@@ -1,0 +1,254 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+
+model User {
+  id             String   @id @default(cuid())
+  name           String?
+  email          String   @unique
+  emailVerified  DateTime?
+  password       String?  // facultatif si tu fais du social login
+  image          String?
+  type           UserType
+  candidat       Candidat? @relation("UserAsCandidat")
+  recruteur      Recruteur? @relation("UserAsRecruteur")
+  accounts       Account[] 
+  sessions       Session[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  companies CompanyUser[]
+}
+
+model Candidat {
+  id       String @id @default(cuid())
+  user     User   @relation("UserAsCandidat", fields: [userId], references: [id])
+  userId   String @unique
+  nom      String?
+  prenom   String?
+  telephone String?
+  cv       String?
+  letterm  String?
+  bio      String?
+  adresse  String?
+  ville    String?
+  statut      String?
+  pays String
+  dateNaissance DateTime
+  nationalite String?
+  situationFamiliale String?
+  permisConduire String?
+  competences String[] @default([])
+  image    String?
+  favorite  Boolean? @default(false)
+  applications Application[]
+}
+
+model Recruteur {
+  id          String      @id @default(cuid())
+  user        User        @relation("UserAsRecruteur",fields: [userId], references: [id])
+  userId      String      @unique
+  type        RecruteurType
+  entreprise  String?
+  description String?
+  name        String
+  logo        String?
+  industry    String?
+  size        String?        // Ex : "50-200 employés"
+  location    String?
+  website     String?
+  email       String?
+  phone       String?
+
+  social      CompanySocial?
+  OfferTemplate OfferTemplate[]
+  JobOffer      JobOffer[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model CompanySocial {
+  id         String   @id @default(cuid())
+  linkedin   String?
+  twitter    String?
+  recruteur    Recruteur  @relation(fields: [recruteurId], references: [id])
+  recruteurId  String   @unique
+}
+
+
+model Company {
+  id        String         @id @default(cuid())
+  name      String
+  users     CompanyUser[]  // Lien avec les utilisateurs (recruteurs)
+  createdAt DateTime       @default(now())
+  invitation Invitation[]
+}
+
+model CompanyUser {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  company   Company  @relation(fields: [companyId], references: [id])
+  companyId String
+  role      Role   // Rôle dans l'entreprise (admin, membre, etc.)
+  createdAt DateTime @default(now())
+}
+
+model Invitation {
+  id         String   @id @default(cuid())
+  email      String   // Email invité
+  companyId  String
+  role       Role
+  token      String   @unique // Pour sécuriser l'invitation
+  accepted   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  company    Company  @relation(fields: [companyId], references: [id])
+}
+
+
+/// Représente une offre d'emploi publiée par une entreprise
+model JobOffer {
+  id                Int       @id @default(autoincrement()) // Identifiant unique de l'offre
+  title             String                                   // Titre du poste (ex : Développeur Full Stack)
+  description       String                                   // Description générale du poste
+  company           String                                   // Nom de l'entreprise proposant l'offre
+  location          String                                   // Lieu de travail (ex : Abidjan, télétravail)
+  type              String                                   // Type de contrat (ex : Freelance, CDI, CDD)
+  etat              String @default("active")
+  experience        String                                   // Années d'expérience requises (ex : "2-5")
+  salaryMin         Float                                    // Salaire minimum proposé
+  salaryMax         Float                                    // Salaire maximum proposé
+  salaryCurrency    String                                   // Devise du salaire (ex : XOF, EUR, USD)
+  salaryPeriod      String                                   // Périodicité du salaire (ex : mois, an)
+  benefits          String                                   // Avantages (ex : mutuelle, tickets resto)
+  requirements      String                                   // Exigences spécifiques du poste
+  responsibilities  String                                   // Responsabilités principales du poste
+  skills            String                                   // Compétences nécessaires (ex : JavaScript, React)
+  templateId        Int?                                     // ID du modèle d'offre utilisé (optionnel)
+  competences       String[] @default([])
+  template          OfferTemplate? @relation(fields: [templateId], references: [id])  // Relation vers le modèle d'offre utilisé
+  recruteur   Recruteur   @relation(fields: [recruteurId], references: [id])
+  recruteurId String
+  createdAt         DateTime    @default(now())             // Date de création de l'offre
+  updatedAt         DateTime    @updatedAt                  // Date de dernière mise à jour de l'offre
+  kanbanColumns     KanbanColumn[]    // Liste des colonnes associées à cette offre
+  applications      Application[]
+
+}
+
+/// Représente un modèle d'offre d'emploi pouvant être réutilisé
+model OfferTemplate {
+  id          Int         @id @default(autoincrement())     // Identifiant unique du modèle
+  name        String                                       // Nom du modèle (ex : Modèle Développeur)
+  description String                                       // Description courte du modèle
+  content     String                                       // Contenu ou structure type du modèle
+  offers      JobOffer[]                                  // Toutes les offres liées à ce modèle
+
+  recruteur   Recruteur   @relation(fields: [recruteurId], references: [id])
+  recruteurId String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  
+}
+
+model Application {
+  id         String     @id @default(cuid())
+  candidat   Candidat   @relation(fields: [candidatId], references: [id])
+  candidatId String
+  jobOffer   JobOffer   @relation(fields: [jobOfferId], references: [id])
+  jobOfferId Int
+  column     KanbanColumn  @relation(fields: [columnId], references: [id])
+  columnId   String        // Référence vers la colonne actuelle dans le kanban
+  note       String?       // Note ajoutée par le recruteur sur cette candidature
+  rating     Int?          // Note par étoiles (1 à 3)
+  message    String?       // Message facultatif du candidat
+  cv         String?       // Lien vers le CV utilisé pour la candidature
+  createdAt  DateTime   @default(now())
+}
+
+
+model KanbanColumn {
+  id            String       @id @default(cuid())   // Identifiant unique de la colonne
+  color         String      
+  name          String       // Nom de la colonne (ex : "Nouvelles", "Acceptées", etc.)
+  order         Int          // L'ordre de la colonne dans le Kanban (ex: 1 pour "Nouvelles", 2 pour "En cours", etc.)
+  isDefault     Boolean      @default(false)        // Si la colonne est une colonne par défaut (non supprimable)
+  jobOffer      JobOffer     @relation(fields: [jobOfferId], references: [id])
+  jobOfferId    Int
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  applications  Application[]
+}
+
+
+// sec
+model Account {
+  id                 String   @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id])
+}
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+
+
+///////////ENUM
+
+
+enum UserType {
+  CANDIDAT
+  RECRUTEUR
+}
+
+
+
+enum RecruteurType {
+  PARTICULIER
+  ENTREPRISE
+  ENTITE
+}
+
+enum Role{
+  ADMIN
+  USER
+}
