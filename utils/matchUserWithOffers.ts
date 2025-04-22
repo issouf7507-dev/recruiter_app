@@ -36,40 +36,6 @@ interface UserProfile {
   };
 }
 
-type MatchResult = {
-  title: string;
-  company: string;
-  matchingPercentage: number;
-  matchedSkills: string[];
-  missingSkills: string[];
-};
-
-function matchUserWithOffers(
-  user: { competences: string[] },
-  offers: JobOffer[]
-): JobOffer[] {
-  return offers.map((offer) => {
-    const matchedSkills = offer.competences.filter((skill) =>
-      user.competences.includes(skill)
-    );
-
-    const missingSkills = offer.competences.filter(
-      (skill) => !user.competences.includes(skill)
-    );
-
-    const matchingPercentage = Math.round(
-      (matchedSkills.length / offer.competences.length) * 100
-    );
-
-    return {
-      ...offer,
-      matchingPercentage,
-      matchedSkills,
-      missingSkills,
-    };
-  });
-}
-
 export function matchUserWithOffers2(
   user: UserProfile,
   offers: JobOffer[]
