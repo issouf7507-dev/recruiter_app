@@ -1,11 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
-import prisma from "@/lib/prisma";
 import { verify } from "jsonwebtoken";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
     const token = req.cookies.get("candidat")?.value;
-
     if (!token) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
@@ -22,16 +21,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { jobOfferId, message } = body;
 
-    if (!jobOfferId) {
-      return NextResponse.json(
-        { error: "ID de l'offre requis" },
-        { status: 400 }
-      );
-    }
-
-    // Récupérer le candidat
-    const candidat = await prisma.candidat.findUnique({
-      where: { userId: decoded.userId },
+    // Vérifier si le candidat existe
+    const candidat = await prisma.candidat.findFirst({
+      where: {
+        userId: decoded.userId,
+      },
     });
 
     if (!candidat) {
@@ -41,37 +35,62 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Récupérer la colonne par défaut "Nouvelles"
-    const defaultColumn = await prisma.kanbanColumn.findFirst({
+    // Vérifier si l'offre existe
+    const jobOffer = await prisma.jobOffer.findUnique({
       where: {
-        jobOfferId: jobOfferId,
-        isDefault: true,
+        id: Number(jobOfferId),
+      },
+      include: {
+        kanbanColumns: {
+          orderBy: {
+            order: "asc",
+          },
+        },
       },
     });
 
-    if (!defaultColumn) {
+    if (!jobOffer) {
+      return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
+    }
+
+    console.log(jobOffer.kanbanColumns[0].id);
+
+    // Vérifier si le candidat a déjà postulé
+    const existingApplication = await prisma.application.findFirst({
+      where: {
+        candidatId: candidat.id,
+        jobOfferId: Number(jobOfferId),
+      },
+    });
+
+    if (existingApplication) {
       return NextResponse.json(
-        { error: "Colonne par défaut non trouvée" },
-        { status: 404 }
+        { error: "Vous avez déjà postulé à cette offre" },
+        { status: 400 }
       );
     }
 
     // Créer la candidature
     const application = await prisma.application.create({
       data: {
+        message,
         candidatId: candidat.id,
-        jobOfferId: jobOfferId,
-        columnId: defaultColumn.id,
-        message: message || null,
-        cv: candidat.cv || null,
+        jobOfferId: Number(jobOfferId),
+        columnId: jobOffer.kanbanColumns[0].id,
       },
     });
 
-    return NextResponse.json({ success: true, application });
-  } catch (error) {
-    console.error("Erreur lors de la candidature:", error);
     return NextResponse.json(
-      { error: "Erreur lors de la candidature" },
+      {
+        success: true,
+        data: application,
+      },
+      { status: 201 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { error: "Une erreur est survenue" },
       { status: 500 }
     );
   }

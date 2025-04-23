@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,6 +27,9 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "@/utils/utilts";
+import { Application } from "@/types/types";
 
 // Type pour les candidatures
 type Candidature = {
@@ -79,9 +82,9 @@ const mockCandidatures: Candidature[] = [
 ];
 
 // Fonction pour obtenir la couleur du badge selon le statut
-const getStatusColor = (status: Candidature["status"]) => {
+const getStatusColor = (status: string) => {
   switch (status) {
-    case "nouvelle":
+    case "Nouvelles":
       return "bg-blue-500";
     case "en_cours":
       return "bg-yellow-500";
@@ -95,9 +98,9 @@ const getStatusColor = (status: Candidature["status"]) => {
 };
 
 // Fonction pour formater le statut
-const formatStatus = (status: Candidature["status"]) => {
+const formatStatus = (status: string) => {
   switch (status) {
-    case "nouvelle":
+    case "Nouvelles":
       return "Nouvelle";
     case "en_cours":
       return "En cours";
@@ -113,14 +116,14 @@ const formatStatus = (status: Candidature["status"]) => {
 export default function CandidaturesPage({
   params,
 }: {
-  params: { offerId: string };
+  params: Promise<{ offerId: string }>;
 }) {
   const [candidatures, setCandidatures] =
     useState<Candidature[]>(mockCandidatures);
   const [selectedCandidature, setSelectedCandidature] =
-    useState<Candidature | null>(null);
+    useState<Application | null>(null);
 
-  const handleViewDetails = (candidature: Candidature) => {
+  const handleViewDetails = (candidature: Application) => {
     setSelectedCandidature(candidature);
   };
 
@@ -132,25 +135,38 @@ export default function CandidaturesPage({
     );
   };
 
+  const { offerId } = use(params);
+
   const handleDownloadCV = (cvPath: string) => {
     // Ici, vous implémenteriez la logique de téléchargement
     console.log("Téléchargement du CV:", cvPath);
     // Exemple de téléchargement :
-    // window.open(cvPath, '_blank');
+    window.open(cvPath, "_blank");
   };
 
-  const handleDownloadLettreMotivation = (content: string, nom: string) => {
+  const handleDownloadLettreMotivation = (cvPath: string, nom: string) => {
+    console.log("LettreMotivation", cvPath);
+    // Exemple de téléchargement :
+    window.open(cvPath, "_blank");
     // Créer un blob avec le contenu de la lettre
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `lettre-motivation-${nom}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
+    // const blob = new Blob([content], { type: "text/plain" });
+    // const url = window.URL.createObjectURL(blob);
+    // const a = document.createElement("a");
+    // a.href = url;
+    // a.download = `lettre-motivation-${nom}.txt`;
+    // document.body.appendChild(a);
+    // a.click();
+    // window.URL.revokeObjectURL(url);
+    // document.body.removeChild(a);
   };
+
+  const { data: candidatdata } = useQuery({
+    queryKey: ["candidatdata", offerId],
+    queryFn: () =>
+      fetchData(`/api/recruteur/offresbyuser/applications/${offerId}`),
+  });
+
+  // console.log(candidatdata?.data?.[0].column.name);
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
@@ -186,53 +202,61 @@ export default function CandidaturesPage({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {candidatures.map((candidature) => (
-                <TableRow key={candidature.id}>
-                  <TableCell className="font-medium">
-                    <div className="flex items-center gap-2">
-                      {candidature.nom}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6"
-                        onClick={() => handleToggleFavorite(candidature.id)}
-                      >
-                        {candidature.isFavorite ? (
-                          <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-                        ) : (
-                          <Star className="h-4 w-4" />
+              {candidatdata &&
+                candidatdata.data.map((candidature: Application) => (
+                  <TableRow key={candidature.id}>
+                    <TableCell className="font-medium">
+                      <div className="flex items-center gap-2">
+                        {candidature.candidat.nom}
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6"
+                          onClick={() => handleToggleFavorite(candidature.id)}
+                        >
+                          {candidature.candidat.favorite ? (
+                            <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                          ) : (
+                            <Star className="h-4 w-4" />
+                          )}
+                        </Button>
+                      </div>
+                    </TableCell>
+                    <TableCell>{candidature.email}</TableCell>
+                    <TableCell>{candidature.candidat.telephone}</TableCell>
+                    <TableCell>{candidature.createdAt}</TableCell>
+                    <TableCell>
+                      <Badge
+                        className={getStatusColor(
+                          candidature.column.name.toString()
                         )}
-                      </Button>
-                    </div>
-                  </TableCell>
-                  <TableCell>{candidature.email}</TableCell>
-                  <TableCell>{candidature.telephone}</TableCell>
-                  <TableCell>{candidature.date}</TableCell>
-                  <TableCell>
-                    <Badge className={getStatusColor(candidature.status)}>
-                      {formatStatus(candidature.status)}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() => handleViewDetails(candidature)}
                       >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() => handleDownloadCV(candidature.cv)}
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+                        {formatStatus(candidature.column.name)}
+                      </Badge>
+                      {/* s */}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() => handleViewDetails(candidature)}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() =>
+                            handleDownloadCV(candidature.candidat.cv)
+                          }
+                        >
+                          <Download className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </CardContent>
@@ -246,7 +270,7 @@ export default function CandidaturesPage({
           <DialogHeader>
             <DialogTitle>Détails de la candidature</DialogTitle>
             <DialogDescription>
-              Informations de {selectedCandidature?.nom}
+              Informations de {selectedCandidature?.candidat.nom}
             </DialogDescription>
           </DialogHeader>
 
@@ -263,7 +287,7 @@ export default function CandidaturesPage({
                       handleToggleFavorite(selectedCandidature.id)
                     }
                   >
-                    {selectedCandidature?.isFavorite ? (
+                    {selectedCandidature?.candidat.favorite ? (
                       <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
                     ) : (
                       <Star className="h-5 w-5" />
@@ -273,27 +297,28 @@ export default function CandidaturesPage({
               </CardHeader>
               <CardContent className="space-y-2">
                 <p>
-                  <strong>Nom :</strong> {selectedCandidature?.nom}
+                  <strong>Nom :</strong> {selectedCandidature?.candidat?.nom}
                 </p>
                 <p>
                   <strong>Email :</strong> {selectedCandidature?.email}
                 </p>
                 <p>
-                  <strong>Téléphone :</strong> {selectedCandidature?.telephone}
+                  <strong>Téléphone :</strong>{" "}
+                  {selectedCandidature?.candidat.telephone}
                 </p>
                 <p>
                   <strong>Date de candidature :</strong>{" "}
-                  {selectedCandidature?.date}
+                  {selectedCandidature?.createdAt}
                 </p>
                 <p>
                   <strong>Statut :</strong>
-                  <Badge
+                  {/* <Badge
                     className={`ml-2 ${getStatusColor(
                       selectedCandidature?.status || "nouvelle"
                     )}`}
                   >
                     {formatStatus(selectedCandidature?.status || "nouvelle")}
-                  </Badge>
+                  </Badge> */}
                 </p>
               </CardContent>
             </Card>
@@ -332,8 +357,8 @@ export default function CandidaturesPage({
                     variant="outline"
                     onClick={() =>
                       handleDownloadLettreMotivation(
-                        selectedCandidature?.lettreMotivation || "",
-                        selectedCandidature?.nom || ""
+                        selectedCandidature?.candidat.letterm || "",
+                        selectedCandidature?.candidat.letterm || ""
                       )
                     }
                   >
@@ -350,7 +375,7 @@ export default function CandidaturesPage({
               </CardHeader>
               <CardContent>
                 <p className="whitespace-pre-wrap">
-                  {selectedCandidature?.lettreMotivation}
+                  {selectedCandidature?.candidat.letterm}
                 </p>
               </CardContent>
             </Card>

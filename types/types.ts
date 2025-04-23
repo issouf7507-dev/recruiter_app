@@ -6,6 +6,54 @@ export type offerTemplate = {
   recruteurId: string;
 };
 
+type Column = {
+  id: string;
+  name: string;
+  color: string;
+  order: number;
+  isDefault: boolean;
+  jobOfferId: number;
+  createdAt: string; // ou Date si tu le convertis
+  updatedAt: string; // ou Date si tu le convertis
+};
+
+export type Candidat = {
+  id: string;
+  userId: string;
+  nom: string;
+  prenom: string;
+  telephone: string;
+  adresse: string;
+  ville: string;
+  pays: string;
+  dateNaissance: string;
+  nationalite: string;
+  situationFamiliale: string;
+  permisConduire: string;
+  bio: string;
+  cv: string;
+  letterm: string;
+  competences: string[];
+  image: string;
+  favorite: boolean;
+  statut: string | null;
+};
+
+export type Application = {
+  id: string;
+  candidatId: string;
+  jobOfferId: number;
+  columnId: string;
+  note: string | null;
+  rating: number | null;
+  message: string;
+  cv: string | null;
+  email?: string | null;
+  createdAt: string;
+  candidat: Candidat;
+  column: Column;
+};
+
 export type JobOffer = {
   id: number;
   title: string;
@@ -27,7 +75,7 @@ export type JobOffer = {
   recruteurId: string;
   createdAt: string; // ou Date si tu les convertis
   updatedAt: string; // ou Date si tu les convertis
-  applications: any[]; // à typer selon la structure d'une application
+  applications: Application[]; // à typer selon la structure d'une application
   competences: string[];
   matchingPercentage?: number;
   matchedSkills?: string[];

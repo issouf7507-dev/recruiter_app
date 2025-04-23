@@ -79,7 +79,7 @@ export default function ModifierOffre({
 
   // Récupérer les données de l'offre existante
   const { data: offerData, isLoading } = useQuery({
-    queryKey: ["offer", id],
+    queryKey: ["offerbyid", id],
     queryFn: () => fetchData(`/api/recruteur/offres/${id}`),
   });
 

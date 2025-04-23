@@ -95,7 +95,13 @@ export async function GET(
       orderBy: {
         createdAt: "asc",
       },
-      include: { applications: true, kanbanColumns: true },
+      include: {
+        applications: {
+          include: {
+            candidat: true,
+          },
+        },
+      },
     });
 
     return NextResponse.json(

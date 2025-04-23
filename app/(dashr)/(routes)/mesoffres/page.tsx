@@ -70,7 +70,7 @@ export default function MesOffres() {
   });
 
   // console.log("bb:", ss);
-  // console.log("aa:", user);
+  console.log(offertData);
 
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [searchQuery, setSearchQuery] = useState("");

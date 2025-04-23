@@ -137,6 +137,8 @@ model JobOffer {
   requirements      String                                   // Exigences spécifiques du poste
   responsibilities  String                                   // Responsabilités principales du poste
   skills            String                                   // Compétences nécessaires (ex : JavaScript, React)
+  postulated        Boolean?   @default(false)//(a mettre a jour)
+  favorite          Boolean? @default(false)
   templateId        Int?                                     // ID du modèle d'offre utilisé (optionnel)
   competences       String[] @default([])
   template          OfferTemplate? @relation(fields: [templateId], references: [id])  // Relation vers le modèle d'offre utilisé

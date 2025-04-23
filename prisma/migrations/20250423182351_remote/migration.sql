@@ -129,6 +129,8 @@ CREATE TABLE "JobOffer" (
     "requirements" TEXT NOT NULL,
     "responsibilities" TEXT NOT NULL,
     "skills" TEXT NOT NULL,
+    "postulated" BOOLEAN DEFAULT false,
+    "favorite" BOOLEAN DEFAULT false,
     "templateId" INTEGER,
     "competences" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "recruteurId" TEXT NOT NULL,

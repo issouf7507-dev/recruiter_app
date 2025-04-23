@@ -15,7 +15,6 @@ import {
   Calendar,
   Clock,
   BriefcaseIcon,
-  GraduationCap,
   Banknote,
   Share2,
   Eye,
@@ -126,7 +125,7 @@ export default function OffreDetail({
     queryFn: () => fetchDataById(`/api/recruteur/offres/${offerId}`),
   });
 
-  console.log(queryoffresbyid?.data[0]);
+  console.log(queryoffresbyid?.data[0].id);
 
   return (
     <div className="p-6 space-y-6">
@@ -178,7 +177,9 @@ export default function OffreDetail({
             <CardHeader>
               <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle className="text-2xl">{offer.title}</CardTitle>
+                  <CardTitle className="text-2xl">
+                    {queryoffresbyid?.data[0].title}
+                  </CardTitle>
                   <CardDescription className="flex items-center gap-2 mt-2">
                     <Building className="h-4 w-4" />
                     {queryoffresbyid?.data[0].company}
@@ -293,12 +294,6 @@ export default function OffreDetail({
                     <p className="text-sm text-muted-foreground">
                       {queryoffresbyid?.data[0].benefits}
                     </p>
-
-                    {/* <ul className="list-disc list-inside text-sm text-muted-foreground">
-                      {offer.benefits.map((benefit, index) => (
-                        <li key={index}>{benefit}</li>
-                      ))}
-                    </ul> */}
                   </div>
                 </TabsContent>
               </Tabs>
@@ -323,7 +318,7 @@ export default function OffreDetail({
                   Candidatures totales
                 </span>
                 <span className="font-semibold">
-                  {offer.applications.total}
+                  {queryoffresbyid?.data[0]?.applications.length}
                 </span>
               </div>
               <div className="flex justify-between items-center">
@@ -364,7 +359,7 @@ export default function OffreDetail({
                 variant="outline"
                 onClick={() =>
                   // window.location.href == "/mesoffres/1/candidatures"
-                  (window.location.href = `/mesoffres/1/candidatures`)
+                  (window.location.href = `/mesoffres/${queryoffresbyid?.data[0].id}/candidatures`)
                 }
               >
                 Voir les candidatures

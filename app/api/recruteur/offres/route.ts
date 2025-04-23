@@ -94,7 +94,13 @@ export async function GET(req: Request) {
       orderBy: {
         createdAt: "asc",
       },
-      include: { applications: true },
+      include: {
+        applications: {
+          include: {
+            candidat: true,
+          },
+        },
+      },
     });
 
     return NextResponse.json(
