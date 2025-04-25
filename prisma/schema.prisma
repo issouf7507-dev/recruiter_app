@@ -6,7 +6,9 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
 }
+
 
 datasource db {
   provider  = "postgresql"
@@ -141,6 +143,7 @@ model JobOffer {
   favorite          Boolean? @default(false)
   templateId        Int?                                     // ID du modèle d'offre utilisé (optionnel)
   competences       String[] @default([])
+  views             Int      @default(0)  // Nouveau champ pour le compteur de vues
   template          OfferTemplate? @relation(fields: [templateId], references: [id])  // Relation vers le modèle d'offre utilisé
   recruteur   Recruteur   @relation(fields: [recruteurId], references: [id])
   recruteurId String

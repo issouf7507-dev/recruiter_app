@@ -55,7 +55,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const InformationsPersonnellesPage = () => {
-  const { user, loading: authLoading } = useUserStore();
+  const { candidat, loading: authLoading } = useUserStore();
   const [isEditing, setIsEditing] = useState(false);
   const [date, setDate] = useState<Date>();
   const [formLoading, setFormLoading] = useState(true);
@@ -93,33 +93,33 @@ const InformationsPersonnellesPage = () => {
   // console.log(user);
 
   useEffect(() => {
-    if (user?.candidat) {
-      const candidat = user.candidat;
+    if (candidat?.candidat) {
+      const ucandidat = candidat?.candidat;
       reset({
-        nom: candidat.nom || "",
-        prenom: candidat.prenom || "",
-        telephone: candidat.telephone || "",
-        adresse: candidat.adresse || "",
-        ville: candidat.ville || "",
-        pays: candidat.pays || "",
-        dateNaissance: candidat.dateNaissance
-          ? new Date(candidat.dateNaissance)
+        nom: ucandidat.nom || "",
+        prenom: ucandidat.prenom || "",
+        telephone: ucandidat.telephone || "",
+        adresse: ucandidat.adresse || "",
+        ville: ucandidat.ville || "",
+        pays: ucandidat.pays || "",
+        dateNaissance: ucandidat.dateNaissance
+          ? new Date(ucandidat.dateNaissance)
           : undefined,
-        nationalite: candidat.nationalite || "",
-        situationFamiliale: candidat.situationFamiliale || "",
-        permisConduire: candidat.permisConduire || "",
-        bio: candidat.bio || "",
-        image: candidat.image || "",
-        competences: candidat.competences || [],
-        cv: candidat.cv || "",
-        letterm: candidat.letterm || "",
+        nationalite: ucandidat.nationalite || "",
+        situationFamiliale: ucandidat.situationFamiliale || "",
+        permisConduire: ucandidat.permisConduire || "",
+        bio: ucandidat.bio || "",
+        image: ucandidat.image || "",
+        competences: ucandidat.competences || [],
+        cv: ucandidat.cv || "",
+        letterm: ucandidat.letterm || "",
       });
-      if (candidat.dateNaissance) {
-        setDate(new Date(candidat.dateNaissance));
+      if (ucandidat.dateNaissance) {
+        setDate(new Date(ucandidat.dateNaissance));
       }
       setFormLoading(false);
     }
-  }, [user, reset]);
+  }, [candidat, reset]);
 
   const onSubmit = async (data: FormData) => {
     console.log(data);
@@ -141,16 +141,16 @@ const InformationsPersonnellesPage = () => {
         toast.success("Profil mis à jour avec succès");
         setIsEditing(false);
         // Mettre à jour le store avec les nouvelles données
-        if (user?.candidat) {
+        if (candidat?.candidat) {
           useUserStore.setState({
             user: {
-              ...user,
+              ...candidat,
               candidat: {
-                ...user.candidat,
+                ...candidat.candidat,
                 ...data,
                 dateNaissance:
                   data.dateNaissance?.toISOString() ||
-                  user.candidat.dateNaissance,
+                  candidat.candidat.dateNaissance,
               },
             },
           });

@@ -33,7 +33,7 @@ interface User {
 }
 
 export function useAuthCandidat() {
-  const { user, loading, setUser, setLoading } = useUserStore();
+  const { loading, setLoading, setCandidat, candidat } = useUserStore();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -41,19 +41,20 @@ export function useAuthCandidat() {
         const response = await fetch("/api/auth/me-cd");
         if (response.ok) {
           const data = await response.json();
-          setUser(data.user);
+          // setCandidat(data.user);
+          setCandidat(data.user);
         } else {
-          setUser(null);
+          setCandidat(null);
         }
       } catch (error) {
-        setUser(null);
+        setCandidat(null);
       } finally {
         setLoading(false);
       }
     };
 
     fetchUser();
-  }, [setUser, setLoading]);
+  }, [setCandidat, setLoading]);
 
-  return { user, loading };
+  return { loading, candidat };
 }

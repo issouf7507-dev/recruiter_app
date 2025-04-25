@@ -5,6 +5,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -29,90 +37,11 @@ import { JobOffer } from "@/types/types";
 import { matchUserWithOffers2 } from "@/utils/matchUserWithOffers";
 import { useUserStore } from "@/store/userStore";
 import { toast } from "sonner";
-
-const offres = [
-  {
-    id: 1,
-    titre: "Développeur Full Stack",
-    entreprise: "TechCorp Inc.",
-    localisation: "Abidjan, Côte d'Ivoire",
-    type: "CDI",
-    salaire: "1 500 000 - 2 000 000 FCFA",
-    date: "Il y a 2 jours",
-    competences: ["React", "Node.js", "MongoDB"],
-    description:
-      "Nous recherchons un développeur Full Stack expérimenté pour rejoindre notre équipe de développement agile.",
-    match: 95,
-  },
-  {
-    id: 2,
-    titre: "Designer UI/UX",
-    entreprise: "Digital Solutions",
-    localisation: "Abidjan, Côte d'Ivoire",
-    type: "CDI",
-    salaire: "1 200 000 - 1 800 000 FCFA",
-    date: "Il y a 3 jours",
-    competences: ["Figma", "Adobe XD", "UI/UX"],
-    description:
-      "Rejoignez notre équipe créative en tant que Designer UI/UX pour créer des expériences utilisateur exceptionnelles.",
-    match: 88,
-  },
-  {
-    id: 3,
-    titre: "Data Scientist",
-    entreprise: "AI Solutions",
-    localisation: "Abidjan, Côte d'Ivoire",
-    type: "CDI",
-    salaire: "2 000 000 - 2 500 000 FCFA",
-    date: "Il y a 1 jour",
-    competences: ["Python", "Machine Learning", "TensorFlow"],
-    description:
-      "Nous recherchons un Data Scientist passionné pour travailler sur des projets innovants d'intelligence artificielle.",
-    match: 92,
-  },
-  {
-    id: 4,
-    titre: "Chef de Projet IT",
-    entreprise: "TechVision",
-    localisation: "Yamoussoukro, Côte d'Ivoire",
-    type: "CDI",
-    salaire: "2 500 000 - 3 000 000 FCFA",
-    date: "Il y a 5 jours",
-    competences: ["Gestion de projet", "Agile", "Scrum"],
-    description:
-      "Nous recherchons un Chef de Projet IT pour piloter nos projets digitaux et assurer leur succès.",
-    match: 85,
-  },
-  {
-    id: 5,
-    titre: "Développeur Mobile",
-    entreprise: "AppTech",
-    localisation: "Bouaké, Côte d'Ivoire",
-    type: "CDD",
-    salaire: "1 800 000 - 2 200 000 FCFA",
-    date: "Il y a 4 jours",
-    competences: ["React Native", "Flutter", "iOS", "Android"],
-    description:
-      "Rejoignez notre équipe en tant que Développeur Mobile pour créer des applications innovantes.",
-    match: 90,
-  },
-  {
-    id: 6,
-    titre: "DevOps Engineer",
-    entreprise: "CloudTech",
-    localisation: "Abidjan, Côte d'Ivoire",
-    type: "CDI",
-    salaire: "2 200 000 - 2 800 000 FCFA",
-    date: "Il y a 6 jours",
-    competences: ["AWS", "Docker", "Kubernetes", "CI/CD"],
-    description:
-      "Nous recherchons un DevOps Engineer pour optimiser nos processus de déploiement et d'infrastructure.",
-    match: 87,
-  },
-];
+import Link from "next/link";
 
 const ToutesLesOffresPage = () => {
-  const { user, loading: authLoading } = useUserStore();
+  const { candidat, loading: authLoading } = useUserStore();
+  const [showCvAlert, setShowCvAlert] = useState(false);
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [filters, setFilters] = useState({
     type: "all",
@@ -130,12 +59,20 @@ const ToutesLesOffresPage = () => {
     queryFn: () => fetchData("/api/recruteur/offres"),
   });
   let matchOffersWithUser;
-  if (user?.candidat?.nom) {
-    matchOffersWithUser = matchUserWithOffers2(user, offertData?.data);
+
+  console.log(candidat);
+
+  if (candidat?.candidat?.nom) {
+    matchOffersWithUser = matchUserWithOffers2(candidat, offertData?.data);
   }
-  console.log();
+
+  // console.log(matchOffersWithUser);
 
   const handlePostuler = async (jobOfferId: number) => {
+    if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
+      setShowCvAlert(true);
+      return;
+    }
     try {
       const response = await fetch("/api/candidat/postuler", {
         method: "POST",
@@ -270,7 +207,9 @@ const ToutesLesOffresPage = () => {
       {viewMode === "list" ? (
         <div className="grid gap-6">
           {offertData &&
-            matchOffersWithUser?.map((offre: JobOffer) => (
+          matchOffersWithUser &&
+          matchOffersWithUser.length > 0 ? (
+            matchOffersWithUser.map((offre: JobOffer) => (
               <Card
                 key={offre.id}
                 className="hover:shadow-lg transition-shadow"
@@ -279,7 +218,14 @@ const ToutesLesOffresPage = () => {
                   <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <h2 className="text-xl font-semibold">{offre.title}</h2>
+                        <Link
+                          href={`/dashboard-candidats/toutes-les-offres/${offre.id}`}
+                          className="hover:underline"
+                        >
+                          <h2 className="text-xl font-semibold">
+                            {offre.title}
+                          </h2>
+                        </Link>
                         <Badge variant="secondary" className="ml-2">
                           {offre.matchingPercentage} % match
                         </Badge>
@@ -335,12 +281,30 @@ const ToutesLesOffresPage = () => {
                   </p>
                 </CardContent>
               </Card>
-            ))}
+            ))
+          ) : (
+            <div className="flex min-h-[60vh] w-full items-center justify-center">
+              <div className="flex flex-col items-center justify-center py-12">
+                <Briefcase className="h-12 w-12 text-muted-foreground mb-4" />
+                <h3 className="text-xl font-semibold mb-2">
+                  Aucune offre disponible
+                </h3>
+                <p className="text-muted-foreground text-center">
+                  Il n'y a actuellement aucune offre d'emploi correspondant à
+                  votre profil.
+                  <br />
+                  Revenez plus tard pour découvrir de nouvelles opportunités.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {offertData &&
-            matchOffersWithUser?.map((offre) => (
+          matchOffersWithUser &&
+          matchOffersWithUser.length > 0 ? (
+            matchOffersWithUser.map((offre) => (
               <Card
                 key={offre.id}
                 className="hover:shadow-lg transition-shadow"
@@ -403,9 +367,52 @@ const ToutesLesOffresPage = () => {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            ))
+          ) : (
+            <div className="col-span-full flex flex-col items-center justify-center py-12">
+              <Briefcase className="h-12 w-12 text-muted-foreground mb-4" />
+              <h3 className="text-xl font-semibold mb-2">
+                Aucune offre disponible
+              </h3>
+              <p className="text-muted-foreground text-center">
+                Il n'y a actuellement aucune offre d'emploi correspondant à
+                votre profil.
+                <br />
+                Revenez plus tard pour découvrir de nouvelles opportunités.
+              </p>
+            </div>
+          )}
         </div>
       )}
+
+      <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
+        <DialogContent className="w-lg">
+          <DialogHeader>
+            <DialogTitle>Documents importants manquants</DialogTitle>
+            <DialogDescription>
+              Pour maximiser vos chances de trouver un emploi, il est important
+              de compléter votre profil en ajoutant votre CV et votre lettre de
+              motivation.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-muted-foreground">
+              Ces documents sont essentiels pour que les recruteurs puissent
+              vous connaître et vous contacter.
+            </p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowCvAlert(false)}>
+              Plus tard
+            </Button>
+            <Button asChild>
+              <Link href="/dashboard-candidats/informations-personnelles">
+                Compléter mon profil
+              </Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

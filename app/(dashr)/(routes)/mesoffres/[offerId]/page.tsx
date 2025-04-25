@@ -125,8 +125,6 @@ export default function OffreDetail({
     queryFn: () => fetchDataById(`/api/recruteur/offres/${offerId}`),
   });
 
-  console.log(queryoffresbyid?.data[0].id);
-
   return (
     <div className="p-6 space-y-6">
       {/* En-tête avec navigation et actions */}

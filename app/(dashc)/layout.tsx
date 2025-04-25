@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
@@ -43,6 +43,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+// import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+import { useUserStore } from "@/store/userStore";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 
 const queryClient = new QueryClient();
@@ -141,9 +151,20 @@ export default function CandidatsLayout({
   ];
 
   const [open, setOpen] = useState(false);
+  const [showCvAlert, setShowCvAlert] = useState(false);
   const { setTheme } = useTheme();
 
-  const { user, loading } = useAuthCandidat();
+  const { candidat, loading } = useAuthCandidat();
+
+  // Vérifier si le CV et la lettre de motivation sont manquants
+  useEffect(() => {
+    if (
+      candidat?.candidat &&
+      (!candidat.candidat.cv || !candidat.candidat.letterm)
+    ) {
+      setShowCvAlert(true);
+    }
+  }, [candidat]);
 
   if (loading) {
     return (
@@ -153,7 +174,7 @@ export default function CandidatsLayout({
     );
   }
 
-  if (!user) {
+  if (!candidat) {
     return (
       <div className="h-screen flex items-center justify-center">
         <Card className="w-96 text-center">
@@ -264,6 +285,35 @@ export default function CandidatsLayout({
         >
           {children}
         </ThemeProvider>
+
+        <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
+          <DialogContent className="w-lg">
+            <DialogHeader>
+              <DialogTitle>Documents importants manquants</DialogTitle>
+              <DialogDescription>
+                Pour maximiser vos chances de trouver un emploi, il est
+                important de compléter votre profil en ajoutant votre CV et
+                votre lettre de motivation.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="py-4">
+              <p className="text-sm text-muted-foreground">
+                Ces documents sont essentiels pour que les recruteurs puissent
+                vous connaître et vous contacter.
+              </p>
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setShowCvAlert(false)}>
+                Plus tard
+              </Button>
+              <Button asChild>
+                <Link href="/dashboard-candidats/informations-personnelles">
+                  Compléter mon profil
+                </Link>
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </QueryClientProvider>
   );

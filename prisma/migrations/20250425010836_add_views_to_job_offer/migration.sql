@@ -133,6 +133,7 @@ CREATE TABLE "JobOffer" (
     "favorite" BOOLEAN DEFAULT false,
     "templateId" INTEGER,
     "competences" TEXT[] DEFAULT ARRAY[]::TEXT[],
+    "views" INTEGER NOT NULL DEFAULT 0,
     "recruteurId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

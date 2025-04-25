@@ -54,11 +54,10 @@ export default function Connexion() {
       if (response.success) {
         toast.success("Connexion réussie");
         router.push("/dashboard-candidats");
-      } else {
-        toast.error(response.message || "Erreur de connexion");
       }
-    } catch (error) {
-      toast.error("Une erreur est survenue");
+    } catch (error: any) {
+      toast.error(error.message || "Une erreur est survenue");
+      console.error("Erreur de connexion:", error);
     } finally {
       setIsLoading(false);
     }

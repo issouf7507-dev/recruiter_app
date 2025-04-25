@@ -25,6 +25,8 @@ export async function GET(req: NextRequest) {
       },
     });
 
+    // console.log(user);
+
     if (!user) {
       return NextResponse.json(
         { error: "Utilisateur non trouvé" },

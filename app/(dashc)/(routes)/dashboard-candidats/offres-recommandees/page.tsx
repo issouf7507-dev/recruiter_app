@@ -21,6 +21,17 @@ import {
   List,
   Grid,
 } from "lucide-react";
+import { useUserStore } from "@/store/userStore";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const offres = [
   {
@@ -66,6 +77,18 @@ const offres = [
 
 const OffresRecommandeesPage = () => {
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const [showCvAlert, setShowCvAlert] = useState(false);
+  const { user } = useUserStore();
+  const router = useRouter();
+
+  const handlePostuler = (offreId: number) => {
+    if (!user?.candidat?.cv || !user?.candidat?.letterm) {
+      setShowCvAlert(true);
+      return;
+    }
+    // Ici, vous pouvez ajouter la logique de postulation
+    router.push(`/dashboard-candidats/toutes-les-offres/${offreId}`);
+  };
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
@@ -153,7 +176,9 @@ const OffresRecommandeesPage = () => {
                     </div>
                     <div className="flex gap-2">
                       <Button variant="outline">Sauvegarder</Button>
-                      <Button>Postuler</Button>
+                      <Button onClick={() => handlePostuler(offre.id)}>
+                        Postuler
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -211,7 +236,12 @@ const OffresRecommandeesPage = () => {
                     <Button variant="outline" className="flex-1">
                       Sauvegarder
                     </Button>
-                    <Button className="flex-1">Postuler</Button>
+                    <Button
+                      className="flex-1"
+                      onClick={() => handlePostuler(offre.id)}
+                    >
+                      Postuler
+                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -219,6 +249,34 @@ const OffresRecommandeesPage = () => {
           ))}
         </div>
       )}
+
+      <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
+        <DialogContent className="w-lg">
+          <DialogHeader>
+            <DialogTitle>Documents manquants</DialogTitle>
+            <DialogDescription>
+              Pour postuler à une offre, vous devez d'abord compléter votre
+              profil en ajoutant votre CV et votre lettre de motivation.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-muted-foreground">
+              Ces documents sont obligatoires pour pouvoir postuler aux offres
+              d'emploi.
+            </p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowCvAlert(false)}>
+              Plus tard
+            </Button>
+            <Button asChild>
+              <Link href="/dashboard-candidats/informations-personnelles">
+                Compléter mon profil
+              </Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

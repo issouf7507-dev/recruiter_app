@@ -65,7 +65,9 @@ export const postData = async (data: any, urlApi: string) => {
     const responseData = await response.json();
 
     if (!response.ok) {
-      throw new Error(responseData.message || "Une erreur est survenue");
+      throw new Error(
+        responseData.error || responseData.message || "Une erreur est survenue"
+      );
     }
 
     return responseData;

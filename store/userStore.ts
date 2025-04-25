@@ -39,9 +39,12 @@ interface User {
 
 interface UserState {
   user: User | null;
+  candidat: User | null;
   loading: boolean;
   setUser: (user: User | null) => void;
+  setCandidat: (candidat: User | null) => void;
   setLoading: (loading: boolean) => void;
+
   clearUser: () => void;
 }
 
@@ -49,8 +52,10 @@ export const useUserStore = create<UserState>()(
   persist(
     (set) => ({
       user: null,
+      candidat: null,
       loading: true,
       setUser: (user) => set({ user }),
+      setCandidat: (candidat) => set({ candidat }),
       setLoading: (loading) => set({ loading }),
       clearUser: () => set({ user: null }),
     }),
