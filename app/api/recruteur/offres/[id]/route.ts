@@ -96,6 +96,7 @@ export async function GET(
         createdAt: "asc",
       },
       include: {
+        kanbanColumns: true,
         applications: {
           include: {
             candidat: true,

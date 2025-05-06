@@ -18,6 +18,7 @@ import {
   User,
   ClipboardList,
   Lock,
+  Loader2,
 } from "lucide-react";
 
 import {
@@ -80,7 +81,7 @@ export default function CandidatsLayout({
           label: "Toutes les offres",
           href: "/dashboard-candidats/toutes-les-offres",
         },
-        { label: "Favoris", href: "/offres/toutes-les-offres" },
+        // { label: "Favoris", href: "/offres/toutes-les-offres" },
       ],
     },
     {
@@ -117,17 +118,17 @@ export default function CandidatsLayout({
           href: "/dashboard-candidats/formations-competences",
         },
         // { label: "Compétences", href: "/dashboard-candidats/competences" },
-        {
-          label: "CV et pièces jointes",
-          href: "/dashboard-candidats/cv-pieces-jointes",
-        },
+        // {
+        //   label: "CV et pièces jointes",
+        //   href: "/dashboard-candidats/cv-pieces-jointes",
+        // },
       ],
     },
-    {
-      label: "Suivi de carrière",
-      href: "/dashboard-candidats/suivi-carriere",
-      icon: <TrendingUp className="h-5 w-5 text-neutral-500" />,
-    },
+    // {
+    //   label: "Suivi de carrière",
+    //   href: "/dashboard-candidats/suivi-carriere",
+    //   icon: <TrendingUp className="h-5 w-5 text-neutral-500" />,
+    // },
     {
       label: "Messages",
       href: "/dashboard-candidats/messagerie",
@@ -169,7 +170,7 @@ export default function CandidatsLayout({
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center">
-        Chargement...
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     );
   }
@@ -211,7 +212,7 @@ export default function CandidatsLayout({
         )}
       >
         <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="justify-between gap-10">
+          <SidebarBody className="justify-between gap-10 border">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
               {open ? <Logo /> : <LogoIcon />}
               <div className="mt-8 flex flex-col gap-2">
@@ -306,7 +307,7 @@ export default function CandidatsLayout({
               <Button variant="outline" onClick={() => setShowCvAlert(false)}>
                 Plus tard
               </Button>
-              <Button asChild>
+              <Button asChild onClick={() => setShowCvAlert(false)}>
                 <Link href="/dashboard-candidats/informations-personnelles">
                   Compléter mon profil
                 </Link>

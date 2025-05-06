@@ -45,21 +45,24 @@ export async function POST(req: NextRequest) {
           orderBy: {
             order: "asc",
           },
+
+          take: 1,
         },
       },
     });
 
-    if (!jobOffer) {
-      return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
+    if (!jobOffer?.kanbanColumns?.[0]) {
+      return NextResponse.json(
+        { error: "Aucune colonne kanban trouvée pour cette offre" },
+        { status: 400 }
+      );
     }
 
-    console.log(jobOffer.kanbanColumns[0].id);
-
-    // Vérifier si le candidat a déjà postulé
     const existingApplication = await prisma.application.findFirst({
       where: {
         candidatId: candidat.id,
         jobOfferId: Number(jobOfferId),
+        columnId: jobOffer.kanbanColumns[0].id,
       },
     });
 

@@ -45,6 +45,7 @@ export async function POST(req: Request) {
             entreprise,
             description,
             name: "",
+            email,
           },
         },
       },

@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -29,10 +29,26 @@ import {
   Save,
   X,
   Briefcase,
+  Loader2,
 } from "lucide-react";
+import { useUserStore } from "@/store/userStore";
+import { fetchData, postData, deleteData } from "@/utils/utilts";
+import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface Experience {
-  id: number;
+  id: string;
   poste: string;
   entreprise: string;
   localisation: string;
@@ -43,93 +59,153 @@ interface Experience {
   competences: string[];
 }
 
-const ExperiencesPage = () => {
-  const [isAdding, setIsAdding] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [experiences, setExperiences] = useState<Experience[]>([
-    {
-      id: 1,
-      poste: "Développeur Full Stack",
-      entreprise: "TechCorp Inc.",
-      localisation: "Abidjan, Côte d'Ivoire",
-      typeContrat: "CDI",
-      dateDebut: new Date("2020-01-01"),
-      dateFin: null as Date | null,
-      description:
-        "Développement et maintenance d'applications web full stack. Gestion de projets et encadrement d'une équipe de 3 développeurs.",
-      competences: ["React", "Node.js", "MongoDB", "TypeScript"],
-    },
-    {
-      id: 2,
-      poste: "Développeur Frontend",
-      entreprise: "WebSolutions",
-      localisation: "Abidjan, Côte d'Ivoire",
-      typeContrat: "CDD",
-      dateDebut: new Date("2018-06-01"),
-      dateFin: new Date("2019-12-31"),
-      description:
-        "Développement d'interfaces utilisateur modernes et responsives. Intégration de maquettes et optimisation des performances.",
-      competences: ["React", "JavaScript", "CSS", "HTML"],
-    },
-  ]);
+const experienceSchema = z.object({
+  poste: z.string().min(1, "Le poste est requis"),
+  entreprise: z.string().min(1, "L'entreprise est requise"),
+  localisation: z.string().min(1, "La localisation est requise"),
+  typeContrat: z.string().min(1, "Le type de contrat est requis"),
+  dateDebut: z.date(),
+  dateFin: z.date().nullable(),
+  description: z.string().optional(),
+  competences: z.array(z.string()).optional(),
+  candidatId: z.string(),
+});
 
-  const [newExperience, setNewExperience] = useState<Partial<Experience>>({
-    poste: "",
-    entreprise: "",
-    localisation: "",
-    typeContrat: "",
-    dateDebut: new Date(),
-    dateFin: null,
-    description: "",
-    competences: [],
+type ExperienceFormData = z.infer<typeof experienceSchema>;
+
+const ExperiencesPage = () => {
+  const { candidat } = useUserStore();
+  const [isAdding, setIsAdding] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+  // const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<ExperienceFormData>({
+    resolver: zodResolver(experienceSchema),
+    defaultValues: {
+      poste: "",
+      entreprise: "",
+      localisation: "",
+      typeContrat: "",
+      dateDebut: new Date(),
+      dateFin: null,
+      description: "",
+      competences: [],
+      candidatId: "",
+    },
   });
 
-  const handleAddExperience = () => {
-    if (newExperience.poste && newExperience.entreprise) {
-      setExperiences([
-        {
-          id: experiences.length + 1,
-          poste: newExperience.poste!,
-          entreprise: newExperience.entreprise!,
-          localisation: newExperience.localisation!,
-          typeContrat: newExperience.typeContrat!,
-          dateDebut: newExperience.dateDebut!,
-          dateFin: newExperience.dateFin ?? null,
-          description: newExperience.description!,
-          competences: newExperience.competences!,
-        },
-        ...experiences,
-      ]);
-      setNewExperience({
-        poste: "",
-        entreprise: "",
-        localisation: "",
-        typeContrat: "",
-        dateDebut: new Date(),
-        dateFin: null,
-        description: "",
-        competences: [],
-      });
+  const {
+    data: experiencesData,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["experiencesData"],
+    queryFn: () => fetchData("/api/candidat/experiences"),
+  });
+
+  const addExperienceMutation = useMutation({
+    mutationFn: (data: ExperienceFormData) =>
+      postData(data, "/api/candidat/experiences"),
+    onSuccess: () => {
+      toast.success("Expérience ajoutée avec succès");
+      refetch();
+      form.reset();
       setIsAdding(false);
+    },
+    onError: (error) => {
+      console.error("Erreur lors de l'ajout de l'expérience:", error);
+      toast.error("Erreur lors de l'ajout de l'expérience");
+    },
+  });
+
+  // console.log(experiencesData);
+  // useEffect(() => {
+  //   loadExperiences();
+  // }, [candidat]);
+
+  // const loadExperiences = async () => {
+  //   if (!candidat?.candidat?.id) return;
+
+  //   try {
+  //     const response = await fetchData(`/api/candidat/experiences`);
+  //     if (response.success) {
+  //       setExperiences(response.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Erreur lors du chargement des expériences:", error);
+  //     toast.error("Erreur lors du chargement des expériences");
+  //   } finally {
+  //     // setIsLoading(false);
+  //   }
+  // };
+
+  const handleAddExperience = async (data: ExperienceFormData) => {
+    if (!candidat?.candidat?.id) return;
+
+    addExperienceMutation.mutate({
+      ...data,
+      candidatId: candidat.candidat.id,
+    });
+
+    // setIsSubmitting(true);
+    // try {
+    //   const response = await postData(
+    //     {
+    //       ...data,
+    //       candidatId: candidat.candidat.id,
+    //     },
+    //     "/api/candidat/experiences"
+    //   );
+
+    //   if (response.success) {
+    //     toast.success("Expérience ajoutée avec succès");
+    //     form.reset();
+    //     setIsAdding(false);
+    //     // loadExperiences();
+    //   }
+    // } catch (error) {
+    //   console.error("Erreur lors de l'ajout de l'expérience:", error);
+    //   toast.error("Erreur lors de l'ajout de l'expérience");
+    // } finally {
+    //   // setIsSubmitting(false);
+    // }
+  };
+
+  const handleDeleteExperience = async (id: string) => {
+    setIsSubmitting(true);
+    try {
+      const response = await deleteData(`/api/candidat/experiences/${id}`);
+      if (response.success) {
+        toast.success("Expérience supprimée avec succès");
+        // loadExperiences();
+      }
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'expérience:", error);
+      toast.error("Erreur lors de la suppression de l'expérience");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleEditExperience = (id: number) => {
-    setEditingId(id);
-  };
-
-  const handleSaveEdit = (id: number) => {
-    setEditingId(null);
-  };
-
-  const handleDeleteExperience = (id: number) => {
-    setExperiences(experiences.filter((exp) => exp.id !== id));
-  };
+  if (isLoading) {
+    return (
+      <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Expériences professionnelles</h1>
+        <div className="space-y-2">
+          <h1 className="text-2xl font-bold">Expériences professionnelles</h1>
+          <p className="text-sm text-muted-foreground">
+            Gérez vos expériences professionnelles pour améliorer votre profil
+          </p>
+        </div>
         <Button onClick={() => setIsAdding(true)}>
           <Plus className="h-4 w-4 mr-2" />
           Ajouter une expérience
@@ -139,238 +215,306 @@ const ExperiencesPage = () => {
       {isAdding && (
         <Card>
           <CardContent className="p-6">
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="poste">Poste</Label>
-                  <Input
-                    id="poste"
-                    value={newExperience.poste}
-                    onChange={(e) =>
-                      setNewExperience({
-                        ...newExperience,
-                        poste: e.target.value,
-                      })
-                    }
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(handleAddExperience)}
+                className="space-y-4"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="poste"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Poste</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="entreprise"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Entreprise</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="entreprise">Entreprise</Label>
-                  <Input
-                    id="entreprise"
-                    value={newExperience.entreprise}
-                    onChange={(e) =>
-                      setNewExperience({
-                        ...newExperience,
-                        entreprise: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="localisation">Localisation</Label>
-                  <Input
-                    id="localisation"
-                    value={newExperience.localisation}
-                    onChange={(e) =>
-                      setNewExperience({
-                        ...newExperience,
-                        localisation: e.target.value,
-                      })
-                    }
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="localisation"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Localisation</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="typeContrat"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Type de contrat</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Sélectionner" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="CDI">CDI</SelectItem>
+                            <SelectItem value="CDD">CDD</SelectItem>
+                            <SelectItem value="Stage">Stage</SelectItem>
+                            <SelectItem value="Freelance">Freelance</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="typeContrat">Type de contrat</Label>
-                  <Select
-                    value={newExperience.typeContrat}
-                    onValueChange={(value) =>
-                      setNewExperience({
-                        ...newExperience,
-                        typeContrat: value,
-                      })
-                    }
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="dateDebut"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Date de début</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                className="w-full justify-start text-left font-normal"
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {field.value ? (
+                                  format(field.value, "PPP", { locale: fr })
+                                ) : (
+                                  <span>Choisir une date</span>
+                                )}
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0">
+                            <Calendar
+                              mode="single"
+                              selected={field.value}
+                              onSelect={field.onChange}
+                              initialFocus
+                              locale={fr}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="dateFin"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Date de fin</FormLabel>
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                className="w-full justify-start text-left font-normal"
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {field.value ? (
+                                  format(field.value, "PPP", { locale: fr })
+                                ) : (
+                                  <span>Choisir une date</span>
+                                )}
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0">
+                            <Calendar
+                              mode="single"
+                              selected={field.value ?? undefined}
+                              onSelect={field.onChange}
+                              initialFocus
+                              locale={fr}
+                            />
+                          </PopoverContent>
+                        </Popover>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Description</FormLabel>
+                      <FormControl>
+                        <Textarea {...field} className="min-h-[100px]" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="competences"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Compétences</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Ajouter des compétences (séparées par des virgules)"
+                          value={field.value?.join(", ")}
+                          onChange={(e) =>
+                            field.onChange(
+                              e.target.value
+                                .split(",")
+                                .map((skill) => skill.trim())
+                            )
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="flex justify-end gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setIsAdding(false);
+                      form.reset();
+                    }}
+                    disabled={isSubmitting}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionner" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="CDI">CDI</SelectItem>
-                      <SelectItem value="CDD">CDD</SelectItem>
-                      <SelectItem value="Stage">Stage</SelectItem>
-                      <SelectItem value="Freelance">Freelance</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    Annuler
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={addExperienceMutation.isPending}
+                  >
+                    {addExperienceMutation.isPending ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      "Ajouter"
+                    )}
+                  </Button>
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Date de début</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full justify-start text-left font-normal"
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {newExperience.dateDebut ? (
-                          format(newExperience.dateDebut, "PPP", { locale: fr })
-                        ) : (
-                          <span>Choisir une date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={newExperience.dateDebut}
-                        onSelect={(date) =>
-                          setNewExperience({
-                            ...newExperience,
-                            dateDebut: date!,
-                          })
-                        }
-                        initialFocus
-                        locale={fr}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                <div className="space-y-2">
-                  <Label>Date de fin</Label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full justify-start text-left font-normal"
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {newExperience.dateFin ? (
-                          format(newExperience.dateFin, "PPP", { locale: fr })
-                        ) : (
-                          <span>Choisir une date</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={newExperience.dateFin ?? new Date()}
-                        onSelect={(date) =>
-                          setNewExperience({ ...newExperience, dateFin: date })
-                        }
-                        initialFocus
-                        locale={fr}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  value={newExperience.description}
-                  onChange={(e) =>
-                    setNewExperience({
-                      ...newExperience,
-                      description: e.target.value,
-                    })
-                  }
-                  className="min-h-[100px]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Compétences</Label>
-                <Input
-                  placeholder="Ajouter des compétences (séparées par des virgules)"
-                  value={newExperience.competences?.join(", ")}
-                  onChange={(e) =>
-                    setNewExperience({
-                      ...newExperience,
-                      competences: e.target.value
-                        .split(",")
-                        .map((skill) => skill.trim()),
-                    })
-                  }
-                />
-              </div>
-
-              <div className="flex justify-end gap-2">
-                <Button variant="outline" onClick={() => setIsAdding(false)}>
-                  Annuler
-                </Button>
-                <Button onClick={handleAddExperience}>Ajouter</Button>
-              </div>
-            </div>
+              </form>
+            </Form>
           </CardContent>
         </Card>
       )}
 
       <div className="space-y-4">
-        {experiences.map((experience) => (
-          <Card key={experience.id}>
-            <CardContent className="p-6">
-              <div className="flex justify-between items-start">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-semibold">{experience.poste}</h3>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <Briefcase className="h-4 w-4" />
-                    <span>{experience.entreprise}</span>
-                    <span>•</span>
-                    <span>{experience.localisation}</span>
-                    <span>•</span>
-                    <span>{experience.typeContrat}</span>
+        {experiencesData?.data.length === 0 ? (
+          <div className="flex items-center justify-center min-h-[80vh]">
+            <Card className="w-full max-w-md">
+              <CardContent className="p-6 flex flex-col items-center justify-center space-y-4">
+                <Briefcase className="h-12 w-12 text-muted-foreground" />
+                <div className="text-center space-y-2">
+                  <h3 className="text-lg font-semibold">Aucune expérience</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Commencez par ajouter vos expériences professionnelles pour
+                    enrichir votre profil
+                  </p>
+                </div>
+                <Button onClick={() => setIsAdding(true)} variant="outline">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Ajouter une expérience
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        ) : (
+          experiencesData?.data.map((experience: Experience) => (
+            <Card key={experience.id}>
+              <CardContent className="p-6">
+                <div className="flex justify-between items-start">
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold">
+                      {experience.poste}
+                    </h3>
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <Briefcase className="h-4 w-4" />
+                      <span>{experience.entreprise}</span>
+                      <span>•</span>
+                      <span>{experience.localisation}</span>
+                      <span>•</span>
+                      <span>{experience.typeContrat}</span>
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      {format(experience.dateDebut, "MMMM yyyy", {
+                        locale: fr,
+                      })}{" "}
+                      -{" "}
+                      {experience.dateFin
+                        ? format(experience.dateFin, "MMMM yyyy", {
+                            locale: fr,
+                          })
+                        : "Présent"}
+                    </div>
                   </div>
-                  <div className="text-sm text-muted-foreground">
-                    {format(experience.dateDebut, "MMMM yyyy", { locale: fr })}{" "}
-                    -{" "}
-                    {experience.dateFin
-                      ? format(experience.dateFin, "MMMM yyyy", { locale: fr })
-                      : "Présent"}
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      onClick={() => handleDeleteExperience(experience.id)}
+                      disabled={isSubmitting}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleEditExperience(experience.id)}
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => handleDeleteExperience(experience.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+
+                <p className="mt-4 text-muted-foreground">
+                  {experience.description}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {experience.competences.map((competence, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-secondary text-secondary-foreground rounded-md text-sm"
+                    >
+                      {competence}
+                    </span>
+                  ))}
                 </div>
-              </div>
-
-              <p className="mt-4 text-muted-foreground">
-                {experience.description}
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {experience.competences.map((competence, index) => (
-                  <span
-                    key={index}
-                    className="px-2 py-1 bg-secondary text-secondary-foreground rounded-md text-sm"
-                  >
-                    {competence}
-                  </span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          ))
+        )}
       </div>
     </div>
   );

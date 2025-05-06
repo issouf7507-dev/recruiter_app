@@ -31,6 +31,8 @@ import { CalendarIcon, Camera, Loader2, Pencil, Save } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { useUserStore } from "@/store/userStore";
+import { postData, putData } from "@/utils/utilts";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -55,7 +57,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const InformationsPersonnellesPage = () => {
-  const { candidat, loading: authLoading } = useUserStore();
+  const { candidat, loading: authLoading, setCandidat } = useUserStore();
   const [isEditing, setIsEditing] = useState(false);
   const [date, setDate] = useState<Date>();
   const [formLoading, setFormLoading] = useState(true);
@@ -121,47 +123,87 @@ const InformationsPersonnellesPage = () => {
     }
   }, [candidat, reset]);
 
-  const onSubmit = async (data: FormData) => {
-    console.log(data);
+  const updateMutation = useMutation({
+    mutationFn: (data: FormData) => putData(data, "/api/candidat/update"),
+    onSuccess: (result) => {
+      toast.success("Profil mis à jour avec succès");
+      setIsEditing(false);
 
-    try {
-      const response = await fetch("/api/candidat/update", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...data,
-          dateNaissance: data.dateNaissance?.toISOString(),
-        }),
-      });
+      // console.log(result);
 
-      const result = await response.json();
-      if (result.success) {
-        toast.success("Profil mis à jour avec succès");
-        setIsEditing(false);
-        // Mettre à jour le store avec les nouvelles données
-        if (candidat?.candidat) {
-          useUserStore.setState({
-            user: {
-              ...candidat,
-              candidat: {
-                ...candidat.candidat,
-                ...data,
-                dateNaissance:
-                  data.dateNaissance?.toISOString() ||
-                  candidat.candidat.dateNaissance,
-              },
-            },
-          });
-        }
-      } else {
-        toast.error(result.error || "Erreur lors de la mise à jour");
-      }
-    } catch (error) {
+      // if (candidat?.candidat) {
+      //   setCandidat({
+      //     ...candidat,
+      //     candidat: {
+      //       ...candidat.candidat,
+      //       ...data,
+      //       dateNaissance:
+      //         data.dateNaissance?.toISOString() ||
+      //         candidat.candidat.dateNaissance,
+      //     },
+      //   });
+      // }
+    },
+    onError: (error) => {
       console.error("Erreur lors de la mise à jour:", error);
       toast.error("Erreur lors de la mise à jour");
+    },
+  });
+
+  const onSubmit = async (data: FormData) => {
+    updateMutation.mutate(data);
+    // Mettre à jour le store avec les nouvelles données
+    if (candidat?.candidat) {
+      setCandidat({
+        ...candidat,
+        candidat: {
+          ...candidat.candidat,
+          ...data,
+          dateNaissance:
+            data.dateNaissance?.toISOString() ||
+            candidat.candidat.dateNaissance,
+        },
+      });
     }
+
+    // try {
+    //   const response = await fetch("/api/candidat/update", {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       ...data,
+    //       dateNaissance: data.dateNaissance?.toISOString(),
+    //     }),
+    //   });
+
+    //   const result = await response.json();
+    //   if (result.success) {
+    //     toast.success("Profil mis à jour avec succès");
+    //     setIsEditing(false);
+    //     console.log(result);
+
+    //     // Mettre à jour le store avec les nouvelles données
+    //     if (candidat?.candidat) {
+    //       setCandidat({
+    //         ...candidat,
+    //         candidat: {
+    //           ...candidat.candidat,
+    //           ...data,
+    //           dateNaissance:
+    //             data.dateNaissance?.toISOString() ||
+    //             candidat.candidat.dateNaissance,
+    //         },
+    //       });
+    //     }
+    //   } else {
+    //     toast.error(result.error || "Erreur lors de la mise à jour");
+    //   }
+    // } catch (error) {
+    //   console.error("Erreur lors de la mise à jour:", error);
+    //   toast.error("Erreur lors de la mise à jour");
+    // }
   };
 
   const handleFileUpload = async (file: File, type: "cv" | "letterm") => {
@@ -220,12 +262,19 @@ const InformationsPersonnellesPage = () => {
                 setIsEditing(true);
               }
             }}
-            disabled={isSubmitting}
+            disabled={updateMutation.isPending}
           >
             {isEditing ? (
               <>
-                <Save className="h-4 w-4 mr-2" />
-                {isSubmitting ? "Enregistrement..." : "Enregistrer"}
+                {!updateMutation.isPending && <Save className="h-4 w-4 mr-2" />}
+                {updateMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Enregistrement
+                  </>
+                ) : (
+                  "Enregistrer"
+                )}
               </>
             ) : (
               <>
@@ -504,6 +553,9 @@ const InformationsPersonnellesPage = () => {
                     <SelectItem value="aws">AWS</SelectItem>
                     <SelectItem value="uiux">UI/UX Design</SelectItem>
                     <SelectItem value="agile">Méthodologies Agiles</SelectItem>
+                    <SelectItem value="canva">Canva</SelectItem>
+                    <SelectItem value="rédaction">Rédaction</SelectItem>
+                    {/* <SelectItem value="agile">Méthodologies Agiles</SelectItem> */}
                   </SelectContent>
                 </Select>
                 <div className="flex flex-wrap gap-2 mt-2">

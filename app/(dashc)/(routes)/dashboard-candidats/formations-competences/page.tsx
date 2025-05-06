@@ -26,153 +26,359 @@ import {
   Plus,
   Pencil,
   Trash2,
-  Save,
-  X,
   GraduationCap,
   Languages,
   Code2,
   BookOpen,
+  Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface Formation {
-  id: number;
+  id: string;
   diplome: string;
   etablissement: string;
   domaine: string;
   dateDebut: Date;
-  dateFin: Date | null | undefined;
+  dateFin: Date | null;
   description: string;
 }
 
 interface Competence {
-  id: number;
+  id: string;
   categorie: string;
   nom: string;
   niveau: number;
 }
 
+const formationSchema = z.object({
+  diplome: z.string().min(1, "Le diplôme est requis"),
+  etablissement: z.string().min(1, "L'établissement est requis"),
+  domaine: z.string().optional(),
+  dateDebut: z.date(),
+  dateFin: z.date().nullable(),
+  description: z.string().optional(),
+});
+
+const competenceSchema = z.object({
+  categorie: z.string().min(1, "La catégorie est requise"),
+  nom: z.string().min(1, "Le nom est requis"),
+  niveau: z.number().min(1).max(5),
+});
+
+type FormationFormData = z.infer<typeof formationSchema>;
+type CompetenceFormData = z.infer<typeof competenceSchema>;
+
 const FormationsCompetencesPage = () => {
   const [isAddingFormation, setIsAddingFormation] = useState(false);
   const [isAddingCompetence, setIsAddingCompetence] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingType, setEditingType] = useState<
+    "formation" | "competence" | null
+  >(null);
+  const [formations, setFormations] = useState<Formation[]>([]);
+  const [competences, setCompetences] = useState<Competence[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<{
+    type: "formation" | "competence";
+    id: string;
+    name: string;
+  } | null>(null);
 
-  const [formations, setFormations] = useState<Formation[]>([
-    {
-      id: 1,
-      diplome: "Master en Informatique",
-      etablissement: "Université Félix Houphouët-Boigny",
-      domaine: "Informatique",
-      dateDebut: new Date("2016-09-01"),
-      dateFin: new Date("2018-06-30"),
-      description:
-        "Spécialisation en développement web et intelligence artificielle. Projet de fin d'études sur l'analyse prédictive des données.",
-    },
-    {
-      id: 2,
-      diplome: "Licence en Mathématiques",
-      etablissement: "Université Félix Houphouët-Boigny",
-      domaine: "Mathématiques",
-      dateDebut: new Date("2013-09-01"),
-      dateFin: new Date("2016-06-30"),
-      description:
-        "Formation générale en mathématiques avec option en statistiques et probabilités.",
-    },
-  ]);
+  const queryClient = useQueryClient();
 
-  const [competences, setCompetences] = useState<Competence[]>([
-    {
-      id: 1,
-      categorie: "Développement",
-      nom: "React",
-      niveau: 4,
+  const {
+    register: registerFormation,
+    handleSubmit: handleSubmitFormation,
+    reset: resetFormation,
+    formState: { errors: formationErrors },
+    setValue: setFormationValue,
+    watch: watchFormation,
+  } = useForm<FormationFormData>({
+    resolver: zodResolver(formationSchema),
+    defaultValues: {
+      diplome: "",
+      etablissement: "",
+      domaine: "",
+      dateDebut: new Date(),
+      dateFin: null,
+      description: "",
     },
-    {
-      id: 2,
-      categorie: "Développement",
-      nom: "Node.js",
-      niveau: 4,
-    },
-    {
-      id: 3,
-      categorie: "Langues",
-      nom: "Anglais",
-      niveau: 3,
-    },
-    {
-      id: 4,
-      categorie: "Langues",
-      nom: "Français",
-      niveau: 5,
-    },
-  ]);
-
-  const [newFormation, setNewFormation] = useState<Partial<Formation>>({
-    diplome: "",
-    etablissement: "",
-    domaine: "",
-    dateDebut: new Date(),
-    dateFin: null as Date | null,
-    description: "",
   });
 
-  const [newCompetence, setNewCompetence] = useState<Partial<Competence>>({
-    categorie: "",
-    nom: "",
-    niveau: 1,
+  const {
+    register: registerCompetence,
+    handleSubmit: handleSubmitCompetence,
+    reset: resetCompetence,
+    formState: { errors: competenceErrors },
+    setValue: setCompetenceValue,
+    watch: watchCompetence,
+  } = useForm<CompetenceFormData>({
+    resolver: zodResolver(competenceSchema),
+    defaultValues: {
+      categorie: "",
+      nom: "",
+      niveau: 1,
+    },
   });
 
-  const handleAddFormation = () => {
-    if (newFormation.diplome && newFormation.etablissement) {
-      setFormations([
-        {
-          id: formations.length + 1,
-          diplome: newFormation.diplome!,
-          etablissement: newFormation.etablissement!,
-          domaine: newFormation.domaine!,
-          dateDebut: newFormation.dateDebut!,
-          dateFin: newFormation.dateFin ?? null,
-          description: newFormation.description!,
+  const { data: formationsData, isLoading: isLoadingFormations } = useQuery({
+    queryKey: ["formations"],
+    queryFn: async () => {
+      const response = await fetch("/api/candidat/formations");
+      const data = await response.json();
+      if (!data.success)
+        throw new Error("Erreur lors de la récupération des formations");
+      return data.data;
+    },
+  });
+
+  const { data: competencesData, isLoading: isLoadingCompetences } = useQuery({
+    queryKey: ["competences"],
+    queryFn: async () => {
+      const response = await fetch("/api/candidat/competences");
+      const data = await response.json();
+      if (!data.success)
+        throw new Error("Erreur lors de la récupération des compétences");
+      return data.data;
+    },
+  });
+
+  const addFormationMutation = useMutation({
+    mutationFn: async (data: FormationFormData) => {
+      const response = await fetch("/api/candidat/formations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        ...formations,
-      ]);
-      setNewFormation({
-        diplome: "",
-        etablissement: "",
-        domaine: "",
-        dateDebut: new Date(),
-        dateFin: null,
-        description: "",
+        body: JSON.stringify(data),
       });
+      const result = await response.json();
+      if (!result.success)
+        throw new Error("Erreur lors de l'ajout de la formation");
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["formations"] });
+      resetFormation();
       setIsAddingFormation(false);
-    }
-  };
+      toast.success("Formation ajoutée avec succès");
+    },
+    onError: () => {
+      toast.error("Erreur lors de l'ajout de la formation");
+    },
+  });
 
-  const handleAddCompetence = () => {
-    if (newCompetence.nom && newCompetence.categorie) {
-      setCompetences([
-        {
-          id: competences.length + 1,
-          categorie: newCompetence.categorie!,
-          nom: newCompetence.nom!,
-          niveau: newCompetence.niveau!,
+  const addCompetenceMutation = useMutation({
+    mutationFn: async (data: CompetenceFormData) => {
+      const response = await fetch("/api/candidat/competences", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        ...competences,
-      ]);
-      setNewCompetence({
-        categorie: "",
-        nom: "",
-        niveau: 1,
+        body: JSON.stringify(data),
       });
+      const result = await response.json();
+      if (!result.success)
+        throw new Error("Erreur lors de l'ajout de la compétence");
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["competences"] });
+      resetCompetence();
       setIsAddingCompetence(false);
+      toast.success("Compétence ajoutée avec succès");
+    },
+    onError: () => {
+      toast.error("Erreur lors de l'ajout de la compétence");
+    },
+  });
+
+  const updateFormationMutation = useMutation({
+    mutationFn: async ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: FormationFormData;
+    }) => {
+      const response = await fetch(`/api/candidat/formations/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (!result.success)
+        throw new Error("Erreur lors de la mise à jour de la formation");
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["formations"] });
+      setEditingId(null);
+      setEditingType(null);
+      toast.success("Formation mise à jour avec succès");
+    },
+    onError: () => {
+      toast.error("Erreur lors de la mise à jour de la formation");
+    },
+  });
+
+  const updateCompetenceMutation = useMutation({
+    mutationFn: async ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: CompetenceFormData;
+    }) => {
+      const response = await fetch(`/api/candidat/competences/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+      if (!result.success)
+        throw new Error("Erreur lors de la mise à jour de la compétence");
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["competences"] });
+      setEditingId(null);
+      setEditingType(null);
+      toast.success("Compétence mise à jour avec succès");
+    },
+    onError: () => {
+      toast.error("Erreur lors de la mise à jour de la compétence");
+    },
+  });
+
+  const deleteFormationMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const response = await fetch(`/api/candidat/formations/${id}`, {
+        method: "DELETE",
+      });
+      const result = await response.json();
+      if (!result.success)
+        throw new Error("Erreur lors de la suppression de la formation");
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["formations"] });
+      setDeleteDialogOpen(false);
+      setItemToDelete(null);
+      toast.success("Formation supprimée avec succès");
+    },
+    onError: () => {
+      toast.error("Erreur lors de la suppression de la formation");
+    },
+  });
+
+  const deleteCompetenceMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const response = await fetch(`/api/candidat/competences/${id}`, {
+        method: "DELETE",
+      });
+      const result = await response.json();
+      if (!result.success)
+        throw new Error("Erreur lors de la suppression de la compétence");
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["competences"] });
+      setDeleteDialogOpen(false);
+      setItemToDelete(null);
+      toast.success("Compétence supprimée avec succès");
+    },
+    onError: () => {
+      toast.error("Erreur lors de la suppression de la compétence");
+    },
+  });
+
+  const handleAddFormation = async (data: FormationFormData) => {
+    addFormationMutation.mutate(data);
+  };
+
+  const handleAddCompetence = async (data: CompetenceFormData) => {
+    addCompetenceMutation.mutate(data);
+  };
+
+  const handleUpdateFormation = async (data: FormationFormData) => {
+    if (!editingId) return;
+    updateFormationMutation.mutate({ id: editingId, data });
+  };
+
+  const handleUpdateCompetence = async (data: CompetenceFormData) => {
+    if (!editingId) return;
+    updateCompetenceMutation.mutate({ id: editingId, data });
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!itemToDelete) return;
+    if (itemToDelete.type === "formation") {
+      deleteFormationMutation.mutate(itemToDelete.id);
+    } else {
+      deleteCompetenceMutation.mutate(itemToDelete.id);
     }
   };
 
-  const handleDeleteFormation = (id: number) => {
-    setFormations(formations.filter((f) => f.id !== id));
+  const handleDeleteClick = (
+    type: "formation" | "competence",
+    id: string,
+    name: string
+  ) => {
+    setItemToDelete({ type, id, name });
+    setDeleteDialogOpen(true);
   };
 
-  const handleDeleteCompetence = (id: number) => {
-    setCompetences(competences.filter((c) => c.id !== id));
+  const handleEditClick = (type: "formation" | "competence", id: string) => {
+    setEditingId(id);
+    setEditingType(type);
+
+    if (type === "formation") {
+      const formationToEdit = formationsData?.find(
+        (f: Formation) => f.id === id
+      );
+      if (formationToEdit) {
+        resetFormation({
+          diplome: formationToEdit.diplome,
+          etablissement: formationToEdit.etablissement,
+          domaine: formationToEdit.domaine,
+          dateDebut: new Date(formationToEdit.dateDebut),
+          dateFin: formationToEdit.dateFin
+            ? new Date(formationToEdit.dateFin)
+            : null,
+          description: formationToEdit.description,
+        });
+      }
+    } else {
+      const competenceToEdit = competencesData?.find(
+        (c: Competence) => c.id === id
+      );
+      if (competenceToEdit) {
+        resetCompetence({
+          categorie: competenceToEdit.categorie,
+          nom: competenceToEdit.nom,
+          niveau: competenceToEdit.niveau,
+        });
+      }
+    }
   };
 
   return (
@@ -189,48 +395,37 @@ const FormationsCompetencesPage = () => {
         {isAddingFormation && (
           <Card>
             <CardContent className="p-6">
-              <div className="space-y-4">
+              <form
+                onSubmit={handleSubmitFormation(handleAddFormation)}
+                className="space-y-4"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="diplome">Diplôme</Label>
-                    <Input
-                      id="diplome"
-                      value={newFormation.diplome}
-                      onChange={(e) =>
-                        setNewFormation({
-                          ...newFormation,
-                          diplome: e.target.value,
-                        })
-                      }
-                    />
+                    <Input id="diplome" {...registerFormation("diplome")} />
+                    {formationErrors.diplome && (
+                      <p className="text-sm text-red-500">
+                        {formationErrors.diplome.message}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="etablissement">Établissement</Label>
                     <Input
                       id="etablissement"
-                      value={newFormation.etablissement}
-                      onChange={(e) =>
-                        setNewFormation({
-                          ...newFormation,
-                          etablissement: e.target.value,
-                        })
-                      }
+                      {...registerFormation("etablissement")}
                     />
+                    {formationErrors.etablissement && (
+                      <p className="text-sm text-red-500">
+                        {formationErrors.etablissement.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="domaine">Domaine d'études</Label>
-                  <Input
-                    id="domaine"
-                    value={newFormation.domaine}
-                    onChange={(e) =>
-                      setNewFormation({
-                        ...newFormation,
-                        domaine: e.target.value,
-                      })
-                    }
-                  />
+                  <Input id="domaine" {...registerFormation("domaine")} />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -243,8 +438,8 @@ const FormationsCompetencesPage = () => {
                           className="w-full justify-start text-left font-normal"
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {newFormation.dateDebut ? (
-                            format(newFormation.dateDebut, "PPP", {
+                          {watchFormation("dateDebut") ? (
+                            format(watchFormation("dateDebut"), "PPP", {
                               locale: fr,
                             })
                           ) : (
@@ -255,12 +450,9 @@ const FormationsCompetencesPage = () => {
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={newFormation.dateDebut}
+                          selected={watchFormation("dateDebut")}
                           onSelect={(date) =>
-                            setNewFormation({
-                              ...newFormation,
-                              dateDebut: date!,
-                            })
+                            setFormationValue("dateDebut", date!)
                           }
                           initialFocus
                           locale={fr}
@@ -277,8 +469,10 @@ const FormationsCompetencesPage = () => {
                           className="w-full justify-start text-left font-normal"
                         >
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {newFormation.dateFin ? (
-                            format(newFormation.dateFin, "PPP", { locale: fr })
+                          {watchFormation("dateFin") ? (
+                            format(watchFormation("dateFin") as Date, "PPP", {
+                              locale: fr,
+                            })
                           ) : (
                             <span>Choisir une date</span>
                           )}
@@ -287,12 +481,9 @@ const FormationsCompetencesPage = () => {
                       <PopoverContent className="w-auto p-0">
                         <Calendar
                           mode="single"
-                          selected={newFormation.dateFin ?? undefined}
+                          selected={watchFormation("dateFin") ?? undefined}
                           onSelect={(date) =>
-                            setNewFormation({
-                              ...newFormation,
-                              dateFin: date ?? null,
-                            })
+                            setFormationValue("dateFin", date ?? null)
                           }
                           initialFocus
                           locale={fr}
@@ -306,13 +497,7 @@ const FormationsCompetencesPage = () => {
                   <Label htmlFor="description">Description</Label>
                   <Textarea
                     id="description"
-                    value={newFormation.description}
-                    onChange={(e) =>
-                      setNewFormation({
-                        ...newFormation,
-                        description: e.target.value,
-                      })
-                    }
+                    {...registerFormation("description")}
                     className="min-h-[100px]"
                   />
                 </div>
@@ -321,64 +506,112 @@ const FormationsCompetencesPage = () => {
                   <Button
                     variant="outline"
                     onClick={() => setIsAddingFormation(false)}
+                    disabled={isSubmitting}
                   >
                     Annuler
                   </Button>
-                  <Button onClick={handleAddFormation}>Ajouter</Button>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      "Ajouter"
+                    )}
+                  </Button>
                 </div>
-              </div>
+              </form>
             </CardContent>
           </Card>
         )}
 
-        <div className="space-y-4">
-          {formations.map((formation) => (
-            <Card key={formation.id}>
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-semibold">
-                      {formation.diplome}
-                    </h3>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <GraduationCap className="h-4 w-4" />
-                      <span>{formation.etablissement}</span>
-                      <span>•</span>
-                      <span>{formation.domaine}</span>
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      {format(formation.dateDebut, "MMMM yyyy", { locale: fr })}{" "}
-                      -{" "}
-                      {formation.dateFin
-                        ? format(formation.dateFin, "MMMM yyyy", { locale: fr })
-                        : "Présent"}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
+        {isLoadingFormations ? (
+          <div className="flex justify-center items-center h-32">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {formationsData?.length === 0 ? (
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex flex-col items-center justify-center text-center space-y-2">
+                    <GraduationCap className="h-8 w-8 text-muted-foreground" />
+                    <p className="text-muted-foreground">
+                      Aucune formation n'a été ajoutée pour le moment.
+                    </p>
                     <Button
                       variant="outline"
-                      size="icon"
-                      onClick={() => setEditingId(formation.id)}
+                      onClick={() => setIsAddingFormation(true)}
                     >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => handleDeleteFormation(formation.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
+                      <Plus className="h-4 w-4 mr-2" />
+                      Ajouter une formation
                     </Button>
                   </div>
-                </div>
+                </CardContent>
+              </Card>
+            ) : (
+              formationsData?.map((formation: Formation) => (
+                <Card key={formation.id}>
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start">
+                      <div className="space-y-2">
+                        <h3 className="text-xl font-semibold">
+                          {formation.diplome}
+                        </h3>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <GraduationCap className="h-4 w-4" />
+                          <span>{formation.etablissement}</span>
+                          <span>•</span>
+                          <span>{formation.domaine}</span>
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          {format(formation.dateDebut, "MMMM yyyy", {
+                            locale: fr,
+                          })}{" "}
+                          -{" "}
+                          {formation.dateFin
+                            ? format(formation.dateFin, "MMMM yyyy", {
+                                locale: fr,
+                              })
+                            : "Présent"}
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() =>
+                            handleEditClick("formation", formation.id)
+                          }
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() =>
+                            handleDeleteClick(
+                              "formation",
+                              formation.id,
+                              formation.diplome
+                            )
+                          }
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
 
-                <p className="mt-4 text-muted-foreground">
-                  {formation.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    <p className="mt-4 text-muted-foreground">
+                      {formation.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </div>
+        )}
       </div>
 
       <div className="space-y-6">
@@ -393,17 +626,17 @@ const FormationsCompetencesPage = () => {
         {isAddingCompetence && (
           <Card>
             <CardContent className="p-6">
-              <div className="space-y-4">
+              <form
+                onSubmit={handleSubmitCompetence(handleAddCompetence)}
+                className="space-y-4"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="categorie">Catégorie</Label>
                     <Select
-                      value={newCompetence.categorie}
+                      value={watchCompetence("categorie")}
                       onValueChange={(value) =>
-                        setNewCompetence({
-                          ...newCompetence,
-                          categorie: value,
-                        })
+                        setCompetenceValue("categorie", value)
                       }
                     >
                       <SelectTrigger>
@@ -418,19 +651,20 @@ const FormationsCompetencesPage = () => {
                         <SelectItem value="Gestion">Gestion</SelectItem>
                       </SelectContent>
                     </Select>
+                    {competenceErrors.categorie && (
+                      <p className="text-sm text-red-500">
+                        {competenceErrors.categorie.message}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="nom">Nom</Label>
-                    <Input
-                      id="nom"
-                      value={newCompetence.nom}
-                      onChange={(e) =>
-                        setNewCompetence({
-                          ...newCompetence,
-                          nom: e.target.value,
-                        })
-                      }
-                    />
+                    <Input id="nom" {...registerCompetence("nom")} />
+                    {competenceErrors.nom && (
+                      <p className="text-sm text-red-500">
+                        {competenceErrors.nom.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -441,17 +675,12 @@ const FormationsCompetencesPage = () => {
                       <Button
                         key={niveau}
                         variant={
-                          newCompetence.niveau === niveau
+                          watchCompetence("niveau") === niveau
                             ? "default"
                             : "outline"
                         }
                         size="sm"
-                        onClick={() =>
-                          setNewCompetence({
-                            ...newCompetence,
-                            niveau,
-                          })
-                        }
+                        onClick={() => setCompetenceValue("niveau", niveau)}
                       >
                         {niveau}
                       </Button>
@@ -463,68 +692,436 @@ const FormationsCompetencesPage = () => {
                   <Button
                     variant="outline"
                     onClick={() => setIsAddingCompetence(false)}
+                    disabled={isSubmitting}
                   >
                     Annuler
                   </Button>
-                  <Button onClick={handleAddCompetence}>Ajouter</Button>
+                  <Button type="submit" disabled={isSubmitting}>
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      "Ajouter"
+                    )}
+                  </Button>
                 </div>
-              </div>
+              </form>
             </CardContent>
           </Card>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {competences.map((competence) => (
-            <Card key={competence.id}>
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-semibold">{competence.nom}</h3>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      {competence.categorie === "Développement" ? (
-                        <Code2 className="h-4 w-4" />
-                      ) : competence.categorie === "Langues" ? (
-                        <Languages className="h-4 w-4" />
-                      ) : (
-                        <BookOpen className="h-4 w-4" />
-                      )}
-                      <span>{competence.categorie}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((niveau) => (
-                        <div
-                          key={niveau}
-                          className={`h-2 w-2 rounded-full ${
-                            niveau <= competence.niveau
-                              ? "bg-primary"
-                              : "bg-muted"
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
+        {isLoadingCompetences ? (
+          <div className="flex justify-center items-center h-32">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {competencesData?.length === 0 ? (
+              <Card className="col-span-2">
+                <CardContent className="p-6">
+                  <div className="flex flex-col items-center justify-center text-center space-y-2">
+                    <Code2 className="h-8 w-8 text-muted-foreground" />
+                    <p className="text-muted-foreground">
+                      Aucune compétence n'a été ajoutée pour le moment.
+                    </p>
                     <Button
                       variant="outline"
-                      size="icon"
-                      onClick={() => setEditingId(competence.id)}
+                      onClick={() => setIsAddingCompetence(true)}
                     >
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      onClick={() => handleDeleteCompetence(competence.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
+                      <Plus className="h-4 w-4 mr-2" />
+                      Ajouter une compétence
                     </Button>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </CardContent>
+              </Card>
+            ) : (
+              competencesData?.map((competence: Competence) => (
+                <Card key={competence.id}>
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-start">
+                      <div className="space-y-2">
+                        <h3 className="text-xl font-semibold">
+                          {competence.nom}
+                        </h3>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          {competence.categorie === "Développement" ? (
+                            <Code2 className="h-4 w-4" />
+                          ) : competence.categorie === "Langues" ? (
+                            <Languages className="h-4 w-4" />
+                          ) : (
+                            <BookOpen className="h-4 w-4" />
+                          )}
+                          <span>{competence.categorie}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {[1, 2, 3, 4, 5].map((niveau) => (
+                            <div
+                              key={niveau}
+                              className={`h-2 w-2 rounded-full ${
+                                niveau <= competence.niveau
+                                  ? "bg-primary"
+                                  : "bg-muted"
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() =>
+                            handleEditClick("competence", competence.id)
+                          }
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() =>
+                            handleDeleteClick(
+                              "competence",
+                              competence.id,
+                              competence.nom
+                            )
+                          }
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            )}
+          </div>
+        )}
       </div>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirmer la suppression</DialogTitle>
+            <DialogDescription>
+              Êtes-vous sûr de vouloir supprimer{" "}
+              {itemToDelete?.type === "formation"
+                ? "la formation"
+                : "la compétence"}{" "}
+              "{itemToDelete?.name}" ? Cette action est irréversible.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+            >
+              Annuler
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleConfirmDelete}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Suppression en cours...
+                </>
+              ) : (
+                "Supprimer"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={editingId !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setEditingId(null);
+            setEditingType(null);
+            resetFormation();
+            resetCompetence();
+          }
+        }}
+      >
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>
+              Modifier{" "}
+              {editingType === "formation" ? "la formation" : "la compétence"}
+            </DialogTitle>
+          </DialogHeader>
+
+          {editingType === "formation" && (
+            <form
+              onSubmit={handleSubmitFormation(handleUpdateFormation)}
+              className="space-y-4"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-diplome">Diplôme</Label>
+                  <Input
+                    id="edit-diplome"
+                    {...registerFormation("diplome")}
+                    defaultValue={
+                      formationsData?.find(
+                        (formation: Formation) => formation.id === editingId
+                      )?.diplome
+                    }
+                  />
+                  {formationErrors.diplome && (
+                    <p className="text-sm text-red-500">
+                      {formationErrors.diplome.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-etablissement">Établissement</Label>
+                  <Input
+                    id="edit-etablissement"
+                    {...registerFormation("etablissement")}
+                    defaultValue={
+                      formationsData?.find(
+                        (formation: Formation) => formation.id === editingId
+                      )?.etablissement
+                    }
+                  />
+                  {formationErrors.etablissement && (
+                    <p className="text-sm text-red-500">
+                      {formationErrors.etablissement.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="edit-domaine">Domaine d'études</Label>
+                <Input
+                  id="edit-domaine"
+                  {...registerFormation("domaine")}
+                  defaultValue={
+                    formationsData?.find(
+                      (formation: Formation) => formation.id === editingId
+                    )?.domaine
+                  }
+                />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Date de début</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start text-left font-normal"
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {watchFormation("dateDebut") ? (
+                          format(watchFormation("dateDebut") as Date, "PPP", {
+                            locale: fr,
+                          })
+                        ) : (
+                          <span>Choisir une date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={watchFormation("dateDebut")}
+                        onSelect={(date) =>
+                          setFormationValue("dateDebut", date!)
+                        }
+                        initialFocus
+                        locale={fr}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="space-y-2">
+                  <Label>Date de fin</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start text-left font-normal"
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {watchFormation("dateFin") ? (
+                          format(watchFormation("dateFin") as Date, "PPP", {
+                            locale: fr,
+                          })
+                        ) : (
+                          <span>Choisir une date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={watchFormation("dateFin") ?? undefined}
+                        onSelect={(date) =>
+                          setFormationValue("dateFin", date ?? null)
+                        }
+                        initialFocus
+                        locale={fr}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="edit-description">Description</Label>
+                <Textarea
+                  id="edit-description"
+                  {...registerFormation("description")}
+                  defaultValue={
+                    formationsData?.find(
+                      (formation: Formation) => formation.id === editingId
+                    )?.description
+                  }
+                  className="min-h-[100px]"
+                />
+              </div>
+
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setEditingId(null);
+                    setEditingType(null);
+                    resetFormation();
+                  }}
+                  disabled={isSubmitting}
+                >
+                  Annuler
+                </Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Mise à jour en cours...
+                    </>
+                  ) : (
+                    "Mettre à jour"
+                  )}
+                </Button>
+              </DialogFooter>
+            </form>
+          )}
+
+          {editingType === "competence" && (
+            <form
+              onSubmit={handleSubmitCompetence(handleUpdateCompetence)}
+              className="space-y-4"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-categorie">Catégorie</Label>
+                  <Select
+                    value={watchCompetence("categorie")}
+                    onValueChange={(value) =>
+                      setCompetenceValue("categorie", value)
+                    }
+                    defaultValue={
+                      competencesData?.find(
+                        (competence: Competence) => competence.id === editingId
+                      )?.categorie
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Sélectionner" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Développement">
+                        Développement
+                      </SelectItem>
+                      <SelectItem value="Langues">Langues</SelectItem>
+                      <SelectItem value="Design">Design</SelectItem>
+                      <SelectItem value="Gestion">Gestion</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {competenceErrors.categorie && (
+                    <p className="text-sm text-red-500">
+                      {competenceErrors.categorie.message}
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-nom">Nom</Label>
+                  <Input
+                    id="edit-nom"
+                    {...registerCompetence("nom")}
+                    defaultValue={
+                      competencesData?.find(
+                        (competence: Competence) => competence.id === editingId
+                      )?.nom
+                    }
+                  />
+                  {competenceErrors.nom && (
+                    <p className="text-sm text-red-500">
+                      {competenceErrors.nom.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Niveau</Label>
+                <div className="flex items-center gap-2">
+                  {[1, 2, 3, 4, 5].map((niveau) => (
+                    <Button
+                      key={niveau}
+                      variant={
+                        watchCompetence("niveau") === niveau
+                          ? "default"
+                          : "outline"
+                      }
+                      size="sm"
+                      onClick={() => setCompetenceValue("niveau", niveau)}
+                    >
+                      {niveau}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setEditingId(null);
+                    setEditingType(null);
+                    resetCompetence();
+                  }}
+                  disabled={isSubmitting}
+                >
+                  Annuler
+                </Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Mise à jour en cours...
+                    </>
+                  ) : (
+                    "Mettre à jour"
+                  )}
+                </Button>
+              </DialogFooter>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

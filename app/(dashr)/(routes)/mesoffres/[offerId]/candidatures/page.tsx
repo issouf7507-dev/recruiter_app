@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Eye, Download, Star, StarOff } from "lucide-react";
+import { ArrowLeft, Eye, Download, Star, StarOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import {
   Dialog,
@@ -30,6 +30,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/utils/utilts";
 import { Application } from "@/types/types";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Type pour les candidatures
 type Candidature = {
@@ -122,6 +123,7 @@ export default function CandidaturesPage({
     useState<Candidature[]>(mockCandidatures);
   const [selectedCandidature, setSelectedCandidature] =
     useState<Application | null>(null);
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
   const handleViewDetails = (candidature: Application) => {
     setSelectedCandidature(candidature);
@@ -140,33 +142,41 @@ export default function CandidaturesPage({
   const handleDownloadCV = (cvPath: string) => {
     // Ici, vous implémenteriez la logique de téléchargement
     console.log("Téléchargement du CV:", cvPath);
-    // Exemple de téléchargement :
+
     window.open(cvPath, "_blank");
   };
 
   const handleDownloadLettreMotivation = (cvPath: string, nom: string) => {
     console.log("LettreMotivation", cvPath);
-    // Exemple de téléchargement :
+
     window.open(cvPath, "_blank");
-    // Créer un blob avec le contenu de la lettre
-    // const blob = new Blob([content], { type: "text/plain" });
-    // const url = window.URL.createObjectURL(blob);
-    // const a = document.createElement("a");
-    // a.href = url;
-    // a.download = `lettre-motivation-${nom}.txt`;
-    // document.body.appendChild(a);
-    // a.click();
-    // window.URL.revokeObjectURL(url);
-    // document.body.removeChild(a);
   };
 
-  const { data: candidatdata } = useQuery({
+  const { data: candidatdata, isLoading } = useQuery({
     queryKey: ["candidatdata", offerId],
     queryFn: () =>
       fetchData(`/api/recruteur/offresbyuser/applications/${offerId}`),
   });
 
-  // console.log(candidatdata?.data?.[0].column.name);
+  // console.log(candidatdata?.data);
+
+  const sortedCandidatures = candidatdata?.data
+    ? [...candidatdata.data].sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        return sortOrder === "newest"
+          ? dateB.getTime() - dateA.getTime()
+          : dateA.getTime() - dateB.getTime();
+      })
+    : [];
+
+  if (isLoading) {
+    return (
+      <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
@@ -190,75 +200,157 @@ export default function CandidaturesPage({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nom</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Téléphone</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Statut</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {candidatdata &&
-                candidatdata.data.map((candidature: Application) => (
-                  <TableRow key={candidature.id}>
-                    <TableCell className="font-medium">
-                      <div className="flex items-center gap-2">
-                        {candidature.candidat.nom}
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-6 w-6"
-                          onClick={() => handleToggleFavorite(candidature.id)}
-                        >
-                          {candidature.candidat.favorite ? (
-                            <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-                          ) : (
-                            <Star className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </TableCell>
-                    <TableCell>{candidature.email}</TableCell>
-                    <TableCell>{candidature.candidat.telephone}</TableCell>
-                    <TableCell>{candidature.createdAt}</TableCell>
-                    <TableCell>
-                      <Badge
-                        className={getStatusColor(
-                          candidature.column.name.toString()
-                        )}
-                      >
-                        {formatStatus(candidature.column.name)}
-                      </Badge>
-                      {/* s */}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          onClick={() => handleViewDetails(candidature)}
-                        >
-                          <Eye className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          onClick={() =>
-                            handleDownloadCV(candidature.candidat.cv)
-                          }
-                        >
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </TableCell>
+          <Tabs
+            defaultValue="newest"
+            onValueChange={(value) =>
+              setSortOrder(value as "newest" | "oldest")
+            }
+          >
+            <TabsList className="mb-4">
+              <TabsTrigger value="newest">Plus récentes</TabsTrigger>
+              <TabsTrigger value="oldest">Plus anciennes</TabsTrigger>
+            </TabsList>
+            <TabsContent value="newest">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Nom</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Téléphone</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Statut</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+                </TableHeader>
+                <TableBody>
+                  {sortedCandidatures.map((candidature: Application) => (
+                    <TableRow key={candidature.id}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-2">
+                          {candidature.candidat.nom}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6"
+                            onClick={() => handleToggleFavorite(candidature.id)}
+                          >
+                            {candidature.candidat.favorite ? (
+                              <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                            ) : (
+                              <Star className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </div>
+                      </TableCell>
+                      <TableCell>{candidature.candidat.email}</TableCell>
+                      <TableCell>{candidature.candidat.telephone}</TableCell>
+                      <TableCell>{candidature.createdAt}</TableCell>
+                      <TableCell>
+                        <Badge
+                          className={getStatusColor(
+                            candidature.column.name.toString()
+                          )}
+                        >
+                          {formatStatus(candidature.column.name)}
+                        </Badge>
+                        {/* s */}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => handleViewDetails(candidature)}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() =>
+                              handleDownloadCV(candidature.candidat.cv)
+                            }
+                          >
+                            <Download className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TabsContent>
+            <TabsContent value="oldest">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Nom</TableHead>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Téléphone</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Statut</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {sortedCandidatures.map((candidature: Application) => (
+                    <TableRow key={candidature.id}>
+                      <TableCell className="font-medium">
+                        <div className="flex items-center gap-2">
+                          {candidature.candidat.nom}
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6"
+                            onClick={() => handleToggleFavorite(candidature.id)}
+                          >
+                            {candidature.candidat.favorite ? (
+                              <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                            ) : (
+                              <Star className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </div>
+                      </TableCell>
+                      <TableCell>{candidature.candidat.email}</TableCell>
+                      <TableCell>{candidature.candidat.telephone}</TableCell>
+                      <TableCell>{candidature.createdAt}</TableCell>
+                      <TableCell>
+                        <Badge
+                          className={getStatusColor(
+                            candidature.column.name.toString()
+                          )}
+                        >
+                          {formatStatus(candidature.column.name)}
+                        </Badge>
+                        {/* s */}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => handleViewDetails(candidature)}
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() =>
+                              handleDownloadCV(candidature.candidat.cv)
+                            }
+                          >
+                            <Download className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
 

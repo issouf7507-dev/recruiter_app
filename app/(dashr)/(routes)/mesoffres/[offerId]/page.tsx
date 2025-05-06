@@ -21,6 +21,7 @@ import {
   EyeOff,
   ArrowLeft,
   Pencil,
+  Loader2,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -120,10 +121,20 @@ export default function OffreDetail({
 
   const { offerId } = use(params);
 
-  const { data: queryoffresbyid } = useQuery({
+  const { data: queryoffresbyid, isLoading } = useQuery({
     queryKey: ["queryoffresbyid"],
     queryFn: () => fetchDataById(`/api/recruteur/offres/${offerId}`),
   });
+
+  // console.log(queryoffresbyid?.data[0].id);
+
+  if (isLoading) {
+    return (
+      <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -220,12 +231,9 @@ export default function OffreDetail({
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Clock className="h-4 w-4 text-muted-foreground" />
-                  {queryoffresbyid?.data[0].experience} ans
+                  {queryoffresbyid?.data[0].experience}
                 </div>
-                {/* <div className="flex items-center gap-2 text-sm">
-                  <GraduationCap className="h-4 w-4 text-muted-foreground" />
-                  {queryoffresbyid?.data[0].education}
-                </div> */}
+
                 <div className="flex items-center gap-2 text-sm">
                   <Banknote className="h-4 w-4 text-muted-foreground" />
                   {queryoffresbyid?.data[0].salaryMin.toLocaleString()} -{" "}
@@ -309,7 +317,9 @@ export default function OffreDetail({
             <CardContent className="space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">Vues</span>
-                <span className="font-semibold">{offer.views}</span>
+                <span className="font-semibold">
+                  {queryoffresbyid?.data[0]?.views}
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">
@@ -329,7 +339,7 @@ export default function OffreDetail({
                   {offer.applications.new}
                 </Badge>
               </div>
-              <div className="flex justify-between items-center">
+              {/* <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">
                   Présélectionnés
                 </span>
@@ -342,7 +352,7 @@ export default function OffreDetail({
                 <span className="font-semibold">
                   {offer.applications.rejected}
                 </span>
-              </div>
+              </div> */}
             </CardContent>
           </Card>
 
@@ -355,10 +365,11 @@ export default function OffreDetail({
               <Button
                 className="w-full"
                 variant="outline"
-                onClick={() =>
-                  // window.location.href == "/mesoffres/1/candidatures"
-                  (window.location.href = `/mesoffres/${queryoffresbyid?.data[0].id}/candidatures`)
-                }
+                onClick={() => {
+                  if (queryoffresbyid?.data[0].id) {
+                    window.location.href = `/mesoffres/${queryoffresbyid?.data[0].id}/candidatures`;
+                  }
+                }}
               >
                 Voir les candidatures
               </Button>

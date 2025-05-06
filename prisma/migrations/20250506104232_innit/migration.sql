@@ -31,6 +31,7 @@ CREATE TABLE "Candidat" (
     "telephone" TEXT,
     "cv" TEXT,
     "letterm" TEXT,
+    "email" TEXT NOT NULL,
     "bio" TEXT,
     "adresse" TEXT,
     "ville" TEXT,
@@ -60,7 +61,7 @@ CREATE TABLE "Recruteur" (
     "size" TEXT,
     "location" TEXT,
     "website" TEXT,
-    "email" TEXT,
+    "email" TEXT NOT NULL,
     "phone" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -129,7 +130,6 @@ CREATE TABLE "JobOffer" (
     "requirements" TEXT NOT NULL,
     "responsibilities" TEXT NOT NULL,
     "skills" TEXT NOT NULL,
-    "postulated" BOOLEAN DEFAULT false,
     "favorite" BOOLEAN DEFAULT false,
     "templateId" INTEGER,
     "competences" TEXT[] DEFAULT ARRAY[]::TEXT[],
@@ -218,6 +218,105 @@ CREATE TABLE "VerificationToken" (
     "expires" TIMESTAMP(3) NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "Experience" (
+    "id" TEXT NOT NULL,
+    "poste" TEXT NOT NULL,
+    "entreprise" TEXT NOT NULL,
+    "localisation" TEXT NOT NULL,
+    "typeContrat" TEXT NOT NULL,
+    "dateDebut" TIMESTAMP(3) NOT NULL,
+    "dateFin" TIMESTAMP(3),
+    "description" TEXT NOT NULL,
+    "competences" TEXT[],
+    "candidatId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Experience_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Formation" (
+    "id" TEXT NOT NULL,
+    "diplome" TEXT NOT NULL,
+    "etablissement" TEXT NOT NULL,
+    "domaine" TEXT NOT NULL,
+    "dateDebut" TIMESTAMP(3) NOT NULL,
+    "dateFin" TIMESTAMP(3),
+    "description" TEXT NOT NULL,
+    "candidatId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Formation_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Competence" (
+    "id" TEXT NOT NULL,
+    "categorie" TEXT NOT NULL,
+    "nom" TEXT NOT NULL,
+    "niveau" INTEGER NOT NULL,
+    "candidatId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Competence_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ObjectifCarriere" (
+    "id" TEXT NOT NULL,
+    "titre" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "categorie" TEXT NOT NULL,
+    "dateLimite" TIMESTAMP(3) NOT NULL,
+    "progression" INTEGER NOT NULL DEFAULT 0,
+    "etapes" TEXT[],
+    "candidatId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ObjectifCarriere_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "AlerteEmploi" (
+    "id" TEXT NOT NULL,
+    "titre" TEXT NOT NULL,
+    "motsCles" TEXT[],
+    "localisation" TEXT NOT NULL,
+    "typeContrat" TEXT NOT NULL,
+    "salaireMin" DOUBLE PRECISION,
+    "salaireMax" DOUBLE PRECISION,
+    "experience" TEXT NOT NULL,
+    "frequence" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL DEFAULT true,
+    "derniereMiseAJour" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "nombreResultats" INTEGER NOT NULL DEFAULT 0,
+    "candidatId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "AlerteEmploi_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Notification" (
+    "id" TEXT NOT NULL,
+    "titre" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "lu" BOOLEAN NOT NULL DEFAULT false,
+    "candidatId" TEXT NOT NULL,
+    "offreId" INTEGER,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Notification_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -225,7 +324,13 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "Candidat_userId_key" ON "Candidat"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Candidat_email_key" ON "Candidat"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Recruteur_userId_key" ON "Recruteur"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Recruteur_email_key" ON "Recruteur"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "CompanySocial_recruteurId_key" ON "CompanySocial"("recruteurId");
@@ -289,3 +394,21 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Experience" ADD CONSTRAINT "Experience_candidatId_fkey" FOREIGN KEY ("candidatId") REFERENCES "Candidat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Formation" ADD CONSTRAINT "Formation_candidatId_fkey" FOREIGN KEY ("candidatId") REFERENCES "Candidat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Competence" ADD CONSTRAINT "Competence_candidatId_fkey" FOREIGN KEY ("candidatId") REFERENCES "Candidat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ObjectifCarriere" ADD CONSTRAINT "ObjectifCarriere_candidatId_fkey" FOREIGN KEY ("candidatId") REFERENCES "Candidat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "AlerteEmploi" ADD CONSTRAINT "AlerteEmploi_candidatId_fkey" FOREIGN KEY ("candidatId") REFERENCES "Candidat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Notification" ADD CONSTRAINT "Notification_candidatId_fkey" FOREIGN KEY ("candidatId") REFERENCES "Candidat"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -60,6 +60,7 @@ export async function POST(req: Request) {
             permisConduire,
             situationFamiliale,
             telephone,
+            email,
           },
         },
       },

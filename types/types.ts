@@ -37,6 +37,7 @@ export type Candidat = {
   image: string;
   favorite: boolean;
   statut: string | null;
+  email: string | null;
 };
 
 export type Application = {
@@ -71,6 +72,8 @@ export type JobOffer = {
   requirements: string;
   responsibilities: string;
   skills: string;
+  postulated: boolean;
+  favorite: boolean;
   templateId: number;
   recruteurId: string;
   createdAt: string; // ou Date si tu les convertis
@@ -80,4 +83,18 @@ export type JobOffer = {
   matchingPercentage?: number;
   matchedSkills?: string[];
   missingSkills?: string[];
+};
+
+export type AlerteNotificationType = {
+  id: string;
+  titre: string;
+  message: string;
+  offre: {
+    id: number;
+    title: string;
+    company: string;
+    location: string;
+  };
+  createdAt: string;
+  lu: boolean;
 };

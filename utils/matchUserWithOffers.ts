@@ -41,21 +41,26 @@ export function matchUserWithOffers2(
   offers: JobOffer[]
 ): JobOffer[] {
   if (offers) {
+    // On prépare les compétences du candidat en lowercase
+    const userSkills =
+      user.candidat?.competences.map((skill) => skill.toLowerCase()) || [];
+
     return offers.map((offer) => {
-      const matchedSkills = offer.competences.filter((skill) =>
-        user.candidat?.competences.includes(skill)
+      // On prépare les compétences de l'offre en lowercase aussi
+      const offerSkills = offer.competences.map((skill) => skill.toLowerCase());
+
+      const matchedSkills = offerSkills.filter((skill) =>
+        userSkills.includes(skill)
       );
-      const missingSkills = offer.competences.filter(
-        (skill) => !user.candidat?.competences.includes(skill)
+      const missingSkills = offerSkills.filter(
+        (skill) => !userSkills.includes(skill)
       );
 
       const matchingPercentage = Math.round(
-        (matchedSkills.length / offer.competences.length) * 100
+        (matchedSkills.length / offerSkills.length) * 100
       );
 
       return {
-        //   title: offer.title,
-        //   company: offer.company,
         ...offer,
         matchingPercentage,
         matchedSkills,
@@ -66,3 +71,34 @@ export function matchUserWithOffers2(
     return [];
   }
 }
+
+// export function matchUserWithOffers2(
+//   user: UserProfile,
+//   offers: JobOffer[]
+// ): JobOffer[] {
+//   if (offers) {
+//     return offers.map((offer) => {
+//       const matchedSkills = offer.competences.filter((skill) =>
+//         user.candidat?.competences.includes(skill)
+//       );
+//       const missingSkills = offer.competences.filter(
+//         (skill) => !user.candidat?.competences.includes(skill)
+//       );
+
+//       const matchingPercentage = Math.round(
+//         (matchedSkills.length / offer.competences.length) * 100
+//       );
+
+//       return {
+//         //   title: offer.title,
+//         //   company: offer.company,
+//         ...offer,
+//         matchingPercentage,
+//         matchedSkills,
+//         missingSkills,
+//       };
+//     });
+//   } else {
+//     return [];
+//   }
+// }

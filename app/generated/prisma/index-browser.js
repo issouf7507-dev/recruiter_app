@@ -137,6 +137,7 @@ exports.Prisma.CandidatScalarFieldEnum = {
   telephone: 'telephone',
   cv: 'cv',
   letterm: 'letterm',
+  email: 'email',
   bio: 'bio',
   adresse: 'adresse',
   ville: 'ville',
@@ -217,7 +218,6 @@ exports.Prisma.JobOfferScalarFieldEnum = {
   requirements: 'requirements',
   responsibilities: 'responsibilities',
   skills: 'skills',
-  postulated: 'postulated',
   favorite: 'favorite',
   templateId: 'templateId',
   competences: 'competences',
@@ -288,6 +288,87 @@ exports.Prisma.VerificationTokenScalarFieldEnum = {
   expires: 'expires'
 };
 
+exports.Prisma.ExperienceScalarFieldEnum = {
+  id: 'id',
+  poste: 'poste',
+  entreprise: 'entreprise',
+  localisation: 'localisation',
+  typeContrat: 'typeContrat',
+  dateDebut: 'dateDebut',
+  dateFin: 'dateFin',
+  description: 'description',
+  competences: 'competences',
+  candidatId: 'candidatId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FormationScalarFieldEnum = {
+  id: 'id',
+  diplome: 'diplome',
+  etablissement: 'etablissement',
+  domaine: 'domaine',
+  dateDebut: 'dateDebut',
+  dateFin: 'dateFin',
+  description: 'description',
+  candidatId: 'candidatId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CompetenceScalarFieldEnum = {
+  id: 'id',
+  categorie: 'categorie',
+  nom: 'nom',
+  niveau: 'niveau',
+  candidatId: 'candidatId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ObjectifCarriereScalarFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  description: 'description',
+  categorie: 'categorie',
+  dateLimite: 'dateLimite',
+  progression: 'progression',
+  etapes: 'etapes',
+  candidatId: 'candidatId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AlerteEmploiScalarFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  motsCles: 'motsCles',
+  localisation: 'localisation',
+  typeContrat: 'typeContrat',
+  salaireMin: 'salaireMin',
+  salaireMax: 'salaireMax',
+  experience: 'experience',
+  frequence: 'frequence',
+  active: 'active',
+  derniereMiseAJour: 'derniereMiseAJour',
+  nombreResultats: 'nombreResultats',
+  candidatId: 'candidatId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  message: 'message',
+  type: 'type',
+  lu: 'lu',
+  candidatId: 'candidatId',
+  offreId: 'offreId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -332,7 +413,13 @@ exports.Prisma.ModelName = {
   KanbanColumn: 'KanbanColumn',
   Account: 'Account',
   Session: 'Session',
-  VerificationToken: 'VerificationToken'
+  VerificationToken: 'VerificationToken',
+  Experience: 'Experience',
+  Formation: 'Formation',
+  Competence: 'Competence',
+  ObjectifCarriere: 'ObjectifCarriere',
+  AlerteEmploi: 'AlerteEmploi',
+  Notification: 'Notification'
 };
 
 /**

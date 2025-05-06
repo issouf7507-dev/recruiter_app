@@ -33,14 +33,15 @@ model User {
 }
 
 model Candidat {
-  id                 String        @id @default(cuid())
-  user               User          @relation("UserAsCandidat", fields: [userId], references: [id])
-  userId             String        @unique
+  id                 String             @id @default(cuid())
+  user               User               @relation("UserAsCandidat", fields: [userId], references: [id])
+  userId             String             @unique
   nom                String?
   prenom             String?
   telephone          String?
   cv                 String?
   letterm            String?
+  email              String             @unique
   bio                String?
   adresse            String?
   ville              String?
@@ -50,10 +51,16 @@ model Candidat {
   nationalite        String?
   situationFamiliale String?
   permisConduire     String?
-  competences        String[]      @default([])
+  competences        String[]           @default([])
   image              String?
-  favorite           Boolean?      @default(false)
+  favorite           Boolean?           @default(false)
   applications       Application[]
+  experiences        Experience[]
+  formations         Formation[]
+  competencesList    Competence[]
+  objectifs          ObjectifCarriere[]
+  alertes            AlerteEmploi[]
+  notifications      Notification[]
 }
 
 model Recruteur {
@@ -69,7 +76,7 @@ model Recruteur {
   size        String? // Ex : "50-200 employés"
   location    String?
   website     String?
-  email       String?
+  email       String        @unique
   phone       String?
 
   social        CompanySocial?
@@ -135,7 +142,6 @@ model JobOffer {
   requirements     String // Exigences spécifiques du poste
   responsibilities String // Responsabilités principales du poste
   skills           String // Compétences nécessaires (ex : JavaScript, React)
-  postulated       Boolean?       @default(false) //(a mettre a jour)
   favorite         Boolean?       @default(false)
   templateId       Int? // ID du modèle d'offre utilisé (optionnel)
   competences      String[]       @default([])
@@ -244,4 +250,91 @@ enum RecruteurType {
 enum Role {
   ADMIN
   USER
+}
+
+model Experience {
+  id           String    @id @default(cuid())
+  poste        String
+  entreprise   String
+  localisation String
+  typeContrat  String
+  dateDebut    DateTime
+  dateFin      DateTime?
+  description  String
+  competences  String[]
+  candidat     Candidat  @relation(fields: [candidatId], references: [id])
+  candidatId   String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Formation {
+  id            String    @id @default(cuid())
+  diplome       String
+  etablissement String
+  domaine       String
+  dateDebut     DateTime
+  dateFin       DateTime?
+  description   String
+  candidat      Candidat  @relation(fields: [candidatId], references: [id])
+  candidatId    String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Competence {
+  id         String   @id @default(cuid())
+  categorie  String
+  nom        String
+  niveau     Int
+  candidat   Candidat @relation(fields: [candidatId], references: [id])
+  candidatId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model ObjectifCarriere {
+  id          String   @id @default(cuid())
+  titre       String
+  description String
+  categorie   String
+  dateLimite  DateTime
+  progression Int      @default(0)
+  etapes      String[]
+  candidat    Candidat @relation(fields: [candidatId], references: [id])
+  candidatId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AlerteEmploi {
+  id                String   @id @default(cuid())
+  titre             String
+  motsCles          String[]
+  localisation      String
+  typeContrat       String
+  salaireMin        Float?
+  salaireMax        Float?
+  experience        String
+  frequence         String
+  active            Boolean  @default(true)
+  derniereMiseAJour DateTime @default(now())
+  nombreResultats   Int      @default(0)
+  candidat          Candidat @relation(fields: [candidatId], references: [id])
+  candidatId        String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  titre      String
+  message    String
+  type       String // "alerte", "application", etc.
+  lu         Boolean  @default(false)
+  candidat   Candidat @relation(fields: [candidatId], references: [id])
+  candidatId String
+  offreId    Int? // ID de l'offre liée à la notification
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

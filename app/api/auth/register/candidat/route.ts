@@ -54,6 +54,7 @@ export async function POST(req: Request) {
             nationalite: validatedData.nationalite,
             situationFamiliale: validatedData.situationFamiliale,
             permisConduire: validatedData.permisConduire,
+            email: validatedData.email,
           },
         },
       },
