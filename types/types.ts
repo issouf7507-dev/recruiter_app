@@ -89,12 +89,7 @@ export type AlerteNotificationType = {
   id: string;
   titre: string;
   message: string;
-  offre: {
-    id: number;
-    title: string;
-    company: string;
-    location: string;
-  };
+  offreId: number;
   createdAt: string;
   lu: boolean;
 };

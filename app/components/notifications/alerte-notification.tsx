@@ -19,7 +19,6 @@ export function AlerteNotification({
   notifications: AlerteNotificationType[];
   isLoading: boolean;
 }) {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   // const { data: notifications, isLoading } = useQuery<AlerteNotification[]>({
@@ -65,9 +64,9 @@ export function AlerteNotification({
     markAsRead.mutate([notification.id]);
 
     // Rediriger vers l'offre
-    if (notification.offre?.id) {
-      router.push(`/offres/${notification.offre.id}`);
-    }
+    // if (notification.offre?.id) {
+    //   router.push(`/offres/${notification.offre.id}`);
+    // }
   };
 
   return (
@@ -112,12 +111,19 @@ export function AlerteNotification({
           ) : (
             <div className="p-2">
               {notifications?.map((notification) => (
+                //  <Link
+                //             href={`/dashboard-candidats/toutes-les-offres/${offre.id}`}
+                //             className="hover:underline"
+                //           >
                 <div
                   key={notification.id}
                   className={`p-3 rounded-lg mb-2 cursor-pointer hover:bg-accent ${
                     !notification.lu ? "bg-accent/50" : ""
                   }`}
-                  onClick={() => handleNotificationClick(notification)}
+                  onClick={() => {
+                    handleNotificationClick(notification);
+                    window.location.href = `/dashboard-candidats/toutes-les-offres/${notification.offreId}`;
+                  }}
                 >
                   <div className="flex items-start justify-between">
                     <div>
@@ -125,7 +131,7 @@ export function AlerteNotification({
                       <p className="text-sm text-muted-foreground">
                         {notification.message}
                       </p>
-                      {notification.offre && (
+                      {/* {notification.offre && (
                         <>
                           <p className="text-sm text-muted-foreground">
                             {notification.offre.title} -{" "}
@@ -135,7 +141,7 @@ export function AlerteNotification({
                             {notification.offre.location}
                           </p>
                         </>
-                      )}
+                      )} */}
                     </div>
                     <span className="text-xs text-muted-foreground">
                       {new Date(notification.createdAt).toLocaleDateString()}

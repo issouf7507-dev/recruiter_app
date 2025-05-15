@@ -1,7 +1,6 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
@@ -17,6 +16,7 @@ import {
   Sun,
   Moon,
   Lock,
+  UserPlus,
 } from "lucide-react";
 
 import {
@@ -43,6 +43,8 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { postData } from "@/utils/utilts";
+import { usePathname } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const queryClient = new QueryClient();
 export default function RecruteursLayout({
@@ -54,12 +56,12 @@ export default function RecruteursLayout({
     {
       label: "Tableau de bord",
       href: "/dashboard-recruteurs",
-      icon: <LayoutDashboard className="h-5 w-5 text-neutral-500" />,
+      icon: <LayoutDashboard className="h-5 w-5 text-white" />,
     },
     {
       label: "Offres d'emploi",
-      href: "/offres",
-      icon: <Briefcase className="h-5 w-5 text-neutral-500" />,
+      href: "#",
+      icon: <Briefcase className="h-5 w-5 text-white" />,
       subItems: [
         { label: "Créer une offre", href: "/mesoffres/creer" },
         { label: "Mes offres", href: "/mesoffres" },
@@ -69,7 +71,7 @@ export default function RecruteursLayout({
     {
       label: "Candidatures",
       href: "/candidatures",
-      icon: <Users className="h-5 w-5 text-neutral-500" />,
+      icon: <Users className="h-5 w-5 text-white" />,
       subItems: [
         {
           label: "Candidatures reçues",
@@ -85,27 +87,32 @@ export default function RecruteursLayout({
     {
       label: "Recherche de CV",
       href: "/dashboard-recruteurs/recherche-cv",
-      icon: <Search className="h-5 w-5 text-neutral-500" />,
+      icon: <Search className="h-5 w-5 text-white" />,
     },
     {
       label: "Messagerie",
       href: "/dashboard-recruteurs/messagerie",
-      icon: <MessageSquare className="h-5 w-5 text-neutral-500" />,
+      icon: <MessageSquare className="h-5 w-5 text-white" />,
     },
     {
       label: "Statistiques et rapports",
       href: "/dashboard-recruteurs/statistiques",
-      icon: <BarChart2 className="h-5 w-5 text-neutral-500" />,
+      icon: <BarChart2 className="h-5 w-5 text-white" />,
     },
     {
       label: "Profil entreprise",
       href: "/dashboard-recruteurs/profil",
-      icon: <Building2 className="h-5 w-5 text-neutral-500" />,
+      icon: <Building2 className="h-5 w-5 text-white" />,
     },
     {
       label: "Aide et support",
       href: "/dashboard-recruteurs/aide",
-      icon: <HelpCircle className="h-5 w-5 text-neutral-500" />,
+      icon: <HelpCircle className="h-5 w-5 text-white" />,
+    },
+    {
+      label: "Invitations",
+      href: "/dashboard-recruteurs/invitations",
+      icon: <UserPlus className="h-5 w-5 text-white" />,
     },
   ];
 
@@ -114,6 +121,27 @@ export default function RecruteursLayout({
 
   const { user, loading } = useAuth();
 
+  const pathname = usePathname();
+  let isActive = "";
+  let isActive2 = "";
+
+  for (const link of links) {
+    // console.log(link.subItems);
+
+    if (link.href === pathname) {
+      isActive2 = link.href;
+    }
+
+    if (link.subItems) {
+      for (const subItem of link.subItems) {
+        if (subItem.href === pathname) {
+          // console.log(subItem.href);
+          isActive = subItem.href;
+        }
+      }
+    }
+  }
+
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center">
@@ -121,6 +149,8 @@ export default function RecruteursLayout({
       </div>
     );
   }
+
+  // console.log(user);
 
   if (!user) {
     return (
@@ -159,21 +189,28 @@ export default function RecruteursLayout({
         )}
       >
         <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="justify-between gap-10">
+          <SidebarBody className="justify-between gap-10 border bg-[#2a294b] dark:bg-card rounded-lg px-2">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
               {open ? <Logo /> : <LogoIcon />}
               <div className="mt-8 flex flex-col gap-2">
                 {links.map((link, idx) => (
                   <div key={idx}>
-                    <SidebarLink link={link} />
+                    <SidebarLink
+                      link={link}
+                      className={isActive2 === link.href && "bg-[#0c0c19]"}
+                    />
                     {open && link.subItems && (
                       <div className="ml-10 mt-1 flex flex-col gap-1">
                         {link.subItems.map((subItem, subIdx) => (
                           <Link
                             key={subIdx}
                             href={subItem.href}
-                            className="text-sm text-neutral-500 hover:text-neutral-800 py-1"
+                            className={cn(
+                              "text-sm text-neutral-600 hover:text-neutral-800 py-1",
+                              isActive === subItem.href && "text-white"
+                            )}
                           >
+                            {/* {isActive} */}
                             {subItem.label}
                           </Link>
                         ))}
@@ -184,7 +221,7 @@ export default function RecruteursLayout({
               </div>
             </div>
             <div className=" flex flex-col">
-              <div className="flex-shrink-0">
+              {/* <div className="flex-shrink-0">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="icon">
@@ -205,8 +242,8 @@ export default function RecruteursLayout({
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </div>
-              <Button
+              </div> */}
+              {/* <Button
                 variant="ghost"
                 className="w-full justify-start gap-2"
                 onClick={() => {
@@ -225,19 +262,24 @@ export default function RecruteursLayout({
               >
                 <LogOut className="h-5 w-5 text-neutral-500" />
                 {open && <span>Déconnexion</span>}
-              </Button>
+              </Button> */}
               <SidebarLink
+                className={"uppercase"}
                 link={{
-                  label: "Manu Arora",
+                  label: user?.name || "",
                   href: "#",
                   icon: (
-                    <Image
-                      src="https://assets.aceternity.com/manu.png"
-                      className="h-7 w-7 flex-shrink-0 rounded-full"
-                      width={50}
-                      height={50}
-                      alt="Avatar"
-                    />
+                    <Avatar>
+                      {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
+                      <AvatarFallback className="text-[14px] font-bold">
+                        {(user?.name &&
+                          (
+                            user?.name.split(" ")[0].slice(0, 1) +
+                            user?.name.split(" ")[1].slice(0, 1)
+                          ).toUpperCase()) ||
+                          ""}
+                      </AvatarFallback>
+                    </Avatar>
                   ),
                 }}
               />

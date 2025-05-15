@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Plus, Pencil, Trash2, X, Loader2 } from "lucide-react";
+import { ArrowLeft, Plus, Loader2 } from "lucide-react";
 import Link from "next/link";
 import {
   Dialog,
@@ -33,8 +33,8 @@ import {
 } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import { deleteData, fetchDataById, postData } from "@/utils/utilts";
-import { Star } from "lucide-react";
-import { Calendar } from "lucide-react";
+
+import React from "react";
 
 // Types
 type KanbanColumn = {
@@ -80,54 +80,21 @@ const availableColors = [
   { value: "#60A5FA", label: "dwdw" },
 ];
 
-// Données fictives de candidatures
-// const mockApplications: Application[] = [
-//   {
-//     id: "1",
-//     candidat: {
-//       id: "1",
-//       nom: "Jean Dupont",
-//       email: "jean.dupont@email.com",
-//       date: "2024-03-15",
-//       status: "Nouvelles",
-//     },
-//     note: "Profil intéressant avec 5 ans d'expérience",
-//     rating: 3,
-//     message: "Très motivé par ce poste",
-//     cv: "/cvs/cv-jean-dupont.pdf",
-//     createdAt: "2024-03-15",
-//   },
-//   {
-//     id: "2",
-//     candidat: {
-//       id: "2",
-//       nom: "Marie Martin",
-//       email: "marie.martin@email.com",
-//       date: "2024-03-16",
-//       status: "En cours",
-//     },
-//     note: "Compétences techniques solides",
-//     rating: 2,
-//     message: "Recherche un poste en full remote",
-//     cv: "/cvs/cv-marie-martin.pdf",
-//     createdAt: "2024-03-16",
-//   },
-//   {
-//     id: "3",
-//     candidat: {
-//       id: "3",
-//       nom: "Pierre Durand",
-//       email: "pierre.durand@email.com",
-//       date: "2024-03-17",
-//       status: "Finalisées",
-//     },
-//     note: "Excellent profil, très bonnes références",
-//     rating: 3,
-//     message: "Disponible immédiatement",
-//     cv: "/cvs/cv-pierre-durand.pdf",
-//     createdAt: "2024-03-17",
-//   },
-// ];
+// Fonction utilitaire pour couleur aléatoire
+function getRandomColor() {
+  const colors = [
+    "#F59E42", // orange
+    "#60A5FA", // blue
+    "#34D399", // green
+    "#F472B6", // pink
+    "#FACC15", // yellow
+    "#A78BFA", // purple
+    "#F87171", // red
+    "#38BDF8", // sky
+    "#4ADE80", // emerald
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
 
 export default function KanbanPage({
   params,
@@ -147,6 +114,11 @@ export default function KanbanPage({
     staleTime: 30000, // Les données sont considérées comme fraîches pendant 30 secondes
     gcTime: 60000, // Les données sont gardées en cache pendant 1 minute
   });
+
+  // const { data: offertData, isLoading } = useQuery({
+  //   queryKey: ["offerbyid", id],
+  //   queryFn: () => fetchData(`/api/recruteur/offres/${id}`),
+  // });
 
   // Optimiser la gestion des colonnes
   const [columns, setColumns] = useState<KanbanColumn[]>([]);
@@ -176,6 +148,19 @@ export default function KanbanPage({
     note: string;
   } | null>(null);
   const [newNote, setNewNote] = useState("");
+
+  // Ajout des états pour la modal de détail de carte
+  const [selectedCard, setSelectedCard] = useState<Application | null>(null);
+  const [isCardModalOpen, setIsCardModalOpen] = useState(false);
+  const [checklist, setChecklist] = useState([
+    { text: "Choose a Design agency", checked: true },
+    { text: "Share detailed design directives", checked: false },
+    { text: "Share color palette", checked: false },
+  ]);
+  const [newChecklistItem, setNewChecklistItem] = useState("");
+  const [description, setDescription] = useState("");
+  const [activity, setActivity] = useState<string[]>([]);
+  const [newComment, setNewComment] = useState("");
 
   const handleAddColumn = async () => {
     if (!newColumn.name) return;
@@ -370,6 +355,7 @@ export default function KanbanPage({
   if (queryoffresbyid?.data?.[0].kanbanColumns) {
     return (
       <div className="p-6 space-y-6 w-full h-screen overflow-auto">
+        {/* Breadcrumb */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/dashboard-recruteurs/offres">
@@ -384,8 +370,17 @@ export default function KanbanPage({
             Ajouter une étape
           </Button>
         </div>
+        <div>
+          <div className="flex items-center text-sm text-gray-500 mb-2 gap-2">
+            <span className="font-medium cursor-pointer">Offres</span>
+            <span className="mx-1">›</span>
+            <span className="text-blue-600 font-medium cursor-pointer">
+              {queryoffresbyid?.data?.[0].title}
+            </span>
+          </div>
+        </div>
 
-        <div className="flex gap-4 overflow-x-auto h-full">
+        <div className="flex gap-6 overflow-x-auto h-full pb-4">
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable
               droppableId="all-columns"
@@ -396,218 +391,190 @@ export default function KanbanPage({
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className="flex gap-4"
+                  className="flex gap-6"
                 >
                   {columns
                     .sort((a, b) => (a.order || 0) - (b.order || 0))
-                    .map((column, index) => (
-                      <Draggable
-                        key={column.id}
-                        draggableId={column.id || "temp-id"}
-                        index={index}
-                      >
-                        {(provided: DraggableProvided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            className="flex-shrink-0 w-80"
-                          >
-                            <Card>
-                              <CardHeader className="pb-3">
-                                <div
-                                  {...provided.dragHandleProps}
-                                  className="flex items-center justify-between cursor-grab active:cursor-grabbing"
-                                >
-                                  <CardTitle className="text-sm font-medium">
+                    .map((column, index) => {
+                      const columnApps = applications.filter(
+                        (app) => app.columnId === column.id
+                      );
+                      return (
+                        <Draggable
+                          key={column.id}
+                          draggableId={column.id || "temp-id"}
+                          index={index}
+                        >
+                          {(provided: DraggableProvided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              className="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg border border-gray-100 p-3 flex flex-col min-h-[400px]"
+                            >
+                              {/* Colonne header */}
+                              <div
+                                className="flex items-center justify-between mb-3"
+                                {...provided.dragHandleProps}
+                              >
+                                <div className="flex items-center gap-2">
+                                  <span className="font-semibold text-lg">
                                     {column.name}
-                                  </CardTitle>
-                                  <div className="flex items-center gap-2">
-                                    <Button
-                                      variant="ghost"
-                                      size="icon"
-                                      onClick={() => {
-                                        setEditingColumn(column);
-                                        setIsColumnDialogOpen(true);
-                                      }}
-                                    >
-                                      <Pencil className="h-4 w-4" />
-                                    </Button>
-                                    {column.id &&
-                                      column.id !== "nouvelle" &&
-                                      column.id !== "acceptee" &&
-                                      column.id !== "refusee" && (
-                                        <Button
-                                          variant="ghost"
-                                          size="icon"
-                                          onClick={() =>
-                                            column.id &&
-                                            handleDeleteColumn(column.id)
-                                          }
-                                        >
-                                          <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                      )}
-                                  </div>
+                                  </span>
+                                  <span className="bg-gray-200 text-xs px-2 py-0.5 rounded-full font-medium">
+                                    {columnApps.length}
+                                  </span>
                                 </div>
-                              </CardHeader>
-                              <CardContent className="pb-6">
-                                <Droppable droppableId={column.id || "temp-id"}>
-                                  {(provided: DroppableProvided) => (
-                                    <div
-                                      {...provided.droppableProps}
-                                      ref={provided.innerRef}
-                                      className="space-y-2 min-h-[100px] border-dashed border rounded-lg p-2"
-                                    >
-                                      {applications
-                                        .filter(
-                                          (app) => app.columnId === column.id
-                                        )
-                                        .map((application, index) => (
-                                          <Draggable
-                                            key={application.id}
-                                            draggableId={application.id}
-                                            index={index}
-                                          >
-                                            {(provided: DraggableProvided) => (
-                                              <div
-                                                ref={provided.innerRef}
-                                                {...provided.draggableProps}
-                                                {...provided.dragHandleProps}
-                                                className="p-3 rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
-                                              >
-                                                <div className="flex justify-between items-start">
-                                                  <div>
-                                                    <h4 className="font-medium">
-                                                      {application.candidat.nom}{" "}
-                                                      {
-                                                        application.candidat
-                                                          .prenom
-                                                      }
-                                                    </h4>
-                                                    <p className="text-sm text-gray-500">
-                                                      {
-                                                        application.candidat
-                                                          .email
-                                                      }
-                                                    </p>
-                                                    {application.note && (
-                                                      <p className="text-sm text-gray-600 mt-2">
-                                                        {application.note}
-                                                      </p>
-                                                    )}
-                                                  </div>
-                                                  <div className="flex items-center gap-1">
-                                                    {[1, 2, 3].map((rating) => (
-                                                      <button
-                                                        key={rating}
-                                                        onClick={() =>
-                                                          handleRatingChange(
-                                                            application.id,
-                                                            rating
-                                                          )
-                                                        }
-                                                        className="focus:outline-none"
-                                                      >
-                                                        <Star
-                                                          className={`h-4 w-4 ${
-                                                            application.rating &&
-                                                            rating <=
-                                                              application.rating
-                                                              ? "text-yellow-400 fill-yellow-400"
-                                                              : "text-gray-300"
-                                                          }`}
-                                                        />
-                                                      </button>
-                                                    ))}
-                                                  </div>
-                                                </div>
-
-                                                {editingNote?.id ===
-                                                  application.id && (
-                                                  <div className="mt-2 space-y-2">
-                                                    <textarea
-                                                      value={editingNote.note}
-                                                      onChange={(e) =>
-                                                        setEditingNote({
-                                                          id: application.id,
-                                                          note: e.target.value,
-                                                        })
-                                                      }
-                                                      className="w-full p-2 text-sm border rounded-md"
-                                                      placeholder="Ajouter une note..."
-                                                      rows={2}
+                                <button className="text-blue-600 text-xs font-medium hover:underline">
+                                  + Add Task
+                                </button>
+                              </div>
+                              {/* Cartes */}
+                              <Droppable droppableId={column.id || "temp-id"}>
+                                {(provided: DroppableProvided) => (
+                                  <div
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                    className="space-y-4 flex-1"
+                                  >
+                                    {columnApps.map((application, idx) => {
+                                      // Couleur aléatoire pour le tag
+                                      const tagColor = getRandomColor();
+                                      // Priorité aléatoire pour la démo
+                                      const priorities = [
+                                        {
+                                          label: "High",
+                                          color: "bg-red-100 text-red-700",
+                                        },
+                                        {
+                                          label: "Medium",
+                                          color:
+                                            "bg-yellow-100 text-yellow-700",
+                                        },
+                                        {
+                                          label: "Low",
+                                          color: "bg-green-100 text-green-700",
+                                        },
+                                      ];
+                                      const priority =
+                                        priorities[
+                                          Math.floor(
+                                            Math.random() * priorities.length
+                                          )
+                                        ];
+                                      return (
+                                        <Draggable
+                                          key={application.id}
+                                          draggableId={application.id}
+                                          index={idx}
+                                        >
+                                          {(provided: DraggableProvided) => (
+                                            <div
+                                              ref={provided.innerRef}
+                                              {...provided.draggableProps}
+                                              {...provided.dragHandleProps}
+                                              className="bg-white rounded-xl shadow border border-gray-200 p-4 flex flex-col gap-2 hover:shadow-md transition-shadow min-h-[120px] cursor-pointer"
+                                              onClick={() => {
+                                                setSelectedCard(application);
+                                                setIsCardModalOpen(true);
+                                                setDescription(
+                                                  application.note || ""
+                                                );
+                                              }}
+                                            >
+                                              {/* ID et priorité */}
+                                              <div className="flex items-center justify-between mb-1">
+                                                <span className="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                                                  OZS-{application.id.slice(-1)}
+                                                </span>
+                                                <span
+                                                  className={`text-xs font-semibold px-2 py-0.5 rounded ${priority.color}`}
+                                                >
+                                                  {priority.label}
+                                                </span>
+                                              </div>
+                                              {/* Titre */}
+                                              <div className="font-semibold text-blue-700 text-base">
+                                                {application.candidat.nom}{" "}
+                                                {application.candidat.prenom}
+                                              </div>
+                                              {/* Description */}
+                                              <div className="text-xs text-gray-500">
+                                                {application.message ||
+                                                  application.note ||
+                                                  "Aucune description."}
+                                              </div>
+                                              {/* Tags */}
+                                              <div className="flex flex-wrap gap-2 mt-1">
+                                                <span
+                                                  className="text-xs font-medium px-2 py-0.5 rounded-full"
+                                                  style={{
+                                                    backgroundColor: tagColor,
+                                                    color: "#fff",
+                                                  }}
+                                                >
+                                                  {column.name}
+                                                </span>
+                                              </div>
+                                              {/* Footer : assigné, commentaires, pièces jointes */}
+                                              <div className="flex items-center justify-between mt-2">
+                                                {/* Assigné */}
+                                                <span className="bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center text-xs font-bold border">
+                                                  {application.candidat.nom.slice(
+                                                    0,
+                                                    1
+                                                  )}
+                                                  {application.candidat.prenom?.slice(
+                                                    0,
+                                                    1
+                                                  )}
+                                                </span>
+                                                <div className="flex items-center gap-2 text-gray-400">
+                                                  {/* Icône pièce jointe */}
+                                                  <svg
+                                                    width="16"
+                                                    height="16"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    viewBox="0 0 24 24"
+                                                  >
+                                                    <path d="M21 15V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8" />
+                                                    <rect
+                                                      width="16"
+                                                      height="12"
+                                                      x="4"
+                                                      y="7"
+                                                      rx="2"
                                                     />
-                                                    <div className="flex justify-end gap-2">
-                                                      <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        onClick={() =>
-                                                          setEditingNote(null)
-                                                        }
-                                                      >
-                                                        {/* {application.id} */}
-                                                        <X className="h-4 w-4" />
-                                                      </Button>
-                                                      <Button
-                                                        size="sm"
-                                                        onClick={
-                                                          editingNote?.note
-                                                            ? handleEditNoteSubmit
-                                                            : handleNoteSubmit
-                                                        }
-                                                      >
-                                                        {editingNote?.note
-                                                          ? "Modifier"
-                                                          : "Enregistrer"}
-                                                      </Button>
-                                                    </div>
-                                                  </div>
-                                                )}
-
-                                                <div className="flex items-center justify-between mt-4">
-                                                  <div className="flex items-center gap-2 mt-2 text-xs text-gray-500">
-                                                    <Calendar className="h-3 w-3" />
-                                                    {new Date(
-                                                      application.createdAt
-                                                    ).toLocaleDateString()}
-                                                  </div>
-
-                                                  <div>
-                                                    <Button
-                                                      size="sm"
-                                                      onClick={() =>
-                                                        setEditingNote({
-                                                          id: application.id,
-                                                          note:
-                                                            application.note ||
-                                                            "",
-                                                        })
-                                                      }
-                                                      disabled={
-                                                        editingNote?.id ===
-                                                        application.id
-                                                      }
-                                                    >
-                                                      {application.note
-                                                        ? "Modifier la note"
-                                                        : "Ajouter une note"}
-                                                    </Button>
-                                                  </div>
+                                                    <path d="M16 3v4" />
+                                                  </svg>
+                                                  {/* Icône commentaire */}
+                                                  <svg
+                                                    width="16"
+                                                    height="16"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                    viewBox="0 0 24 24"
+                                                  >
+                                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                                  </svg>
                                                 </div>
                                               </div>
-                                            )}
-                                          </Draggable>
-                                        ))}
-                                      {provided.placeholder}
-                                    </div>
-                                  )}
-                                </Droppable>
-                              </CardContent>
-                            </Card>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                                            </div>
+                                          )}
+                                        </Draggable>
+                                      );
+                                    })}
+                                    {provided.placeholder}
+                                  </div>
+                                )}
+                              </Droppable>
+                            </div>
+                          )}
+                        </Draggable>
+                      );
+                    })}
                   {provided.placeholder}
                 </div>
               )}
@@ -693,6 +660,225 @@ export default function KanbanPage({
                 {editingColumn ? "Modifier" : "Ajouter"}
               </Button>
             </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Modal de détail de carte */}
+        <Dialog open={isCardModalOpen} onOpenChange={setIsCardModalOpen}>
+          <DialogContent className="max-w-3xl w-full p-0 overflow-hidden">
+            {selectedCard && (
+              <div className="flex flex-col md:flex-row w-full h-full">
+                {/* Partie principale */}
+                <div className="flex-1 p-6 bg-white">
+                  {/* Titre et colonne */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-bold text-lg">
+                      {selectedCard.candidat.nom} {selectedCard.candidat.prenom}
+                    </span>
+                    <span className="text-xs text-gray-500">in list</span>
+                    <span className="text-blue-600 text-xs font-semibold">
+                      {
+                        columns.find((col) => col.id === selectedCard.columnId)
+                          ?.name
+                      }
+                    </span>
+                  </div>
+                  {/* Membres et labels */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold border">
+                      {selectedCard.candidat.nom.slice(0, 1)}
+                      {selectedCard.candidat.prenom?.slice(0, 1)}
+                    </span>
+                    {/* Labels (tags) */}
+                    <span className="bg-yellow-400 text-xs font-semibold px-2 py-0.5 rounded-full">
+                      External
+                    </span>
+                    <span className="bg-blue-400 text-xs font-semibold px-2 py-0.5 rounded-full">
+                      Design
+                    </span>
+                  </div>
+                  {/* Date et statut */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <input
+                      type="checkbox"
+                      checked
+                      readOnly
+                      className="accent-green-500"
+                    />
+                    <span className="text-xs">yesterday at 4:47 PM</span>
+                    <span className="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded font-semibold">
+                      COMPLETE
+                    </span>
+                  </div>
+                  {/* Description */}
+                  <div className="mb-6">
+                    <div className="font-semibold mb-1">Description</div>
+                    <textarea
+                      className="w-full border rounded p-2 text-sm min-h-[60px]"
+                      placeholder="Add a more detailed description..."
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </div>
+                  {/* Checklist */}
+                  <div className="mb-6">
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="font-semibold">Checklist</div>
+                      <button className="text-xs text-gray-500 hover:underline">
+                        Hide completed items
+                      </button>
+                      <button className="text-xs text-gray-500 hover:underline">
+                        Delete
+                      </button>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
+                      <div
+                        className="h-2 bg-blue-500"
+                        style={{
+                          width: `${Math.round(
+                            (checklist.filter((i) => i.checked).length /
+                              checklist.length) *
+                              100
+                          )}%`,
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-2 mb-2">
+                      {checklist.map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={item.checked}
+                            onChange={() => {
+                              setChecklist((cl) =>
+                                cl.map((it, i) =>
+                                  i === idx
+                                    ? { ...it, checked: !it.checked }
+                                    : it
+                                )
+                              );
+                            }}
+                          />
+                          <span
+                            className={
+                              item.checked ? "line-through text-gray-400" : ""
+                            }
+                          >
+                            {item.text}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex gap-2 mt-2">
+                      <input
+                        className="border rounded px-2 py-1 text-xs flex-1"
+                        placeholder="Add an item"
+                        value={newChecklistItem}
+                        onChange={(e) => setNewChecklistItem(e.target.value)}
+                      />
+                      <button
+                        className="bg-gray-100 px-2 py-1 rounded text-xs font-medium"
+                        onClick={() => {
+                          if (newChecklistItem.trim()) {
+                            setChecklist((cl) => [
+                              ...cl,
+                              { text: newChecklistItem, checked: false },
+                            ]);
+                            setNewChecklistItem("");
+                          }
+                        }}
+                      >
+                        Add an item
+                      </button>
+                    </div>
+                  </div>
+                  {/* Activity */}
+                  <div className="mb-2">
+                    <div className="font-semibold mb-1">Activity</div>
+                    <div className="flex gap-2 items-start mb-2">
+                      <span className="bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold border">
+                        {selectedCard.candidat.nom.slice(0, 1)}
+                        {selectedCard.candidat.prenom?.slice(0, 1)}
+                      </span>
+                      <input
+                        className="border rounded px-2 py-1 text-xs flex-1"
+                        placeholder="Write a comment..."
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && newComment.trim()) {
+                            setActivity((act) => [newComment, ...act]);
+                            setNewComment("");
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      {activity.map((comment, idx) => (
+                        <div
+                          key={idx}
+                          className="text-xs text-gray-700 bg-gray-100 rounded p-2 mb-1"
+                        >
+                          {comment}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                {/* Sidebar actions */}
+                <div className="w-full md:w-64 bg-gray-50 border-l p-4 flex flex-col gap-2">
+                  <div className="font-semibold text-xs text-gray-500 mb-2">
+                    SUGGESTED
+                  </div>
+                  <button className="text-left text-sm font-medium text-blue-600 hover:underline mb-2">
+                    Join
+                  </button>
+                  <div className="font-semibold text-xs text-gray-500 mt-4 mb-2">
+                    ADD TO CARD
+                  </div>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    Members
+                  </button>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    Labels
+                  </button>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    Checklist
+                  </button>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    Due date
+                  </button>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    Attachment
+                  </button>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    Location
+                  </button>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    Cover
+                  </button>
+                  <div className="font-semibold text-xs text-gray-500 mt-4 mb-2">
+                    POWER-UPS
+                  </div>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    Google Drive
+                  </button>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    + Add Power-Ups
+                  </button>
+                  <div className="font-semibold text-xs text-gray-500 mt-4 mb-2">
+                    BUTLER
+                  </div>
+                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
+                    + Add button
+                  </button>
+                  <div className="font-semibold text-xs text-gray-500 mt-4 mb-2">
+                    ACTIONS
+                  </div>
+                </div>
+              </div>
+            )}
           </DialogContent>
         </Dialog>
       </div>

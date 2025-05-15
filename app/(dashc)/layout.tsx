@@ -66,12 +66,12 @@ export default function CandidatsLayout({
     {
       label: "Accueil",
       href: "/dashboard-candidats",
-      icon: <LayoutDashboard className="h-5 w-5 text-neutral-500" />,
+      icon: <LayoutDashboard className="h-5 w-5 text-white" />,
     },
     {
       label: "Offres d'emploi",
       href: "/dashboard-candidats/offres-recommandees",
-      icon: <Briefcase className="h-5 w-5 text-neutral-500" />,
+      icon: <Briefcase className="h-5 w-5 text-white" />,
       subItems: [
         {
           label: "Offres recommandées",
@@ -87,7 +87,7 @@ export default function CandidatsLayout({
     {
       label: "Mes candidatures",
       href: "/dashboard-candidats/candidatures",
-      icon: <ClipboardList className="h-5 w-5 text-neutral-500" />,
+      icon: <ClipboardList className="h-5 w-5 text-white" />,
       subItems: [
         {
           label: "En cours",
@@ -106,7 +106,7 @@ export default function CandidatsLayout({
     {
       label: "Mon profil",
       href: "/dashboard-candidats/profil",
-      icon: <User className="h-5 w-5 text-neutral-500" />,
+      icon: <User className="h-5 w-5 text-white" />,
       subItems: [
         {
           label: "Informations personnelles",
@@ -132,22 +132,22 @@ export default function CandidatsLayout({
     {
       label: "Messages",
       href: "/dashboard-candidats/messagerie",
-      icon: <MessageSquare className="h-5 w-5 text-neutral-500" />,
+      icon: <MessageSquare className="h-5 w-5 text-white" />,
     },
     {
       label: "Alertes emploi",
       href: "/dashboard-candidats/alertes-emploi",
-      icon: <Bell className="h-5 w-5 text-neutral-500" />,
+      icon: <Bell className="h-5 w-5 text-white" />,
     },
     {
       label: "Aide",
       href: "/dashboard-candidats/aide",
-      icon: <HelpCircle className="h-5 w-5 text-neutral-500" />,
+      icon: <HelpCircle className="h-5 w-5 text-white" />,
     },
     {
       label: "Déconnexion",
       href: "/logout",
-      icon: <LogOut className="h-5 w-5 text-neutral-500" />,
+      icon: <LogOut className="h-5 w-5 text-white" />,
     },
   ];
 
@@ -212,7 +212,7 @@ export default function CandidatsLayout({
         )}
       >
         <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="justify-between gap-10 border">
+          <SidebarBody className="justify-between gap-10 border bg-[#2a294b] dark:bg-card rounded-lg">
             <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
               {open ? <Logo /> : <LogoIcon />}
               <div className="mt-8 flex flex-col gap-2">
@@ -225,7 +225,7 @@ export default function CandidatsLayout({
                           <Link
                             key={subIdx}
                             href={subItem.href}
-                            className="text-sm text-neutral-500 hover:text-neutral-800 py-1"
+                            className="text-sm text-white hover:text-neutral-800 py-1"
                           >
                             {subItem.label}
                           </Link>

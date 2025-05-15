@@ -131,3 +131,10 @@ export const deleteData = async (urlApi: string) => {
     throw new Error("Une erreur inattendue s'est produite");
   }
 };
+
+export const formatSalary = (amount: number): string => {
+  if (amount >= 1000000) {
+    return `${(amount / 1000000).toFixed(1)}M FCFA`;
+  }
+  return `${amount.toLocaleString()} FCFA`;
+};

@@ -1,6 +1,5 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { use, useEffect, useState, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,10 +8,8 @@ import {
   Building,
   MapPin,
   Briefcase,
-  Clock,
   DollarSign,
   Calendar,
-  FileText,
   ArrowLeft,
   Eye,
 } from "lucide-react";
@@ -21,12 +18,15 @@ import Link from "next/link";
 import { JobOffer } from "@/types/types";
 import { fetchData } from "@/utils/utilts";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useUserStore } from "@/store/userStore";
 
 const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
   //   const params = useParams();
   const { id } = use(params);
   const [offre, setOffre] = useState<JobOffer | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { candidat, loading: authLoading } = useUserStore();
+
+  const [postulatedOffers, setPostulatedOffers] = useState<number[]>([]);
   const hasIncrementedViews = useRef(false);
 
   // Récupérer les données de l'offre existante
@@ -66,27 +66,24 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   }, [id, incrementViews]);
 
-  //   console.log(offerData);
-  //   if (offertData) {
-  //     setOffre(offertData?.data?.[0]);
-  //   }
-  //   const offer =
+  const loadPostulatedOffers = async () => {
+    await fetchData("/api/candidat/postulations")
+      .then((res) => {
+        if (res.success) {
+          setPostulatedOffers(res.data.map((app: any) => app.jobOfferId));
+          // console.log(res.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur lors du chargement des postulations:", error);
+      });
+  };
 
-  //   useEffect(() => {
-  //     const fetchOffre = async () => {
-  //       try {
-  //         const data = await fetchData(`/api/recruteur/offres/${params.id}`);
-  //         setOffre(data);
-  //       } catch (error) {
-  //         console.error("Erreur lors de la récupération de l'offre:", error);
-  //         toast.error("Erreur lors de la récupération de l'offre");
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-
-  //     fetchOffre();
-  //   }, [params.id]);
+  useEffect(() => {
+    if (candidat?.candidat?.id) {
+      loadPostulatedOffers();
+    }
+  }, [candidat]);
 
   const handlePostuler = async () => {
     try {
@@ -113,6 +110,7 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   };
 
+  console.log(offertData);
   if (isLoading) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
@@ -145,8 +143,14 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
           </Button>
         </Link>
         <div className="flex gap-2">
-          <Button variant="outline">Sauvegarder</Button>
-          <Button onClick={handlePostuler}>Postuler</Button>
+          <Button
+            onClick={handlePostuler}
+            disabled={postulatedOffers.includes(offertData?.data?.[0].id)}
+          >
+            {postulatedOffers.includes(offertData?.data?.[0].id)
+              ? "Déjà postulé"
+              : "Postuler"}
+          </Button>
         </div>
       </div>
 
@@ -195,10 +199,10 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
                     })}
                   </span>
                 </div>
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <Eye className="h-4 w-4 text-muted-foreground" />
                   <span>{offertData?.data?.[0].views} vues</span>
-                </div>
+                </div> */}
               </div>
 
               <div className="space-y-4">
@@ -258,7 +262,7 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
             </div>
           ) : similarOffers?.data?.length > 0 ? (
-            <div className="space-y-4">
+            <div className="flex flex-col gap-4">
               {similarOffers.data.map((offer: JobOffer) => (
                 <Link
                   key={offer.id}

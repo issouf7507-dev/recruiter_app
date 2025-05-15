@@ -27,6 +27,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
+import { useQuery } from "@tanstack/react-query";
+import { AlerteNotificationType } from "@/types/types";
 
 const data = [
   { month: "Jan", candidatures: 5 },
@@ -55,9 +58,34 @@ const candidatures = [
 ];
 
 const DashboardPage = () => {
+  const {
+    data: notifications,
+    isLoading: notificationsLoading,
+    refetch: refetchNotifications,
+  } = useQuery<AlerteNotificationType[]>({
+    queryKey: ["alerte-notifications"],
+    queryFn: async () => {
+      const response = await fetch("/api/candidat/notifications");
+      if (!response.ok) {
+        throw new Error("Erreur lors de la récupération des notifications");
+      }
+      return response.json();
+    },
+  });
+
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
-      <h1 className="text-2xl font-bold">Tableau de bord</h1>
+      {/* <h1 className="text-2xl font-bold">Tableau de bord</h1> */}
+
+      <div className="flex justify-between items-center border-b pb-4">
+        <h1 className="text-2xl font-bold">Tableau de bord</h1>
+        <div className="flex items-center gap-2">
+          <AlerteNotification
+            notifications={(notifications && notifications) || []}
+            isLoading={notificationsLoading}
+          />
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>

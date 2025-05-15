@@ -98,6 +98,7 @@ export async function POST(req: NextRequest) {
         experience,
         frequence: frequence || "Quotidienne",
         candidatId: candidat.id,
+        active: true,
       },
     });
 

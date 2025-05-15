@@ -177,28 +177,28 @@ exports.Prisma.CompanySocialScalarFieldEnum = {
   recruteurId: 'recruteurId'
 };
 
-exports.Prisma.CompanyScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.CompanyUserScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  companyId: 'companyId',
-  role: 'role',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.InvitationScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  companyId: 'companyId',
+  recruteurId: 'recruteurId',
   role: 'role',
   token: 'token',
   accepted: 'accepted',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
+};
+
+exports.Prisma.CollaborateurScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  nom: 'nom',
+  prenom: 'prenom',
+  role: 'role',
+  recruteurId: 'recruteurId',
+  invitationId: 'invitationId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.JobOfferScalarFieldEnum = {
@@ -396,7 +396,9 @@ exports.RecruteurType = exports.$Enums.RecruteurType = {
 
 exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN',
-  USER: 'USER'
+  USER: 'USER',
+  MANAGER: 'MANAGER',
+  VIEWER: 'VIEWER'
 };
 
 exports.Prisma.ModelName = {
@@ -404,9 +406,8 @@ exports.Prisma.ModelName = {
   Candidat: 'Candidat',
   Recruteur: 'Recruteur',
   CompanySocial: 'CompanySocial',
-  Company: 'Company',
-  CompanyUser: 'CompanyUser',
   Invitation: 'Invitation',
+  Collaborateur: 'Collaborateur',
   JobOffer: 'JobOffer',
   OfferTemplate: 'OfferTemplate',
   Application: 'Application',

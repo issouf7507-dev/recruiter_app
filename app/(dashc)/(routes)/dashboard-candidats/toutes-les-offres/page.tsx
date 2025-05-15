@@ -30,15 +30,20 @@ import {
   Grid,
   Filter,
   Loader2,
+  Search as SearchIcon,
 } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { fetchData, postData } from "@/utils/utilts";
-import { JobOffer } from "@/types/types";
+import { AlerteNotificationType, JobOffer } from "@/types/types";
 import { matchUserWithOffers2 } from "@/utils/matchUserWithOffers";
 import { useUserStore } from "@/store/userStore";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Label } from "@/components/ui/label";
+import AdvancedSearch from "@/app/components/search/AdvancedSearch";
+import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
+// import AdvancedSearch from "./components/AdvancedSearch";
 
 const ToutesLesOffresPage = () => {
   const { candidat, loading: authLoading } = useUserStore();
@@ -74,11 +79,28 @@ const ToutesLesOffresPage = () => {
     queryFn: () => fetchData("/api/recruteur/offres"),
   });
 
+  const {
+    data: notifications,
+    isLoading: notificationsLoading,
+    refetch: refetchNotifications,
+  } = useQuery<AlerteNotificationType[]>({
+    queryKey: ["alerte-notifications"],
+    queryFn: async () => {
+      const response = await fetch("/api/candidat/notifications");
+      if (!response.ok) {
+        throw new Error("Erreur lors de la récupération des notifications");
+      }
+      return response.json();
+    },
+  });
+  const [showSearchModal, setShowSearchModal] = useState(false);
+
   const loadPostulatedOffers = async () => {
     await fetchData("/api/candidat/postulations")
       .then((res) => {
         if (res.success) {
           setPostulatedOffers(res.data.map((app: any) => app.jobOfferId));
+          // console.log(res.data);
         }
       })
       .catch((error) => {
@@ -103,12 +125,12 @@ const ToutesLesOffresPage = () => {
   const filteredOffers = matchOffersWithUser.filter((offre: JobOffer) => {
     // Filtre par onglet actif
 
-    // if (activeTab === "postulated" && !postulatedOffers.includes(offre.id)) {
-    //   return false;
-    // }
-    if (activeTab === "all" && postulatedOffers.includes(offre.id)) {
+    if (activeTab === "postulated" && !postulatedOffers.includes(offre.id)) {
       return false;
     }
+    // if (activeTab === "all" && postulatedOffers.includes(offre.id)) {
+    //   return false;
+    // }
 
     // Filtre par type de contrat
     if (filters.type !== "all" && offre.type.toLowerCase() !== filters.type) {
@@ -201,6 +223,10 @@ const ToutesLesOffresPage = () => {
     setShowConfirmModal(true);
   };
 
+  const handleSearchResults = (results: JobOffer[]) => {
+    setMatchOffersWithUser(results);
+  };
+
   if (isLoading || filteredOffers.length < 0) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
@@ -211,13 +237,21 @@ const ToutesLesOffresPage = () => {
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b pb-4">
         <h1 className="text-2xl font-bold">Toutes les offres</h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
           <div className="relative flex-1">
             <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input placeholder="Rechercher une offre..." className="pl-8" />
           </div>
+          <Button
+            variant="outline"
+            onClick={() => setShowSearchModal(true)}
+            className="flex items-center gap-2"
+          >
+            <Search className="h-4 w-4" />
+            Recherche avancée
+          </Button>
           <div className="flex gap-2">
             <Button
               variant="outline"
@@ -235,9 +269,21 @@ const ToutesLesOffresPage = () => {
             >
               <Grid className="h-4 w-4" />
             </Button>
+
+            <AlerteNotification
+              notifications={(notifications && notifications) || []}
+              isLoading={notificationsLoading}
+            />
           </div>
         </div>
       </div>
+
+      <AdvancedSearch
+        isOpen={showSearchModal}
+        onOpenChange={setShowSearchModal}
+        onSearch={handleSearchResults}
+        allOffers={offertData?.data || []}
+      />
 
       <Tabs
         defaultValue="all"
@@ -249,6 +295,232 @@ const ToutesLesOffresPage = () => {
           <TabsTrigger value="postulated">Offres postulées</TabsTrigger>
         </TabsList>
         <TabsContent value="all" className="mt-6">
+          <div className="flex flex-wrap gap-4 mb-3">
+            <Select
+              value={filters.type}
+              onValueChange={(value) => setFilters({ ...filters, type: value })}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Type de contrat" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tous les types</SelectItem>
+                <SelectItem value="cdi">CDI</SelectItem>
+                <SelectItem value="cdd">CDD</SelectItem>
+                <SelectItem value="stage">Stage</SelectItem>
+                <SelectItem value="freelance">Freelance</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={filters.salaire}
+              onValueChange={(value) =>
+                setFilters({ ...filters, salaire: value })
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Salaire" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tous les salaires</SelectItem>
+                <SelectItem value="0-1">0 - 1M FCFA</SelectItem>
+                <SelectItem value="1-2">1M - 2M FCFA</SelectItem>
+                <SelectItem value="2-3">2M - 3M FCFA</SelectItem>
+                <SelectItem value="3+">3M+ FCFA</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {viewMode === "list" ? (
+            <div className="grid gap-6">
+              {offertData && filteredOffers && filteredOffers.length > 0 ? (
+                filteredOffers.map((offre: JobOffer) => (
+                  <Card
+                    key={offre.id}
+                    className="hover:shadow-lg transition-shadow"
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/dashboard-candidats/toutes-les-offres/${offre.id}`}
+                              className="hover:underline"
+                            >
+                              <h2 className="text-xl font-semibold">
+                                {offre.title}
+                              </h2>
+                            </Link>
+                            <Badge variant="secondary" className="ml-2">
+                              {offre.matchingPercentage} % match
+                            </Badge>
+                          </div>
+                          <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-1">
+                              <Building className="h-4 w-4" />
+                              {offre.company}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <MapPin className="h-4 w-4" />
+                              {offre.location}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Briefcase className="h-4 w-4" />
+                              {offre.type}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Clock className="h-4 w-4" />
+                              {new Date(offre.createdAt).toLocaleDateString(
+                                "fr-FR",
+                                {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                }
+                              )}
+                            </div>
+                          </div>
+                          <p className="text-sm text-muted-foreground">
+                            {offre.salaryMin} - {offre.salaryMax}{" "}
+                            {offre.salaryCurrency}
+                          </p>
+                        </div>
+                        <div className="flex flex-col justify-between gap-4">
+                          <div className="flex flex-wrap gap-2">
+                            {offre.competences.map((competence, index) => (
+                              <Badge key={index} variant="outline">
+                                {competence}
+                              </Badge>
+                            ))}
+                          </div>
+                          <div className="flex gap-2 items-center justify-end">
+                            <Button
+                              onClick={() => handlePostuler(offre.id)}
+                              disabled={postulatedOffers.includes(offre.id)}
+                            >
+                              {postulatedOffers.includes(offre.id)
+                                ? "Déjà postulé"
+                                : "Postuler"}
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="mt-4 text-sm text-muted-foreground">
+                        {offre.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <div className="flex min-h-[60vh] w-full items-center justify-center">
+                  <div className="flex flex-col items-center justify-center py-12">
+                    <Briefcase className="h-12 w-12 text-muted-foreground mb-4" />
+                    <h3 className="text-xl font-semibold mb-2">
+                      Aucune offre disponible
+                    </h3>
+                    <p className="text-muted-foreground text-center">
+                      Il n'y a actuellement aucune offre d'emploi correspondant
+                      à vos critères.
+                      <br />
+                      Essayez de modifier vos filtres ou revenez plus tard.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {offertData && filteredOffers && filteredOffers.length > 0 ? (
+                filteredOffers.map((offre) => (
+                  <Card
+                    key={offre.id}
+                    className="hover:shadow-lg transition-shadow"
+                  >
+                    <CardContent className="p-6">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-2">
+                          <h2 className="text-xl font-semibold">
+                            {offre.title}
+                          </h2>
+                          <Badge variant="secondary" className="ml-2">
+                            {offre.matchingPercentage}% match
+                          </Badge>
+                        </div>
+                        <div className="space-y-2 text-sm text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Building className="h-4 w-4" />
+                            {offre.company}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MapPin className="h-4 w-4" />
+                            {offre.location}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Briefcase className="h-4 w-4" />
+                            {offre.type}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-4 w-4" />
+                            {new Date(offre.createdAt).toLocaleDateString(
+                              "fr-FR",
+                              {
+                                day: "numeric",
+                                month: "long",
+                                year: "numeric",
+                              }
+                            )}
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          {offre.salaryMin} - {offre.salaryMax}{" "}
+                          {offre.salaryCurrency}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {offre.competences.map((competence, index) => (
+                            <Badge key={index} variant="outline">
+                              {competence}
+                            </Badge>
+                          ))}
+                        </div>
+                        <p className="text-sm text-muted-foreground line-clamp-2">
+                          {offre.description}
+                        </p>
+                        <div className="flex gap-2">
+                          {/* <Button variant="outline" className="flex-1">
+                            Sauvegarder
+                          </Button> */}
+                          <Button
+                            className="flex-1"
+                            onClick={() => handlePostuler(offre.id)}
+                            disabled={postulatedOffers.includes(offre.id)}
+                          >
+                            {postulatedOffers.includes(offre.id)
+                              ? "Déjà postulé"
+                              : "Postuler"}
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <div className="col-span-full flex flex-col items-center justify-center py-12">
+                  <Briefcase className="h-12 w-12 text-muted-foreground mb-4" />
+                  <h3 className="text-xl font-semibold mb-2">
+                    Aucune offre disponible
+                  </h3>
+                  <p className="text-muted-foreground text-center">
+                    Il n'y a actuellement aucune offre d'emploi correspondant à
+                    vos critères.
+                    <br />
+                    Essayez de modifier vos filtres ou revenez plus tard.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </TabsContent>
+        <TabsContent value="postulated" className="mt-6">
           <div className="flex flex-wrap gap-4 mb-3">
             <Select
               value={filters.type}
@@ -473,232 +745,6 @@ const ToutesLesOffresPage = () => {
               )}
             </div>
           )}
-        </TabsContent>
-        <TabsContent value="postulated" className="mt-6">
-          <div className="flex flex-wrap gap-4 mb-3">
-            <Select
-              value={filters.type}
-              onValueChange={(value) => setFilters({ ...filters, type: value })}
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Type de contrat" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous les types</SelectItem>
-                <SelectItem value="cdi">CDI</SelectItem>
-                <SelectItem value="cdd">CDD</SelectItem>
-                <SelectItem value="stage">Stage</SelectItem>
-                <SelectItem value="freelance">Freelance</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select
-              value={filters.salaire}
-              onValueChange={(value) =>
-                setFilters({ ...filters, salaire: value })
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Salaire" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous les salaires</SelectItem>
-                <SelectItem value="0-1">0 - 1M FCFA</SelectItem>
-                <SelectItem value="1-2">1M - 2M FCFA</SelectItem>
-                <SelectItem value="2-3">2M - 3M FCFA</SelectItem>
-                <SelectItem value="3+">3M+ FCFA</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* {viewMode === "list" ? (
-            <div className="grid gap-6">
-              {offertData && filteredOffers && filteredOffers.length > 0 ? (
-                filteredOffers.map((offre: JobOffer) => (
-                  <Card
-                    key={offre.id}
-                    className="hover:shadow-lg transition-shadow"
-                  >
-                    <CardContent className="p-6">
-                      <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href={`/dashboard-candidats/toutes-les-offres/${offre.id}`}
-                              className="hover:underline"
-                            >
-                              <h2 className="text-xl font-semibold">
-                                {offre.title}
-                              </h2>
-                            </Link>
-                            <Badge variant="secondary" className="ml-2">
-                              {offre.matchingPercentage} % match
-                            </Badge>
-                          </div>
-                          <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-                            <div className="flex items-center gap-1">
-                              <Building className="h-4 w-4" />
-                              {offre.company}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <MapPin className="h-4 w-4" />
-                              {offre.location}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Briefcase className="h-4 w-4" />
-                              {offre.type}
-                            </div>
-                            <div className="flex items-center gap-1">
-                              <Clock className="h-4 w-4" />
-                              {new Date(offre.createdAt).toLocaleDateString(
-                                "fr-FR",
-                                {
-                                  day: "numeric",
-                                  month: "long",
-                                  year: "numeric",
-                                }
-                              )}
-                            </div>
-                          </div>
-                          <p className="text-sm text-muted-foreground">
-                            {offre.salaryMin} - {offre.salaryMax}{" "}
-                            {offre.salaryCurrency}
-                          </p>
-                        </div>
-                        <div className="flex flex-col justify-between gap-4">
-                          <div className="flex flex-wrap gap-2">
-                            {offre.competences.map((competence, index) => (
-                              <Badge key={index} variant="outline">
-                                {competence}
-                              </Badge>
-                            ))}
-                          </div>
-                          <div className="flex gap-2 items-center justify-end">
-                            <Button
-                              onClick={() => handlePostuler(offre.id)}
-                              disabled={postulatedOffers.includes(offre.id)}
-                            >
-                              {postulatedOffers.includes(offre.id)
-                                ? "Déjà postulé"
-                                : "Postuler"}
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                      <p className="mt-4 text-sm text-muted-foreground">
-                        {offre.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ))
-              ) : (
-                <div className="flex min-h-[60vh] w-full items-center justify-center">
-                  <div className="flex flex-col items-center justify-center py-12">
-                    <Briefcase className="h-12 w-12 text-muted-foreground mb-4" />
-                    <h3 className="text-xl font-semibold mb-2">
-                      Aucune offre disponible
-                    </h3>
-                    <p className="text-muted-foreground text-center">
-                      Il n'y a actuellement aucune offre d'emploi correspondant
-                      à vos critères.
-                      <br />
-                      Essayez de modifier vos filtres ou revenez plus tard.
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {offertData && filteredOffers && filteredOffers.length > 0 ? (
-                filteredOffers.map((offre) => (
-                  <Card
-                    key={offre.id}
-                    className="hover:shadow-lg transition-shadow"
-                  >
-                    <CardContent className="p-6">
-                      <div className="space-y-4">
-                        <div className="flex items-center gap-2">
-                          <h2 className="text-xl font-semibold">
-                            {offre.title}
-                          </h2>
-                          <Badge variant="secondary" className="ml-2">
-                            {offre.matchingPercentage}% match
-                          </Badge>
-                        </div>
-                        <div className="space-y-2 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Building className="h-4 w-4" />
-                            {offre.company}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            {offre.location}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Briefcase className="h-4 w-4" />
-                            {offre.type}
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <Clock className="h-4 w-4" />
-                            {new Date(offre.createdAt).toLocaleDateString(
-                              "fr-FR",
-                              {
-                                day: "numeric",
-                                month: "long",
-                                year: "numeric",
-                              }
-                            )}
-                          </div>
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          {offre.salaryMin} - {offre.salaryMax}{" "}
-                          {offre.salaryCurrency}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {offre.competences.map((competence, index) => (
-                            <Badge key={index} variant="outline">
-                              {competence}
-                            </Badge>
-                          ))}
-                        </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {offre.description}
-                        </p>
-                        <div className="flex gap-2">
-                          <Button variant="outline" className="flex-1">
-                            Sauvegarder
-                          </Button>
-                          <Button
-                            className="flex-1"
-                            onClick={() => handlePostuler(offre.id)}
-                            disabled={postulatedOffers.includes(offre.id)}
-                          >
-                            {postulatedOffers.includes(offre.id)
-                              ? "Déjà postulé"
-                              : "Postuler"}
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              ) : (
-                <div className="col-span-full flex flex-col items-center justify-center py-12">
-                  <Briefcase className="h-12 w-12 text-muted-foreground mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">
-                    Aucune offre disponible
-                  </h3>
-                  <p className="text-muted-foreground text-center">
-                    Il n'y a actuellement aucune offre d'emploi correspondant à
-                    vos critères.
-                    <br />
-                    Essayez de modifier vos filtres ou revenez plus tard.
-                  </p>
-                </div>
-              )}
-            </div>
-          )} */}
         </TabsContent>
       </Tabs>
 

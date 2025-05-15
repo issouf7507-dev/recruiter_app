@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
+
 import {
   Plus,
   Bell,
@@ -31,26 +30,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
-import { AlerteService } from "@/app/services/alerte.service";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Check, ChevronsUpDown, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+
 import {
   CompetenceAutocomplete,
   type Competence,
 } from "@/app/components/ui/competence-autocomplete";
 import { AlerteNotificationType } from "@/types/types";
+import { Badge } from "@/components/ui/badge";
 
 const alerteSchema = z.object({
   titre: z.string().min(1, "Le titre est requis"),
@@ -74,34 +60,36 @@ interface Alerte extends AlerteFormData {
 
 // Liste des compétences disponibles
 const competences: Competence[] = [
-  { value: "javascript", label: "JavaScript" },
-  { value: "typescript", label: "TypeScript" },
-  { value: "react", label: "React" },
-  { value: "nextjs", label: "Next.js" },
-  { value: "nodejs", label: "Node.js" },
-  { value: "python", label: "Python" },
-  { value: "java", label: "Java" },
-  { value: "php", label: "PHP" },
-  { value: "sql", label: "SQL" },
-  { value: "mongodb", label: "MongoDB" },
-  { value: "git", label: "Git" },
-  { value: "docker", label: "Docker" },
-  { value: "aws", label: "AWS" },
-  { value: "uiux", label: "UI/UX Design" },
-  { value: "agile", label: "Méthodologies Agiles" },
-  { value: "canva", label: "Canva" },
-  { value: "rédaction", label: "Rédaction" },
-  { value: "postgresql", label: "PostgreSQL" },
-  { value: "figma", label: "Figma" },
-  { value: "adobexd", label: "Adobe XD" },
-  { value: "designthinking", label: "Design Thinking" },
-  { value: "gestionprojet", label: "Gestion de projet" },
-  { value: "scrum", label: "Scrum" },
-  { value: "jira", label: "JIRA" },
-  { value: "linux", label: "Linux" },
-  { value: "windowsserver", label: "Windows Server" },
-  { value: "securitenetwork", label: "Sécurité réseau" },
-  { value: "socialmedia", label: "Social media" },
+  { value: "JavaScript", label: "JavaScript" },
+  { value: "TypeScript", label: "TypeScript" },
+  { value: "React", label: "React" },
+  { value: "Next.js", label: "Next.js" },
+  { value: "Node.js", label: "Node.js" },
+  { value: "Python", label: "Python" },
+  { value: "Java", label: "Java" },
+  { value: "PHP", label: "PHP" },
+  { value: "SQL", label: "SQL" },
+  { value: "MongoDB", label: "MongoDB" },
+  { value: "Git", label: "Git" },
+  { value: "Docker", label: "Docker" },
+  { value: "AWS", label: "AWS" },
+  { value: "UI/UX Design", label: "UI/UX Design" },
+  { value: "Méthodologies Agiles", label: "Méthodologies Agiles" },
+  { value: "Canva", label: "Canva" },
+  { value: "Rédaction", label: "Rédaction" },
+  { value: "PostgreSQL", label: "PostgreSQL" },
+  { value: "Figma", label: "Figma" },
+  { value: "Adobe XD", label: "Adobe XD" },
+  { value: "Design Thinking", label: "Design Thinking" },
+  { value: "Gestion de projet", label: "Gestion de projet" },
+  { value: "Scrum", label: "Scrum" },
+  { value: "JIRA", label: "JIRA" },
+  { value: "Linux", label: "Linux" },
+  { value: "Windows Server", label: "Windows Server" },
+  { value: "Sécurité réseau", label: "Sécurité réseau" },
+  { value: "Social media", label: "Social media" },
+  { value: "Marketing", label: "Marketing" },
+  { value: "Communication", label: "Communication" },
 ];
 
 const AlertesEmploiPage = () => {
@@ -435,13 +423,13 @@ const AlertesEmploiPage = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Switch
+                  {/* <Switch
                     checked={alerte.active}
                     onCheckedChange={(checked) =>
                       toggleAlerte.mutate({ id: alerte.id, active: checked })
                     }
                     disabled={toggleAlerte.isPending}
-                  />
+                  /> */}
                   <Button variant="ghost" size="icon">
                     <Pencil className="h-4 w-4" />
                   </Button>
@@ -469,11 +457,11 @@ const AlertesEmploiPage = () => {
                   <span>Fréquence : </span>
                   <span className="font-medium">{alerte.frequence}</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="font-medium">
-                    {alerte.nombreResultats} nouvelles offres
-                  </span>
-                </div>
+                {/* <div className="flex items-center gap-2 text-sm">
+                      <span className="font-medium">
+                        {alerte.nombreResultats} nouvelles offres
+                      </span>
+                    </div> */}
               </div>
 
               {alerte.motsCles.length > 0 && (
@@ -483,12 +471,18 @@ const AlertesEmploiPage = () => {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {alerte.motsCles.map((motCle, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-muted rounded-full text-sm"
-                      >
-                        {motCle}
-                      </span>
+                      <div key={index}>
+                        {/* <span
+                          key={index}
+                          className="px-2 py-1 bg-muted rounded-full text-sm"
+                        >
+                          {motCle}
+                        </span> */}
+
+                        <Badge className="" variant="outline">
+                          {motCle}
+                        </Badge>
+                      </div>
                     ))}
                   </div>
                 </div>

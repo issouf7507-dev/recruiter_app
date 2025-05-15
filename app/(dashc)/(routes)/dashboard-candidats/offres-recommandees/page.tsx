@@ -28,17 +28,17 @@ import {
   Building,
   List,
   Grid,
-  Filter,
   Loader2,
 } from "lucide-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { fetchData, postData } from "@/utils/utilts";
-import { JobOffer } from "@/types/types";
+import { AlerteNotificationType, JobOffer } from "@/types/types";
 import { matchUserWithOffers2 } from "@/utils/matchUserWithOffers";
 import { useUserStore } from "@/store/userStore";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
 
 const OffresRecommandeesPage = () => {
   const { candidat, loading: authLoading } = useUserStore();
@@ -73,6 +73,21 @@ const OffresRecommandeesPage = () => {
   } = useQuery({
     queryKey: ["offertData2123"],
     queryFn: () => fetchData("/api/recruteur/offres"),
+  });
+
+  const {
+    data: notifications,
+    isLoading: notificationsLoading,
+    refetch: refetchNotifications,
+  } = useQuery<AlerteNotificationType[]>({
+    queryKey: ["alerte-notifications"],
+    queryFn: async () => {
+      const response = await fetch("/api/candidat/notifications");
+      if (!response.ok) {
+        throw new Error("Erreur lors de la récupération des notifications");
+      }
+      return response.json();
+    },
   });
 
   const loadPostulatedOffers = async () => {
@@ -219,8 +234,16 @@ const OffresRecommandeesPage = () => {
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div className="space-y-2">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b">
+        {/* <div className="space-y-2">
+          <h1 className="text-2xl font-bold">Offres recommandées</h1>
+          <p className="text-sm text-muted-foreground">
+            Découvrez les offres qui correspondent à plus de 50% avec votre
+            profil
+          </p>
+        </div> */}
+
+        <div className=" items-center  pb-4">
           <h1 className="text-2xl font-bold">Offres recommandées</h1>
           <p className="text-sm text-muted-foreground">
             Découvrez les offres qui correspondent à plus de 50% avec votre
@@ -249,6 +272,13 @@ const OffresRecommandeesPage = () => {
             >
               <Grid className="h-4 w-4" />
             </Button>
+
+            <div className="flex items-center gap-2">
+              <AlerteNotification
+                notifications={(notifications && notifications) || []}
+                isLoading={notificationsLoading}
+              />
+            </div>
           </div>
         </div>
       </div>

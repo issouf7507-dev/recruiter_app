@@ -7,11 +7,15 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/utils/utilts";
 import { JobOffer } from "@/types/types";
 import { Loader2 } from "lucide-react";
+import { useUserStore } from "@/store/userStore";
 
 export default function OffresPage() {
+  const { user, loading } = useUserStore();
+
   const { data: querymoffres, isLoading } = useQuery({
     queryKey: ["querymoffres2"],
-    queryFn: () => fetchData("/api/recruteur/offres"),
+    queryFn: () =>
+      fetchData(`/api/recruteur/offresbyuser/${user?.recruteur?.id}`),
   });
 
   if (isLoading) {

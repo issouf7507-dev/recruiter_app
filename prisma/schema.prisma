@@ -27,11 +27,11 @@ model User {
   type           UserType
   candidat       Candidat? @relation("UserAsCandidat")
   recruteur      Recruteur? @relation("UserAsRecruteur")
+  collaborateur  Collaborateur?
   accounts       Account[] 
   sessions       Session[]
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  companies CompanyUser[]
 }
 
 model Candidat {
@@ -80,12 +80,13 @@ model Recruteur {
   website     String?
   email          String   @unique
   phone       String?
-
   social      CompanySocial?
   OfferTemplate OfferTemplate[]
   JobOffer      JobOffer[]
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @updatedAt
+  invitations Invitation[]
+  collaborateurs Collaborateur[]
 }
 
 model CompanySocial {
@@ -97,36 +98,36 @@ model CompanySocial {
 }
 
 
-model Company {
-  id        String         @id @default(cuid())
-  name      String
-  users     CompanyUser[]  // Lien avec les utilisateurs (recruteurs)
-  createdAt DateTime       @default(now())
-  invitation Invitation[]
-}
 
-model CompanyUser {
-  id        String   @id @default(cuid())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    String
-  company   Company  @relation(fields: [companyId], references: [id])
-  companyId String
-  role      Role   // Rôle dans l'entreprise (admin, membre, etc.)
-  createdAt DateTime @default(now())
-}
 
 model Invitation {
   id         String   @id @default(cuid())
   email      String   // Email invité
-  companyId  String
+  recruteurId String
+  recruteur   Recruteur @relation(fields: [recruteurId], references: [id])
   role       Role
   token      String   @unique // Pour sécuriser l'invitation
   accepted   Boolean  @default(false)
   createdAt  DateTime @default(now())
-
-  company    Company  @relation(fields: [companyId], references: [id])
+  expiresAt  DateTime // Date d'expiration de l'invitation
+  collaborateur Collaborateur? // Relation avec le collaborateur une fois acceptée
 }
 
+model Collaborateur {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  nom         String
+  prenom      String
+  role        Role
+  recruteurId String
+  recruteur   Recruteur @relation(fields: [recruteurId], references: [id])
+  invitation  Invitation? @relation(fields: [invitationId], references: [id])
+  invitationId String? @unique
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 
 /// Représente une offre d'emploi publiée par une entreprise
 model JobOffer {
@@ -262,6 +263,8 @@ enum RecruteurType {
 enum Role{
   ADMIN
   USER
+  MANAGER
+  VIEWER
 }
 
 model Experience {

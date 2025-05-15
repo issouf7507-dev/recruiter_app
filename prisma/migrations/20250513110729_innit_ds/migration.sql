@@ -5,7 +5,7 @@ CREATE TYPE "UserType" AS ENUM ('CANDIDAT', 'RECRUTEUR');
 CREATE TYPE "RecruteurType" AS ENUM ('PARTICULIER', 'ENTREPRISE', 'ENTITE');
 
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER');
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'USER', 'MANAGER', 'VIEWER');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -80,36 +80,33 @@ CREATE TABLE "CompanySocial" (
 );
 
 -- CreateTable
-CREATE TABLE "Company" (
-    "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Company_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "CompanyUser" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "companyId" TEXT NOT NULL,
-    "role" "Role" NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "CompanyUser_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Invitation" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "companyId" TEXT NOT NULL,
+    "recruteurId" TEXT NOT NULL,
     "role" "Role" NOT NULL,
     "token" TEXT NOT NULL,
     "accepted" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Invitation_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Collaborateur" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "nom" TEXT NOT NULL,
+    "prenom" TEXT NOT NULL,
+    "role" "Role" NOT NULL,
+    "recruteurId" TEXT NOT NULL,
+    "invitationId" TEXT,
+    "userId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Collaborateur_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -339,6 +336,15 @@ CREATE UNIQUE INDEX "CompanySocial_recruteurId_key" ON "CompanySocial"("recruteu
 CREATE UNIQUE INDEX "Invitation_token_key" ON "Invitation"("token");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Collaborateur_email_key" ON "Collaborateur"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Collaborateur_invitationId_key" ON "Collaborateur"("invitationId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Collaborateur_userId_key" ON "Collaborateur"("userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
@@ -360,13 +366,16 @@ ALTER TABLE "Recruteur" ADD CONSTRAINT "Recruteur_userId_fkey" FOREIGN KEY ("use
 ALTER TABLE "CompanySocial" ADD CONSTRAINT "CompanySocial_recruteurId_fkey" FOREIGN KEY ("recruteurId") REFERENCES "Recruteur"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "CompanyUser" ADD CONSTRAINT "CompanyUser_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_recruteurId_fkey" FOREIGN KEY ("recruteurId") REFERENCES "Recruteur"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "CompanyUser" ADD CONSTRAINT "CompanyUser_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Collaborateur" ADD CONSTRAINT "Collaborateur_recruteurId_fkey" FOREIGN KEY ("recruteurId") REFERENCES "Recruteur"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Invitation" ADD CONSTRAINT "Invitation_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Collaborateur" ADD CONSTRAINT "Collaborateur_invitationId_fkey" FOREIGN KEY ("invitationId") REFERENCES "Invitation"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Collaborateur" ADD CONSTRAINT "Collaborateur_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "JobOffer" ADD CONSTRAINT "JobOffer_templateId_fkey" FOREIGN KEY ("templateId") REFERENCES "OfferTemplate"("id") ON DELETE SET NULL ON UPDATE CASCADE;
