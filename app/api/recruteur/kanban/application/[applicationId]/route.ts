@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verify } from "jsonwebtoken";
 
-export async function POST(req: NextRequest) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ applicationId: string }> }
+) {
   try {
     const body = await req.json();
-    const { id, note } = body;
+    const { note } = body;
+    const idapp = (await params).applicationId;
 
     const token = req.cookies.get("token")?.value;
     if (!token) {
@@ -34,14 +38,15 @@ export async function POST(req: NextRequest) {
 
     const application = await prisma.application.update({
       where: {
-        id,
+        id: idapp,
       },
+
       data: {
         notes: {
           create: {
-            content: note || "",
-            authorId: user.recruteur?.id!,
-            authorType: user.recruteur?.type!,
+            content: note,
+            authorId: user.id,
+            authorType: user.type,
           },
         },
       },
@@ -50,6 +55,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: true,
+        message: "Note ajoutée avec succès",
         application,
       },
       { status: 201 }

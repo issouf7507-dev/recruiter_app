@@ -1,100 +1,41 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-import { verify } from "jsonwebtoken";
+import { getAuthenticatedUser } from "@/lib/auth-utils";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: number }> }
 ) {
   try {
-    // const session = await getServerSession(authOptions);
-    // if (!session?.user) {
-    //   return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    // }
+    const authenticatedUser = await getAuthenticatedUser(req);
 
-    // // Récupérer l'utilisateur et vérifier s'il est un collaborateur
-    // const user = await prisma.user.findUnique({
-    //   where: { email: session.user.email! },
-    //   include: {
-    //     collaborateur: true,
-    //     recruteur: true,
-    //   },
-    // });
-
-    // if (!user) {
-    //   return NextResponse.json(
-    //     { error: "Utilisateur non trouvé" },
-    //     { status: 404 }
-    //   );
-    // }
-
-    const tokenv = req.cookies.get("token")?.value;
-
-    if (!tokenv) {
-      return new NextResponse("Non autorisé", { status: 401 });
-    }
-
-    const decoded = verify(tokenv, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    if (!authenticatedUser) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const user = await prisma.user.findFirst({
+    // Récupérer les offres du recruteur de l'utilisateur connecté
+    const offres = await prisma.jobOffer.findMany({
       where: {
-        id: decoded.userId,
+        recruteurId: authenticatedUser.recruteurId,
       },
       include: {
         recruteur: true,
-        collaborateur: true,
-      },
-    });
-
-    // Déterminer le recruteurId à utiliser
-    let recruteurId: string;
-    if (user?.type === "RECRUTEUR" && user?.recruteur) {
-      // Si c'est le recruteur principal
-      recruteurId = user.recruteur.id;
-    } else if (user?.collaborateur) {
-      // Si c'est un collaborateur
-      recruteurId = user.collaborateur.recruteurId;
-    } else {
-      return NextResponse.json(
-        { error: "Accès non autorisé" },
-        { status: 403 }
-      );
-    }
-
-    const jobOffer = await prisma.jobOffer.findMany({
-      where: {
-        recruteurId: recruteurId,
-      },
-      orderBy: {
-        createdAt: "asc",
-      },
-      include: {
         applications: {
           include: {
             candidat: true,
           },
         },
-        kanbanColumns: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
+    return NextResponse.json(offres);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des offres:", error);
     return NextResponse.json(
-      { message: true, data: jobOffer },
-      { status: 200 }
-    );
-  } catch (err) {
-    console.log(err);
-    return NextResponse.json(
-      { success: false, message: "Une erreur est survenue" },
+      { error: "Erreur lors de la récupération des offres" },
       { status: 500 }
     );
   }

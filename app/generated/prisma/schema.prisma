@@ -177,11 +177,57 @@ model Application {
   jobOfferId Int
   column     KanbanColumn @relation(fields: [columnId], references: [id])
   columnId   String // Référence vers la colonne actuelle dans le kanban
-  note       String? // Note ajoutée par le recruteur sur cette candidature
   rating     Int? // Note par étoiles (1 à 3)
   message    String? // Message facultatif du candidat
   cv         String? // Lien vers le CV utilisé pour la candidature
-  createdAt  DateTime     @default(now())
+
+  //Migration en attente
+  duedate DateTime? // Date d'échéance de la candidature
+
+  notes     ApplicationNote[]
+  checklist ChecklistItem[]
+  files     ApplicationFile[]
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+}
+
+model ApplicationNote {
+  id            String      @id @default(cuid())
+  application   Application @relation(fields: [applicationId], references: [id])
+  applicationId String
+  content       String // Contenu de la note
+  authorId      String // ID de l'auteur (Recruteur ou Collaborateur)
+  authorType    String // Type d'auteur ("RECRUTEUR" ou "COLLABORATEUR")
+  // isPrivate     Boolean   @default(false) // Si la note est privée (visible uniquement par l'auteur)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model ChecklistItem {
+  id            String      @id @default(cuid())
+  application   Application @relation(fields: [applicationId], references: [id])
+  applicationId String
+  title         String // Titre de l'élément de la checklist
+  description   String? // Description optionnelle
+  isCompleted   Boolean     @default(false)
+  createdById   String // ID de l'auteur (Recruteur ou Collaborateur)
+  createdByType String // Type d'auteur ("RECRUTEUR" ou "COLLABORATEUR")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model ApplicationFile {
+  id             String      @id @default(cuid())
+  application    Application @relation(fields: [applicationId], references: [id])
+  applicationId  String
+  fileName       String // Nom original du fichier
+  fileUrl        String // URL du fichier stocké
+  fileType       String // Type MIME du fichier
+  fileSize       Int // Taille du fichier en bytes
+  uploadedById   String // ID de l'auteur (Recruteur ou Collaborateur)
+  uploadedByType String // Type d'auteur ("RECRUTEUR" ou "COLLABORATEUR")
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
 }
 
 model KanbanColumn {
@@ -239,6 +285,7 @@ model VerificationToken {
 enum UserType {
   CANDIDAT
   RECRUTEUR
+  COLLABORATEUR
 }
 
 enum RecruteurType {

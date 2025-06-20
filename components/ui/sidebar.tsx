@@ -172,6 +172,8 @@ export const SidebarLink = ({
 
         open ? "justify-start" : "justify-center",
 
+        animate ? "" : "justify-start",
+
         className
       )}
       {...props}
@@ -182,7 +184,11 @@ export const SidebarLink = ({
           display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-white dark:text-neutral-200 text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        className={` text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0 ${
+          open ? "text-white dark:text-neutral-200 " : "text-black "
+        }
+          
+         `}
       >
         {link.label}
       </motion.span>

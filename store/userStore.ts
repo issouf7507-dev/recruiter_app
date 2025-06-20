@@ -35,6 +35,19 @@ interface User {
     entreprise?: string;
     logo?: string;
   };
+  collaborateur?: {
+    id: string;
+    email: string;
+    nom: string;
+    prenom: string;
+    role: string;
+    recruteurId: string;
+    recruteur?: {
+      id: string;
+      name: string;
+      entreprise?: string;
+    };
+  };
 }
 
 interface UserState {

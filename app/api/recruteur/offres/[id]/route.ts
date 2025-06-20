@@ -100,6 +100,9 @@ export async function GET(
         applications: {
           include: {
             candidat: true,
+            notes: true,
+            checklist: true,
+            files: true,
           },
         },
       },

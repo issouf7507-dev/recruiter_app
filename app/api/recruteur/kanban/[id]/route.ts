@@ -17,6 +17,36 @@ export async function GET(req: Request) {
   }
 }
 
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const id = (await params).id;
+    const { name, color, jobOfferId } = await req.json();
+
+    const kanbanColumn = await prisma.kanbanColumn.update({
+      where: { id },
+      data: { name, color, jobOfferId: Number(jobOfferId) },
+    });
+
+    return NextResponse.json(
+      {
+        sucess: true,
+        message: "Column updated successfully",
+        data: kanbanColumn,
+      },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { succes: false, message: "Erreur server" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }

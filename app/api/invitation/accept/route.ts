@@ -1,27 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { verify } from "jsonwebtoken";
 import { hash } from "bcryptjs";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { token, nom, prenom, password } = body;
-
-    const tokenv = req.cookies.get("token")?.value;
-
-    if (!tokenv) {
-      return new NextResponse("Non autorisé", { status: 401 });
-    }
-
-    const decoded = verify(tokenv, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
 
     if (!token || !nom || !prenom || !password) {
       return NextResponse.json(
@@ -51,20 +35,36 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Créer l'utilisateur
+    // Vérifier si un utilisateur existe déjà avec cet email
+    const existingUser = await prisma.user.findUnique({
+      where: { email: invitation.email },
+    });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Un compte existe déjà avec cet email" },
+        { status: 400 }
+      );
+    }
+
+    // Créer l'utilisateur avec le type COLLABORATEUR
     const hashedPassword = await hash(password, 12);
     const user = await prisma.user.create({
       data: {
         email: invitation.email,
         name: `${prenom} ${nom}`,
         password: hashedPassword,
-        type: "RECRUTEUR",
+        type: "COLLABORATEUR",
       },
     });
 
     if (!user) {
-      return NextResponse.json({});
+      return NextResponse.json(
+        { error: "Erreur lors de la création du compte" },
+        { status: 500 }
+      );
     }
+
     // Créer le collaborateur
     const collaborateur = await prisma.collaborateur.create({
       data: {

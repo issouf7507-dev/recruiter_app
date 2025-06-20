@@ -59,6 +59,11 @@ export default function RecruteursLayout({
       icon: <LayoutDashboard className="h-5 w-5 text-white" />,
     },
     {
+      label: "Test d'accès",
+      href: "/dashboard-recruteurs/test-access",
+      icon: <HelpCircle className="h-5 w-5 text-white" />,
+    },
+    {
       label: "Offres d'emploi",
       href: "#",
       icon: <Briefcase className="h-5 w-5 text-white" />,
@@ -180,6 +185,35 @@ export default function RecruteursLayout({
     );
   }
 
+  // Vérifier que l'utilisateur est un recruteur ou un collaborateur
+  if (user.type !== "RECRUTEUR" && user.type !== "COLLABORATEUR") {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Card className="w-96 text-center">
+          <CardHeader className="flex flex-col items-center gap-2">
+            <Lock className="w-10 h-10 text-red-500" />
+            <CardTitle>Accès restreint</CardTitle>
+            <CardDescription>
+              Vous devez être un recruteur ou un collaborateur pour accéder à
+              cette section.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p>
+              Seuls les recruteurs et leurs collaborateurs peuvent accéder à
+              cette section.
+            </p>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <Button asChild variant="link">
+              <Link href="/recruteur/connexion">Se connecter</Link>
+            </Button>
+          </CardFooter>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <div
@@ -221,7 +255,7 @@ export default function RecruteursLayout({
               </div>
             </div>
             <div className=" flex flex-col">
-              {/* <div className="flex-shrink-0">
+              <div className="flex-shrink-0">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="icon">
@@ -242,7 +276,7 @@ export default function RecruteursLayout({
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-              </div> */}
+              </div>
               {/* <Button
                 variant="ghost"
                 className="w-full justify-start gap-2"

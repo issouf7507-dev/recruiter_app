@@ -17,6 +17,17 @@ type Column = {
   updatedAt: string; // ou Date si tu le convertis
 };
 
+export type KanbanColumn = {
+  color: string;
+  createdAt?: string;
+  id?: string;
+  isDefault?: boolean;
+  jobOfferId?: number;
+  name: string;
+  order?: number;
+  updatedAt?: string;
+};
+
 export type Candidat = {
   id: string;
   userId: string;
@@ -92,4 +103,52 @@ export type AlerteNotificationType = {
   offreId: number;
   createdAt: string;
   lu: boolean;
+};
+
+// Type étendu pour une offre d'emploi
+export type DetailedJobOffer = {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  postedDate: string;
+  applicants: number;
+  description: string;
+  status: "active" | "draft" | "closed";
+  salary: {
+    min: number;
+    max: number;
+    currency: string;
+    period: string;
+  };
+  experience: string;
+  education: string;
+  skills: string[];
+  responsibilities: string[];
+  requirements: string[];
+  benefits: string[];
+  views: number;
+  applications: {
+    total: number;
+    new: number;
+    shortlisted: number;
+    rejected: number;
+  };
+  kanbanColumns: any[];
+};
+
+export type Candidature = {
+  id: string;
+  nom: string;
+  email: string;
+  telephone: string;
+  cv: string;
+  lettreMotivation: string;
+  status: "nouvelle" | "en_cours" | "acceptee" | "refusee";
+  date: string;
+  isFavorite: boolean;
+  column: Column;
+  candidat: Candidat;
+  createdAt: string;
 };

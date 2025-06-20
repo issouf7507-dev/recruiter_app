@@ -242,11 +242,47 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   candidatId: 'candidatId',
   jobOfferId: 'jobOfferId',
   columnId: 'columnId',
-  note: 'note',
   rating: 'rating',
   message: 'message',
   cv: 'cv',
-  createdAt: 'createdAt'
+  duedate: 'duedate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ApplicationNoteScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  content: 'content',
+  authorId: 'authorId',
+  authorType: 'authorType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ChecklistItemScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  title: 'title',
+  description: 'description',
+  isCompleted: 'isCompleted',
+  createdById: 'createdById',
+  createdByType: 'createdByType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ApplicationFileScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  fileSize: 'fileSize',
+  uploadedById: 'uploadedById',
+  uploadedByType: 'uploadedByType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.KanbanColumnScalarFieldEnum = {
@@ -385,7 +421,8 @@ exports.Prisma.NullsOrder = {
 };
 exports.UserType = exports.$Enums.UserType = {
   CANDIDAT: 'CANDIDAT',
-  RECRUTEUR: 'RECRUTEUR'
+  RECRUTEUR: 'RECRUTEUR',
+  COLLABORATEUR: 'COLLABORATEUR'
 };
 
 exports.RecruteurType = exports.$Enums.RecruteurType = {
@@ -411,6 +448,9 @@ exports.Prisma.ModelName = {
   JobOffer: 'JobOffer',
   OfferTemplate: 'OfferTemplate',
   Application: 'Application',
+  ApplicationNote: 'ApplicationNote',
+  ChecklistItem: 'ChecklistItem',
+  ApplicationFile: 'ApplicationFile',
   KanbanColumn: 'KanbanColumn',
   Account: 'Account',
   Session: 'Session',

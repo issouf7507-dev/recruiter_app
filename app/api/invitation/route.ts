@@ -3,8 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { randomBytes } from "crypto";
 
-import { verify } from "jsonwebtoken";
 import { MailService } from "@/app/services/mail.service";
+import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { verify } from "jsonwebtoken";
 
 // Route pour créer une nouvelle invitation
 export async function POST(req: NextRequest) {
@@ -12,7 +13,7 @@ export async function POST(req: NextRequest) {
     const tokenv = req.cookies.get("token")?.value;
 
     if (!tokenv) {
-      return new NextResponse("Non autorisé", { status: 401 });
+      return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
     const decoded = verify(tokenv, process.env.JWT_SECRET!) as {
@@ -20,8 +21,27 @@ export async function POST(req: NextRequest) {
       type: string;
     };
 
-    if (decoded.type !== "RECRUTEUR") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.userId },
+      include: {
+        recruteur: true,
+      },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "Utilisateur non trouvé" },
+        { status: 404 }
+      );
+    }
+
+    const authenticatedUser = user.recruteur;
+
+    if (!authenticatedUser) {
+      return NextResponse.json(
+        { error: "Recruteur non trouvé" },
+        { status: 404 }
+      );
     }
 
     const body = await req.json();
@@ -34,38 +54,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const user = await prisma.user.findFirst({
-      where: {
-        id: decoded.userId,
-      },
-      include: {
-        recruteur: true,
-      },
-    });
-
-    // Vérifier si l'utilisateur est un recruteur
-    const recruteur = await prisma.recruteur.findFirst({
-      where: {
-        user: {
-          email: user?.recruteur?.email,
-        },
-      },
-    });
-
-    if (!recruteur) {
-      return NextResponse.json(
-        {
-          error: "Vous devez être un recruteur pour inviter des collaborateurs",
-        },
-        { status: 403 }
-      );
-    }
-
     // Vérifier si une invitation existe déjà pour cet email
     const existingInvitation = await prisma.invitation.findFirst({
       where: {
         email,
-        recruteurId: recruteur.id,
+        recruteurId: authenticatedUser.id,
         accepted: false,
       },
     });
@@ -89,7 +82,7 @@ export async function POST(req: NextRequest) {
         role,
         token,
         expiresAt,
-        recruteurId: recruteur.id,
+        recruteurId: authenticatedUser.id,
       },
     });
 
@@ -101,11 +94,9 @@ export async function POST(req: NextRequest) {
       "Invitation à rejoindre l'équipe",
       `
      <h1>Vous avez été invité à rejoindre l'équipe</h1>
-         <p>Vous avez été invité à rejoindre l'équipe de ${
-           recruteur.entreprise || recruteur.name
-         }.</p>
+         <p>Vous avez été invité à rejoindre l'équipe.</p>
         <p>Cliquez sur le lien suivant pour accepter l'invitation :</p>
-        <a href="${`http://localhost:3000/dashboard-recruteurs/invitations/accept?token=${token}`}">${`http://localhost:3000/dashboard-recruteurs/invitations/accept?token=${token}`}</a>
+        <a href="${inviteUrl}">${inviteUrl}</a>
          <p>Ce lien expirera dans 7 jours.</p>`
     );
 
@@ -122,40 +113,15 @@ export async function POST(req: NextRequest) {
 // Route pour récupérer les invitations d'un recruteur
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get("token")?.value;
+    const authenticatedUser = await getAuthenticatedUser(req);
 
-    if (!token) {
-      return new NextResponse("Non autorisé", { status: 401 });
-    }
-
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    if (!authenticatedUser) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    const user = await prisma.user.findFirst({
-      where: {
-        id: decoded.userId,
-      },
-      include: {
-        recruteur: true,
-      },
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        { error: "Vous devez être un recruteur pour voir les invitations" },
-        { status: 403 }
-      );
     }
 
     const invitations = await prisma.invitation.findMany({
       where: {
-        recruteurId: user.recruteur?.id,
+        recruteurId: authenticatedUser.recruteurId,
       },
       include: {
         collaborateur: true,

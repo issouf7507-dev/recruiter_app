@@ -4,12 +4,12 @@ import { verify } from "jsonwebtoken";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ applicationId: string }> }
 ) {
   try {
     const body = await req.json();
-    const { idapp, note } = body;
-    const { id } = await params;
+    const id = (await params).applicationId;
+    const { title, description } = body;
 
     const token = req.cookies.get("token")?.value;
     if (!token) {
@@ -36,26 +36,25 @@ export async function POST(
       );
     }
 
-    const application = await prisma.application.update({
-      where: {
-        id: idapp,
-      },
-
+    const checklistItem = await prisma.checklistItem.create({
       data: {
-        note,
+        title,
+        description,
+        isCompleted: false,
+        applicationId: id,
+        createdById: user.id,
+        createdByType: user.type,
       },
     });
 
-    return NextResponse.json(
-      {
-        success: true,
-        application,
-      },
-      { status: 201 }
+    return NextResponse.json({ success: true, data: checklistItem });
+  } catch (error) {
+    console.error(
+      "Erreur lors de la création de l'élément de la checklist:",
+      error
     );
-  } catch (err) {
     return NextResponse.json(
-      { error: "Erreur lors de la récupération des informations" },
+      { success: false, error: "Erreur lors de la création de l'élément" },
       { status: 500 }
     );
   }

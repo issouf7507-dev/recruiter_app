@@ -18,11 +18,21 @@ export async function GET(req: NextRequest) {
       type: string;
     };
 
+    // Vérifier que l'utilisateur est un recruteur ou un collaborateur
+    if (decoded.type !== "RECRUTEUR" && decoded.type !== "COLLABORATEUR") {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
     // Récupérer l'utilisateur
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
       include: {
         recruteur: true,
+        collaborateur: {
+          include: {
+            recruteur: true,
+          },
+        },
       },
     });
 

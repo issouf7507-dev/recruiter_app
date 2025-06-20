@@ -59,6 +59,21 @@ export type OfferTemplate = $Result.DefaultSelection<Prisma.$OfferTemplatePayloa
  */
 export type Application = $Result.DefaultSelection<Prisma.$ApplicationPayload>
 /**
+ * Model ApplicationNote
+ * 
+ */
+export type ApplicationNote = $Result.DefaultSelection<Prisma.$ApplicationNotePayload>
+/**
+ * Model ChecklistItem
+ * 
+ */
+export type ChecklistItem = $Result.DefaultSelection<Prisma.$ChecklistItemPayload>
+/**
+ * Model ApplicationFile
+ * 
+ */
+export type ApplicationFile = $Result.DefaultSelection<Prisma.$ApplicationFilePayload>
+/**
  * Model KanbanColumn
  * 
  */
@@ -115,7 +130,8 @@ export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
 export namespace $Enums {
   export const UserType: {
   CANDIDAT: 'CANDIDAT',
-  RECRUTEUR: 'RECRUTEUR'
+  RECRUTEUR: 'RECRUTEUR',
+  COLLABORATEUR: 'COLLABORATEUR'
 };
 
 export type UserType = (typeof UserType)[keyof typeof UserType]
@@ -367,6 +383,36 @@ export class PrismaClient<
     * ```
     */
   get application(): Prisma.ApplicationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationNote`: Exposes CRUD operations for the **ApplicationNote** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationNotes
+    * const applicationNotes = await prisma.applicationNote.findMany()
+    * ```
+    */
+  get applicationNote(): Prisma.ApplicationNoteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.checklistItem`: Exposes CRUD operations for the **ChecklistItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChecklistItems
+    * const checklistItems = await prisma.checklistItem.findMany()
+    * ```
+    */
+  get checklistItem(): Prisma.ChecklistItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationFile`: Exposes CRUD operations for the **ApplicationFile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationFiles
+    * const applicationFiles = await prisma.applicationFile.findMany()
+    * ```
+    */
+  get applicationFile(): Prisma.ApplicationFileDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.kanbanColumn`: Exposes CRUD operations for the **KanbanColumn** model.
@@ -916,6 +962,9 @@ export namespace Prisma {
     JobOffer: 'JobOffer',
     OfferTemplate: 'OfferTemplate',
     Application: 'Application',
+    ApplicationNote: 'ApplicationNote',
+    ChecklistItem: 'ChecklistItem',
+    ApplicationFile: 'ApplicationFile',
     KanbanColumn: 'KanbanColumn',
     Account: 'Account',
     Session: 'Session',
@@ -944,7 +993,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "candidat" | "recruteur" | "companySocial" | "invitation" | "collaborateur" | "jobOffer" | "offerTemplate" | "application" | "kanbanColumn" | "account" | "session" | "verificationToken" | "experience" | "formation" | "competence" | "objectifCarriere" | "alerteEmploi" | "notification"
+      modelProps: "user" | "candidat" | "recruteur" | "companySocial" | "invitation" | "collaborateur" | "jobOffer" | "offerTemplate" | "application" | "applicationNote" | "checklistItem" | "applicationFile" | "kanbanColumn" | "account" | "session" | "verificationToken" | "experience" | "formation" | "competence" | "objectifCarriere" | "alerteEmploi" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1611,6 +1660,228 @@ export namespace Prisma {
           count: {
             args: Prisma.ApplicationCountArgs<ExtArgs>
             result: $Utils.Optional<ApplicationCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApplicationNote: {
+        payload: Prisma.$ApplicationNotePayload<ExtArgs>
+        fields: Prisma.ApplicationNoteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationNoteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationNoteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationNoteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationNoteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationNoteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationNoteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationNoteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApplicationNoteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>[]
+          }
+          delete: {
+            args: Prisma.ApplicationNoteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
+          }
+          update: {
+            args: Prisma.ApplicationNoteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationNoteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationNoteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ApplicationNoteUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>[]
+          }
+          upsert: {
+            args: Prisma.ApplicationNoteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNotePayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationNoteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationNote>
+          }
+          groupBy: {
+            args: Prisma.ApplicationNoteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationNoteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationNoteCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationNoteCountAggregateOutputType> | number
+          }
+        }
+      }
+      ChecklistItem: {
+        payload: Prisma.$ChecklistItemPayload<ExtArgs>
+        fields: Prisma.ChecklistItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChecklistItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChecklistItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+          }
+          findFirst: {
+            args: Prisma.ChecklistItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChecklistItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+          }
+          findMany: {
+            args: Prisma.ChecklistItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>[]
+          }
+          create: {
+            args: Prisma.ChecklistItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+          }
+          createMany: {
+            args: Prisma.ChecklistItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ChecklistItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>[]
+          }
+          delete: {
+            args: Prisma.ChecklistItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+          }
+          update: {
+            args: Prisma.ChecklistItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChecklistItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChecklistItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ChecklistItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>[]
+          }
+          upsert: {
+            args: Prisma.ChecklistItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemPayload>
+          }
+          aggregate: {
+            args: Prisma.ChecklistItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChecklistItem>
+          }
+          groupBy: {
+            args: Prisma.ChecklistItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChecklistItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChecklistItemCountArgs<ExtArgs>
+            result: $Utils.Optional<ChecklistItemCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApplicationFile: {
+        payload: Prisma.$ApplicationFilePayload<ExtArgs>
+        fields: Prisma.ApplicationFileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationFileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationFileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationFileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationFileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationFileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationFileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationFileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApplicationFileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>[]
+          }
+          delete: {
+            args: Prisma.ApplicationFileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>
+          }
+          update: {
+            args: Prisma.ApplicationFileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationFileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationFileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ApplicationFileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>[]
+          }
+          upsert: {
+            args: Prisma.ApplicationFileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFilePayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationFileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationFile>
+          }
+          groupBy: {
+            args: Prisma.ApplicationFileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationFileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationFileCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationFileCountAggregateOutputType> | number
           }
         }
       }
@@ -2447,6 +2718,9 @@ export namespace Prisma {
     jobOffer?: JobOfferOmit
     offerTemplate?: OfferTemplateOmit
     application?: ApplicationOmit
+    applicationNote?: ApplicationNoteOmit
+    checklistItem?: ChecklistItemOmit
+    applicationFile?: ApplicationFileOmit
     kanbanColumn?: KanbanColumnOmit
     account?: AccountOmit
     session?: SessionOmit
@@ -2797,6 +3071,55 @@ export namespace Prisma {
    */
   export type OfferTemplateCountOutputTypeCountOffersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: JobOfferWhereInput
+  }
+
+
+  /**
+   * Count Type ApplicationCountOutputType
+   */
+
+  export type ApplicationCountOutputType = {
+    notes: number
+    checklist: number
+    files: number
+  }
+
+  export type ApplicationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    notes?: boolean | ApplicationCountOutputTypeCountNotesArgs
+    checklist?: boolean | ApplicationCountOutputTypeCountChecklistArgs
+    files?: boolean | ApplicationCountOutputTypeCountFilesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCountOutputType
+     */
+    select?: ApplicationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationNoteWhereInput
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountChecklistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChecklistItemWhereInput
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationFileWhereInput
   }
 
 
@@ -12747,11 +13070,12 @@ export namespace Prisma {
     candidatId: string | null
     jobOfferId: number | null
     columnId: string | null
-    note: string | null
     rating: number | null
     message: string | null
     cv: string | null
+    duedate: Date | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type ApplicationMaxAggregateOutputType = {
@@ -12759,11 +13083,12 @@ export namespace Prisma {
     candidatId: string | null
     jobOfferId: number | null
     columnId: string | null
-    note: string | null
     rating: number | null
     message: string | null
     cv: string | null
+    duedate: Date | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type ApplicationCountAggregateOutputType = {
@@ -12771,11 +13096,12 @@ export namespace Prisma {
     candidatId: number
     jobOfferId: number
     columnId: number
-    note: number
     rating: number
     message: number
     cv: number
+    duedate: number
     createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -12795,11 +13121,12 @@ export namespace Prisma {
     candidatId?: true
     jobOfferId?: true
     columnId?: true
-    note?: true
     rating?: true
     message?: true
     cv?: true
+    duedate?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type ApplicationMaxAggregateInputType = {
@@ -12807,11 +13134,12 @@ export namespace Prisma {
     candidatId?: true
     jobOfferId?: true
     columnId?: true
-    note?: true
     rating?: true
     message?: true
     cv?: true
+    duedate?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type ApplicationCountAggregateInputType = {
@@ -12819,11 +13147,12 @@ export namespace Prisma {
     candidatId?: true
     jobOfferId?: true
     columnId?: true
-    note?: true
     rating?: true
     message?: true
     cv?: true
+    duedate?: true
     createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -12918,11 +13247,12 @@ export namespace Prisma {
     candidatId: string
     jobOfferId: number
     columnId: string
-    note: string | null
     rating: number | null
     message: string | null
     cv: string | null
+    duedate: Date | null
     createdAt: Date
+    updatedAt: Date
     _count: ApplicationCountAggregateOutputType | null
     _avg: ApplicationAvgAggregateOutputType | null
     _sum: ApplicationSumAggregateOutputType | null
@@ -12949,14 +13279,19 @@ export namespace Prisma {
     candidatId?: boolean
     jobOfferId?: boolean
     columnId?: boolean
-    note?: boolean
     rating?: boolean
     message?: boolean
     cv?: boolean
+    duedate?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
     jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     column?: boolean | KanbanColumnDefaultArgs<ExtArgs>
+    notes?: boolean | Application$notesArgs<ExtArgs>
+    checklist?: boolean | Application$checklistArgs<ExtArgs>
+    files?: boolean | Application$filesArgs<ExtArgs>
+    _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12964,11 +13299,12 @@ export namespace Prisma {
     candidatId?: boolean
     jobOfferId?: boolean
     columnId?: boolean
-    note?: boolean
     rating?: boolean
     message?: boolean
     cv?: boolean
+    duedate?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
     jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     column?: boolean | KanbanColumnDefaultArgs<ExtArgs>
@@ -12979,11 +13315,12 @@ export namespace Prisma {
     candidatId?: boolean
     jobOfferId?: boolean
     columnId?: boolean
-    note?: boolean
     rating?: boolean
     message?: boolean
     cv?: boolean
+    duedate?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
     jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     column?: boolean | KanbanColumnDefaultArgs<ExtArgs>
@@ -12994,18 +13331,23 @@ export namespace Prisma {
     candidatId?: boolean
     jobOfferId?: boolean
     columnId?: boolean
-    note?: boolean
     rating?: boolean
     message?: boolean
     cv?: boolean
+    duedate?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidatId" | "jobOfferId" | "columnId" | "note" | "rating" | "message" | "cv" | "createdAt", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidatId" | "jobOfferId" | "columnId" | "rating" | "message" | "cv" | "duedate" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
     jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     column?: boolean | KanbanColumnDefaultArgs<ExtArgs>
+    notes?: boolean | Application$notesArgs<ExtArgs>
+    checklist?: boolean | Application$checklistArgs<ExtArgs>
+    files?: boolean | Application$filesArgs<ExtArgs>
+    _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
@@ -13024,17 +13366,21 @@ export namespace Prisma {
       candidat: Prisma.$CandidatPayload<ExtArgs>
       jobOffer: Prisma.$JobOfferPayload<ExtArgs>
       column: Prisma.$KanbanColumnPayload<ExtArgs>
+      notes: Prisma.$ApplicationNotePayload<ExtArgs>[]
+      checklist: Prisma.$ChecklistItemPayload<ExtArgs>[]
+      files: Prisma.$ApplicationFilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       candidatId: string
       jobOfferId: number
       columnId: string
-      note: string | null
       rating: number | null
       message: string | null
       cv: string | null
+      duedate: Date | null
       createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["application"]>
     composites: {}
   }
@@ -13432,6 +13778,9 @@ export namespace Prisma {
     candidat<T extends CandidatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidatDefaultArgs<ExtArgs>>): Prisma__CandidatClient<$Result.GetResult<Prisma.$CandidatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     jobOffer<T extends JobOfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobOfferDefaultArgs<ExtArgs>>): Prisma__JobOfferClient<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     column<T extends KanbanColumnDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KanbanColumnDefaultArgs<ExtArgs>>): Prisma__KanbanColumnClient<$Result.GetResult<Prisma.$KanbanColumnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    notes<T extends Application$notesArgs<ExtArgs> = {}>(args?: Subset<T, Application$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    checklist<T extends Application$checklistArgs<ExtArgs> = {}>(args?: Subset<T, Application$checklistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    files<T extends Application$filesArgs<ExtArgs> = {}>(args?: Subset<T, Application$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13465,11 +13814,12 @@ export namespace Prisma {
     readonly candidatId: FieldRef<"Application", 'String'>
     readonly jobOfferId: FieldRef<"Application", 'Int'>
     readonly columnId: FieldRef<"Application", 'String'>
-    readonly note: FieldRef<"Application", 'String'>
     readonly rating: FieldRef<"Application", 'Int'>
     readonly message: FieldRef<"Application", 'String'>
     readonly cv: FieldRef<"Application", 'String'>
+    readonly duedate: FieldRef<"Application", 'DateTime'>
     readonly createdAt: FieldRef<"Application", 'DateTime'>
+    readonly updatedAt: FieldRef<"Application", 'DateTime'>
   }
     
 
@@ -13866,6 +14216,78 @@ export namespace Prisma {
   }
 
   /**
+   * Application.notes
+   */
+  export type Application$notesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    where?: ApplicationNoteWhereInput
+    orderBy?: ApplicationNoteOrderByWithRelationInput | ApplicationNoteOrderByWithRelationInput[]
+    cursor?: ApplicationNoteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationNoteScalarFieldEnum | ApplicationNoteScalarFieldEnum[]
+  }
+
+  /**
+   * Application.checklist
+   */
+  export type Application$checklistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    where?: ChecklistItemWhereInput
+    orderBy?: ChecklistItemOrderByWithRelationInput | ChecklistItemOrderByWithRelationInput[]
+    cursor?: ChecklistItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChecklistItemScalarFieldEnum | ChecklistItemScalarFieldEnum[]
+  }
+
+  /**
+   * Application.files
+   */
+  export type Application$filesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    where?: ApplicationFileWhereInput
+    orderBy?: ApplicationFileOrderByWithRelationInput | ApplicationFileOrderByWithRelationInput[]
+    cursor?: ApplicationFileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationFileScalarFieldEnum | ApplicationFileScalarFieldEnum[]
+  }
+
+  /**
    * Application without action
    */
   export type ApplicationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13881,6 +14303,3357 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ApplicationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApplicationNote
+   */
+
+  export type AggregateApplicationNote = {
+    _count: ApplicationNoteCountAggregateOutputType | null
+    _min: ApplicationNoteMinAggregateOutputType | null
+    _max: ApplicationNoteMaxAggregateOutputType | null
+  }
+
+  export type ApplicationNoteMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    content: string | null
+    authorId: string | null
+    authorType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApplicationNoteMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    content: string | null
+    authorId: string | null
+    authorType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApplicationNoteCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    content: number
+    authorId: number
+    authorType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ApplicationNoteMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    content?: true
+    authorId?: true
+    authorType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApplicationNoteMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    content?: true
+    authorId?: true
+    authorType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApplicationNoteCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    content?: true
+    authorId?: true
+    authorType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ApplicationNoteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationNote to aggregate.
+     */
+    where?: ApplicationNoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationNotes to fetch.
+     */
+    orderBy?: ApplicationNoteOrderByWithRelationInput | ApplicationNoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationNoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationNotes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationNotes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationNotes
+    **/
+    _count?: true | ApplicationNoteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationNoteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationNoteMaxAggregateInputType
+  }
+
+  export type GetApplicationNoteAggregateType<T extends ApplicationNoteAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationNote]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationNote[P]>
+      : GetScalarType<T[P], AggregateApplicationNote[P]>
+  }
+
+
+
+
+  export type ApplicationNoteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationNoteWhereInput
+    orderBy?: ApplicationNoteOrderByWithAggregationInput | ApplicationNoteOrderByWithAggregationInput[]
+    by: ApplicationNoteScalarFieldEnum[] | ApplicationNoteScalarFieldEnum
+    having?: ApplicationNoteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationNoteCountAggregateInputType | true
+    _min?: ApplicationNoteMinAggregateInputType
+    _max?: ApplicationNoteMaxAggregateInputType
+  }
+
+  export type ApplicationNoteGroupByOutputType = {
+    id: string
+    applicationId: string
+    content: string
+    authorId: string
+    authorType: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ApplicationNoteCountAggregateOutputType | null
+    _min: ApplicationNoteMinAggregateOutputType | null
+    _max: ApplicationNoteMaxAggregateOutputType | null
+  }
+
+  type GetApplicationNoteGroupByPayload<T extends ApplicationNoteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationNoteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationNoteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationNoteGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationNoteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationNoteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationNote"]>
+
+  export type ApplicationNoteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationNote"]>
+
+  export type ApplicationNoteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationNote"]>
+
+  export type ApplicationNoteSelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ApplicationNoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "content" | "authorId" | "authorType" | "createdAt" | "updatedAt", ExtArgs["result"]["applicationNote"]>
+  export type ApplicationNoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+  export type ApplicationNoteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+  export type ApplicationNoteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationNotePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationNote"
+    objects: {
+      application: Prisma.$ApplicationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      content: string
+      authorId: string
+      authorType: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["applicationNote"]>
+    composites: {}
+  }
+
+  type ApplicationNoteGetPayload<S extends boolean | null | undefined | ApplicationNoteDefaultArgs> = $Result.GetResult<Prisma.$ApplicationNotePayload, S>
+
+  type ApplicationNoteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationNoteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationNoteCountAggregateInputType | true
+    }
+
+  export interface ApplicationNoteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationNote'], meta: { name: 'ApplicationNote' } }
+    /**
+     * Find zero or one ApplicationNote that matches the filter.
+     * @param {ApplicationNoteFindUniqueArgs} args - Arguments to find a ApplicationNote
+     * @example
+     * // Get one ApplicationNote
+     * const applicationNote = await prisma.applicationNote.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationNoteFindUniqueArgs>(args: SelectSubset<T, ApplicationNoteFindUniqueArgs<ExtArgs>>): Prisma__ApplicationNoteClient<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationNote that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationNoteFindUniqueOrThrowArgs} args - Arguments to find a ApplicationNote
+     * @example
+     * // Get one ApplicationNote
+     * const applicationNote = await prisma.applicationNote.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationNoteFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationNoteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationNoteClient<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationNote that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteFindFirstArgs} args - Arguments to find a ApplicationNote
+     * @example
+     * // Get one ApplicationNote
+     * const applicationNote = await prisma.applicationNote.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationNoteFindFirstArgs>(args?: SelectSubset<T, ApplicationNoteFindFirstArgs<ExtArgs>>): Prisma__ApplicationNoteClient<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationNote that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteFindFirstOrThrowArgs} args - Arguments to find a ApplicationNote
+     * @example
+     * // Get one ApplicationNote
+     * const applicationNote = await prisma.applicationNote.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationNoteFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationNoteFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationNoteClient<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationNotes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationNotes
+     * const applicationNotes = await prisma.applicationNote.findMany()
+     * 
+     * // Get first 10 ApplicationNotes
+     * const applicationNotes = await prisma.applicationNote.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationNoteWithIdOnly = await prisma.applicationNote.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationNoteFindManyArgs>(args?: SelectSubset<T, ApplicationNoteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationNote.
+     * @param {ApplicationNoteCreateArgs} args - Arguments to create a ApplicationNote.
+     * @example
+     * // Create one ApplicationNote
+     * const ApplicationNote = await prisma.applicationNote.create({
+     *   data: {
+     *     // ... data to create a ApplicationNote
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationNoteCreateArgs>(args: SelectSubset<T, ApplicationNoteCreateArgs<ExtArgs>>): Prisma__ApplicationNoteClient<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationNotes.
+     * @param {ApplicationNoteCreateManyArgs} args - Arguments to create many ApplicationNotes.
+     * @example
+     * // Create many ApplicationNotes
+     * const applicationNote = await prisma.applicationNote.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationNoteCreateManyArgs>(args?: SelectSubset<T, ApplicationNoteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApplicationNotes and returns the data saved in the database.
+     * @param {ApplicationNoteCreateManyAndReturnArgs} args - Arguments to create many ApplicationNotes.
+     * @example
+     * // Create many ApplicationNotes
+     * const applicationNote = await prisma.applicationNote.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApplicationNotes and only return the `id`
+     * const applicationNoteWithIdOnly = await prisma.applicationNote.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApplicationNoteCreateManyAndReturnArgs>(args?: SelectSubset<T, ApplicationNoteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ApplicationNote.
+     * @param {ApplicationNoteDeleteArgs} args - Arguments to delete one ApplicationNote.
+     * @example
+     * // Delete one ApplicationNote
+     * const ApplicationNote = await prisma.applicationNote.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationNote
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationNoteDeleteArgs>(args: SelectSubset<T, ApplicationNoteDeleteArgs<ExtArgs>>): Prisma__ApplicationNoteClient<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationNote.
+     * @param {ApplicationNoteUpdateArgs} args - Arguments to update one ApplicationNote.
+     * @example
+     * // Update one ApplicationNote
+     * const applicationNote = await prisma.applicationNote.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationNoteUpdateArgs>(args: SelectSubset<T, ApplicationNoteUpdateArgs<ExtArgs>>): Prisma__ApplicationNoteClient<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationNotes.
+     * @param {ApplicationNoteDeleteManyArgs} args - Arguments to filter ApplicationNotes to delete.
+     * @example
+     * // Delete a few ApplicationNotes
+     * const { count } = await prisma.applicationNote.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationNoteDeleteManyArgs>(args?: SelectSubset<T, ApplicationNoteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationNotes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationNotes
+     * const applicationNote = await prisma.applicationNote.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationNoteUpdateManyArgs>(args: SelectSubset<T, ApplicationNoteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationNotes and returns the data updated in the database.
+     * @param {ApplicationNoteUpdateManyAndReturnArgs} args - Arguments to update many ApplicationNotes.
+     * @example
+     * // Update many ApplicationNotes
+     * const applicationNote = await prisma.applicationNote.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ApplicationNotes and only return the `id`
+     * const applicationNoteWithIdOnly = await prisma.applicationNote.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ApplicationNoteUpdateManyAndReturnArgs>(args: SelectSubset<T, ApplicationNoteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ApplicationNote.
+     * @param {ApplicationNoteUpsertArgs} args - Arguments to update or create a ApplicationNote.
+     * @example
+     * // Update or create a ApplicationNote
+     * const applicationNote = await prisma.applicationNote.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationNote
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationNote we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationNoteUpsertArgs>(args: SelectSubset<T, ApplicationNoteUpsertArgs<ExtArgs>>): Prisma__ApplicationNoteClient<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationNotes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteCountArgs} args - Arguments to filter ApplicationNotes to count.
+     * @example
+     * // Count the number of ApplicationNotes
+     * const count = await prisma.applicationNote.count({
+     *   where: {
+     *     // ... the filter for the ApplicationNotes we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationNoteCountArgs>(
+      args?: Subset<T, ApplicationNoteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationNoteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationNote.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationNoteAggregateArgs>(args: Subset<T, ApplicationNoteAggregateArgs>): Prisma.PrismaPromise<GetApplicationNoteAggregateType<T>>
+
+    /**
+     * Group by ApplicationNote.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationNoteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationNoteGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationNoteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationNoteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationNoteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationNote model
+   */
+  readonly fields: ApplicationNoteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationNote.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationNoteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationNote model
+   */
+  interface ApplicationNoteFieldRefs {
+    readonly id: FieldRef<"ApplicationNote", 'String'>
+    readonly applicationId: FieldRef<"ApplicationNote", 'String'>
+    readonly content: FieldRef<"ApplicationNote", 'String'>
+    readonly authorId: FieldRef<"ApplicationNote", 'String'>
+    readonly authorType: FieldRef<"ApplicationNote", 'String'>
+    readonly createdAt: FieldRef<"ApplicationNote", 'DateTime'>
+    readonly updatedAt: FieldRef<"ApplicationNote", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationNote findUnique
+   */
+  export type ApplicationNoteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNote to fetch.
+     */
+    where: ApplicationNoteWhereUniqueInput
+  }
+
+  /**
+   * ApplicationNote findUniqueOrThrow
+   */
+  export type ApplicationNoteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNote to fetch.
+     */
+    where: ApplicationNoteWhereUniqueInput
+  }
+
+  /**
+   * ApplicationNote findFirst
+   */
+  export type ApplicationNoteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNote to fetch.
+     */
+    where?: ApplicationNoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationNotes to fetch.
+     */
+    orderBy?: ApplicationNoteOrderByWithRelationInput | ApplicationNoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationNotes.
+     */
+    cursor?: ApplicationNoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationNotes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationNotes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationNotes.
+     */
+    distinct?: ApplicationNoteScalarFieldEnum | ApplicationNoteScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationNote findFirstOrThrow
+   */
+  export type ApplicationNoteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNote to fetch.
+     */
+    where?: ApplicationNoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationNotes to fetch.
+     */
+    orderBy?: ApplicationNoteOrderByWithRelationInput | ApplicationNoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationNotes.
+     */
+    cursor?: ApplicationNoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationNotes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationNotes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationNotes.
+     */
+    distinct?: ApplicationNoteScalarFieldEnum | ApplicationNoteScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationNote findMany
+   */
+  export type ApplicationNoteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNotes to fetch.
+     */
+    where?: ApplicationNoteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationNotes to fetch.
+     */
+    orderBy?: ApplicationNoteOrderByWithRelationInput | ApplicationNoteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationNotes.
+     */
+    cursor?: ApplicationNoteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationNotes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationNotes.
+     */
+    skip?: number
+    distinct?: ApplicationNoteScalarFieldEnum | ApplicationNoteScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationNote create
+   */
+  export type ApplicationNoteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationNote.
+     */
+    data: XOR<ApplicationNoteCreateInput, ApplicationNoteUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationNote createMany
+   */
+  export type ApplicationNoteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationNotes.
+     */
+    data: ApplicationNoteCreateManyInput | ApplicationNoteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationNote createManyAndReturn
+   */
+  export type ApplicationNoteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * The data used to create many ApplicationNotes.
+     */
+    data: ApplicationNoteCreateManyInput | ApplicationNoteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationNote update
+   */
+  export type ApplicationNoteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationNote.
+     */
+    data: XOR<ApplicationNoteUpdateInput, ApplicationNoteUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationNote to update.
+     */
+    where: ApplicationNoteWhereUniqueInput
+  }
+
+  /**
+   * ApplicationNote updateMany
+   */
+  export type ApplicationNoteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationNotes.
+     */
+    data: XOR<ApplicationNoteUpdateManyMutationInput, ApplicationNoteUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationNotes to update
+     */
+    where?: ApplicationNoteWhereInput
+    /**
+     * Limit how many ApplicationNotes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationNote updateManyAndReturn
+   */
+  export type ApplicationNoteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * The data used to update ApplicationNotes.
+     */
+    data: XOR<ApplicationNoteUpdateManyMutationInput, ApplicationNoteUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationNotes to update
+     */
+    where?: ApplicationNoteWhereInput
+    /**
+     * Limit how many ApplicationNotes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationNote upsert
+   */
+  export type ApplicationNoteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationNote to update in case it exists.
+     */
+    where: ApplicationNoteWhereUniqueInput
+    /**
+     * In case the ApplicationNote found by the `where` argument doesn't exist, create a new ApplicationNote with this data.
+     */
+    create: XOR<ApplicationNoteCreateInput, ApplicationNoteUncheckedCreateInput>
+    /**
+     * In case the ApplicationNote was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationNoteUpdateInput, ApplicationNoteUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationNote delete
+   */
+  export type ApplicationNoteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationNote to delete.
+     */
+    where: ApplicationNoteWhereUniqueInput
+  }
+
+  /**
+   * ApplicationNote deleteMany
+   */
+  export type ApplicationNoteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationNotes to delete
+     */
+    where?: ApplicationNoteWhereInput
+    /**
+     * Limit how many ApplicationNotes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationNote without action
+   */
+  export type ApplicationNoteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNote
+     */
+    select?: ApplicationNoteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNote
+     */
+    omit?: ApplicationNoteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ChecklistItem
+   */
+
+  export type AggregateChecklistItem = {
+    _count: ChecklistItemCountAggregateOutputType | null
+    _min: ChecklistItemMinAggregateOutputType | null
+    _max: ChecklistItemMaxAggregateOutputType | null
+  }
+
+  export type ChecklistItemMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    title: string | null
+    description: string | null
+    isCompleted: boolean | null
+    createdById: string | null
+    createdByType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChecklistItemMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    title: string | null
+    description: string | null
+    isCompleted: boolean | null
+    createdById: string | null
+    createdByType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChecklistItemCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    title: number
+    description: number
+    isCompleted: number
+    createdById: number
+    createdByType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ChecklistItemMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    title?: true
+    description?: true
+    isCompleted?: true
+    createdById?: true
+    createdByType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChecklistItemMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    title?: true
+    description?: true
+    isCompleted?: true
+    createdById?: true
+    createdByType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChecklistItemCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    title?: true
+    description?: true
+    isCompleted?: true
+    createdById?: true
+    createdByType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ChecklistItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChecklistItem to aggregate.
+     */
+    where?: ChecklistItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChecklistItems to fetch.
+     */
+    orderBy?: ChecklistItemOrderByWithRelationInput | ChecklistItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChecklistItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChecklistItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChecklistItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChecklistItems
+    **/
+    _count?: true | ChecklistItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChecklistItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChecklistItemMaxAggregateInputType
+  }
+
+  export type GetChecklistItemAggregateType<T extends ChecklistItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateChecklistItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChecklistItem[P]>
+      : GetScalarType<T[P], AggregateChecklistItem[P]>
+  }
+
+
+
+
+  export type ChecklistItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChecklistItemWhereInput
+    orderBy?: ChecklistItemOrderByWithAggregationInput | ChecklistItemOrderByWithAggregationInput[]
+    by: ChecklistItemScalarFieldEnum[] | ChecklistItemScalarFieldEnum
+    having?: ChecklistItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChecklistItemCountAggregateInputType | true
+    _min?: ChecklistItemMinAggregateInputType
+    _max?: ChecklistItemMaxAggregateInputType
+  }
+
+  export type ChecklistItemGroupByOutputType = {
+    id: string
+    applicationId: string
+    title: string
+    description: string | null
+    isCompleted: boolean
+    createdById: string
+    createdByType: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ChecklistItemCountAggregateOutputType | null
+    _min: ChecklistItemMinAggregateOutputType | null
+    _max: ChecklistItemMaxAggregateOutputType | null
+  }
+
+  type GetChecklistItemGroupByPayload<T extends ChecklistItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChecklistItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChecklistItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChecklistItemGroupByOutputType[P]>
+            : GetScalarType<T[P], ChecklistItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChecklistItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    title?: boolean
+    description?: boolean
+    isCompleted?: boolean
+    createdById?: boolean
+    createdByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checklistItem"]>
+
+  export type ChecklistItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    title?: boolean
+    description?: boolean
+    isCompleted?: boolean
+    createdById?: boolean
+    createdByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checklistItem"]>
+
+  export type ChecklistItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    title?: boolean
+    description?: boolean
+    isCompleted?: boolean
+    createdById?: boolean
+    createdByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checklistItem"]>
+
+  export type ChecklistItemSelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    title?: boolean
+    description?: boolean
+    isCompleted?: boolean
+    createdById?: boolean
+    createdByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ChecklistItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "title" | "description" | "isCompleted" | "createdById" | "createdByType" | "createdAt" | "updatedAt", ExtArgs["result"]["checklistItem"]>
+  export type ChecklistItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+  export type ChecklistItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+  export type ChecklistItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+
+  export type $ChecklistItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChecklistItem"
+    objects: {
+      application: Prisma.$ApplicationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      title: string
+      description: string | null
+      isCompleted: boolean
+      createdById: string
+      createdByType: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["checklistItem"]>
+    composites: {}
+  }
+
+  type ChecklistItemGetPayload<S extends boolean | null | undefined | ChecklistItemDefaultArgs> = $Result.GetResult<Prisma.$ChecklistItemPayload, S>
+
+  type ChecklistItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ChecklistItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ChecklistItemCountAggregateInputType | true
+    }
+
+  export interface ChecklistItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChecklistItem'], meta: { name: 'ChecklistItem' } }
+    /**
+     * Find zero or one ChecklistItem that matches the filter.
+     * @param {ChecklistItemFindUniqueArgs} args - Arguments to find a ChecklistItem
+     * @example
+     * // Get one ChecklistItem
+     * const checklistItem = await prisma.checklistItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChecklistItemFindUniqueArgs>(args: SelectSubset<T, ChecklistItemFindUniqueArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ChecklistItem that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ChecklistItemFindUniqueOrThrowArgs} args - Arguments to find a ChecklistItem
+     * @example
+     * // Get one ChecklistItem
+     * const checklistItem = await prisma.checklistItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChecklistItemFindUniqueOrThrowArgs>(args: SelectSubset<T, ChecklistItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChecklistItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemFindFirstArgs} args - Arguments to find a ChecklistItem
+     * @example
+     * // Get one ChecklistItem
+     * const checklistItem = await prisma.checklistItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChecklistItemFindFirstArgs>(args?: SelectSubset<T, ChecklistItemFindFirstArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChecklistItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemFindFirstOrThrowArgs} args - Arguments to find a ChecklistItem
+     * @example
+     * // Get one ChecklistItem
+     * const checklistItem = await prisma.checklistItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChecklistItemFindFirstOrThrowArgs>(args?: SelectSubset<T, ChecklistItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ChecklistItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChecklistItems
+     * const checklistItems = await prisma.checklistItem.findMany()
+     * 
+     * // Get first 10 ChecklistItems
+     * const checklistItems = await prisma.checklistItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const checklistItemWithIdOnly = await prisma.checklistItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChecklistItemFindManyArgs>(args?: SelectSubset<T, ChecklistItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ChecklistItem.
+     * @param {ChecklistItemCreateArgs} args - Arguments to create a ChecklistItem.
+     * @example
+     * // Create one ChecklistItem
+     * const ChecklistItem = await prisma.checklistItem.create({
+     *   data: {
+     *     // ... data to create a ChecklistItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChecklistItemCreateArgs>(args: SelectSubset<T, ChecklistItemCreateArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ChecklistItems.
+     * @param {ChecklistItemCreateManyArgs} args - Arguments to create many ChecklistItems.
+     * @example
+     * // Create many ChecklistItems
+     * const checklistItem = await prisma.checklistItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChecklistItemCreateManyArgs>(args?: SelectSubset<T, ChecklistItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ChecklistItems and returns the data saved in the database.
+     * @param {ChecklistItemCreateManyAndReturnArgs} args - Arguments to create many ChecklistItems.
+     * @example
+     * // Create many ChecklistItems
+     * const checklistItem = await prisma.checklistItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ChecklistItems and only return the `id`
+     * const checklistItemWithIdOnly = await prisma.checklistItem.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ChecklistItemCreateManyAndReturnArgs>(args?: SelectSubset<T, ChecklistItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ChecklistItem.
+     * @param {ChecklistItemDeleteArgs} args - Arguments to delete one ChecklistItem.
+     * @example
+     * // Delete one ChecklistItem
+     * const ChecklistItem = await prisma.checklistItem.delete({
+     *   where: {
+     *     // ... filter to delete one ChecklistItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChecklistItemDeleteArgs>(args: SelectSubset<T, ChecklistItemDeleteArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ChecklistItem.
+     * @param {ChecklistItemUpdateArgs} args - Arguments to update one ChecklistItem.
+     * @example
+     * // Update one ChecklistItem
+     * const checklistItem = await prisma.checklistItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChecklistItemUpdateArgs>(args: SelectSubset<T, ChecklistItemUpdateArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ChecklistItems.
+     * @param {ChecklistItemDeleteManyArgs} args - Arguments to filter ChecklistItems to delete.
+     * @example
+     * // Delete a few ChecklistItems
+     * const { count } = await prisma.checklistItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChecklistItemDeleteManyArgs>(args?: SelectSubset<T, ChecklistItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChecklistItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChecklistItems
+     * const checklistItem = await prisma.checklistItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChecklistItemUpdateManyArgs>(args: SelectSubset<T, ChecklistItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChecklistItems and returns the data updated in the database.
+     * @param {ChecklistItemUpdateManyAndReturnArgs} args - Arguments to update many ChecklistItems.
+     * @example
+     * // Update many ChecklistItems
+     * const checklistItem = await prisma.checklistItem.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ChecklistItems and only return the `id`
+     * const checklistItemWithIdOnly = await prisma.checklistItem.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ChecklistItemUpdateManyAndReturnArgs>(args: SelectSubset<T, ChecklistItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ChecklistItem.
+     * @param {ChecklistItemUpsertArgs} args - Arguments to update or create a ChecklistItem.
+     * @example
+     * // Update or create a ChecklistItem
+     * const checklistItem = await prisma.checklistItem.upsert({
+     *   create: {
+     *     // ... data to create a ChecklistItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChecklistItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChecklistItemUpsertArgs>(args: SelectSubset<T, ChecklistItemUpsertArgs<ExtArgs>>): Prisma__ChecklistItemClient<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ChecklistItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemCountArgs} args - Arguments to filter ChecklistItems to count.
+     * @example
+     * // Count the number of ChecklistItems
+     * const count = await prisma.checklistItem.count({
+     *   where: {
+     *     // ... the filter for the ChecklistItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChecklistItemCountArgs>(
+      args?: Subset<T, ChecklistItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChecklistItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChecklistItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChecklistItemAggregateArgs>(args: Subset<T, ChecklistItemAggregateArgs>): Prisma.PrismaPromise<GetChecklistItemAggregateType<T>>
+
+    /**
+     * Group by ChecklistItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChecklistItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChecklistItemGroupByArgs['orderBy'] }
+        : { orderBy?: ChecklistItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChecklistItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChecklistItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChecklistItem model
+   */
+  readonly fields: ChecklistItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChecklistItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChecklistItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChecklistItem model
+   */
+  interface ChecklistItemFieldRefs {
+    readonly id: FieldRef<"ChecklistItem", 'String'>
+    readonly applicationId: FieldRef<"ChecklistItem", 'String'>
+    readonly title: FieldRef<"ChecklistItem", 'String'>
+    readonly description: FieldRef<"ChecklistItem", 'String'>
+    readonly isCompleted: FieldRef<"ChecklistItem", 'Boolean'>
+    readonly createdById: FieldRef<"ChecklistItem", 'String'>
+    readonly createdByType: FieldRef<"ChecklistItem", 'String'>
+    readonly createdAt: FieldRef<"ChecklistItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"ChecklistItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChecklistItem findUnique
+   */
+  export type ChecklistItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItem to fetch.
+     */
+    where: ChecklistItemWhereUniqueInput
+  }
+
+  /**
+   * ChecklistItem findUniqueOrThrow
+   */
+  export type ChecklistItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItem to fetch.
+     */
+    where: ChecklistItemWhereUniqueInput
+  }
+
+  /**
+   * ChecklistItem findFirst
+   */
+  export type ChecklistItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItem to fetch.
+     */
+    where?: ChecklistItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChecklistItems to fetch.
+     */
+    orderBy?: ChecklistItemOrderByWithRelationInput | ChecklistItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChecklistItems.
+     */
+    cursor?: ChecklistItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChecklistItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChecklistItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChecklistItems.
+     */
+    distinct?: ChecklistItemScalarFieldEnum | ChecklistItemScalarFieldEnum[]
+  }
+
+  /**
+   * ChecklistItem findFirstOrThrow
+   */
+  export type ChecklistItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItem to fetch.
+     */
+    where?: ChecklistItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChecklistItems to fetch.
+     */
+    orderBy?: ChecklistItemOrderByWithRelationInput | ChecklistItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChecklistItems.
+     */
+    cursor?: ChecklistItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChecklistItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChecklistItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChecklistItems.
+     */
+    distinct?: ChecklistItemScalarFieldEnum | ChecklistItemScalarFieldEnum[]
+  }
+
+  /**
+   * ChecklistItem findMany
+   */
+  export type ChecklistItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItems to fetch.
+     */
+    where?: ChecklistItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChecklistItems to fetch.
+     */
+    orderBy?: ChecklistItemOrderByWithRelationInput | ChecklistItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChecklistItems.
+     */
+    cursor?: ChecklistItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChecklistItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChecklistItems.
+     */
+    skip?: number
+    distinct?: ChecklistItemScalarFieldEnum | ChecklistItemScalarFieldEnum[]
+  }
+
+  /**
+   * ChecklistItem create
+   */
+  export type ChecklistItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ChecklistItem.
+     */
+    data: XOR<ChecklistItemCreateInput, ChecklistItemUncheckedCreateInput>
+  }
+
+  /**
+   * ChecklistItem createMany
+   */
+  export type ChecklistItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChecklistItems.
+     */
+    data: ChecklistItemCreateManyInput | ChecklistItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChecklistItem createManyAndReturn
+   */
+  export type ChecklistItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * The data used to create many ChecklistItems.
+     */
+    data: ChecklistItemCreateManyInput | ChecklistItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ChecklistItem update
+   */
+  export type ChecklistItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ChecklistItem.
+     */
+    data: XOR<ChecklistItemUpdateInput, ChecklistItemUncheckedUpdateInput>
+    /**
+     * Choose, which ChecklistItem to update.
+     */
+    where: ChecklistItemWhereUniqueInput
+  }
+
+  /**
+   * ChecklistItem updateMany
+   */
+  export type ChecklistItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChecklistItems.
+     */
+    data: XOR<ChecklistItemUpdateManyMutationInput, ChecklistItemUncheckedUpdateManyInput>
+    /**
+     * Filter which ChecklistItems to update
+     */
+    where?: ChecklistItemWhereInput
+    /**
+     * Limit how many ChecklistItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChecklistItem updateManyAndReturn
+   */
+  export type ChecklistItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * The data used to update ChecklistItems.
+     */
+    data: XOR<ChecklistItemUpdateManyMutationInput, ChecklistItemUncheckedUpdateManyInput>
+    /**
+     * Filter which ChecklistItems to update
+     */
+    where?: ChecklistItemWhereInput
+    /**
+     * Limit how many ChecklistItems to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ChecklistItem upsert
+   */
+  export type ChecklistItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ChecklistItem to update in case it exists.
+     */
+    where: ChecklistItemWhereUniqueInput
+    /**
+     * In case the ChecklistItem found by the `where` argument doesn't exist, create a new ChecklistItem with this data.
+     */
+    create: XOR<ChecklistItemCreateInput, ChecklistItemUncheckedCreateInput>
+    /**
+     * In case the ChecklistItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChecklistItemUpdateInput, ChecklistItemUncheckedUpdateInput>
+  }
+
+  /**
+   * ChecklistItem delete
+   */
+  export type ChecklistItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+    /**
+     * Filter which ChecklistItem to delete.
+     */
+    where: ChecklistItemWhereUniqueInput
+  }
+
+  /**
+   * ChecklistItem deleteMany
+   */
+  export type ChecklistItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChecklistItems to delete
+     */
+    where?: ChecklistItemWhereInput
+    /**
+     * Limit how many ChecklistItems to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChecklistItem without action
+   */
+  export type ChecklistItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItem
+     */
+    select?: ChecklistItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItem
+     */
+    omit?: ChecklistItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApplicationFile
+   */
+
+  export type AggregateApplicationFile = {
+    _count: ApplicationFileCountAggregateOutputType | null
+    _avg: ApplicationFileAvgAggregateOutputType | null
+    _sum: ApplicationFileSumAggregateOutputType | null
+    _min: ApplicationFileMinAggregateOutputType | null
+    _max: ApplicationFileMaxAggregateOutputType | null
+  }
+
+  export type ApplicationFileAvgAggregateOutputType = {
+    fileSize: number | null
+  }
+
+  export type ApplicationFileSumAggregateOutputType = {
+    fileSize: number | null
+  }
+
+  export type ApplicationFileMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    fileName: string | null
+    fileUrl: string | null
+    fileType: string | null
+    fileSize: number | null
+    uploadedById: string | null
+    uploadedByType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApplicationFileMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    fileName: string | null
+    fileUrl: string | null
+    fileType: string | null
+    fileSize: number | null
+    uploadedById: string | null
+    uploadedByType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApplicationFileCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    fileName: number
+    fileUrl: number
+    fileType: number
+    fileSize: number
+    uploadedById: number
+    uploadedByType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ApplicationFileAvgAggregateInputType = {
+    fileSize?: true
+  }
+
+  export type ApplicationFileSumAggregateInputType = {
+    fileSize?: true
+  }
+
+  export type ApplicationFileMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    uploadedById?: true
+    uploadedByType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApplicationFileMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    uploadedById?: true
+    uploadedByType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApplicationFileCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    uploadedById?: true
+    uploadedByType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ApplicationFileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationFile to aggregate.
+     */
+    where?: ApplicationFileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationFiles to fetch.
+     */
+    orderBy?: ApplicationFileOrderByWithRelationInput | ApplicationFileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationFileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationFiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationFiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationFiles
+    **/
+    _count?: true | ApplicationFileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ApplicationFileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ApplicationFileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationFileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationFileMaxAggregateInputType
+  }
+
+  export type GetApplicationFileAggregateType<T extends ApplicationFileAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationFile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationFile[P]>
+      : GetScalarType<T[P], AggregateApplicationFile[P]>
+  }
+
+
+
+
+  export type ApplicationFileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationFileWhereInput
+    orderBy?: ApplicationFileOrderByWithAggregationInput | ApplicationFileOrderByWithAggregationInput[]
+    by: ApplicationFileScalarFieldEnum[] | ApplicationFileScalarFieldEnum
+    having?: ApplicationFileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationFileCountAggregateInputType | true
+    _avg?: ApplicationFileAvgAggregateInputType
+    _sum?: ApplicationFileSumAggregateInputType
+    _min?: ApplicationFileMinAggregateInputType
+    _max?: ApplicationFileMaxAggregateInputType
+  }
+
+  export type ApplicationFileGroupByOutputType = {
+    id: string
+    applicationId: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ApplicationFileCountAggregateOutputType | null
+    _avg: ApplicationFileAvgAggregateOutputType | null
+    _sum: ApplicationFileSumAggregateOutputType | null
+    _min: ApplicationFileMinAggregateOutputType | null
+    _max: ApplicationFileMaxAggregateOutputType | null
+  }
+
+  type GetApplicationFileGroupByPayload<T extends ApplicationFileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationFileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationFileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationFileGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationFileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationFileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    fileName?: boolean
+    fileUrl?: boolean
+    fileType?: boolean
+    fileSize?: boolean
+    uploadedById?: boolean
+    uploadedByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationFile"]>
+
+  export type ApplicationFileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    fileName?: boolean
+    fileUrl?: boolean
+    fileType?: boolean
+    fileSize?: boolean
+    uploadedById?: boolean
+    uploadedByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationFile"]>
+
+  export type ApplicationFileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    fileName?: boolean
+    fileUrl?: boolean
+    fileType?: boolean
+    fileSize?: boolean
+    uploadedById?: boolean
+    uploadedByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationFile"]>
+
+  export type ApplicationFileSelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    fileName?: boolean
+    fileUrl?: boolean
+    fileType?: boolean
+    fileSize?: boolean
+    uploadedById?: boolean
+    uploadedByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ApplicationFileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "fileName" | "fileUrl" | "fileType" | "fileSize" | "uploadedById" | "uploadedByType" | "createdAt" | "updatedAt", ExtArgs["result"]["applicationFile"]>
+  export type ApplicationFileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+  export type ApplicationFileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+  export type ApplicationFileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationFilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationFile"
+    objects: {
+      application: Prisma.$ApplicationPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      fileName: string
+      fileUrl: string
+      fileType: string
+      fileSize: number
+      uploadedById: string
+      uploadedByType: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["applicationFile"]>
+    composites: {}
+  }
+
+  type ApplicationFileGetPayload<S extends boolean | null | undefined | ApplicationFileDefaultArgs> = $Result.GetResult<Prisma.$ApplicationFilePayload, S>
+
+  type ApplicationFileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationFileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationFileCountAggregateInputType | true
+    }
+
+  export interface ApplicationFileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationFile'], meta: { name: 'ApplicationFile' } }
+    /**
+     * Find zero or one ApplicationFile that matches the filter.
+     * @param {ApplicationFileFindUniqueArgs} args - Arguments to find a ApplicationFile
+     * @example
+     * // Get one ApplicationFile
+     * const applicationFile = await prisma.applicationFile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationFileFindUniqueArgs>(args: SelectSubset<T, ApplicationFileFindUniqueArgs<ExtArgs>>): Prisma__ApplicationFileClient<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationFile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationFileFindUniqueOrThrowArgs} args - Arguments to find a ApplicationFile
+     * @example
+     * // Get one ApplicationFile
+     * const applicationFile = await prisma.applicationFile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationFileFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationFileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationFileClient<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationFile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileFindFirstArgs} args - Arguments to find a ApplicationFile
+     * @example
+     * // Get one ApplicationFile
+     * const applicationFile = await prisma.applicationFile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationFileFindFirstArgs>(args?: SelectSubset<T, ApplicationFileFindFirstArgs<ExtArgs>>): Prisma__ApplicationFileClient<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationFile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileFindFirstOrThrowArgs} args - Arguments to find a ApplicationFile
+     * @example
+     * // Get one ApplicationFile
+     * const applicationFile = await prisma.applicationFile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationFileFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationFileFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationFileClient<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationFiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationFiles
+     * const applicationFiles = await prisma.applicationFile.findMany()
+     * 
+     * // Get first 10 ApplicationFiles
+     * const applicationFiles = await prisma.applicationFile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationFileWithIdOnly = await prisma.applicationFile.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationFileFindManyArgs>(args?: SelectSubset<T, ApplicationFileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationFile.
+     * @param {ApplicationFileCreateArgs} args - Arguments to create a ApplicationFile.
+     * @example
+     * // Create one ApplicationFile
+     * const ApplicationFile = await prisma.applicationFile.create({
+     *   data: {
+     *     // ... data to create a ApplicationFile
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationFileCreateArgs>(args: SelectSubset<T, ApplicationFileCreateArgs<ExtArgs>>): Prisma__ApplicationFileClient<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationFiles.
+     * @param {ApplicationFileCreateManyArgs} args - Arguments to create many ApplicationFiles.
+     * @example
+     * // Create many ApplicationFiles
+     * const applicationFile = await prisma.applicationFile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationFileCreateManyArgs>(args?: SelectSubset<T, ApplicationFileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApplicationFiles and returns the data saved in the database.
+     * @param {ApplicationFileCreateManyAndReturnArgs} args - Arguments to create many ApplicationFiles.
+     * @example
+     * // Create many ApplicationFiles
+     * const applicationFile = await prisma.applicationFile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApplicationFiles and only return the `id`
+     * const applicationFileWithIdOnly = await prisma.applicationFile.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApplicationFileCreateManyAndReturnArgs>(args?: SelectSubset<T, ApplicationFileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ApplicationFile.
+     * @param {ApplicationFileDeleteArgs} args - Arguments to delete one ApplicationFile.
+     * @example
+     * // Delete one ApplicationFile
+     * const ApplicationFile = await prisma.applicationFile.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationFile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationFileDeleteArgs>(args: SelectSubset<T, ApplicationFileDeleteArgs<ExtArgs>>): Prisma__ApplicationFileClient<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationFile.
+     * @param {ApplicationFileUpdateArgs} args - Arguments to update one ApplicationFile.
+     * @example
+     * // Update one ApplicationFile
+     * const applicationFile = await prisma.applicationFile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationFileUpdateArgs>(args: SelectSubset<T, ApplicationFileUpdateArgs<ExtArgs>>): Prisma__ApplicationFileClient<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationFiles.
+     * @param {ApplicationFileDeleteManyArgs} args - Arguments to filter ApplicationFiles to delete.
+     * @example
+     * // Delete a few ApplicationFiles
+     * const { count } = await prisma.applicationFile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationFileDeleteManyArgs>(args?: SelectSubset<T, ApplicationFileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationFiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationFiles
+     * const applicationFile = await prisma.applicationFile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationFileUpdateManyArgs>(args: SelectSubset<T, ApplicationFileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationFiles and returns the data updated in the database.
+     * @param {ApplicationFileUpdateManyAndReturnArgs} args - Arguments to update many ApplicationFiles.
+     * @example
+     * // Update many ApplicationFiles
+     * const applicationFile = await prisma.applicationFile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ApplicationFiles and only return the `id`
+     * const applicationFileWithIdOnly = await prisma.applicationFile.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ApplicationFileUpdateManyAndReturnArgs>(args: SelectSubset<T, ApplicationFileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ApplicationFile.
+     * @param {ApplicationFileUpsertArgs} args - Arguments to update or create a ApplicationFile.
+     * @example
+     * // Update or create a ApplicationFile
+     * const applicationFile = await prisma.applicationFile.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationFile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationFile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationFileUpsertArgs>(args: SelectSubset<T, ApplicationFileUpsertArgs<ExtArgs>>): Prisma__ApplicationFileClient<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationFiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileCountArgs} args - Arguments to filter ApplicationFiles to count.
+     * @example
+     * // Count the number of ApplicationFiles
+     * const count = await prisma.applicationFile.count({
+     *   where: {
+     *     // ... the filter for the ApplicationFiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationFileCountArgs>(
+      args?: Subset<T, ApplicationFileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationFileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationFile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationFileAggregateArgs>(args: Subset<T, ApplicationFileAggregateArgs>): Prisma.PrismaPromise<GetApplicationFileAggregateType<T>>
+
+    /**
+     * Group by ApplicationFile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationFileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationFileGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationFileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationFileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationFileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationFile model
+   */
+  readonly fields: ApplicationFileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationFile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationFileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationFile model
+   */
+  interface ApplicationFileFieldRefs {
+    readonly id: FieldRef<"ApplicationFile", 'String'>
+    readonly applicationId: FieldRef<"ApplicationFile", 'String'>
+    readonly fileName: FieldRef<"ApplicationFile", 'String'>
+    readonly fileUrl: FieldRef<"ApplicationFile", 'String'>
+    readonly fileType: FieldRef<"ApplicationFile", 'String'>
+    readonly fileSize: FieldRef<"ApplicationFile", 'Int'>
+    readonly uploadedById: FieldRef<"ApplicationFile", 'String'>
+    readonly uploadedByType: FieldRef<"ApplicationFile", 'String'>
+    readonly createdAt: FieldRef<"ApplicationFile", 'DateTime'>
+    readonly updatedAt: FieldRef<"ApplicationFile", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationFile findUnique
+   */
+  export type ApplicationFileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFile to fetch.
+     */
+    where: ApplicationFileWhereUniqueInput
+  }
+
+  /**
+   * ApplicationFile findUniqueOrThrow
+   */
+  export type ApplicationFileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFile to fetch.
+     */
+    where: ApplicationFileWhereUniqueInput
+  }
+
+  /**
+   * ApplicationFile findFirst
+   */
+  export type ApplicationFileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFile to fetch.
+     */
+    where?: ApplicationFileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationFiles to fetch.
+     */
+    orderBy?: ApplicationFileOrderByWithRelationInput | ApplicationFileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationFiles.
+     */
+    cursor?: ApplicationFileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationFiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationFiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationFiles.
+     */
+    distinct?: ApplicationFileScalarFieldEnum | ApplicationFileScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationFile findFirstOrThrow
+   */
+  export type ApplicationFileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFile to fetch.
+     */
+    where?: ApplicationFileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationFiles to fetch.
+     */
+    orderBy?: ApplicationFileOrderByWithRelationInput | ApplicationFileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationFiles.
+     */
+    cursor?: ApplicationFileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationFiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationFiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationFiles.
+     */
+    distinct?: ApplicationFileScalarFieldEnum | ApplicationFileScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationFile findMany
+   */
+  export type ApplicationFileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFiles to fetch.
+     */
+    where?: ApplicationFileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationFiles to fetch.
+     */
+    orderBy?: ApplicationFileOrderByWithRelationInput | ApplicationFileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationFiles.
+     */
+    cursor?: ApplicationFileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationFiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationFiles.
+     */
+    skip?: number
+    distinct?: ApplicationFileScalarFieldEnum | ApplicationFileScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationFile create
+   */
+  export type ApplicationFileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationFile.
+     */
+    data: XOR<ApplicationFileCreateInput, ApplicationFileUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationFile createMany
+   */
+  export type ApplicationFileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationFiles.
+     */
+    data: ApplicationFileCreateManyInput | ApplicationFileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationFile createManyAndReturn
+   */
+  export type ApplicationFileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * The data used to create many ApplicationFiles.
+     */
+    data: ApplicationFileCreateManyInput | ApplicationFileCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationFile update
+   */
+  export type ApplicationFileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationFile.
+     */
+    data: XOR<ApplicationFileUpdateInput, ApplicationFileUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationFile to update.
+     */
+    where: ApplicationFileWhereUniqueInput
+  }
+
+  /**
+   * ApplicationFile updateMany
+   */
+  export type ApplicationFileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationFiles.
+     */
+    data: XOR<ApplicationFileUpdateManyMutationInput, ApplicationFileUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationFiles to update
+     */
+    where?: ApplicationFileWhereInput
+    /**
+     * Limit how many ApplicationFiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationFile updateManyAndReturn
+   */
+  export type ApplicationFileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * The data used to update ApplicationFiles.
+     */
+    data: XOR<ApplicationFileUpdateManyMutationInput, ApplicationFileUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationFiles to update
+     */
+    where?: ApplicationFileWhereInput
+    /**
+     * Limit how many ApplicationFiles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationFile upsert
+   */
+  export type ApplicationFileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationFile to update in case it exists.
+     */
+    where: ApplicationFileWhereUniqueInput
+    /**
+     * In case the ApplicationFile found by the `where` argument doesn't exist, create a new ApplicationFile with this data.
+     */
+    create: XOR<ApplicationFileCreateInput, ApplicationFileUncheckedCreateInput>
+    /**
+     * In case the ApplicationFile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationFileUpdateInput, ApplicationFileUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationFile delete
+   */
+  export type ApplicationFileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationFile to delete.
+     */
+    where: ApplicationFileWhereUniqueInput
+  }
+
+  /**
+   * ApplicationFile deleteMany
+   */
+  export type ApplicationFileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationFiles to delete
+     */
+    where?: ApplicationFileWhereInput
+    /**
+     * Limit how many ApplicationFiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationFile without action
+   */
+  export type ApplicationFileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
   }
 
 
@@ -25318,14 +29091,59 @@ export namespace Prisma {
     candidatId: 'candidatId',
     jobOfferId: 'jobOfferId',
     columnId: 'columnId',
-    note: 'note',
     rating: 'rating',
     message: 'message',
     cv: 'cv',
-    createdAt: 'createdAt'
+    duedate: 'duedate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+  export const ApplicationNoteScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    content: 'content',
+    authorId: 'authorId',
+    authorType: 'authorType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ApplicationNoteScalarFieldEnum = (typeof ApplicationNoteScalarFieldEnum)[keyof typeof ApplicationNoteScalarFieldEnum]
+
+
+  export const ChecklistItemScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    title: 'title',
+    description: 'description',
+    isCompleted: 'isCompleted',
+    createdById: 'createdById',
+    createdByType: 'createdByType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ChecklistItemScalarFieldEnum = (typeof ChecklistItemScalarFieldEnum)[keyof typeof ChecklistItemScalarFieldEnum]
+
+
+  export const ApplicationFileScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    fileName: 'fileName',
+    fileUrl: 'fileUrl',
+    fileType: 'fileType',
+    fileSize: 'fileSize',
+    uploadedById: 'uploadedById',
+    uploadedByType: 'uploadedByType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ApplicationFileScalarFieldEnum = (typeof ApplicationFileScalarFieldEnum)[keyof typeof ApplicationFileScalarFieldEnum]
 
 
   export const KanbanColumnScalarFieldEnum: {
@@ -26416,14 +30234,18 @@ export namespace Prisma {
     candidatId?: StringFilter<"Application"> | string
     jobOfferId?: IntFilter<"Application"> | number
     columnId?: StringFilter<"Application"> | string
-    note?: StringNullableFilter<"Application"> | string | null
     rating?: IntNullableFilter<"Application"> | number | null
     message?: StringNullableFilter<"Application"> | string | null
     cv?: StringNullableFilter<"Application"> | string | null
+    duedate?: DateTimeNullableFilter<"Application"> | Date | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
+    updatedAt?: DateTimeFilter<"Application"> | Date | string
     candidat?: XOR<CandidatScalarRelationFilter, CandidatWhereInput>
     jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     column?: XOR<KanbanColumnScalarRelationFilter, KanbanColumnWhereInput>
+    notes?: ApplicationNoteListRelationFilter
+    checklist?: ChecklistItemListRelationFilter
+    files?: ApplicationFileListRelationFilter
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -26431,14 +30253,18 @@ export namespace Prisma {
     candidatId?: SortOrder
     jobOfferId?: SortOrder
     columnId?: SortOrder
-    note?: SortOrderInput | SortOrder
     rating?: SortOrderInput | SortOrder
     message?: SortOrderInput | SortOrder
     cv?: SortOrderInput | SortOrder
+    duedate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     candidat?: CandidatOrderByWithRelationInput
     jobOffer?: JobOfferOrderByWithRelationInput
     column?: KanbanColumnOrderByWithRelationInput
+    notes?: ApplicationNoteOrderByRelationAggregateInput
+    checklist?: ChecklistItemOrderByRelationAggregateInput
+    files?: ApplicationFileOrderByRelationAggregateInput
   }
 
   export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -26449,14 +30275,18 @@ export namespace Prisma {
     candidatId?: StringFilter<"Application"> | string
     jobOfferId?: IntFilter<"Application"> | number
     columnId?: StringFilter<"Application"> | string
-    note?: StringNullableFilter<"Application"> | string | null
     rating?: IntNullableFilter<"Application"> | number | null
     message?: StringNullableFilter<"Application"> | string | null
     cv?: StringNullableFilter<"Application"> | string | null
+    duedate?: DateTimeNullableFilter<"Application"> | Date | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
+    updatedAt?: DateTimeFilter<"Application"> | Date | string
     candidat?: XOR<CandidatScalarRelationFilter, CandidatWhereInput>
     jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     column?: XOR<KanbanColumnScalarRelationFilter, KanbanColumnWhereInput>
+    notes?: ApplicationNoteListRelationFilter
+    checklist?: ChecklistItemListRelationFilter
+    files?: ApplicationFileListRelationFilter
   }, "id">
 
   export type ApplicationOrderByWithAggregationInput = {
@@ -26464,11 +30294,12 @@ export namespace Prisma {
     candidatId?: SortOrder
     jobOfferId?: SortOrder
     columnId?: SortOrder
-    note?: SortOrderInput | SortOrder
     rating?: SortOrderInput | SortOrder
     message?: SortOrderInput | SortOrder
     cv?: SortOrderInput | SortOrder
+    duedate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: ApplicationCountOrderByAggregateInput
     _avg?: ApplicationAvgOrderByAggregateInput
     _max?: ApplicationMaxOrderByAggregateInput
@@ -26484,11 +30315,234 @@ export namespace Prisma {
     candidatId?: StringWithAggregatesFilter<"Application"> | string
     jobOfferId?: IntWithAggregatesFilter<"Application"> | number
     columnId?: StringWithAggregatesFilter<"Application"> | string
-    note?: StringNullableWithAggregatesFilter<"Application"> | string | null
     rating?: IntNullableWithAggregatesFilter<"Application"> | number | null
     message?: StringNullableWithAggregatesFilter<"Application"> | string | null
     cv?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    duedate?: DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
+  }
+
+  export type ApplicationNoteWhereInput = {
+    AND?: ApplicationNoteWhereInput | ApplicationNoteWhereInput[]
+    OR?: ApplicationNoteWhereInput[]
+    NOT?: ApplicationNoteWhereInput | ApplicationNoteWhereInput[]
+    id?: StringFilter<"ApplicationNote"> | string
+    applicationId?: StringFilter<"ApplicationNote"> | string
+    content?: StringFilter<"ApplicationNote"> | string
+    authorId?: StringFilter<"ApplicationNote"> | string
+    authorType?: StringFilter<"ApplicationNote"> | string
+    createdAt?: DateTimeFilter<"ApplicationNote"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationNote"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  }
+
+  export type ApplicationNoteOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    application?: ApplicationOrderByWithRelationInput
+  }
+
+  export type ApplicationNoteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApplicationNoteWhereInput | ApplicationNoteWhereInput[]
+    OR?: ApplicationNoteWhereInput[]
+    NOT?: ApplicationNoteWhereInput | ApplicationNoteWhereInput[]
+    applicationId?: StringFilter<"ApplicationNote"> | string
+    content?: StringFilter<"ApplicationNote"> | string
+    authorId?: StringFilter<"ApplicationNote"> | string
+    authorType?: StringFilter<"ApplicationNote"> | string
+    createdAt?: DateTimeFilter<"ApplicationNote"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationNote"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  }, "id">
+
+  export type ApplicationNoteOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ApplicationNoteCountOrderByAggregateInput
+    _max?: ApplicationNoteMaxOrderByAggregateInput
+    _min?: ApplicationNoteMinOrderByAggregateInput
+  }
+
+  export type ApplicationNoteScalarWhereWithAggregatesInput = {
+    AND?: ApplicationNoteScalarWhereWithAggregatesInput | ApplicationNoteScalarWhereWithAggregatesInput[]
+    OR?: ApplicationNoteScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationNoteScalarWhereWithAggregatesInput | ApplicationNoteScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationNote"> | string
+    applicationId?: StringWithAggregatesFilter<"ApplicationNote"> | string
+    content?: StringWithAggregatesFilter<"ApplicationNote"> | string
+    authorId?: StringWithAggregatesFilter<"ApplicationNote"> | string
+    authorType?: StringWithAggregatesFilter<"ApplicationNote"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ApplicationNote"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ApplicationNote"> | Date | string
+  }
+
+  export type ChecklistItemWhereInput = {
+    AND?: ChecklistItemWhereInput | ChecklistItemWhereInput[]
+    OR?: ChecklistItemWhereInput[]
+    NOT?: ChecklistItemWhereInput | ChecklistItemWhereInput[]
+    id?: StringFilter<"ChecklistItem"> | string
+    applicationId?: StringFilter<"ChecklistItem"> | string
+    title?: StringFilter<"ChecklistItem"> | string
+    description?: StringNullableFilter<"ChecklistItem"> | string | null
+    isCompleted?: BoolFilter<"ChecklistItem"> | boolean
+    createdById?: StringFilter<"ChecklistItem"> | string
+    createdByType?: StringFilter<"ChecklistItem"> | string
+    createdAt?: DateTimeFilter<"ChecklistItem"> | Date | string
+    updatedAt?: DateTimeFilter<"ChecklistItem"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  }
+
+  export type ChecklistItemOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    application?: ApplicationOrderByWithRelationInput
+  }
+
+  export type ChecklistItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChecklistItemWhereInput | ChecklistItemWhereInput[]
+    OR?: ChecklistItemWhereInput[]
+    NOT?: ChecklistItemWhereInput | ChecklistItemWhereInput[]
+    applicationId?: StringFilter<"ChecklistItem"> | string
+    title?: StringFilter<"ChecklistItem"> | string
+    description?: StringNullableFilter<"ChecklistItem"> | string | null
+    isCompleted?: BoolFilter<"ChecklistItem"> | boolean
+    createdById?: StringFilter<"ChecklistItem"> | string
+    createdByType?: StringFilter<"ChecklistItem"> | string
+    createdAt?: DateTimeFilter<"ChecklistItem"> | Date | string
+    updatedAt?: DateTimeFilter<"ChecklistItem"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  }, "id">
+
+  export type ChecklistItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ChecklistItemCountOrderByAggregateInput
+    _max?: ChecklistItemMaxOrderByAggregateInput
+    _min?: ChecklistItemMinOrderByAggregateInput
+  }
+
+  export type ChecklistItemScalarWhereWithAggregatesInput = {
+    AND?: ChecklistItemScalarWhereWithAggregatesInput | ChecklistItemScalarWhereWithAggregatesInput[]
+    OR?: ChecklistItemScalarWhereWithAggregatesInput[]
+    NOT?: ChecklistItemScalarWhereWithAggregatesInput | ChecklistItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChecklistItem"> | string
+    applicationId?: StringWithAggregatesFilter<"ChecklistItem"> | string
+    title?: StringWithAggregatesFilter<"ChecklistItem"> | string
+    description?: StringNullableWithAggregatesFilter<"ChecklistItem"> | string | null
+    isCompleted?: BoolWithAggregatesFilter<"ChecklistItem"> | boolean
+    createdById?: StringWithAggregatesFilter<"ChecklistItem"> | string
+    createdByType?: StringWithAggregatesFilter<"ChecklistItem"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ChecklistItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ChecklistItem"> | Date | string
+  }
+
+  export type ApplicationFileWhereInput = {
+    AND?: ApplicationFileWhereInput | ApplicationFileWhereInput[]
+    OR?: ApplicationFileWhereInput[]
+    NOT?: ApplicationFileWhereInput | ApplicationFileWhereInput[]
+    id?: StringFilter<"ApplicationFile"> | string
+    applicationId?: StringFilter<"ApplicationFile"> | string
+    fileName?: StringFilter<"ApplicationFile"> | string
+    fileUrl?: StringFilter<"ApplicationFile"> | string
+    fileType?: StringFilter<"ApplicationFile"> | string
+    fileSize?: IntFilter<"ApplicationFile"> | number
+    uploadedById?: StringFilter<"ApplicationFile"> | string
+    uploadedByType?: StringFilter<"ApplicationFile"> | string
+    createdAt?: DateTimeFilter<"ApplicationFile"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationFile"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  }
+
+  export type ApplicationFileOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    application?: ApplicationOrderByWithRelationInput
+  }
+
+  export type ApplicationFileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApplicationFileWhereInput | ApplicationFileWhereInput[]
+    OR?: ApplicationFileWhereInput[]
+    NOT?: ApplicationFileWhereInput | ApplicationFileWhereInput[]
+    applicationId?: StringFilter<"ApplicationFile"> | string
+    fileName?: StringFilter<"ApplicationFile"> | string
+    fileUrl?: StringFilter<"ApplicationFile"> | string
+    fileType?: StringFilter<"ApplicationFile"> | string
+    fileSize?: IntFilter<"ApplicationFile"> | number
+    uploadedById?: StringFilter<"ApplicationFile"> | string
+    uploadedByType?: StringFilter<"ApplicationFile"> | string
+    createdAt?: DateTimeFilter<"ApplicationFile"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationFile"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+  }, "id">
+
+  export type ApplicationFileOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ApplicationFileCountOrderByAggregateInput
+    _avg?: ApplicationFileAvgOrderByAggregateInput
+    _max?: ApplicationFileMaxOrderByAggregateInput
+    _min?: ApplicationFileMinOrderByAggregateInput
+    _sum?: ApplicationFileSumOrderByAggregateInput
+  }
+
+  export type ApplicationFileScalarWhereWithAggregatesInput = {
+    AND?: ApplicationFileScalarWhereWithAggregatesInput | ApplicationFileScalarWhereWithAggregatesInput[]
+    OR?: ApplicationFileScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationFileScalarWhereWithAggregatesInput | ApplicationFileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationFile"> | string
+    applicationId?: StringWithAggregatesFilter<"ApplicationFile"> | string
+    fileName?: StringWithAggregatesFilter<"ApplicationFile"> | string
+    fileUrl?: StringWithAggregatesFilter<"ApplicationFile"> | string
+    fileType?: StringWithAggregatesFilter<"ApplicationFile"> | string
+    fileSize?: IntWithAggregatesFilter<"ApplicationFile"> | number
+    uploadedById?: StringWithAggregatesFilter<"ApplicationFile"> | string
+    uploadedByType?: StringWithAggregatesFilter<"ApplicationFile"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ApplicationFile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ApplicationFile"> | Date | string
   }
 
   export type KanbanColumnWhereInput = {
@@ -28165,14 +32219,18 @@ export namespace Prisma {
 
   export type ApplicationCreateInput = {
     id?: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     candidat: CandidatCreateNestedOneWithoutApplicationsInput
     jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -28180,23 +32238,31 @@ export namespace Prisma {
     candidatId: string
     jobOfferId: number
     columnId: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
     jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -28204,11 +32270,15 @@ export namespace Prisma {
     candidatId?: StringFieldUpdateOperationsInput | string
     jobOfferId?: IntFieldUpdateOperationsInput | number
     columnId?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
@@ -28216,20 +32286,22 @@ export namespace Prisma {
     candidatId: string
     jobOfferId: number
     columnId: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ApplicationUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApplicationUncheckedUpdateManyInput = {
@@ -28237,11 +32309,254 @@ export namespace Prisma {
     candidatId?: StringFieldUpdateOperationsInput | string
     jobOfferId?: IntFieldUpdateOperationsInput | number
     columnId?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteCreateInput = {
+    id?: string
+    content: string
+    authorId: string
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    application: ApplicationCreateNestedOneWithoutNotesInput
+  }
+
+  export type ApplicationNoteUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    content: string
+    authorId: string
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutNotesNestedInput
+  }
+
+  export type ApplicationNoteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteCreateManyInput = {
+    id?: string
+    applicationId: string
+    content: string
+    authorId: string
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    application: ApplicationCreateNestedOneWithoutChecklistInput
+  }
+
+  export type ChecklistItemUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutChecklistNestedInput
+  }
+
+  export type ChecklistItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemCreateManyInput = {
+    id?: string
+    applicationId: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileCreateInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    application: ApplicationCreateNestedOneWithoutFilesInput
+  }
+
+  export type ApplicationFileUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutFilesNestedInput
+  }
+
+  export type ApplicationFileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileCreateManyInput = {
+    id?: string
+    applicationId: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type KanbanColumnCreateInput = {
@@ -29941,16 +34256,47 @@ export namespace Prisma {
     isNot?: KanbanColumnWhereInput
   }
 
+  export type ApplicationNoteListRelationFilter = {
+    every?: ApplicationNoteWhereInput
+    some?: ApplicationNoteWhereInput
+    none?: ApplicationNoteWhereInput
+  }
+
+  export type ChecklistItemListRelationFilter = {
+    every?: ChecklistItemWhereInput
+    some?: ChecklistItemWhereInput
+    none?: ChecklistItemWhereInput
+  }
+
+  export type ApplicationFileListRelationFilter = {
+    every?: ApplicationFileWhereInput
+    some?: ApplicationFileWhereInput
+    none?: ApplicationFileWhereInput
+  }
+
+  export type ApplicationNoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChecklistItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApplicationFileOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ApplicationCountOrderByAggregateInput = {
     id?: SortOrder
     candidatId?: SortOrder
     jobOfferId?: SortOrder
     columnId?: SortOrder
-    note?: SortOrder
     rating?: SortOrder
     message?: SortOrder
     cv?: SortOrder
+    duedate?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ApplicationAvgOrderByAggregateInput = {
@@ -29963,11 +34309,12 @@ export namespace Prisma {
     candidatId?: SortOrder
     jobOfferId?: SortOrder
     columnId?: SortOrder
-    note?: SortOrder
     rating?: SortOrder
     message?: SortOrder
     cv?: SortOrder
+    duedate?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ApplicationMinOrderByAggregateInput = {
@@ -29975,16 +34322,135 @@ export namespace Prisma {
     candidatId?: SortOrder
     jobOfferId?: SortOrder
     columnId?: SortOrder
-    note?: SortOrder
     rating?: SortOrder
     message?: SortOrder
     cv?: SortOrder
+    duedate?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type ApplicationSumOrderByAggregateInput = {
     jobOfferId?: SortOrder
     rating?: SortOrder
+  }
+
+  export type ApplicationScalarRelationFilter = {
+    is?: ApplicationWhereInput
+    isNot?: ApplicationWhereInput
+  }
+
+  export type ApplicationNoteCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationNoteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationNoteMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChecklistItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChecklistItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChecklistItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationFileCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationFileAvgOrderByAggregateInput = {
+    fileSize?: SortOrder
+  }
+
+  export type ApplicationFileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationFileMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationFileSumOrderByAggregateInput = {
+    fileSize?: SortOrder
   }
 
   export type KanbanColumnCountOrderByAggregateInput = {
@@ -31504,6 +35970,48 @@ export namespace Prisma {
     connect?: KanbanColumnWhereUniqueInput
   }
 
+  export type ApplicationNoteCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationNoteCreateWithoutApplicationInput, ApplicationNoteUncheckedCreateWithoutApplicationInput> | ApplicationNoteCreateWithoutApplicationInput[] | ApplicationNoteUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationNoteCreateOrConnectWithoutApplicationInput | ApplicationNoteCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationNoteCreateManyApplicationInputEnvelope
+    connect?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+  }
+
+  export type ChecklistItemCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ChecklistItemCreateWithoutApplicationInput, ChecklistItemUncheckedCreateWithoutApplicationInput> | ChecklistItemCreateWithoutApplicationInput[] | ChecklistItemUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ChecklistItemCreateOrConnectWithoutApplicationInput | ChecklistItemCreateOrConnectWithoutApplicationInput[]
+    createMany?: ChecklistItemCreateManyApplicationInputEnvelope
+    connect?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+  }
+
+  export type ApplicationFileCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
+    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+  }
+
+  export type ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationNoteCreateWithoutApplicationInput, ApplicationNoteUncheckedCreateWithoutApplicationInput> | ApplicationNoteCreateWithoutApplicationInput[] | ApplicationNoteUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationNoteCreateOrConnectWithoutApplicationInput | ApplicationNoteCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationNoteCreateManyApplicationInputEnvelope
+    connect?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+  }
+
+  export type ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ChecklistItemCreateWithoutApplicationInput, ChecklistItemUncheckedCreateWithoutApplicationInput> | ChecklistItemCreateWithoutApplicationInput[] | ChecklistItemUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ChecklistItemCreateOrConnectWithoutApplicationInput | ChecklistItemCreateOrConnectWithoutApplicationInput[]
+    createMany?: ChecklistItemCreateManyApplicationInputEnvelope
+    connect?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+  }
+
+  export type ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
+    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+  }
+
   export type CandidatUpdateOneRequiredWithoutApplicationsNestedInput = {
     create?: XOR<CandidatCreateWithoutApplicationsInput, CandidatUncheckedCreateWithoutApplicationsInput>
     connectOrCreate?: CandidatCreateOrConnectWithoutApplicationsInput
@@ -31526,6 +36034,132 @@ export namespace Prisma {
     upsert?: KanbanColumnUpsertWithoutApplicationsInput
     connect?: KanbanColumnWhereUniqueInput
     update?: XOR<XOR<KanbanColumnUpdateToOneWithWhereWithoutApplicationsInput, KanbanColumnUpdateWithoutApplicationsInput>, KanbanColumnUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type ApplicationNoteUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationNoteCreateWithoutApplicationInput, ApplicationNoteUncheckedCreateWithoutApplicationInput> | ApplicationNoteCreateWithoutApplicationInput[] | ApplicationNoteUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationNoteCreateOrConnectWithoutApplicationInput | ApplicationNoteCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationNoteUpsertWithWhereUniqueWithoutApplicationInput | ApplicationNoteUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationNoteCreateManyApplicationInputEnvelope
+    set?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+    disconnect?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+    delete?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+    connect?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+    update?: ApplicationNoteUpdateWithWhereUniqueWithoutApplicationInput | ApplicationNoteUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationNoteUpdateManyWithWhereWithoutApplicationInput | ApplicationNoteUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationNoteScalarWhereInput | ApplicationNoteScalarWhereInput[]
+  }
+
+  export type ChecklistItemUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ChecklistItemCreateWithoutApplicationInput, ChecklistItemUncheckedCreateWithoutApplicationInput> | ChecklistItemCreateWithoutApplicationInput[] | ChecklistItemUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ChecklistItemCreateOrConnectWithoutApplicationInput | ChecklistItemCreateOrConnectWithoutApplicationInput[]
+    upsert?: ChecklistItemUpsertWithWhereUniqueWithoutApplicationInput | ChecklistItemUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ChecklistItemCreateManyApplicationInputEnvelope
+    set?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+    disconnect?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+    delete?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+    connect?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+    update?: ChecklistItemUpdateWithWhereUniqueWithoutApplicationInput | ChecklistItemUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ChecklistItemUpdateManyWithWhereWithoutApplicationInput | ChecklistItemUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ChecklistItemScalarWhereInput | ChecklistItemScalarWhereInput[]
+  }
+
+  export type ApplicationFileUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput | ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
+    set?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    disconnect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    delete?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    update?: ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationFileUpdateManyWithWhereWithoutApplicationInput | ApplicationFileUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
+  }
+
+  export type ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationNoteCreateWithoutApplicationInput, ApplicationNoteUncheckedCreateWithoutApplicationInput> | ApplicationNoteCreateWithoutApplicationInput[] | ApplicationNoteUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationNoteCreateOrConnectWithoutApplicationInput | ApplicationNoteCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationNoteUpsertWithWhereUniqueWithoutApplicationInput | ApplicationNoteUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationNoteCreateManyApplicationInputEnvelope
+    set?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+    disconnect?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+    delete?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+    connect?: ApplicationNoteWhereUniqueInput | ApplicationNoteWhereUniqueInput[]
+    update?: ApplicationNoteUpdateWithWhereUniqueWithoutApplicationInput | ApplicationNoteUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationNoteUpdateManyWithWhereWithoutApplicationInput | ApplicationNoteUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationNoteScalarWhereInput | ApplicationNoteScalarWhereInput[]
+  }
+
+  export type ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ChecklistItemCreateWithoutApplicationInput, ChecklistItemUncheckedCreateWithoutApplicationInput> | ChecklistItemCreateWithoutApplicationInput[] | ChecklistItemUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ChecklistItemCreateOrConnectWithoutApplicationInput | ChecklistItemCreateOrConnectWithoutApplicationInput[]
+    upsert?: ChecklistItemUpsertWithWhereUniqueWithoutApplicationInput | ChecklistItemUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ChecklistItemCreateManyApplicationInputEnvelope
+    set?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+    disconnect?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+    delete?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+    connect?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
+    update?: ChecklistItemUpdateWithWhereUniqueWithoutApplicationInput | ChecklistItemUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ChecklistItemUpdateManyWithWhereWithoutApplicationInput | ChecklistItemUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ChecklistItemScalarWhereInput | ChecklistItemScalarWhereInput[]
+  }
+
+  export type ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput | ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
+    set?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    disconnect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    delete?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    update?: ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationFileUpdateManyWithWhereWithoutApplicationInput | ApplicationFileUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
+  }
+
+  export type ApplicationCreateNestedOneWithoutNotesInput = {
+    create?: XOR<ApplicationCreateWithoutNotesInput, ApplicationUncheckedCreateWithoutNotesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutNotesInput
+    connect?: ApplicationWhereUniqueInput
+  }
+
+  export type ApplicationUpdateOneRequiredWithoutNotesNestedInput = {
+    create?: XOR<ApplicationCreateWithoutNotesInput, ApplicationUncheckedCreateWithoutNotesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutNotesInput
+    upsert?: ApplicationUpsertWithoutNotesInput
+    connect?: ApplicationWhereUniqueInput
+    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutNotesInput, ApplicationUpdateWithoutNotesInput>, ApplicationUncheckedUpdateWithoutNotesInput>
+  }
+
+  export type ApplicationCreateNestedOneWithoutChecklistInput = {
+    create?: XOR<ApplicationCreateWithoutChecklistInput, ApplicationUncheckedCreateWithoutChecklistInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutChecklistInput
+    connect?: ApplicationWhereUniqueInput
+  }
+
+  export type ApplicationUpdateOneRequiredWithoutChecklistNestedInput = {
+    create?: XOR<ApplicationCreateWithoutChecklistInput, ApplicationUncheckedCreateWithoutChecklistInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutChecklistInput
+    upsert?: ApplicationUpsertWithoutChecklistInput
+    connect?: ApplicationWhereUniqueInput
+    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutChecklistInput, ApplicationUpdateWithoutChecklistInput>, ApplicationUncheckedUpdateWithoutChecklistInput>
+  }
+
+  export type ApplicationCreateNestedOneWithoutFilesInput = {
+    create?: XOR<ApplicationCreateWithoutFilesInput, ApplicationUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutFilesInput
+    connect?: ApplicationWhereUniqueInput
+  }
+
+  export type ApplicationUpdateOneRequiredWithoutFilesNestedInput = {
+    create?: XOR<ApplicationCreateWithoutFilesInput, ApplicationUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutFilesInput
+    upsert?: ApplicationUpsertWithoutFilesInput
+    connect?: ApplicationWhereUniqueInput
+    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutFilesInput, ApplicationUpdateWithoutFilesInput>, ApplicationUncheckedUpdateWithoutFilesInput>
   }
 
   export type JobOfferCreateNestedOneWithoutKanbanColumnsInput = {
@@ -32487,24 +37121,32 @@ export namespace Prisma {
 
   export type ApplicationCreateWithoutCandidatInput = {
     id?: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutCandidatInput = {
     id?: string
     jobOfferId: number
     columnId: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutCandidatInput = {
@@ -32794,11 +37436,12 @@ export namespace Prisma {
     candidatId?: StringFilter<"Application"> | string
     jobOfferId?: IntFilter<"Application"> | number
     columnId?: StringFilter<"Application"> | string
-    note?: StringNullableFilter<"Application"> | string | null
     rating?: IntNullableFilter<"Application"> | number | null
     message?: StringNullableFilter<"Application"> | string | null
     cv?: StringNullableFilter<"Application"> | string | null
+    duedate?: DateTimeNullableFilter<"Application"> | Date | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
+    updatedAt?: DateTimeFilter<"Application"> | Date | string
   }
 
   export type ExperienceUpsertWithWhereUniqueWithoutCandidatInput = {
@@ -34033,24 +38676,32 @@ export namespace Prisma {
 
   export type ApplicationCreateWithoutJobOfferInput = {
     id?: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     candidat: CandidatCreateNestedOneWithoutApplicationsInput
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutJobOfferInput = {
     id?: string
     candidatId: string
     columnId: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutJobOfferInput = {
@@ -34525,6 +39176,100 @@ export namespace Prisma {
     create: XOR<KanbanColumnCreateWithoutApplicationsInput, KanbanColumnUncheckedCreateWithoutApplicationsInput>
   }
 
+  export type ApplicationNoteCreateWithoutApplicationInput = {
+    id?: string
+    content: string
+    authorId: string
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    content: string
+    authorId: string
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationNoteWhereUniqueInput
+    create: XOR<ApplicationNoteCreateWithoutApplicationInput, ApplicationNoteUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationNoteCreateManyApplicationInputEnvelope = {
+    data: ApplicationNoteCreateManyApplicationInput | ApplicationNoteCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ChecklistItemCreateWithoutApplicationInput = {
+    id?: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemCreateOrConnectWithoutApplicationInput = {
+    where: ChecklistItemWhereUniqueInput
+    create: XOR<ChecklistItemCreateWithoutApplicationInput, ChecklistItemUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ChecklistItemCreateManyApplicationInputEnvelope = {
+    data: ChecklistItemCreateManyApplicationInput | ChecklistItemCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationFileCreateWithoutApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationFileWhereUniqueInput
+    create: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileCreateManyApplicationInputEnvelope = {
+    data: ApplicationFileCreateManyApplicationInput | ApplicationFileCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CandidatUpsertWithoutApplicationsInput = {
     update: XOR<CandidatUpdateWithoutApplicationsInput, CandidatUncheckedUpdateWithoutApplicationsInput>
     create: XOR<CandidatCreateWithoutApplicationsInput, CandidatUncheckedCreateWithoutApplicationsInput>
@@ -34691,6 +39436,326 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ApplicationNoteUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationNoteWhereUniqueInput
+    update: XOR<ApplicationNoteUpdateWithoutApplicationInput, ApplicationNoteUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationNoteCreateWithoutApplicationInput, ApplicationNoteUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationNoteUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationNoteWhereUniqueInput
+    data: XOR<ApplicationNoteUpdateWithoutApplicationInput, ApplicationNoteUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationNoteUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationNoteScalarWhereInput
+    data: XOR<ApplicationNoteUpdateManyMutationInput, ApplicationNoteUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationNoteScalarWhereInput = {
+    AND?: ApplicationNoteScalarWhereInput | ApplicationNoteScalarWhereInput[]
+    OR?: ApplicationNoteScalarWhereInput[]
+    NOT?: ApplicationNoteScalarWhereInput | ApplicationNoteScalarWhereInput[]
+    id?: StringFilter<"ApplicationNote"> | string
+    applicationId?: StringFilter<"ApplicationNote"> | string
+    content?: StringFilter<"ApplicationNote"> | string
+    authorId?: StringFilter<"ApplicationNote"> | string
+    authorType?: StringFilter<"ApplicationNote"> | string
+    createdAt?: DateTimeFilter<"ApplicationNote"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationNote"> | Date | string
+  }
+
+  export type ChecklistItemUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ChecklistItemWhereUniqueInput
+    update: XOR<ChecklistItemUpdateWithoutApplicationInput, ChecklistItemUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ChecklistItemCreateWithoutApplicationInput, ChecklistItemUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ChecklistItemUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ChecklistItemWhereUniqueInput
+    data: XOR<ChecklistItemUpdateWithoutApplicationInput, ChecklistItemUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ChecklistItemUpdateManyWithWhereWithoutApplicationInput = {
+    where: ChecklistItemScalarWhereInput
+    data: XOR<ChecklistItemUpdateManyMutationInput, ChecklistItemUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ChecklistItemScalarWhereInput = {
+    AND?: ChecklistItemScalarWhereInput | ChecklistItemScalarWhereInput[]
+    OR?: ChecklistItemScalarWhereInput[]
+    NOT?: ChecklistItemScalarWhereInput | ChecklistItemScalarWhereInput[]
+    id?: StringFilter<"ChecklistItem"> | string
+    applicationId?: StringFilter<"ChecklistItem"> | string
+    title?: StringFilter<"ChecklistItem"> | string
+    description?: StringNullableFilter<"ChecklistItem"> | string | null
+    isCompleted?: BoolFilter<"ChecklistItem"> | boolean
+    createdById?: StringFilter<"ChecklistItem"> | string
+    createdByType?: StringFilter<"ChecklistItem"> | string
+    createdAt?: DateTimeFilter<"ChecklistItem"> | Date | string
+    updatedAt?: DateTimeFilter<"ChecklistItem"> | Date | string
+  }
+
+  export type ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationFileWhereUniqueInput
+    update: XOR<ApplicationFileUpdateWithoutApplicationInput, ApplicationFileUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationFileWhereUniqueInput
+    data: XOR<ApplicationFileUpdateWithoutApplicationInput, ApplicationFileUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationFileScalarWhereInput
+    data: XOR<ApplicationFileUpdateManyMutationInput, ApplicationFileUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationFileScalarWhereInput = {
+    AND?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
+    OR?: ApplicationFileScalarWhereInput[]
+    NOT?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
+    id?: StringFilter<"ApplicationFile"> | string
+    applicationId?: StringFilter<"ApplicationFile"> | string
+    fileName?: StringFilter<"ApplicationFile"> | string
+    fileUrl?: StringFilter<"ApplicationFile"> | string
+    fileType?: StringFilter<"ApplicationFile"> | string
+    fileSize?: IntFilter<"ApplicationFile"> | number
+    uploadedById?: StringFilter<"ApplicationFile"> | string
+    uploadedByType?: StringFilter<"ApplicationFile"> | string
+    createdAt?: DateTimeFilter<"ApplicationFile"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationFile"> | Date | string
+  }
+
+  export type ApplicationCreateWithoutNotesInput = {
+    id?: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidat: CandidatCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutNotesInput = {
+    id?: string
+    candidatId: string
+    jobOfferId: number
+    columnId: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutNotesInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutNotesInput, ApplicationUncheckedCreateWithoutNotesInput>
+  }
+
+  export type ApplicationUpsertWithoutNotesInput = {
+    update: XOR<ApplicationUpdateWithoutNotesInput, ApplicationUncheckedUpdateWithoutNotesInput>
+    create: XOR<ApplicationCreateWithoutNotesInput, ApplicationUncheckedCreateWithoutNotesInput>
+    where?: ApplicationWhereInput
+  }
+
+  export type ApplicationUpdateToOneWithWhereWithoutNotesInput = {
+    where?: ApplicationWhereInput
+    data: XOR<ApplicationUpdateWithoutNotesInput, ApplicationUncheckedUpdateWithoutNotesInput>
+  }
+
+  export type ApplicationUpdateWithoutNotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutNotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidatId?: StringFieldUpdateOperationsInput | string
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    columnId?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCreateWithoutChecklistInput = {
+    id?: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidat: CandidatCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutChecklistInput = {
+    id?: string
+    candidatId: string
+    jobOfferId: number
+    columnId: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutChecklistInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutChecklistInput, ApplicationUncheckedCreateWithoutChecklistInput>
+  }
+
+  export type ApplicationUpsertWithoutChecklistInput = {
+    update: XOR<ApplicationUpdateWithoutChecklistInput, ApplicationUncheckedUpdateWithoutChecklistInput>
+    create: XOR<ApplicationCreateWithoutChecklistInput, ApplicationUncheckedCreateWithoutChecklistInput>
+    where?: ApplicationWhereInput
+  }
+
+  export type ApplicationUpdateToOneWithWhereWithoutChecklistInput = {
+    where?: ApplicationWhereInput
+    data: XOR<ApplicationUpdateWithoutChecklistInput, ApplicationUncheckedUpdateWithoutChecklistInput>
+  }
+
+  export type ApplicationUpdateWithoutChecklistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutChecklistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidatId?: StringFieldUpdateOperationsInput | string
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    columnId?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCreateWithoutFilesInput = {
+    id?: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidat: CandidatCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutFilesInput = {
+    id?: string
+    candidatId: string
+    jobOfferId: number
+    columnId: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutFilesInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutFilesInput, ApplicationUncheckedCreateWithoutFilesInput>
+  }
+
+  export type ApplicationUpsertWithoutFilesInput = {
+    update: XOR<ApplicationUpdateWithoutFilesInput, ApplicationUncheckedUpdateWithoutFilesInput>
+    create: XOR<ApplicationCreateWithoutFilesInput, ApplicationUncheckedCreateWithoutFilesInput>
+    where?: ApplicationWhereInput
+  }
+
+  export type ApplicationUpdateToOneWithWhereWithoutFilesInput = {
+    where?: ApplicationWhereInput
+    data: XOR<ApplicationUpdateWithoutFilesInput, ApplicationUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type ApplicationUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidatId?: StringFieldUpdateOperationsInput | string
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    columnId?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
   export type JobOfferCreateWithoutKanbanColumnsInput = {
     title: string
     description: string
@@ -34751,24 +39816,32 @@ export namespace Prisma {
 
   export type ApplicationCreateWithoutColumnInput = {
     id?: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
     candidat: CandidatCreateNestedOneWithoutApplicationsInput
     jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutColumnInput = {
     id?: string
     candidatId: string
     jobOfferId: number
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutColumnInput = {
@@ -35897,11 +40970,12 @@ export namespace Prisma {
     id?: string
     jobOfferId: number
     columnId: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ExperienceCreateManyCandidatInput = {
@@ -35981,35 +41055,44 @@ export namespace Prisma {
 
   export type ApplicationUpdateWithoutCandidatInput = {
     id?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutCandidatInput = {
     id?: StringFieldUpdateOperationsInput | string
     jobOfferId?: IntFieldUpdateOperationsInput | number
     columnId?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutCandidatInput = {
     id?: StringFieldUpdateOperationsInput | string
     jobOfferId?: IntFieldUpdateOperationsInput | number
     columnId?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ExperienceUpdateWithoutCandidatInput = {
@@ -36481,11 +41564,12 @@ export namespace Prisma {
     id?: string
     candidatId: string
     columnId: string
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type KanbanColumnUpdateWithoutJobOfferInput = {
@@ -36522,35 +41606,44 @@ export namespace Prisma {
 
   export type ApplicationUpdateWithoutJobOfferInput = {
     id?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutJobOfferInput = {
     id?: StringFieldUpdateOperationsInput | string
     candidatId?: StringFieldUpdateOperationsInput | string
     columnId?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutJobOfferInput = {
     id?: StringFieldUpdateOperationsInput | string
     candidatId?: StringFieldUpdateOperationsInput | string
     columnId?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type JobOfferCreateManyTemplateInput = {
@@ -36656,48 +41749,186 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ApplicationNoteCreateManyApplicationInput = {
+    id?: string
+    content: string
+    authorId: string
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemCreateManyApplicationInput = {
+    id?: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileCreateManyApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type ApplicationCreateManyColumnInput = {
     id?: string
     candidatId: string
     jobOfferId: number
-    note?: string | null
     rating?: number | null
     message?: string | null
     cv?: string | null
+    duedate?: Date | string | null
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ApplicationUpdateWithoutColumnInput = {
     id?: StringFieldUpdateOperationsInput | string
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
     jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutColumnInput = {
     id?: StringFieldUpdateOperationsInput | string
     candidatId?: StringFieldUpdateOperationsInput | string
     jobOfferId?: IntFieldUpdateOperationsInput | number
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutColumnInput = {
     id?: StringFieldUpdateOperationsInput | string
     candidatId?: StringFieldUpdateOperationsInput | string
     jobOfferId?: IntFieldUpdateOperationsInput | number
-    note?: NullableStringFieldUpdateOperationsInput | string | null
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

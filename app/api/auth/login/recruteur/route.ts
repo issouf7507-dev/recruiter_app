@@ -19,12 +19,16 @@ export async function POST(req: Request) {
       where: { email },
       include: {
         recruteur: true,
+        collaborateur: {
+          include: {
+            recruteur: true,
+          },
+        },
       },
     });
 
-    // console.log(user);
-
-    if (!user || user.type !== "RECRUTEUR") {
+    // Vérifier que l'utilisateur est un recruteur ou un collaborateur
+    if (!user || (user.type !== "RECRUTEUR" && user.type !== "COLLABORATEUR")) {
       return NextResponse.json(
         { error: "Email ou mot de passe incorrect" },
         { status: 401 }

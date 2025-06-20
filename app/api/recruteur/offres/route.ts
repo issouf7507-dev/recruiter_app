@@ -59,9 +59,19 @@ export async function POST(req: Request) {
     });
 
     const defaultColumns = [
-      { name: "Nouvelles", color: "#FACC15", order: 1, isDefault: true },
-      { name: "En cours", color: "#60A5FA", order: 2, isDefault: true },
-      { name: "Finalisées", color: "#34D399", order: 3, isDefault: true },
+      { name: "Nouvelles", color: "bg-blue-300/30", order: 1, isDefault: true },
+      {
+        name: "En cours",
+        color: "bg-yellow-300/30",
+        order: 2,
+        isDefault: true,
+      },
+      {
+        name: "Finalisées",
+        color: "bg-green-300/30",
+        order: 3,
+        isDefault: true,
+      },
     ];
 
     await Promise.all(
@@ -98,6 +108,9 @@ export async function GET(req: Request) {
         applications: {
           include: {
             candidat: true,
+            notes: true,
+            checklist: true,
+            files: true,
           },
         },
       },

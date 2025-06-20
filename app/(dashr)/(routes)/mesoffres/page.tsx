@@ -70,9 +70,8 @@ export default function MesOffres() {
   });
 
   // console.log("bb:", ss);
-  console.log(offertData);
 
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
@@ -90,7 +89,7 @@ export default function MesOffres() {
     }
   };
 
-  const filteredOffers = offertData?.data.filter((offer: JobOffer) => {
+  const filteredOffers = offertData?.data?.filter((offer: JobOffer) => {
     const matchesSearch =
       offer?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       offer?.company?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -115,7 +114,9 @@ export default function MesOffres() {
       <CardHeader>
         <CardTitle className="flex justify-between items-start">
           <div>
-            <h3 className="text-lg font-semibold">{offer.title}</h3>
+            <Link href={`/mesoffres/${offer.id}`} className="hover:underline">
+              <h3 className="text-lg font-semibold">{offer.title}</h3>
+            </Link>
             <p className="text-sm text-muted-foreground mt-1">{offer.type}</p>
           </div>
           <div
@@ -213,7 +214,9 @@ export default function MesOffres() {
       <div className="flex items-center gap-6 flex-1">
         <div className="flex-1">
           <div className="flex items-center gap-3">
-            <h3 className="font-semibold">{offer.title}</h3>
+            <Link href={`/mesoffres/${offer.id}`} className="hover:underline">
+              <h3 className="font-semibold">{offer.title}</h3>
+            </Link>
             <span className="text-sm text-muted-foreground">{offer.type}</span>
             <div
               className={`px-2 py-1 rounded-full text-xs ${
@@ -253,14 +256,6 @@ export default function MesOffres() {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          className="flex items-center gap-2"
-          onClick={() => (window.location.href = `/mesoffres/${offer.id}`)}
-        >
-          <Eye className="h-4 w-4" />
-        </Button>
         <Button
           variant="outline"
           size="sm"
@@ -340,32 +335,32 @@ export default function MesOffres() {
         </Select>
         <div className="flex gap-2">
           <Button
-            variant={viewMode === "grid" ? "default" : "outline"}
-            size="icon"
-            onClick={() => setViewMode("grid")}
-          >
-            <LayoutGrid className="h-4 w-4" />
-          </Button>
-          <Button
             variant={viewMode === "list" ? "default" : "outline"}
             size="icon"
             onClick={() => setViewMode("list")}
           >
             <List className="h-4 w-4" />
           </Button>
+          <Button
+            variant={viewMode === "grid" ? "default" : "outline"}
+            size="icon"
+            onClick={() => setViewMode("grid")}
+          >
+            <LayoutGrid className="h-4 w-4" />
+          </Button>
         </div>
       </div>
 
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full overflow-y-auto ">
           {/* {filteredOffers.map((offer) => ( */}
           {filteredOffers?.map((offer: any) => (
             <OfferCard key={offer.id} offer={offer} />
           ))}
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          {filteredOffers.map((offer: JobOffer) => (
+        <div className="flex flex-col gap-4 overflow-y-auto h-[calc(100vh-200px)]">
+          {filteredOffers?.map((offer: JobOffer) => (
             <OfferListItem key={offer.id} offer={offer} />
           ))}
         </div>
