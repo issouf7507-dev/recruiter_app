@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
     const invitation = await prisma.invitation.create({
       data: {
         email,
-        role,
+        role: role == "MANAGER" ? "MANAGER" : "ADMIN",
         token,
         expiresAt,
         recruteurId: authenticatedUser.id,

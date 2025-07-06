@@ -50,6 +50,7 @@ import {
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserStore } from "@/store/userStore";
+import { useRecruteurId } from "@/hooks/useRecruteurId";
 
 // Type pour une offre d'emploi
 
@@ -58,15 +59,16 @@ type ViewMode = "grid" | "list";
 export default function MesOffres() {
   // const { user, loading } = useAuth();
   const { user, loading } = useUserStore();
+  const recruteurId = useRecruteurId();
 
   const {
     data: offertData,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["offertData123"],
-    queryFn: () =>
-      fetchData(`/api/recruteur/offresbyuser/${user?.recruteur?.id}`),
+    queryKey: ["offertData123", recruteurId],
+    queryFn: () => fetchData(`/api/recruteur/offresbyuser/${recruteurId}`),
+    enabled: !!recruteurId,
   });
 
   const [viewMode, setViewMode] = useState<ViewMode>("list");

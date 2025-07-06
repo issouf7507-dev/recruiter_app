@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
+import { kanbanEvents } from "@/lib/socket";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-
     const { name, color, order, jobOfferId } = body;
+
+    const authenticatedUser = await getAuthenticatedUser(req as NextRequest);
+    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
     const kanbanColumn = await prisma.kanbanColumn.create({
       data: {
@@ -16,11 +23,18 @@ export async function POST(req: Request) {
       },
     });
 
+    // Publier l'événement WebSocket
+    await kanbanEvents.columnCreated(kanbanColumn, jobOfferId);
+
+    // Invalider le cache
+    await cacheUtils.del(CACHE_KEYS.KANBAN_BOARD(jobOfferId));
+
     return NextResponse.json(
       { sucess: true, data: kanbanColumn },
       { status: 200 }
     );
-  } catch {
+  } catch (error) {
+    console.error("Erreur lors de l'ajout de la colonne:", error);
     return NextResponse.json(
       { succes: false, message: "Erreur server" },
       { status: 500 }
@@ -36,7 +50,8 @@ export async function GET(req: Request) {
       { sucess: true, data: kanbanColumn },
       { status: 200 }
     );
-  } catch {
+  } catch (error) {
+    console.error("Erreur lors de la récupération des colonnes:", error);
     return NextResponse.json(
       { succes: false, message: "Erreur server" },
       { status: 500 }

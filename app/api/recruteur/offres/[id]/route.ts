@@ -1,77 +1,26 @@
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
 
 export async function PUT(
-  req: Request,
-  {
-    params,
-  }: {
-    params: Promise<{ id: string }>;
-  }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const body = await req.json();
-    const {
-      title,
-      description,
-      company,
-      location,
-      type,
-      experience,
-
-      salaryMin,
-      salaryMax,
-      salaryCurrency,
-      salaryPeriod,
-      skills,
-      requirements,
-      responsibilities,
-      benefits,
-      template,
-      recruteurId,
-    } = body;
     const id = (await params).id;
-
-    const recruteur = await prisma.recruteur.findFirst({
-      where: {
-        userId: recruteurId,
-      },
-    });
-
-    if (!recruteur) {
-      return NextResponse.json(
-        { success: false, message: "Ce recruteur n'existe pas" },
-        { status: 400 }
-      );
-    }
+    const body = await req.json();
 
     const jobOffer = await prisma.jobOffer.update({
       where: {
         id: Number(id),
       },
-      data: {
-        title,
-        description,
-        company,
-        location,
-        type,
-        experience,
-        salaryMin: parseFloat(salaryMin),
-        salaryMax: parseFloat(salaryMax),
-        salaryCurrency,
-        salaryPeriod,
-        skills,
-        requirements,
-        responsibilities,
-        benefits,
-
-        recruteurId: recruteur.id,
-      },
+      data: body,
     });
 
     return NextResponse.json(
-      { success: true, data: jobOffer },
-      { status: 201 }
+      { message: true, data: jobOffer },
+      { status: 200 }
     );
   } catch (err) {
     console.log(err);
@@ -83,45 +32,101 @@ export async function PUT(
 }
 
 export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ id: number }> }
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = (await params).id;
-    // const
-    const jobOffer = await prisma.jobOffer.findMany({
+    const authenticatedUser = await getAuthenticatedUser(req);
+    if (
+      !authenticatedUser ||
+      (authenticatedUser.type !== "RECRUTEUR" &&
+        authenticatedUser.type !== "COLLABORATEUR")
+    ) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const offerId = (await params).id;
+    const cacheKey = CACHE_KEYS.KANBAN_BOARD(offerId);
+
+    // Essayer de récupérer depuis le cache
+    const cachedData = await cacheUtils.get(cacheKey);
+    if (cachedData) {
+      return NextResponse.json({
+        success: true,
+        data: cachedData,
+        fromCache: true,
+      });
+    }
+
+    // Si pas en cache, récupérer depuis la base de données
+    const offer = await prisma.jobOffer.findFirst({
       where: {
-        id: Number(id),
-      },
-      orderBy: {
-        createdAt: "asc",
+        id: Number(offerId),
+        recruteurId: authenticatedUser.recruteurId,
       },
       include: {
-        kanbanColumns: true,
+        kanbanColumns: {
+          orderBy: { order: "asc" },
+        },
         applications: {
           include: {
-            candidat: true,
-            notes: true,
-            checklist: true,
-            files: true,
+            candidat: {
+              select: {
+                id: true,
+                nom: true,
+                prenom: true,
+                email: true,
+                competences: true,
+                cv: true,
+                letterm: true,
+              },
+            },
+            notes: {
+              orderBy: { createdAt: "desc" },
+            },
+            checklist: {
+              orderBy: { createdAt: "desc" },
+            },
+            files: {
+              orderBy: { createdAt: "desc" },
+            },
             collaborateurs: {
               include: {
-                collaborateur: true,
+                collaborateur: {
+                  include: {
+                    user: {
+                      select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                      },
+                    },
+                  },
+                },
               },
             },
           },
+          orderBy: { createdAt: "desc" },
         },
       },
     });
 
+    if (!offer) {
+      return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
+    }
+
+    // Mettre en cache
+    await cacheUtils.set(cacheKey, [offer], CACHE_TTL.KANBAN_BOARD);
+
+    return NextResponse.json({
+      success: true,
+      data: [offer],
+      fromCache: false,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'offre:", error);
     return NextResponse.json(
-      { message: true, data: jobOffer },
-      { status: 200 }
-    );
-  } catch (err) {
-    console.log(err);
-    NextResponse.json(
-      { success: false, message: "Une erreur est survenue" },
+      { error: "Erreur lors de la récupération de l'offre" },
       { status: 500 }
     );
   }

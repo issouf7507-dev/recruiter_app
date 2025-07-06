@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { kanbanEvents } from "@/lib/socket";
 
 export async function PUT(
   req: NextRequest,
@@ -49,6 +50,7 @@ export async function PUT(
           content: notes,
           authorId: authenticatedUser.userId,
           authorType: authenticatedUser.type,
+          authorName: authenticatedUser.name,
         },
       };
     }
@@ -67,6 +69,18 @@ export async function PUT(
         },
       },
     });
+
+    // Émettre un événement WebSocket si une note a été ajoutée
+    if (notes !== undefined) {
+      const latestNote = updatedApplication.notes[0]; // La note la plus récente
+      if (latestNote) {
+        await kanbanEvents.noteAdded(
+          idapp,
+          latestNote,
+          application.jobOffer.id.toString()
+        );
+      }
+    }
 
     return NextResponse.json(
       {

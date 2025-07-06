@@ -34,6 +34,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useUserStore } from "@/store/userStore";
+import { useWebSocket } from "@/hooks/useWebSocket";
 
 // Types
 type KanbanColumn = {
@@ -51,6 +52,7 @@ type Note = {
   id?: string;
   content: string;
   authorId: string;
+  authorName?: string;
   authorType: string;
   createdAt?: string;
 };
@@ -185,6 +187,14 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
     gcTime: 60000, // Les données sont gardées en cache pendant 1 minute
   });
 
+  console.log("queryoffresbyid", queryoffresbyid);
+
+  // Hook WebSocket pour les mises à jour en temps réel
+  const { socket, isConnected } = useWebSocket({
+    offerId,
+    enabled: true,
+  });
+
   const [columns, setColumns] = useState<KanbanColumn[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
   const [selectedColor, setSelectedColor] = useState<string>("bg-blue-300/30");
@@ -257,6 +267,111 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
   const [selectedDueDate, setSelectedDueDate] = useState<string>("");
   const [isUpdatingDueDate, setIsUpdatingDueDate] = useState(false);
 
+  // Gestion des événements WebSocket
+  useEffect(() => {
+    if (!socket || !isConnected()) return;
+
+    // Écouter les événements de déplacement d'application
+    const handleApplicationMoved = (data: {
+      applicationId: string;
+      newColumnId: string;
+      application: Application;
+    }) => {
+      console.log("Application déplacée via WebSocket:", data);
+      setApplications((prevApps) =>
+        prevApps.map((app) =>
+          app.id === data.applicationId
+            ? { ...data.application, columnId: data.newColumnId }
+            : app
+        )
+      );
+    };
+
+    // Écouter les événements de mise à jour d'application
+    const handleApplicationUpdated = (data: {
+      applicationId: string;
+      application: Application;
+    }) => {
+      console.log("Application mise à jour via WebSocket:", data);
+      setApplications((prevApps) =>
+        prevApps.map((app) =>
+          app.id === data.applicationId ? data.application : app
+        )
+      );
+    };
+
+    // Écouter les événements de nouvelle application
+    const handleApplicationCreated = (data: { application: Application }) => {
+      console.log("Nouvelle application via WebSocket:", data);
+      setApplications((prevApps) => [...prevApps, data.application]);
+    };
+
+    // Écouter les événements de suppression d'application
+    const handleApplicationDeleted = (data: { applicationId: string }) => {
+      console.log("Application supprimée via WebSocket:", data);
+      setApplications((prevApps) =>
+        prevApps.filter((app) => app.id !== data.applicationId)
+      );
+    };
+
+    // Écouter les événements de notes
+    const handleNoteAdded = (data: {
+      applicationId: string;
+      note: any;
+      offerId: string;
+    }) => {
+      console.log("Note ajoutée via WebSocket:", data);
+      setApplications((prevApps) =>
+        prevApps.map((app) =>
+          app.id === data.applicationId
+            ? { ...app, notes: [data.note, ...app.notes] }
+            : app
+        )
+      );
+    };
+
+    const handleNoteUpdated = (data: {
+      applicationId: string;
+      note: any;
+      offerId: string;
+    }) => {
+      console.log("Note modifiée via WebSocket:", data);
+      setApplications((prevApps) =>
+        prevApps.map((app) =>
+          app.id === data.applicationId
+            ? {
+                ...app,
+                notes: app.notes.map((note) =>
+                  note.id === data.note.id ? data.note : note
+                ),
+              }
+            : app
+        )
+      );
+    };
+
+    // S'abonner aux événements
+    socket.on("application:moved", handleApplicationMoved);
+    socket.on("application:updated", handleApplicationUpdated);
+    socket.on("application:created", handleApplicationCreated);
+    socket.on("application:deleted", handleApplicationDeleted);
+    socket.on("note:added", handleNoteAdded);
+    socket.on("note:updated", handleNoteUpdated);
+
+    // Joindre la room pour cette offre
+    socket.emit("join:offer", offerId);
+
+    return () => {
+      socket.off("application:moved", handleApplicationMoved);
+      socket.off("application:updated", handleApplicationUpdated);
+      socket.off("application:created", handleApplicationCreated);
+      socket.off("application:deleted", handleApplicationDeleted);
+      socket.off("note:added", handleNoteAdded);
+      socket.off("note:updated", handleNoteUpdated);
+      socket.emit("leave:offer", offerId);
+    };
+  }, [socket, isConnected, offerId]);
+
   // Mettre à jour les états locaux quand les données changent
   useEffect(() => {
     if (queryoffresbyid?.data?.[0]) {
@@ -293,6 +408,8 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
         (app) => app.id === selectedCard.id
       );
       if (updatedCard) {
+        console.log("updatedCard", updatedCard);
+        ``;
         setSelectedCard(updatedCard);
       }
     }
@@ -421,7 +538,10 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
 
       if (!sourceColumn || !destColumn) return;
 
-      // Mettre à jour l'état local immédiatement
+      // Sauvegarder l'état précédent pour rollback en cas d'erreur
+      const previousApplications = [...applications];
+
+      // Mettre à jour l'état local immédiatement (mise à jour optimiste)
       setApplications((prevApps) =>
         prevApps.map((app) =>
           app.id === draggableId ? { ...app, columnId: destColumn.id! } : app
@@ -430,26 +550,26 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
 
       // Mettre à jour l'API en arrière-plan
       try {
-        await postData(
+        const response = await postData(
           {
             applicationId: draggableId,
             newColumnId: destination.droppableId,
             sourceColumnId: source.droppableId,
           },
           "/api/recruteur/kanban/move-application"
-        ).then((res) => {
-          if (res.success) {
-            queryoffresbyidrefetch();
-          }
-        });
+        );
 
-        // if (!response.success) {
-        //   // En cas d'erreur, revenir à l'état précédent
-        //   await queryoffresbyidrefetch();
-        // }
+        if (!response.success) {
+          // En cas d'erreur, revenir à l'état précédent
+          setApplications(previousApplications);
+          console.error("Erreur lors du déplacement:", response.error);
+        }
+        // Si succès, ne pas refetch - l'état local est déjà correct
+        // et les WebSockets mettront à jour si nécessaire
       } catch (error) {
         console.error("Erreur lors du déplacement de la candidature:", error);
-        await queryoffresbyidrefetch();
+        // En cas d'erreur, revenir à l'état précédent
+        setApplications(previousApplications);
       }
     }
   };
@@ -466,11 +586,14 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
 
   const handleNoteSubmit = async () => {
     if (!selectedCard || !cardNote.trim()) return;
+    console.log("handleNoteSubmit - selectedCard:", selectedCard);
+    console.log("handleNoteSubmit - cardNote:", cardNote);
     setIsUpdatingMessage(true);
 
     try {
       if (editingNote) {
         // Modification d'une note existante
+        console.log("Modification d'une note existante:", editingNote);
         const response = await fetch(
           `/api/recruteur/kanban/application/${selectedCard.id}/notes/${editingNote.id}`,
           {
@@ -481,43 +604,65 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
         );
 
         if (response.ok) {
-          // Mettre à jour l'état local immédiatement
-          const updatedNotes = selectedCard.notes.map((note) =>
-            note.id === editingNote.id
-              ? {
-                  ...note,
-                  content: cardNote,
-                  updatedAt: new Date().toISOString(),
-                }
-              : note
-          );
+          const responseData = await response.json();
+          console.log("Réponse modification note:", responseData);
 
-          setSelectedCard({ ...selectedCard, notes: updatedNotes });
+          // Mettre à jour l'état local avec la réponse de l'API
+          if (responseData.note) {
+            const updatedNotes = selectedCard.notes.map((note) =>
+              note.id === editingNote.id ? responseData.note : note
+            );
+
+            setSelectedCard({ ...selectedCard, notes: updatedNotes });
+
+            // Mettre à jour aussi l'état global des applications
+            setApplications((prevApplications) =>
+              prevApplications.map((app) =>
+                app.id === selectedCard.id
+                  ? { ...app, notes: updatedNotes }
+                  : app
+              )
+            );
+          }
+
           setCardNote("");
           setEditingNote(null);
         } else {
           throw new Error("Erreur lors de la modification de la note");
         }
       } else {
-        // Création d'une nouvelle note - optimiste update
-        const newNote: Note = {
-          content: cardNote,
-          authorId: user?.id || "",
-          authorType: "recruteur",
-          createdAt: new Date().toISOString(),
-        };
-
-        setSelectedCard({
-          ...selectedCard,
-          notes: [...selectedCard.notes, newNote],
-        });
-        setCardNote("");
-
-        // Appel API en arrière-plan
-        await putData(
+        // Création d'une nouvelle note
+        console.log("Création d'une nouvelle note");
+        const response = await putData(
           { notes: cardNote },
           `/api/recruteur/kanban/application/${selectedCard.id}`
         );
+
+        console.log("Réponse création note:", response);
+
+        if (response.success && response.application) {
+          console.log("Application mise à jour:", response.application);
+          console.log("Notes de l'application:", response.application.notes);
+
+          // Mettre à jour l'état local avec la réponse de l'API
+          setSelectedCard({
+            ...selectedCard,
+            notes: response.application.notes || [],
+          });
+
+          // Mettre à jour aussi l'état global des applications
+          setApplications((prevApplications) =>
+            prevApplications.map((app) =>
+              app.id === selectedCard.id
+                ? { ...app, notes: response.application.notes || [] }
+                : app
+            )
+          );
+
+          setCardNote("");
+        } else {
+          throw new Error("Erreur lors de l'ajout de la note");
+        }
       }
     } catch (error) {
       console.error("Erreur lors de l'ajout/modification de la note:", error);
@@ -1185,7 +1330,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
 
   if (queryoffresbyid?.data?.[0].kanbanColumns) {
     return (
-      <div className=" space-y-6 w-full h-screen overflow-auto">
+      <div className=" space-y-6 w-full h-screen overflow-auto mt-10">
         {/* Breadcrumb */}
 
         <div className="flex gap-6 overflow-x-auto  pb-4">
@@ -1342,6 +1487,14 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                                               onClick={() => {
                                                 setSelectedCard(application);
                                                 setIsCardModalOpen(true);
+                                                console.log(
+                                                  "Carte sélectionnée:",
+                                                  application
+                                                );
+                                                console.log(
+                                                  "Notes de la carte:",
+                                                  application.notes
+                                                );
                                                 // Charger les collaborateurs affectés
                                                 loadAssignedCollaborateurs(
                                                   application.id
@@ -1751,7 +1904,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                       </div>
 
                       {/* Documents téléchargeables */}
-                      <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="bg-gray-50 rounded-lg py-4">
                         <h3 className="text-sm font-semibold text-gray-700 mb-3">
                           Documents
                         </h3>
@@ -1868,7 +2021,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
 
                       <div className="flex items-center gap-2 mb-4">
                         <Input
-                          className="w-full bg-gray-50 border-0 rounded-full p-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all shadow-none"
+                          className="w-full bg-gray-50 rounded-full p-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all shadow-none border"
                           placeholder="Écrire un message..."
                           value={cardNote}
                           onChange={(e) => {
@@ -1965,11 +2118,12 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                                   }`}
                                 >
                                   <span className="font-medium">
-                                    {user?.id === note.authorId
-                                      ? user?.name || "Vous"
-                                      : note.authorType === "RECRUTEUR"
-                                      ? "Recruteur"
-                                      : "Candidat"}
+                                    {note.authorName ||
+                                      (user?.id === note.authorId
+                                        ? user?.name || "Vous"
+                                        : note.authorType === "RECRUTEUR"
+                                        ? "Recruteur"
+                                        : "Candidat")}
                                   </span>
                                   <span>•</span>
                                   <span>
@@ -2320,11 +2474,12 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                                       }`}
                                     >
                                       <span className="font-medium">
-                                        {user?.id === note.authorId
-                                          ? user?.name || "Vous"
-                                          : note.authorType === "RECRUTEUR"
-                                          ? "Recruteur"
-                                          : "Candidat"}
+                                        {note.authorName ||
+                                          (user?.id === note.authorId
+                                            ? user?.name || "Vous"
+                                            : note.authorType === "RECRUTEUR"
+                                            ? "Recruteur"
+                                            : "Candidat")}
                                       </span>
                                       <span>•</span>
                                       <span>

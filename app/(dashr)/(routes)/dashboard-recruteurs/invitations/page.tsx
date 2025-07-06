@@ -258,7 +258,9 @@ export default function InvitationsPage() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="ADMIN">Administrateur</SelectItem>
-                    <SelectItem value="COLLABORATEUR">Collaborateur</SelectItem>
+                    <SelectItem value="USER">Collaborateur</SelectItem>
+                    <SelectItem value="MANAGER">Manager</SelectItem>
+                    <SelectItem value="VIEWER">Lecteur</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

@@ -212,6 +212,7 @@ model ApplicationNote {
   applicationId String
   content       String // Contenu de la note
   authorId      String // ID de l'auteur (Recruteur ou Collaborateur)
+  authorName    String? // Nom de l'auteur (nullable temporairement)
   authorType    String // Type d'auteur ("RECRUTEUR" ou "COLLABORATEUR")
   // isPrivate     Boolean   @default(false) // Si la note est privée (visible uniquement par l'auteur)
   createdAt     DateTime    @default(now())

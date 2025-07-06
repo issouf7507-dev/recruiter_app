@@ -15576,6 +15576,7 @@ export namespace Prisma {
     applicationId: string | null
     content: string | null
     authorId: string | null
+    authorName: string | null
     authorType: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -15586,6 +15587,7 @@ export namespace Prisma {
     applicationId: string | null
     content: string | null
     authorId: string | null
+    authorName: string | null
     authorType: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -15596,6 +15598,7 @@ export namespace Prisma {
     applicationId: number
     content: number
     authorId: number
+    authorName: number
     authorType: number
     createdAt: number
     updatedAt: number
@@ -15608,6 +15611,7 @@ export namespace Prisma {
     applicationId?: true
     content?: true
     authorId?: true
+    authorName?: true
     authorType?: true
     createdAt?: true
     updatedAt?: true
@@ -15618,6 +15622,7 @@ export namespace Prisma {
     applicationId?: true
     content?: true
     authorId?: true
+    authorName?: true
     authorType?: true
     createdAt?: true
     updatedAt?: true
@@ -15628,6 +15633,7 @@ export namespace Prisma {
     applicationId?: true
     content?: true
     authorId?: true
+    authorName?: true
     authorType?: true
     createdAt?: true
     updatedAt?: true
@@ -15711,6 +15717,7 @@ export namespace Prisma {
     applicationId: string
     content: string
     authorId: string
+    authorName: string | null
     authorType: string
     createdAt: Date
     updatedAt: Date
@@ -15738,6 +15745,7 @@ export namespace Prisma {
     applicationId?: boolean
     content?: boolean
     authorId?: boolean
+    authorName?: boolean
     authorType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -15749,6 +15757,7 @@ export namespace Prisma {
     applicationId?: boolean
     content?: boolean
     authorId?: boolean
+    authorName?: boolean
     authorType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -15760,6 +15769,7 @@ export namespace Prisma {
     applicationId?: boolean
     content?: boolean
     authorId?: boolean
+    authorName?: boolean
     authorType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -15771,12 +15781,13 @@ export namespace Prisma {
     applicationId?: boolean
     content?: boolean
     authorId?: boolean
+    authorName?: boolean
     authorType?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ApplicationNoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "content" | "authorId" | "authorType" | "createdAt" | "updatedAt", ExtArgs["result"]["applicationNote"]>
+  export type ApplicationNoteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "content" | "authorId" | "authorName" | "authorType" | "createdAt" | "updatedAt", ExtArgs["result"]["applicationNote"]>
   export type ApplicationNoteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     application?: boolean | ApplicationDefaultArgs<ExtArgs>
   }
@@ -15797,6 +15808,7 @@ export namespace Prisma {
       applicationId: string
       content: string
       authorId: string
+      authorName: string | null
       authorType: string
       createdAt: Date
       updatedAt: Date
@@ -16228,6 +16240,7 @@ export namespace Prisma {
     readonly applicationId: FieldRef<"ApplicationNote", 'String'>
     readonly content: FieldRef<"ApplicationNote", 'String'>
     readonly authorId: FieldRef<"ApplicationNote", 'String'>
+    readonly authorName: FieldRef<"ApplicationNote", 'String'>
     readonly authorType: FieldRef<"ApplicationNote", 'String'>
     readonly createdAt: FieldRef<"ApplicationNote", 'DateTime'>
     readonly updatedAt: FieldRef<"ApplicationNote", 'DateTime'>
@@ -30373,6 +30386,7 @@ export namespace Prisma {
     applicationId: 'applicationId',
     content: 'content',
     authorId: 'authorId',
+    authorName: 'authorName',
     authorType: 'authorType',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -31662,6 +31676,7 @@ export namespace Prisma {
     applicationId?: StringFilter<"ApplicationNote"> | string
     content?: StringFilter<"ApplicationNote"> | string
     authorId?: StringFilter<"ApplicationNote"> | string
+    authorName?: StringNullableFilter<"ApplicationNote"> | string | null
     authorType?: StringFilter<"ApplicationNote"> | string
     createdAt?: DateTimeFilter<"ApplicationNote"> | Date | string
     updatedAt?: DateTimeFilter<"ApplicationNote"> | Date | string
@@ -31673,6 +31688,7 @@ export namespace Prisma {
     applicationId?: SortOrder
     content?: SortOrder
     authorId?: SortOrder
+    authorName?: SortOrderInput | SortOrder
     authorType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -31687,6 +31703,7 @@ export namespace Prisma {
     applicationId?: StringFilter<"ApplicationNote"> | string
     content?: StringFilter<"ApplicationNote"> | string
     authorId?: StringFilter<"ApplicationNote"> | string
+    authorName?: StringNullableFilter<"ApplicationNote"> | string | null
     authorType?: StringFilter<"ApplicationNote"> | string
     createdAt?: DateTimeFilter<"ApplicationNote"> | Date | string
     updatedAt?: DateTimeFilter<"ApplicationNote"> | Date | string
@@ -31698,6 +31715,7 @@ export namespace Prisma {
     applicationId?: SortOrder
     content?: SortOrder
     authorId?: SortOrder
+    authorName?: SortOrderInput | SortOrder
     authorType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -31714,6 +31732,7 @@ export namespace Prisma {
     applicationId?: StringWithAggregatesFilter<"ApplicationNote"> | string
     content?: StringWithAggregatesFilter<"ApplicationNote"> | string
     authorId?: StringWithAggregatesFilter<"ApplicationNote"> | string
+    authorName?: StringNullableWithAggregatesFilter<"ApplicationNote"> | string | null
     authorType?: StringWithAggregatesFilter<"ApplicationNote"> | string
     createdAt?: DateTimeWithAggregatesFilter<"ApplicationNote"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ApplicationNote"> | Date | string
@@ -33714,6 +33733,7 @@ export namespace Prisma {
     id?: string
     content: string
     authorId: string
+    authorName?: string | null
     authorType: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -33725,6 +33745,7 @@ export namespace Prisma {
     applicationId: string
     content: string
     authorId: string
+    authorName?: string | null
     authorType: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -33734,6 +33755,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
     authorType?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33745,6 +33767,7 @@ export namespace Prisma {
     applicationId?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
     authorType?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33755,6 +33778,7 @@ export namespace Prisma {
     applicationId: string
     content: string
     authorId: string
+    authorName?: string | null
     authorType: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -33764,6 +33788,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
     authorType?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33774,6 +33799,7 @@ export namespace Prisma {
     applicationId?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
     authorType?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -35782,6 +35808,7 @@ export namespace Prisma {
     applicationId?: SortOrder
     content?: SortOrder
     authorId?: SortOrder
+    authorName?: SortOrder
     authorType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -35792,6 +35819,7 @@ export namespace Prisma {
     applicationId?: SortOrder
     content?: SortOrder
     authorId?: SortOrder
+    authorName?: SortOrder
     authorType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -35802,6 +35830,7 @@ export namespace Prisma {
     applicationId?: SortOrder
     content?: SortOrder
     authorId?: SortOrder
+    authorName?: SortOrder
     authorType?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -40942,6 +40971,7 @@ export namespace Prisma {
     id?: string
     content: string
     authorId: string
+    authorName?: string | null
     authorType: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -40951,6 +40981,7 @@ export namespace Prisma {
     id?: string
     content: string
     authorId: string
+    authorName?: string | null
     authorType: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -41246,6 +41277,7 @@ export namespace Prisma {
     applicationId?: StringFilter<"ApplicationNote"> | string
     content?: StringFilter<"ApplicationNote"> | string
     authorId?: StringFilter<"ApplicationNote"> | string
+    authorName?: StringNullableFilter<"ApplicationNote"> | string | null
     authorType?: StringFilter<"ApplicationNote"> | string
     createdAt?: DateTimeFilter<"ApplicationNote"> | Date | string
     updatedAt?: DateTimeFilter<"ApplicationNote"> | Date | string
@@ -43603,6 +43635,7 @@ export namespace Prisma {
     id?: string
     content: string
     authorId: string
+    authorName?: string | null
     authorType: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -43642,6 +43675,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
     authorType?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43651,6 +43685,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
     authorType?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43660,6 +43695,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
     authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
     authorType?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

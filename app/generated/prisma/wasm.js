@@ -263,6 +263,7 @@ exports.Prisma.ApplicationNoteScalarFieldEnum = {
   applicationId: 'applicationId',
   content: 'content',
   authorId: 'authorId',
+  authorName: 'authorName',
   authorType: 'authorType',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

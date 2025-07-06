@@ -9,10 +9,13 @@ export async function GET(
   try {
     const authenticatedUser = await getAuthenticatedUser(req);
 
-    if (!authenticatedUser) {
+    if (
+      !authenticatedUser ||
+      (authenticatedUser.type !== "RECRUTEUR" &&
+        authenticatedUser.type !== "COLLABORATEUR")
+    ) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
-    // console.log("authenticatedUser", authenticatedUser);
 
     // Récupérer les offres du recruteur de l'utilisateur connecté
     const offres = await prisma.jobOffer.findMany({
@@ -36,8 +39,6 @@ export async function GET(
         createdAt: "desc",
       },
     });
-
-    // console.log("offres", offres);
 
     return NextResponse.json(offres);
   } catch (error) {

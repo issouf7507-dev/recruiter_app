@@ -6,6 +6,7 @@ export interface AuthenticatedUser {
   userId: string;
   type: "RECRUTEUR" | "COLLABORATEUR";
   recruteurId: string;
+  name: string;
 }
 
 /**
@@ -34,7 +35,11 @@ export async function getAuthenticatedUser(
       where: { id: decoded.userId },
       include: {
         recruteur: true,
-        collaborateur: true,
+        collaborateur: {
+          include: {
+            recruteur: true,
+          },
+        },
       },
     });
 
@@ -47,7 +52,10 @@ export async function getAuthenticatedUser(
     if (user.type === "RECRUTEUR" && user.recruteur) {
       recruteurId = user.recruteur.id;
     } else if (user.type === "COLLABORATEUR" && user.collaborateur) {
-      recruteurId = user.collaborateur.recruteurId;
+      if (!user.collaborateur.recruteur) {
+        return null;
+      }
+      recruteurId = user.collaborateur.recruteur.id;
     } else {
       return null;
     }
@@ -56,6 +64,7 @@ export async function getAuthenticatedUser(
       userId: user.id,
       type: user.type as "RECRUTEUR" | "COLLABORATEUR",
       recruteurId,
+      name: user.name || "",
     };
   } catch (error) {
     console.error(

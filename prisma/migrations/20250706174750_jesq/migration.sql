@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "UserType" AS ENUM ('CANDIDAT', 'RECRUTEUR');
+CREATE TYPE "UserType" AS ENUM ('CANDIDAT', 'RECRUTEUR', 'COLLABORATEUR');
 
 -- CreateEnum
 CREATE TYPE "RecruteurType" AS ENUM ('PARTICULIER', 'ENTREPRISE', 'ENTITE');
@@ -110,6 +110,17 @@ CREATE TABLE "Collaborateur" (
 );
 
 -- CreateTable
+CREATE TABLE "ApplicationCollaborateur" (
+    "id" TEXT NOT NULL,
+    "applicationId" TEXT NOT NULL,
+    "collaborateurId" TEXT NOT NULL,
+    "assignedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "assignedBy" TEXT NOT NULL,
+
+    CONSTRAINT "ApplicationCollaborateur_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "JobOffer" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
@@ -160,6 +171,7 @@ CREATE TABLE "Application" (
     "rating" INTEGER,
     "message" TEXT,
     "cv" TEXT,
+    "duedate" TIMESTAMP(3),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -172,8 +184,8 @@ CREATE TABLE "ApplicationNote" (
     "applicationId" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "authorId" TEXT NOT NULL,
+    "authorName" TEXT,
     "authorType" TEXT NOT NULL,
-    "isPrivate" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -390,6 +402,9 @@ CREATE UNIQUE INDEX "Collaborateur_invitationId_key" ON "Collaborateur"("invitat
 CREATE UNIQUE INDEX "Collaborateur_userId_key" ON "Collaborateur"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "ApplicationCollaborateur_applicationId_collaborateurId_key" ON "ApplicationCollaborateur"("applicationId", "collaborateurId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");
 
 -- CreateIndex
@@ -421,6 +436,12 @@ ALTER TABLE "Collaborateur" ADD CONSTRAINT "Collaborateur_invitationId_fkey" FOR
 
 -- AddForeignKey
 ALTER TABLE "Collaborateur" ADD CONSTRAINT "Collaborateur_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ApplicationCollaborateur" ADD CONSTRAINT "ApplicationCollaborateur_applicationId_fkey" FOREIGN KEY ("applicationId") REFERENCES "Application"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ApplicationCollaborateur" ADD CONSTRAINT "ApplicationCollaborateur_collaborateurId_fkey" FOREIGN KEY ("collaborateurId") REFERENCES "Collaborateur"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "JobOffer" ADD CONSTRAINT "JobOffer_templateId_fkey" FOREIGN KEY ("templateId") REFERENCES "OfferTemplate"("id") ON DELETE SET NULL ON UPDATE CASCADE;

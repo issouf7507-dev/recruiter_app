@@ -8,14 +8,16 @@ import { fetchData } from "@/utils/utilts";
 import { JobOffer } from "@/types/types";
 import { Loader2 } from "lucide-react";
 import { useUserStore } from "@/store/userStore";
+import { useRecruteurId } from "@/hooks/useRecruteurId";
 
 export default function OffresPage() {
   const { user, loading } = useUserStore();
+  const recruteurId = useRecruteurId();
 
   const { data: querymoffres, isLoading } = useQuery({
-    queryKey: ["querymoffres2"],
-    queryFn: () =>
-      fetchData(`/api/recruteur/offresbyuser/${user?.recruteur?.id}`),
+    queryKey: ["querymoffres2", recruteurId],
+    queryFn: () => fetchData(`/api/recruteur/offresbyuser/${recruteurId}`),
+    enabled: !!recruteurId,
   });
 
   if (isLoading) {

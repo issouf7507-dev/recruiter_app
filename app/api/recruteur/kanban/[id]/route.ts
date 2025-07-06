@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { kanbanEvents } from "@/lib/socket";
+import { CACHE_KEYS, cacheUtils } from "@/lib/redis";
 
 export async function GET(req: Request) {
   try {
@@ -64,6 +66,16 @@ export async function DELETE(
         message: "model non trouvé",
       });
     }
+
+    // Publier l'événement WebSocket
+    await kanbanEvents.columnDeleted(
+      offerTemplate.id,
+      offerTemplate.jobOfferId.toString()
+    );
+
+    await cacheUtils.del(
+      CACHE_KEYS.KANBAN_BOARD(offerTemplate.jobOfferId.toString())
+    );
 
     return NextResponse.json({
       success: true,

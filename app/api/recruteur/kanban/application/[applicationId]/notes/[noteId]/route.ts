@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { kanbanEvents } from "@/lib/socket";
 
 export async function PUT(
   req: NextRequest,
@@ -93,6 +94,13 @@ export async function PUT(
         updatedAt: new Date(),
       },
     });
+
+    // Émettre un événement WebSocket pour la modification de la note
+    await kanbanEvents.noteUpdated(
+      applicationId,
+      updatedNote,
+      application.jobOffer.id.toString()
+    );
 
     return NextResponse.json(
       {

@@ -35,6 +35,7 @@ import { useUserStore } from "@/store/userStore";
 import SidebarOffres from "@/components/SidebarOffres";
 import KanbanBoard from "@/app/components/kanban/KanbanBoard";
 import ManualKanbanBoard from "@/app/components/kanban/ManualKanbanBoard";
+import { useRecruteurId } from "@/hooks/useRecruteurId";
 
 // Types pour une meilleure sécurité des données
 interface OfferData {
@@ -68,6 +69,7 @@ export default function OffreDetail({
   const { user } = useUserStore();
   const router = useRouter();
   const { offerId } = use(params);
+  const recruteurId = useRecruteurId();
 
   // Récupérer les détails de l'offre actuelle
   const {
@@ -81,17 +83,20 @@ export default function OffreDetail({
     enabled: !!offerId,
   });
 
+  console.log("user", user);
+
   // Récupérer toutes les offres du recruteur pour l'historique
   const {
     data: allOffers,
     isLoading: allOffersLoading,
     error: allOffersError,
   } = useQuery({
-    queryKey: ["allOffers", user?.recruteur?.id],
-    queryFn: () =>
-      fetchData(`/api/recruteur/offresbyuser/${user?.recruteur?.id}`),
-    enabled: !!user?.recruteur?.id,
+    queryKey: ["allOffers", recruteurId],
+    queryFn: () => fetchData(`/api/recruteur/offresbyuser/${recruteurId}`),
+    enabled: !!recruteurId,
   });
+
+  console.log("allOffers", allOffers);
 
   // Fonction utilitaire pour accéder aux données de l'offre de manière sécurisée
   const getOfferData = (): OfferData | null => {
