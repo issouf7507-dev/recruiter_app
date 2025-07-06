@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   DragDropContext,
   Droppable,
@@ -9,7 +9,6 @@ import {
   DroppableProvided,
   DraggableProvided,
 } from "@hello-pangea/dnd";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
 import { Plus, Loader2, MoreVertical, RefreshCcw } from "lucide-react";
@@ -35,7 +34,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useUserStore } from "@/store/userStore";
-import { Textarea } from "@/components/ui/textarea";
 
 // Types
 type KanbanColumn = {
@@ -50,11 +48,38 @@ type KanbanColumn = {
 };
 
 type Note = {
-  id: string;
+  id?: string;
   content: string;
   authorId: string;
   authorType: string;
   createdAt?: string;
+};
+
+type Collaborateur = {
+  id: string;
+  nom: string;
+  prenom: string;
+  email: string;
+  role: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+};
+
+type ApplicationCollaborateur = {
+  id: string;
+  collaborateur: Collaborateur;
+  assignedAt: string;
+  assignedBy: string;
+};
+
+type Collaborateurs = {
+  id: string;
+  collaborateur: Collaborateur;
+  assignedAt: string;
+  assignedBy: string;
 };
 
 type Application = {
@@ -74,10 +99,13 @@ type Application = {
   cv?: string;
   createdAt: string;
   columnId: string;
+  duedate?: string | null;
   notes: Note[];
   checklist: ChecklistItem[];
   attachments: Attachment[];
   files: ApplicationFile[];
+  collaborateurs: Collaborateurs[];
+  // assignedCollaborateurs?: ApplicationCollaborateur[];
 };
 
 type ChecklistItem = {
@@ -202,16 +230,32 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
 
   const [cardApplicationDetailSpet, setCardApplicationDetailSpet] = useState(1);
 
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-  const [noteToDelete, setNoteToDelete] = useState<string | null>(null);
-
   // États pour les pièces jointes
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [applicationFiles, setApplicationFiles] = useState<ApplicationFile[]>(
     []
   );
   const [isUploading, setIsUploading] = useState(false);
+  const [isUpdatingMessage, setIsUpdatingMessage] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+
+  // États pour l'affectation des collaborateurs
+  const [collaborateurs, setCollaborateurs] = useState<Collaborateur[]>([]);
+  const [assignedCollaborateurs, setAssignedCollaborateurs] = useState<
+    ApplicationCollaborateur[]
+  >([]);
+  const [selectedCollaborateurs, setSelectedCollaborateurs] = useState<
+    string[]
+  >([]);
+  const [isLoadingCollaborateurs, setIsLoadingCollaborateurs] = useState(false);
+  const [isAssigningCollaborateurs, setIsAssigningCollaborateurs] =
+    useState(false);
+  const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
+
+  // États pour la date d'échéance
+  const [isDueDateModalOpen, setIsDueDateModalOpen] = useState(false);
+  const [selectedDueDate, setSelectedDueDate] = useState<string>("");
+  const [isUpdatingDueDate, setIsUpdatingDueDate] = useState(false);
 
   // Mettre à jour les états locaux quand les données changent
   useEffect(() => {
@@ -241,6 +285,18 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
       setApplicationFiles(selectedCard.files || []);
     }
   }, [selectedCard]);
+
+  // Synchroniser la carte sélectionnée avec les données mises à jour
+  useEffect(() => {
+    if (selectedCard && applications.length > 0) {
+      const updatedCard = applications.find(
+        (app) => app.id === selectedCard.id
+      );
+      if (updatedCard) {
+        setSelectedCard(updatedCard);
+      }
+    }
+  }, [applications, selectedCard?.id]);
 
   const handleAddColumn = async () => {
     if (!newColumn.name) return;
@@ -408,95 +464,67 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
     setCardNote("");
   };
 
-  const handleDeleteNote = async (noteId: string) => {
-    setNoteToDelete(noteId);
-    setShowDeleteDialog(true);
-  };
-
-  const confirmDeleteNote = async () => {
-    if (!selectedCard || !noteToDelete) return;
-
-    try {
-      const updatedNotes = selectedCard.notes.filter(
-        (note) => note.id !== noteToDelete
-      );
-      const updatedCard: Application = {
-        ...selectedCard,
-        notes: updatedNotes,
-      };
-
-      setSelectedCard(updatedCard);
-
-      await putData(
-        { notes: updatedNotes },
-        `/api/recruteur/kanban/application/${selectedCard.id}`
-      );
-
-      setShowDeleteDialog(false);
-      setNoteToDelete(null);
-    } catch (error) {
-      console.error("Erreur lors de la suppression de la note:", error);
-    }
-  };
-
   const handleNoteSubmit = async () => {
-    if (!selectedCard) return;
+    if (!selectedCard || !cardNote.trim()) return;
+    setIsUpdatingMessage(true);
 
     try {
-      const newNote: Note = {
-        id: editingNote?.id || Date.now().toString(),
-        content: cardNote,
-        authorId: user?.id || "",
-        authorType: "recruteur",
-        createdAt: new Date().toISOString(),
-      };
-
-      let updatedNotes: Note[];
       if (editingNote) {
         // Modification d'une note existante
-        updatedNotes = selectedCard.notes.map((note) =>
-          note.id === editingNote.id ? newNote : note
+        const response = await fetch(
+          `/api/recruteur/kanban/application/${selectedCard.id}/notes/${editingNote.id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ content: cardNote }),
+          }
         );
+
+        if (response.ok) {
+          // Mettre à jour l'état local immédiatement
+          const updatedNotes = selectedCard.notes.map((note) =>
+            note.id === editingNote.id
+              ? {
+                  ...note,
+                  content: cardNote,
+                  updatedAt: new Date().toISOString(),
+                }
+              : note
+          );
+
+          setSelectedCard({ ...selectedCard, notes: updatedNotes });
+          setCardNote("");
+          setEditingNote(null);
+        } else {
+          throw new Error("Erreur lors de la modification de la note");
+        }
       } else {
-        // Ajout d'une nouvelle note
-        updatedNotes = [...selectedCard.notes, newNote];
+        // Création d'une nouvelle note - optimiste update
+        const newNote: Note = {
+          content: cardNote,
+          authorId: user?.id || "",
+          authorType: "recruteur",
+          createdAt: new Date().toISOString(),
+        };
+
+        setSelectedCard({
+          ...selectedCard,
+          notes: [...selectedCard.notes, newNote],
+        });
+        setCardNote("");
+
+        // Appel API en arrière-plan
+        await putData(
+          { notes: cardNote },
+          `/api/recruteur/kanban/application/${selectedCard.id}`
+        );
       }
-
-      const updatedCard: Application = {
-        ...selectedCard,
-        notes: updatedNotes,
-      };
-
-      setSelectedCard(updatedCard);
-      setCardNote("");
-      setEditingNote(null);
-
-      await putData(
-        { notes: updatedNotes },
-        `/api/recruteur/kanban/application/${selectedCard.id}`
-      );
     } catch (error) {
       console.error("Erreur lors de l'ajout/modification de la note:", error);
-    }
-  };
-
-  // console.log(user);
-  // console.log(selectedCard?.notes);
-
-  const handleEditNoteSubmit = async () => {
-    if (!editingNote) return;
-
-    try {
-      const response = await postData(
-        editingNote,
-        "/api/recruteur/kanban/application"
-      );
-      if (response.success) {
-        setEditingNote(null);
-        queryoffresbyidrefetch();
-      }
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour de la note:", error);
+      // En cas d'erreur, recharger les données
+      queryoffresbyidrefetch();
+    } finally {
+      setIsUpdatingMessage(false);
     }
   };
 
@@ -863,12 +891,289 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
   };
 
   const handleDownloadLettreMotivation = (cvPath: string) => {
-    console.log("LettreMotivation", cvPath);
-
-    window.open(cvPath, "_blank");
+    if (cvPath) {
+      window.open(cvPath, "_blank");
+    }
   };
 
-  // http://localhost:3000/api/recruteur/kanban/application/cmbwshkzd0017i3feveqcqwcs/checklist/1749948261866
+  // Fonctions pour gérer l'affectation des collaborateurs
+  const loadCollaborateurs = async () => {
+    setIsLoadingCollaborateurs(true);
+    try {
+      const response = await fetch("/api/recruteur/collaborateurs");
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setCollaborateurs(data.data);
+        }
+      }
+    } catch (error) {
+      console.error("Erreur lors du chargement des collaborateurs:", error);
+    } finally {
+      setIsLoadingCollaborateurs(false);
+    }
+  };
+
+  const loadAssignedCollaborateurs = async (applicationId: string) => {
+    try {
+      const response = await fetch(
+        `/api/recruteur/kanban/application/assign-collaborateurs?applicationId=${applicationId}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setAssignedCollaborateurs(data.data);
+          setSelectedCollaborateurs(
+            data.data.map(
+              (assignment: ApplicationCollaborateur) =>
+                assignment.collaborateur.id
+            )
+          );
+        }
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors du chargement des collaborateurs affectés:",
+        error
+      );
+    }
+  };
+
+  const handleAssignCollaborateurs = async () => {
+    if (!selectedCard) return;
+
+    setIsAssigningCollaborateurs(true);
+    try {
+      const response = await fetch(
+        "/api/recruteur/kanban/application/assign-collaborateurs",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            applicationId: selectedCard.id,
+            collaborateurIds: selectedCollaborateurs,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          // Recharger les collaborateurs affectés
+          await loadAssignedCollaborateurs(selectedCard.id);
+
+          // Recharger toutes les données pour s'assurer de la cohérence
+          await queryoffresbyidrefetch();
+
+          setIsAssignModalOpen(false);
+        }
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'affectation des collaborateurs:", error);
+    } finally {
+      setIsAssigningCollaborateurs(false);
+    }
+  };
+
+  const handleOpenAssignModal = async (card: Application) => {
+    setSelectedCard(card);
+    setIsAssignModalOpen(true);
+    await loadCollaborateurs();
+    await loadAssignedCollaborateurs(card.id);
+  };
+
+  // desassigner un collaborateur
+  const [isDeletingCollaborator, setIsDeletingCollaborator] = useState(false);
+  const handleDeleteCollaborator = async (collaboratorId: string) => {
+    if (!selectedCard) return;
+
+    setIsDeletingCollaborator(true);
+    try {
+      await deleteData(
+        `/api/recruteur/kanban/application/assign-collaborateurs?assignmentId=${collaboratorId}`
+      );
+
+      // Mettre à jour l'état local immédiatement
+      const updatedCollaborateurs = selectedCard.collaborateurs.filter(
+        (collab) => collab.id !== collaboratorId
+      );
+
+      // Mettre à jour la carte sélectionnée
+      setSelectedCard((prev) =>
+        prev
+          ? {
+              ...prev,
+              collaborateurs: updatedCollaborateurs,
+            }
+          : null
+      );
+
+      // Mettre à jour la liste des applications
+      setApplications((prevApplications) =>
+        prevApplications.map((app) =>
+          app.id === selectedCard.id
+            ? { ...app, collaborateurs: updatedCollaborateurs }
+            : app
+        )
+      );
+
+      // Recharger les données depuis l'API pour s'assurer de la cohérence
+      await queryoffresbyidrefetch();
+    } catch (error) {
+      console.error("Erreur lors de la suppression du collaborateur:", error);
+    } finally {
+      setIsDeletingCollaborator(false);
+    }
+  };
+
+  // Fonctions pour gérer la date d'échéance
+  const handleOpenDueDateModal = (card: Application) => {
+    setSelectedCard(card);
+    setSelectedDueDate(
+      card.duedate ? new Date(card.duedate).toISOString().split("T")[0] : ""
+    );
+    setIsDueDateModalOpen(true);
+  };
+
+  const handleUpdateDueDate = async () => {
+    if (!selectedCard) return;
+
+    setIsUpdatingDueDate(true);
+    try {
+      const response = await fetch(
+        `/api/recruteur/kanban/application/${selectedCard.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            duedate: selectedDueDate
+              ? new Date(selectedDueDate).toISOString()
+              : null,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          // Mettre à jour l'état local immédiatement
+          const updatedCard = {
+            ...selectedCard,
+            duedate: selectedDueDate
+              ? new Date(selectedDueDate).toISOString()
+              : null,
+          };
+
+          setSelectedCard(updatedCard);
+
+          // Mettre à jour la liste des applications
+          setApplications((prevApplications) =>
+            prevApplications.map((app) =>
+              app.id === selectedCard.id ? updatedCard : app
+            )
+          );
+
+          setIsDueDateModalOpen(false);
+        }
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la mise à jour de la date d'échéance:",
+        error
+      );
+    } finally {
+      setIsUpdatingDueDate(false);
+    }
+  };
+
+  const handleRemoveDueDate = async () => {
+    if (!selectedCard) return;
+
+    setIsUpdatingDueDate(true);
+    try {
+      const response = await fetch(
+        `/api/recruteur/kanban/application/${selectedCard.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            duedate: null,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          // Mettre à jour l'état local immédiatement
+          const updatedCard = {
+            ...selectedCard,
+            duedate: null,
+          };
+
+          setSelectedCard(updatedCard);
+
+          // Mettre à jour la liste des applications
+          setApplications((prevApplications) =>
+            prevApplications.map((app) =>
+              app.id === selectedCard.id ? updatedCard : app
+            )
+          );
+
+          setIsDueDateModalOpen(false);
+        }
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la suppression de la date d'échéance:",
+        error
+      );
+    } finally {
+      setIsUpdatingDueDate(false);
+    }
+  };
+
+  // Fonction utilitaire pour calculer le statut de la date d'échéance
+  const getDueDateStatus = (duedate: string | null) => {
+    if (!duedate) return null;
+
+    const dueDate = new Date(duedate);
+    const today = new Date();
+    const diffTime = dueDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays < 0) {
+      return {
+        status: "overdue",
+        days: Math.abs(diffDays),
+        color: "text-red-600 bg-red-50",
+      };
+    } else if (diffDays === 0) {
+      return {
+        status: "today",
+        days: 0,
+        color: "text-orange-600 bg-orange-50",
+      };
+    } else if (diffDays <= 3) {
+      return {
+        status: "urgent",
+        days: diffDays,
+        color: "text-yellow-600 bg-yellow-50",
+      };
+    } else {
+      return {
+        status: "upcoming",
+        days: diffDays,
+        color: "text-green-600 bg-green-50",
+      };
+    }
+  };
 
   if (isLoading || isReordering || queryoffresbyidrefetchisPending) {
     return (
@@ -1037,6 +1342,10 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                                               onClick={() => {
                                                 setSelectedCard(application);
                                                 setIsCardModalOpen(true);
+                                                // Charger les collaborateurs affectés
+                                                loadAssignedCollaborateurs(
+                                                  application.id
+                                                );
                                                 // setDescription(
                                                 //   application.note || ""
                                                 // );
@@ -1077,20 +1386,186 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                                                   {column.name}
                                                 </span>
                                               </div>
+                                              {/* Date d'échéance */}
+                                              {application.duedate && (
+                                                <div className="mt-2">
+                                                  {(() => {
+                                                    const dueDateStatus =
+                                                      getDueDateStatus(
+                                                        application.duedate
+                                                      );
+                                                    if (!dueDateStatus)
+                                                      return null;
+
+                                                    return (
+                                                      <div
+                                                        className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium ${dueDateStatus.color}`}
+                                                      >
+                                                        <svg
+                                                          className="w-3 h-3"
+                                                          fill="none"
+                                                          stroke="currentColor"
+                                                          viewBox="0 0 24 24"
+                                                        >
+                                                          <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                          />
+                                                        </svg>
+                                                        {dueDateStatus.status ===
+                                                          "overdue" && (
+                                                          <span>
+                                                            En retard (
+                                                            {dueDateStatus.days}
+                                                            j)
+                                                          </span>
+                                                        )}
+                                                        {dueDateStatus.status ===
+                                                          "today" && (
+                                                          <span>
+                                                            Aujourd'hui
+                                                          </span>
+                                                        )}
+                                                        {dueDateStatus.status ===
+                                                          "urgent" && (
+                                                          <span>
+                                                            Urgent (
+                                                            {dueDateStatus.days}
+                                                            j)
+                                                          </span>
+                                                        )}
+                                                        {dueDateStatus.status ===
+                                                          "upcoming" && (
+                                                          <span>
+                                                            {dueDateStatus.days}
+                                                            j restants
+                                                          </span>
+                                                        )}
+                                                      </div>
+                                                    );
+                                                  })()}
+                                                </div>
+                                              )}
                                               {/* Footer : assigné, commentaires, pièces jointes */}
                                               <div className="flex items-center justify-between mt-2">
-                                                {/* Assigné */}
-                                                <span className="bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center text-xs font-bold border">
-                                                  {application.candidat.nom.slice(
-                                                    0,
-                                                    1
+                                                {/* Collaborateurs affectés */}
+                                                <div className="flex items-center gap-1">
+                                                  {application.collaborateurs &&
+                                                  application.collaborateurs
+                                                    .length > 0 ? (
+                                                    <div className="flex -space-x-1">
+                                                      {application.collaborateurs
+                                                        .slice(0, 3)
+                                                        .map((assignment) => (
+                                                          <div
+                                                            key={assignment.id}
+                                                            className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white text-xs font-bold border-2 border-white"
+                                                            title={`${assignment.collaborateur.prenom} ${assignment.collaborateur.nom}`}
+                                                          >
+                                                            {assignment.collaborateur.nom.slice(
+                                                              0,
+                                                              1
+                                                            )}
+                                                            {assignment.collaborateur.prenom.slice(
+                                                              0,
+                                                              1
+                                                            )}
+                                                          </div>
+                                                        ))}
+                                                      {application
+                                                        .collaborateurs.length >
+                                                        3 && (
+                                                        <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-xs font-bold border-2 border-white">
+                                                          +
+                                                          {application
+                                                            .collaborateurs
+                                                            .length - 3}
+                                                        </div>
+                                                      )}
+                                                    </div>
+                                                  ) : (
+                                                    <span className="bg-gray-200 rounded-full w-7 h-7 flex items-center justify-center text-xs font-bold border">
+                                                      {application.candidat.nom.slice(
+                                                        0,
+                                                        1
+                                                      )}
+                                                      {application.candidat.prenom?.slice(
+                                                        0,
+                                                        1
+                                                      )}
+                                                    </span>
                                                   )}
-                                                  {application.candidat.prenom?.slice(
-                                                    0,
-                                                    1
-                                                  )}
-                                                </span>
+                                                </div>
+
                                                 <div className="flex items-center gap-2 text-gray-400">
+                                                  {/* Bouton d'affectation des collaborateurs */}
+                                                  <button
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      handleOpenAssignModal(
+                                                        application
+                                                      );
+                                                    }}
+                                                    className="p-1 hover:bg-gray-100 rounded transition-colors"
+                                                    title="Affecter des collaborateurs"
+                                                  >
+                                                    <svg
+                                                      width="14"
+                                                      height="14"
+                                                      fill="none"
+                                                      stroke="currentColor"
+                                                      strokeWidth="2"
+                                                      viewBox="0 0 24 24"
+                                                    >
+                                                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                                      <circle
+                                                        cx="9"
+                                                        cy="7"
+                                                        r="4"
+                                                      />
+                                                      <path d="m22 21-2-2" />
+                                                      <path d="M16 16h6" />
+                                                    </svg>
+                                                  </button>
+
+                                                  {/* Bouton de date d'échéance */}
+                                                  <button
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      handleOpenDueDateModal(
+                                                        application
+                                                      );
+                                                    }}
+                                                    className={`p-1 hover:bg-gray-100 rounded transition-colors ${
+                                                      application.duedate
+                                                        ? "text-orange-500"
+                                                        : ""
+                                                    }`}
+                                                    title={
+                                                      application.duedate
+                                                        ? "Modifier la date d'échéance"
+                                                        : "Définir une date d'échéance"
+                                                    }
+                                                  >
+                                                    <svg
+                                                      width="14"
+                                                      height="14"
+                                                      fill="none"
+                                                      stroke="currentColor"
+                                                      strokeWidth="2"
+                                                      viewBox="0 0 24 24"
+                                                    >
+                                                      <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                                      />
+                                                    </svg>
+                                                  </button>
+
                                                   {/* Icône pièce jointe */}
                                                   <svg
                                                     width="16"
@@ -1406,7 +1881,16 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                             onClick={handleNoteSubmit}
                             disabled={cardNote.length === 0}
                           >
-                            {editingNote ? "Modifier" : "Envoyer"}
+                            {isUpdatingMessage ? (
+                              <>
+                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                {editingNote ? "Modifier" : "Envoyer"}
+                              </>
+                            ) : editingNote ? (
+                              "Modifier"
+                            ) : (
+                              "Envoyer"
+                            )}
                           </Button>
                           {editingNote && (
                             <Button
@@ -1749,8 +2233,18 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                                 onClick={handleNoteSubmit}
                                 disabled={cardNote.length === 0}
                               >
-                                {editingNote ? "Modifier" : "Envoyer"}
+                                {isUpdatingMessage ? (
+                                  <>
+                                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                    {editingNote ? "Modifier" : "Envoyer"}
+                                  </>
+                                ) : editingNote ? (
+                                  "Modifier"
+                                ) : (
+                                  "Envoyer"
+                                )}
                               </Button>
+
                               {editingNote && (
                                 <Button
                                   className="px-4 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors text-sm font-medium"
@@ -1864,28 +2358,6 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                                                   strokeLinejoin="round"
                                                   strokeWidth={2}
                                                   d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                                                />
-                                              </svg>
-                                            </button>
-                                            <button
-                                              onClick={() =>
-                                                handleDeleteNote(note.id)
-                                              }
-                                              className="text-gray-400 hover:text-red-500 transition-colors"
-                                              title="Supprimer"
-                                            >
-                                              <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-3 w-3"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                              >
-                                                <path
-                                                  strokeLinecap="round"
-                                                  strokeLinejoin="round"
-                                                  strokeWidth={2}
-                                                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                                                 />
                                               </svg>
                                             </button>
@@ -2934,9 +3406,6 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                   >
                     Checklist
                   </button>
-                  <button className="text-left text-sm hover:bg-gray-100 rounded px-2 py-1">
-                    Due date
-                  </button>
 
                   <button
                     onClick={() => setCardApplicationDetailSpet(5)}
@@ -2946,6 +3415,178 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                   >
                     Attachment
                   </button>
+
+                  <div className="font-semibold text-xs text-gray-500 mt-4 mb-2">
+                    Gestion
+                  </div>
+
+                  <button
+                    onClick={() => handleOpenAssignModal(selectedCard!)}
+                    className="text-left text-sm hover:bg-primary/10 text-primary rounded px-2 py-1 flex items-center gap-2"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="m22 21-2-2" />
+                      <path d="M16 16h6" />
+                    </svg>
+                    Affecter collaborateurs
+                  </button>
+
+                  <button
+                    onClick={() => handleOpenDueDateModal(selectedCard!)}
+                    className={`text-left text-sm hover:bg-primary/10 text-primary rounded px-2 py-1 flex items-center gap-2 ${
+                      selectedCard?.duedate ? "text-orange-600" : ""
+                    }`}
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    {selectedCard?.duedate
+                      ? "Modifier échéance"
+                      : "Définir échéance"}
+                  </button>
+
+                  {/* Affichage de la date d'échéance */}
+                  {selectedCard?.duedate && (
+                    <div className="mt-4">
+                      <div className="font-semibold text-xs text-gray-500 mb-2">
+                        DATE D'ÉCHÉANCE
+                      </div>
+                      <div className="p-2 bg-orange-50 rounded-lg border border-orange-200">
+                        {(() => {
+                          const dueDateStatus = getDueDateStatus(
+                            selectedCard.duedate
+                          );
+                          if (!dueDateStatus) return null;
+
+                          return (
+                            <div
+                              className={`flex items-center gap-2 text-xs font-medium ${dueDateStatus.color}`}
+                            >
+                              <svg
+                                className="w-3 h-3"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                              </svg>
+                              <span>
+                                {new Date(
+                                  selectedCard.duedate
+                                ).toLocaleDateString("fr-FR")}
+                              </span>
+                              {dueDateStatus.status === "overdue" && (
+                                <span className="text-red-600">
+                                  • En retard ({dueDateStatus.days}j)
+                                </span>
+                              )}
+                              {dueDateStatus.status === "today" && (
+                                <span className="text-orange-600">
+                                  • Aujourd'hui
+                                </span>
+                              )}
+                              {dueDateStatus.status === "urgent" && (
+                                <span className="text-yellow-600">
+                                  • Urgent ({dueDateStatus.days}j)
+                                </span>
+                              )}
+                              {dueDateStatus.status === "upcoming" && (
+                                <span className="text-green-600">
+                                  • {dueDateStatus.days}j restants
+                                </span>
+                              )}
+                            </div>
+                          );
+                        })()}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Affichage des collaborateurs affectés */}
+                  {selectedCard?.collaborateurs &&
+                    selectedCard.collaborateurs.length > 0 && (
+                      <div className="mt-4">
+                        <div className="font-semibold text-xs text-gray-500 mb-2">
+                          COLLABORATEURS AFFECTÉS
+                        </div>
+                        <div className="space-y-2">
+                          {selectedCard.collaborateurs.map((assignment) => (
+                            <div
+                              key={assignment.id}
+                              className="flex items-center gap-2 p-2 bg-primary/10 rounded-lg border border-primary/20"
+                            >
+                              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-semibold text-xs">
+                                {assignment.collaborateur.prenom.slice(0, 1)}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="text-xs font-medium text-gray-900 truncate">
+                                  {assignment.collaborateur.prenom}{" "}
+                                  {assignment.collaborateur.nom}
+                                </div>
+                                <div className="text-xs text-gray-500">
+                                  {assignment.collaborateur.role}
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-red-600 bg-transparent   hover:text-red-700 hover:bg-red-50"
+                                  onClick={() => {
+                                    handleDeleteCollaborator(assignment.id);
+                                  }}
+                                  disabled={isDeletingCollaborator}
+                                >
+                                  {isDeletingCollaborator ? (
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                  ) : (
+                                    <svg
+                                      className="w-4 h-4"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      viewBox="0 0 24 24"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                      />
+                                    </svg>
+                                  )}
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                 </div>
               </div>
             )}
@@ -3058,37 +3699,302 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
           </DialogContent>
         </Dialog>
 
-        {/* Dialog de confirmation de suppression */}
-        {showDeleteDialog && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
-              <h3 className="text-lg font-semibold mb-4">
-                Confirmer la suppression
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Êtes-vous sûr de vouloir supprimer cette note ? Cette action est
-                irréversible.
-              </p>
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={() => {
-                    setShowDeleteDialog(false);
-                    setNoteToDelete(null);
-                  }}
-                  className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
-                >
-                  Annuler
-                </button>
-                <button
-                  onClick={confirmDeleteNote}
-                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-                >
-                  Supprimer
-                </button>
+        {/* Modal d'affectation des collaborateurs */}
+        <Dialog open={isAssignModalOpen} onOpenChange={setIsAssignModalOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Affecter des collaborateurs</DialogTitle>
+              <DialogDescription>
+                Sélectionnez les collaborateurs à affecter à cette candidature.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4">
+              {/* Informations sur la candidature */}
+              {selectedCard && (
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    Candidature de {selectedCard.candidat.prenom}{" "}
+                    {selectedCard.candidat.nom}
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    {selectedCard.candidat.email}
+                  </p>
+                </div>
+              )}
+
+              {/* Liste des collaborateurs */}
+              <div>
+                <h4 className="font-semibold text-gray-900 mb-3">
+                  Collaborateurs disponibles
+                </h4>
+                {isLoadingCollaborateurs ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="h-6 w-6 animate-spin text-primary" />
+                    <span className="ml-2 text-gray-600">Chargement...</span>
+                  </div>
+                ) : collaborateurs.length === 0 ? (
+                  <div className="text-center py-8 text-gray-500">
+                    <div className="w-12 h-12 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center">
+                      <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                        />
+                      </svg>
+                    </div>
+                    <p className="text-sm">Aucun collaborateur disponible</p>
+                    <p className="text-xs text-gray-400">
+                      Invitez des collaborateurs depuis votre dashboard
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-2 max-h-60 overflow-y-auto">
+                    {collaborateurs.map((collaborateur) => (
+                      <label
+                        key={collaborateur.id}
+                        className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedCollaborateurs.includes(
+                            collaborateur.id
+                          )}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedCollaborateurs([
+                                ...selectedCollaborateurs,
+                                collaborateur.id,
+                              ]);
+                            } else {
+                              setSelectedCollaborateurs(
+                                selectedCollaborateurs.filter(
+                                  (id) => id !== collaborateur.id
+                                )
+                              );
+                            }
+                          }}
+                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                        />
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-semibold text-sm">
+                          {collaborateur.prenom.slice(0, 1)}
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-900">
+                            {collaborateur.prenom} {collaborateur.nom}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            {collaborateur.email}
+                          </div>
+                        </div>
+                        <div className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">
+                          {collaborateur.role}
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                )}
               </div>
+
+              {/* Collaborateurs actuellement affectés */}
+              {assignedCollaborateurs.length > 0 && (
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-3">
+                    Collaborateurs actuellement affectés
+                  </h4>
+                  <div className="space-y-2">
+                    {assignedCollaborateurs.map((assignment) => (
+                      <div
+                        key={assignment.id}
+                        className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white font-semibold text-sm">
+                          {assignment.collaborateur.prenom.slice(0, 1)}
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-900">
+                            {assignment.collaborateur.prenom}{" "}
+                            {assignment.collaborateur.nom}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            Affecté le{" "}
+                            {new Date(assignment.assignedAt).toLocaleDateString(
+                              "fr-FR"
+                            )}
+                          </div>
+                        </div>
+                        <div className="text-xs text-green-600 bg-green-100 px-2 py-1 rounded">
+                          Affecté
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
+
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setIsAssignModalOpen(false)}
+                disabled={isAssigningCollaborateurs}
+              >
+                Annuler
+              </Button>
+              <Button
+                onClick={handleAssignCollaborateurs}
+                disabled={isAssigningCollaborateurs || isLoadingCollaborateurs}
+              >
+                {isAssigningCollaborateurs ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Affectation...
+                  </>
+                ) : (
+                  "Affecter les collaborateurs"
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Modal de date d'échéance */}
+        <Dialog open={isDueDateModalOpen} onOpenChange={setIsDueDateModalOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Date d'échéance</DialogTitle>
+              <DialogDescription>
+                Définissez une date d'échéance pour cette candidature.
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4">
+              {/* Informations sur la candidature */}
+              {selectedCard && (
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    Candidature de {selectedCard.candidat.prenom}{" "}
+                    {selectedCard.candidat.nom}
+                  </h4>
+                  <p className="text-sm text-gray-600">
+                    {selectedCard.candidat.email}
+                  </p>
+                </div>
+              )}
+
+              {/* Sélection de la date */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Date d'échéance
+                </label>
+                <input
+                  type="date"
+                  value={selectedDueDate}
+                  onChange={(e) => setSelectedDueDate(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  min={new Date().toISOString().split("T")[0]}
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Sélectionnez une date pour définir l'échéance de cette
+                  candidature
+                </p>
+              </div>
+
+              {/* Affichage de la date actuelle si elle existe */}
+              {selectedCard?.duedate && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <h4 className="text-sm font-semibold text-blue-800 mb-2">
+                    Date d'échéance actuelle
+                  </h4>
+                  <div className="flex items-center gap-2">
+                    <svg
+                      className="w-4 h-4 text-blue-600"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                    <span className="text-sm text-blue-700">
+                      {new Date(selectedCard.duedate).toLocaleDateString(
+                        "fr-FR"
+                      )}
+                    </span>
+                    {(() => {
+                      const dueDateStatus = getDueDateStatus(
+                        selectedCard.duedate
+                      );
+                      if (!dueDateStatus) return null;
+
+                      return (
+                        <span
+                          className={`text-xs px-2 py-1 rounded ${dueDateStatus.color}`}
+                        >
+                          {dueDateStatus.status === "overdue" &&
+                            `En retard (${dueDateStatus.days}j)`}
+                          {dueDateStatus.status === "today" && "Aujourd'hui"}
+                          {dueDateStatus.status === "urgent" &&
+                            `Urgent (${dueDateStatus.days}j)`}
+                          {dueDateStatus.status === "upcoming" &&
+                            `${dueDateStatus.days}j restants`}
+                        </span>
+                      );
+                    })()}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <DialogFooter className="flex gap-2">
+              {selectedCard?.duedate && (
+                <Button
+                  variant="outline"
+                  onClick={handleRemoveDueDate}
+                  disabled={isUpdatingDueDate}
+                  className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                >
+                  {isUpdatingDueDate ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    "Supprimer"
+                  )}
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                onClick={() => setIsDueDateModalOpen(false)}
+                disabled={isUpdatingDueDate}
+              >
+                Annuler
+              </Button>
+              <Button
+                onClick={handleUpdateDueDate}
+                disabled={isUpdatingDueDate || !selectedDueDate}
+              >
+                {isUpdatingDueDate ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Mise à jour...
+                  </>
+                ) : (
+                  "Enregistrer"
+                )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }

@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { attachmentId: string } }
+  { params }: { params: Promise<{ attachmentId: string }> }
 ) {
   try {
     // Récupérer le token depuis les cookies
@@ -32,7 +32,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const { attachmentId } = params;
+    const attachmentId = (await params).attachmentId;
 
     // Récupérer le fichier
     const applicationFile = await prisma.applicationFile.findUnique({

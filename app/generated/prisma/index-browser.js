@@ -201,6 +201,14 @@ exports.Prisma.CollaborateurScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ApplicationCollaborateurScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  collaborateurId: 'collaborateurId',
+  assignedAt: 'assignedAt',
+  assignedBy: 'assignedBy'
+};
+
 exports.Prisma.JobOfferScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -445,6 +453,7 @@ exports.Prisma.ModelName = {
   CompanySocial: 'CompanySocial',
   Invitation: 'Invitation',
   Collaborateur: 'Collaborateur',
+  ApplicationCollaborateur: 'ApplicationCollaborateur',
   JobOffer: 'JobOffer',
   OfferTemplate: 'OfferTemplate',
   Application: 'Application',

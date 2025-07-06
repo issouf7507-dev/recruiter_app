@@ -1,31 +1,31 @@
 import { NextResponse, NextRequest } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
-import { verify } from "jsonwebtoken";
+import { getAuthenticatedUser } from "@/lib/auth-utils";
 import prisma from "@/lib/prisma";
+
+// Configuration des types de fichiers autorisés
+const ALLOWED_TYPES = [
+  ".pdf",
+  ".doc",
+  ".docx",
+  ".txt",
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".gif",
+  ".xls",
+  ".xlsx",
+  ".ppt",
+  ".pptx",
+];
+
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 export async function POST(req: NextRequest) {
   try {
-    // Récupérer le token depuis les cookies
-    const token = req.cookies.get("token")?.value;
-
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    // Vérifier le token
-    let decoded;
-    try {
-      decoded = verify(token, process.env.JWT_SECRET!) as {
-        userId: string;
-        type: string;
-      };
-    } catch (error) {
-      console.error("Erreur de vérification du token:", error);
-      return NextResponse.json({ error: "Token invalide" }, { status: 401 });
-    }
-
-    if (decoded.type !== "RECRUTEUR") {
+    const authenticatedUser = await getAuthenticatedUser(req);
+    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
     const uploadedById = formData.get("uploadedById") as string;
     const uploadedByType = formData.get("uploadedByType") as string;
 
+    // Validation des données requises
     if (!file || !applicationId || !uploadedById || !uploadedByType) {
       return NextResponse.json(
         {
@@ -45,10 +46,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Vérifier que l'application existe
-    const application = await prisma.application.findUnique({
-      where: { id: applicationId },
-      include: { jobOffer: true },
+    // Vérifier que l'application existe et appartient au recruteur
+    const application = await prisma.application.findFirst({
+      where: {
+        id: applicationId,
+        jobOffer: {
+          recruteurId: authenticatedUser.recruteurId,
+        },
+      },
     });
 
     if (!application) {
@@ -58,23 +63,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Vérifier le type de fichier
-    const allowedTypes = [
-      ".pdf",
-      ".doc",
-      ".docx",
-      ".txt",
-      ".jpg",
-      ".jpeg",
-      ".png",
-      ".gif",
-      ".xls",
-      ".xlsx",
-      ".ppt",
-      ".pptx",
-    ];
+    // Validation du type de fichier
     const fileExtension = "." + file.name.split(".").pop()?.toLowerCase();
-    if (!allowedTypes.includes(fileExtension)) {
+    if (!ALLOWED_TYPES.includes(fileExtension)) {
       return NextResponse.json(
         {
           error:
@@ -84,9 +75,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Vérifier la taille du fichier (max 10MB)
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    if (file.size > maxSize) {
+    // Validation de la taille
+    if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
         { error: "Fichier trop volumineux. Taille maximum: 10MB" },
         { status: 400 }
@@ -104,7 +94,6 @@ export async function POST(req: NextRequest) {
     const uploadDir = join(process.cwd(), "public", "uploads", "applications");
     try {
       await mkdir(uploadDir, { recursive: true });
-      // Sauvegarder le fichier
       await writeFile(join(uploadDir, filename), buffer);
     } catch (error) {
       console.error("Erreur lors de la sauvegarde du fichier:", error);
@@ -114,27 +103,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Retourner l'URL du fichier
     const fileUrl = `/uploads/applications/${filename}`;
 
-    // Sauvegarder les informations du fichier dans la base de données
-    const applicationFile = await prisma.applicationFile.create({
+    // Sauvegarder les informations du fichier en base
+    const savedFile = await prisma.applicationFile.create({
       data: {
-        applicationId: applicationId,
         fileName: file.name,
-        fileUrl: fileUrl,
-        fileType: file.type,
+        fileUrl,
+        fileType: fileExtension,
         fileSize: file.size,
-        uploadedById: uploadedById,
-        uploadedByType: uploadedByType,
+        uploadedById,
+        uploadedByType,
+        applicationId,
       },
     });
 
-    return NextResponse.json({
-      success: true,
-      data: applicationFile,
-      message: "Fichier uploadé avec succès",
-    });
+    return NextResponse.json(
+      { success: true, data: savedFile },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Erreur lors de l'upload:", error);
     return NextResponse.json(
@@ -146,26 +133,8 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    // Récupérer le token depuis les cookies
-    const token = req.cookies.get("recruteur")?.value;
-
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    // Vérifier le token
-    let decoded;
-    try {
-      decoded = verify(token, process.env.JWT_SECRET_RECRUTEUR!) as {
-        userId: string;
-        type: string;
-      };
-    } catch (error) {
-      console.error("Erreur de vérification du token:", error);
-      return NextResponse.json({ error: "Token invalide" }, { status: 401 });
-    }
-
-    if (decoded.type !== "RECRUTEUR") {
+    const authenticatedUser = await getAuthenticatedUser(req);
+    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -180,10 +149,14 @@ export async function GET(req: NextRequest) {
     }
 
     // Vérifier que l'application existe et que le recruteur y a accès
-    const application = await prisma.application.findUnique({
-      where: { id: applicationId },
+    const application = await prisma.application.findFirst({
+      where: {
+        id: applicationId,
+        jobOffer: {
+          recruteurId: authenticatedUser.recruteurId,
+        },
+      },
       include: {
-        jobOffer: true,
         files: {
           orderBy: { createdAt: "desc" },
         },

@@ -70,7 +70,7 @@ export default function RecruteursLayout({
       subItems: [
         { label: "Créer une offre", href: "/mesoffres/creer" },
         { label: "Mes offres", href: "/mesoffres" },
-        { label: "Modèles d'offres", href: "/mesoffres/modeles" },
+        // { label: "Modèles d'offres", href: "/mesoffres/modeles" },
       ],
     },
     {
@@ -219,7 +219,7 @@ export default function RecruteursLayout({
       <div
         className={cn(
           "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-card w-full flex-1  mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-          "h-[100vh]" // for your use case, use `h-screen` instead of `h-[60vh]`
+          "h-[100vh] overflow-hidden" // for your use case, use `h-screen` instead of `h-[60vh]`
         )}
       >
         <Sidebar open={open} setOpen={setOpen}>

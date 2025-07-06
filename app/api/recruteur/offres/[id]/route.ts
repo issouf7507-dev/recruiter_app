@@ -18,6 +18,7 @@ export async function PUT(
       location,
       type,
       experience,
+
       salaryMin,
       salaryMax,
       salaryCurrency,
@@ -63,7 +64,7 @@ export async function PUT(
         requirements,
         responsibilities,
         benefits,
-        templateId: template,
+
         recruteurId: recruteur.id,
       },
     });
@@ -103,6 +104,11 @@ export async function GET(
             notes: true,
             checklist: true,
             files: true,
+            collaborateurs: {
+              include: {
+                collaborateur: true,
+              },
+            },
           },
         },
       },

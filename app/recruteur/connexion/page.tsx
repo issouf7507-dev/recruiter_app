@@ -63,9 +63,10 @@ export default function ConnexionRecruteur() {
 
   return (
     <div className="grid grid-cols-3 min-h-screen">
-      <div className="col-span-2  flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="col-span-2 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <h1 className="text-2xl font-bold text-center">Connexion</h1>
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-card py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="bg-card py-8 px-4  sm:rounded-lg sm:px-10 border">
             <CustomForm onSubmit={handleSubmit(onSubmit)}>
               {errors.root && (
                 <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">
@@ -86,6 +87,7 @@ export default function ConnexionRecruteur() {
                   type="email"
                   {...register("email")}
                   className={errors.email ? "border-red-500" : ""}
+                  placeholder="Email"
                 />
               </FormGroup>
 
@@ -99,6 +101,7 @@ export default function ConnexionRecruteur() {
                 error={errors.password?.message}
               >
                 <CustomInput
+                  placeholder="Mot de passe"
                   type="password"
                   {...register("password")}
                   className={errors.password ? "border-red-500" : ""}
@@ -106,7 +109,11 @@ export default function ConnexionRecruteur() {
               </FormGroup>
 
               <div>
-                <CustomButton type="submit" isLoading={isSubmitting}>
+                <CustomButton
+                  type="submit"
+                  className="bg-primary hover:bg-primary/90 w-full"
+                  isLoading={isSubmitting}
+                >
                   Se connecter
                 </CustomButton>
               </div>
@@ -126,7 +133,7 @@ export default function ConnexionRecruteur() {
                   Vous n'avez pas de compte?{" "}
                   <Link
                     href="/recruteur/inscription"
-                    className="hover:underline"
+                    className="hover:text-primary hover:underline font-bold"
                   >
                     Incrivez-vous
                   </Link>
@@ -136,7 +143,7 @@ export default function ConnexionRecruteur() {
           </div>
         </div>
       </div>
-      <div className="col-span-1 bg-card"></div>
+      <div className="col-span-1 bg-primary"></div>
     </div>
   );
 }

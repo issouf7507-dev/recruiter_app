@@ -42,64 +42,55 @@ import { toast } from "sonner";
 
 // Schéma de validation pour le formulaire
 const offerFormSchema = z.object({
-  title: z.string().min(1, "Le titre est requis"),
-  company: z.string().min(1, "L'entreprise est requise"),
-  location: z.string().min(1, "La localisation est requise"),
-  type: z.string().min(1, "Le type de contrat est requis"),
-  experience: z.string().min(1, "L'expérience requise est requise"),
-  education: z.string().min(1, "Le niveau d'études est requis"),
-  description: z.string().min(1, "La description est requise"),
-  responsibilities: z.string().min(1, "Les responsabilités sont requises"),
-  requirements: z.string().min(1, "Les prérequis sont requis"),
-  skills: z.array(z.string()).min(1, "Au moins une compétence est requise"),
-  benefits: z.string().min(1, "Les avantages sont requis"),
-  salaryMin: z.string().min(1, "Le salaire minimum est requis"),
-  salaryMax: z.string().min(1, "Le salaire maximum est requis"),
-  salaryCurrency: z.string().min(1, "La devise est requise"),
-  salaryPeriod: z.string().min(1, "La période est requise"),
+  title: z.string().nonempty("Le titre est requis"),
+  company: z.string().nonempty("L'entreprise est requise"),
+  location: z.string().nonempty("La localisation est requise"),
+  type: z.string().nonempty("Le type de contrat est requis"),
+  experience: z.string().nonempty("L'expérience requise est requise"),
+  // education: z.string().nonempty("Le niveau d'études est requis"),
+  description: z.string().nonempty("La description est requise"),
+  responsibilities: z.string().nonempty("Les responsabilités sont requises"),
+  requirements: z.string().nonempty("Les prérequis sont requis"),
+  skills: z.array(z.string()).nonempty("Au moins une compétence est requise"),
+  benefits: z.string().nonempty("Les avantages sont requis"),
+  salaryMin: z.string().nonempty("Le salaire minimum est requis"),
+  salaryMax: z.string().nonempty("Le salaire maximum est requis"),
+  salaryCurrency: z.string().nonempty("La devise est requise"),
+  salaryPeriod: z.string().nonempty("La période est requise"),
+
   template: z.string().optional(),
 });
-
-// Type pour les modèles d'offres
-type Template = {
-  id: string;
-  name: string;
-  description: string;
-  content: string;
-};
 
 export default function CreerOffre() {
   const { user } = useAuth();
   const [isSuccess, setIsSuccess] = useState(false);
-  const [selectedTemplate, setSelectedTemplate] = useState<string>("");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof offerFormSchema>>({
-    // resolver: zodResolver(offerFormSchema),
+    resolver: zodResolver(offerFormSchema),
     defaultValues: {
       type: "CDI",
       salaryCurrency: "EUR",
       salaryPeriod: "an",
+      skills: [],
+      template: "",
+      title: "",
+      company: "",
+      location: "",
+      description: "",
+      responsibilities: "",
+      requirements: "",
+      benefits: "",
+
+      // education: "",
     },
+    mode: "onChange", // Pour voir la validation en direct
   });
 
-  const handleTemplateChange = (value: string) => {
-    setSelectedTemplate(value);
-    if (value !== "none") {
-      const template = querymoffres.data?.data.find(
-        (t: offerTemplate) => t.id.toString() === value
-      );
-      if (template) {
-        // Ici, vous pourriez pré-remplir le formulaire avec les données du modèle
-        form.setValue("title", template.name);
-        form.setValue("description", template.content);
-        form.setValue("template", template.id);
-      }
-    }
-  };
-
   const onSubmit = async (data: z.infer<typeof offerFormSchema>) => {
+    console.log("Form errors:", form.formState.errors);
     try {
       setIsSubmitting(true);
 
@@ -151,55 +142,6 @@ export default function CreerOffre() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Modèle d'offre</CardTitle>
-              <CardDescription>
-                Sélectionnez un modèle d'offre existant ou créez une nouvelle
-                offre
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FormField
-                control={form.control}
-                name="template"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Modèle d'offre</FormLabel>
-                    <Select
-                      onValueChange={handleTemplateChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Sélectionnez un modèle" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="none">Nouvelle offre</SelectItem>
-                        {querymoffres.data?.data?.map(
-                          (template: offerTemplate) => (
-                            <SelectItem
-                              key={template.id}
-                              value={template.id.toString()}
-                            >
-                              {template.name}
-                            </SelectItem>
-                          )
-                        )}
-                      </SelectContent>
-                    </Select>
-                    <FormDescription>
-                      Vous pouvez sélectionner un modèle existant ou créer une
-                      nouvelle offre
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
               <CardTitle>Informations générales</CardTitle>
               <CardDescription>
                 Les informations principales de l'offre d'emploi
@@ -232,6 +174,32 @@ export default function CreerOffre() {
                       <FormLabel>Entreprise</FormLabel>
                       <FormControl>
                         <Input placeholder="Nom de l'entreprise" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="template"
+                  render={({ field }) => (
+                    <FormItem className="hidden">
+                      <FormLabel>Modèle</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Sélectionnez un modèle" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="none">Aucun modèle</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>

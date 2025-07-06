@@ -63,7 +63,7 @@ export function CustomButton({
     "inline-flex justify-center rounded-md border px-4 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2";
   const variants = {
     primary:
-      "border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500",
+      "border-transparent bg-primary text-white hover:bg-primary/90 focus:ring-indigo-500",
     secondary:
       "border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-indigo-500",
   };

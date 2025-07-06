@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { verify } from "jsonwebtoken";
+import { getAuthenticatedUser } from "@/lib/auth-utils";
 
 export async function PUT(
   req: NextRequest,
@@ -8,46 +8,62 @@ export async function PUT(
 ) {
   try {
     const body = await req.json();
-    const { note } = body;
+    const { notes, duedate } = body;
     const idapp = (await params).applicationId;
 
-    const token = req.cookies.get("token")?.value;
-    if (!token) {
-      return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
+    const authenticatedUser = await getAuthenticatedUser(req);
+    if (!authenticatedUser) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    // Récupérer l'utilisateur
-    const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+    // Vérifier que l'application appartient au recruteur de l'utilisateur connecté
+    const application = await prisma.application.findUnique({
+      where: { id: idapp },
       include: {
-        recruteur: true,
+        jobOffer: {
+          include: { recruteur: true },
+        },
       },
     });
 
-    if (!user) {
+    if (!application) {
       return NextResponse.json(
-        { error: "Utilisateur non trouvé" },
+        { error: "Application non trouvée" },
         { status: 404 }
       );
     }
 
-    const application = await prisma.application.update({
-      where: {
-        id: idapp,
-      },
+    if (application.jobOffer.recruteurId !== authenticatedUser.recruteurId) {
+      return NextResponse.json(
+        { error: "Accès non autorisé à cette application" },
+        { status: 403 }
+      );
+    }
 
-      data: {
+    // Préparer les données de mise à jour
+    const updateData: any = {};
+
+    if (notes !== undefined) {
+      updateData.notes = {
+        create: {
+          content: notes,
+          authorId: authenticatedUser.userId,
+          authorType: authenticatedUser.type,
+        },
+      };
+    }
+
+    if (duedate !== undefined) {
+      updateData.duedate = duedate ? new Date(duedate) : null;
+    }
+
+    // Mettre à jour l'application
+    const updatedApplication = await prisma.application.update({
+      where: { id: idapp },
+      data: updateData,
+      include: {
         notes: {
-          create: {
-            content: note,
-            authorId: user.id,
-            authorType: user.type,
-          },
+          orderBy: { createdAt: "desc" },
         },
       },
     });
@@ -55,15 +71,28 @@ export async function PUT(
     return NextResponse.json(
       {
         success: true,
-        message: "Note ajoutée avec succès",
-        application,
+        message: notes
+          ? "Note ajoutée avec succès"
+          : duedate
+          ? "Date d'échéance mise à jour avec succès"
+          : "Application mise à jour avec succès",
+        application: updatedApplication,
       },
-      { status: 201 }
+      { status: 200 }
     );
-  } catch (err) {
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour:", error);
     return NextResponse.json(
-      { error: "Erreur lors de la récupération des informations" },
+      { error: "Erreur lors de la mise à jour" },
       { status: 500 }
     );
   }
+}
+
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ applicationId: string }> }
+) {
+  // Rediriger vers PUT pour éviter la duplication
+  return PUT(req, { params });
 }

@@ -22,25 +22,43 @@ import {
   ArrowLeft,
   Pencil,
   Loader2,
+  AlertCircle,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { fetchData, fetchDataById } from "@/utils/utilts";
 import { useQuery } from "@tanstack/react-query";
 import { useUserStore } from "@/store/userStore";
 import SidebarOffres from "@/components/SidebarOffres";
-import { Application, KanbanColumn } from "@/types/types";
-import CandidaturesTable from "@/app/components/tables/candidatsTable";
-
-import Board from "@/app/components/kanban/Board";
 import KanbanBoard from "@/app/components/kanban/KanbanBoard";
-// import CandidaturesTable from "@/app/components/tables/candidatsTable";
-// import KanbanBoard from "@/app/components/kanban/KanbanBoard";
+import ManualKanbanBoard from "@/app/components/kanban/ManualKanbanBoard";
 
-// import KanbanBoard from "@/components/kanban/KanbanBoard";
-
-// Données mockées pour l'exemple
+// Types pour une meilleure sécurité des données
+interface OfferData {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  type: string;
+  experience: string;
+  salaryMin: number;
+  salaryMax: number;
+  salaryCurrency: string;
+  salaryPeriod: string;
+  description: string;
+  responsibilities: string;
+  requirements: string;
+  benefits: string;
+  competences: string[];
+  etat: "active" | "draft" | "closed";
+  createdAt: string;
+  views: number;
+  applications: any[];
+  kanbanColumns: any[];
+}
 
 export default function OffreDetail({
   params,
@@ -48,170 +66,243 @@ export default function OffreDetail({
   params: Promise<{ offerId: string }>;
 }) {
   const { user } = useUserStore();
+  const router = useRouter();
   const { offerId } = use(params);
 
   // Récupérer les détails de l'offre actuelle
   const {
     data: queryoffresbyid,
     isLoading,
+    error: offerError,
     refetch: queryoffresbyidrefetch,
   } = useQuery({
-    queryKey: ["queryoffresbyid"],
+    queryKey: ["queryoffresbyid", offerId],
     queryFn: () => fetchDataById(`/api/recruteur/offres/${offerId}`),
+    enabled: !!offerId,
   });
 
   // Récupérer toutes les offres du recruteur pour l'historique
-  const { data: allOffers, isLoading: allOffersLoading } = useQuery({
-    queryKey: ["allOffers"],
+  const {
+    data: allOffers,
+    isLoading: allOffersLoading,
+    error: allOffersError,
+  } = useQuery({
+    queryKey: ["allOffers", user?.recruteur?.id],
     queryFn: () =>
       fetchData(`/api/recruteur/offresbyuser/${user?.recruteur?.id}`),
+    enabled: !!user?.recruteur?.id,
   });
 
-  const { data: candidatdata, isLoading: candidatdataLoding } = useQuery({
-    queryKey: ["candidatdataforntable", offerId],
-    queryFn: () =>
-      fetchData(`/api/recruteur/offresbyuser/applications/${offerId}`),
-  });
+  // Fonction utilitaire pour accéder aux données de l'offre de manière sécurisée
+  const getOfferData = (): OfferData | null => {
+    return queryoffresbyid?.data?.[0] || null;
+  };
 
-  // console.log(queryoffresbyid?.data[0].kanbanColumns);
+  const offerData = getOfferData();
 
-  const [columns, setColumns] = useState<KanbanColumn[]>([]);
-  const [applications, setApplications] = useState<Application[]>([]);
+  // Fonction pour formater le salaire
+  const formatSalary = (
+    min: number,
+    max: number,
+    currency: string,
+    period: string
+  ) => {
+    return `${min.toLocaleString()} - ${max.toLocaleString()} ${currency}/${period}`;
+  };
 
-  // Mettre à jour les états locaux quand les données changent
-  useEffect(() => {
-    if (queryoffresbyid?.data?.[0]) {
-      setColumns(queryoffresbyid.data[0].kanbanColumns || []);
-      setApplications(queryoffresbyid.data[0].applications || []);
+  // Fonction pour obtenir le statut de l'offre
+  const getOfferStatus = (etat: string) => {
+    switch (etat) {
+      case "active":
+        return { label: "Active", variant: "default" as const };
+      case "draft":
+        return { label: "Brouillon", variant: "secondary" as const };
+      case "closed":
+        return { label: "Fermée", variant: "destructive" as const };
+      default:
+        return { label: "Inconnu", variant: "outline" as const };
     }
-  }, [queryoffresbyid?.data]);
+  };
 
-  if (isLoading || allOffersLoading) {
+  // Gestion des erreurs
+  if (offerError || allOffersError) {
     return (
-      <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
-        <Loader2 className="h-8 w-8 animate-spin" />
+      <div className="flex h-screen w-full overflow-x-hidden">
+        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              Une erreur est survenue lors du chargement des données.
+              <Button
+                variant="link"
+                className="p-0 h-auto font-normal"
+                onClick={() => {
+                  queryoffresbyidrefetch();
+                }}
+              >
+                Réessayer
+              </Button>
+            </AlertDescription>
+          </Alert>
+        </main>
       </div>
     );
   }
 
+  // État de chargement
+  if (isLoading || allOffersLoading) {
+    return (
+      <div className="flex h-screen w-full overflow-x-hidden">
+        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
+          <div className="flex items-center justify-center min-h-[60vh] w-full">
+            <Loader2 className="h-8 w-8 animate-spin" />
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Vérification si l'offre existe
+  if (!offerData) {
+    return (
+      <div className="flex h-screen w-full overflow-x-hidden">
+        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
+          <Alert>
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>
+              Offre non trouvée ou vous n'avez pas les permissions pour y
+              accéder.
+            </AlertDescription>
+          </Alert>
+        </main>
+      </div>
+    );
+  }
+
+  const status = getOfferStatus(offerData.etat);
+
   return (
     <div className="flex h-screen w-full overflow-x-hidden">
       {/* Sidebar */}
-      <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
+      <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+
       {/* Main content */}
       <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
         {/* En-tête avec navigation et actions */}
-        <div className="flex justify-between items-center ">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div className="flex items-center gap-4">
-            <Link href="/mesoffres">
+            <Link href="/mesoffres" aria-label="Retour aux offres">
               <Button variant="outline" size="icon">
                 <ArrowLeft className="h-4 w-4" />
               </Button>
             </Link>
             <h1 className="text-2xl font-bold">Détail de l'offre</h1>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <Button variant="outline" className="flex items-center gap-2">
               <Share2 className="h-4 w-4" />
-              Partager
+              <span className="hidden sm:inline">Partager</span>
             </Button>
             <Button variant="outline" className="flex items-center gap-2">
-              {queryoffresbyid?.data[0].etat === "active" ? (
+              {offerData.etat === "active" ? (
                 <>
                   <EyeOff className="h-4 w-4" />
-                  Masquer l'offre
+                  <span className="hidden sm:inline">Masquer l'offre</span>
                 </>
               ) : (
                 <>
                   <Eye className="h-4 w-4" />
-                  Publier l'offre
+                  <span className="hidden sm:inline">Publier l'offre</span>
                 </>
               )}
             </Button>
             <Button
               className="flex items-center gap-2"
-              onClick={() =>
-                (window.location.href = `/mesoffres/modifier/${offerId}`)
-              }
+              onClick={() => router.push(`/mesoffres/modifier/${offerId}`)}
             >
               <Pencil className="h-4 w-4" />
-              Modifier
+              <span className="hidden sm:inline">Modifier</span>
             </Button>
           </div>
         </div>
 
         {/* Tabs navigation */}
-
-        <div className="w-full h-[100vh] overflow-y-auto">
-          <Tabs defaultValue="details" className="w-full mt-6">
-            <TabsList>
-              <TabsTrigger value="details">Détail</TabsTrigger>
-              <TabsTrigger value="candidatures">Candidatures</TabsTrigger>
-
+        <div className="w-full h-[calc(100vh-200px)] overflow-y-auto">
+          <Tabs defaultValue="details" className="w-full">
+            <TabsList className="bg-transparent border">
+              <TabsTrigger value="details" className="border shadow-none">
+                Détail
+              </TabsTrigger>
               <TabsTrigger value="tableau">Tableau</TabsTrigger>
+              <TabsTrigger value="personnalise">
+                Tableau personnalisé
+              </TabsTrigger>
             </TabsList>
+
             <TabsContent value="details">
               <div className="space-y-6">
-                <div className="grid grid-cols-12 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                   {/* Colonne principale */}
-                  <div className="col-span-8 space-y-6">
+                  <div className="lg:col-span-8 space-y-6">
                     {/* Carte principale de l'offre */}
-                    <Card>
+                    <Card className="shadow-none border bg-transparent">
                       <CardHeader>
-                        <div className="flex justify-between items-start">
+                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                           <div>
                             <CardTitle className="text-2xl">
-                              {queryoffresbyid?.data[0].title}
+                              {offerData.title}
                             </CardTitle>
                             <CardDescription className="flex items-center gap-2 mt-2">
                               <Building className="h-4 w-4" />
-                              {queryoffresbyid?.data[0].company}
+                              {offerData.company}
                             </CardDescription>
                           </div>
-                          <Badge>
-                            {queryoffresbyid?.data[0].etat === "active"
-                              ? "Active"
-                              : queryoffresbyid?.data[0].etat === "draft"
-                              ? "Brouillon"
-                              : "Fermée"}
-                          </Badge>
+                          <Badge variant={status.variant}>{status.label}</Badge>
                         </div>
                       </CardHeader>
                       <CardContent className="space-y-6">
                         {/* Informations principales */}
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="flex items-center gap-2 text-sm">
-                            <MapPin className="h-4 w-4 text-muted-foreground" />
-                            {queryoffresbyid?.data[0].location}
+                            <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            <span>{offerData.location}</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <BriefcaseIcon className="h-4 w-4 text-muted-foreground" />
-                            {queryoffresbyid?.data[0].type}
+                            <BriefcaseIcon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            <span>{offerData.type}</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <Calendar className="h-4 w-4 text-muted-foreground" />
-                            Publié le{" "}
-                            {new Date(
-                              queryoffresbyid?.data[0].createdAt
-                            ).toLocaleDateString()}
+                            <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            <span>
+                              Publié le{" "}
+                              {new Date(
+                                offerData.createdAt
+                              ).toLocaleDateString()}
+                            </span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
-                            <Clock className="h-4 w-4 text-muted-foreground" />
-                            {queryoffresbyid?.data[0].experience}
+                            <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            <span>{offerData.experience}</span>
                           </div>
-                          <div className="flex items-center gap-2 text-sm">
-                            <Banknote className="h-4 w-4 text-muted-foreground" />
-                            {queryoffresbyid?.data[0].salaryMin.toLocaleString()}{" "}
-                            -{" "}
-                            {queryoffresbyid?.data[0].salaryMax.toLocaleString()}{" "}
-                            {queryoffresbyid?.data[0].salaryCurrency}/
-                            {queryoffresbyid?.data[0].salaryPeriod}
+                          <div className="flex items-center gap-2 text-sm sm:col-span-2">
+                            <Banknote className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                            <span>
+                              {formatSalary(
+                                offerData.salaryMin,
+                                offerData.salaryMax,
+                                offerData.salaryCurrency,
+                                offerData.salaryPeriod
+                              )}
+                            </span>
                           </div>
                         </div>
 
                         {/* Onglets de contenu */}
                         <Tabs defaultValue="description" className="mt-6">
-                          <TabsList>
+                          <TabsList className="grid w-full grid-cols-3 bg-transparent border">
                             <TabsTrigger value="description">
                               Description
                             </TabsTrigger>
@@ -230,16 +321,16 @@ export default function OffreDetail({
                               <h3 className="font-semibold mb-2">
                                 Description du poste
                               </h3>
-                              <p className="text-sm text-muted-foreground">
-                                {queryoffresbyid?.data[0].description}
+                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                {offerData.description}
                               </p>
                             </div>
                             <div>
                               <h3 className="font-semibold mb-2">
                                 Responsabilités
                               </h3>
-                              <p className="text-sm text-muted-foreground">
-                                {queryoffresbyid?.data[0].responsibilities}
+                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                {offerData.responsibilities}
                               </p>
                             </div>
                           </TabsContent>
@@ -252,10 +343,10 @@ export default function OffreDetail({
                                 Compétences requises
                               </h3>
                               <div className="flex flex-wrap gap-2">
-                                {queryoffresbyid?.data[0].competences.map(
+                                {offerData.competences?.map(
                                   (skill: string, index: number) => (
                                     <Badge
-                                      key={index}
+                                      key={`${skill}-${index}`}
                                       variant="secondary"
                                       className="capitalize"
                                     >
@@ -267,16 +358,16 @@ export default function OffreDetail({
                             </div>
                             <div>
                               <h3 className="font-semibold mb-2">Prérequis</h3>
-                              <p className="text-sm text-muted-foreground">
-                                {queryoffresbyid?.data[0].requirements}
+                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                {offerData.requirements}
                               </p>
                             </div>
                           </TabsContent>
                           <TabsContent value="benefits">
                             <div>
                               <h3 className="font-semibold mb-2">Avantages</h3>
-                              <p className="text-sm text-muted-foreground">
-                                {queryoffresbyid?.data[0].benefits}
+                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                {offerData.benefits}
                               </p>
                             </div>
                           </TabsContent>
@@ -286,9 +377,9 @@ export default function OffreDetail({
                   </div>
 
                   {/* Colonne latérale */}
-                  <div className="col-span-4 space-y-6">
+                  <div className="lg:col-span-4 space-y-6">
                     {/* Statistiques */}
-                    <Card>
+                    <Card className="shadow-none border bg-transparent">
                       <CardHeader>
                         <CardTitle className="text-lg">Statistiques</CardTitle>
                       </CardHeader>
@@ -298,7 +389,7 @@ export default function OffreDetail({
                             Vues
                           </span>
                           <span className="font-semibold">
-                            {queryoffresbyid?.data[0]?.views || 0}
+                            {offerData.views || 0}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
@@ -306,14 +397,14 @@ export default function OffreDetail({
                             Candidatures totales
                           </span>
                           <span className="font-semibold">
-                            {queryoffresbyid?.data[0]?.applications.length || 0}
+                            {offerData.applications?.length || 0}
                           </span>
                         </div>
                       </CardContent>
                     </Card>
 
                     {/* Actions rapides */}
-                    <Card>
+                    <Card className="shadow-none border bg-transparent">
                       <CardHeader>
                         <CardTitle className="text-lg">
                           Actions rapides
@@ -323,11 +414,11 @@ export default function OffreDetail({
                         <Button
                           className="w-full"
                           variant="outline"
-                          onClick={() => {
-                            if (queryoffresbyid?.data[0].id) {
-                              window.location.href = `/mesoffres/${queryoffresbyid?.data[0].id}/candidatures`;
-                            }
-                          }}
+                          onClick={() =>
+                            router.push(
+                              `/mesoffres/${offerData.id}/candidatures`
+                            )
+                          }
                         >
                           Voir les candidatures
                         </Button>
@@ -343,17 +434,15 @@ export default function OffreDetail({
                 </div>
               </div>
             </TabsContent>
-            <TabsContent value="candidatures" className="w-full">
-              <CandidaturesTable
-                candidatdata={candidatdata?.data}
-                candidatdataLoding={candidatdataLoding}
-              />
+
+            <TabsContent value="tableau" className="w-full">
+              <KanbanBoard offerId={offerId} />
             </TabsContent>
 
-            <TabsContent value="tableau" className="w-full ">
-              <KanbanBoard offerId={offerId} />
-
-              {/* <Board /> */}
+            <TabsContent value="personnalise">
+              <div className="w-full h-[calc(100vh-200px)] overflow-y-auto">
+                <ManualKanbanBoard offerId={offerId} />
+              </div>
             </TabsContent>
           </Tabs>
         </div>

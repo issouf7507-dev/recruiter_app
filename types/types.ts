@@ -82,6 +82,7 @@ export type JobOffer = {
   benefits: string;
   requirements: string;
   responsibilities: string;
+  views?: number;
   skills: string;
   postulated: boolean;
   favorite: boolean;

@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
         email: invitation.email,
         nom,
         prenom,
-        role: invitation.role,
+        role: user.type == "COLLABORATEUR" ? "MANAGER" : "ADMIN",
         recruteurId: invitation.recruteurId,
         invitationId: invitation.id,
         userId: user.id,

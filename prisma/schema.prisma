@@ -124,8 +124,22 @@ model Collaborateur {
   invitationId String? @unique
   user        User     @relation(fields: [userId], references: [id])
   userId      String   @unique
+  applications ApplicationCollaborateur[] // Relation many-to-many avec les applications
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Table de liaison pour la relation many-to-many entre Application et Collaborateur
+model ApplicationCollaborateur {
+  id              String        @id @default(cuid())
+  application     Application   @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId   String
+  collaborateur   Collaborateur @relation(fields: [collaborateurId], references: [id], onDelete: Cascade)
+  collaborateurId String
+  assignedAt      DateTime      @default(now())
+  assignedBy      String        // ID de l'utilisateur qui a fait l'affectation
+
+  @@unique([applicationId, collaborateurId])
 }
 
 /// Représente une offre d'emploi publiée par une entreprise
@@ -193,6 +207,7 @@ model Application {
   notes      ApplicationNote[]
   checklist  ChecklistItem[]
   files      ApplicationFile[]
+  collaborateurs ApplicationCollaborateur[] // Relation many-to-many avec les collaborateurs
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }

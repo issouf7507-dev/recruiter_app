@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useUserStore } from "@/store/userStore";
 
 interface User {
@@ -35,26 +35,26 @@ interface User {
 export function useAuthCandidat() {
   const { loading, setLoading, setCandidat, candidat } = useUserStore();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch("/api/auth/me-cd");
-        if (response.ok) {
-          const data = await response.json();
-          // setCandidat(data.user);
-          setCandidat(data.user);
-        } else {
-          setCandidat(null);
-        }
-      } catch (error) {
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await fetch("/api/auth/me-cd");
+      if (response.ok) {
+        const data = await response.json();
+        setCandidat(data.user);
+      } else {
         setCandidat(null);
-      } finally {
-        setLoading(false);
       }
-    };
-
-    fetchUser();
+    } catch (error) {
+      console.error("Erreur lors de la récupération du candidat:", error);
+      setCandidat(null);
+    } finally {
+      setLoading(false);
+    }
   }, [setCandidat, setLoading]);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   return { loading, candidat };
 }

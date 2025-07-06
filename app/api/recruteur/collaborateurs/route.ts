@@ -1,0 +1,42 @@
+import { NextRequest, NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
+import { getAuthenticatedUser } from "@/lib/auth-utils";
+
+export async function GET(req: NextRequest) {
+  try {
+    const authenticatedUser = await getAuthenticatedUser(req);
+    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    // Récupérer les collaborateurs avec mise en cache
+    const collaborateurs = await prisma.collaborateur.findMany({
+      where: {
+        recruteurId: authenticatedUser.recruteurId,
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      data: collaborateurs,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la récupération des collaborateurs:", error);
+    return NextResponse.json(
+      { error: "Erreur lors de la récupération des collaborateurs" },
+      { status: 500 }
+    );
+  }
+}

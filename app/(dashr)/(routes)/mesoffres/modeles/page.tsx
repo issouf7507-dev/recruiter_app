@@ -271,17 +271,10 @@ export default function ModelesOffres() {
       ) : (
         <div className="grid gap-4">
           {query?.data?.data?.length === 0 ? (
-            // <Card>
-            //   <CardContent className="p-6 text-center">
-            //     <p className="text-muted-foreground">
-            //       Aucun modèle n'a été créé pour le moment.
-            //     </p>
-            //   </CardContent>
-            // </Card>
             <div className="h-[80vh] flex items-center justify-center">
-              <Card className="w-96 text-center">
+              <Card className="w-96 text-center shadow-none">
                 <CardHeader className="flex flex-col items-center gap-2">
-                  <Lock className="w-10 h-10 text-red-500" />
+                  <Lock className="w-10 h-10 text-primary" />
                   <CardTitle>Pas de data</CardTitle>
                 </CardHeader>
                 <CardContent>

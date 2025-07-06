@@ -15,7 +15,7 @@ export class MailService {
         from: process.env.NEXT_APP_EMAIL_USER,
         to,
         subject,
-        text: message,
+        html: message,
       });
 
       console.log("Email envoyé avec succès");

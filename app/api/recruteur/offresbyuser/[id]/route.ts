@@ -12,6 +12,7 @@ export async function GET(
     if (!authenticatedUser) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
+    // console.log("authenticatedUser", authenticatedUser);
 
     // Récupérer les offres du recruteur de l'utilisateur connecté
     const offres = await prisma.jobOffer.findMany({
@@ -23,6 +24,11 @@ export async function GET(
         applications: {
           include: {
             candidat: true,
+            collaborateurs: {
+              include: {
+                collaborateur: true,
+              },
+            },
           },
         },
       },
@@ -30,6 +36,8 @@ export async function GET(
         createdAt: "desc",
       },
     });
+
+    // console.log("offres", offres);
 
     return NextResponse.json(offres);
   } catch (error) {
@@ -41,85 +49,85 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
+// export async function DELETE(
+//   req: Request,
+//   { params }: { params: Promise<{ id: string }> }
+// ) {
+//   try {
+//     const session = await getServerSession(authOptions);
+//     if (!session?.user) {
+//       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+//     }
 
-    // Vérifier les permissions
-    const user = await prisma.user.findUnique({
-      where: { email: session.user.email! },
-      include: {
-        collaborateur: true,
-        recruteur: true,
-      },
-    });
+//     // Vérifier les permissions
+//     const user = await prisma.user.findUnique({
+//       where: { email: session.user.email! },
+//       include: {
+//         collaborateur: true,
+//         recruteur: true,
+//       },
+//     });
 
-    if (!user) {
-      return NextResponse.json(
-        { error: "Utilisateur non trouvé" },
-        { status: 404 }
-      );
-    }
+//     if (!user) {
+//       return NextResponse.json(
+//         { error: "Utilisateur non trouvé" },
+//         { status: 404 }
+//       );
+//     }
 
-    const id = (await params).id;
+//     const id = (await params).id;
 
-    // Vérifier si l'offre appartient au recruteur ou au collaborateur
-    const jobOffer = await prisma.jobOffer.findUnique({
-      where: { id: Number(id) },
-    });
+//     // Vérifier si l'offre appartient au recruteur ou au collaborateur
+//     const jobOffer = await prisma.jobOffer.findUnique({
+//       where: { id: Number(id) },
+//     });
 
-    if (!jobOffer) {
-      return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
-    }
+//     if (!jobOffer) {
+//       return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
+//     }
 
-    let canDelete = false;
-    if (user.type === "RECRUTEUR" && user.recruteur) {
-      canDelete = jobOffer.recruteurId === user.recruteur.id;
-    } else if (user.collaborateur) {
-      canDelete =
-        jobOffer.recruteurId === user.collaborateur.recruteurId &&
-        user.collaborateur.role === "ADMIN";
-    }
+//     let canDelete = false;
+//     if (user.type === "RECRUTEUR" && user.recruteur) {
+//       canDelete = jobOffer.recruteurId === user.recruteur.id;
+//     } else if (user.collaborateur) {
+//       canDelete =
+//         jobOffer.recruteurId === user.collaborateur.recruteurId &&
+//         user.collaborateur.role === "ADMIN";
+//     }
 
-    if (!canDelete) {
-      return NextResponse.json(
-        { error: "Non autorisé à supprimer cette offre" },
-        { status: 403 }
-      );
-    }
+//     if (!canDelete) {
+//       return NextResponse.json(
+//         { error: "Non autorisé à supprimer cette offre" },
+//         { status: 403 }
+//       );
+//     }
 
-    // Supprimer d'abord les colonnes du kanban associées
-    await prisma.kanbanColumn.deleteMany({
-      where: {
-        jobOfferId: Number(id),
-      },
-    });
+//     // Supprimer d'abord les colonnes du kanban associées
+//     await prisma.kanbanColumn.deleteMany({
+//       where: {
+//         jobOfferId: Number(id),
+//       },
+//     });
 
-    // Supprimer l'offre
-    const deletedJobOffer = await prisma.jobOffer.delete({
-      where: {
-        id: Number(id),
-      },
-    });
+//     // Supprimer l'offre
+//     const deletedJobOffer = await prisma.jobOffer.delete({
+//       where: {
+//         id: Number(id),
+//       },
+//     });
 
-    return NextResponse.json(
-      { success: true, data: deletedJobOffer },
-      { status: 200 }
-    );
-  } catch (err) {
-    console.log(err);
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Une erreur est survenue lors de la suppression",
-      },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json(
+//       { success: true, data: deletedJobOffer },
+//       { status: 200 }
+//     );
+//   } catch (err) {
+//     console.log(err);
+//     return NextResponse.json(
+//       {
+//         success: false,
+//         message: "Une erreur est survenue lors de la suppression",
+//       },
+//       { status: 500 }
+//     );
+//   }
+// }

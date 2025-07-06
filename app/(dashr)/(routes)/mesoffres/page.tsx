@@ -69,8 +69,6 @@ export default function MesOffres() {
       fetchData(`/api/recruteur/offresbyuser/${user?.recruteur?.id}`),
   });
 
-  // console.log("bb:", ss);
-
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -89,7 +87,9 @@ export default function MesOffres() {
     }
   };
 
-  const filteredOffers = offertData?.data?.filter((offer: JobOffer) => {
+  // console.log("offertData", offertData);
+
+  const filteredOffers = offertData?.filter((offer: JobOffer) => {
     const matchesSearch =
       offer?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       offer?.company?.toLowerCase().includes(searchQuery.toLowerCase()) ||

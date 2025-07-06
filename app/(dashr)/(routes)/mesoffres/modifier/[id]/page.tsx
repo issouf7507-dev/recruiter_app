@@ -37,26 +37,25 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchData, putData } from "@/utils/utilts";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
-import { useUserStore } from "@/store/userStore";
 
 // Schéma de validation pour le formulaire
 const offerFormSchema = z.object({
-  title: z.string().min(1, "Le titre est requis"),
-  company: z.string().min(1, "L'entreprise est requise"),
-  location: z.string().min(1, "La localisation est requise"),
-  type: z.string().min(1, "Le type de contrat est requis"),
-  experience: z.string().min(1, "L'expérience requise est requise"),
-  education: z.string().min(1, "Le niveau d'études est requis"),
-  description: z.string().min(1, "La description est requise"),
-  responsibilities: z.string().min(1, "Les responsabilités sont requises"),
-  requirements: z.string().min(1, "Les prérequis sont requis"),
-  skills: z.string().min(1, "Les compétences sont requises"),
-  benefits: z.string().min(1, "Les avantages sont requis"),
-  salaryMin: z.string().min(1, "Le salaire minimum est requis"),
-  salaryMax: z.string().min(1, "Le salaire maximum est requis"),
-  salaryCurrency: z.string().min(1, "La devise est requise"),
-  salaryPeriod: z.string().min(1, "La période est requise"),
-  etat: z.string().optional(),
+  title: z.string().nonempty("Le titre est requis"),
+  company: z.string().nonempty("L'entreprise est requise"),
+  location: z.string().nonempty("La localisation est requise"),
+  type: z.string().nonempty("Le type de contrat est requis"),
+  experience: z.string().nonempty("L'expérience requise est requise"),
+  // education: z.string().nonempty("Le niveau d'études est requis"),
+  description: z.string().nonempty("La description est requise"),
+  responsibilities: z.string().nonempty("Les responsabilités sont requises"),
+  requirements: z.string().nonempty("Les prérequis sont requis"),
+  skills: z.array(z.string()).nonempty("Au moins une compétence est requise"),
+  benefits: z.string().nonempty("Les avantages sont requis"),
+  salaryMin: z.string().nonempty("Le salaire minimum est requis"),
+  salaryMax: z.string().nonempty("Le salaire maximum est requis"),
+  salaryCurrency: z.string().nonempty("La devise est requise"),
+  salaryPeriod: z.string().nonempty("La période est requise"),
+  template: z.string().optional(),
 });
 
 export default function ModifierOffre({
@@ -64,17 +63,28 @@ export default function ModifierOffre({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { user, loading } = useUserStore();
+  const { user } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { id } = use(params);
 
   const form = useForm<z.infer<typeof offerFormSchema>>({
+    resolver: zodResolver(offerFormSchema),
     defaultValues: {
       type: "CDI",
       salaryCurrency: "EUR",
       salaryPeriod: "an",
+      skills: [],
+      title: "",
+      company: "",
+      location: "",
+      description: "",
+      responsibilities: "",
+      requirements: "",
+      benefits: "",
+      template: "",
     },
+    mode: "onChange",
   });
 
   // Récupérer les données de l'offre existante
@@ -83,37 +93,75 @@ export default function ModifierOffre({
     queryFn: () => fetchData(`/api/recruteur/offres/${id}`),
   });
 
-  console.log(offerData?.data);
-
   // Mettre à jour le formulaire avec les données de l'offre
   useEffect(() => {
     if (offerData?.data) {
       const offer = offerData?.data?.[0];
-      form.reset({
-        title: offer.title,
-        company: offer.company,
-        location: offer.location,
-        type: offer.type,
-        experience: offer.experience,
-        education: offer.education,
-        description: offer.description,
-        responsibilities: offer.responsibilities,
-        requirements: offer.requirements,
-        skills: offer.skills,
-        benefits: offer.benefits,
-        salaryMin: offer.salaryMin,
-        salaryMax: offer.salaryMax,
-        salaryCurrency: offer.salaryCurrency,
-        salaryPeriod: offer.salaryPeriod,
-        etat: offer.etat,
+
+      // console.log("Données de l'offre reçues:", offer);
+
+      // Convertir les compétences de string à array si nécessaire
+      let skillsArray: string[] = [];
+      if (offer.competences) {
+        if (Array.isArray(offer.competences)) {
+          skillsArray = offer.competences;
+        } else {
+          // Si c'est une string, la diviser par virgules
+          skillsArray = offer.competences
+            .split(",")
+            .map((skill: string) => skill.trim())
+            .filter((skill: string) => skill);
+        }
+      }
+
+      // Utiliser setValue pour chaque champ individuellement
+      form.setValue("title", offer.title || "");
+      form.setValue("company", offer.company || "");
+      form.setValue("location", offer.location || "");
+      form.setValue("type", offer.type || "CDI");
+      form.setValue("experience", offer.experience || "");
+      form.setValue("description", offer.description || "");
+      form.setValue("responsibilities", offer.responsibilities || "");
+      form.setValue("requirements", offer.requirements || "");
+      form.setValue("skills", skillsArray as [string, ...string[]]);
+      form.setValue("benefits", offer.benefits || "");
+      form.setValue("salaryMin", offer.salaryMin?.toString() || "");
+      form.setValue("salaryMax", offer.salaryMax?.toString() || "");
+      form.setValue("salaryCurrency", offer.salaryCurrency || "EUR");
+      form.setValue("salaryPeriod", offer.salaryPeriod || "an");
+      form.setValue("template", offer.template || "");
+
+      // Forcer la mise à jour des champs Select après un court délai
+      setTimeout(() => {
+        if (offer.type) form.setValue("type", offer.type);
+        if (offer.experience) form.setValue("experience", offer.experience);
+        if (offer.salaryCurrency)
+          form.setValue("salaryCurrency", offer.salaryCurrency);
+        if (offer.salaryPeriod)
+          form.setValue("salaryPeriod", offer.salaryPeriod);
+      }, 100);
+
+      console.log("Valeurs du formulaire après setValue:", {
+        type: form.getValues("type"),
+        experience: form.getValues("experience"),
+        skills: form.getValues("skills"),
       });
     }
   }, [offerData, form]);
 
   const onSubmit = async (data: z.infer<typeof offerFormSchema>) => {
+    console.log("Form errors:", form.formState.errors);
     try {
       setIsSubmitting(true);
-      const newdata = { ...data, recruteurId: user?.id };
+
+      // Convertir le tableau skills en string pour Prisma
+      const newdata = {
+        ...data,
+        skills: Array.isArray(data.skills)
+          ? data.skills.join(", ")
+          : data.skills,
+        recruteurId: user?.id,
+      };
 
       await putData(newdata, `/api/recruteur/offres/${id}`).then((res) => {
         if (res.success) {
@@ -191,6 +239,32 @@ export default function ModifierOffre({
 
                 <FormField
                   control={form.control}
+                  name="template"
+                  render={({ field }) => (
+                    <FormItem className="hidden">
+                      <FormLabel>Modèle</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Sélectionnez un modèle" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="none">Aucun modèle</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name="location"
                   render={({ field }) => (
                     <FormItem>
@@ -211,7 +285,7 @@ export default function ModifierOffre({
                       <FormLabel>Type de contrat</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -239,7 +313,7 @@ export default function ModifierOffre({
                       <FormLabel>Expérience requise</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -305,7 +379,7 @@ export default function ModifierOffre({
                       <FormLabel>Devise</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -331,7 +405,7 @@ export default function ModifierOffre({
                       <FormLabel>Période</FormLabel>
                       <Select
                         onValueChange={field.onChange}
-                        defaultValue={field.value}
+                        value={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -432,15 +506,64 @@ export default function ModifierOffre({
                   <FormItem>
                     <FormLabel>Compétences techniques</FormLabel>
                     <FormDescription>
-                      Listez les compétences requises (séparées par des
-                      virgules)
+                      Sélectionnez les compétences requises pour ce poste
                     </FormDescription>
-                    <FormControl>
-                      <Input
-                        placeholder="React, Node.js, TypeScript, MongoDB"
-                        {...field}
-                      />
-                    </FormControl>
+                    <Select
+                      onValueChange={(value) => {
+                        const currentSkills = field.value || [];
+                        if (!currentSkills.includes(value)) {
+                          field.onChange([...currentSkills, value]);
+                        }
+                      }}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Sélectionnez les compétences" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="javascript">JavaScript</SelectItem>
+                        <SelectItem value="typescript">TypeScript</SelectItem>
+                        <SelectItem value="react">React</SelectItem>
+                        <SelectItem value="nextjs">Next.js</SelectItem>
+                        <SelectItem value="nodejs">Node.js</SelectItem>
+                        <SelectItem value="python">Python</SelectItem>
+                        <SelectItem value="java">Java</SelectItem>
+                        <SelectItem value="php">PHP</SelectItem>
+                        <SelectItem value="sql">SQL</SelectItem>
+                        <SelectItem value="mongodb">MongoDB</SelectItem>
+                        <SelectItem value="git">Git</SelectItem>
+                        <SelectItem value="docker">Docker</SelectItem>
+                        <SelectItem value="aws">AWS</SelectItem>
+                        <SelectItem value="uiux">UI/UX Design</SelectItem>
+                        <SelectItem value="agile">
+                          Méthodologies Agiles
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {field.value?.map((skill) => (
+                        <div
+                          key={skill}
+                          className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md"
+                        >
+                          <span className="text-sm">
+                            {skill.charAt(0).toUpperCase() + skill.slice(1)}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              field.onChange(
+                                field.value.filter((s) => s !== skill)
+                              );
+                            }}
+                            className="text-primary hover:text-primary/80"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                     <FormMessage />
                   </FormItem>
                 )}

@@ -44,6 +44,11 @@ export type Invitation = $Result.DefaultSelection<Prisma.$InvitationPayload>
  */
 export type Collaborateur = $Result.DefaultSelection<Prisma.$CollaborateurPayload>
 /**
+ * Model ApplicationCollaborateur
+ * 
+ */
+export type ApplicationCollaborateur = $Result.DefaultSelection<Prisma.$ApplicationCollaborateurPayload>
+/**
  * Model JobOffer
  * Représente une offre d'emploi publiée par une entreprise
  */
@@ -353,6 +358,16 @@ export class PrismaClient<
     * ```
     */
   get collaborateur(): Prisma.CollaborateurDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationCollaborateur`: Exposes CRUD operations for the **ApplicationCollaborateur** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationCollaborateurs
+    * const applicationCollaborateurs = await prisma.applicationCollaborateur.findMany()
+    * ```
+    */
+  get applicationCollaborateur(): Prisma.ApplicationCollaborateurDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.jobOffer`: Exposes CRUD operations for the **JobOffer** model.
@@ -959,6 +974,7 @@ export namespace Prisma {
     CompanySocial: 'CompanySocial',
     Invitation: 'Invitation',
     Collaborateur: 'Collaborateur',
+    ApplicationCollaborateur: 'ApplicationCollaborateur',
     JobOffer: 'JobOffer',
     OfferTemplate: 'OfferTemplate',
     Application: 'Application',
@@ -993,7 +1009,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "candidat" | "recruteur" | "companySocial" | "invitation" | "collaborateur" | "jobOffer" | "offerTemplate" | "application" | "applicationNote" | "checklistItem" | "applicationFile" | "kanbanColumn" | "account" | "session" | "verificationToken" | "experience" | "formation" | "competence" | "objectifCarriere" | "alerteEmploi" | "notification"
+      modelProps: "user" | "candidat" | "recruteur" | "companySocial" | "invitation" | "collaborateur" | "applicationCollaborateur" | "jobOffer" | "offerTemplate" | "application" | "applicationNote" | "checklistItem" | "applicationFile" | "kanbanColumn" | "account" | "session" | "verificationToken" | "experience" | "formation" | "competence" | "objectifCarriere" | "alerteEmploi" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1438,6 +1454,80 @@ export namespace Prisma {
           count: {
             args: Prisma.CollaborateurCountArgs<ExtArgs>
             result: $Utils.Optional<CollaborateurCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApplicationCollaborateur: {
+        payload: Prisma.$ApplicationCollaborateurPayload<ExtArgs>
+        fields: Prisma.ApplicationCollaborateurFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationCollaborateurFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationCollaborateurFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationCollaborateurFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationCollaborateurFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationCollaborateurFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationCollaborateurCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationCollaborateurCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApplicationCollaborateurCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>[]
+          }
+          delete: {
+            args: Prisma.ApplicationCollaborateurDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>
+          }
+          update: {
+            args: Prisma.ApplicationCollaborateurUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationCollaborateurDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationCollaborateurUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ApplicationCollaborateurUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>[]
+          }
+          upsert: {
+            args: Prisma.ApplicationCollaborateurUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurPayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationCollaborateurAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationCollaborateur>
+          }
+          groupBy: {
+            args: Prisma.ApplicationCollaborateurGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationCollaborateurGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationCollaborateurCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationCollaborateurCountAggregateOutputType> | number
           }
         }
       }
@@ -2715,6 +2805,7 @@ export namespace Prisma {
     companySocial?: CompanySocialOmit
     invitation?: InvitationOmit
     collaborateur?: CollaborateurOmit
+    applicationCollaborateur?: ApplicationCollaborateurOmit
     jobOffer?: JobOfferOmit
     offerTemplate?: OfferTemplateOmit
     application?: ApplicationOmit
@@ -3004,6 +3095,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type CollaborateurCountOutputType
+   */
+
+  export type CollaborateurCountOutputType = {
+    applications: number
+  }
+
+  export type CollaborateurCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | CollaborateurCountOutputTypeCountApplicationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CollaborateurCountOutputType without action
+   */
+  export type CollaborateurCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCountOutputType
+     */
+    select?: CollaborateurCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CollaborateurCountOutputType without action
+   */
+  export type CollaborateurCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCollaborateurWhereInput
+  }
+
+
+  /**
    * Count Type JobOfferCountOutputType
    */
 
@@ -3082,12 +3204,14 @@ export namespace Prisma {
     notes: number
     checklist: number
     files: number
+    collaborateurs: number
   }
 
   export type ApplicationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     notes?: boolean | ApplicationCountOutputTypeCountNotesArgs
     checklist?: boolean | ApplicationCountOutputTypeCountChecklistArgs
     files?: boolean | ApplicationCountOutputTypeCountFilesArgs
+    collaborateurs?: boolean | ApplicationCountOutputTypeCountCollaborateursArgs
   }
 
   // Custom InputTypes
@@ -3120,6 +3244,13 @@ export namespace Prisma {
    */
   export type ApplicationCountOutputTypeCountFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ApplicationFileWhereInput
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountCollaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCollaborateurWhereInput
   }
 
 
@@ -9521,6 +9652,8 @@ export namespace Prisma {
     recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
     invitation?: boolean | Collaborateur$invitationArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    applications?: boolean | Collaborateur$applicationsArgs<ExtArgs>
+    _count?: boolean | CollaborateurCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["collaborateur"]>
 
   export type CollaborateurSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9573,6 +9706,8 @@ export namespace Prisma {
     recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
     invitation?: boolean | Collaborateur$invitationArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    applications?: boolean | Collaborateur$applicationsArgs<ExtArgs>
+    _count?: boolean | CollaborateurCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CollaborateurIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
@@ -9591,6 +9726,7 @@ export namespace Prisma {
       recruteur: Prisma.$RecruteurPayload<ExtArgs>
       invitation: Prisma.$InvitationPayload<ExtArgs> | null
       user: Prisma.$UserPayload<ExtArgs>
+      applications: Prisma.$ApplicationCollaborateurPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10000,6 +10136,7 @@ export namespace Prisma {
     recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     invitation<T extends Collaborateur$invitationArgs<ExtArgs> = {}>(args?: Subset<T, Collaborateur$invitationArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    applications<T extends Collaborateur$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Collaborateur$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10454,6 +10591,30 @@ export namespace Prisma {
   }
 
   /**
+   * Collaborateur.applications
+   */
+  export type Collaborateur$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    where?: ApplicationCollaborateurWhereInput
+    orderBy?: ApplicationCollaborateurOrderByWithRelationInput | ApplicationCollaborateurOrderByWithRelationInput[]
+    cursor?: ApplicationCollaborateurWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationCollaborateurScalarFieldEnum | ApplicationCollaborateurScalarFieldEnum[]
+  }
+
+  /**
    * Collaborateur without action
    */
   export type CollaborateurDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10469,6 +10630,1072 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CollaborateurInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApplicationCollaborateur
+   */
+
+  export type AggregateApplicationCollaborateur = {
+    _count: ApplicationCollaborateurCountAggregateOutputType | null
+    _min: ApplicationCollaborateurMinAggregateOutputType | null
+    _max: ApplicationCollaborateurMaxAggregateOutputType | null
+  }
+
+  export type ApplicationCollaborateurMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    collaborateurId: string | null
+    assignedAt: Date | null
+    assignedBy: string | null
+  }
+
+  export type ApplicationCollaborateurMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    collaborateurId: string | null
+    assignedAt: Date | null
+    assignedBy: string | null
+  }
+
+  export type ApplicationCollaborateurCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    collaborateurId: number
+    assignedAt: number
+    assignedBy: number
+    _all: number
+  }
+
+
+  export type ApplicationCollaborateurMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    collaborateurId?: true
+    assignedAt?: true
+    assignedBy?: true
+  }
+
+  export type ApplicationCollaborateurMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    collaborateurId?: true
+    assignedAt?: true
+    assignedBy?: true
+  }
+
+  export type ApplicationCollaborateurCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    collaborateurId?: true
+    assignedAt?: true
+    assignedBy?: true
+    _all?: true
+  }
+
+  export type ApplicationCollaborateurAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationCollaborateur to aggregate.
+     */
+    where?: ApplicationCollaborateurWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCollaborateurs to fetch.
+     */
+    orderBy?: ApplicationCollaborateurOrderByWithRelationInput | ApplicationCollaborateurOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationCollaborateurWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCollaborateurs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCollaborateurs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationCollaborateurs
+    **/
+    _count?: true | ApplicationCollaborateurCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationCollaborateurMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationCollaborateurMaxAggregateInputType
+  }
+
+  export type GetApplicationCollaborateurAggregateType<T extends ApplicationCollaborateurAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationCollaborateur]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationCollaborateur[P]>
+      : GetScalarType<T[P], AggregateApplicationCollaborateur[P]>
+  }
+
+
+
+
+  export type ApplicationCollaborateurGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCollaborateurWhereInput
+    orderBy?: ApplicationCollaborateurOrderByWithAggregationInput | ApplicationCollaborateurOrderByWithAggregationInput[]
+    by: ApplicationCollaborateurScalarFieldEnum[] | ApplicationCollaborateurScalarFieldEnum
+    having?: ApplicationCollaborateurScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationCollaborateurCountAggregateInputType | true
+    _min?: ApplicationCollaborateurMinAggregateInputType
+    _max?: ApplicationCollaborateurMaxAggregateInputType
+  }
+
+  export type ApplicationCollaborateurGroupByOutputType = {
+    id: string
+    applicationId: string
+    collaborateurId: string
+    assignedAt: Date
+    assignedBy: string
+    _count: ApplicationCollaborateurCountAggregateOutputType | null
+    _min: ApplicationCollaborateurMinAggregateOutputType | null
+    _max: ApplicationCollaborateurMaxAggregateOutputType | null
+  }
+
+  type GetApplicationCollaborateurGroupByPayload<T extends ApplicationCollaborateurGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationCollaborateurGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationCollaborateurGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationCollaborateurGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationCollaborateurGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationCollaborateurSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    collaborateurId?: boolean
+    assignedAt?: boolean
+    assignedBy?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    collaborateur?: boolean | CollaborateurDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationCollaborateur"]>
+
+  export type ApplicationCollaborateurSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    collaborateurId?: boolean
+    assignedAt?: boolean
+    assignedBy?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    collaborateur?: boolean | CollaborateurDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationCollaborateur"]>
+
+  export type ApplicationCollaborateurSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    collaborateurId?: boolean
+    assignedAt?: boolean
+    assignedBy?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    collaborateur?: boolean | CollaborateurDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationCollaborateur"]>
+
+  export type ApplicationCollaborateurSelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    collaborateurId?: boolean
+    assignedAt?: boolean
+    assignedBy?: boolean
+  }
+
+  export type ApplicationCollaborateurOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "collaborateurId" | "assignedAt" | "assignedBy", ExtArgs["result"]["applicationCollaborateur"]>
+  export type ApplicationCollaborateurInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    collaborateur?: boolean | CollaborateurDefaultArgs<ExtArgs>
+  }
+  export type ApplicationCollaborateurIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    collaborateur?: boolean | CollaborateurDefaultArgs<ExtArgs>
+  }
+  export type ApplicationCollaborateurIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    collaborateur?: boolean | CollaborateurDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationCollaborateurPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationCollaborateur"
+    objects: {
+      application: Prisma.$ApplicationPayload<ExtArgs>
+      collaborateur: Prisma.$CollaborateurPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      collaborateurId: string
+      assignedAt: Date
+      assignedBy: string
+    }, ExtArgs["result"]["applicationCollaborateur"]>
+    composites: {}
+  }
+
+  type ApplicationCollaborateurGetPayload<S extends boolean | null | undefined | ApplicationCollaborateurDefaultArgs> = $Result.GetResult<Prisma.$ApplicationCollaborateurPayload, S>
+
+  type ApplicationCollaborateurCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationCollaborateurFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationCollaborateurCountAggregateInputType | true
+    }
+
+  export interface ApplicationCollaborateurDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationCollaborateur'], meta: { name: 'ApplicationCollaborateur' } }
+    /**
+     * Find zero or one ApplicationCollaborateur that matches the filter.
+     * @param {ApplicationCollaborateurFindUniqueArgs} args - Arguments to find a ApplicationCollaborateur
+     * @example
+     * // Get one ApplicationCollaborateur
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationCollaborateurFindUniqueArgs>(args: SelectSubset<T, ApplicationCollaborateurFindUniqueArgs<ExtArgs>>): Prisma__ApplicationCollaborateurClient<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationCollaborateur that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationCollaborateurFindUniqueOrThrowArgs} args - Arguments to find a ApplicationCollaborateur
+     * @example
+     * // Get one ApplicationCollaborateur
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationCollaborateurFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationCollaborateurFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationCollaborateurClient<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationCollaborateur that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurFindFirstArgs} args - Arguments to find a ApplicationCollaborateur
+     * @example
+     * // Get one ApplicationCollaborateur
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationCollaborateurFindFirstArgs>(args?: SelectSubset<T, ApplicationCollaborateurFindFirstArgs<ExtArgs>>): Prisma__ApplicationCollaborateurClient<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationCollaborateur that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurFindFirstOrThrowArgs} args - Arguments to find a ApplicationCollaborateur
+     * @example
+     * // Get one ApplicationCollaborateur
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationCollaborateurFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationCollaborateurFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationCollaborateurClient<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationCollaborateurs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationCollaborateurs
+     * const applicationCollaborateurs = await prisma.applicationCollaborateur.findMany()
+     * 
+     * // Get first 10 ApplicationCollaborateurs
+     * const applicationCollaborateurs = await prisma.applicationCollaborateur.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationCollaborateurWithIdOnly = await prisma.applicationCollaborateur.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationCollaborateurFindManyArgs>(args?: SelectSubset<T, ApplicationCollaborateurFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationCollaborateur.
+     * @param {ApplicationCollaborateurCreateArgs} args - Arguments to create a ApplicationCollaborateur.
+     * @example
+     * // Create one ApplicationCollaborateur
+     * const ApplicationCollaborateur = await prisma.applicationCollaborateur.create({
+     *   data: {
+     *     // ... data to create a ApplicationCollaborateur
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationCollaborateurCreateArgs>(args: SelectSubset<T, ApplicationCollaborateurCreateArgs<ExtArgs>>): Prisma__ApplicationCollaborateurClient<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationCollaborateurs.
+     * @param {ApplicationCollaborateurCreateManyArgs} args - Arguments to create many ApplicationCollaborateurs.
+     * @example
+     * // Create many ApplicationCollaborateurs
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationCollaborateurCreateManyArgs>(args?: SelectSubset<T, ApplicationCollaborateurCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApplicationCollaborateurs and returns the data saved in the database.
+     * @param {ApplicationCollaborateurCreateManyAndReturnArgs} args - Arguments to create many ApplicationCollaborateurs.
+     * @example
+     * // Create many ApplicationCollaborateurs
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApplicationCollaborateurs and only return the `id`
+     * const applicationCollaborateurWithIdOnly = await prisma.applicationCollaborateur.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApplicationCollaborateurCreateManyAndReturnArgs>(args?: SelectSubset<T, ApplicationCollaborateurCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ApplicationCollaborateur.
+     * @param {ApplicationCollaborateurDeleteArgs} args - Arguments to delete one ApplicationCollaborateur.
+     * @example
+     * // Delete one ApplicationCollaborateur
+     * const ApplicationCollaborateur = await prisma.applicationCollaborateur.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationCollaborateur
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationCollaborateurDeleteArgs>(args: SelectSubset<T, ApplicationCollaborateurDeleteArgs<ExtArgs>>): Prisma__ApplicationCollaborateurClient<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationCollaborateur.
+     * @param {ApplicationCollaborateurUpdateArgs} args - Arguments to update one ApplicationCollaborateur.
+     * @example
+     * // Update one ApplicationCollaborateur
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationCollaborateurUpdateArgs>(args: SelectSubset<T, ApplicationCollaborateurUpdateArgs<ExtArgs>>): Prisma__ApplicationCollaborateurClient<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationCollaborateurs.
+     * @param {ApplicationCollaborateurDeleteManyArgs} args - Arguments to filter ApplicationCollaborateurs to delete.
+     * @example
+     * // Delete a few ApplicationCollaborateurs
+     * const { count } = await prisma.applicationCollaborateur.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationCollaborateurDeleteManyArgs>(args?: SelectSubset<T, ApplicationCollaborateurDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationCollaborateurs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationCollaborateurs
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationCollaborateurUpdateManyArgs>(args: SelectSubset<T, ApplicationCollaborateurUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationCollaborateurs and returns the data updated in the database.
+     * @param {ApplicationCollaborateurUpdateManyAndReturnArgs} args - Arguments to update many ApplicationCollaborateurs.
+     * @example
+     * // Update many ApplicationCollaborateurs
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ApplicationCollaborateurs and only return the `id`
+     * const applicationCollaborateurWithIdOnly = await prisma.applicationCollaborateur.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ApplicationCollaborateurUpdateManyAndReturnArgs>(args: SelectSubset<T, ApplicationCollaborateurUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ApplicationCollaborateur.
+     * @param {ApplicationCollaborateurUpsertArgs} args - Arguments to update or create a ApplicationCollaborateur.
+     * @example
+     * // Update or create a ApplicationCollaborateur
+     * const applicationCollaborateur = await prisma.applicationCollaborateur.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationCollaborateur
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationCollaborateur we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationCollaborateurUpsertArgs>(args: SelectSubset<T, ApplicationCollaborateurUpsertArgs<ExtArgs>>): Prisma__ApplicationCollaborateurClient<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationCollaborateurs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurCountArgs} args - Arguments to filter ApplicationCollaborateurs to count.
+     * @example
+     * // Count the number of ApplicationCollaborateurs
+     * const count = await prisma.applicationCollaborateur.count({
+     *   where: {
+     *     // ... the filter for the ApplicationCollaborateurs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationCollaborateurCountArgs>(
+      args?: Subset<T, ApplicationCollaborateurCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationCollaborateurCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationCollaborateur.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationCollaborateurAggregateArgs>(args: Subset<T, ApplicationCollaborateurAggregateArgs>): Prisma.PrismaPromise<GetApplicationCollaborateurAggregateType<T>>
+
+    /**
+     * Group by ApplicationCollaborateur.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationCollaborateurGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationCollaborateurGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationCollaborateurGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationCollaborateurGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationCollaborateurGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationCollaborateur model
+   */
+  readonly fields: ApplicationCollaborateurFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationCollaborateur.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationCollaborateurClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    collaborateur<T extends CollaborateurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CollaborateurDefaultArgs<ExtArgs>>): Prisma__CollaborateurClient<$Result.GetResult<Prisma.$CollaborateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationCollaborateur model
+   */
+  interface ApplicationCollaborateurFieldRefs {
+    readonly id: FieldRef<"ApplicationCollaborateur", 'String'>
+    readonly applicationId: FieldRef<"ApplicationCollaborateur", 'String'>
+    readonly collaborateurId: FieldRef<"ApplicationCollaborateur", 'String'>
+    readonly assignedAt: FieldRef<"ApplicationCollaborateur", 'DateTime'>
+    readonly assignedBy: FieldRef<"ApplicationCollaborateur", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationCollaborateur findUnique
+   */
+  export type ApplicationCollaborateurFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateur to fetch.
+     */
+    where: ApplicationCollaborateurWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCollaborateur findUniqueOrThrow
+   */
+  export type ApplicationCollaborateurFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateur to fetch.
+     */
+    where: ApplicationCollaborateurWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCollaborateur findFirst
+   */
+  export type ApplicationCollaborateurFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateur to fetch.
+     */
+    where?: ApplicationCollaborateurWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCollaborateurs to fetch.
+     */
+    orderBy?: ApplicationCollaborateurOrderByWithRelationInput | ApplicationCollaborateurOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationCollaborateurs.
+     */
+    cursor?: ApplicationCollaborateurWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCollaborateurs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCollaborateurs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationCollaborateurs.
+     */
+    distinct?: ApplicationCollaborateurScalarFieldEnum | ApplicationCollaborateurScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCollaborateur findFirstOrThrow
+   */
+  export type ApplicationCollaborateurFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateur to fetch.
+     */
+    where?: ApplicationCollaborateurWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCollaborateurs to fetch.
+     */
+    orderBy?: ApplicationCollaborateurOrderByWithRelationInput | ApplicationCollaborateurOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationCollaborateurs.
+     */
+    cursor?: ApplicationCollaborateurWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCollaborateurs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCollaborateurs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationCollaborateurs.
+     */
+    distinct?: ApplicationCollaborateurScalarFieldEnum | ApplicationCollaborateurScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCollaborateur findMany
+   */
+  export type ApplicationCollaborateurFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateurs to fetch.
+     */
+    where?: ApplicationCollaborateurWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCollaborateurs to fetch.
+     */
+    orderBy?: ApplicationCollaborateurOrderByWithRelationInput | ApplicationCollaborateurOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationCollaborateurs.
+     */
+    cursor?: ApplicationCollaborateurWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCollaborateurs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCollaborateurs.
+     */
+    skip?: number
+    distinct?: ApplicationCollaborateurScalarFieldEnum | ApplicationCollaborateurScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCollaborateur create
+   */
+  export type ApplicationCollaborateurCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationCollaborateur.
+     */
+    data: XOR<ApplicationCollaborateurCreateInput, ApplicationCollaborateurUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationCollaborateur createMany
+   */
+  export type ApplicationCollaborateurCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationCollaborateurs.
+     */
+    data: ApplicationCollaborateurCreateManyInput | ApplicationCollaborateurCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationCollaborateur createManyAndReturn
+   */
+  export type ApplicationCollaborateurCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * The data used to create many ApplicationCollaborateurs.
+     */
+    data: ApplicationCollaborateurCreateManyInput | ApplicationCollaborateurCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationCollaborateur update
+   */
+  export type ApplicationCollaborateurUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationCollaborateur.
+     */
+    data: XOR<ApplicationCollaborateurUpdateInput, ApplicationCollaborateurUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationCollaborateur to update.
+     */
+    where: ApplicationCollaborateurWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCollaborateur updateMany
+   */
+  export type ApplicationCollaborateurUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationCollaborateurs.
+     */
+    data: XOR<ApplicationCollaborateurUpdateManyMutationInput, ApplicationCollaborateurUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationCollaborateurs to update
+     */
+    where?: ApplicationCollaborateurWhereInput
+    /**
+     * Limit how many ApplicationCollaborateurs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationCollaborateur updateManyAndReturn
+   */
+  export type ApplicationCollaborateurUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * The data used to update ApplicationCollaborateurs.
+     */
+    data: XOR<ApplicationCollaborateurUpdateManyMutationInput, ApplicationCollaborateurUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationCollaborateurs to update
+     */
+    where?: ApplicationCollaborateurWhereInput
+    /**
+     * Limit how many ApplicationCollaborateurs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationCollaborateur upsert
+   */
+  export type ApplicationCollaborateurUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationCollaborateur to update in case it exists.
+     */
+    where: ApplicationCollaborateurWhereUniqueInput
+    /**
+     * In case the ApplicationCollaborateur found by the `where` argument doesn't exist, create a new ApplicationCollaborateur with this data.
+     */
+    create: XOR<ApplicationCollaborateurCreateInput, ApplicationCollaborateurUncheckedCreateInput>
+    /**
+     * In case the ApplicationCollaborateur was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationCollaborateurUpdateInput, ApplicationCollaborateurUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationCollaborateur delete
+   */
+  export type ApplicationCollaborateurDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationCollaborateur to delete.
+     */
+    where: ApplicationCollaborateurWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCollaborateur deleteMany
+   */
+  export type ApplicationCollaborateurDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationCollaborateurs to delete
+     */
+    where?: ApplicationCollaborateurWhereInput
+    /**
+     * Limit how many ApplicationCollaborateurs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationCollaborateur without action
+   */
+  export type ApplicationCollaborateurDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
   }
 
 
@@ -13291,6 +14518,7 @@ export namespace Prisma {
     notes?: boolean | Application$notesArgs<ExtArgs>
     checklist?: boolean | Application$checklistArgs<ExtArgs>
     files?: boolean | Application$filesArgs<ExtArgs>
+    collaborateurs?: boolean | Application$collaborateursArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
@@ -13347,6 +14575,7 @@ export namespace Prisma {
     notes?: boolean | Application$notesArgs<ExtArgs>
     checklist?: boolean | Application$checklistArgs<ExtArgs>
     files?: boolean | Application$filesArgs<ExtArgs>
+    collaborateurs?: boolean | Application$collaborateursArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13369,6 +14598,7 @@ export namespace Prisma {
       notes: Prisma.$ApplicationNotePayload<ExtArgs>[]
       checklist: Prisma.$ChecklistItemPayload<ExtArgs>[]
       files: Prisma.$ApplicationFilePayload<ExtArgs>[]
+      collaborateurs: Prisma.$ApplicationCollaborateurPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -13781,6 +15011,7 @@ export namespace Prisma {
     notes<T extends Application$notesArgs<ExtArgs> = {}>(args?: Subset<T, Application$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     checklist<T extends Application$checklistArgs<ExtArgs> = {}>(args?: Subset<T, Application$checklistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     files<T extends Application$filesArgs<ExtArgs> = {}>(args?: Subset<T, Application$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    collaborateurs<T extends Application$collaborateursArgs<ExtArgs> = {}>(args?: Subset<T, Application$collaborateursArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14285,6 +15516,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ApplicationFileScalarFieldEnum | ApplicationFileScalarFieldEnum[]
+  }
+
+  /**
+   * Application.collaborateurs
+   */
+  export type Application$collaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    where?: ApplicationCollaborateurWhereInput
+    orderBy?: ApplicationCollaborateurOrderByWithRelationInput | ApplicationCollaborateurOrderByWithRelationInput[]
+    cursor?: ApplicationCollaborateurWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationCollaborateurScalarFieldEnum | ApplicationCollaborateurScalarFieldEnum[]
   }
 
   /**
@@ -29044,6 +30299,17 @@ export namespace Prisma {
   export type CollaborateurScalarFieldEnum = (typeof CollaborateurScalarFieldEnum)[keyof typeof CollaborateurScalarFieldEnum]
 
 
+  export const ApplicationCollaborateurScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    collaborateurId: 'collaborateurId',
+    assignedAt: 'assignedAt',
+    assignedBy: 'assignedBy'
+  };
+
+  export type ApplicationCollaborateurScalarFieldEnum = (typeof ApplicationCollaborateurScalarFieldEnum)[keyof typeof ApplicationCollaborateurScalarFieldEnum]
+
+
   export const JobOfferScalarFieldEnum: {
     id: 'id',
     title: 'title',
@@ -29931,6 +31197,7 @@ export namespace Prisma {
     recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
     invitation?: XOR<InvitationNullableScalarRelationFilter, InvitationWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    applications?: ApplicationCollaborateurListRelationFilter
   }
 
   export type CollaborateurOrderByWithRelationInput = {
@@ -29947,6 +31214,7 @@ export namespace Prisma {
     recruteur?: RecruteurOrderByWithRelationInput
     invitation?: InvitationOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
+    applications?: ApplicationCollaborateurOrderByRelationAggregateInput
   }
 
   export type CollaborateurWhereUniqueInput = Prisma.AtLeast<{
@@ -29966,6 +31234,7 @@ export namespace Prisma {
     recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
     invitation?: XOR<InvitationNullableScalarRelationFilter, InvitationWhereInput> | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    applications?: ApplicationCollaborateurListRelationFilter
   }, "id" | "email" | "invitationId" | "userId">
 
   export type CollaborateurOrderByWithAggregationInput = {
@@ -29998,6 +31267,65 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Collaborateur"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Collaborateur"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Collaborateur"> | Date | string
+  }
+
+  export type ApplicationCollaborateurWhereInput = {
+    AND?: ApplicationCollaborateurWhereInput | ApplicationCollaborateurWhereInput[]
+    OR?: ApplicationCollaborateurWhereInput[]
+    NOT?: ApplicationCollaborateurWhereInput | ApplicationCollaborateurWhereInput[]
+    id?: StringFilter<"ApplicationCollaborateur"> | string
+    applicationId?: StringFilter<"ApplicationCollaborateur"> | string
+    collaborateurId?: StringFilter<"ApplicationCollaborateur"> | string
+    assignedAt?: DateTimeFilter<"ApplicationCollaborateur"> | Date | string
+    assignedBy?: StringFilter<"ApplicationCollaborateur"> | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    collaborateur?: XOR<CollaborateurScalarRelationFilter, CollaborateurWhereInput>
+  }
+
+  export type ApplicationCollaborateurOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+    application?: ApplicationOrderByWithRelationInput
+    collaborateur?: CollaborateurOrderByWithRelationInput
+  }
+
+  export type ApplicationCollaborateurWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    applicationId_collaborateurId?: ApplicationCollaborateurApplicationIdCollaborateurIdCompoundUniqueInput
+    AND?: ApplicationCollaborateurWhereInput | ApplicationCollaborateurWhereInput[]
+    OR?: ApplicationCollaborateurWhereInput[]
+    NOT?: ApplicationCollaborateurWhereInput | ApplicationCollaborateurWhereInput[]
+    applicationId?: StringFilter<"ApplicationCollaborateur"> | string
+    collaborateurId?: StringFilter<"ApplicationCollaborateur"> | string
+    assignedAt?: DateTimeFilter<"ApplicationCollaborateur"> | Date | string
+    assignedBy?: StringFilter<"ApplicationCollaborateur"> | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    collaborateur?: XOR<CollaborateurScalarRelationFilter, CollaborateurWhereInput>
+  }, "id" | "applicationId_collaborateurId">
+
+  export type ApplicationCollaborateurOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+    _count?: ApplicationCollaborateurCountOrderByAggregateInput
+    _max?: ApplicationCollaborateurMaxOrderByAggregateInput
+    _min?: ApplicationCollaborateurMinOrderByAggregateInput
+  }
+
+  export type ApplicationCollaborateurScalarWhereWithAggregatesInput = {
+    AND?: ApplicationCollaborateurScalarWhereWithAggregatesInput | ApplicationCollaborateurScalarWhereWithAggregatesInput[]
+    OR?: ApplicationCollaborateurScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationCollaborateurScalarWhereWithAggregatesInput | ApplicationCollaborateurScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationCollaborateur"> | string
+    applicationId?: StringWithAggregatesFilter<"ApplicationCollaborateur"> | string
+    collaborateurId?: StringWithAggregatesFilter<"ApplicationCollaborateur"> | string
+    assignedAt?: DateTimeWithAggregatesFilter<"ApplicationCollaborateur"> | Date | string
+    assignedBy?: StringWithAggregatesFilter<"ApplicationCollaborateur"> | string
   }
 
   export type JobOfferWhereInput = {
@@ -30246,6 +31574,7 @@ export namespace Prisma {
     notes?: ApplicationNoteListRelationFilter
     checklist?: ChecklistItemListRelationFilter
     files?: ApplicationFileListRelationFilter
+    collaborateurs?: ApplicationCollaborateurListRelationFilter
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -30265,6 +31594,7 @@ export namespace Prisma {
     notes?: ApplicationNoteOrderByRelationAggregateInput
     checklist?: ChecklistItemOrderByRelationAggregateInput
     files?: ApplicationFileOrderByRelationAggregateInput
+    collaborateurs?: ApplicationCollaborateurOrderByRelationAggregateInput
   }
 
   export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -30287,6 +31617,7 @@ export namespace Prisma {
     notes?: ApplicationNoteListRelationFilter
     checklist?: ChecklistItemListRelationFilter
     files?: ApplicationFileListRelationFilter
+    collaborateurs?: ApplicationCollaborateurListRelationFilter
   }, "id">
 
   export type ApplicationOrderByWithAggregationInput = {
@@ -31885,6 +33216,7 @@ export namespace Prisma {
     recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
     invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
     user: UserCreateNestedOneWithoutCollaborateurInput
+    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurUncheckedCreateInput = {
@@ -31898,6 +33230,7 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurUpdateInput = {
@@ -31911,6 +33244,7 @@ export namespace Prisma {
     recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
     invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
     user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
+    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type CollaborateurUncheckedUpdateInput = {
@@ -31924,6 +33258,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type CollaborateurCreateManyInput = {
@@ -31960,6 +33295,60 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCollaborateurCreateInput = {
+    id?: string
+    assignedAt?: Date | string
+    assignedBy: string
+    application: ApplicationCreateNestedOneWithoutCollaborateursInput
+    collaborateur: CollaborateurCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type ApplicationCollaborateurUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+    application?: ApplicationUpdateOneRequiredWithoutCollaborateursNestedInput
+    collaborateur?: CollaborateurUpdateOneRequiredWithoutApplicationsNestedInput
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurCreateManyInput = {
+    id?: string
+    applicationId: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
   }
 
   export type JobOfferCreateInput = {
@@ -32231,6 +33620,7 @@ export namespace Prisma {
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -32247,6 +33637,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
@@ -32263,6 +33654,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -32279,6 +33671,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
@@ -33976,6 +35369,16 @@ export namespace Prisma {
     isNot?: InvitationWhereInput | null
   }
 
+  export type ApplicationCollaborateurListRelationFilter = {
+    every?: ApplicationCollaborateurWhereInput
+    some?: ApplicationCollaborateurWhereInput
+    none?: ApplicationCollaborateurWhereInput
+  }
+
+  export type ApplicationCollaborateurOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CollaborateurCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -34013,6 +35416,45 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type ApplicationScalarRelationFilter = {
+    is?: ApplicationWhereInput
+    isNot?: ApplicationWhereInput
+  }
+
+  export type CollaborateurScalarRelationFilter = {
+    is?: CollaborateurWhereInput
+    isNot?: CollaborateurWhereInput
+  }
+
+  export type ApplicationCollaborateurApplicationIdCollaborateurIdCompoundUniqueInput = {
+    applicationId: string
+    collaborateurId: string
+  }
+
+  export type ApplicationCollaborateurCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+  }
+
+  export type ApplicationCollaborateurMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+  }
+
+  export type ApplicationCollaborateurMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -34333,11 +35775,6 @@ export namespace Prisma {
   export type ApplicationSumOrderByAggregateInput = {
     jobOfferId?: SortOrder
     rating?: SortOrder
-  }
-
-  export type ApplicationScalarRelationFilter = {
-    is?: ApplicationWhereInput
-    isNot?: ApplicationWhereInput
   }
 
   export type ApplicationNoteCountOrderByAggregateInput = {
@@ -35723,6 +37160,20 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCreateWithoutCollaborateurInput[] | ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCreateManyCollaborateurInputEnvelope
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+  }
+
+  export type ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCreateWithoutCollaborateurInput[] | ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCreateManyCollaborateurInputEnvelope
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+  }
+
   export type RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput = {
     create?: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
     connectOrCreate?: RecruteurCreateOrConnectWithoutCollaborateursInput
@@ -35747,6 +37198,62 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutCollaborateurInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCollaborateurInput, UserUpdateWithoutCollaborateurInput>, UserUncheckedUpdateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCreateWithoutCollaborateurInput[] | ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput[]
+    upsert?: ApplicationCollaborateurUpsertWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurUpsertWithWhereUniqueWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCreateManyCollaborateurInputEnvelope
+    set?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    delete?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    update?: ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput[]
+    updateMany?: ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput | ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput[]
+    deleteMany?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCreateWithoutCollaborateurInput[] | ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput[]
+    upsert?: ApplicationCollaborateurUpsertWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurUpsertWithWhereUniqueWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCreateManyCollaborateurInputEnvelope
+    set?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    delete?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    update?: ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput[]
+    updateMany?: ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput | ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput[]
+    deleteMany?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+  }
+
+  export type ApplicationCreateNestedOneWithoutCollaborateursInput = {
+    create?: XOR<ApplicationCreateWithoutCollaborateursInput, ApplicationUncheckedCreateWithoutCollaborateursInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutCollaborateursInput
+    connect?: ApplicationWhereUniqueInput
+  }
+
+  export type CollaborateurCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<CollaborateurCreateWithoutApplicationsInput, CollaborateurUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: CollaborateurCreateOrConnectWithoutApplicationsInput
+    connect?: CollaborateurWhereUniqueInput
+  }
+
+  export type ApplicationUpdateOneRequiredWithoutCollaborateursNestedInput = {
+    create?: XOR<ApplicationCreateWithoutCollaborateursInput, ApplicationUncheckedCreateWithoutCollaborateursInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutCollaborateursInput
+    upsert?: ApplicationUpsertWithoutCollaborateursInput
+    connect?: ApplicationWhereUniqueInput
+    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutCollaborateursInput, ApplicationUpdateWithoutCollaborateursInput>, ApplicationUncheckedUpdateWithoutCollaborateursInput>
+  }
+
+  export type CollaborateurUpdateOneRequiredWithoutApplicationsNestedInput = {
+    create?: XOR<CollaborateurCreateWithoutApplicationsInput, CollaborateurUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: CollaborateurCreateOrConnectWithoutApplicationsInput
+    upsert?: CollaborateurUpsertWithoutApplicationsInput
+    connect?: CollaborateurWhereUniqueInput
+    update?: XOR<XOR<CollaborateurUpdateToOneWithWhereWithoutApplicationsInput, CollaborateurUpdateWithoutApplicationsInput>, CollaborateurUncheckedUpdateWithoutApplicationsInput>
   }
 
   export type JobOfferCreatecompetencesInput = {
@@ -35991,6 +37498,13 @@ export namespace Prisma {
     connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
   }
 
+  export type ApplicationCollaborateurCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+  }
+
   export type ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput = {
     create?: XOR<ApplicationNoteCreateWithoutApplicationInput, ApplicationNoteUncheckedCreateWithoutApplicationInput> | ApplicationNoteCreateWithoutApplicationInput[] | ApplicationNoteUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationNoteCreateOrConnectWithoutApplicationInput | ApplicationNoteCreateOrConnectWithoutApplicationInput[]
@@ -36010,6 +37524,13 @@ export namespace Prisma {
     connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
     createMany?: ApplicationFileCreateManyApplicationInputEnvelope
     connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+  }
+
+  export type ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
   }
 
   export type CandidatUpdateOneRequiredWithoutApplicationsNestedInput = {
@@ -36078,6 +37599,20 @@ export namespace Prisma {
     deleteMany?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
   }
 
+  export type ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
+    set?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    delete?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    update?: ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput | ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+  }
+
   export type ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput = {
     create?: XOR<ApplicationNoteCreateWithoutApplicationInput, ApplicationNoteUncheckedCreateWithoutApplicationInput> | ApplicationNoteCreateWithoutApplicationInput[] | ApplicationNoteUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationNoteCreateOrConnectWithoutApplicationInput | ApplicationNoteCreateOrConnectWithoutApplicationInput[]
@@ -36118,6 +37653,20 @@ export namespace Prisma {
     update?: ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: ApplicationFileUpdateManyWithWhereWithoutApplicationInput | ApplicationFileUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
+    set?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    delete?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    update?: ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput | ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
   }
 
   export type ApplicationCreateNestedOneWithoutNotesInput = {
@@ -36784,6 +38333,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
     invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
+    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurUncheckedCreateWithoutUserInput = {
@@ -36796,6 +38346,7 @@ export namespace Prisma {
     invitationId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurCreateOrConnectWithoutUserInput = {
@@ -37008,6 +38559,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
     invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
+    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type CollaborateurUncheckedUpdateWithoutUserInput = {
@@ -37020,6 +38572,7 @@ export namespace Prisma {
     invitationId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
@@ -37132,6 +38685,7 @@ export namespace Prisma {
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutCandidatInput = {
@@ -37147,6 +38701,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutCandidatInput = {
@@ -37827,6 +39382,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
     user: UserCreateNestedOneWithoutCollaborateurInput
+    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurUncheckedCreateWithoutRecruteurInput = {
@@ -37839,6 +39395,7 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurCreateOrConnectWithoutRecruteurInput = {
@@ -38216,6 +39773,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
     user: UserCreateNestedOneWithoutCollaborateurInput
+    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurUncheckedCreateWithoutInvitationInput = {
@@ -38228,6 +39786,7 @@ export namespace Prisma {
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurCreateOrConnectWithoutInvitationInput = {
@@ -38311,6 +39870,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
     user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
+    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type CollaborateurUncheckedUpdateWithoutInvitationInput = {
@@ -38323,6 +39883,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type RecruteurCreateWithoutCollaborateursInput = {
@@ -38436,6 +39997,30 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutCollaborateurInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutCollaborateurInput, UserUncheckedCreateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurCreateWithoutCollaborateurInput = {
+    id?: string
+    assignedAt?: Date | string
+    assignedBy: string
+    application: ApplicationCreateNestedOneWithoutCollaborateursInput
+  }
+
+  export type ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput = {
+    id?: string
+    applicationId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    create: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurCreateManyCollaborateurInputEnvelope = {
+    data: ApplicationCollaborateurCreateManyCollaborateurInput | ApplicationCollaborateurCreateManyCollaborateurInput[]
+    skipDuplicates?: boolean
   }
 
   export type RecruteurUpsertWithoutCollaborateursInput = {
@@ -38569,6 +40154,181 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
+  export type ApplicationCollaborateurUpsertWithWhereUniqueWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    update: XOR<ApplicationCollaborateurUpdateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedUpdateWithoutCollaborateurInput>
+    create: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    data: XOR<ApplicationCollaborateurUpdateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedUpdateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurScalarWhereInput
+    data: XOR<ApplicationCollaborateurUpdateManyMutationInput, ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurScalarWhereInput = {
+    AND?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+    OR?: ApplicationCollaborateurScalarWhereInput[]
+    NOT?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+    id?: StringFilter<"ApplicationCollaborateur"> | string
+    applicationId?: StringFilter<"ApplicationCollaborateur"> | string
+    collaborateurId?: StringFilter<"ApplicationCollaborateur"> | string
+    assignedAt?: DateTimeFilter<"ApplicationCollaborateur"> | Date | string
+    assignedBy?: StringFilter<"ApplicationCollaborateur"> | string
+  }
+
+  export type ApplicationCreateWithoutCollaborateursInput = {
+    id?: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidat: CandidatCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutCollaborateursInput = {
+    id?: string
+    candidatId: string
+    jobOfferId: number
+    columnId: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutCollaborateursInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutCollaborateursInput, ApplicationUncheckedCreateWithoutCollaborateursInput>
+  }
+
+  export type CollaborateurCreateWithoutApplicationsInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
+    invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
+    user: UserCreateNestedOneWithoutCollaborateurInput
+  }
+
+  export type CollaborateurUncheckedCreateWithoutApplicationsInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    recruteurId: string
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CollaborateurCreateOrConnectWithoutApplicationsInput = {
+    where: CollaborateurWhereUniqueInput
+    create: XOR<CollaborateurCreateWithoutApplicationsInput, CollaborateurUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type ApplicationUpsertWithoutCollaborateursInput = {
+    update: XOR<ApplicationUpdateWithoutCollaborateursInput, ApplicationUncheckedUpdateWithoutCollaborateursInput>
+    create: XOR<ApplicationCreateWithoutCollaborateursInput, ApplicationUncheckedCreateWithoutCollaborateursInput>
+    where?: ApplicationWhereInput
+  }
+
+  export type ApplicationUpdateToOneWithWhereWithoutCollaborateursInput = {
+    where?: ApplicationWhereInput
+    data: XOR<ApplicationUpdateWithoutCollaborateursInput, ApplicationUncheckedUpdateWithoutCollaborateursInput>
+  }
+
+  export type ApplicationUpdateWithoutCollaborateursInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutCollaborateursInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidatId?: StringFieldUpdateOperationsInput | string
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    columnId?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type CollaborateurUpsertWithoutApplicationsInput = {
+    update: XOR<CollaborateurUpdateWithoutApplicationsInput, CollaborateurUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<CollaborateurCreateWithoutApplicationsInput, CollaborateurUncheckedCreateWithoutApplicationsInput>
+    where?: CollaborateurWhereInput
+  }
+
+  export type CollaborateurUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: CollaborateurWhereInput
+    data: XOR<CollaborateurUpdateWithoutApplicationsInput, CollaborateurUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type CollaborateurUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
+    invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
+    user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
+  }
+
+  export type CollaborateurUncheckedUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OfferTemplateCreateWithoutOffersInput = {
     name: string
     description: string
@@ -38687,6 +40447,7 @@ export namespace Prisma {
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutJobOfferInput = {
@@ -38702,6 +40463,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutJobOfferInput = {
@@ -39270,6 +41032,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ApplicationCollaborateurCreateWithoutApplicationInput = {
+    id?: string
+    assignedAt?: Date | string
+    assignedBy: string
+    collaborateur: CollaborateurCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type ApplicationCollaborateurUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    create: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurCreateManyApplicationInputEnvelope = {
+    data: ApplicationCollaborateurCreateManyApplicationInput | ApplicationCollaborateurCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type CandidatUpsertWithoutApplicationsInput = {
     update: XOR<CandidatUpdateWithoutApplicationsInput, CandidatUncheckedUpdateWithoutApplicationsInput>
     create: XOR<CandidatCreateWithoutApplicationsInput, CandidatUncheckedCreateWithoutApplicationsInput>
@@ -39528,6 +41314,22 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ApplicationFile"> | Date | string
   }
 
+  export type ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    update: XOR<ApplicationCollaborateurUpdateWithoutApplicationInput, ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    data: XOR<ApplicationCollaborateurUpdateWithoutApplicationInput, ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationCollaborateurScalarWhereInput
+    data: XOR<ApplicationCollaborateurUpdateManyMutationInput, ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationInput>
+  }
+
   export type ApplicationCreateWithoutNotesInput = {
     id?: string
     rating?: number | null
@@ -39541,6 +41343,7 @@ export namespace Prisma {
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutNotesInput = {
@@ -39556,6 +41359,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutNotesInput = {
@@ -39587,6 +41391,7 @@ export namespace Prisma {
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutNotesInput = {
@@ -39602,6 +41407,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateWithoutChecklistInput = {
@@ -39617,6 +41423,7 @@ export namespace Prisma {
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutChecklistInput = {
@@ -39632,6 +41439,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutChecklistInput = {
@@ -39663,6 +41471,7 @@ export namespace Prisma {
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutChecklistInput = {
@@ -39678,6 +41487,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateWithoutFilesInput = {
@@ -39693,6 +41503,7 @@ export namespace Prisma {
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutFilesInput = {
@@ -39708,6 +41519,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutFilesInput = {
@@ -39739,6 +41551,7 @@ export namespace Prisma {
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutFilesInput = {
@@ -39754,6 +41567,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type JobOfferCreateWithoutKanbanColumnsInput = {
@@ -39827,6 +41641,7 @@ export namespace Prisma {
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutColumnInput = {
@@ -39842,6 +41657,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
     files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutColumnInput = {
@@ -41066,6 +42882,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutCandidatInput = {
@@ -41081,6 +42898,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutCandidatInput = {
@@ -41524,6 +43342,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
     user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
+    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type CollaborateurUncheckedUpdateWithoutRecruteurInput = {
@@ -41536,6 +43355,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type CollaborateurUncheckedUpdateManyWithoutRecruteurInput = {
@@ -41548,6 +43368,34 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCollaborateurCreateManyCollaborateurInput = {
+    id?: string
+    applicationId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurUpdateWithoutCollaborateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+    application?: ApplicationUpdateOneRequiredWithoutCollaborateursNestedInput
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateWithoutCollaborateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
   }
 
   export type KanbanColumnCreateManyJobOfferInput = {
@@ -41617,6 +43465,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutJobOfferInput = {
@@ -41632,6 +43481,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutJobOfferInput = {
@@ -41781,6 +43631,13 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type ApplicationCollaborateurCreateManyApplicationInput = {
+    id?: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
   export type ApplicationNoteUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
@@ -41877,6 +43734,27 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ApplicationCollaborateurUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+    collaborateur?: CollaborateurUpdateOneRequiredWithoutApplicationsNestedInput
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
   export type ApplicationCreateManyColumnInput = {
     id?: string
     candidatId: string
@@ -41902,6 +43780,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutColumnInput = {
@@ -41917,6 +43796,7 @@ export namespace Prisma {
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
     files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutColumnInput = {

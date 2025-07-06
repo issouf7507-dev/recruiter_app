@@ -19,7 +19,8 @@ export async function POST(req: Request) {
       requirements,
       responsibilities,
       benefits,
-      template,
+      education,
+      // template,
       recruteurId,
     } = body;
 
@@ -52,7 +53,8 @@ export async function POST(req: Request) {
         requirements,
         responsibilities,
         benefits,
-        templateId: template,
+        // education,
+        // templateId: template,
         recruteurId: recruteur.id,
         competences: skills,
       },

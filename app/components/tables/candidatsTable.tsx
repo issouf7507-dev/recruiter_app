@@ -106,6 +106,8 @@ export default function CandidaturesTable({
       })
     : [];
 
+  // console.log("sortedCandidatures", sortedCandidatures);
+
   if (candidatdataLoding) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
@@ -152,19 +154,17 @@ export default function CandidaturesTable({
                       <TableRow key={candidature.id}>
                         <TableCell className="font-medium">
                           <div className="flex items-center gap-2">
-                            {candidature.candidat.nom}
+                            {/* {candidature.candidat.nom} */}
                           </div>
                         </TableCell>
-                        <TableCell>{candidature.candidat.email}</TableCell>
-                        <TableCell>{candidature.candidat.telephone}</TableCell>
-                        <TableCell>{candidature.createdAt}</TableCell>
+                        {/* <TableCell>{candidature.candidat.email}</TableCell> */}
+                        {/* <TableCell>{candidature.candidat.telephone}</TableCell> */}
+                        {/* <TableCell>{candidature.createdAt}</TableCell> */}
                         <TableCell>
                           <Badge
-                            className={getStatusColor(
-                              candidature.column.name.toString()
-                            )}
+                          // className={getStatusColor(candidature.column.name.toString())}
                           >
-                            {formatStatus(candidature.column.name)}
+                            {/* {formatStatus(candidature.column.name)} */}
                           </Badge>
                           {/* s */}
                         </TableCell>
@@ -216,19 +216,19 @@ export default function CandidaturesTable({
                       <TableRow key={candidature.id}>
                         <TableCell className="font-medium">
                           <div className="flex items-center gap-2">
-                            {candidature.candidat.nom}
+                            {/* {candidature.candidat.nom}   */}
                           </div>
                         </TableCell>
-                        <TableCell>{candidature.candidat.email}</TableCell>
-                        <TableCell>{candidature.candidat.telephone}</TableCell>
-                        <TableCell>{candidature.createdAt}</TableCell>
+                        {/* <TableCell>{candidature.candidat.email}</TableCell> */}
+                        {/* <TableCell>{candidature.candidat.telephone}</TableCell> */}
+                        {/* <TableCell>{candidature.createdAt}</TableCell> */}
                         <TableCell>
                           <Badge
-                            className={getStatusColor(
-                              candidature.column.name.toString()
-                            )}
+                          // className={getStatusColor(
+                          //   candidature.column.name.toString()
+                          // )}
                           >
-                            {formatStatus(candidature.column.name)}
+                            {/* {formatStatus(candidature.column.name)} */}
                           </Badge>
                           {/* s */}
                         </TableCell>

@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { z } from "zod";
 import {
   CustomForm,
@@ -63,9 +63,10 @@ export default function InscriptionRecruteur() {
 
   return (
     <div className="grid grid-cols-3 min-h-screen">
-      <div className="col-span-2  flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="col-span-2 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <h1 className="text-2xl font-bold text-center">Inscription</h1>
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className=" bg-card dark:bg-card py-8 px-4  sm:rounded-lg sm:px-10">
+          <div className="bg-card dark:bg-card py-8 px-4  sm:rounded-lg sm:px-10 border">
             <CustomForm onSubmit={handleSubmit(onSubmit)}>
               <FormGroup
                 label={
@@ -172,7 +173,11 @@ export default function InscriptionRecruteur() {
               </FormGroup>
 
               <div>
-                <CustomButton type="submit" isLoading={isSubmitting}>
+                <CustomButton
+                  type="submit"
+                  className="bg-primary hover:bg-primary/90 w-full"
+                  isLoading={isSubmitting}
+                >
                   S'inscrire
                 </CustomButton>
               </div>
@@ -191,26 +196,20 @@ export default function InscriptionRecruteur() {
               <div className="mt-2">
                 <div className="text-xs text-center">
                   Vous avez deja un compte?{" "}
-                  <Link href="/recruteur/connexion" className="hover:underline">
-                    Connectez-vous{" "}
+                  <Link
+                    href="/recruteur/connexion"
+                    className="hover:text-primary hover:underline font-bold"
+                  >
+                    Connectez-vous{""}
                   </Link>
                 </div>
               </div>
-
-              {/* <div className="mt-6">
-                <CustomButton
-                  variant="secondary"
-                  onClick={() => router.push("/recruteur/connexion")}
-                >
-                  Se connecter
-                </CustomButton>
-              </div> */}
             </div>
           </div>
         </div>
       </div>
 
-      <div className="col-span-1 bg-card"></div>
+      <div className="col-span-1 bg-primary"></div>
     </div>
   );
 }

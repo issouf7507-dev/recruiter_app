@@ -118,7 +118,7 @@ export default function Inscription() {
     // <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div className="grid grid-cols-3 min-h-screen">
       <div className="col-span-2  flex items-center justify-center">
-        <Card className="w-full max-w-2xl">
+        <Card className="w-full max-w-2xl shadow-none">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center">
               Inscription
@@ -398,7 +398,7 @@ export default function Inscription() {
           </CardContent>
         </Card>
       </div>
-      <div className="col-span-1 bg-card"></div>
+      <div className="col-span-1 bg-primary"></div>
     </div>
     // </div>
   );

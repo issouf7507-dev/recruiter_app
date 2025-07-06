@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useUserStore } from "@/store/userStore";
 
 interface User {
@@ -14,25 +14,25 @@ interface User {
 export function useAuth() {
   const { user, loading, setUser, setLoading } = useUserStore();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch("/api/auth/me");
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data.user);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
+  const fetchUser = useCallback(async () => {
+    try {
+      const response = await fetch("/api/auth/me");
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+      } else {
         setUser(null);
-      } finally {
-        setLoading(false);
       }
-    };
-
-    fetchUser();
+    } catch (error) {
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
   }, [setUser, setLoading]);
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
   return { user, loading };
 }

@@ -27,7 +27,11 @@ export async function GET(req: Request) {
       );
     }
 
-    return NextResponse.json({ valid: true });
+    return NextResponse.json({
+      valid: true,
+      role: invitation.role,
+      email: invitation.email,
+    });
   } catch (error) {
     console.error("Erreur lors de la validation du token:", error);
     return NextResponse.json(
