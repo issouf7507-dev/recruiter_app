@@ -2,13 +2,9 @@ import { NextResponse, NextRequest } from "next/server";
 import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: number }> }
-) {
+export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
-    const id = (await params).id;
     if (!token) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
@@ -22,19 +18,39 @@ export async function GET(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const user = await prisma.user.findUnique({
+    // Récupérer le recruteur
+    const recruteur = await prisma.recruteur.findFirst({
       where: {
-        id: decoded.userId,
+        userId: decoded.userId,
       },
     });
 
+    if (!recruteur) {
+      return NextResponse.json(
+        { error: "Recruteur non trouvé" },
+        { status: 404 }
+      );
+    }
+
+    // Récupérer toutes les candidatures de toutes les offres du recruteur
     const candidatures = await prisma.application.findMany({
       where: {
-        jobOfferId: Number(id),
+        jobOffer: {
+          recruteurId: recruteur.id,
+        },
       },
       include: {
         candidat: true,
         column: true,
+        jobOffer: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 

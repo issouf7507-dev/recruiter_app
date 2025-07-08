@@ -151,17 +151,18 @@ export default function ModifierOffre({
 
   const onSubmit = async (data: z.infer<typeof offerFormSchema>) => {
     console.log("Form errors:", form.formState.errors);
+    console.log("Skills before submission:", data.skills);
     try {
       setIsSubmitting(true);
 
-      // Convertir le tableau skills en string pour Prisma
+      // Envoyer les skills comme un tableau
       const newdata = {
         ...data,
-        skills: Array.isArray(data.skills)
-          ? data.skills.join(", ")
-          : data.skills,
+        skills: Array.isArray(data.skills) ? data.skills : [data.skills],
         recruteurId: user?.id,
       };
+
+      console.log("Skills after processing:", newdata.skills);
 
       await putData(newdata, `/api/recruteur/offres/${id}`).then((res) => {
         if (res.success) {
@@ -197,7 +198,7 @@ export default function ModifierOffre({
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <Card>
+          <Card className="border bg-transparent shadow-none">
             <CardHeader>
               <CardTitle>Informations générales</CardTitle>
               <CardDescription>
@@ -249,7 +250,7 @@ export default function ModifierOffre({
                           value={field.value}
                         >
                           <FormControl>
-                            <SelectTrigger>
+                            <SelectTrigger className="border bg-transparent shadow-none">
                               <SelectValue placeholder="Sélectionnez un modèle" />
                             </SelectTrigger>
                           </FormControl>
@@ -288,7 +289,7 @@ export default function ModifierOffre({
                         value={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border bg-transparent shadow-none">
                             <SelectValue placeholder="Sélectionnez le type de contrat" />
                           </SelectTrigger>
                         </FormControl>
@@ -316,7 +317,7 @@ export default function ModifierOffre({
                         value={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border bg-transparent shadow-none">
                             <SelectValue placeholder="Sélectionnez l'expérience requise" />
                           </SelectTrigger>
                         </FormControl>
@@ -382,7 +383,7 @@ export default function ModifierOffre({
                         value={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border bg-transparent shadow-none">
                             <SelectValue placeholder="Devise" />
                           </SelectTrigger>
                         </FormControl>
@@ -408,7 +409,7 @@ export default function ModifierOffre({
                         value={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border bg-transparent shadow-none">
                             <SelectValue placeholder="Période" />
                           </SelectTrigger>
                         </FormControl>
@@ -427,7 +428,7 @@ export default function ModifierOffre({
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border bg-transparent shadow-none">
             <CardHeader>
               <CardTitle>Description du poste</CardTitle>
               <CardDescription>
@@ -444,7 +445,7 @@ export default function ModifierOffre({
                     <FormControl>
                       <Textarea
                         placeholder="Décrivez le poste en détail..."
-                        className="min-h-[100px]"
+                        className="min-h-[100px] bg-transparent shadow-none"
                         {...field}
                       />
                     </FormControl>
@@ -467,7 +468,7 @@ export default function ModifierOffre({
                         placeholder="- Développer des applications web
 - Collaborer avec l'équipe design
 - Participer aux réunions d'équipe"
-                        className="min-h-[100px]"
+                        className="min-h-[100px] bg-transparent shadow-none"
                         {...field}
                       />
                     </FormControl>
@@ -490,7 +491,7 @@ export default function ModifierOffre({
                         placeholder="- 3 ans d'expérience minimum
 - Maîtrise de React
 - Bon niveau d'anglais"
-                        className="min-h-[100px]"
+                        className="min-h-[100px] bg-transparent shadow-none"
                         {...field}
                       />
                     </FormControl>
@@ -515,9 +516,10 @@ export default function ModifierOffre({
                           field.onChange([...currentSkills, value]);
                         }
                       }}
+                      value=""
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full">
+                        <SelectTrigger className="w-full border bg-transparent shadow-none">
                           <SelectValue placeholder="Sélectionnez les compétences" />
                         </SelectTrigger>
                       </FormControl>
@@ -583,7 +585,7 @@ export default function ModifierOffre({
                         placeholder="- Télétravail partiel
 - Mutuelle d'entreprise
 - RTT"
-                        className="min-h-[100px]"
+                        className="min-h-[100px] bg-transparent shadow-none "
                         {...field}
                       />
                     </FormControl>

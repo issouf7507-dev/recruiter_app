@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,13 +22,20 @@ import {
   DollarSign,
   Plus,
   LogIn,
+  Filter,
+  X,
+  Grid3X3,
+  List,
 } from "lucide-react";
 import Link from "next/link";
 import LoginModal from "@/components/auth/LoginModal";
 import OffresStats from "@/components/offres/OffresStats";
 import OffresFilters from "@/components/offres/OffresFilters";
+import Header from "@/app/components/header/header";
 
 export default function OffresPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const [offres, setOffres] = useState<JobOffer[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,23 +47,126 @@ export default function OffresPage() {
   const [loginModalType, setLoginModalType] = useState<
     "candidat" | "recruteur" | null
   >(null);
+  const [pagination, setPagination] = useState({
+    page: 1,
+    total: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrev: false,
+  });
+  const [isSearchMode, setIsSearchMode] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const { user, loading: authLoading } = useAuth();
 
-  useEffect(() => {
-    fetchOffres();
-  }, []);
+  // Get search parameters from URL
+  const urlQuery = searchParams.get("q") || "";
+  const urlLocation = searchParams.get("location") || "";
+  const urlCompany = searchParams.get("company") || "";
 
-  const fetchOffres = async () => {
+  useEffect(() => {
+    // Set initial search values from URL
+    setSearchTerm(urlQuery);
+    setFilterLocation(urlLocation);
+    setFilterCompany(urlCompany);
+
+    // If we have URL parameters, we're in search mode
+    if (urlQuery || urlLocation || urlCompany) {
+      setIsSearchMode(true);
+      fetchOffres(1);
+    } else {
+      setIsSearchMode(false);
+      // Load all offers when no search parameters
+      fetchAllOffres();
+
+      console.log(offres);
+    }
+  }, [urlQuery, urlLocation, urlCompany]);
+
+  const fetchOffres = async (page = 1) => {
     try {
-      const response = await fetch("/api/recruteur/offres");
+      setLoading(true);
+
+      // Build search parameters
+      const params = new URLSearchParams();
+      if (searchTerm) params.append("q", searchTerm);
+      if (filterLocation) params.append("location", filterLocation);
+      if (filterCompany) params.append("company", filterCompany);
+      if (page > 1) params.append("page", page.toString());
+      params.append("limit", "10");
+
+      const response = await fetch(`/api/offres/search?${params.toString()}`);
       if (response.ok) {
         const data = await response.json();
-        setOffres(data.data || []);
+        if (data.success) {
+          setOffres(data.data || []);
+          setPagination(
+            data.pagination || {
+              page: 1,
+              total: 0,
+              totalPages: 0,
+              hasNext: false,
+              hasPrev: false,
+            }
+          );
+        }
       }
     } catch (error) {
       console.error("Erreur lors du chargement des offres:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchAllOffres = async (page = 1) => {
+    try {
+      setLoading(true);
+
+      const params = new URLSearchParams();
+      if (page > 1) params.append("page", page.toString());
+      params.append("limit", "10");
+
+      const response = await fetch(`/api/offres/search?${params.toString()}`);
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.success) {
+          setOffres(data.data || []);
+          setPagination(
+            data.pagination || {
+              page: 1,
+              total: 0,
+              totalPages: 0,
+              hasNext: false,
+              hasPrev: false,
+            }
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Erreur lors du chargement des offres:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = () => {
+    // Update URL with search parameters
+    const params = new URLSearchParams();
+    if (searchTerm) params.append("q", searchTerm);
+    if (filterLocation) params.append("location", filterLocation);
+    if (filterCompany) params.append("company", filterCompany);
+
+    const newUrl = params.toString()
+      ? `/offres?${params.toString()}`
+      : "/offres";
+    router.push(newUrl);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (isSearchMode) {
+      fetchOffres(newPage);
+    } else {
+      fetchAllOffres(newPage);
     }
   };
 
@@ -132,7 +243,182 @@ export default function OffresPage() {
     setFilterLocation("");
     setFilterCompany("");
     setSalaryRange({ min: 0, max: 0 });
+    setIsSearchMode(false);
+    // Clear URL parameters and load all offers
+    router.push("/offres");
   };
+
+  const handleSearchTermChange = (value: string) => {
+    setSearchTerm(value);
+  };
+
+  const handleLocationChange = (value: string) => {
+    setFilterLocation(value);
+  };
+
+  const handleCompanyChange = (value: string) => {
+    setFilterCompany(value);
+  };
+
+  const handleClearSearchTerm = () => {
+    setSearchTerm("");
+  };
+
+  const handleClearLocation = () => {
+    setFilterLocation("");
+  };
+
+  const handleClearCompany = () => {
+    setFilterCompany("");
+  };
+
+  // Composant pour l'affichage en liste
+  const ListView = ({ offre }: { offre: JobOffer }) => (
+    <Card className="shadow-none border mb-4">
+      <CardContent className="p-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex-1">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {offre.title}
+                </h3>
+                <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                  <div className="flex items-center gap-1">
+                    <Building className="h-4 w-4" />
+                    {offre.company}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MapPin className="h-4 w-4" />
+                    {offre.location}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" />
+                    {offre.experience}
+                  </div>
+                </div>
+              </div>
+              <Badge className={getTypeColor(offre.type)}>{offre.type}</Badge>
+            </div>
+
+            <p className="text-gray-600 mb-3 line-clamp-2">
+              {offre.description}
+            </p>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                {offre.salaryMin && offre.salaryMax && (
+                  <div className="flex items-center gap-1 text-sm text-gray-600">
+                    <DollarSign className="h-4 w-4" />
+                    {formatSalary(
+                      offre.salaryMin,
+                      offre.salaryMax,
+                      offre.salaryCurrency,
+                      offre.salaryPeriod
+                    )}
+                  </div>
+                )}
+
+                {offre.competences && offre.competences.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {offre.competences.slice(0, 3).map((competence, index) => (
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className="text-xs"
+                      >
+                        {competence}
+                      </Badge>
+                    ))}
+                    {offre.competences.length > 3 && (
+                      <Badge variant="outline" className="text-xs">
+                        +{offre.competences.length - 3}
+                      </Badge>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <Link href={`/offres/${offre.id}`}>
+                <Button>Voir l'offre</Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  // Composant pour l'affichage en grille
+  const GridView = ({ offre }: { offre: JobOffer }) => (
+    <Card className="hover:shadow-md transition-shadow duration-200 shadow-none">
+      <CardHeader>
+        <div className="flex items-start justify-between">
+          <div className="flex-1">
+            <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-2">
+              {offre.title}
+            </CardTitle>
+            <CardDescription className="mt-2">
+              <div className="flex items-center gap-2 text-sm text-gray-600">
+                <Building className="h-4 w-4" />
+                {offre.company}
+              </div>
+            </CardDescription>
+          </div>
+          <Badge className={getTypeColor(offre.type)}>{offre.type}</Badge>
+        </div>
+      </CardHeader>
+
+      <CardContent className="space-y-3">
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <MapPin className="h-4 w-4" />
+          {offre.location}
+        </div>
+
+        <div className="flex items-center gap-2 text-sm text-gray-600">
+          <Clock className="h-4 w-4" />
+          {offre.experience}
+        </div>
+
+        {offre.salaryMin && offre.salaryMax && (
+          <div className="flex items-center gap-2 text-sm text-gray-600">
+            <DollarSign className="h-4 w-4" />
+            {formatSalary(
+              offre.salaryMin,
+              offre.salaryMax,
+              offre.salaryCurrency,
+              offre.salaryPeriod
+            )}
+          </div>
+        )}
+
+        <p className="text-sm text-gray-600 line-clamp-3">
+          {offre.description}
+        </p>
+
+        {offre.competences && offre.competences.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {offre.competences.slice(0, 3).map((competence, index) => (
+              <Badge key={index} variant="secondary" className="text-xs">
+                {competence}
+              </Badge>
+            ))}
+            {offre.competences.length > 3 && (
+              <Badge variant="outline" className="text-xs">
+                +{offre.competences.length - 3}
+              </Badge>
+            )}
+          </div>
+        )}
+      </CardContent>
+
+      <CardFooter>
+        <Link href={`/offres/${offre.id}`} className="w-full">
+          <Button className="w-full">Voir l'offre</Button>
+        </Link>
+      </CardFooter>
+    </Card>
+  );
 
   // Calculer les statistiques
   const offresByType = offres.reduce(
@@ -165,174 +451,235 @@ export default function OffresPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                Offres d'emploi
-              </h1>
-              <p className="text-gray-600 mt-1">
-                Découvrez les meilleures opportunités de carrière
-              </p>
-            </div>
-
-            {/* Bouton Poster */}
-            <div className="flex gap-3">
-              {user ? (
-                <Link href="/dashboard-recruteurs/offres/creer">
-                  <Button className="flex items-center gap-2">
-                    <Plus className="h-4 w-4" />
-                    Poster une offre
-                  </Button>
-                </Link>
-              ) : (
-                <Button
-                  variant="outline"
-                  className="flex items-center gap-2"
-                  onClick={handlePosterClick}
-                >
-                  <LogIn className="h-4 w-4" />
-                  Se connecter pour poster
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <Header />
       {/* Filtres et recherche */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mt-20">
+        {/* Barre de recherche */}
+        <div className="bg-white rounded-lg shadow-none border p-6 mb-6">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <input
+                  type="text"
+                  placeholder="Rechercher un poste, compétences..."
+                  value={searchTerm}
+                  onChange={(e) => handleSearchTermChange(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+            </div>
+            <div className="flex-1">
+              <div className="relative">
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <input
+                  type="text"
+                  placeholder="Localisation..."
+                  value={filterLocation}
+                  onChange={(e) => handleLocationChange(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+            </div>
+            <div className="flex-1">
+              <div className="relative">
+                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <input
+                  type="text"
+                  placeholder="Entreprise..."
+                  value={filterCompany}
+                  onChange={(e) => handleCompanyChange(e.target.value)}
+                  onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                />
+              </div>
+            </div>
+            <Button onClick={handleSearch} className="px-6">
+              <Search className="h-4 w-4 mr-2" />
+              Rechercher
+            </Button>
+          </div>
+
+          {/* Filtres actifs */}
+          {(searchTerm || filterLocation || filterCompany) && (
+            <div className="flex items-center gap-2 mt-4 flex-wrap">
+              <span className="text-sm text-gray-600">Filtres actifs:</span>
+              {searchTerm && (
+                <Badge variant="secondary" className="flex items-center gap-1">
+                  Recherche: {searchTerm}
+                  <X
+                    className="h-3 w-3 cursor-pointer"
+                    onClick={handleClearSearchTerm}
+                  />
+                </Badge>
+              )}
+              {filterLocation && (
+                <Badge variant="secondary" className="flex items-center gap-1">
+                  Localisation: {filterLocation}
+                  <X
+                    className="h-3 w-3 cursor-pointer"
+                    onClick={handleClearLocation}
+                  />
+                </Badge>
+              )}
+              {filterCompany && (
+                <Badge variant="secondary" className="flex items-center gap-1">
+                  Entreprise: {filterCompany}
+                  <X
+                    className="h-3 w-3 cursor-pointer"
+                    onClick={handleClearCompany}
+                  />
+                </Badge>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleClearFilters}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                Effacer tout
+              </Button>
+            </div>
+          )}
+        </div>
+
         {/* Statistiques */}
         {!loading && offres.length > 0 && (
           <OffresStats
-            totalOffres={offres.length}
+            totalOffres={pagination.total}
             offresByType={offresByType}
             topCompanies={topCompanies}
             topLocations={topLocations}
           />
         )}
 
-        {/* Filtres avancés */}
-        <OffresFilters
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          filterType={filterType}
-          onFilterTypeChange={setFilterType}
-          filterLocation={filterLocation}
-          onFilterLocationChange={setFilterLocation}
-          filterCompany={filterCompany}
-          onFilterCompanyChange={setFilterCompany}
-          salaryRange={salaryRange}
-          onSalaryRangeChange={setSalaryRange}
-          locations={topLocations}
-          companies={topCompanies}
-          onClearFilters={handleClearFilters}
-        />
-
         {/* Résultats */}
-        <div className="mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <p className="text-gray-600">
-            {filteredOffres.length} offre{filteredOffres.length > 1 ? "s" : ""}{" "}
-            trouvée{filteredOffres.length > 1 ? "s" : ""}
+            {pagination.total} offre{pagination.total > 1 ? "s" : ""} trouvée
+            {pagination.total > 1 ? "s" : ""}
+            {searchTerm || filterLocation || filterCompany
+              ? " pour votre recherche"
+              : ""}
           </p>
+          <div className="flex items-center gap-4">
+            {/* Toggle de vue */}
+            <div className="flex items-center bg-white border rounded-lg p-1">
+              <Button
+                variant={viewMode === "grid" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("grid")}
+                className="flex items-center gap-2"
+              >
+                <Grid3X3 className="h-4 w-4" />
+                Grille
+              </Button>
+              <Button
+                variant={viewMode === "list" ? "default" : "ghost"}
+                size="sm"
+                onClick={() => setViewMode("list")}
+                className="flex items-center gap-2"
+              >
+                <List className="h-4 w-4" />
+                Liste
+              </Button>
+            </div>
+            {pagination.totalPages > 1 && (
+              <div className="text-sm text-gray-500">
+                Page {pagination.page} sur {pagination.totalPages}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Grille des offres */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredOffres.map((offre) => (
-            <Card
-              key={offre.id}
-              className="hover:shadow-lg transition-shadow duration-200"
+        {/* Affichage des offres */}
+        {loading ? (
+          <div
+            className={
+              viewMode === "grid"
+                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                : "space-y-4"
+            }
+          >
+            {[...Array(6)].map((_, i) => (
+              <Card key={i} className="shadow-none">
+                <CardHeader>
+                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : offres.length > 0 ? (
+          <>
+            <div
+              className={
+                viewMode === "grid"
+                  ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  : "space-y-4"
+              }
             >
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-2">
-                      {offre.title}
-                    </CardTitle>
-                    <CardDescription className="mt-2">
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
-                        <Building className="h-4 w-4" />
-                        {offre.company}
-                      </div>
-                    </CardDescription>
-                  </div>
-                  <Badge className={getTypeColor(offre.type)}>
-                    {offre.type}
-                  </Badge>
-                </div>
-              </CardHeader>
+              {offres.map((offre) =>
+                viewMode === "list" ? (
+                  <ListView key={offre.id} offre={offre} />
+                ) : (
+                  <GridView key={offre.id} offre={offre} />
+                )
+              )}
+            </div>
 
-              <CardContent className="space-y-3">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <MapPin className="h-4 w-4" />
-                  {offre.location}
-                </div>
+            {/* Pagination */}
+            {pagination.totalPages > 1 && (
+              <div className="flex items-center justify-center gap-2 mt-8">
+                <Button
+                  variant="outline"
+                  onClick={() => handlePageChange(pagination.page - 1)}
+                  disabled={!pagination.hasPrev}
+                >
+                  Précédent
+                </Button>
 
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Clock className="h-4 w-4" />
-                  {offre.experience}
-                </div>
-
-                {offre.salaryMin && offre.salaryMax && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <DollarSign className="h-4 w-4" />
-                    {formatSalary(
-                      offre.salaryMin,
-                      offre.salaryMax,
-                      offre.salaryCurrency,
-                      offre.salaryPeriod
-                    )}
-                  </div>
-                )}
-
-                <p className="text-sm text-gray-600 line-clamp-3">
-                  {offre.description}
-                </p>
-
-                {offre.competences && offre.competences.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {offre.competences.slice(0, 3).map((competence, index) => (
-                      <Badge
-                        key={index}
-                        variant="secondary"
-                        className="text-xs"
-                      >
-                        {competence}
-                      </Badge>
-                    ))}
-                    {offre.competences.length > 3 && (
-                      <Badge variant="secondary" className="text-xs">
-                        +{offre.competences.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-                )}
-              </CardContent>
-
-              <CardFooter>
-                <div className="w-full flex gap-2">
-                  <Link href={`/offres/${offre.id}`} className="flex-1">
-                    <Button variant="outline" className="w-full">
-                      Voir détails
-                    </Button>
-                  </Link>
-                  {user ? (
-                    <Button className="flex-1">Postuler</Button>
-                  ) : (
-                    <Button className="flex-1" onClick={handlePostulerClick}>
-                      Se connecter pour postuler
-                    </Button>
+                <div className="flex items-center gap-1">
+                  {Array.from(
+                    { length: Math.min(5, pagination.totalPages) },
+                    (_, i) => {
+                      const pageNum = i + 1;
+                      return (
+                        <Button
+                          key={pageNum}
+                          variant={
+                            pageNum === pagination.page ? "default" : "outline"
+                          }
+                          size="sm"
+                          onClick={() => handlePageChange(pageNum)}
+                        >
+                          {pageNum}
+                        </Button>
+                      );
+                    }
                   )}
                 </div>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
 
-        {/* Message si aucune offre */}
-        {filteredOffres.length === 0 && !loading && (
+                <Button
+                  variant="outline"
+                  onClick={() => handlePageChange(pagination.page + 1)}
+                  disabled={!pagination.hasNext}
+                >
+                  Suivant
+                </Button>
+              </div>
+            )}
+          </>
+        ) : (
           <div className="text-center py-12">
             <div className="text-gray-400 mb-4">
               <Search className="h-16 w-16 mx-auto" />
@@ -340,10 +687,16 @@ export default function OffresPage() {
             <h3 className="text-lg font-medium text-gray-900 mb-2">
               Aucune offre trouvée
             </h3>
-            <p className="text-gray-600">
-              Essayez de modifier vos critères de recherche ou revenez plus
-              tard.
+            <p className="text-gray-600 mb-4">
+              {searchTerm || filterLocation || filterCompany
+                ? "Essayez de modifier vos critères de recherche"
+                : "Aucune offre disponible pour le moment"}
             </p>
+            {(searchTerm || filterLocation || filterCompany) && (
+              <Button onClick={handleClearFilters} variant="outline">
+                Effacer les filtres
+              </Button>
+            )}
           </div>
         )}
       </div>

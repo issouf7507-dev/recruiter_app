@@ -2,9 +2,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Users,
   Briefcase,
@@ -15,14 +18,122 @@ import {
   Star,
   UserCheck,
   X,
+  Search,
+  MapPin,
+  Building,
 } from "lucide-react";
 import Header from "../components/header/header";
 
+// Data structure for pricing cards
+const pricingPlans = [
+  {
+    id: 1,
+    name: "Plan Gratuit",
+    price: 0,
+    currency: "€",
+    period: "Mois",
+    description:
+      "Parfait pour découvrir la plateforme et commencer vos premiers recrutements",
+    features: [
+      "Jusqu'à 3 offres d'emploi actives",
+      "Tableau Kanban basique",
+      "Profil candidat complet",
+      "Support par email",
+    ],
+    buttonText: "Commencer gratuitement",
+    buttonVariant: "default",
+    isPopular: false,
+    onClick: () => {}, // Will be set in component
+  },
+  {
+    id: 2,
+    name: "Plan Pro",
+    price: 49,
+    currency: "€",
+    period: "Mois",
+    description:
+      "Pour les équipes de recrutement qui veulent optimiser leurs processus",
+    features: [
+      "Offres d'emploi illimitées",
+      "Templates d'offres personnalisables",
+      "Collaboration d'équipe (jusqu'à 5 membres)",
+      "Recherche avancée de candidats",
+      "Statistiques détaillées",
+    ],
+    buttonText: "Commencer l'essai gratuit",
+    buttonVariant: "primary",
+    isPopular: true,
+    onClick: () => {}, // Will be set in component
+  },
+  {
+    id: 3,
+    name: "Plan Entreprise",
+    price: 199,
+    currency: "€",
+    period: "Mois",
+    description:
+      "Solution complète pour les grandes entreprises et agences de recrutement",
+    features: [
+      "Tout du plan Pro",
+      "Équipe illimitée",
+      "Diffusion multi-canal",
+      "API personnalisée",
+      "Gestionnaire de compte dédié",
+      "Support 24/7",
+    ],
+    buttonText: "Contacter les ventes",
+    buttonVariant: "default",
+    isPopular: false,
+    onClick: () => {}, // Will be set in component
+  },
+];
+
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isStep, setIsStep] = useState(1);
   const [isRecruteur, setIsRecruteur] = useState(false);
   const [isCandidat, setIsCandidat] = useState(false);
+  const router = useRouter();
+
+  // Search states
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchLocation, setSearchLocation] = useState("");
+  const [searchCompany, setSearchCompany] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
+  // Set onClick handlers for pricing cards
+  const pricingPlansWithHandlers = pricingPlans.map((plan) => ({
+    ...plan,
+    onClick: () => setIsOpen(true),
+  }));
+
+  // Handle search
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSearching(true);
+
+    try {
+      // Build search parameters
+      const searchParams = new URLSearchParams();
+      if (searchQuery) searchParams.append("q", searchQuery);
+      if (searchLocation) searchParams.append("location", searchLocation);
+      if (searchCompany) searchParams.append("company", searchCompany);
+
+      // Navigate to search results page
+      router.push(`/offres?${searchParams.toString()}`);
+      setIsSearchModalOpen(false);
+
+      // Reset search form
+      setSearchQuery("");
+      setSearchLocation("");
+      setSearchCompany("");
+    } catch (error) {
+      console.error("Erreur lors de la recherche:", error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -55,11 +166,14 @@ export default function Home() {
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             {/* </Link> */}
-            <Link href="#demo">
-              <Button variant="outline" size="lg" className="text-lg px-8 py-6">
-                Réserver une démo
-              </Button>
-            </Link>
+            <Button
+              variant="outline"
+              size="lg"
+              className="text-lg px-8 py-6"
+              onClick={() => setIsSearchModalOpen(true)}
+            >
+              Rechercher une offre
+            </Button>
           </div>
         </div>
         {/* Right: Stat Card */}
@@ -169,7 +283,7 @@ export default function Home() {
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-16">
           <div className="flex-1">
             <div className="w-full h-64 bg-primary/10 rounded-xl flex items-center justify-center">
-              <span className="text-7xl text-primary">👨‍💼</span>
+              <span className="text-7xl text-primary">🎯</span>
             </div>
           </div>
           <div className="flex-1">
@@ -177,27 +291,28 @@ export default function Home() {
               Avantages clés
             </Badge>
             <h2 className="text-4xl font-bold text-foreground mb-4">
-              Profitez des avantages d'avoir tout sur une seule plateforme
+              Une plateforme complète pour optimiser vos recrutements
             </h2>
             <ul className="space-y-4 text-lg text-muted-foreground mb-8">
               <li className="flex items-center">
                 <CheckCircle2 className="w-5 h-5 text-primary mr-3" />
-                Intégration et départ en un clic
+                Tableau Kanban pour suivre vos candidatures en temps réel
               </li>
               <li className="flex items-center">
                 <CheckCircle2 className="w-5 h-5 text-primary mr-3" />
-                Conformité et contrats automatisés
+                Système de templates pour créer des offres rapidement
               </li>
               <li className="flex items-center">
                 <CheckCircle2 className="w-5 h-5 text-primary mr-3" />
-                Paiements mondiaux en 120+ devises
+                Collaboration d'équipe avec gestion des rôles et permissions
               </li>
               <li className="flex items-center">
                 <CheckCircle2 className="w-5 h-5 text-primary mr-3" />
-                Support 24/7 pour vous et votre équipe
+                Diffusion multi-canal et recherche de candidats avancée
               </li>
             </ul>
             <Button
+              onClick={() => setIsOpen(true)}
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
             >
@@ -218,59 +333,85 @@ export default function Home() {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <Card className="shadow-lg">
-            <CardContent className="p-8 flex flex-col items-center text-center">
-              <h3 className="text-xl font-semibold mb-2 text-foreground">
-                Salarié EOR
-              </h3>
-              <div className="text-3xl font-bold text-primary mb-4">
-                599€<span className="text-base font-normal">/Mois</span>
-              </div>
-              <ul className="space-y-2 text-muted-foreground text-sm mb-6">
-                <li>Embaucher dans 150+ pays</li>
-                <li>Conformité automatisée</li>
-                <li>Paiements mondiaux</li>
-                <li>Support 24/7</li>
-              </ul>
-              <Button className="w-full">Commencer</Button>
-            </CardContent>
-          </Card>
-          <Card className="shadow-lg border-2 border-primary">
-            <CardContent className="p-8 flex flex-col items-center text-center">
-              <h3 className="text-xl font-semibold mb-2 text-foreground">
-                Prestataire
-              </h3>
-              <div className="text-3xl font-bold text-primary mb-4">
-                99€<span className="text-base font-normal">/Mois</span>
-              </div>
-              <ul className="space-y-2 text-muted-foreground text-sm mb-6">
-                <li>Intégrer des prestataires mondialement</li>
-                <li>Contrats conformes</li>
-                <li>Paiements automatisés</li>
-                <li>Support dans 180+ pays</li>
-              </ul>
-              <Button className="w-full bg-primary text-primary-foreground">
-                Commencer
-              </Button>
-            </CardContent>
-          </Card>
-          <Card className="shadow-lg">
-            <CardContent className="p-8 flex flex-col items-center text-center">
-              <h3 className="text-xl font-semibold mb-2 text-foreground">
-                Paie mondiale
-              </h3>
-              <div className="text-3xl font-bold text-primary mb-4">
-                1200€<span className="text-base font-normal">/Mois</span>
-              </div>
-              <ul className="space-y-2 text-muted-foreground text-sm mb-6">
-                <li>Gérer la paie dans 120+ pays</li>
-                <li>Déclarations fiscales automatisées</li>
-                <li>Support multi-devises</li>
-                <li>Gestionnaire de compte dédié</li>
-              </ul>
-              <Button className="w-full">Commencer</Button>
-            </CardContent>
-          </Card>
+          {pricingPlansWithHandlers.map((plan) => (
+            <Card
+              key={plan.id}
+              className={`shadow-none h-[650px] ${
+                plan.isPopular ? "border-2 border-primary bg-primary" : ""
+              }`}
+            >
+              <CardContent className="flex flex-col justify-between h-full">
+                <div className="p-8 flex flex-col">
+                  <h3
+                    className={`text-xl font-semibold mb-2 text-foreground ${
+                      plan.isPopular ? "text-white" : ""
+                    }`}
+                  >
+                    {plan.name}
+                  </h3>
+                  <div
+                    className={`text-5xl font-bold text-primary mb-7 ${
+                      plan.isPopular ? "text-white" : ""
+                    }`}
+                  >
+                    {plan.price}
+                    {plan.currency}
+                    <span
+                      className={`text-base font-normal ${
+                        plan.isPopular ? "text-white" : ""
+                      }`}
+                    >
+                      {" "}
+                      / {plan.period}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-center mb-7 ">
+                    <p
+                      className={`text-muted-foreground text-sm text-center ${
+                        plan.isPopular ? "text-white" : ""
+                      }`}
+                    >
+                      {plan.description}
+                    </p>
+                  </div>
+                  <div
+                    className={`border-b border-gray-200 w-full mb-7 ${
+                      plan.isPopular ? "border-white" : ""
+                    }`}
+                  ></div>
+
+                  <ul className="space-y-2 text-muted-foreground text-sm mb-6 list-disc flex flex-col gap-2">
+                    {plan.features.map((feature, index) => (
+                      <li
+                        key={index}
+                        className={`flex items-center ${
+                          plan.isPopular ? "text-white" : ""
+                        }`}
+                      >
+                        <CheckCircle2
+                          className={`w-5 h-5 text-primary mr-3 ${
+                            plan.isPopular ? "text-white" : ""
+                          }`}
+                        />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {/*  */}
+                <Button
+                  onClick={plan.onClick}
+                  className={`w-full ${
+                    plan.buttonVariant === "primary"
+                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                      : ""
+                  } ${plan.isPopular ? "bg-white text-primary" : ""}`}
+                >
+                  {plan.buttonText}
+                </Button>{" "}
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </section>
 
@@ -389,35 +530,178 @@ export default function Home() {
       {/* les absoulutes  */}
 
       {isOpen && (
-        <div className="fixed inset-0 w-full h-full bg-[#00000083] z-50 flex items-center justify-center">
-          <div className="relative flex flex-col  bg-white rounded-lg p-4 w-[800px]">
-            <div className="absolute top-0 right-0 p-5 cursor-pointer-">
-              <X
-                className="w-6 h-6 text-primary mb-2 cursor-pointer "
-                onClick={() => setIsOpen(false)}
-              />
+        <div className="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative flex flex-col bg-white rounded-2xl shadow-2xl p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
+            {/* Close button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 group"
+            >
+              <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
+            </button>
+
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-bold text-primary mb-3">
+                Bienvenue sur xlsix
+              </h2>
+              <p className="text-gray-600 text-lg">
+                Vous êtes un recruteur ou un candidat ?
+              </p>
             </div>
-            <p className=" text-center text-3xl font-bold text-primary">
-              Bienvenue sur xlsix
-            </p>
-            <p className="text-gray-400 text-center text-lg">
-              Vous etes un recruteur ? ou un candidat ?
-            </p>
-            <div className="grid grid-cols-2 gap-5 mt-5 w-full">
-              <Link href="/recruteur/inscription">
-                <div className="flex flex-col items-center justify-center border-4 hover:border-primary rounded-lg p-4 h-40 cursor-pointer">
-                  <UserCheck size={60} className="text-primary mb-2" />
-                  <p className="text-2xl">Recruteur</p>
+
+            {/* Options */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Link href="/recruteur/inscription" className="group">
+                <div className="flex flex-col items-center justify-center border-2 border-gray-200 hover:border-primary hover:shadow-lg rounded-xl p-8 h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:from-primary/5 hover:to-primary/10">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                    <UserCheck size={32} className="text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    Recruteur
+                  </h3>
+                  <p className="text-sm text-gray-600 text-center">
+                    Publiez des offres et trouvez les meilleurs talents
+                  </p>
                 </div>
               </Link>
 
-              <Link href="/candidat/inscription">
-                <div className="flex flex-col items-center justify-center border-4 hover:border-primary rounded-lg p-4 h-40 cursor-pointer">
-                  <Briefcase size={60} className="text-primary mb-2" />
-                  <p className="text-2xl">Candidat</p>
+              <Link href="/candidat/inscription" className="group">
+                <div className="flex flex-col items-center justify-center border-2 border-gray-200 hover:border-primary hover:shadow-lg rounded-xl p-8 h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:from-primary/5 hover:to-primary/10">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                    <Briefcase size={32} className="text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    Candidat
+                  </h3>
+                  <p className="text-sm text-gray-600 text-center">
+                    Découvrez des opportunités et postulez facilement
+                  </p>
                 </div>
               </Link>
             </div>
+
+            {/* Footer */}
+            <div className="text-center mt-6">
+              <p className="text-sm text-gray-500">
+                Rejoignez notre communauté de professionnels
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Search Modal */}
+      {isSearchModalOpen && (
+        <div className="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="relative flex flex-col bg-white rounded-2xl shadow-2xl p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
+            {/* Close button */}
+            <button
+              onClick={() => setIsSearchModalOpen(false)}
+              className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 group"
+            >
+              <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
+            </button>
+
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-primary mb-3">
+                Rechercher une offre
+              </h2>
+              <p className="text-gray-600 text-lg">
+                Trouvez l'opportunité qui vous correspond
+              </p>
+            </div>
+
+            {/* Search Form */}
+            <form onSubmit={handleSearch} className="space-y-6">
+              <div className="space-y-4">
+                <div>
+                  <Label
+                    htmlFor="searchQuery"
+                    className="text-sm font-medium text-gray-700 mb-2 block"
+                  >
+                    <Search className="w-4 h-4 inline mr-2" />
+                    Poste ou compétences
+                  </Label>
+                  <Input
+                    id="searchQuery"
+                    type="text"
+                    placeholder="Ex: Développeur React, Marketing Digital..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="searchLocation"
+                    className="text-sm font-medium text-gray-700 mb-2 block"
+                  >
+                    <MapPin className="w-4 h-4 inline mr-2" />
+                    Localisation
+                  </Label>
+                  <Input
+                    id="searchLocation"
+                    type="text"
+                    placeholder="Ex: Paris, Télétravail, Abidjan..."
+                    value={searchLocation}
+                    onChange={(e) => setSearchLocation(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="searchCompany"
+                    className="text-sm font-medium text-gray-700 mb-2 block"
+                  >
+                    <Building className="w-4 h-4 inline mr-2" />
+                    Entreprise (optionnel)
+                  </Label>
+                  <Input
+                    id="searchCompany"
+                    type="text"
+                    placeholder="Ex: Google, Microsoft..."
+                    value={searchCompany}
+                    onChange={(e) => setSearchCompany(e.target.value)}
+                    className="w-full"
+                  />
+                </div>
+              </div>
+
+              <div className="flex gap-4 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsSearchModalOpen(false)}
+                  className="flex-1"
+                >
+                  Annuler
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={
+                    isSearching ||
+                    (!searchQuery && !searchLocation && !searchCompany)
+                  }
+                  className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90"
+                >
+                  {isSearching ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                      Recherche...
+                    </>
+                  ) : (
+                    <>
+                      <Search className="w-4 h-4 mr-2" />
+                      Rechercher
+                    </>
+                  )}
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       )}

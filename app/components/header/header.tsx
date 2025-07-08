@@ -8,7 +8,7 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-          <span className="text-xl font-bold text-foreground">Acet Labs</span>
+          <span className="text-xl font-bold text-foreground">Xlsix</span>
         </div>
 
         <div className="flex items-center space-x-4">

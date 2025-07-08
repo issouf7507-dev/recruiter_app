@@ -1,214 +1,150 @@
-# Guide de Dépannage - Kanban Board Drag & Drop
+# 🔧 Dépannage Kanban - Problèmes de Synchronisation
 
-## Problème : Les changements ne persistent pas après actualisation
+## Problème : Notes non visibles après actualisation
 
 ### Symptômes
 
-- Le drag and drop fonctionne visuellement
-- L'API retourne un statut 200
-- Après actualisation, les cartes reviennent à leur position d'origine
+- ✅ Les notes sont bien créées en base de données
+- ❌ Les notes ne s'affichent pas immédiatement après actualisation
+- ⏱️ Il faut attendre un délai pour voir les nouvelles notes
 
-### Causes Possibles
+### Causes identifiées et solutions
 
-#### 1. Problème de Cache
+## 1. **Cache Redis non invalidé** ✅ CORRIGÉ
 
-**Symptôme :** Les données sont mises en cache et ne se rafraîchissent pas
+**Problème :** La route de création de notes n'invalidait pas le cache Redis.
 
-**Solution :**
+**Solution appliquée :**
+
+```typescript
+// Dans app/api/recruteur/kanban/application/[applicationId]/route.ts
+import { CACHE_KEYS, cacheUtils } from "@/lib/redis";
+
+// Après la création de la note
+const cacheKey = CACHE_KEYS.KANBAN_BOARD(authenticatedUser.recruteurId);
+await cacheUtils.del(cacheKey);
+console.log("Cache invalidé pour:", cacheKey);
+```
+
+## 2. **WebSocket non fonctionnel** ✅ CORRIGÉ
+
+**Problème :** Les événements WebSocket n'étaient pas émis correctement.
+
+**Solution appliquée :**
+
+- ✅ Correction des noms d'événements (`join:offer` au lieu de `join:kanban`)
+- ✅ Ajout des événements WebSocket dans toutes les routes API
+- ✅ Configuration du serveur personnalisé avec WebSocket
+
+## 3. **État local non synchronisé** ✅ AMÉLIORÉ
+
+**Problème :** Le composant ne mettait pas à jour l'état local immédiatement.
+
+**Solution appliquée :**
+
+```typescript
+// Mise à jour immédiate de l'état local
+const updatedNotes = response.application.notes || [];
+setSelectedCard({
+  ...selectedCard,
+  notes: updatedNotes,
+});
+
+// Rechargement différé pour synchronisation
+setTimeout(() => {
+  queryoffresbyidrefetch();
+}, 500);
+```
+
+## Tests de vérification
+
+### 1. Test WebSocket
 
 ```bash
-# Vérifier que Redis fonctionne
-node diagnostic-kanban.js
-
-# Vider le cache manuellement
-redis-cli FLUSHALL
+npm run test:websocket
 ```
 
-#### 2. Problème de Base de Données
+### 2. Test manuel
 
-**Symptôme :** L'API retourne 200 mais la base de données n'est pas mise à jour
+1. Créer une note
+2. Vérifier qu'elle s'affiche immédiatement
+3. Actualiser la page
+4. Vérifier qu'elle est toujours visible
 
-**Vérification :**
-
-```sql
--- Vérifier que l'application a bien été déplacée
-SELECT id, columnId FROM Application WHERE id = 'your-application-id';
-```
-
-#### 3. Problème d'Authentification
-
-**Symptôme :** L'utilisateur n'a pas les droits pour modifier l'application
-
-**Vérification :**
-
-- Vérifier que le token JWT est valide
-- Vérifier que l'utilisateur est bien le recruteur de l'offre
-
-#### 4. Problème WebSocket
-
-**Symptôme :** Les mises à jour en temps réel ne fonctionnent pas
-
-**Vérification :**
-
-```javascript
-// Dans la console du navigateur
-console.log("WebSocket connected:", socket?.connected);
-```
-
-### Étapes de Diagnostic
-
-#### Étape 1 : Vérifier les Logs
+### 3. Vérification des logs
 
 ```bash
-# Démarrer le serveur en mode debug
-NODE_ENV=development DEBUG=* npm run dev
+# Dans les logs du serveur, chercher :
+"Cache invalidé pour:"
+"Note ajoutée via WebSocket:"
+"Client connecté:"
 ```
 
-#### Étape 2 : Tester l'API Manuellement
+## Configuration requise
 
-```bash
-# Utiliser le script de test
-node test-move-application.js
+### Variables d'environnement
+
+```env
+REDIS_HOST=redis-13302.c281.us-east-1-2.ec2.redns.redis-cloud.com
+REDIS_PORT=13302
+REDIS_PASSWORD=UZII9yu2XTgnURGyxmluWHh2Pnx85pKy
+REDIS_USERNAME=default
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-#### Étape 3 : Vérifier la Base de Données
+### Scripts package.json
 
-```bash
-# Se connecter à la base de données
-npx prisma studio
-```
-
-#### Étape 4 : Vérifier Redis
-
-```bash
-# Se connecter à Redis
-redis-cli
-> KEYS *
-> GET "kanban:board:your-offer-id"
-```
-
-### Solutions
-
-#### Solution 1 : Forcer le Rafraîchissement
-
-```javascript
-// Dans le composant KanbanBoard
-const onDragEnd = async (result: DropResult) => {
-  // ... code existant ...
-
-  try {
-    const response = await postData(
-      moveData,
-      "/api/recruteur/kanban/move-application"
-    );
-
-    if (response.success) {
-      // Forcer le rafraîchissement des données
-      await queryoffresbyidrefetch();
-    }
-  } catch (error) {
-    console.error("Erreur:", error);
-  }
-};
-```
-
-#### Solution 2 : Améliorer la Gestion d'Erreur
-
-```javascript
-// Dans l'API move-application
-export async function POST(req: NextRequest) {
-  try {
-    // ... code existant ...
-
-    // Log pour debug
-    console.log("Application déplacée:", {
-      applicationId,
-      newColumnId,
-      success: true,
-    });
-
-    return NextResponse.json({
-      success: true,
-      application: updatedApplication,
-    });
-  } catch (error) {
-    console.error("Erreur déplacement:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+```json
+{
+  "scripts": {
+    "dev": "node server.js",
+    "test:websocket": "node test-websocket.js"
   }
 }
 ```
 
-#### Solution 3 : Vérifier les Permissions
+## Ordre de démarrage
 
-```javascript
-// Dans l'API move-application
-const authenticatedUser = await getAuthenticatedUser(req);
-if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
-  return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-}
+1. **Démarrer Redis** (si local)
+2. **Démarrer le serveur :** `npm run dev`
+3. **Tester WebSocket :** `npm run test:websocket`
+4. **Ouvrir l'application** dans le navigateur
 
-// Vérifier que l'application appartient au recruteur
-const application = await prisma.application.findFirst({
-  where: {
-    id: applicationId,
-    jobOffer: {
-      recruteurId: authenticatedUser.recruteurId,
-    },
-  },
-});
-```
+## Monitoring
 
-### Prévention
+### Logs à surveiller
 
-#### 1. Monitoring
+- ✅ "WebSocket connecté"
+- ✅ "Cache invalidé pour:"
+- ✅ "Note ajoutée via WebSocket:"
+- ❌ "Erreur Redis:"
+- ❌ "Erreur WebSocket:"
 
-```javascript
-// Ajouter des logs de monitoring
-console.log("Drag & Drop Event:", {
-  applicationId,
-  fromColumn: sourceColumnId,
-  toColumn: newColumnId,
-  timestamp: new Date().toISOString(),
-});
-```
+### Métriques de performance
 
-#### 2. Validation
+- Temps de réponse API : < 200ms
+- Temps de synchronisation WebSocket : < 100ms
+- Taille du cache Redis : < 10MB
 
-```javascript
-// Valider les données avant mise à jour
-if (!applicationId || !newColumnId) {
-  return NextResponse.json({ error: "Données manquantes" }, { status: 400 });
-}
-```
+## Problèmes courants
 
-#### 3. Tests Automatisés
+### 1. WebSocket ne se connecte pas
 
-```bash
-# Créer des tests unitaires
-npm test -- --testNamePattern="move-application"
-```
+**Solution :** Vérifier que le serveur utilise `node server.js` et non `next dev`
 
-### Commandes Utiles
+### 2. Cache toujours présent
 
-```bash
-# Redémarrer le serveur
-npm run dev
+**Solution :** Vérifier les logs "Cache invalidé" et les clés Redis
 
-# Vérifier les variables d'environnement
-node -e "console.log(process.env.DATABASE_URL)"
+### 3. Notes dupliquées
 
-# Tester Redis
-redis-cli ping
+**Solution :** Vérifier que l'état local est correctement mis à jour
 
-# Vérifier les logs
-tail -f logs/app.log
-```
+## Support
 
-### Support
-
-Si le problème persiste :
+Si les problèmes persistent :
 
 1. Vérifier les logs du serveur
-2. Tester avec le script de diagnostic
-3. Vérifier la configuration de la base de données
-4. Contacter l'équipe de développement
+2. Exécuter `npm run test:websocket`
+3. Vérifier la connectivité Redis
+4. Redémarrer le serveur avec `npm run dev`

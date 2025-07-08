@@ -20,6 +20,8 @@ export default function OffresPage() {
     enabled: !!recruteurId,
   });
 
+  console.log(querymoffres);
+
   if (isLoading) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
@@ -40,7 +42,7 @@ export default function OffresPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {querymoffres?.data.map((offer: JobOffer) => (
+        {querymoffres?.map((offer: JobOffer) => (
           <Link
             key={offer.id}
             href={`/dashboard-recruteurs/offres/${offer.id}/kanban`}

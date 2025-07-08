@@ -17,6 +17,7 @@ import {
   Moon,
   Lock,
   UserPlus,
+  Share2,
 } from "lucide-react";
 
 import {
@@ -70,6 +71,14 @@ export default function RecruteursLayout({
       subItems: [
         { label: "Créer une offre", href: "/mesoffres/creer" },
         { label: "Mes offres", href: "/mesoffres" },
+        {
+          label: "Diffusion des offres",
+          href: "/dashboard-recruteurs/diffusion-offres",
+        },
+        {
+          label: "Historique diffusion",
+          href: "/dashboard-recruteurs/historique-diffusion",
+        },
         // { label: "Modèles d'offres", href: "/mesoffres/modeles" },
       ],
     },
@@ -346,7 +355,7 @@ const Logo = () => {
         animate={{ opacity: 1 }}
         className="font-medium text-black dark:text-white whitespace-pre"
       >
-        Acet Labs
+        Xlsix
       </motion.span>
     </Link>
   );

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
-import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
+// import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
 
 export async function PUT(
   req: NextRequest,
@@ -10,12 +10,53 @@ export async function PUT(
   try {
     const id = (await params).id;
     const body = await req.json();
+    console.log("Received skills in API:", body.skills);
+    const {
+      title,
+      description,
+      company,
+      location,
+      type,
+      experience,
+      salaryMin,
+      salaryMax,
+      salaryCurrency,
+      salaryPeriod,
+      skills,
+      requirements,
+      responsibilities,
+      benefits,
+      // recruteurId,
+    } = body;
 
     const jobOffer = await prisma.jobOffer.update({
       where: {
         id: Number(id),
       },
-      data: body,
+      data: {
+        title,
+        description,
+        company,
+        location,
+        type,
+        experience,
+        salaryMin: parseFloat(salaryMin),
+        salaryMax: parseFloat(salaryMax),
+        salaryCurrency,
+        salaryPeriod,
+        skills: "",
+        requirements,
+        responsibilities,
+        benefits,
+        // templateId: template,
+        // recruteurId: recruteur.id,
+        competences: Array.isArray(skills)
+          ? skills
+          : skills
+              .split(",")
+              .map((s: string) => s.trim())
+              .filter((s: string) => s),
+      },
     });
 
     return NextResponse.json(
@@ -46,17 +87,17 @@ export async function GET(
     }
 
     const offerId = (await params).id;
-    const cacheKey = CACHE_KEYS.KANBAN_BOARD(offerId);
+    // const cacheKey = CACHE_KEYS.KANBAN_BOARD(offerId);
 
     // Essayer de récupérer depuis le cache
-    const cachedData = await cacheUtils.get(cacheKey);
-    if (cachedData) {
-      return NextResponse.json({
-        success: true,
-        data: cachedData,
-        fromCache: true,
-      });
-    }
+    // const cachedData = await cacheUtils.get(cacheKey);
+    // if (cachedData) {
+    //   return NextResponse.json({
+    //     success: true,
+    //     data: cachedData,
+    //     fromCache: true,
+    //   });
+    // }
 
     // Si pas en cache, récupérer depuis la base de données
     const offer = await prisma.jobOffer.findFirst({
@@ -116,7 +157,7 @@ export async function GET(
     }
 
     // Mettre en cache
-    await cacheUtils.set(cacheKey, [offer], CACHE_TTL.KANBAN_BOARD);
+    // await cacheUtils.set(cacheKey, [offer], CACHE_TTL.KANBAN_BOARD);
 
     return NextResponse.json({
       success: true,

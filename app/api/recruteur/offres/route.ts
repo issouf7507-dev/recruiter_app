@@ -1,5 +1,10 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { NextRequest, NextResponse } from "next/server";
+import { verify } from "jsonwebtoken";
+// import { CACHE_KEYS, CACHE_TTL, cacheUtils } from "@/lib/redis";
+
+const DISABLE_CACHE_LOCAL = true; // Force la désactivation
 
 export async function POST(req: Request) {
   try {
@@ -87,12 +92,17 @@ export async function POST(req: Request) {
       )
     );
 
+    // Invalider le cache après création d'une nouvelle offre
+    // const cacheKey = CACHE_KEYS.KANBAN_BOARD(recruteur.id);
+    // await cacheUtils.del(cacheKey);
+    // console.log("Cache invalidé après création d'offre:", cacheKey);
+
     return NextResponse.json(
       { success: true, data: jobOffer },
       { status: 201 }
     );
   } catch (err) {
-    console.log(err);
+    console.error("Erreur lors de la création de l'offre:", err);
     return NextResponse.json(
       { success: false, message: "Une erreur est survenue" },
       { status: 500 }
@@ -100,32 +110,69 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    const jobOffer = await prisma.jobOffer.findMany({
-      orderBy: {
-        createdAt: "asc",
+    const token = req.cookies.get("token")?.value;
+    if (!token) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const decoded = verify(token, process.env.JWT_SECRET!) as {
+      userId: string;
+      type: string;
+    };
+
+    if (decoded.type !== "RECRUTEUR") {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    // Récupérer le recruteur
+    const recruteur = await prisma.recruteur.findFirst({
+      where: {
+        userId: decoded.userId,
       },
-      include: {
-        applications: {
-          include: {
-            candidat: true,
-            notes: true,
-            checklist: true,
-            files: true,
+    });
+
+    if (!recruteur) {
+      return NextResponse.json(
+        { error: "Recruteur non trouvé" },
+        { status: 404 }
+      );
+    }
+
+    // Récupérer toutes les offres du recruteur
+    const offres = await prisma.jobOffer.findMany({
+      where: {
+        recruteurId: recruteur.id,
+        etat: "active",
+      },
+      select: {
+        id: true,
+        title: true,
+        company: true,
+        location: true,
+        _count: {
+          select: {
+            applications: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
     return NextResponse.json(
-      { message: true, data: jobOffer },
+      {
+        success: true,
+        data: offres,
+      },
       { status: 200 }
     );
   } catch (err) {
-    console.log(err);
-    NextResponse.json(
-      { success: false, message: "Une erreur est survenue" },
+    console.error("Erreur lors de la récupération des offres:", err);
+    return NextResponse.json(
+      { error: "Erreur lors de la récupération des offres" },
       { status: 500 }
     );
   }

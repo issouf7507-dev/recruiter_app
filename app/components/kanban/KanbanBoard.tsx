@@ -644,22 +644,27 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
           console.log("Application mise à jour:", response.application);
           console.log("Notes de l'application:", response.application.notes);
 
-          // Mettre à jour l'état local avec la réponse de l'API
+          // Mettre à jour immédiatement l'état local avec la réponse de l'API
+          const updatedNotes = response.application.notes || [];
           setSelectedCard({
             ...selectedCard,
-            notes: response.application.notes || [],
+            notes: updatedNotes,
           });
 
           // Mettre à jour aussi l'état global des applications
           setApplications((prevApplications) =>
             prevApplications.map((app) =>
-              app.id === selectedCard.id
-                ? { ...app, notes: response.application.notes || [] }
-                : app
+              app.id === selectedCard.id ? { ...app, notes: updatedNotes } : app
             )
           );
 
           setCardNote("");
+
+          // Forcer le rechargement des données après un délai pour s'assurer de la synchronisation
+          setTimeout(() => {
+            console.log("Rechargement des données pour synchronisation...");
+            queryoffresbyidrefetch();
+          }, 500);
         } else {
           throw new Error("Erreur lors de l'ajout de la note");
         }
@@ -2257,7 +2262,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                       </div>
 
                       {/* Documents téléchargeables */}
-                      <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="bg-gray-50 rounded-lg">
                         <h3 className="text-sm font-semibold text-gray-700 mb-3">
                           Documents
                         </h3>
@@ -2581,7 +2586,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                       </div>
 
                       {/* Documents téléchargeables */}
-                      <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="bg-gray-50 rounded-lg">
                         <h3 className="text-sm font-semibold text-gray-700 mb-3">
                           Documents
                         </h3>
@@ -3173,7 +3178,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                       </div>
 
                       {/* Documents téléchargeables */}
-                      <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="bg-gray-50 rounded-lg">
                         <h3 className="text-sm font-semibold text-gray-700 mb-3">
                           Documents
                         </h3>

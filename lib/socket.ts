@@ -126,7 +126,35 @@ export const configureSocket = (server: SocketServer) => {
 
     // Configuration Redis Pub/Sub pour la synchronisation entre serveurs
     const setupRedisPubSub = async () => {
+      // Vérifier si Redis est désactivé
+      const DISABLE_CACHE_LOCAL =
+        process.env.NODE_ENV === "development" &&
+        process.env.DISABLE_CACHE === "true";
+
+      if (DISABLE_CACHE_LOCAL) {
+        console.log(
+          "Redis désactivé - WebSockets fonctionneront sans synchronisation entre serveurs"
+        );
+        return;
+      }
+
       try {
+        // Vérifier si Redis est disponible
+        if (!redisPubSub) {
+          console.warn(
+            "Redis non disponible - WebSockets fonctionneront sans synchronisation entre serveurs"
+          );
+          return;
+        }
+
+        // Vérifier si Redis est connecté
+        if (!redisPubSub.isOpen) {
+          console.warn(
+            "Redis non connecté - WebSockets fonctionneront sans synchronisation entre serveurs"
+          );
+          return;
+        }
+
         // Créer un client Redis dédié pour les abonnements
         const subscriber = redisPubSub.duplicate();
         await subscriber.connect();
@@ -150,7 +178,10 @@ export const configureSocket = (server: SocketServer) => {
 
         console.log("Redis Pub/Sub configuré avec succès");
       } catch (error) {
-        console.error("Erreur lors de la configuration Redis Pub/Sub:", error);
+        console.warn(
+          "Erreur lors de la configuration Redis Pub/Sub (normal en local):",
+          error
+        );
       }
     };
 
@@ -166,7 +197,29 @@ export const publishEvent = async (
   data: any,
   offerId: string
 ) => {
+  // Vérifier si Redis est désactivé
+  const DISABLE_CACHE_LOCAL =
+    process.env.NODE_ENV === "development" &&
+    process.env.DISABLE_CACHE === "true";
+
+  if (DISABLE_CACHE_LOCAL) {
+    console.log("Redis désactivé - événement non publié:", type);
+    return;
+  }
+
   try {
+    // Vérifier si Redis est disponible
+    if (!redisPubSub) {
+      console.warn("Redis non disponible - événement non publié:", type);
+      return;
+    }
+
+    // Vérifier si Redis est connecté
+    if (!redisPubSub.isOpen) {
+      console.warn("Redis non connecté - événement non publié:", type);
+      return;
+    }
+
     const event = {
       type,
       data,
@@ -176,7 +229,10 @@ export const publishEvent = async (
 
     await redisPubSub.publish("kanban:events", JSON.stringify(event));
   } catch (error) {
-    console.error("Erreur lors de la publication de l'événement:", error);
+    console.warn(
+      "Erreur lors de la publication de l'événement (normal en local):",
+      error
+    );
   }
 };
 

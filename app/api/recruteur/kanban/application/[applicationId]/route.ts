@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
 import { kanbanEvents } from "@/lib/socket";
+import { CACHE_KEYS, cacheUtils } from "@/lib/redis";
 
 export async function PUT(
   req: NextRequest,
@@ -80,6 +81,27 @@ export async function PUT(
           application.jobOffer.id.toString()
         );
       }
+    }
+
+    // Invalider le cache Redis pour forcer le rechargement des données
+    // Invalider avec l'ID du recruteur ET l'ID de l'offre pour être sûr
+    const cacheKeyRecruteur = CACHE_KEYS.KANBAN_BOARD(
+      authenticatedUser.recruteurId
+    );
+    const cacheKeyOffre = CACHE_KEYS.KANBAN_BOARD(
+      application.jobOffer.id.toString()
+    );
+
+    try {
+      await cacheUtils.del(cacheKeyRecruteur);
+      await cacheUtils.del(cacheKeyOffre);
+      console.log("Cache invalidé pour recruteur:", cacheKeyRecruteur);
+      console.log("Cache invalidé pour offre:", cacheKeyOffre);
+    } catch (cacheError) {
+      console.warn(
+        "Erreur lors de l'invalidation du cache (normal en local):",
+        (cacheError as Error).message
+      );
     }
 
     return NextResponse.json(

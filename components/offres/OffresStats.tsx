@@ -41,7 +41,7 @@ export default function OffresStats({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       {/* Total des offres */}
-      <Card>
+      <Card className="shadow-none">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Total des offres
@@ -57,7 +57,7 @@ export default function OffresStats({
       </Card>
 
       {/* Répartition par type */}
-      <Card>
+      <Card className="shadow-none">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Types de contrat
@@ -79,7 +79,7 @@ export default function OffresStats({
       </Card>
 
       {/* Top entreprises */}
-      <Card>
+      <Card className="shadow-none">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Top entreprises</CardTitle>
           <Building className="h-4 w-4 text-muted-foreground" />
@@ -99,7 +99,7 @@ export default function OffresStats({
       </Card>
 
       {/* Top localisations */}
-      <Card>
+      <Card className="shadow-none">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Top localisations

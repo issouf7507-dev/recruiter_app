@@ -2,37 +2,54 @@ import { createClient } from "redis";
 
 // Configuration Redis Cloud
 const redisConfig = {
-  username: process.env.REDIS_USERNAME || "default",
-  password: process.env.REDIS_PASSWORD || "UZII9yu2XTgnURGyxmluWHh2Pnx85pKy",
+  username: "default",
+  password: "6wzoWWfpSWJpjFVLCNqX55WUOH9iAFEZ",
   socket: {
-    host:
-      process.env.REDIS_HOST ||
-      "redis-13302.c281.us-east-1-2.ec2.redns.redis-cloud.com",
-    port: parseInt(process.env.REDIS_PORT || "13302"),
+    host: "redis-16217.c232.us-east-1-2.ec2.redns.redis-cloud.com",
+    port: 16217,
   },
   retryDelayOnFailover: 100,
   maxRetriesPerRequest: 3,
   lazyConnect: true,
 };
 
-// Instance Redis pour le cache
-export const redis = createClient(redisConfig);
+// Option pour désactiver le cache en local (définir à true pour désactiver)
+const DISABLE_CACHE_LOCAL = true; // Force la désactivation pour résoudre les erreurs
 
-// Instance Redis pour les WebSockets (pub/sub)
-export const redisPubSub = createClient(redisConfig);
+// Instance Redis pour le cache (créée seulement si nécessaire)
+export const redis = DISABLE_CACHE_LOCAL ? null : createClient(redisConfig);
 
-// Gestionnaire d'erreurs Redis
-redis.on("error", (error) => {
-  console.error("Erreur Redis:", error);
-});
+// Instance Redis pour les WebSockets (pub/sub) (créée seulement si nécessaire)
+export const redisPubSub = DISABLE_CACHE_LOCAL
+  ? null
+  : createClient(redisConfig);
 
-redisPubSub.on("error", (error) => {
-  console.error("Erreur Redis PubSub:", error);
-});
+// Gestionnaire d'erreurs Redis (seulement si Redis n'est pas désactivé)
+if (!DISABLE_CACHE_LOCAL && redis && redisPubSub) {
+  redis.on("error", (error) => {
+    console.error("Erreur Redis:", error);
+  });
 
-// Connexion automatique
-redis.connect().catch(console.error);
-redisPubSub.connect().catch(console.error);
+  redisPubSub.on("error", (error) => {
+    console.error("Erreur Redis PubSub:", error);
+  });
+
+  // Connexion automatique seulement si Redis n'est pas désactivé
+  redis.connect().catch((error) => {
+    console.warn(
+      "Impossible de se connecter à Redis (normal si désactivé):",
+      error.message
+    );
+  });
+  redisPubSub.connect().catch((error) => {
+    console.warn(
+      "Impossible de se connecter à Redis PubSub (normal si désactivé):",
+      error.message
+    );
+  });
+} else {
+  console.log("Redis désactivé en local - pas de connexion établie");
+}
 
 // Fonctions utilitaires pour le cache
 export const cacheUtils = {
@@ -43,7 +60,16 @@ export const cacheUtils = {
 
   // Mettre en cache avec expiration
   set: async (key: string, data: any, ttl: number = 3600): Promise<void> => {
+    if (DISABLE_CACHE_LOCAL || !redis) {
+      console.log("Cache désactivé en local, skip set:", key);
+      return;
+    }
+
     try {
+      if (!redis.isOpen) {
+        console.warn("Redis non connecté, skip set:", key);
+        return;
+      }
       await redis.setEx(key, ttl, JSON.stringify(data));
     } catch (error) {
       console.error("Erreur lors de la mise en cache:", error);
@@ -52,7 +78,16 @@ export const cacheUtils = {
 
   // Récupérer du cache
   get: async <T>(key: string): Promise<T | null> => {
+    if (DISABLE_CACHE_LOCAL || !redis) {
+      console.log("Cache désactivé en local, skip get:", key);
+      return null;
+    }
+
     try {
+      if (!redis.isOpen) {
+        console.warn("Redis non connecté, skip get:", key);
+        return null;
+      }
       const data = await redis.get(key);
       return data ? JSON.parse(data) : null;
     } catch (error) {
@@ -63,7 +98,16 @@ export const cacheUtils = {
 
   // Supprimer du cache
   del: async (key: string): Promise<void> => {
+    if (DISABLE_CACHE_LOCAL || !redis) {
+      console.log("Cache désactivé en local, skip del:", key);
+      return;
+    }
+
     try {
+      if (!redis.isOpen) {
+        console.warn("Redis non connecté, skip del:", key);
+        return;
+      }
       await redis.del(key);
     } catch (error) {
       console.error("Erreur lors de la suppression du cache:", error);
@@ -72,6 +116,11 @@ export const cacheUtils = {
 
   // Supprimer plusieurs clés avec pattern
   delPattern: async (pattern: string): Promise<void> => {
+    if (DISABLE_CACHE_LOCAL || !redis) {
+      console.log("Cache désactivé en local, skip delPattern:", pattern);
+      return;
+    }
+
     try {
       const keys = await redis.keys(pattern);
       if (keys.length > 0) {
@@ -84,6 +133,11 @@ export const cacheUtils = {
 
   // Vérifier si une clé existe
   exists: async (key: string): Promise<boolean> => {
+    if (DISABLE_CACHE_LOCAL || !redis) {
+      console.log("Cache désactivé en local, skip exists:", key);
+      return false;
+    }
+
     try {
       const result = await redis.exists(key);
       return result === 1;

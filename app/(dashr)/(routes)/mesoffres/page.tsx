@@ -112,7 +112,7 @@ export default function MesOffres() {
   }
 
   const OfferCard = ({ offer }: { offer: JobOffer }) => (
-    <Card className="flex flex-col bg-background">
+    <Card className="flex flex-col bg-transparent shadow-none">
       <CardHeader>
         <CardTitle className="flex justify-between items-start">
           <div>
@@ -212,7 +212,7 @@ export default function MesOffres() {
   );
 
   const OfferListItem = ({ offer }: { offer: JobOffer }) => (
-    <div className="flex items-center justify-between p-4 border rounded-lg bg-background">
+    <div className="flex items-center justify-between p-4 border rounded-lg bg-transparent shadow-none">
       <div className="flex items-center gap-6 flex-1">
         <div className="flex-1">
           <div className="flex items-center gap-3">
@@ -261,7 +261,7 @@ export default function MesOffres() {
         <Button
           variant="outline"
           size="sm"
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 border bg-transparent shadow-none"
           onClick={() =>
             (window.location.href = `/mesoffres/modifier/${offer.id}`)
           }
@@ -271,9 +271,9 @@ export default function MesOffres() {
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button
-              variant="destructive"
+              variant="outline"
               size="sm"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 border bg-transparent shadow-none"
             >
               <Trash2 className="h-4 w-4" />
             </Button>
@@ -324,7 +324,7 @@ export default function MesOffres() {
           />
         </div>
         <Select value={statusFilter} onValueChange={setStatusFilter}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-[180px] border bg-transparent shadow-none">
             <Filter className="h-4 w-4 mr-2" />
             <SelectValue placeholder="Filtrer par statut" />
           </SelectTrigger>
@@ -340,6 +340,7 @@ export default function MesOffres() {
             variant={viewMode === "list" ? "default" : "outline"}
             size="icon"
             onClick={() => setViewMode("list")}
+            className="border-none shadow-none"
           >
             <List className="h-4 w-4" />
           </Button>
@@ -347,6 +348,7 @@ export default function MesOffres() {
             variant={viewMode === "grid" ? "default" : "outline"}
             size="icon"
             onClick={() => setViewMode("grid")}
+            className="border shadow-none"
           >
             <LayoutGrid className="h-4 w-4" />
           </Button>

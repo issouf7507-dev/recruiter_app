@@ -18,7 +18,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Eye, Download, Star, StarOff, Filter } from "lucide-react";
+import {
+  ArrowLeft,
+  Eye,
+  Download,
+  Star,
+  StarOff,
+  Filter,
+  Loader2,
+} from "lucide-react";
 import Link from "next/link";
 import {
   Dialog,
@@ -46,75 +54,20 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// Type pour les candidatures
-type Candidature = {
-  id: string;
-  nom: string;
-  email: string;
-  telephone: string;
-  cv: string;
-  lettreMotivation: string;
-  status: "nouvelle" | "en_cours" | "acceptee" | "refusee";
-  date: string;
-  isFavorite: boolean;
-  offerId: string;
-  offerTitle: string;
-};
-
-// Données fictives pour les candidatures
-const mockCandidatures: Candidature[] = [
-  {
-    id: "1",
-    nom: "Jean Dupont",
-    email: "jean.dupont@email.com",
-    telephone: "06 12 34 56 78",
-    cv: "/cvs/cv-jean-dupont.pdf",
-    lettreMotivation: "Je suis très intéressé par ce poste...",
-    status: "nouvelle",
-    date: "2024-04-15",
-    isFavorite: false,
-    offerId: "1",
-    offerTitle: "Développeur Full Stack",
-  },
-  {
-    id: "2",
-    nom: "Marie Martin",
-    email: "marie.martin@email.com",
-    telephone: "07 23 45 67 89",
-    cv: "/cvs/cv-marie-martin.pdf",
-    lettreMotivation: "Mon expérience correspond parfaitement...",
-    status: "en_cours",
-    date: "2024-04-14",
-    isFavorite: true,
-    offerId: "2",
-    offerTitle: "Designer UI/UX",
-  },
-  {
-    id: "3",
-    nom: "Pierre Durand",
-    email: "pierre.durand@email.com",
-    telephone: "06 98 76 54 32",
-    cv: "/cvs/cv-pierre-durand.pdf",
-    lettreMotivation: "Je suis passionné par...",
-    status: "acceptee",
-    date: "2024-04-13",
-    isFavorite: false,
-    offerId: "1",
-    offerTitle: "Développeur Full Stack",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { fetchData } from "@/utils/utilts";
+import { Application } from "@/types/types";
 
 // Fonction pour obtenir la couleur du badge selon le statut
-const getStatusColor = (status: Candidature["status"]) => {
+const getStatusColor = (status: string) => {
   switch (status) {
-    case "nouvelle":
+    case "Nouvelles":
       return "bg-blue-500";
-    case "en_cours":
+    case "En cours":
       return "bg-yellow-500";
-    case "acceptee":
+    case "Acceptées":
       return "bg-green-500";
-    case "refusee":
+    case "Refusées":
       return "bg-red-500";
     default:
       return "bg-gray-500";
@@ -122,19 +75,8 @@ const getStatusColor = (status: Candidature["status"]) => {
 };
 
 // Fonction pour formater le statut
-const formatStatus = (status: Candidature["status"]) => {
-  switch (status) {
-    case "nouvelle":
-      return "Nouvelle";
-    case "en_cours":
-      return "En cours";
-    case "acceptee":
-      return "Acceptée";
-    case "refusee":
-      return "Refusée";
-    default:
-      return status;
-  }
+const formatStatus = (status: string) => {
+  return status;
 };
 
 export default function CandidaturesPage({
@@ -142,10 +84,8 @@ export default function CandidaturesPage({
 }: {
   params: { offerId: string };
 }) {
-  const [candidatures, setCandidatures] =
-    useState<Candidature[]>(mockCandidatures);
   const [selectedCandidature, setSelectedCandidature] =
-    useState<Candidature | null>(null);
+    useState<Application | null>(null);
   const [filters, setFilters] = useState({
     status: "all",
     date: null as Date | null,
@@ -153,75 +93,123 @@ export default function CandidaturesPage({
     offerId: "all",
   });
 
-  const handleViewDetails = (candidature: Candidature) => {
+  const handleViewDetails = (candidature: Application) => {
     setSelectedCandidature(candidature);
   };
 
-  const handleToggleFavorite = (candidatureId: string) => {
-    setCandidatures(
-      candidatures.map((c) =>
-        c.id === candidatureId ? { ...c, isFavorite: !c.isFavorite } : c
-      )
-    );
-  };
-
   const handleDownloadCV = (cvPath: string) => {
-    console.log("Téléchargement du CV:", cvPath);
+    if (cvPath) {
+      window.open(cvPath, "_blank");
+    } else {
+      console.log("Aucun CV disponible");
+    }
   };
 
   const handleDownloadLettreMotivation = (content: string, nom: string) => {
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `lettre-motivation-${nom}.txt`;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
+    if (content) {
+      const blob = new Blob([content], { type: "text/plain" });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `lettre-motivation-${nom}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } else {
+      console.log("Aucune lettre de motivation disponible");
+    }
   };
 
-  const filteredCandidatures = candidatures.filter((candidature) => {
-    if (filters.status !== "all" && candidature.status !== filters.status) {
-      return false;
-    }
-    if (filters.date) {
-      const candidatureDate = new Date(candidature.date);
-      const filterDate = filters.date;
+  // Récupérer les candidatures depuis l'API
+  const {
+    data: candidaturesData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["candidatures"],
+    queryFn: () => fetchData(`/api/recruteur/candidatures`),
+  });
+
+  const candidatures: Application[] = candidaturesData?.data || [];
+
+  const filteredCandidatures = candidatures.filter(
+    (candidature: Application) => {
       if (
-        candidatureDate.getDate() !== filterDate.getDate() ||
-        candidatureDate.getMonth() !== filterDate.getMonth() ||
-        candidatureDate.getFullYear() !== filterDate.getFullYear()
+        filters.status !== "all" &&
+        candidature.column.name !== filters.status
       ) {
         return false;
       }
+      if (filters.date) {
+        const candidatureDate = new Date(candidature.createdAt);
+        const filterDate = filters.date;
+        if (
+          candidatureDate.getDate() !== filterDate.getDate() ||
+          candidatureDate.getMonth() !== filterDate.getMonth() ||
+          candidatureDate.getFullYear() !== filterDate.getFullYear()
+        ) {
+          return false;
+        }
+      }
+      if (filters.showFavorites && !candidature.candidat.favorite) {
+        return false;
+      }
+      if (
+        filters.offerId !== "all" &&
+        candidature.jobOfferId.toString() !== filters.offerId
+      ) {
+        return false;
+      }
+      return true;
     }
-    if (filters.showFavorites && !candidature.isFavorite) {
-      return false;
-    }
-    if (filters.offerId !== "all" && candidature.offerId !== filters.offerId) {
-      return false;
-    }
-    return true;
-  });
+  );
+
+  // Obtenir la liste unique des statuts
+  const uniqueStatuses = Array.from(
+    new Set(candidatures.map((c: Application) => c.column.name))
+  );
 
   // Obtenir la liste unique des offres
   const uniqueOffers = Array.from(
-    new Set(candidatures.map((c) => ({ id: c.offerId, title: c.offerTitle })))
+    new Set(
+      candidatures.map((c: Application) => ({
+        id: c.jobOfferId.toString(),
+        title: (c as any).jobOffer?.title || `Offre ${c.jobOfferId}`,
+      }))
+    )
   );
+
+  if (isLoading) {
+    return (
+      <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-6">
+        <div className="text-center text-red-500">
+          Erreur lors du chargement des candidatures
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
       <div className="flex items-center gap-4">
-        <Link href={`/mesoffres/${params.offerId}`}>
+        <Link href="/mesoffres">
           <Button variant="outline" size="icon">
             <ArrowLeft className="h-4 w-4" />
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold">Candidatures reçues</h1>
+        <h1 className="text-2xl font-bold">Toutes les candidatures</h1>
       </div>
 
-      <Card>
+      <Card className="border bg-transparent shadow-none">
         <CardHeader>
           <CardTitle>Filtres</CardTitle>
         </CardHeader>
@@ -235,7 +223,7 @@ export default function CandidaturesPage({
                   setFilters({ ...filters, offerId: value })
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className="border bg-transparent shadow-none">
                   <SelectValue placeholder="Sélectionner une offre" />
                 </SelectTrigger>
                 <SelectContent>
@@ -256,22 +244,26 @@ export default function CandidaturesPage({
                   setFilters({ ...filters, status: value })
                 }
               >
-                <SelectTrigger>
+                <SelectTrigger className="border bg-transparent shadow-none">
                   <SelectValue placeholder="Sélectionner un statut" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tous les statuts</SelectItem>
-                  <SelectItem value="nouvelle">Nouvelle</SelectItem>
-                  <SelectItem value="en_cours">En cours</SelectItem>
-                  <SelectItem value="acceptee">Acceptée</SelectItem>
-                  <SelectItem value="refusee">Refusée</SelectItem>
+                  {uniqueStatuses.map((status, idx) => (
+                    <SelectItem key={idx} value={status}>
+                      {status}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
               <Label>Date</Label>
               <Popover modal>
-                <PopoverTrigger asChild>
+                <PopoverTrigger
+                  asChild
+                  className="border bg-transparent shadow-none"
+                >
                   <Button
                     variant={"outline"}
                     className={cn(
@@ -287,7 +279,7 @@ export default function CandidaturesPage({
                     )}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
+                <PopoverContent className="w-auto p-0 border bg-gray-200 shadow-none">
                   <Calendar
                     mode="single"
                     selected={filters.date || undefined}
@@ -300,97 +292,95 @@ export default function CandidaturesPage({
                 </PopoverContent>
               </Popover>
             </div>
-            <div className="space-y-2">
-              <Label>Favoris uniquement</Label>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={filters.showFavorites}
-                  onChange={(e) =>
-                    setFilters({ ...filters, showFavorites: e.target.checked })
-                  }
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                />
-                <span className="text-sm text-muted-foreground">
-                  {filters.showFavorites ? "Activé" : "Désactivé"}
-                </span>
-              </div>
-            </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border bg-transparent shadow-none">
         <CardHeader>
           <CardTitle>Liste des candidatures</CardTitle>
           <CardDescription>
-            Gérez les candidatures reçues pour cette offre
+            Gérez toutes les candidatures reçues ({filteredCandidatures.length}{" "}
+            candidature
+            {filteredCandidatures.length > 1 ? "s" : ""})
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Offre</TableHead>
-                <TableHead>Nom</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Téléphone</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Statut</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredCandidatures.map((candidature) => (
-                <TableRow key={candidature.id}>
-                  <TableCell>{candidature.offerTitle}</TableCell>
-                  <TableCell className="font-medium">
-                    <div className="flex items-center gap-2">
-                      {candidature.nom}
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6"
-                        onClick={() => handleToggleFavorite(candidature.id)}
-                      >
-                        {candidature.isFavorite ? (
-                          <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-                        ) : (
-                          <Star className="h-4 w-4" />
-                        )}
-                      </Button>
-                    </div>
-                  </TableCell>
-                  <TableCell>{candidature.email}</TableCell>
-                  <TableCell>{candidature.telephone}</TableCell>
-                  <TableCell>{candidature.date}</TableCell>
-                  <TableCell>
-                    <Badge className={getStatusColor(candidature.status)}>
-                      {formatStatus(candidature.status)}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() => handleViewDetails(candidature)}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        onClick={() => handleDownloadCV(candidature.cv)}
-                      >
-                        <Download className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+          {filteredCandidatures.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              Aucune candidature trouvée
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Offre</TableHead>
+                  <TableHead>Nom</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Téléphone</TableHead>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Statut</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {filteredCandidatures.map((candidature: Application) => (
+                  <TableRow key={candidature.id}>
+                    <TableCell>
+                      {(candidature as any).jobOffer?.title ||
+                        `Offre ${candidature.jobOfferId}`}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      <div className="flex items-center gap-2">
+                        {candidature.candidat.nom} {candidature.candidat.prenom}
+                        {candidature.candidat.favorite && (
+                          <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>{candidature.candidat.email}</TableCell>
+                    <TableCell>{candidature.candidat.telephone}</TableCell>
+                    <TableCell>
+                      {format(new Date(candidature.createdAt), "dd/MM/yyyy", {
+                        locale: fr,
+                      })}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        className={getStatusColor(candidature.column.name)}
+                      >
+                        {formatStatus(candidature.column.name)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() => handleViewDetails(candidature)}
+                          className="border bg-transparent shadow-none"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        {candidature.candidat.cv && (
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() =>
+                              handleDownloadCV(candidature.candidat.cv)
+                            }
+                            className="border bg-transparent shadow-none"
+                          >
+                            <Download className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
 
@@ -402,7 +392,8 @@ export default function CandidaturesPage({
           <DialogHeader>
             <DialogTitle>Détails de la candidature</DialogTitle>
             <DialogDescription>
-              Informations de {selectedCandidature?.nom}
+              Informations de {selectedCandidature?.candidat.nom}{" "}
+              {selectedCandidature?.candidat.prenom}
             </DialogDescription>
           </DialogHeader>
 
@@ -411,46 +402,47 @@ export default function CandidaturesPage({
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span>Informations du candidat</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() =>
-                      selectedCandidature &&
-                      handleToggleFavorite(selectedCandidature.id)
-                    }
-                  >
-                    {selectedCandidature?.isFavorite ? (
-                      <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-                    ) : (
-                      <Star className="h-5 w-5" />
-                    )}
-                  </Button>
+                  {selectedCandidature?.candidat.favorite && (
+                    <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+                  )}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 <p>
-                  <strong>Nom :</strong> {selectedCandidature?.nom}
+                  <strong>Nom :</strong> {selectedCandidature?.candidat.nom}{" "}
+                  {selectedCandidature?.candidat.prenom}
                 </p>
                 <p>
-                  <strong>Email :</strong> {selectedCandidature?.email}
+                  <strong>Email :</strong> {selectedCandidature?.candidat.email}
                 </p>
                 <p>
-                  <strong>Téléphone :</strong> {selectedCandidature?.telephone}
+                  <strong>Téléphone :</strong>{" "}
+                  {selectedCandidature?.candidat.telephone}
                 </p>
                 <p>
                   <strong>Date de candidature :</strong>{" "}
-                  {selectedCandidature?.date}
+                  {selectedCandidature?.createdAt &&
+                    format(
+                      new Date(selectedCandidature.createdAt),
+                      "dd/MM/yyyy à HH:mm",
+                      { locale: fr }
+                    )}
                 </p>
                 <p>
                   <strong>Statut :</strong>
                   <Badge
                     className={`ml-2 ${getStatusColor(
-                      selectedCandidature?.status || "nouvelle"
+                      selectedCandidature?.column.name || ""
                     )}`}
                   >
-                    {formatStatus(selectedCandidature?.status || "nouvelle")}
+                    {formatStatus(selectedCandidature?.column.name || "")}
                   </Badge>
                 </p>
+                {selectedCandidature?.candidat.bio && (
+                  <p>
+                    <strong>Bio :</strong> {selectedCandidature.candidat.bio}
+                  </p>
+                )}
               </CardContent>
             </Card>
 
@@ -459,57 +451,90 @@ export default function CandidaturesPage({
                 <CardTitle>Documents</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Curriculum Vitae</p>
-                    <p className="text-sm text-muted-foreground">
-                      Document PDF
-                    </p>
+                {selectedCandidature?.candidat.cv && (
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Curriculum Vitae</p>
+                      <p className="text-sm text-muted-foreground">
+                        Document PDF
+                      </p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        handleDownloadCV(selectedCandidature.candidat.cv)
+                      }
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Télécharger le CV
+                    </Button>
                   </div>
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      handleDownloadCV(selectedCandidature?.cv || "")
-                    }
-                  >
-                    <Download className="h-4 w-4 mr-2" />
-                    Télécharger le CV
-                  </Button>
-                </div>
+                )}
 
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Lettre de motivation</p>
-                    <p className="text-sm text-muted-foreground">
-                      Document texte
-                    </p>
+                {selectedCandidature?.candidat.letterm && (
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Lettre de motivation</p>
+                      <p className="text-sm text-muted-foreground">
+                        Document texte
+                      </p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        handleDownloadLettreMotivation(
+                          selectedCandidature.candidat.letterm,
+                          `${selectedCandidature.candidat.nom} ${selectedCandidature.candidat.prenom}`
+                        )
+                      }
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Télécharger la lettre
+                    </Button>
                   </div>
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      handleDownloadLettreMotivation(
-                        selectedCandidature?.lettreMotivation || "",
-                        selectedCandidature?.nom || ""
-                      )
-                    }
-                  >
-                    <Download className="h-4 w-4 mr-2" />
-                    Télécharger la lettre
-                  </Button>
-                </div>
+                )}
+
+                {!selectedCandidature?.candidat.cv &&
+                  !selectedCandidature?.candidat.letterm && (
+                    <p className="text-muted-foreground">
+                      Aucun document disponible
+                    </p>
+                  )}
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Lettre de motivation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="whitespace-pre-wrap">
-                  {selectedCandidature?.lettreMotivation}
-                </p>
-              </CardContent>
-            </Card>
+            {selectedCandidature?.message && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Message du candidat</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="whitespace-pre-wrap">
+                    {selectedCandidature.message}
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+
+            {selectedCandidature?.candidat.competences &&
+              selectedCandidature.candidat.competences.length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Compétences</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedCandidature.candidat.competences.map(
+                        (competence, index) => (
+                          <Badge key={index} variant="secondary">
+                            {competence}
+                          </Badge>
+                        )
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
           </div>
         </DialogContent>
       </Dialog>

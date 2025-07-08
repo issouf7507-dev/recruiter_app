@@ -140,7 +140,7 @@ export default function CreerOffre() {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <Card>
+          <Card className="border bg-transparent shadow-none">
             <CardHeader>
               <CardTitle>Informations générales</CardTitle>
               <CardDescription>
@@ -231,7 +231,7 @@ export default function CreerOffre() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border bg-transparent shadow-none">
                             <SelectValue placeholder="Sélectionnez le type de contrat" />
                           </SelectTrigger>
                         </FormControl>
@@ -259,7 +259,7 @@ export default function CreerOffre() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border bg-transparent shadow-none">
                             <SelectValue placeholder="Sélectionnez l'expérience requise" />
                           </SelectTrigger>
                         </FormControl>
@@ -325,7 +325,7 @@ export default function CreerOffre() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border bg-transparent shadow-none">
                             <SelectValue placeholder="Devise" />
                           </SelectTrigger>
                         </FormControl>
@@ -351,7 +351,7 @@ export default function CreerOffre() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger>
+                          <SelectTrigger className="border bg-transparent shadow-none">
                             <SelectValue placeholder="Période" />
                           </SelectTrigger>
                         </FormControl>
@@ -370,7 +370,7 @@ export default function CreerOffre() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="border bg-transparent shadow-none">
             <CardHeader>
               <CardTitle>Description du poste</CardTitle>
               <CardDescription>
@@ -387,7 +387,7 @@ export default function CreerOffre() {
                     <FormControl>
                       <Textarea
                         placeholder="Décrivez le poste en détail..."
-                        className="min-h-[100px]"
+                        className="min-h-[100px] bg-transparent shadow-none"
                         {...field}
                       />
                     </FormControl>
@@ -410,7 +410,7 @@ export default function CreerOffre() {
                         placeholder="- Développer des applications web
 - Collaborer avec l'équipe design
 - Participer aux réunions d'équipe"
-                        className="min-h-[100px]"
+                        className="min-h-[100px] bg-transparent shadow-none"
                         {...field}
                       />
                     </FormControl>
@@ -433,7 +433,7 @@ export default function CreerOffre() {
                         placeholder="- 3 ans d'expérience minimum
 - Maîtrise de React
 - Bon niveau d'anglais"
-                        className="min-h-[100px]"
+                        className="min-h-[100px] bg-transparent shadow-none"
                         {...field}
                       />
                     </FormControl>
@@ -460,7 +460,7 @@ export default function CreerOffre() {
                       }}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full">
+                        <SelectTrigger className="w-full border bg-transparent shadow-none  ">
                           <SelectValue placeholder="Sélectionnez les compétences" />
                         </SelectTrigger>
                       </FormControl>
@@ -526,7 +526,7 @@ export default function CreerOffre() {
                         placeholder="- Télétravail partiel
 - Mutuelle d'entreprise
 - RTT"
-                        className="min-h-[100px]"
+                        className="min-h-[100px] bg-transparent shadow-none"
                         {...field}
                       />
                     </FormControl>
