@@ -1,0 +1,90 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [dev-issouf-feature]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 31.97.193.80
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+
+          script: |
+            # Naviguer vers le répertoire du projet
+            cd /var/www/webapp/recruter
+
+            # Sauvegarder l'ancienne version
+            if [ -d "current" ]; then
+              mv current backup-$(date +%Y%m%d-%H%M%S)
+            fi
+
+            # Créer le répertoire de déploiement
+            mkdir -p current
+
+            # Cloner le code depuis GitHub
+            git clone -b dev-issouf-feature https://github.com/${{ github.repository }}.git temp-deploy
+
+            # Copier les fichiers nécessaires
+            cp -r temp-deploy/* current/
+            cp -r temp-deploy/.* current/ 2>/dev/null || true
+
+            # Nettoyer
+            rm -rf temp-deploy
+
+            # Naviguer vers le répertoire de déploiement
+            cd current
+
+            # Installer les dépendances
+            npm ci
+
+            # Construire l'application
+            npm run build
+
+            # Vérifier que le build existe
+            if [ ! -d ".next" ]; then
+              echo "Erreur: Le build .next n'existe pas!"
+              exit 1
+            fi
+
+            # Arrêter le processus PM2 existant s'il existe
+            pm2 stop recruter 2>/dev/null || true
+            pm2 delete recruter 2>/dev/null || true
+
+            # Tuer tout processus utilisant le port 3000
+            lsof -ti:3000 | xargs kill -9 2>/dev/null || true
+
+            # Démarrer le service PM2 sur le port 3000
+            pm2 start npm --name "recruter" -- start -- -p 3000
+
+            # Sauvegarder la configuration PM2
+            pm2 save
+
+            # Nettoyer les anciennes sauvegardes (garder les 5 plus récentes)
+            cd /var/www/webapp/recruter
+            ls -t backup-* | tail -n +6 | xargs -r rm -rf
+
+            echo "Déploiement terminé avec succès!"
