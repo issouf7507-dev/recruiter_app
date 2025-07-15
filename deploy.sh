@@ -33,7 +33,7 @@ git clone -b dev-issouf-f https://github.com/issouf7507-dev/recruiter_app.git .
 
 # Installer les dépendances
 echo "📦 Installation des dépendances..."
-npm ci --production
+npm ci --production --legacy-peer-deps
 
 # Construire l'application
 echo "🔨 Construction de l'application..."
