@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +33,7 @@ import OffresStats from "@/components/offres/OffresStats";
 import OffresFilters from "@/components/offres/OffresFilters";
 import Header from "@/app/components/header/header";
 
-export default function OffresPage() {
+function OffresPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [offres, setOffres] = useState<JobOffer[]>([]);
@@ -723,5 +723,13 @@ export default function OffresPage() {
         showBothOptions={!loginModalType}
       />
     </div>
+  );
+}
+
+export default function OffresPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OffresPageContent />
+    </Suspense>
   );
 }

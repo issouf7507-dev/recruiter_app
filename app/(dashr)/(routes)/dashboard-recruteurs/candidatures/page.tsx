@@ -79,11 +79,7 @@ const formatStatus = (status: string) => {
   return status;
 };
 
-export default function CandidaturesPage({
-  params,
-}: {
-  params: { offerId: string };
-}) {
+export default function CandidaturesPage() {
   const [selectedCandidature, setSelectedCandidature] =
     useState<Application | null>(null);
   const [filters, setFilters] = useState({

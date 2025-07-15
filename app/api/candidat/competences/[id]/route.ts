@@ -60,9 +60,10 @@ export async function DELETE(
 // PUT /api/candidat/competences/[id]
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const token = req.cookies.get("candidat")?.value;
 
     if (!token) {
@@ -93,7 +94,7 @@ export async function PUT(
 
     const competence = await prisma.competence.findUnique({
       where: {
-        id: params.id,
+        id: id,
       },
     });
 
@@ -113,7 +114,7 @@ export async function PUT(
 
     const updatedCompetence = await prisma.competence.update({
       where: {
-        id: params.id,
+        id: id,
       },
       data: {
         categorie,

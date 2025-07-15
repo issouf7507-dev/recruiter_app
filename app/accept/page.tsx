@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,7 +28,7 @@ import {
   EyeOff,
 } from "lucide-react";
 
-export default function AcceptInvitationPage() {
+function AcceptInvitationPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get("token");
@@ -380,5 +380,13 @@ export default function AcceptInvitationPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function AcceptInvitationPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AcceptInvitationPageContent />
+    </Suspense>
   );
 }

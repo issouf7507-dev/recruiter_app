@@ -3,9 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verify } from "jsonwebtoken";
 
-// GET /api/objectifs/[objectifId] - Récupérer un objectif spécifique
 export async function GET(
-  req: NextResponse,
+  req: NextRequest,
   { params }: { params: Promise<{ objectifId: string }> }
 ) {
   try {

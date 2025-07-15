@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -113,8 +113,10 @@ const formatStatus = (status: Candidature["status"]) => {
 export default function CandidaturesPage({
   params,
 }: {
-  params: { offerId: string };
+  params: Promise<{ offerId: string }>;
 }) {
+  const { offerId } = use(params);
+
   const [candidatures, setCandidatures] =
     useState<Candidature[]>(mockCandidatures);
   const [selectedCandidature, setSelectedCandidature] =
@@ -155,7 +157,7 @@ export default function CandidaturesPage({
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
       <div className="flex items-center gap-4">
-        <Link href={`/mesoffres/${params.offerId}`}>
+        <Link href={`/mesoffres/${offerId}`}>
           <Button variant="outline" size="icon">
             <ArrowLeft className="h-4 w-4" />
           </Button>
