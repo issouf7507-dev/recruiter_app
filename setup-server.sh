@@ -45,7 +45,7 @@ echo "⚙️ Configuration de Nginx..."
 sudo tee /etc/nginx/sites-available/recruter << EOF
 server {
     listen 80;
-    server_name marabu.services www.marabu.services;
+    server_name xlisx.com;
 
     location / {
         proxy_pass http://localhost:3000;
