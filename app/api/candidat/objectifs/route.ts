@@ -96,7 +96,12 @@ export async function POST(req: NextRequest) {
         description,
         categorie,
         dateLimite: new Date(dateLimite),
-        etapes: etapes || [],
+        objectifEtapes: {
+          create: etapes.map((etape: any) => ({
+            titre: etape.titre,
+            description: etape.description,
+          })),
+        },
         candidatId: candidat.id,
       },
     });
