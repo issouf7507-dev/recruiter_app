@@ -147,9 +147,15 @@ exports.Prisma.CandidatScalarFieldEnum = {
   nationalite: 'nationalite',
   situationFamiliale: 'situationFamiliale',
   permisConduire: 'permisConduire',
-  competences: 'competences',
   image: 'image',
   favorite: 'favorite'
+};
+
+exports.Prisma.CandidatCompetenceScalarFieldEnum = {
+  id: 'id',
+  candidatId: 'candidatId',
+  competence: 'competence',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.RecruteurScalarFieldEnum = {
@@ -228,11 +234,17 @@ exports.Prisma.JobOfferScalarFieldEnum = {
   skills: 'skills',
   favorite: 'favorite',
   templateId: 'templateId',
-  competences: 'competences',
   views: 'views',
   recruteurId: 'recruteurId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.JobOfferCompetenceScalarFieldEnum = {
+  id: 'id',
+  jobOfferId: 'jobOfferId',
+  competence: 'competence',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.OfferTemplateScalarFieldEnum = {
@@ -342,10 +354,16 @@ exports.Prisma.ExperienceScalarFieldEnum = {
   dateDebut: 'dateDebut',
   dateFin: 'dateFin',
   description: 'description',
-  competences: 'competences',
   candidatId: 'candidatId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ExperienceCompetenceScalarFieldEnum = {
+  id: 'id',
+  experienceId: 'experienceId',
+  competence: 'competence',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.FormationScalarFieldEnum = {
@@ -359,6 +377,13 @@ exports.Prisma.FormationScalarFieldEnum = {
   candidatId: 'candidatId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.FormationEtapeScalarFieldEnum = {
+  id: 'id',
+  formationId: 'formationId',
+  etape: 'etape',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CompetenceScalarFieldEnum = {
@@ -378,16 +403,21 @@ exports.Prisma.ObjectifCarriereScalarFieldEnum = {
   categorie: 'categorie',
   dateLimite: 'dateLimite',
   progression: 'progression',
-  etapes: 'etapes',
   candidatId: 'candidatId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ObjectifEtapeScalarFieldEnum = {
+  id: 'id',
+  objectifId: 'objectifId',
+  etape: 'etape',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.AlerteEmploiScalarFieldEnum = {
   id: 'id',
   titre: 'titre',
-  motsCles: 'motsCles',
   localisation: 'localisation',
   typeContrat: 'typeContrat',
   salaireMin: 'salaireMin',
@@ -400,6 +430,13 @@ exports.Prisma.AlerteEmploiScalarFieldEnum = {
   candidatId: 'candidatId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AlerteMotCleScalarFieldEnum = {
+  id: 'id',
+  alerteId: 'alerteId',
+  motCle: 'motCle',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.NotificationScalarFieldEnum = {
@@ -419,14 +456,261 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
-};
-
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  password: 'password',
+  image: 'image'
+};
+
+exports.Prisma.CandidatOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  nom: 'nom',
+  prenom: 'prenom',
+  telephone: 'telephone',
+  cv: 'cv',
+  letterm: 'letterm',
+  email: 'email',
+  bio: 'bio',
+  adresse: 'adresse',
+  ville: 'ville',
+  statut: 'statut',
+  pays: 'pays',
+  nationalite: 'nationalite',
+  situationFamiliale: 'situationFamiliale',
+  permisConduire: 'permisConduire',
+  image: 'image'
+};
+
+exports.Prisma.CandidatCompetenceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidatId: 'candidatId',
+  competence: 'competence'
+};
+
+exports.Prisma.RecruteurOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  entreprise: 'entreprise',
+  description: 'description',
+  name: 'name',
+  logo: 'logo',
+  industry: 'industry',
+  size: 'size',
+  location: 'location',
+  website: 'website',
+  email: 'email',
+  phone: 'phone'
+};
+
+exports.Prisma.CompanySocialOrderByRelevanceFieldEnum = {
+  id: 'id',
+  linkedin: 'linkedin',
+  twitter: 'twitter',
+  recruteurId: 'recruteurId'
+};
+
+exports.Prisma.InvitationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  email: 'email',
+  recruteurId: 'recruteurId',
+  token: 'token'
+};
+
+exports.Prisma.CollaborateurOrderByRelevanceFieldEnum = {
+  id: 'id',
+  email: 'email',
+  nom: 'nom',
+  prenom: 'prenom',
+  recruteurId: 'recruteurId',
+  invitationId: 'invitationId',
+  userId: 'userId'
+};
+
+exports.Prisma.ApplicationCollaborateurOrderByRelevanceFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  collaborateurId: 'collaborateurId',
+  assignedBy: 'assignedBy'
+};
+
+exports.Prisma.JobOfferOrderByRelevanceFieldEnum = {
+  title: 'title',
+  description: 'description',
+  company: 'company',
+  location: 'location',
+  type: 'type',
+  etat: 'etat',
+  experience: 'experience',
+  salaryCurrency: 'salaryCurrency',
+  salaryPeriod: 'salaryPeriod',
+  benefits: 'benefits',
+  requirements: 'requirements',
+  responsibilities: 'responsibilities',
+  skills: 'skills',
+  recruteurId: 'recruteurId'
+};
+
+exports.Prisma.JobOfferCompetenceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  competence: 'competence'
+};
+
+exports.Prisma.OfferTemplateOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  content: 'content',
+  recruteurId: 'recruteurId'
+};
+
+exports.Prisma.ApplicationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidatId: 'candidatId',
+  columnId: 'columnId',
+  message: 'message',
+  cv: 'cv'
+};
+
+exports.Prisma.ApplicationNoteOrderByRelevanceFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName',
+  authorType: 'authorType'
+};
+
+exports.Prisma.ChecklistItemOrderByRelevanceFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  title: 'title',
+  description: 'description',
+  createdById: 'createdById',
+  createdByType: 'createdByType'
+};
+
+exports.Prisma.ApplicationFileOrderByRelevanceFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  uploadedById: 'uploadedById',
+  uploadedByType: 'uploadedByType'
+};
+
+exports.Prisma.KanbanColumnOrderByRelevanceFieldEnum = {
+  id: 'id',
+  color: 'color',
+  name: 'name'
+};
+
+exports.Prisma.AccountOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state'
+};
+
+exports.Prisma.SessionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  sessionToken: 'sessionToken',
+  userId: 'userId'
+};
+
+exports.Prisma.VerificationTokenOrderByRelevanceFieldEnum = {
+  identifier: 'identifier',
+  token: 'token'
+};
+
+exports.Prisma.ExperienceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  poste: 'poste',
+  entreprise: 'entreprise',
+  localisation: 'localisation',
+  typeContrat: 'typeContrat',
+  description: 'description',
+  candidatId: 'candidatId'
+};
+
+exports.Prisma.ExperienceCompetenceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  experienceId: 'experienceId',
+  competence: 'competence'
+};
+
+exports.Prisma.FormationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  diplome: 'diplome',
+  etablissement: 'etablissement',
+  domaine: 'domaine',
+  description: 'description',
+  candidatId: 'candidatId'
+};
+
+exports.Prisma.FormationEtapeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  formationId: 'formationId',
+  etape: 'etape'
+};
+
+exports.Prisma.CompetenceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  categorie: 'categorie',
+  nom: 'nom',
+  candidatId: 'candidatId'
+};
+
+exports.Prisma.ObjectifCarriereOrderByRelevanceFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  description: 'description',
+  categorie: 'categorie',
+  candidatId: 'candidatId'
+};
+
+exports.Prisma.ObjectifEtapeOrderByRelevanceFieldEnum = {
+  id: 'id',
+  objectifId: 'objectifId',
+  etape: 'etape'
+};
+
+exports.Prisma.AlerteEmploiOrderByRelevanceFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  localisation: 'localisation',
+  typeContrat: 'typeContrat',
+  experience: 'experience',
+  frequence: 'frequence',
+  candidatId: 'candidatId'
+};
+
+exports.Prisma.AlerteMotCleOrderByRelevanceFieldEnum = {
+  id: 'id',
+  alerteId: 'alerteId',
+  motCle: 'motCle'
+};
+
+exports.Prisma.NotificationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  titre: 'titre',
+  message: 'message',
+  type: 'type',
+  candidatId: 'candidatId'
 };
 exports.UserType = exports.$Enums.UserType = {
   CANDIDAT: 'CANDIDAT',
@@ -450,12 +734,14 @@ exports.Role = exports.$Enums.Role = {
 exports.Prisma.ModelName = {
   User: 'User',
   Candidat: 'Candidat',
+  CandidatCompetence: 'CandidatCompetence',
   Recruteur: 'Recruteur',
   CompanySocial: 'CompanySocial',
   Invitation: 'Invitation',
   Collaborateur: 'Collaborateur',
   ApplicationCollaborateur: 'ApplicationCollaborateur',
   JobOffer: 'JobOffer',
+  JobOfferCompetence: 'JobOfferCompetence',
   OfferTemplate: 'OfferTemplate',
   Application: 'Application',
   ApplicationNote: 'ApplicationNote',
@@ -466,10 +752,14 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Experience: 'Experience',
+  ExperienceCompetence: 'ExperienceCompetence',
   Formation: 'Formation',
+  FormationEtape: 'FormationEtape',
   Competence: 'Competence',
   ObjectifCarriere: 'ObjectifCarriere',
+  ObjectifEtape: 'ObjectifEtape',
   AlerteEmploi: 'AlerteEmploi',
+  AlerteMotCle: 'AlerteMotCle',
   Notification: 'Notification'
 };
 
