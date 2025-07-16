@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     // Exclude specific offer if provided
     if (exclude) {
       whereClause.NOT = {
-        id: exclude,
+        id: parseInt(exclude),
       };
     }
 

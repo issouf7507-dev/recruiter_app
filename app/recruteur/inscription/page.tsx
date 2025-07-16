@@ -62,11 +62,13 @@ export default function InscriptionRecruteur() {
   };
 
   return (
-    <div className="grid grid-cols-3 min-h-screen">
-      <div className="col-span-2 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-bold text-center">Inscription</h1>
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-card dark:bg-card py-8 px-4  sm:rounded-lg sm:px-10 border">
+    <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-3">
+      {/* Formulaire principal */}
+      <div className="flex-1 flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 lg:col-span-2">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <h1 className="text-2xl font-bold text-center mb-8">Inscription</h1>
+
+          <div className="bg-card dark:bg-card py-6 px-4 sm:py-8 sm:px-6 lg:px-8 sm:rounded-lg border">
             <CustomForm onSubmit={handleSubmit(onSubmit)}>
               <FormGroup
                 label={
@@ -172,7 +174,7 @@ export default function InscriptionRecruteur() {
                 />
               </FormGroup>
 
-              <div>
+              <div className="mt-6">
                 <CustomButton
                   type="submit"
                   className="bg-primary hover:bg-primary/90 w-full"
@@ -189,18 +191,18 @@ export default function InscriptionRecruteur() {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-card ">Déjà inscrit ?</span>
+                  <span className="px-2 bg-card">Déjà inscrit ?</span>
                 </div>
               </div>
 
-              <div className="mt-2">
-                <div className="text-xs text-center">
-                  Vous avez deja un compte?{" "}
+              <div className="mt-4 text-center">
+                <div className="text-sm">
+                  Vous avez déjà un compte ?{" "}
                   <Link
                     href="/recruteur/connexion"
                     className="hover:text-primary hover:underline font-bold"
                   >
-                    Connectez-vous{""}
+                    Connectez-vous
                   </Link>
                 </div>
               </div>
@@ -209,7 +211,8 @@ export default function InscriptionRecruteur() {
         </div>
       </div>
 
-      <div className="col-span-1 bg-primary"></div>
+      {/* Section décorative - cachée sur mobile, visible sur desktop */}
+      <div className="hidden lg:block lg:col-span-1 bg-primary"></div>
     </div>
   );
 }

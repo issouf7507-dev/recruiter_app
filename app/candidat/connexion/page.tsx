@@ -64,34 +64,42 @@ export default function Connexion() {
   }
 
   return (
-    <div className="grid grid-cols-3 min-h-screen">
-      <div className="col-span-2 flex items-center justify-center">
-        <Card className="w-full max-w-md shadow-none">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">
+    <div className="min-h-screen flex">
+      {/* Sidebar colorée - cachée sur mobile */}
+      <div className="hidden lg:block lg:w-1/3 bg-primary"></div>
+
+      {/* Contenu principal */}
+      <div className="flex-1 flex items-center justify-center p-4 lg:p-8">
+        <Card className="w-full max-w-md shadow-lg lg:shadow-none">
+          <CardHeader className="space-y-1 px-6 pt-6 lg:px-8 lg:pt-8">
+            <CardTitle className="text-xl lg:text-2xl font-bold text-center">
               Connexion
             </CardTitle>
-            <CardDescription className="text-center">
+            <CardDescription className="text-center text-sm lg:text-base">
               Entrez vos identifiants pour accéder à votre compte
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-6 pb-6 lg:px-8 lg:pb-8">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
+                className="space-y-4 lg:space-y-6"
               >
                 <FormField
                   control={form.control}
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2">
+                      <FormLabel className="flex items-center gap-2 text-sm lg:text-base">
                         <Mail className="h-4 w-4" />
                         Email
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="votre@email.com" {...field} />
+                        <Input
+                          placeholder="votre@email.com"
+                          {...field}
+                          className="h-10 lg:h-11"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -102,7 +110,7 @@ export default function Connexion() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2">
+                      <FormLabel className="flex items-center gap-2 text-sm lg:text-base">
                         <Lock className="h-4 w-4" />
                         Mot de passe
                       </FormLabel>
@@ -111,22 +119,27 @@ export default function Connexion() {
                           type="password"
                           placeholder="••••••••"
                           {...field}
+                          className="h-10 lg:h-11"
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button
+                  type="submit"
+                  className="w-full h-10 lg:h-11 text-sm lg:text-base"
+                  disabled={isLoading}
+                >
                   {isLoading ? "Connexion..." : "Se connecter"}
                 </Button>
               </form>
             </Form>
-            <div className="mt-4 text-center text-sm">
+            <div className="mt-4 lg:mt-6 text-center text-xs lg:text-sm">
               <span className="text-gray-600">Pas encore de compte ? </span>
               <Link
                 href="/candidat/inscription"
-                className="text-primary hover:underline"
+                className="text-primary hover:underline font-medium"
               >
                 S'inscrire
               </Link>
@@ -134,8 +147,6 @@ export default function Connexion() {
           </CardContent>
         </Card>
       </div>
-      <div className="col-span-1 bg-primary"></div>
     </div>
-    // </div>
   );
 }

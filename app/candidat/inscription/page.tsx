@@ -115,70 +115,96 @@ export default function Inscription() {
   }
 
   return (
-    // <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div className="grid grid-cols-3 min-h-screen">
-      <div className="col-span-2  flex items-center justify-center">
-        <Card className="w-full max-w-2xl shadow-none">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">
-              Inscription
-            </CardTitle>
-            <CardDescription className="text-center">
-              Créez votre compte candidat
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
-              >
-                <div className="grid grid-cols-3 gap-4">
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile: Full width, Desktop: Grid layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 min-h-screen">
+        {/* Form Section */}
+        <div className="col-span-1 lg:col-span-2 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+          <Card className="w-full max-w-2xl shadow-none border-0 lg:border">
+            <CardHeader className="space-y-1 px-4 sm:px-6 lg:px-8 pt-6">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-center">
+                Inscription
+              </CardTitle>
+              <CardDescription className="text-center text-sm sm:text-base">
+                Créez votre compte candidat
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="px-4 sm:px-6 lg:px-8 pb-6">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4 sm:space-y-6"
+                >
+                  {/* Nom, Prénom, Email - Responsive grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                    <FormField
+                      control={form.control}
+                      name="nom"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <User className="h-4 w-4" />
+                            Nom
+                          </FormLabel>
+                          <FormControl>
+                            <Input placeholder="Votre nom" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="prenom"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <User className="h-4 w-4" />
+                            Prénom
+                          </FormLabel>
+                          <FormControl>
+                            <Input placeholder="Votre prénom" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem className="sm:col-span-2 lg:col-span-1">
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <Mail className="h-4 w-4" />
+                            Email
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              placeholder="votre@email.com"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* Téléphone - Full width */}
                   <FormField
                     control={form.control}
-                    name="nom"
+                    name="telephone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <User className="h-4 w-4" />
-                          Nom
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder="Votre nom" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="prenom"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <User className="h-4 w-4" />
-                          Prénom
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder="Votre prénom" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <Mail className="h-4 w-4" />
-                          Email
+                        <FormLabel className="flex items-center gap-2 text-sm">
+                          <Phone className="h-4 w-4" />
+                          Téléphone
                         </FormLabel>
                         <FormControl>
                           <Input
-                            type="email"
-                            placeholder="votre@email.com"
+                            type="tel"
+                            placeholder="Votre numéro de téléphone"
                             {...field}
                           />
                         </FormControl>
@@ -186,220 +212,205 @@ export default function Inscription() {
                       </FormItem>
                     )}
                   />
-                </div>
 
-                <FormField
-                  control={form.control}
-                  name="telephone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-center gap-2">
-                        <Phone className="h-4 w-4" />
-                        Téléphone
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="tel"
-                          placeholder="Votre numéro de téléphone"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <Lock className="h-4 w-4" />
-                          Mot de passe
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="••••••••"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <Lock className="h-4 w-4" />
-                          Confirmer le mot de passe
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            type="password"
-                            placeholder="••••••••"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="dateNaissance"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <Calendar className="h-4 w-4" />
-                          Date de naissance
-                        </FormLabel>
-                        <FormControl>
-                          <Input type="date" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="nationalite"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <Globe className="h-4 w-4" />
-                          Nationalité
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder="Votre nationalité" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="pays"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4" />
-                          Pays
-                        </FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl className="w-full">
-                            <SelectTrigger>
-                              <SelectValue placeholder="Sélectionnez votre pays" />
-                            </SelectTrigger>
+                  {/* Mots de passe - Responsive grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <Lock className="h-4 w-4" />
+                            Mot de passe
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="••••••••"
+                              {...field}
+                            />
                           </FormControl>
-                          <SelectContent>
-                            <SelectItem value="CI">Côte d'Ivoire</SelectItem>
-                            <SelectItem value="FR">France</SelectItem>
-                            <SelectItem value="SN">Sénégal</SelectItem>
-                            <SelectItem value="ML">Mali</SelectItem>
-                            <SelectItem value="BF">Burkina Faso</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="situationFamiliale"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <Users className="h-4 w-4" />
-                          Situation familiale
-                        </FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl className="w-full">
-                            <SelectTrigger>
-                              <SelectValue placeholder="Sélectionnez votre situation" />
-                            </SelectTrigger>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="confirmPassword"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <Lock className="h-4 w-4" />
+                            Confirmer le mot de passe
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="password"
+                              placeholder="••••••••"
+                              {...field}
+                            />
                           </FormControl>
-                          <SelectContent>
-                            <SelectItem value="celibataire">
-                              Célibataire
-                            </SelectItem>
-                            <SelectItem value="marie">Marié(e)</SelectItem>
-                            <SelectItem value="divorce">Divorcé(e)</SelectItem>
-                            <SelectItem value="veuf">Veuf(ve)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
 
-                  <FormField
-                    control={form.control}
-                    name="permisConduire"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          <Car className="h-4 w-4" />
-                          Permis de conduire
-                        </FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl className="w-full">
-                            <SelectTrigger>
-                              <SelectValue placeholder="Avez-vous le permis ?" />
-                            </SelectTrigger>
+                  {/* Date de naissance et Nationalité - Responsive grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <FormField
+                      control={form.control}
+                      name="dateNaissance"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <Calendar className="h-4 w-4" />
+                            Date de naissance
+                          </FormLabel>
+                          <FormControl>
+                            <Input type="date" {...field} />
                           </FormControl>
-                          <SelectContent>
-                            <SelectItem value="oui">Oui</SelectItem>
-                            <SelectItem value="non">Non</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Inscription..." : "S'inscrire"}
-                </Button>
-              </form>
-            </Form>
-            <div className="mt-4 text-center text-sm">
-              <span className="text-gray-600">Déjà un compte ? </span>
-              <Link
-                href="/candidat/connexion"
-                className="text-primary hover:underline"
-              >
-                Se connecter
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+                    <FormField
+                      control={form.control}
+                      name="nationalite"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <Globe className="h-4 w-4" />
+                            Nationalité
+                          </FormLabel>
+                          <FormControl>
+                            <Input placeholder="Votre nationalité" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* Pays, Situation familiale, Permis - Responsive grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                    <FormField
+                      control={form.control}
+                      name="pays"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <MapPin className="h-4 w-4" />
+                            Pays
+                          </FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl className="w-full">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Sélectionnez votre pays" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="CI">Côte d'Ivoire</SelectItem>
+                              <SelectItem value="FR">France</SelectItem>
+                              <SelectItem value="SN">Sénégal</SelectItem>
+                              <SelectItem value="ML">Mali</SelectItem>
+                              <SelectItem value="BF">Burkina Faso</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="situationFamiliale"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <Users className="h-4 w-4" />
+                            Situation familiale
+                          </FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl className="w-full">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Sélectionnez votre situation" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="celibataire">
+                                Célibataire
+                              </SelectItem>
+                              <SelectItem value="marie">Marié(e)</SelectItem>
+                              <SelectItem value="divorce">
+                                Divorcé(e)
+                              </SelectItem>
+                              <SelectItem value="veuf">Veuf(ve)</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="permisConduire"
+                      render={({ field }) => (
+                        <FormItem className="sm:col-span-2 lg:col-span-1">
+                          <FormLabel className="flex items-center gap-2 text-sm">
+                            <Car className="h-4 w-4" />
+                            Permis de conduire
+                          </FormLabel>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl className="w-full">
+                              <SelectTrigger>
+                                <SelectValue placeholder="Avez-vous le permis ?" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="oui">Oui</SelectItem>
+                              <SelectItem value="non">Non</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <Button type="submit" className="w-full" disabled={isLoading}>
+                    {isLoading ? "Inscription..." : "S'inscrire"}
+                  </Button>
+                </form>
+              </Form>
+              <div className="mt-4 text-center text-sm">
+                <span className="text-gray-600">Déjà un compte ? </span>
+                <Link
+                  href="/candidat/connexion"
+                  className="text-primary hover:underline"
+                >
+                  Se connecter
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Background Section - Hidden on mobile, visible on desktop */}
+        <div className="hidden lg:block col-span-1 bg-primary"></div>
       </div>
-      <div className="col-span-1 bg-primary"></div>
     </div>
-    // </div>
   );
 }

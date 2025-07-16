@@ -62,14 +62,16 @@ export default function ConnexionRecruteur() {
   };
 
   return (
-    <div className="grid grid-cols-3 min-h-screen">
-      <div className="col-span-2 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-        <h1 className="text-2xl font-bold text-center">Connexion</h1>
-        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-card py-8 px-4  sm:rounded-lg sm:px-10 border">
+    <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-3">
+      {/* Contenu principal - responsive */}
+      <div className="flex-1 flex flex-col justify-center px-4 py-8 sm:px-6 lg:px-8 lg:col-span-2">
+        <div className="mx-auto w-full max-w-md">
+          <h1 className="text-2xl font-bold text-center mb-8">Connexion</h1>
+
+          <div className="bg-card py-6 px-4 sm:py-8 sm:px-6 rounded-lg border shadow-sm">
             <CustomForm onSubmit={handleSubmit(onSubmit)}>
               {errors.root && (
-                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">
+                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-4">
                   {errors.root.message}
                 </div>
               )}
@@ -108,7 +110,7 @@ export default function ConnexionRecruteur() {
                 />
               </FormGroup>
 
-              <div>
+              <div className="mt-6">
                 <CustomButton
                   type="submit"
                   className="bg-primary hover:bg-primary/90 w-full"
@@ -125,25 +127,39 @@ export default function ConnexionRecruteur() {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-card">Pas encore inscrit ?</span>
+                  <span className="px-2 bg-card text-muted-foreground">
+                    Pas encore inscrit ?
+                  </span>
                 </div>
               </div>
-              <div className="mt-2">
-                <div className="text-xs text-center">
+              <div className="mt-4 text-center">
+                <span className="text-sm text-muted-foreground">
                   Vous n'avez pas de compte?{" "}
                   <Link
                     href="/recruteur/inscription"
-                    className="hover:text-primary hover:underline font-bold"
+                    className="text-primary hover:underline font-medium"
                   >
-                    Incrivez-vous
+                    Inscrivez-vous
                   </Link>
-                </div>
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="col-span-1 bg-primary"></div>
+
+      {/* Sidebar colorée - cachée sur mobile, visible sur desktop */}
+      <div className="hidden lg:block bg-primary">
+        {/* Contenu optionnel pour la sidebar */}
+        <div className="h-full flex items-center justify-center">
+          <div className="text-white text-center p-8">
+            <h2 className="text-2xl font-bold mb-4">Bienvenue</h2>
+            <p className="text-lg opacity-90">
+              Connectez-vous à votre espace recruteur
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -45,7 +45,7 @@ echo "⚙️ Configuration de Nginx..."
 sudo tee /etc/nginx/sites-available/recruter << EOF
 server {
     listen 80;
-    server_name xlisx.com;
+    server_name ylsix.com;
 
     location / {
         proxy_pass http://localhost:3000;

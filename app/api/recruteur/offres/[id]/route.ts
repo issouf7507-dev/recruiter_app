@@ -89,16 +89,6 @@ export async function GET(
     const offerId = (await params).id;
     // const cacheKey = CACHE_KEYS.KANBAN_BOARD(offerId);
 
-    // Essayer de récupérer depuis le cache
-    // const cachedData = await cacheUtils.get(cacheKey);
-    // if (cachedData) {
-    //   return NextResponse.json({
-    //     success: true,
-    //     data: cachedData,
-    //     fromCache: true,
-    //   });
-    // }
-
     // Si pas en cache, récupérer depuis la base de données
     const offer = await prisma.jobOffer.findFirst({
       where: {

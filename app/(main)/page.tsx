@@ -23,6 +23,7 @@ import {
   Building,
 } from "lucide-react";
 import Header from "../components/header/header";
+import Footer from "../components/footer/footer";
 
 // Data structure for pricing cards
 const pricingPlans = [
@@ -140,36 +141,36 @@ export default function Home() {
       {/* Header */}
       <Header />
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-20 flex items-center gap-12 justify-center flex-col h-screen ">
+      <section className="container mx-auto px-4 py-12 md:py-20 flex items-center gap-8 md:gap-12 justify-center flex-col min-h-screen">
         {/* Left: Text */}
         <div className="text-center w-full">
-          <Badge variant="secondary" className="mb-6 px-4 py-2 text-sm">
+          <Badge
+            variant="secondary"
+            className="mb-4 md:mb-6 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm"
+          >
             Plateforme de recrutement nouvelle génération
           </Badge>
-          <h1 className="text-7xl w-full mb-5">
-            Recrutement, RH et conformité pour <br />
+          <h1 className="text-3xl md:text-5xl lg:text-7xl w-full mb-4 md:mb-5 leading-tight">
+            Recrutement, RH et conformité pour{" "}
             <span className="text-primary">les équipes mondiales</span>
           </h1>
-          <p className="w-full text-xl mb-10">
+          <p className="w-full text-base md:text-lg lg:text-xl mb-6 md:mb-10 max-w-4xl mx-auto px-4">
             Recrutez des talents dans 150+ pays, gérez la paie mondiale et
-            restez 100% <br />
-            conformes—le tout sur une seule plateforme.
+            restez 100% conformes—le tout sur une seule plateforme.
           </p>
-          <div className="flex gap-4 justify-center ">
-            {/* <Link href="/recruteur/inscription"> */}
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4">
             <Button
               onClick={() => setIsOpen(true)}
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-base md:text-lg px-6 md:px-8 py-4 md:py-6 w-full sm:w-auto"
             >
               Commencer gratuitement
-              <ArrowRight className="ml-2 w-5 h-5" />
+              <ArrowRight className="ml-2 w-4 h-4 md:w-5 md:h-5" />
             </Button>
-            {/* </Link> */}
             <Button
               variant="outline"
               size="lg"
-              className="text-lg px-8 py-6"
+              className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6 w-full sm:w-auto"
               onClick={() => setIsSearchModalOpen(true)}
             >
               Rechercher une offre
@@ -191,19 +192,19 @@ export default function Home() {
       </section> */}
 
       {/* Features Section */}
-      <section id="features" className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-foreground mb-4">
+      <section id="features" className="container mx-auto px-4 py-12 md:py-20">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
             Boostez vos recrutements avec une plateforme intelligente
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base md:text-lg lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
             Multipliez vos canaux de recrutement et touchez les meilleurs
             talents. Diffusez vos offres sur +160 jobboards, trouvez les bons
             profils sur LinkedIn et CVthèques, et activez la cooptation pour
             booster votre visibilité.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           <Card className="border  hover:shadow-md transition-all duration-300 shadow-none">
             <CardContent className="p-8 flex flex-col items-center text-center">
               <Users className="w-8 h-8 text-primary mb-4" />
@@ -279,42 +280,53 @@ export default function Home() {
       </section>
 
       {/* Avantages Section */}
-      <section className="bg-muted/50 py-20">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-16">
-          <div className="flex-1">
-            <div className="w-full h-64 bg-primary/10 rounded-xl flex items-center justify-center">
-              <span className="text-7xl text-primary">🎯</span>
+      <section className="bg-muted/50 py-12 md:py-20">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8 md:gap-16">
+          <div className="flex-1 order-2 md:order-1">
+            <div className="w-full h-48 md:h-64 bg-primary/10 rounded-xl flex items-center justify-center">
+              <span className="text-4xl md:text-7xl text-primary">🎯</span>
             </div>
           </div>
-          <div className="flex-1">
-            <Badge variant="secondary" className="mb-4 px-4 py-2 text-sm">
+          <div className="flex-1 order-1 md:order-2">
+            <Badge
+              variant="secondary"
+              className="mb-4 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm"
+            >
               Avantages clés
             </Badge>
-            <h2 className="text-4xl font-bold text-foreground mb-4">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
               Une plateforme complète pour optimiser vos recrutements
             </h2>
-            <ul className="space-y-4 text-lg text-muted-foreground mb-8">
-              <li className="flex items-center">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3" />
-                Tableau Kanban pour suivre vos candidatures en temps réel
+            <ul className="space-y-3 md:space-y-4 text-base md:text-lg text-muted-foreground mb-6 md:mb-8">
+              <li className="flex items-start">
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                <span>
+                  Tableau Kanban pour suivre vos candidatures en temps réel
+                </span>
               </li>
-              <li className="flex items-center">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3" />
-                Système de templates pour créer des offres rapidement
+              <li className="flex items-start">
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                <span>
+                  Système de templates pour créer des offres rapidement
+                </span>
               </li>
-              <li className="flex items-center">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3" />
-                Collaboration d'équipe avec gestion des rôles et permissions
+              <li className="flex items-start">
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                <span>
+                  Collaboration d'équipe avec gestion des rôles et permissions
+                </span>
               </li>
-              <li className="flex items-center">
-                <CheckCircle2 className="w-5 h-5 text-primary mr-3" />
-                Diffusion multi-canal et recherche de candidats avancée
+              <li className="flex items-start">
+                <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-primary mr-3 mt-0.5 flex-shrink-0" />
+                <span>
+                  Diffusion multi-canal et recherche de candidats avancée
+                </span>
               </li>
             </ul>
             <Button
               onClick={() => setIsOpen(true)}
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-base md:text-lg px-6 md:px-8 py-4 md:py-6 w-full sm:w-auto"
             >
               Commencer gratuitement
             </Button>
@@ -323,41 +335,44 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="container mx-auto px-4 py-20">
-        <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-4 px-4 py-2 text-sm">
+      <section id="pricing" className="container mx-auto px-4 py-12 md:py-20">
+        <div className="text-center mb-12 md:mb-16">
+          <Badge
+            variant="secondary"
+            className="mb-4 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm"
+          >
             Nos tarifs
           </Badge>
-          <h2 className="text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
             Nous avons des plans exclusifs pour vous
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
           {pricingPlansWithHandlers.map((plan) => (
             <Card
               key={plan.id}
-              className={`shadow-none h-[650px] ${
+              className={`shadow-none min-h-[600px] md:h-[650px] ${
                 plan.isPopular ? "border-2 border-primary bg-primary" : ""
               }`}
             >
               <CardContent className="flex flex-col justify-between h-full">
-                <div className="p-8 flex flex-col">
+                <div className="p-6 md:p-8 flex flex-col">
                   <h3
-                    className={`text-xl font-semibold mb-2 text-foreground ${
+                    className={`text-lg md:text-xl font-semibold mb-2 text-foreground ${
                       plan.isPopular ? "text-white" : ""
                     }`}
                   >
                     {plan.name}
                   </h3>
                   <div
-                    className={`text-5xl font-bold text-primary mb-7 ${
+                    className={`text-3xl md:text-5xl font-bold text-primary mb-4 md:mb-7 ${
                       plan.isPopular ? "text-white" : ""
                     }`}
                   >
                     {plan.price}
                     {plan.currency}
                     <span
-                      className={`text-base font-normal ${
+                      className={`text-sm md:text-base font-normal ${
                         plan.isPopular ? "text-white" : ""
                       }`}
                     >
@@ -365,9 +380,9 @@ export default function Home() {
                       / {plan.period}
                     </span>
                   </div>
-                  <div className="flex items-center justify-center mb-7 ">
+                  <div className="flex items-center justify-center mb-4 md:mb-7">
                     <p
-                      className={`text-muted-foreground text-sm text-center ${
+                      className={`text-muted-foreground text-xs md:text-sm text-center ${
                         plan.isPopular ? "text-white" : ""
                       }`}
                     >
@@ -375,40 +390,39 @@ export default function Home() {
                     </p>
                   </div>
                   <div
-                    className={`border-b border-gray-200 w-full mb-7 ${
+                    className={`border-b border-gray-200 w-full mb-4 md:mb-7 ${
                       plan.isPopular ? "border-white" : ""
                     }`}
                   ></div>
 
-                  <ul className="space-y-2 text-muted-foreground text-sm mb-6 list-disc flex flex-col gap-2">
+                  <ul className="space-y-2 text-muted-foreground text-xs md:text-sm mb-4 md:mb-6 list-disc flex flex-col gap-2">
                     {plan.features.map((feature, index) => (
                       <li
                         key={index}
-                        className={`flex items-center ${
+                        className={`flex items-start ${
                           plan.isPopular ? "text-white" : ""
                         }`}
                       >
                         <CheckCircle2
-                          className={`w-5 h-5 text-primary mr-3 ${
+                          className={`w-4 h-4 md:w-5 md:h-5 text-primary mr-2 md:mr-3 mt-0.5 flex-shrink-0 ${
                             plan.isPopular ? "text-white" : ""
                           }`}
                         />
-                        {feature}
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-                {/*  */}
                 <Button
                   onClick={plan.onClick}
-                  className={`w-full ${
+                  className={`w-full text-sm md:text-base ${
                     plan.buttonVariant === "primary"
                       ? "bg-primary text-primary-foreground hover:bg-primary/90"
                       : ""
                   } ${plan.isPopular ? "bg-white text-primary" : ""}`}
                 >
                   {plan.buttonText}
-                </Button>{" "}
+                </Button>
               </CardContent>
             </Card>
           ))}
@@ -416,34 +430,34 @@ export default function Home() {
       </section>
 
       {/* Testimonial Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="flex-1">
+      <section className="container mx-auto px-4 py-12 md:py-20">
+        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+          <div className="flex-1 order-2 md:order-1">
             <Card className="shadow-xl">
-              <CardContent className="p-8">
+              <CardContent className="p-6 md:p-8">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-5 h-5 text-yellow-400 fill-current"
+                      className="w-4 h-4 md:w-5 md:h-5 text-yellow-400 fill-current"
                     />
                   ))}
                 </div>
-                <p className="text-muted-foreground mb-4 text-lg">
+                <p className="text-muted-foreground mb-4 text-base md:text-lg">
                   "Comment Revolut a simplifié la relocalisation des employés
                   avec Hirer. La plateforme est facile à utiliser et l'équipe de
                   support est toujours disponible. Nous avons économisé du temps
                   et de l'argent sur l'embauche mondiale."
                 </p>
                 <div className="flex items-center mt-6">
-                  <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-3 text-2xl">
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-primary/10 rounded-full flex items-center justify-center mr-3 text-xl md:text-2xl">
                     👨‍💼
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground">
+                    <div className="font-semibold text-foreground text-sm md:text-base">
                       Lukas Bensing
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-xs md:text-sm text-muted-foreground">
                       Responsable RH, Revolut
                     </div>
                   </div>
@@ -451,32 +465,35 @@ export default function Home() {
               </CardContent>
             </Card>
           </div>
-          <div className="flex-1 flex justify-center">
-            <div className="w-full h-64 bg-primary/10 rounded-xl flex items-center justify-center">
-              <span className="text-7xl text-primary">💼</span>
+          <div className="flex-1 flex justify-center order-1 md:order-2">
+            <div className="w-full h-48 md:h-64 bg-primary/10 rounded-xl flex items-center justify-center">
+              <span className="text-4xl md:text-7xl text-primary">💼</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Newsletter Section */}
-      <section className="bg-primary/10 py-16">
+      <section className="bg-primary/10 py-12 md:py-16">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Abonnez-vous à notre newsletter
           </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-muted-foreground mb-6 md:mb-8 max-w-xl mx-auto">
             Recevez les dernières actualités et mises à jour sur l'embauche
             mondiale, les RH et la paie directement dans votre boîte mail.
           </p>
-          <form className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-xl mx-auto">
+          <form className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center max-w-xl mx-auto">
             <input
               type="email"
               placeholder="Entrez votre email"
-              className="w-full sm:w-auto px-6 py-4 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full sm:w-auto px-4 md:px-6 py-3 md:py-4 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary text-sm md:text-base"
               required
             />
-            <Button type="submit" className="px-8 py-4 text-lg">
+            <Button
+              type="submit"
+              className="px-6 md:px-8 py-3 md:py-4 text-sm md:text-lg w-full sm:w-auto"
+            >
               Recevoir le guide
             </Button>
           </form>
@@ -484,97 +501,62 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-muted py-12 mt-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-8 mb-8">
-            <div className="flex items-center space-x-2">
-              <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-              <span className="text-xl font-bold text-foreground">Hirer</span>
-            </div>
-            <div className="flex gap-6 text-muted-foreground text-lg">
-              <Link href="#features" className="hover:text-foreground">
-                Fonctionnalités
-              </Link>
-              <Link href="#pricing" className="hover:text-foreground">
-                Tarifs
-              </Link>
-              <Link href="#about" className="hover:text-foreground">
-                À propos
-              </Link>
-            </div>
-            <div className="flex gap-4">
-              <a href="#" aria-label="Twitter" className="hover:opacity-80">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path
-                    d="M22 5.92a8.38 8.38 0 01-2.36.65A4.13 4.13 0 0021.4 4.1a8.19 8.19 0 01-2.6.99A4.1 4.1 0 0012 8.09c0 .32.04.64.1.94A11.65 11.65 0 013 4.89a4.07 4.07 0 001.27 5.47A4.07 4.07 0 012.8 9.1v.05a4.1 4.1 0 003.29 4.02c-.36.1-.74.16-1.13.16-.28 0-.54-.03-.8-.08a4.1 4.1 0 003.83 2.85A8.23 8.23 0 012 19.54a11.62 11.62 0 006.29 1.84c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.36-.02-.54A8.18 8.18 0 0022 5.92z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </a>
-              <a href="#" aria-label="LinkedIn" className="hover:opacity-80">
-                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path
-                    d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.28c-.97 0-1.75-.79-1.75-1.75s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.75-1.75 1.75zm13.5 10.28h-3v-4.5c0-1.08-.02-2.47-1.5-2.47-1.5 0-1.73 1.17-1.73 2.39v4.58h-3v-9h2.88v1.23h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v4.72z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div className="border-t border-border pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 Hirer. Tous droits réservés.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* les absoulutes  */}
 
       {isOpen && (
         <div className="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="relative flex flex-col bg-white rounded-2xl shadow-2xl p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
+          <div className="relative flex flex-col bg-white rounded-xl md:rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
             {/* Close button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 group"
+              className="absolute top-3 right-3 md:top-4 md:right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 group"
             >
-              <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
+              <X className="w-4 h-4 md:w-5 md:h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
             </button>
 
             {/* Header */}
-            <div className="text-center mb-8">
-              <h2 className="text-4xl font-bold text-primary mb-3">
+            <div className="text-center mb-6 md:mb-8">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2 md:mb-3">
                 Bienvenue sur xlsix
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-600 text-base md:text-lg">
                 Vous êtes un recruteur ou un candidat ?
               </p>
             </div>
 
             {/* Options */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <Link href="/recruteur/inscription" className="group">
-                <div className="flex flex-col items-center justify-center border-2 border-gray-200 hover:border-primary hover:shadow-lg rounded-xl p-8 h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:from-primary/5 hover:to-primary/10">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
-                    <UserCheck size={32} className="text-primary" />
+                <div className="flex flex-col items-center justify-center border-2 border-gray-200 hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:from-primary/5 hover:to-primary/10">
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                    <UserCheck
+                      size={24}
+                      className="text-primary md:w-8 md:h-8"
+                    />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
                     Recruteur
                   </h3>
-                  <p className="text-sm text-gray-600 text-center">
+                  <p className="text-xs md:text-sm text-gray-600 text-center">
                     Publiez des offres et trouvez les meilleurs talents
                   </p>
                 </div>
               </Link>
 
               <Link href="/candidat/inscription" className="group">
-                <div className="flex flex-col items-center justify-center border-2 border-gray-200 hover:border-primary hover:shadow-lg rounded-xl p-8 h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:from-primary/5 hover:to-primary/10">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
-                    <Briefcase size={32} className="text-primary" />
+                <div className="flex flex-col items-center justify-center border-2 border-gray-200 hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:from-primary/5 hover:to-primary/10">
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                    <Briefcase
+                      size={24}
+                      className="text-primary md:w-8 md:h-8"
+                    />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
                     Candidat
                   </h3>
-                  <p className="text-sm text-gray-600 text-center">
+                  <p className="text-xs md:text-sm text-gray-600 text-center">
                     Découvrez des opportunités et postulez facilement
                   </p>
                 </div>
@@ -582,8 +564,8 @@ export default function Home() {
             </div>
 
             {/* Footer */}
-            <div className="text-center mt-6">
-              <p className="text-sm text-gray-500">
+            <div className="text-center mt-4 md:mt-6">
+              <p className="text-xs md:text-sm text-gray-500">
                 Rejoignez notre communauté de professionnels
               </p>
             </div>
@@ -594,28 +576,28 @@ export default function Home() {
       {/* Search Modal */}
       {isSearchModalOpen && (
         <div className="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="relative flex flex-col bg-white rounded-2xl shadow-2xl p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300">
+          <div className="relative flex flex-col bg-white rounded-xl md:rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
             {/* Close button */}
             <button
               onClick={() => setIsSearchModalOpen(false)}
-              className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 group"
+              className="absolute top-3 right-3 md:top-4 md:right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 group"
             >
-              <X className="w-5 h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
+              <X className="w-4 h-4 md:w-5 md:h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
             </button>
 
             {/* Header */}
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-primary mb-3">
+            <div className="text-center mb-6 md:mb-8">
+              <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2 md:mb-3">
                 Rechercher une offre
               </h2>
-              <p className="text-gray-600 text-lg">
+              <p className="text-gray-600 text-base md:text-lg">
                 Trouvez l'opportunité qui vous correspond
               </p>
             </div>
 
             {/* Search Form */}
-            <form onSubmit={handleSearch} className="space-y-6">
-              <div className="space-y-4">
+            <form onSubmit={handleSearch} className="space-y-4 md:space-y-6">
+              <div className="space-y-3 md:space-y-4">
                 <div>
                   <Label
                     htmlFor="searchQuery"
@@ -671,7 +653,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4">
                 <Button
                   type="button"
                   variant="outline"
