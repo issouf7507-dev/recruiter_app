@@ -23,10 +23,9 @@ export class SearchService {
       const where: any = {};
 
       // Add filters only if they are provided and not empty
-      if (title) where.title = { contains: title, mode: "insensitive" };
-      //   if (company) where.company = { contains: company, mode: "insensitive" };
-      if (location)
-        where.location = { contains: location, mode: "insensitive" };
+      if (title) where.title = { contains: title };
+      //   if (company) where.company = { contains: company };
+      if (location) where.location = { contains: location };
       if (type && type !== "all") where.type = type;
 
       // Handle experience filter
@@ -55,11 +54,9 @@ export class SearchService {
         where: {
           title: {
             contains: title,
-            mode: "insensitive",
           },
           location: {
             contains: location,
-            mode: "insensitive",
           },
           type: where.type,
           //   salaryMin: {
