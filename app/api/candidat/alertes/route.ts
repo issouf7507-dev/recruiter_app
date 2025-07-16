@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const {
       titre,
-      motsCles,
+      // motsCles,
       localisation,
       typeContrat,
       salaireMin,
@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
     const alerte = await prisma.alerteEmploi.create({
       data: {
         titre,
-        motsCles: motsCles || [],
+        // motsCles: motsCles || [],
         localisation,
         typeContrat,
         salaireMin,
