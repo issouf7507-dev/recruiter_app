@@ -143,7 +143,7 @@ export async function GET(req: NextRequest) {
 
       const diplome = candidat.formations?.[0]?.diplome || "Non spécifié";
       const competences = [
-        ...candidat.competences,
+        ...candidat.competencesList,
         ...(candidat.competencesList?.map((comp: any) => comp.nom) || []),
       ];
 

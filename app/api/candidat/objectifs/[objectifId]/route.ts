@@ -109,7 +109,13 @@ export async function PATCH(
         dateLimite: dateLimite ? new Date(dateLimite) : objectif.dateLimite,
         progression:
           progression !== undefined ? progression : objectif.progression,
-        etapes: etapes || objectif.etapes,
+        // etapes: etapes || objectif.etapes,
+        objectifEtapes: {
+          create: etapes.map((etape: any) => ({
+            titre: etape.titre,
+            description: etape.description,
+          })),
+        },
       },
     });
 

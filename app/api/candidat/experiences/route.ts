@@ -108,7 +108,11 @@ export async function POST(req: NextRequest) {
         dateDebut: new Date(dateDebut),
         dateFin: dateFin ? new Date(dateFin) : null,
         description,
-        competences,
+        experienceCompetences: {
+          create: competences.map((competence: any) => ({
+            competenceId: competence.id,
+          })),
+        },
         candidatId: candidat.id,
       },
     });

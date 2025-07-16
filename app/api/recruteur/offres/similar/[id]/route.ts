@@ -13,6 +13,9 @@ export async function GET(
       where: {
         id: Number(id),
       },
+      include: {
+        jobOfferCompetences: true,
+      },
     });
 
     if (!currentOffer) {
@@ -40,8 +43,14 @@ export async function GET(
                 location: currentOffer.location, // Même localisation
               },
               {
-                competences: {
-                  hasSome: currentOffer.competences, // Compétences similaires
+                jobOfferCompetences: {
+                  some: {
+                    competence: {
+                      in: currentOffer.jobOfferCompetences.map(
+                        (competence) => competence.competence
+                      ),
+                    },
+                  },
                 },
               },
               {

@@ -50,7 +50,7 @@ export async function PUT(
         benefits,
         // templateId: template,
         // recruteurId: recruteur.id,
-        competences: Array.isArray(skills)
+        jobOfferCompetences: Array.isArray(skills)
           ? skills
           : skills
               .split(",")
@@ -107,7 +107,7 @@ export async function GET(
                 nom: true,
                 prenom: true,
                 email: true,
-                competences: true,
+                competencesList: true,
                 cv: true,
                 letterm: true,
               },

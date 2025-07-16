@@ -69,7 +69,11 @@ export async function POST(req: Request) {
           benefits,
           templateId: template,
           recruteurId: recruteur.id,
-          competences: skills,
+          jobOfferCompetences: {
+            create: skills.map((skill: any) => ({
+              competence: skill,
+            })),
+          },
         },
       });
 

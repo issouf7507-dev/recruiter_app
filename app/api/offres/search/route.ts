@@ -63,6 +63,11 @@ export async function GET(req: NextRequest) {
             id: true,
           },
         },
+        jobOfferCompetences: {
+          select: {
+            competence: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -88,7 +93,7 @@ export async function GET(req: NextRequest) {
       requirements: offer.requirements,
       responsibilities: offer.responsibilities,
       skills: offer.skills,
-      competences: offer.competences,
+      jobOfferCompetences: offer.jobOfferCompetences,
       views: offer.views,
       createdAt: offer.createdAt,
       updatedAt: offer.updatedAt,

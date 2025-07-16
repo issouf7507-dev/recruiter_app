@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const {
       titre,
-      // motsCles,
+      motsCles,
       localisation,
       typeContrat,
       salaireMin,
@@ -91,6 +91,11 @@ export async function POST(req: NextRequest) {
       data: {
         titre,
         // motsCles: motsCles || [],
+        alerteMotsCles: {
+          create: motsCles.map((mot: any) => ({
+            mot: mot,
+          })),
+        },
         localisation,
         typeContrat,
         salaireMin,
