@@ -80,7 +80,7 @@ export async function PATCH(
     const body = await req.json();
     const {
       titre,
-      motsCles,
+      // motsCles,
       localisation,
       typeContrat,
       salaireMin,
@@ -119,7 +119,7 @@ export async function PATCH(
       where: { id: alerteId },
       data: {
         titre: titre || alerte.titre,
-        motsCles: motsCles || alerte.motsCles,
+        // motsCles: motsCles || alerte.motsCles,
         localisation: localisation || alerte.localisation,
         typeContrat: typeContrat || alerte.typeContrat,
         salaireMin: salaireMin !== undefined ? salaireMin : alerte.salaireMin,
