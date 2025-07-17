@@ -26,15 +26,15 @@ export default function OffresStats({
   const getTypeColor = (type: string) => {
     switch (type) {
       case "CDI":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
       case "CDD":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400";
       case "Stage":
-        return "bg-purple-100 text-purple-800";
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400";
       case "Freelance":
-        return "bg-orange-100 text-orange-800";
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
     }
   };
 

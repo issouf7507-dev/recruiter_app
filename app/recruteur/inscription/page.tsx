@@ -11,7 +11,15 @@ import {
   CustomButton,
 } from "@/components/custom-form";
 import Link from "next/link";
-import { Mail, Lock, User, Building2, Briefcase, FileText } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  User,
+  Building2,
+  Briefcase,
+  FileText,
+  UserCheck,
+} from "lucide-react";
 
 const recruteurSchema = z.object({
   email: z.string().email("Email invalide"),
@@ -212,7 +220,119 @@ export default function InscriptionRecruteur() {
       </div>
 
       {/* Section décorative - cachée sur mobile, visible sur desktop */}
-      <div className="hidden lg:block lg:col-span-1 bg-primary"></div>
+      <div className="hidden lg:block lg:col-span-1 bg-gradient-to-br from-primary via-primary/90 to-primary/80 dark:from-primary/30 dark:via-primary/20 dark:to-primary/10 relative overflow-hidden">
+        {/* Effet de fond décoratif */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-2 h-2 bg-white rounded-full"></div>
+          <div className="absolute top-20 right-16 w-1 h-1 bg-white rounded-full"></div>
+          <div className="absolute bottom-20 left-16 w-1 h-1 bg-white rounded-full"></div>
+          <div className="absolute bottom-10 right-10 w-2 h-2 bg-white rounded-full"></div>
+          <div className="absolute top-1/2 left-1/4 w-1 h-1 bg-white rounded-full"></div>
+          <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-white rounded-full"></div>
+        </div>
+
+        {/* Contenu principal */}
+        <div className="relative flex items-center justify-center h-full p-8">
+          <div className="text-center text-white dark:text-primary-foreground max-w-sm">
+            {/* Icône avec animation */}
+            <div className="mb-8">
+              <div className="relative">
+                <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse"></div>
+                <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center border border-white/20">
+                  <UserCheck className="h-12 w-12 text-white" />
+                </div>
+              </div>
+              <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
+                Rejoignez notre réseau
+              </h2>
+              <p className="text-white/80 text-lg font-medium">de recruteurs</p>
+            </div>
+
+            {/* Liste des avantages avec style amélioré */}
+            <div className="space-y-5 text-sm leading-relaxed mb-8">
+              <div className="flex items-start gap-4 group">
+                <div className="relative">
+                  <div className="w-3 h-3 bg-white rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20"></div>
+                </div>
+                <p className="text-white/90 group-hover:text-white transition-colors duration-200">
+                  Publiez vos offres d'emploi en quelques clics
+                </p>
+              </div>
+
+              <div className="flex items-start gap-4 group">
+                <div className="relative">
+                  <div className="w-3 h-3 bg-white rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-200"></div>
+                </div>
+                <p className="text-white/90 group-hover:text-white transition-colors duration-200">
+                  Accédez à une base de candidats qualifiés
+                </p>
+              </div>
+
+              <div className="flex items-start gap-4 group">
+                <div className="relative">
+                  <div className="w-3 h-3 bg-white rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-400"></div>
+                </div>
+                <p className="text-white/90 group-hover:text-white transition-colors duration-200">
+                  Gérez vos candidatures avec notre outil Kanban
+                </p>
+              </div>
+
+              <div className="flex items-start gap-4 group">
+                <div className="relative">
+                  <div className="w-3 h-3 bg-white rounded-full mt-2 flex-shrink-0 shadow-lg"></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-600"></div>
+                </div>
+                <p className="text-white/90 group-hover:text-white transition-colors duration-200">
+                  Bénéficiez d'analyses et statistiques détaillées
+                </p>
+              </div>
+            </div>
+
+            {/* Témoignage avec style amélioré */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20"></div>
+              <div className="relative p-6">
+                <div className="flex items-center justify-center mb-3">
+                  <div className="flex -space-x-2">
+                    {[...Array(5)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-8 h-8 bg-white/20 rounded-full border-2 border-white/30 flex items-center justify-center"
+                      >
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm text-white/90 font-medium leading-relaxed">
+                  "Plus de{" "}
+                  <span className="text-white font-bold">500 entreprises</span>{" "}
+                  nous font confiance pour leurs recrutements"
+                </p>
+                <div className="mt-3 flex items-center justify-center gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-1 h-1 bg-white/60 rounded-full"
+                    ></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Call-to-action subtil */}
+            <div className="mt-6">
+              <div className="inline-flex items-center gap-2 text-white/70 text-xs">
+                <div className="w-2 h-2 bg-white/50 rounded-full animate-pulse"></div>
+                Commencez dès maintenant
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

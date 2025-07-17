@@ -507,21 +507,21 @@ export default function Home() {
 
       {isOpen && (
         <div className="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="relative flex flex-col bg-white rounded-xl md:rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
+          <div className="relative flex flex-col bg-card rounded-xl md:rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
             {/* Close button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-3 right-3 md:top-4 md:right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 group"
+              className="absolute top-3 right-3 md:top-4 md:right-4 p-2 hover:bg-muted rounded-full transition-colors duration-200 group"
             >
-              <X className="w-4 h-4 md:w-5 md:h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
+              <X className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
             </button>
 
             {/* Header */}
             <div className="text-center mb-6 md:mb-8">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2 md:mb-3">
-                Bienvenue sur xlsix
+                Bienvenue sur Ylsix
               </h2>
-              <p className="text-gray-600 text-base md:text-lg">
+              <p className="text-muted-foreground text-base md:text-lg">
                 Vous êtes un recruteur ou un candidat ?
               </p>
             </div>
@@ -529,34 +529,34 @@ export default function Home() {
             {/* Options */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <Link href="/recruteur/inscription" className="group">
-                <div className="flex flex-col items-center justify-center border-2 border-gray-200 hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:from-primary/5 hover:to-primary/10">
+                <div className="flex flex-col items-center justify-center border-2 border-border hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-card to-muted hover:from-primary/5 hover:to-primary/10">
                   <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors duration-300">
                     <UserCheck
                       size={24}
                       className="text-primary md:w-8 md:h-8"
                     />
                   </div>
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
+                  <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">
                     Recruteur
                   </h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">
+                  <p className="text-xs md:text-sm text-muted-foreground text-center">
                     Publiez des offres et trouvez les meilleurs talents
                   </p>
                 </div>
               </Link>
 
               <Link href="/candidat/inscription" className="group">
-                <div className="flex flex-col items-center justify-center border-2 border-gray-200 hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-white to-gray-50 hover:from-primary/5 hover:to-primary/10">
+                <div className="flex flex-col items-center justify-center border-2 border-border hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-card to-muted hover:from-primary/5 hover:to-primary/10">
                   <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors duration-300">
                     <Briefcase
                       size={24}
                       className="text-primary md:w-8 md:h-8"
                     />
                   </div>
-                  <h3 className="text-lg md:text-xl font-semibold text-gray-800 mb-2">
+                  <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">
                     Candidat
                   </h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">
+                  <p className="text-xs md:text-sm text-muted-foreground text-center">
                     Découvrez des opportunités et postulez facilement
                   </p>
                 </div>
@@ -565,7 +565,7 @@ export default function Home() {
 
             {/* Footer */}
             <div className="text-center mt-4 md:mt-6">
-              <p className="text-xs md:text-sm text-gray-500">
+              <p className="text-xs md:text-sm text-muted-foreground">
                 Rejoignez notre communauté de professionnels
               </p>
             </div>
@@ -576,13 +576,13 @@ export default function Home() {
       {/* Search Modal */}
       {isSearchModalOpen && (
         <div className="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="relative flex flex-col bg-white rounded-xl md:rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
+          <div className="relative flex flex-col bg-card rounded-xl md:rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
             {/* Close button */}
             <button
               onClick={() => setIsSearchModalOpen(false)}
-              className="absolute top-3 right-3 md:top-4 md:right-4 p-2 hover:bg-gray-100 rounded-full transition-colors duration-200 group"
+              className="absolute top-3 right-3 md:top-4 md:right-4 p-2 hover:bg-muted rounded-full transition-colors duration-200 group"
             >
-              <X className="w-4 h-4 md:w-5 md:h-5 text-gray-500 group-hover:text-gray-700 transition-colors" />
+              <X className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
             </button>
 
             {/* Header */}
@@ -590,7 +590,7 @@ export default function Home() {
               <h2 className="text-2xl md:text-3xl font-bold text-primary mb-2 md:mb-3">
                 Rechercher une offre
               </h2>
-              <p className="text-gray-600 text-base md:text-lg">
+              <p className="text-muted-foreground text-base md:text-lg">
                 Trouvez l'opportunité qui vous correspond
               </p>
             </div>
@@ -601,7 +601,7 @@ export default function Home() {
                 <div>
                   <Label
                     htmlFor="searchQuery"
-                    className="text-sm font-medium text-gray-700 mb-2 block"
+                    className="text-sm font-medium text-foreground mb-2 block"
                   >
                     <Search className="w-4 h-4 inline mr-2" />
                     Poste ou compétences
@@ -619,7 +619,7 @@ export default function Home() {
                 <div>
                   <Label
                     htmlFor="searchLocation"
-                    className="text-sm font-medium text-gray-700 mb-2 block"
+                    className="text-sm font-medium text-foreground mb-2 block"
                   >
                     <MapPin className="w-4 h-4 inline mr-2" />
                     Localisation
@@ -637,7 +637,7 @@ export default function Home() {
                 <div>
                   <Label
                     htmlFor="searchCompany"
-                    className="text-sm font-medium text-gray-700 mb-2 block"
+                    className="text-sm font-medium text-foreground mb-2 block"
                   >
                     <Building className="w-4 h-4 inline mr-2" />
                     Entreprise (optionnel)

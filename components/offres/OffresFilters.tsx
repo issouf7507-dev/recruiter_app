@@ -69,7 +69,7 @@ export default function OffresFilters({
                 variant="ghost"
                 size="sm"
                 onClick={onClearFilters}
-                className="text-red-600 hover:text-red-700"
+                className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
               >
                 <X className="h-4 w-4 mr-1" />
                 Effacer
@@ -81,13 +81,13 @@ export default function OffresFilters({
       <CardContent className="space-y-4">
         {/* Barre de recherche principale */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <input
             type="text"
             placeholder="Rechercher par titre, entreprise ou localisation..."
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
+            className="w-full pl-10 pr-4 py-2 border border-input bg-background rounded-md focus:ring-2 focus:ring-ring focus:border-transparent text-foreground placeholder:text-muted-foreground"
           />
         </div>
 
@@ -96,7 +96,7 @@ export default function OffresFilters({
           <select
             value={filterType}
             onChange={(e) => onFilterTypeChange(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+            className="px-3 py-2 border border-input bg-background rounded-md focus:ring-2 focus:ring-ring focus:border-transparent text-sm text-foreground"
           >
             <option value="all">Tous les types</option>
             <option value="CDI">CDI</option>
@@ -109,7 +109,7 @@ export default function OffresFilters({
             <select
               value={filterLocation}
               onChange={(e) => onFilterLocationChange(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+              className="px-3 py-2 border border-input bg-background rounded-md focus:ring-2 focus:ring-ring focus:border-transparent text-sm text-foreground"
             >
               <option value="">Toutes les localisations</option>
               {locations.map((location) => (
@@ -124,7 +124,7 @@ export default function OffresFilters({
             <select
               value={filterCompany}
               onChange={(e) => onFilterCompanyChange(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+              className="px-3 py-2 border border-input bg-background rounded-md focus:ring-2 focus:ring-ring focus:border-transparent text-sm text-foreground"
             >
               <option value="">Toutes les entreprises</option>
               {companies.map((company) => (
@@ -138,9 +138,9 @@ export default function OffresFilters({
 
         {/* Filtres avancés */}
         {showAdvancedFilters && (
-          <div className="border-t pt-4 space-y-4">
+          <div className="border-t border-border pt-4 space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Fourchette de salaire (€/an)
               </label>
               <div className="flex items-center gap-3">
@@ -155,10 +155,10 @@ export default function OffresFilters({
                         min: parseInt(e.target.value) || 0,
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    className="w-full px-3 py-2 border border-input bg-background rounded-md focus:ring-2 focus:ring-ring focus:border-transparent text-sm text-foreground placeholder:text-muted-foreground"
                   />
                 </div>
-                <span className="text-gray-500">-</span>
+                <span className="text-muted-foreground">-</span>
                 <div className="flex-1">
                   <input
                     type="number"
@@ -170,7 +170,7 @@ export default function OffresFilters({
                         max: parseInt(e.target.value) || 0,
                       })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                    className="w-full px-3 py-2 border border-input bg-background rounded-md focus:ring-2 focus:ring-ring focus:border-transparent text-sm text-foreground placeholder:text-muted-foreground"
                   />
                 </div>
               </div>
@@ -179,7 +179,7 @@ export default function OffresFilters({
             {/* Filtres rapides par localisation */}
             {locations.length > 0 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Localisations populaires
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -207,7 +207,7 @@ export default function OffresFilters({
             {/* Filtres rapides par entreprise */}
             {companies.length > 0 && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Entreprises populaires
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -236,9 +236,9 @@ export default function OffresFilters({
 
         {/* Filtres actifs */}
         {hasActiveFilters && (
-          <div className="border-t pt-4">
+          <div className="border-t border-border pt-4">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-sm font-medium text-foreground">
                 Filtres actifs :
               </span>
             </div>

@@ -212,15 +212,15 @@ function OffresPageContent() {
   const getTypeColor = (type: string) => {
     switch (type) {
       case "CDI":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
       case "CDD":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400";
       case "Stage":
-        return "bg-purple-100 text-purple-800";
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400";
       case "Freelance":
-        return "bg-orange-100 text-orange-800";
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200";
     }
   };
 
@@ -281,10 +281,10 @@ function OffresPageContent() {
           <div className="flex-1">
             <div className="flex items-start justify-between mb-3">
               <div className="flex-1">
-                <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">
                   {offre.title}
                 </h3>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4 text-xs md:text-sm text-gray-600 mb-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground mb-3">
                   <div className="flex items-center gap-1">
                     <Building className="h-3 w-3 md:h-4 md:w-4" />
                     {offre.company}
@@ -306,14 +306,14 @@ function OffresPageContent() {
               </Badge>
             </div>
 
-            <p className="text-sm md:text-base text-gray-600 mb-3 line-clamp-2">
+            <p className="text-sm md:text-base text-muted-foreground mb-3 line-clamp-2">
               {offre.description}
             </p>
 
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4">
                 {offre.salaryMin && offre.salaryMax && (
-                  <div className="flex items-center gap-1 text-xs md:text-sm text-gray-600">
+                  <div className="flex items-center gap-1 text-xs md:text-sm text-muted-foreground">
                     <DollarSign className="h-3 w-3 md:h-4 md:w-4" />
                     {formatSalary(
                       offre.salaryMin,
@@ -362,11 +362,11 @@ function OffresPageContent() {
       <CardHeader className="p-4 md:p-6">
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <CardTitle className="text-base md:text-lg font-semibold text-gray-900 line-clamp-2">
+            <CardTitle className="text-base md:text-lg font-semibold text-foreground line-clamp-2">
               {offre.title}
             </CardTitle>
             <CardDescription className="mt-2">
-              <div className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
+              <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
                 <Building className="h-3 w-3 md:h-4 md:w-4" />
                 {offre.company}
               </div>
@@ -379,18 +379,18 @@ function OffresPageContent() {
       </CardHeader>
 
       <CardContent className="space-y-2 md:space-y-3 p-4 md:p-6 pt-0">
-        <div className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
           <MapPin className="h-3 w-3 md:h-4 md:w-4" />
           {offre.location}
         </div>
 
-        <div className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
+        <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
           <Clock className="h-3 w-3 md:h-4 md:w-4" />
           {offre.experience}
         </div>
 
         {offre.salaryMin && offre.salaryMax && (
-          <div className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
+          <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
             <DollarSign className="h-3 w-3 md:h-4 md:w-4" />
             {formatSalary(
               offre.salaryMin,
@@ -401,7 +401,7 @@ function OffresPageContent() {
           </div>
         )}
 
-        <p className="text-xs md:text-sm text-gray-600 line-clamp-3">
+        <p className="text-xs md:text-sm text-muted-foreground line-clamp-3">
           {offre.description}
         </p>
 
@@ -460,50 +460,50 @@ function OffresPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <Header />
       {/* Filtres et recherche */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6 mt-16 md:mt-20">
         {/* Barre de recherche */}
-        <div className="bg-white rounded-lg shadow-none border p-4 md:p-6 mb-4 md:mb-6">
+        <div className="bg-card rounded-lg shadow-none border p-4 md:p-6 mb-4 md:mb-6">
           <div className="flex flex-col lg:flex-row gap-3 md:gap-4">
             <div className="flex-1">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <input
                   type="text"
                   placeholder="Rechercher un poste, compétences..."
                   value={searchTerm}
                   onChange={(e) => handleSearchTermChange(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                  className="w-full pl-10 pr-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm md:text-base"
+                  className="w-full pl-10 pr-4 py-2 md:py-3 border border-input bg-background rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm md:text-base text-foreground placeholder:text-muted-foreground"
                 />
               </div>
             </div>
             <div className="flex-1">
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <input
                   type="text"
                   placeholder="Localisation..."
                   value={filterLocation}
                   onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                  className="w-full pl-10 pr-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm md:text-base"
+                  className="w-full pl-10 pr-4 py-2 md:py-3 border border-input bg-background rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm md:text-base text-foreground placeholder:text-muted-foreground"
                 />
               </div>
             </div>
             <div className="flex-1">
               <div className="relative">
-                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <input
                   type="text"
                   placeholder="Entreprise..."
                   value={filterCompany}
                   onChange={(e) => handleCompanyChange(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && handleSearch()}
-                  className="w-full pl-10 pr-4 py-2 md:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm md:text-base"
+                  className="w-full pl-10 pr-4 py-2 md:py-3 border border-input bg-background rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm md:text-base text-foreground placeholder:text-muted-foreground"
                 />
               </div>
             </div>
@@ -520,7 +520,7 @@ function OffresPageContent() {
           {/* Filtres actifs */}
           {(searchTerm || filterLocation || filterCompany) && (
             <div className="flex items-center gap-2 mt-3 md:mt-4 flex-wrap">
-              <span className="text-xs md:text-sm text-gray-600">
+              <span className="text-xs md:text-sm text-muted-foreground">
                 Filtres actifs:
               </span>
               {searchTerm && (
@@ -563,7 +563,7 @@ function OffresPageContent() {
                 variant="ghost"
                 size="sm"
                 onClick={handleClearFilters}
-                className="text-gray-500 hover:text-gray-700 text-xs md:text-sm"
+                className="text-muted-foreground hover:text-foreground text-xs md:text-sm"
               >
                 Effacer tout
               </Button>
@@ -583,7 +583,7 @@ function OffresPageContent() {
 
         {/* Résultats */}
         <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <p className="text-sm md:text-base text-gray-600">
+          <p className="text-sm md:text-base text-muted-foreground">
             {pagination.total} offre{pagination.total > 1 ? "s" : ""} trouvée
             {pagination.total > 1 ? "s" : ""}
             {searchTerm || filterLocation || filterCompany
@@ -592,7 +592,7 @@ function OffresPageContent() {
           </p>
           <div className="flex items-center gap-3 md:gap-4">
             {/* Toggle de vue */}
-            <div className="flex items-center bg-white border rounded-lg p-1">
+            <div className="flex items-center bg-card border rounded-lg p-1">
               <Button
                 variant={viewMode === "grid" ? "default" : "ghost"}
                 size="sm"
@@ -613,7 +613,7 @@ function OffresPageContent() {
               </Button>
             </div>
             {pagination.totalPages > 1 && (
-              <div className="text-xs md:text-sm text-gray-500">
+              <div className="text-xs md:text-sm text-muted-foreground">
                 Page {pagination.page} sur {pagination.totalPages}
               </div>
             )}
@@ -632,14 +632,14 @@ function OffresPageContent() {
             {[...Array(6)].map((_, i) => (
               <Card key={i} className="shadow-none">
                 <CardHeader>
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                  <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                  <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-muted rounded w-1/2"></div>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    <div className="h-3 bg-gray-200 rounded"></div>
-                    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                    <div className="h-3 bg-muted rounded"></div>
+                    <div className="h-3 bg-muted rounded w-2/3"></div>
+                    <div className="h-3 bg-muted rounded w-1/2"></div>
                   </div>
                 </CardContent>
               </Card>
@@ -712,13 +712,13 @@ function OffresPageContent() {
           </>
         ) : (
           <div className="text-center py-8 md:py-12">
-            <div className="text-gray-400 mb-4">
+            <div className="text-muted-foreground mb-4">
               <Search className="h-12 w-12 md:h-16 md:w-16 mx-auto" />
             </div>
-            <h3 className="text-base md:text-lg font-medium text-gray-900 mb-2">
+            <h3 className="text-base md:text-lg font-medium text-foreground mb-2">
               Aucune offre trouvée
             </h3>
-            <p className="text-sm md:text-base text-gray-600 mb-4 px-4">
+            <p className="text-sm md:text-base text-muted-foreground mb-4 px-4">
               {searchTerm || filterLocation || filterCompany
                 ? "Essayez de modifier vos critères de recherche"
                 : "Aucune offre disponible pour le moment"}

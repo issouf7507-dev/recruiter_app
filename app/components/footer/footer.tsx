@@ -156,7 +156,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
               <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-              <span className="text-xl font-bold text-foreground">Xlsix</span>
+              <span className="text-xl font-bold text-foreground">Ylsix</span>
             </div>
             <p className="text-muted-foreground text-sm mb-6">
               Révolutionnez vos recrutements avec notre plateforme intelligente.
@@ -260,7 +260,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Copyright & Legal */}
           <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground">
-            <p>© {currentYear} Xlsix. Tous droits réservés.</p>
+            <p>© {currentYear} Ylsix. Tous droits réservés.</p>
             <div className="flex items-center gap-4">
               <Link
                 href="/mentions-legales"

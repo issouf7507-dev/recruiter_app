@@ -149,15 +149,15 @@ export default function OffreDetailPage() {
   const getTypeColor = (type: string) => {
     switch (type) {
       case "CDI":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400";
       case "CDD":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400";
       case "Stage":
-        return "bg-purple-100 text-purple-800";
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400";
       case "Freelance":
-        return "bg-orange-100 text-orange-800";
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300";
     }
   };
 
@@ -171,7 +171,7 @@ export default function OffreDetailPage() {
 
   if (loading || authLoading || candidatLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
       </div>
     );
@@ -179,13 +179,13 @@ export default function OffreDetailPage() {
 
   if (!offre) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="text-center">
-          <AlertCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+          <AlertCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-foreground mb-2">
             Offre non trouvée
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-muted-foreground mb-4">
             L'offre que vous recherchez n'existe pas ou a été supprimée.
           </p>
           <Link href="/offres">
@@ -200,14 +200,14 @@ export default function OffreDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <Header />
 
       {/* Contenu principal */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mt-20">
         {/* Navigation et titre */}
-        <div className="bg-white rounded-lg shadow-none border p-6 mb-6">
+        <div className="bg-card rounded-lg shadow-none border p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
               <Link href="/offres">
@@ -220,8 +220,8 @@ export default function OffreDetailPage() {
                   Retour aux offres
                 </Button>
               </Link>
-              <div className="h-6 w-px bg-gray-300"></div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <div className="h-6 w-px bg-border"></div>
+              <h1 className="text-2xl font-bold text-foreground">
                 {offre.title}
               </h1>
             </div>
@@ -230,10 +230,12 @@ export default function OffreDetailPage() {
             </Badge>
           </div>
 
-          <div className="flex items-center gap-6 text-sm text-gray-600">
+          <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <Building className="h-4 w-4" />
-              <span className="font-medium">{offre.company}</span>
+              <span className="font-medium text-foreground">
+                {offre.company}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4" />
@@ -268,7 +270,7 @@ export default function OffreDetailPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                <p className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
                   {offre.description}
                 </p>
               </CardContent>
@@ -287,7 +289,7 @@ export default function OffreDetailPage() {
                     {offre.responsibilities.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-gray-700 leading-relaxed">
+                        <span className="text-muted-foreground leading-relaxed">
                           {item}
                         </span>
                       </div>
@@ -310,7 +312,7 @@ export default function OffreDetailPage() {
                     {offre.requirements.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700 leading-relaxed">
+                        <span className="text-muted-foreground leading-relaxed">
                           {item}
                         </span>
                       </div>
@@ -333,7 +335,7 @@ export default function OffreDetailPage() {
                     {offre.benefits.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-gray-700 leading-relaxed">
+                        <span className="text-muted-foreground leading-relaxed">
                           {item}
                         </span>
                       </div>
@@ -360,14 +362,14 @@ export default function OffreDetailPage() {
                 {candidat ? (
                   <>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-700">
+                      <label className="text-sm font-medium text-foreground">
                         Message de motivation
                       </label>
                       <textarea
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Expliquez pourquoi vous êtes intéressé par ce poste..."
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-none"
+                        className="w-full p-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent resize-none bg-background text-foreground placeholder:text-muted-foreground"
                         rows={4}
                       />
                     </div>
@@ -392,10 +394,10 @@ export default function OffreDetailPage() {
                       <AlertCircle className="h-8 w-8 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-2">
+                      <h3 className="font-semibold text-foreground mb-2">
                         Connexion requise
                       </h3>
-                      <p className="text-sm text-gray-600 mb-4">
+                      <p className="text-sm text-muted-foreground mb-4">
                         Vous devez être connecté en tant que candidat pour
                         postuler à cette offre.
                       </p>
@@ -418,28 +420,30 @@ export default function OffreDetailPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-blue-600" />
+                <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+                    <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-foreground">
                       Expérience
                     </p>
-                    <p className="text-sm text-gray-600">{offre.experience}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {offre.experience}
+                    </p>
                   </div>
                 </div>
 
                 {offre.salaryMin && offre.salaryMax && (
-                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                      <DollarSign className="h-5 w-5 text-green-600" />
+                  <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                    <div className="w-10 h-10 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
+                      <DollarSign className="h-5 w-5 text-green-600 dark:text-green-400" />
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-foreground">
                         Salaire
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-muted-foreground">
                         {formatSalary(
                           offre.salaryMin,
                           offre.salaryMax,
@@ -451,15 +455,15 @@ export default function OffreDetailPage() {
                   </div>
                 )}
 
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <Users className="h-5 w-5 text-purple-600" />
+                <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
+                  <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
+                    <Users className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-foreground">
                       Candidatures
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       {offre.applications?.length || 0} candidature
                       {(offre.applications?.length || 0) > 1 ? "s" : ""}
                     </p>
@@ -497,10 +501,10 @@ export default function OffreDetailPage() {
         {/* Section Autres offres */}
         <div className="mt-12">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <h2 className="text-2xl font-bold text-foreground mb-2">
               Autres offres qui pourraient vous intéresser
             </h2>
-            <p className="text-gray-600">
+            <p className="text-muted-foreground">
               Découvrez d'autres opportunités similaires
             </p>
           </div>
@@ -510,13 +514,13 @@ export default function OffreDetailPage() {
               {[...Array(6)].map((_, i) => (
                 <Card key={i} className="shadow-none border animate-pulse">
                   <CardHeader className="pb-4">
-                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                    <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-muted rounded w-1/2"></div>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
-                      <div className="h-3 bg-gray-200 rounded"></div>
-                      <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+                      <div className="h-3 bg-muted rounded"></div>
+                      <div className="h-3 bg-muted rounded w-2/3"></div>
                     </div>
                   </CardContent>
                 </Card>
@@ -533,11 +537,11 @@ export default function OffreDetailPage() {
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
-                          <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-2">
+                          <CardTitle className="text-lg font-semibold text-foreground line-clamp-2">
                             {otherOffre.title}
                           </CardTitle>
                           <CardDescription className="mt-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
                               <Building className="h-4 w-4" />
                               {otherOffre.company}
                             </div>
@@ -553,18 +557,18 @@ export default function OffreDetailPage() {
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <MapPin className="h-4 w-4" />
                         {otherOffre.location}
                       </div>
 
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="h-4 w-4" />
                         {otherOffre.experience}
                       </div>
 
                       {otherOffre.salaryMin && otherOffre.salaryMax && (
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <DollarSign className="h-4 w-4" />
                           {formatSalary(
                             otherOffre.salaryMin,
@@ -575,7 +579,7 @@ export default function OffreDetailPage() {
                         </div>
                       )}
 
-                      <p className="text-sm text-gray-600 line-clamp-3">
+                      <p className="text-sm text-muted-foreground line-clamp-3">
                         {otherOffre.description}
                       </p>
 
@@ -610,13 +614,13 @@ export default function OffreDetailPage() {
             </div>
           ) : (
             <div className="text-center py-8">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building className="h-8 w-8 text-gray-400" />
+              <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building className="h-8 w-8 text-muted-foreground" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+              <h3 className="text-lg font-medium text-foreground mb-2">
                 Aucune autre offre disponible
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-muted-foreground mb-4">
                 Pour le moment, il n'y a pas d'autres offres similaires.
               </p>
               <Link href="/offres">
