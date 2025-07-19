@@ -40,18 +40,48 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const validatedData = updateSchema.parse(body);
 
+    // Extraire les compétences du validatedData
+    const { competences, ...candidatData } = validatedData;
+
     // Mettre à jour le profil du candidat
     const updatedCandidat = await prisma.candidat.update({
       where: { userId: decoded.userId },
       data: {
-        ...validatedData,
-        dateNaissance: validatedData.dateNaissance
-          ? new Date(validatedData.dateNaissance)
+        ...candidatData,
+        dateNaissance: candidatData.dateNaissance
+          ? new Date(candidatData.dateNaissance)
           : undefined,
       },
     });
 
-    return NextResponse.json({ success: true, candidat: updatedCandidat });
+    // Si des compétences sont fournies, les mettre à jour
+    if (competences && competences.length > 0) {
+      // Supprimer toutes les compétences existantes
+      await prisma.candidatCompetence.deleteMany({
+        where: { candidatId: updatedCandidat.id },
+      });
+
+      // Ajouter les nouvelles compétences
+      await prisma.candidatCompetence.createMany({
+        data: competences.map((competence: string) => ({
+          candidatId: updatedCandidat.id,
+          competence: competence,
+        })),
+      });
+    }
+
+    // Récupérer le candidat avec ses compétences
+    const candidatWithCompetences = await prisma.candidat.findUnique({
+      where: { id: updatedCandidat.id },
+      include: {
+        candidatCompetences: true,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      candidat: candidatWithCompetences,
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
