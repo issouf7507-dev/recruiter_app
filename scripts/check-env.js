@@ -9,14 +9,11 @@ const requiredEnvVars = [
   "JWT_SECRET",
   "JWT_SECRET_CANDIDAT",
   "DATABASE_URL",
-  "REDIS_URL",
-  "EMAIL_HOST",
-  "EMAIL_PORT",
   "EMAIL_USER",
   "EMAIL_PASS",
 ];
 
-const optionalEnvVars = ["NEXT_PUBLIC_APP_URL", "APP_URL", "NODE_ENV"];
+const optionalEnvVars = ["NEXT_PUBLIC_APP_URL"];
 
 function checkEnvironmentVariables() {
   console.log("🔍 Vérification des variables d'environnement...\n");
