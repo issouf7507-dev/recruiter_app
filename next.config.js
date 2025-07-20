@@ -17,8 +17,6 @@ const nextConfig = {
   },
   // Configuration pour la production
   productionBrowserSourceMaps: false,
-  // Amélioration des performances
-  swcMinify: true,
   // Gestion des erreurs de compilation
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,
