@@ -164,14 +164,18 @@ export default function ModifierOffre({
 
       console.log("Skills after processing:", newdata.skills);
 
-      await putData(newdata, `/api/recruteur/offres/${id}`).then((res) => {
-        if (res.success) {
-          toast("Super ! Vous venez de modifier l'offre.");
-          router.push("/mesoffres");
-        }
-      });
+      const res = await putData(newdata, `/api/recruteur/offres/${id}`);
+      if (res.message || res.success) {
+        toast.success("Super ! Vous venez de modifier l'offre.");
+        router.push("/mesoffres");
+      } else {
+        toast.error("Une erreur est survenue lors de la modification.");
+      }
     } catch (error) {
       console.error("Erreur lors de la requête:", error);
+      toast.error(
+        "Une erreur est survenue lors de la modification de l'offre."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -503,72 +507,121 @@ export default function ModifierOffre({
               <FormField
                 control={form.control}
                 name="skills"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Compétences techniques</FormLabel>
-                    <FormDescription>
-                      Sélectionnez les compétences requises pour ce poste
-                    </FormDescription>
-                    <Select
-                      onValueChange={(value) => {
-                        const currentSkills = field.value || [];
-                        if (!currentSkills.includes(value)) {
-                          field.onChange([...currentSkills, value]);
-                        }
-                      }}
-                      value=""
-                    >
-                      <FormControl>
-                        <SelectTrigger className="w-full border bg-transparent shadow-none">
-                          <SelectValue placeholder="Sélectionnez les compétences" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="javascript">JavaScript</SelectItem>
-                        <SelectItem value="typescript">TypeScript</SelectItem>
-                        <SelectItem value="react">React</SelectItem>
-                        <SelectItem value="nextjs">Next.js</SelectItem>
-                        <SelectItem value="nodejs">Node.js</SelectItem>
-                        <SelectItem value="python">Python</SelectItem>
-                        <SelectItem value="java">Java</SelectItem>
-                        <SelectItem value="php">PHP</SelectItem>
-                        <SelectItem value="sql">SQL</SelectItem>
-                        <SelectItem value="mongodb">MongoDB</SelectItem>
-                        <SelectItem value="git">Git</SelectItem>
-                        <SelectItem value="docker">Docker</SelectItem>
-                        <SelectItem value="aws">AWS</SelectItem>
-                        <SelectItem value="uiux">UI/UX Design</SelectItem>
-                        <SelectItem value="agile">
-                          Méthodologies Agiles
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {field.value?.map((skill) => (
-                        <div
-                          key={skill}
-                          className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md"
+                render={({ field }) => {
+                  const [customSkill, setCustomSkill] = useState("");
+
+                  const addCustomSkill = () => {
+                    if (
+                      customSkill.trim() &&
+                      !field.value?.includes(customSkill.trim().toLowerCase())
+                    ) {
+                      const currentSkills = field.value || [];
+                      field.onChange([
+                        ...currentSkills,
+                        customSkill.trim().toLowerCase(),
+                      ]);
+                      setCustomSkill("");
+                    }
+                  };
+
+                  const handleKeyPress = (e: React.KeyboardEvent) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addCustomSkill();
+                    }
+                  };
+
+                  return (
+                    <FormItem>
+                      <FormLabel>Compétences techniques</FormLabel>
+                      <FormDescription>
+                        Sélectionnez des compétences prédéfinies ou ajoutez vos
+                        propres compétences
+                      </FormDescription>
+
+                      {/* Sélection de compétences prédéfinies */}
+                      <Select
+                        onValueChange={(value) => {
+                          const currentSkills = field.value || [];
+                          if (!currentSkills.includes(value)) {
+                            field.onChange([...currentSkills, value]);
+                          }
+                        }}
+                        value=""
+                      >
+                        <FormControl>
+                          <SelectTrigger className="w-full border bg-transparent shadow-none">
+                            <SelectValue placeholder="Sélectionnez des compétences prédéfinies" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="javascript">JavaScript</SelectItem>
+                          <SelectItem value="typescript">TypeScript</SelectItem>
+                          <SelectItem value="react">React</SelectItem>
+                          <SelectItem value="nextjs">Next.js</SelectItem>
+                          <SelectItem value="nodejs">Node.js</SelectItem>
+                          <SelectItem value="python">Python</SelectItem>
+                          <SelectItem value="java">Java</SelectItem>
+                          <SelectItem value="php">PHP</SelectItem>
+                          <SelectItem value="sql">SQL</SelectItem>
+                          <SelectItem value="mongodb">MongoDB</SelectItem>
+                          <SelectItem value="git">Git</SelectItem>
+                          <SelectItem value="docker">Docker</SelectItem>
+                          <SelectItem value="aws">AWS</SelectItem>
+                          <SelectItem value="uiux">UI/UX Design</SelectItem>
+                          <SelectItem value="agile">
+                            Méthodologies Agiles
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      {/* Ajout de compétences personnalisées */}
+                      <div className="flex gap-2 mt-2">
+                        <Input
+                          placeholder="Ajouter une compétence personnalisée..."
+                          value={customSkill}
+                          onChange={(e) => setCustomSkill(e.target.value)}
+                          onKeyPress={handleKeyPress}
+                          className="flex-1"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={addCustomSkill}
+                          disabled={!customSkill.trim()}
                         >
-                          <span className="text-sm">
-                            {skill.charAt(0).toUpperCase() + skill.slice(1)}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              field.onChange(
-                                field.value.filter((s) => s !== skill)
-                              );
-                            }}
-                            className="text-primary hover:text-primary/80"
+                          Ajouter
+                        </Button>
+                      </div>
+
+                      {/* Affichage des compétences sélectionnées */}
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {field.value?.map((skill) => (
+                          <div
+                            key={skill}
+                            className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md"
                           >
-                            ×
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                            <span className="text-sm">
+                              {skill.charAt(0).toUpperCase() + skill.slice(1)}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                field.onChange(
+                                  field.value.filter((s) => s !== skill)
+                                );
+                              }}
+                              className="text-primary hover:text-primary/80"
+                            >
+                              ×
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
               />
 
               <FormField

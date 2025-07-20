@@ -29,6 +29,13 @@ export async function PUT(
       // recruteurId,
     } = body;
 
+    // First, delete existing competences for this job offer
+    await prisma.jobOfferCompetence.deleteMany({
+      where: {
+        jobOfferId: Number(id),
+      },
+    });
+
     const jobOffer = await prisma.jobOffer.update({
       where: {
         id: Number(id),
@@ -48,14 +55,11 @@ export async function PUT(
         requirements,
         responsibilities,
         benefits,
-        // templateId: template,
-        // recruteurId: recruteur.id,
-        jobOfferCompetences: Array.isArray(skills)
-          ? skills
-          : skills
-              .split(",")
-              .map((s: string) => s.trim())
-              .filter((s: string) => s),
+        jobOfferCompetences: {
+          create: skills.map((skill: any) => ({
+            competence: skill,
+          })),
+        },
       },
     });
 

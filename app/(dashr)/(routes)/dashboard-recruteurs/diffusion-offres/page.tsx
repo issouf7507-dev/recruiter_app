@@ -34,6 +34,7 @@ import {
   EyeOff,
 } from "lucide-react";
 import { toast } from "sonner";
+import LinkedInPreview from "@/app/components/LinkedInPreview";
 
 type JobOffer = {
   id: number;
@@ -61,6 +62,7 @@ type Platform = {
   color: string;
   url: string;
   enabled: boolean;
+  authenticated: boolean;
   apiKey?: string;
   apiSecret?: string;
 };
@@ -81,6 +83,7 @@ export default function DiffusionOffresPage() {
       color: "bg-blue-600",
       url: "https://www.linkedin.com/jobs/",
       enabled: false,
+      authenticated: false,
     },
     {
       id: "indeed",
@@ -89,6 +92,7 @@ export default function DiffusionOffresPage() {
       color: "bg-blue-500",
       url: "https://www.indeed.com/",
       enabled: false,
+      authenticated: false,
     },
     {
       id: "apec",
@@ -97,6 +101,7 @@ export default function DiffusionOffresPage() {
       color: "bg-orange-500",
       url: "https://www.apec.fr/",
       enabled: false,
+      authenticated: false,
     },
     {
       id: "pole-emploi",
@@ -105,6 +110,7 @@ export default function DiffusionOffresPage() {
       color: "bg-green-600",
       url: "https://www.pole-emploi.fr/",
       enabled: false,
+      authenticated: false,
     },
   ]);
 
@@ -115,17 +121,175 @@ export default function DiffusionOffresPage() {
     customMessage: "",
     includeSalary: true,
     includeBenefits: true,
+    visibility: "PUBLIC" as "PUBLIC" | "CONNECTIONS",
   });
+
+  const [linkedinAuthStatus, setLinkedinAuthStatus] = useState<{
+    isAuthenticated: boolean;
+    isLoading: boolean;
+    error?: string;
+  }>({
+    isAuthenticated: false,
+    isLoading: false,
+  });
+
+  const [linkedinCallbackProcessed, setLinkedinCallbackProcessed] =
+    useState(false);
 
   useEffect(() => {
     loadOffres();
+    checkLinkedInAuth();
+    handleLinkedInCallback();
   }, []);
+
+  // Gérer le callback LinkedIn
+  const handleLinkedInCallback = () => {
+    // Éviter de traiter le callback plusieurs fois
+    if (linkedinCallbackProcessed) {
+      return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const linkedinCode = urlParams.get("linkedin_code");
+    const error = urlParams.get("error");
+    const message = urlParams.get("message");
+
+    if (error) {
+      toast.error(`Erreur LinkedIn: ${message || error}`);
+      // Nettoyer l'URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setLinkedinCallbackProcessed(true);
+      return;
+    }
+
+    if (linkedinCode) {
+      console.log("Traitement du callback LinkedIn...");
+      setLinkedinCallbackProcessed(true);
+      // Échanger le code contre un token
+      exchangeLinkedInCode(linkedinCode);
+      // Nettoyer l'URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  };
+
+  const exchangeLinkedInCode = async (code: string) => {
+    try {
+      console.log("Début de l'échange du code LinkedIn...");
+      setLinkedinAuthStatus((prev) => ({ ...prev, isLoading: true }));
+
+      const response = await fetch("/api/auth/linkedin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Authentification LinkedIn réussie:", data);
+
+        // Sauvegarder le statut dans le localStorage
+        localStorage.setItem("linkedin_authenticated", "true");
+
+        setLinkedinAuthStatus({
+          isAuthenticated: true,
+          isLoading: false,
+        });
+        toast.success("Connexion LinkedIn réussie !");
+
+        // Mettre à jour le statut de la plateforme LinkedIn et l'activer automatiquement
+        setPlatforms((prev) =>
+          prev.map((platform) =>
+            platform.id === "linkedin"
+              ? { ...platform, authenticated: true, enabled: true }
+              : platform
+          )
+        );
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur lors de l'authentification");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'échange du code LinkedIn:", error);
+      setLinkedinAuthStatus({
+        isAuthenticated: false,
+        isLoading: false,
+        error: "Erreur lors de l'authentification LinkedIn",
+      });
+      toast.error("Erreur lors de l'authentification LinkedIn");
+      // Réinitialiser le flag pour permettre une nouvelle tentative
+      setLinkedinCallbackProcessed(false);
+    }
+  };
+
+  // Vérifier l'authentification LinkedIn au chargement
+  const checkLinkedInAuth = async () => {
+    try {
+      setLinkedinAuthStatus((prev) => ({ ...prev, isLoading: true }));
+
+      // Vérifier s'il y a un code LinkedIn dans l'URL (authentification en cours)
+      const urlParams = new URLSearchParams(window.location.search);
+      const linkedinCode = urlParams.get("linkedin_code");
+
+      if (linkedinCode) {
+        // Si il y a un code, ne pas remettre à false
+        console.log("Code LinkedIn détecté, authentification en cours...");
+        setLinkedinAuthStatus((prev) => ({ ...prev, isLoading: false }));
+        return;
+      }
+
+      // Vérifier le statut depuis l'API
+      const response = await fetch("/api/auth/linkedin/status");
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Statut LinkedIn depuis l'API:", data);
+
+        // Vérifier aussi le localStorage comme fallback
+        const localStatus = localStorage.getItem("linkedin_authenticated");
+        const isAuthenticated = data.isAuthenticated || localStatus === "true";
+
+        setLinkedinAuthStatus({
+          isAuthenticated,
+          isLoading: false,
+        });
+
+        // Mettre à jour les plateformes si authentifié
+        if (isAuthenticated) {
+          setPlatforms((prev) =>
+            prev.map((platform) =>
+              platform.id === "linkedin"
+                ? { ...platform, authenticated: true, enabled: true }
+                : platform
+            )
+          );
+        }
+      } else {
+        // Fallback vers localStorage
+        const localStatus = localStorage.getItem("linkedin_authenticated");
+        setLinkedinAuthStatus({
+          isAuthenticated: localStatus === "true",
+          isLoading: false,
+        });
+      }
+    } catch (error) {
+      console.error("Erreur lors de la vérification LinkedIn:", error);
+      // Fallback vers localStorage
+      const localStatus = localStorage.getItem("linkedin_authenticated");
+      setLinkedinAuthStatus({
+        isAuthenticated: localStatus === "true",
+        isLoading: false,
+        error: "Erreur lors de la vérification de l'authentification",
+      });
+    }
+  };
 
   const loadOffres = async () => {
     try {
       const response = await fetch("/api/recruteur/offres");
       if (response.ok) {
         const data = await response.json();
+        console.log("data.data", data.data);
         setOffres(data.data);
       }
     } catch (error) {
@@ -137,6 +301,19 @@ export default function DiffusionOffresPage() {
   };
 
   const togglePlatform = (platformId: string) => {
+    if (platformId === "linkedin") {
+      if (!linkedinAuthStatus.isAuthenticated) {
+        // Si LinkedIn n'est pas authentifié, lancer l'authentification
+        handleLinkedInAuth();
+      } else {
+        // Si LinkedIn est authentifié, proposer de se déconnecter
+        if (window.confirm("Voulez-vous vous déconnecter de LinkedIn ?")) {
+          handleLinkedInLogout();
+        }
+      }
+      return;
+    }
+
     setPlatforms((prev) =>
       prev.map((platform) =>
         platform.id === platformId
@@ -146,13 +323,78 @@ export default function DiffusionOffresPage() {
     );
   };
 
+  const handleLinkedInAuth = async () => {
+    try {
+      setLinkedinAuthStatus((prev) => ({ ...prev, isLoading: true }));
+
+      const response = await fetch("/api/auth/linkedin");
+      if (response.ok) {
+        const data = await response.json();
+        // Rediriger vers LinkedIn pour l'authentification
+        window.location.href = data.authUrl;
+      } else {
+        throw new Error("Impossible de générer l'URL d'authentification");
+      }
+    } catch (error) {
+      setLinkedinAuthStatus({
+        isAuthenticated: false,
+        isLoading: false,
+        error: "Erreur lors de l'authentification LinkedIn",
+      });
+      toast.error("Erreur lors de l'authentification LinkedIn");
+    }
+  };
+
+  const handleLinkedInLogout = async () => {
+    try {
+      setLinkedinAuthStatus((prev) => ({ ...prev, isLoading: true }));
+
+      // Appeler l'API de déconnexion LinkedIn
+      const response = await fetch("/api/auth/linkedin/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        // Nettoyer le localStorage
+        localStorage.removeItem("linkedin_authenticated");
+
+        // Mettre à jour le statut local
+        setLinkedinAuthStatus({
+          isAuthenticated: false,
+          isLoading: false,
+        });
+
+        // Mettre à jour le statut de la plateforme LinkedIn
+        setPlatforms((prev) =>
+          prev.map((platform) =>
+            platform.id === "linkedin"
+              ? { ...platform, authenticated: false, enabled: false }
+              : platform
+          )
+        );
+
+        toast.success("Déconnexion LinkedIn réussie !");
+      } else {
+        throw new Error("Erreur lors de la déconnexion");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion LinkedIn:", error);
+      setLinkedinAuthStatus({
+        isAuthenticated: false,
+        isLoading: false,
+        error: "Erreur lors de la déconnexion LinkedIn",
+      });
+      toast.error("Erreur lors de la déconnexion LinkedIn");
+    }
+  };
+
   const generateDiffusionUrl = (offre: JobOffer, platform: Platform) => {
     const baseUrl = platform.url;
     const params = new URLSearchParams({
       title: offre.title,
       company: offre.company,
       location: offre.location,
-      description: offre.description.substring(0, 500),
+      description: offre.description,
     });
 
     return `${baseUrl}?${params.toString()}`;
@@ -183,6 +425,66 @@ export default function DiffusionOffresPage() {
     }
 
     try {
+      // Traiter chaque plateforme séparément
+      for (const platform of enabledPlatforms) {
+        if (platform.id === "linkedin") {
+          await handleLinkedInDiffusion();
+        } else {
+          // Pour les autres plateformes, utiliser l'ancienne méthode
+          await handleGenericDiffusion(platform);
+        }
+      }
+
+      toast.success("Diffusion terminée");
+    } catch (error) {
+      console.error("Erreur lors de la diffusion:", error);
+      toast.error("Erreur lors de la diffusion");
+    }
+
+    setShowDiffusionDialog(false);
+  };
+
+  const handleLinkedInDiffusion = async () => {
+    if (!selectedOffre) return;
+
+    try {
+      const response = await fetch("/api/recruteur/diffusion/linkedin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          offreId: selectedOffre.id,
+          customMessage: diffusionSettings.customMessage,
+          includeSalary: diffusionSettings.includeSalary,
+          visibility: "PUBLIC",
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        toast.success(data.message);
+
+        // Ouvrir le post LinkedIn dans un nouvel onglet
+        if (data.data?.url) {
+          window.open(data.data.url, "_blank");
+        }
+      } else {
+        const errorData = await response.json();
+        toast.error(
+          errorData.error || "Erreur lors de la publication sur LinkedIn"
+        );
+      }
+    } catch (error) {
+      console.error("Erreur lors de la diffusion LinkedIn:", error);
+      toast.error("Erreur lors de la publication sur LinkedIn");
+    }
+  };
+
+  const handleGenericDiffusion = async (platform: Platform) => {
+    if (!selectedOffre) return;
+
+    try {
       const response = await fetch("/api/recruteur/diffusion", {
         method: "POST",
         headers: {
@@ -190,31 +492,27 @@ export default function DiffusionOffresPage() {
         },
         body: JSON.stringify({
           offreId: selectedOffre.id,
-          platforms: enabledPlatforms,
+          platforms: [platform],
           settings: diffusionSettings,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-
-        // Afficher les résultats
         data.data.results.forEach((result: any) => {
           if (result.success) {
-            toast.success(result.message);
+            toast.success(`${platform.name}: ${result.message}`);
           } else {
-            toast.error(result.message);
+            toast.error(`${platform.name}: ${result.message}`);
           }
         });
       } else {
-        toast.error("Erreur lors de la diffusion");
+        toast.error(`Erreur lors de la diffusion sur ${platform.name}`);
       }
     } catch (error) {
-      console.error("Erreur lors de la diffusion:", error);
-      toast.error("Erreur lors de la diffusion");
+      console.error(`Erreur lors de la diffusion sur ${platform.name}:`, error);
+      toast.error(`Erreur lors de la diffusion sur ${platform.name}`);
     }
-
-    setShowDiffusionDialog(false);
   };
 
   const generateOffreContent = (offre: JobOffer) => {
@@ -304,10 +602,37 @@ ${
                   <div className="flex-1">
                     <h3 className="font-medium">{platform.name}</h3>
                     <p className="text-sm text-muted-foreground">
-                      {platform.enabled ? "Activée" : "Désactivée"}
+                      {platform.id === "linkedin"
+                        ? linkedinAuthStatus.isLoading
+                          ? "Vérification..."
+                          : linkedinAuthStatus.isAuthenticated
+                          ? "Connecté"
+                          : "Non connecté"
+                        : platform.enabled
+                        ? "Activée"
+                        : "Désactivée"}
                     </p>
+                    {platform.id === "linkedin" && (
+                      <p className="text-xs mt-1">
+                        {linkedinAuthStatus.isAuthenticated ? (
+                          <span className="text-green-600">
+                            ✅ Cliquez pour vous déconnecter
+                          </span>
+                        ) : (
+                          <span className="text-orange-600">
+                            Cliquez pour vous connecter
+                          </span>
+                        )}
+                      </p>
+                    )}
                   </div>
-                  <Switch checked={platform.enabled} />
+                  <Switch
+                    checked={platform.enabled}
+                    disabled={
+                      platform.id === "linkedin" &&
+                      !linkedinAuthStatus.isAuthenticated
+                    }
+                  />
                 </div>
               </div>
             ))}
@@ -346,7 +671,8 @@ ${
                   <div className="flex justify-between items-center pt-4 border-t">
                     <div>
                       <p className="text-sm font-medium">
-                        {offre.applications?.length || 0} candidatures
+                        {offre.applications?.length || 0}
+                        candidatures
                       </p>
                     </div>
                     <Button
@@ -455,15 +781,31 @@ ${
                 </div>
               </div>
 
-              {/* Contenu généré */}
-              <div className="space-y-4">
-                <h3 className="font-medium">Contenu généré</h3>
-                <Textarea
-                  value={generateOffreContent(selectedOffre)}
-                  readOnly
-                  className="min-h-[200px] font-mono text-sm"
-                />
-              </div>
+              {/* Aperçu LinkedIn */}
+              {platforms.some((p) => p.id === "linkedin" && p.enabled) &&
+                selectedOffre && (
+                  <div className="space-y-4">
+                    <h3 className="font-medium">Aperçu LinkedIn</h3>
+                    <LinkedInPreview
+                      offre={selectedOffre}
+                      customMessage={diffusionSettings.customMessage}
+                      includeSalary={diffusionSettings.includeSalary}
+                      visibility={diffusionSettings.visibility}
+                    />
+                  </div>
+                )}
+
+              {/* Contenu généré pour les autres plateformes */}
+              {platforms.some((p) => p.id !== "linkedin" && p.enabled) && (
+                <div className="space-y-4">
+                  <h3 className="font-medium">Contenu généré</h3>
+                  <Textarea
+                    value={generateOffreContent(selectedOffre)}
+                    readOnly
+                    className="min-h-[200px] font-mono text-sm"
+                  />
+                </div>
+              )}
 
               <div className="flex justify-end gap-2">
                 <Button
@@ -492,86 +834,154 @@ ${
             </DialogDescription>
           </DialogHeader>
 
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label>Publication automatique</Label>
-              <Switch
-                checked={diffusionSettings.autoPublish}
-                onCheckedChange={(checked) =>
-                  setDiffusionSettings((prev) => ({
-                    ...prev,
-                    autoPublish: checked,
-                  }))
-                }
-              />
+          <div className="space-y-6">
+            {/* Section LinkedIn */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Linkedin className="h-5 w-5 text-blue-600" />
+                <h3 className="font-medium">Paramètres LinkedIn</h3>
+              </div>
+
+              {linkedinAuthStatus.isAuthenticated ? (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <Label>Visibilité du post</Label>
+                    <Select
+                      value={diffusionSettings.visibility || "PUBLIC"}
+                      onValueChange={(value) =>
+                        setDiffusionSettings((prev) => ({
+                          ...prev,
+                          visibility: value as "PUBLIC" | "CONNECTIONS",
+                        }))
+                      }
+                    >
+                      <SelectTrigger className="w-48">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="PUBLIC">Public</SelectItem>
+                        <SelectItem value="CONNECTIONS">
+                          Connexions uniquement
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <Label>Afficher le salaire</Label>
+                    <Switch
+                      checked={diffusionSettings.includeSalary}
+                      onCheckedChange={(checked) =>
+                        setDiffusionSettings((prev) => ({
+                          ...prev,
+                          includeSalary: checked,
+                        }))
+                      }
+                    />
+                  </div>
+
+                  <div className="pt-4 border-t">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={handleLinkedInLogout}
+                      className="w-full"
+                    >
+                      Se déconnecter de LinkedIn
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                  <p className="text-sm text-orange-800">
+                    Connectez-vous à LinkedIn pour configurer les paramètres de
+                    diffusion.
+                  </p>
+                  <Button
+                    size="sm"
+                    className="mt-2"
+                    onClick={() => {
+                      setShowSettingsDialog(false);
+                      handleLinkedInAuth();
+                    }}
+                  >
+                    Se connecter à LinkedIn
+                  </Button>
+                </div>
+              )}
             </div>
 
-            <div className="flex items-center justify-between">
-              <Label>Afficher le salaire</Label>
-              <Switch
-                checked={diffusionSettings.includeSalary}
-                onCheckedChange={(checked) =>
-                  setDiffusionSettings((prev) => ({
-                    ...prev,
-                    includeSalary: checked,
-                  }))
-                }
-              />
-            </div>
+            {/* Section générale */}
+            <div className="space-y-4">
+              <h3 className="font-medium">Paramètres généraux</h3>
 
-            <div className="flex items-center justify-between">
-              <Label>Afficher les avantages</Label>
-              <Switch
-                checked={diffusionSettings.includeBenefits}
-                onCheckedChange={(checked) =>
-                  setDiffusionSettings((prev) => ({
-                    ...prev,
-                    includeBenefits: checked,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Message personnalisé</Label>
-              <Textarea
-                placeholder="Ajoutez un message personnalisé à vos offres..."
-                value={diffusionSettings.customMessage}
-                onChange={(e) =>
-                  setDiffusionSettings((prev) => ({
-                    ...prev,
-                    customMessage: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Date de publication</Label>
-                <Input
-                  type="date"
-                  value={diffusionSettings.scheduleDate}
-                  onChange={(e) =>
+              <div className="flex items-center justify-between">
+                <Label>Publication automatique</Label>
+                <Switch
+                  checked={diffusionSettings.autoPublish}
+                  onCheckedChange={(checked) =>
                     setDiffusionSettings((prev) => ({
                       ...prev,
-                      scheduleDate: e.target.value,
+                      autoPublish: checked,
                     }))
                   }
                 />
               </div>
-              <div className="space-y-2">
-                <Label>Heure de publication</Label>
-                <Input
-                  type="time"
-                  value={diffusionSettings.scheduleTime}
-                  onChange={(e) =>
+
+              <div className="flex items-center justify-between">
+                <Label>Afficher les avantages</Label>
+                <Switch
+                  checked={diffusionSettings.includeBenefits}
+                  onCheckedChange={(checked) =>
                     setDiffusionSettings((prev) => ({
                       ...prev,
-                      scheduleTime: e.target.value,
+                      includeBenefits: checked,
                     }))
                   }
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label>Message personnalisé</Label>
+                <Textarea
+                  placeholder="Ajoutez un message personnalisé à vos offres..."
+                  value={diffusionSettings.customMessage}
+                  onChange={(e) =>
+                    setDiffusionSettings((prev) => ({
+                      ...prev,
+                      customMessage: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Date de publication</Label>
+                  <Input
+                    type="date"
+                    value={diffusionSettings.scheduleDate}
+                    onChange={(e) =>
+                      setDiffusionSettings((prev) => ({
+                        ...prev,
+                        scheduleDate: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Heure de publication</Label>
+                  <Input
+                    type="time"
+                    value={diffusionSettings.scheduleTime}
+                    onChange={(e) =>
+                      setDiffusionSettings((prev) => ({
+                        ...prev,
+                        scheduleTime: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>

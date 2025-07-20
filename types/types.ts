@@ -91,7 +91,12 @@ export type JobOffer = {
   createdAt: string; // ou Date si tu les convertis
   updatedAt: string; // ou Date si tu les convertis
   applications: Application[]; // à typer selon la structure d'une application
-  competences: string[];
+  jobOfferCompetences?: {
+    id: string;
+    competence: string;
+    jobOfferId: number;
+    createdAt: string;
+  }[];
   matchingPercentage?: number;
   matchedSkills?: string[];
   missingSkills?: string[];

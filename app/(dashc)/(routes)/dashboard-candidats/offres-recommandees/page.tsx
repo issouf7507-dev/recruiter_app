@@ -385,9 +385,9 @@ const OffresRecommandeesPage = () => {
                         </div>
                         <div className="flex flex-col justify-between gap-4">
                           <div className="flex flex-wrap gap-2">
-                            {offre.competences.map((competence, index) => (
+                            {offre.jobOfferCompetences?.map((skill, index) => (
                               <Badge key={index} variant="outline">
-                                {competence}
+                                {skill.competence}
                               </Badge>
                             ))}
                           </div>
@@ -474,9 +474,9 @@ const OffresRecommandeesPage = () => {
                           {offre.salaryCurrency}
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          {offre.competences.map((competence, index) => (
+                          {offre.jobOfferCompetences?.map((skill, index) => (
                             <Badge key={index} variant="outline">
-                              {competence}
+                              {skill.competence}
                             </Badge>
                           ))}
                         </div>
@@ -611,9 +611,9 @@ const OffresRecommandeesPage = () => {
                         </div>
                         <div className="flex flex-col justify-between gap-4">
                           <div className="flex flex-wrap gap-2">
-                            {offre.competences.map((competence, index) => (
+                            {offre.jobOfferCompetences?.map((skill, index) => (
                               <Badge key={index} variant="outline">
-                                {competence}
+                                {skill.competence}
                               </Badge>
                             ))}
                           </div>
@@ -700,9 +700,9 @@ const OffresRecommandeesPage = () => {
                           {offre.salaryCurrency}
                         </p>
                         <div className="flex flex-wrap gap-2">
-                          {offre.competences.map((competence, index) => (
+                          {offre.jobOfferCompetences?.map((skill, index) => (
                             <Badge key={index} variant="outline">
-                              {competence}
+                              {skill.competence}
                             </Badge>
                           ))}
                         </div>

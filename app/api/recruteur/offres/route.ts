@@ -155,6 +155,27 @@ export async function GET(req: NextRequest) {
         title: true,
         company: true,
         location: true,
+        description: true,
+        type: true,
+        experience: true,
+        salaryMin: true,
+        salaryMax: true,
+        salaryCurrency: true,
+        salaryPeriod: true,
+        skills: true,
+        requirements: true,
+        responsibilities: true,
+        benefits: true,
+
+        jobOfferCompetences: {
+          select: {
+            competence: true,
+          },
+        },
+
+        createdAt: true,
+        updatedAt: true,
+        etat: true,
         _count: {
           select: {
             applications: true,

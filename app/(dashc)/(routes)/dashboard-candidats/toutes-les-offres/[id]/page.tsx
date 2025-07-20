@@ -218,10 +218,10 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
                     Compétences requises
                   </h2>
                   <div className="flex flex-wrap gap-2">
-                    {offertData?.data?.[0].competences.map(
-                      (competence: string, index: number) => (
+                    {offertData?.data?.[0].jobOfferCompetences?.map(
+                      (skill: any, index: number) => (
                         <Badge key={index} variant="secondary">
-                          {competence}
+                          {skill.competence}
                         </Badge>
                       )
                     )}

@@ -43,17 +43,20 @@ export function matchUserWithOffers2(
   if (offers) {
     // On prépare les compétences du candidat en lowercase
     const userSkills =
-      user.candidat?.competences.map((skill) => skill.toLowerCase()) || [];
+      user.candidat?.competences?.map((skill) => skill.toLowerCase()) || [];
 
     return offers.map((offer) => {
       // On prépare les compétences de l'offre en lowercase aussi
-      const offerSkills = offer.competences.map((skill) => skill.toLowerCase());
+      const offerSkills =
+        offer.jobOfferCompetences?.map((skill) =>
+          skill.competence.toLowerCase()
+        ) || [];
 
-      const matchedSkills = offerSkills.filter((skill) =>
+      const matchedSkills = offerSkills.filter((skill: string) =>
         userSkills.includes(skill)
       );
       const missingSkills = offerSkills.filter(
-        (skill) => !userSkills.includes(skill)
+        (skill: string) => !userSkills.includes(skill)
       );
 
       const matchingPercentage = Math.round(
