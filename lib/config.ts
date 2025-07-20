@@ -7,20 +7,13 @@ export const config = {
   database: {
     url: process.env.DATABASE_URL,
   },
-  redis: {
-    url: process.env.REDIS_URL,
-  },
+
   email: {
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
   app: {
-    url:
-      process.env.NEXT_PUBLIC_APP_URL ||
-      process.env.APP_URL ||
-      "http://localhost:3000",
+    url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
     environment: process.env.NODE_ENV || "development",
   },
 };
