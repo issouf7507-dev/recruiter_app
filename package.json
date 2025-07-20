@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test:websocket": "node test-websocket.js",
-    "test:redis": "node test-redis.js"
+    "test:redis": "node test-redis.js",
+    "check-env": "node scripts/check-env.js",
+    "prebuild": "npm run check-env"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.8.0",

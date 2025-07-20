@@ -4,6 +4,15 @@ import prisma from "@/lib/prisma";
 
 export async function GET(req: NextRequest) {
   try {
+    // Vérifier que JWT_SECRET est défini
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not defined");
+      return NextResponse.json(
+        { error: "Configuration serveur manquante" },
+        { status: 500 }
+      );
+    }
+
     // Récupérer le token depuis les cookies
     const token = req.cookies.get("token")?.value;
     // console.log(token);
@@ -13,7 +22,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Vérifier le token
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
+    const decoded = verify(token, process.env.JWT_SECRET) as {
       userId: string;
       type: string;
     };
@@ -47,6 +56,7 @@ export async function GET(req: NextRequest) {
     const { password, ...userWithoutPassword } = user;
     return NextResponse.json({ user: userWithoutPassword });
   } catch (error) {
+    console.error("Error in /api/auth/me:", error);
     return NextResponse.json(
       { error: "Erreur lors de la récupération des informations" },
       { status: 500 }

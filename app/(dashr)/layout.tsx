@@ -1,7 +1,7 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
@@ -46,8 +46,17 @@ import {
 import { postData } from "@/utils/utilts";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      retryDelay: 1000,
+    },
+  },
+});
+
 export default function RecruteursLayout({
   children,
 }: Readonly<{
@@ -225,120 +234,122 @@ export default function RecruteursLayout({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div
-        className={cn(
-          "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-card w-full flex-1  mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-          "h-[100vh] overflow-hidden" // for your use case, use `h-screen` instead of `h-[60vh]`
-        )}
-      >
-        <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="justify-between gap-10 border bg-[#2a294b] dark:bg-card rounded-lg px-2">
-            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-              {open ? <Logo /> : <LogoIcon />}
-              <div className="mt-8 flex flex-col gap-2">
-                {links.map((link, idx) => (
-                  <div key={idx}>
-                    <SidebarLink
-                      link={link}
-                      className={isActive2 === link.href && "bg-[#0c0c19]"}
-                    />
-                    {open && link.subItems && (
-                      <div className="ml-10 mt-1 flex flex-col gap-1">
-                        {link.subItems.map((subItem, subIdx) => (
-                          <Link
-                            key={subIdx}
-                            href={subItem.href}
-                            className={cn(
-                              "text-sm text-neutral-600 hover:text-neutral-800 py-1",
-                              isActive === subItem.href && "text-white"
-                            )}
-                          >
-                            {/* {isActive} */}
-                            {subItem.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className=" flex flex-col">
-              <div className="flex-shrink-0">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="icon">
-                      <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                      <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                      <span className="sr-only">Toggle theme</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => setTheme("light")}>
-                      Light
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setTheme("dark")}>
-                      Dark
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setTheme("system")}>
-                      System
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-              {/* <Button
-                variant="ghost"
-                className="w-full justify-start gap-2"
-                onClick={() => {
-                  // Handle logout
-                  postData({}, "/api/auth/logout")
-                    .then((res) => {
-                      if (res.message) {
-                        window.location.href = "/recruteur/connexion";
-                      }
-                      // console.log(res);
-                    })
-                    .catch((error) => {
-                      console.error("Erreur lors de la déconnexion:", error);
-                    });
-                }}
-              >
-                <LogOut className="h-5 w-5 text-neutral-500" />
-                {open && <span>Déconnexion</span>}
-              </Button> */}
-              <SidebarLink
-                className={"uppercase"}
-                link={{
-                  label: user?.name || "",
-                  href: "#",
-                  icon: (
-                    <Avatar>
-                      {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
-                      <AvatarFallback className="text-[14px] font-bold">
-                        {(user?.name &&
-                          (
-                            user?.name.split(" ")[0].slice(0, 1) +
-                            user?.name.split(" ")[1].slice(0, 1)
-                          ).toUpperCase()) ||
-                          ""}
-                      </AvatarFallback>
-                    </Avatar>
-                  ),
-                }}
-              />
-            </div>
-          </SidebarBody>
-        </Sidebar>
-
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+      <ErrorBoundary>
+        <div
+          className={cn(
+            "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-card w-full flex-1  mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+            "h-[100vh] overflow-hidden" // for your use case, use `h-screen` instead of `h-[60vh]`
+          )}
         >
-          {children}
-        </ThemeProvider>
-      </div>
+          <Sidebar open={open} setOpen={setOpen}>
+            <SidebarBody className="justify-between gap-10 border bg-[#2a294b] dark:bg-card rounded-lg px-2">
+              <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+                {open ? <Logo /> : <LogoIcon />}
+                <div className="mt-8 flex flex-col gap-2">
+                  {links.map((link, idx) => (
+                    <div key={idx}>
+                      <SidebarLink
+                        link={link}
+                        className={isActive2 === link.href && "bg-[#0c0c19]"}
+                      />
+                      {open && link.subItems && (
+                        <div className="ml-10 mt-1 flex flex-col gap-1">
+                          {link.subItems.map((subItem, subIdx) => (
+                            <Link
+                              key={subIdx}
+                              href={subItem.href}
+                              className={cn(
+                                "text-sm text-neutral-600 hover:text-neutral-800 py-1",
+                                isActive === subItem.href && "text-white"
+                              )}
+                            >
+                              {/* {isActive} */}
+                              {subItem.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className=" flex flex-col">
+                <div className="flex-shrink-0">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="outline" size="icon">
+                        <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                        <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                        <span className="sr-only">Toggle theme</span>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem onClick={() => setTheme("light")}>
+                        Light
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setTheme("dark")}>
+                        Dark
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setTheme("system")}>
+                        System
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+                {/* <Button
+                  variant="ghost"
+                  className="w-full justify-start gap-2"
+                  onClick={() => {
+                    // Handle logout
+                    postData({}, "/api/auth/logout")
+                      .then((res) => {
+                        if (res.message) {
+                          window.location.href = "/recruteur/connexion";
+                        }
+                        // console.log(res);
+                      })
+                      .catch((error) => {
+                        console.error("Erreur lors de la déconnexion:", error);
+                      });
+                  }}
+                >
+                  <LogOut className="h-5 w-5 text-neutral-500" />
+                  {open && <span>Déconnexion</span>}
+                </Button> */}
+                <SidebarLink
+                  className={"uppercase"}
+                  link={{
+                    label: user?.name || "",
+                    href: "#",
+                    icon: (
+                      <Avatar>
+                        {/* <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" /> */}
+                        <AvatarFallback className="text-[14px] font-bold">
+                          {(user?.name &&
+                            (
+                              user?.name.split(" ")[0].slice(0, 1) +
+                              user?.name.split(" ")[1].slice(0, 1)
+                            ).toUpperCase()) ||
+                            ""}
+                        </AvatarFallback>
+                      </Avatar>
+                    ),
+                  }}
+                />
+              </div>
+            </SidebarBody>
+          </Sidebar>
+
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </div>
+      </ErrorBoundary>
     </QueryClientProvider>
   );
 }

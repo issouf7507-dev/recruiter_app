@@ -16,14 +16,22 @@ export function useAuth() {
 
   const fetchUser = useCallback(async () => {
     try {
+      setLoading(true);
       const response = await fetch("/api/auth/me");
+
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
       } else {
+        console.warn(
+          "Auth check failed:",
+          response.status,
+          response.statusText
+        );
         setUser(null);
       }
     } catch (error) {
+      console.error("Error fetching user:", error);
       setUser(null);
     } finally {
       setLoading(false);
