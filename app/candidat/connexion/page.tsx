@@ -27,6 +27,7 @@ import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { postData } from "@/utils/utilts";
 import { Mail, Lock } from "lucide-react";
+import { Suspense } from "react";
 
 const formSchema = z.object({
   email: z.string().email("Email invalide"),
@@ -35,7 +36,7 @@ const formSchema = z.object({
     .min(6, "Le mot de passe doit contenir au moins 6 caractères"),
 });
 
-export default function Connexion() {
+function Connexion() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -155,5 +156,13 @@ export default function Connexion() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function ConnexionPageWrapper() {
+  return (
+    <Suspense fallback={null}>
+      <Connexion />
+    </Suspense>
   );
 }

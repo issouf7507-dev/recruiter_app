@@ -27,19 +27,19 @@ export async function GET(req: NextRequest) {
     // Add search filters
     if (query) {
       whereClause.OR = [
-        { title: { contains: query, mode: "insensitive" } },
-        { description: { contains: query, mode: "insensitive" } },
-        { skills: { contains: query, mode: "insensitive" } },
-        { competences: { hasSome: [query] } },
+        { title: { contains: query } },
+        { description: { contains: query } },
+        { skills: { contains: query } },
+        { jobOfferCompetences: { some: { competence: { contains: query } } } },
       ];
     }
 
     if (location) {
-      whereClause.location = { contains: location, mode: "insensitive" };
+      whereClause.location = { contains: location };
     }
 
     if (company) {
-      whereClause.company = { contains: company, mode: "insensitive" };
+      whereClause.company = { contains: company };
     }
 
     // Get total count for pagination

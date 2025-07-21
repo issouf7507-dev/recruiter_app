@@ -171,7 +171,9 @@ export default function Home() {
               variant="outline"
               size="lg"
               className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6 w-full sm:w-auto"
-              onClick={() => setIsSearchModalOpen(true)}
+              onClick={() => {
+                window.location.href = "/offres";
+              }}
             >
               Rechercher une offre
             </Button>
