@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { postData } from "@/utils/utilts";
 import { Mail, Lock } from "lucide-react";
@@ -36,6 +37,7 @@ const formSchema = z.object({
 
 export default function Connexion() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,7 +55,12 @@ export default function Connexion() {
 
       if (response.success) {
         toast.success("Connexion réussie");
-        router.push("/dashboard-candidats");
+        const redirectTo = searchParams.get("redirect");
+        if (redirectTo) {
+          window.location.href = redirectTo;
+        } else {
+          window.location.href = "/";
+        }
       }
     } catch (error: any) {
       toast.error(error.message || "Une erreur est survenue");

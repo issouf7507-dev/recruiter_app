@@ -193,109 +193,109 @@ function generateLinkedInContent(
 }
 
 // Fonction pour publier avec une URL (article)
-export async function POSTWithUrl(request: NextRequest) {
-  try {
-    const session = await getServerSession(authOptions);
+// export async function POSTWithUrl(request: NextRequest) {
+//   try {
+//     const session = await getServerSession(authOptions);
 
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
+//     if (!session?.user?.id) {
+//       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+//     }
 
-    const body = await request.json();
-    const { offreId, articleUrl, customMessage, visibility = "PUBLIC" } = body;
+//     const body = await request.json();
+//     const { offreId, articleUrl, customMessage, visibility = "PUBLIC" } = body;
 
-    // Récupérer les détails de l'offre
-    const offreResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/recruteur/offres/${offreId}`
-    );
-    if (!offreResponse.ok) {
-      return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
-    }
+//     // Récupérer les détails de l'offre
+//     const offreResponse = await fetch(
+//       `${process.env.NEXT_PUBLIC_APP_URL}/api/recruteur/offres/${offreId}`
+//     );
+//     if (!offreResponse.ok) {
+//       return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
+//     }
 
-    const offreData = await offreResponse.json();
-    const offre: JobOffer = offreData.data;
+//     const offreData = await offreResponse.json();
+//     const offre: JobOffer = offreData.data;
 
-    const linkedinAccessToken = process.env.LINKEDIN_ACCESS_TOKEN;
-    const linkedinPersonUrn = process.env.LINKEDIN_PERSON_URN;
+//     const linkedinAccessToken = process.env.LINKEDIN_ACCESS_TOKEN;
+//     const linkedinPersonUrn = process.env.LINKEDIN_PERSON_URN;
 
-    if (!linkedinAccessToken || !linkedinPersonUrn) {
-      return NextResponse.json(
-        { error: "Configuration LinkedIn manquante" },
-        { status: 400 }
-      );
-    }
+//     if (!linkedinAccessToken || !linkedinPersonUrn) {
+//       return NextResponse.json(
+//         { error: "Configuration LinkedIn manquante" },
+//         { status: 400 }
+//       );
+//     }
 
-    // Préparer le payload avec URL
-    const linkedinPayload = {
-      author: linkedinPersonUrn,
-      lifecycleState: "PUBLISHED",
-      specificContent: {
-        "com.linkedin.ugc.ShareContent": {
-          shareCommentary: {
-            text:
-              customMessage ||
-              `Découvrez cette opportunité chez ${offre.company} !`,
-          },
-          shareMediaCategory: "ARTICLE",
-          media: [
-            {
-              status: "READY",
-              description: {
-                text: offre.description.substring(0, 200),
-              },
-              originalUrl: articleUrl,
-              title: {
-                text: offre.title,
-              },
-            },
-          ],
-        },
-      },
-      visibility: {
-        "com.linkedin.ugc.MemberNetworkVisibility": visibility,
-      },
-    };
+//     // Préparer le payload avec URL
+//     const linkedinPayload = {
+//       author: linkedinPersonUrn,
+//       lifecycleState: "PUBLISHED",
+//       specificContent: {
+//         "com.linkedin.ugc.ShareContent": {
+//           shareCommentary: {
+//             text:
+//               customMessage ||
+//               `Découvrez cette opportunité chez ${offre.company} !`,
+//           },
+//           shareMediaCategory: "ARTICLE",
+//           media: [
+//             {
+//               status: "READY",
+//               description: {
+//                 text: offre.description.substring(0, 200),
+//               },
+//               originalUrl: articleUrl,
+//               title: {
+//                 text: offre.title,
+//               },
+//             },
+//           ],
+//         },
+//       },
+//       visibility: {
+//         "com.linkedin.ugc.MemberNetworkVisibility": visibility,
+//       },
+//     };
 
-    const linkedinResponse = await fetch(
-      "https://api.linkedin.com/v2/ugcPosts",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${linkedinAccessToken}`,
-          "Content-Type": "application/json",
-          "X-Restli-Protocol-Version": "2.0.0",
-        },
-        body: JSON.stringify(linkedinPayload),
-      }
-    );
+//     const linkedinResponse = await fetch(
+//       "https://api.linkedin.com/v2/ugcPosts",
+//       {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${linkedinAccessToken}`,
+//           "Content-Type": "application/json",
+//           "X-Restli-Protocol-Version": "2.0.0",
+//         },
+//         body: JSON.stringify(linkedinPayload),
+//       }
+//     );
 
-    if (!linkedinResponse.ok) {
-      const errorData = await linkedinResponse.text();
-      return NextResponse.json(
-        {
-          error: "Erreur lors de la publication sur LinkedIn",
-          details: errorData,
-        },
-        { status: linkedinResponse.status }
-      );
-    }
+//     if (!linkedinResponse.ok) {
+//       const errorData = await linkedinResponse.text();
+//       return NextResponse.json(
+//         {
+//           error: "Erreur lors de la publication sur LinkedIn",
+//           details: errorData,
+//         },
+//         { status: linkedinResponse.status }
+//       );
+//     }
 
-    const postId = linkedinResponse.headers.get("X-RestLi-Id");
+//     const postId = linkedinResponse.headers.get("X-RestLi-Id");
 
-    return NextResponse.json({
-      success: true,
-      message: "Offre publiée avec succès sur LinkedIn avec URL",
-      data: {
-        platform: "linkedin",
-        postId: postId,
-        url: `https://www.linkedin.com/feed/update/${postId}/`,
-      },
-    });
-  } catch (error) {
-    console.error("Erreur lors de la diffusion LinkedIn avec URL:", error);
-    return NextResponse.json(
-      { error: "Erreur interne du serveur" },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json({
+//       success: true,
+//       message: "Offre publiée avec succès sur LinkedIn avec URL",
+//       data: {
+//         platform: "linkedin",
+//         postId: postId,
+//         url: `https://www.linkedin.com/feed/update/${postId}/`,
+//       },
+//     });
+//   } catch (error) {
+//     console.error("Erreur lors de la diffusion LinkedIn avec URL:", error);
+//     return NextResponse.json(
+//       { error: "Erreur interne du serveur" },
+//       { status: 500 }
+//     );
+//   }
+// }

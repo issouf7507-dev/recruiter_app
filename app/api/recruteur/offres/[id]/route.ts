@@ -82,82 +82,91 @@ export async function GET(
 ) {
   try {
     const authenticatedUser = await getAuthenticatedUser(req);
-    if (
-      !authenticatedUser ||
-      (authenticatedUser.type !== "RECRUTEUR" &&
-        authenticatedUser.type !== "COLLABORATEUR")
-    ) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
     const offerId = (await params).id;
-    // const cacheKey = CACHE_KEYS.KANBAN_BOARD(offerId);
 
-    // Si pas en cache, récupérer depuis la base de données
-    const offer = await prisma.jobOffer.findFirst({
-      where: {
-        id: Number(offerId),
-        recruteurId: authenticatedUser.recruteurId,
-      },
-      include: {
-        kanbanColumns: {
-          orderBy: { order: "asc" },
+    if (
+      authenticatedUser &&
+      (authenticatedUser.type === "RECRUTEUR" ||
+        authenticatedUser.type === "COLLABORATEUR")
+    ) {
+      // Version privée (toutes les infos)
+      const offer = await prisma.jobOffer.findFirst({
+        where: {
+          id: Number(offerId),
+          recruteurId: authenticatedUser.recruteurId,
         },
-        applications: {
-          include: {
-            candidat: {
-              select: {
-                id: true,
-                nom: true,
-                prenom: true,
-                email: true,
-                competencesList: true,
-                cv: true,
-                letterm: true,
+        include: {
+          kanbanColumns: { orderBy: { order: "asc" } },
+          applications: {
+            include: {
+              candidat: {
+                select: {
+                  id: true,
+                  nom: true,
+                  prenom: true,
+                  email: true,
+                  competencesList: true,
+                  cv: true,
+                  letterm: true,
+                },
               },
-            },
-            notes: {
-              orderBy: { createdAt: "desc" },
-            },
-            checklist: {
-              orderBy: { createdAt: "desc" },
-            },
-            files: {
-              orderBy: { createdAt: "desc" },
-            },
-            collaborateurs: {
-              include: {
-                collaborateur: {
-                  include: {
-                    user: {
-                      select: {
-                        id: true,
-                        name: true,
-                        email: true,
+              notes: { orderBy: { createdAt: "desc" } },
+              checklist: { orderBy: { createdAt: "desc" } },
+              files: { orderBy: { createdAt: "desc" } },
+              collaborateurs: {
+                include: {
+                  collaborateur: {
+                    include: {
+                      user: {
+                        select: {
+                          id: true,
+                          name: true,
+                          email: true,
+                        },
                       },
                     },
                   },
                 },
               },
             },
+            orderBy: { createdAt: "desc" },
           },
-          orderBy: { createdAt: "desc" },
+          jobOfferCompetences: {
+            select: { competence: true },
+            orderBy: { competence: "asc" },
+          },
         },
-      },
-    });
-
-    if (!offer) {
-      return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
+      });
+      if (!offer) {
+        return NextResponse.json(
+          { error: "Offre non trouvée" },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json({
+        success: true,
+        data: [offer],
+        fromCache: false,
+      });
+    } else {
+      // Version publique (infos de base)
+      const offer = await prisma.jobOffer.findFirst({
+        where: { id: Number(offerId) },
+        include: {
+          jobOfferCompetences: {
+            select: { competence: true },
+            orderBy: { competence: "asc" },
+          },
+        },
+      });
+      if (!offer) {
+        return NextResponse.json(
+          { error: "Offre non trouvée" },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json({ success: true, data: [offer] });
     }
-
-    // Mettre en cache
-    // await cacheUtils.set(cacheKey, [offer], CACHE_TTL.KANBAN_BOARD);
-
-    return NextResponse.json({
-      success: true,
-      data: [offer],
-      fromCache: false,
-    });
   } catch (error) {
     console.error("Erreur lors de la récupération de l'offre:", error);
     return NextResponse.json(

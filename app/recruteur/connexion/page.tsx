@@ -51,8 +51,8 @@ export default function ConnexionRecruteur() {
         return;
       }
 
-      // Redirection vers le tableau de bord après connexion réussie
-      router.push("/dashboard-recruteurs");
+      // Redirection vers la page d'accueil avec reload pour rafraîchir l'état connecté
+      window.location.href = "/";
     } catch (error) {
       setError("root", {
         type: "manual",

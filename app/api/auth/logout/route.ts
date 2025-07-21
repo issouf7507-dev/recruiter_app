@@ -11,5 +11,12 @@ export async function POST() {
     path: "/",
   });
 
+  response.cookies.set({
+    name: "candidat",
+    value: "",
+    maxAge: 0,
+    path: "/",
+  });
+
   return response;
 }

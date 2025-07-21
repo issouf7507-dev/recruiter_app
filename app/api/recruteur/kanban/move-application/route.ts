@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
-import { cacheUtils, CACHE_KEYS } from "@/lib/redis";
+// import { cacheUtils, CACHE_KEYS } from "@/lib/redis";
 import { kanbanEvents } from "@/lib/socket";
 
 export async function POST(req: NextRequest) {
@@ -149,9 +149,9 @@ export async function POST(req: NextRequest) {
     );
 
     // Invalider le cache
-    await cacheUtils.del(
-      CACHE_KEYS.KANBAN_BOARD(existingApplication.jobOffer.id.toString())
-    );
+    // await cacheUtils.del(
+    //   CACHE_KEYS.KANBAN_BOARD(existingApplication.jobOffer.id.toString())
+    // );
 
     return NextResponse.json(
       {

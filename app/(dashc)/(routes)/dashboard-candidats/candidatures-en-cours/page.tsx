@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,70 +22,116 @@ import {
   Grid,
   FileText,
   Calendar,
+  Loader2,
 } from "lucide-react";
+import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 
-const candidaturesEnCours = [
-  {
-    id: 1,
-    titre: "Développeur Full Stack",
-    entreprise: "TechCorp Inc.",
-    localisation: "Abidjan, Côte d'Ivoire",
-    type: "CDI",
-    salaire: "1 500 000 - 2 000 000 FCFA",
-    date: "Il y a 2 jours",
-    competences: ["React", "Node.js", "MongoDB"],
-    description:
-      "Nous recherchons un développeur Full Stack expérimenté pour rejoindre notre équipe de développement agile.",
-    status: "en_revue",
-    dateCandidature: "15/03/2024",
-    etapes: [
-      { nom: "Candidature envoyée", date: "15/03/2024", statut: "complete" },
-      { nom: "En revue", date: "En cours", statut: "current" },
-      { nom: "Entretien", date: "À venir", statut: "pending" },
-      { nom: "Décision", date: "À venir", statut: "pending" },
-    ],
-  },
-  {
-    id: 2,
-    titre: "Data Scientist",
-    entreprise: "AI Solutions",
-    localisation: "Abidjan, Côte d'Ivoire",
-    type: "CDI",
-    salaire: "2 000 000 - 2 500 000 FCFA",
-    date: "Il y a 1 jour",
-    competences: ["Python", "Machine Learning", "TensorFlow"],
-    description:
-      "Nous recherchons un Data Scientist passionné pour travailler sur des projets innovants d'intelligence artificielle.",
-    status: "entretien",
-    dateCandidature: "14/03/2024",
-    etapes: [
-      { nom: "Candidature envoyée", date: "14/03/2024", statut: "complete" },
-      { nom: "En revue", date: "14/03/2024", statut: "complete" },
-      { nom: "Entretien", date: "20/03/2024", statut: "current" },
-      { nom: "Décision", date: "À venir", statut: "pending" },
-    ],
-  },
-];
+interface Etape {
+  nom: string;
+  date: string;
+  statut: "complete" | "current" | "pending";
+  colonneId: string;
+}
+
+interface Candidature {
+  id: string;
+  titre: string;
+  entreprise: string;
+  localisation: string;
+  type: string;
+  salaire: string;
+  description: string;
+  dateCandidature: string;
+  status: string;
+  etapes: Etape[];
+  message: string;
+  colonneActuelle: {
+    id: string;
+    name: string;
+    order: number;
+    color: string;
+  };
+}
 
 const CandidaturesEnCoursPage = () => {
+  const { candidat } = useAuthCandidat();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [filters, setFilters] = useState({
     status: "all",
     date: "all",
   });
+  const [candidatures, setCandidatures] = useState<Candidature[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    if (candidat?.candidat?.id) {
+      fetchCandidatures();
+    }
+  }, [candidat]);
+
+  const fetchCandidatures = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("/api/candidat/candidatures");
+      const data = await response.json();
+
+      if (data.success) {
+        setCandidatures(data.data);
+      } else {
+        console.error(
+          "Erreur lors du chargement des candidatures:",
+          data.error
+        );
+      }
+    } catch (error) {
+      console.error("Erreur lors du chargement des candidatures:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
+      case "nouvelles":
+        return <Badge variant="secondary">Nouvelles</Badge>;
       case "en_revue":
         return <Badge variant="secondary">En revue</Badge>;
       case "entretien":
         return <Badge variant="default">Entretien programmé</Badge>;
       case "en_attente":
         return <Badge variant="outline">En attente</Badge>;
+      case "acceptées":
+        return (
+          <Badge variant="default" className="bg-green-500">
+            Acceptées
+          </Badge>
+        );
+      case "refusées":
+        return <Badge variant="destructive">Refusées</Badge>;
       default:
         return <Badge variant="secondary">En cours</Badge>;
     }
   };
+
+  const filteredCandidatures = candidatures.filter((candidature) => {
+    const matchesSearch =
+      candidature.titre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      candidature.entreprise.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesStatus =
+      filters.status === "all" || candidature.status === filters.status;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  if (loading) {
+    return (
+      <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
@@ -97,6 +143,8 @@ const CandidaturesEnCoursPage = () => {
             <Input
               placeholder="Rechercher une candidature..."
               className="pl-8"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
           <div className="flex gap-2">
@@ -130,9 +178,12 @@ const CandidaturesEnCoursPage = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="all">Tous les statuts</SelectItem>
+            <SelectItem value="nouvelles">Nouvelles</SelectItem>
             <SelectItem value="en_revue">En revue</SelectItem>
             <SelectItem value="entretien">Entretien programmé</SelectItem>
             <SelectItem value="en_attente">En attente</SelectItem>
+            <SelectItem value="acceptées">Acceptées</SelectItem>
+            <SelectItem value="refusées">Refusées</SelectItem>
           </SelectContent>
         </Select>
 
@@ -152,9 +203,21 @@ const CandidaturesEnCoursPage = () => {
         </Select>
       </div>
 
-      {viewMode === "list" ? (
+      {filteredCandidatures.length === 0 ? (
+        <div className="text-center py-12">
+          <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-muted-foreground mb-2">
+            Aucune candidature trouvée
+          </h3>
+          <p className="text-muted-foreground">
+            {candidatures.length === 0
+              ? "Vous n'avez pas encore postulé à des offres d'emploi."
+              : "Aucune candidature ne correspond à vos critères de recherche."}
+          </p>
+        </div>
+      ) : viewMode === "list" ? (
         <div className="grid gap-6">
-          {candidaturesEnCours.map((candidature) => (
+          {filteredCandidatures.map((candidature) => (
             <Card
               key={candidature.id}
               className="hover:shadow-lg transition-shadow"
@@ -189,15 +252,13 @@ const CandidaturesEnCoursPage = () => {
                     <p className="text-sm text-muted-foreground">
                       {candidature.salaire}
                     </p>
+                    {candidature.message && (
+                      <p className="text-sm text-muted-foreground">
+                        <strong>Message :</strong> {candidature.message}
+                      </p>
+                    )}
                   </div>
                   <div className="flex flex-col justify-between gap-4">
-                    <div className="flex flex-wrap gap-2">
-                      {candidature.competences.map((competence, index) => (
-                        <Badge key={index} variant="outline">
-                          {competence}
-                        </Badge>
-                      ))}
-                    </div>
                     <div className="flex gap-2">
                       <Button variant="outline">
                         <FileText className="h-4 w-4 mr-2" />
@@ -247,7 +308,7 @@ const CandidaturesEnCoursPage = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {candidaturesEnCours.map((candidature) => (
+          {filteredCandidatures.map((candidature) => (
             <Card
               key={candidature.id}
               className="hover:shadow-lg transition-shadow"
@@ -281,13 +342,11 @@ const CandidaturesEnCoursPage = () => {
                   <p className="text-sm text-muted-foreground">
                     {candidature.salaire}
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    {candidature.competences.map((competence, index) => (
-                      <Badge key={index} variant="outline">
-                        {competence}
-                      </Badge>
-                    ))}
-                  </div>
+                  {candidature.message && (
+                    <p className="text-sm text-muted-foreground">
+                      <strong>Message :</strong> {candidature.message}
+                    </p>
+                  )}
                   <div className="flex gap-2">
                     <Button variant="outline" className="flex-1">
                       <FileText className="h-4 w-4 mr-2" />

@@ -83,25 +83,25 @@ const Footer = () => {
     {
       icon: <Mail className="h-4 w-4" />,
       label: "Email",
-      value: "contact@recruter.com",
+      value: "contact@ylsix-rh.com",
       href: "mailto:contact@recruter.com",
     },
     {
       icon: <Phone className="h-4 w-4" />,
       label: "Téléphone",
-      value: "+33 1 23 45 67 89",
-      href: "tel:+33123456789",
+      value: "+225 05 44 65 94 90",
+      href: "tel:+2250544659490",
     },
     {
       icon: <MapPin className="h-4 w-4" />,
       label: "Adresse",
-      value: "123 Rue de la Tech, 75001 Paris",
+      value: "Cocody Abatta",
       href: "#",
     },
     {
       icon: <Clock className="h-4 w-4" />,
       label: "Horaires",
-      value: "Lun-Ven 9h-18h (CET)",
+      value: "Lun-Ven 9h-18h (UTA)",
       href: "#",
     },
   ];

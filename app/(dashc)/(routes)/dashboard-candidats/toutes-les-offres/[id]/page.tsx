@@ -42,6 +42,7 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
     enabled: !!offertData?.data?.[0],
   });
 
+  console.log(offertData?.data?.[0]);
   // Mutation pour incrémenter les vues
   const { mutate: incrementViews } = useMutation({
     mutationFn: async () => {

@@ -2,15 +2,33 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, UserCheck, Briefcase } from "lucide-react";
 import { ModeToggle } from "../toggle-dark/toggle-dark";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const { user, loading } = useAuth();
+
+  const { loading: loadingCandidat, candidat } = useAuthCandidat();
+
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  console.log(candidat);
 
   return (
     <header className="fixed w-full border-b border-border bg-background/80 backdrop-blur-sm top-0 z-50">
@@ -72,19 +90,105 @@ const Header = () => {
               Contact
             </Button>
           </Link>
-          <Link href="/recruteur/connexion">
+
+          {/* Si user connecté, afficher avatar + dropdown, sinon bouton */}
+          {!loading && user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer">
+                  <AvatarImage
+                    src={user.image || undefined}
+                    alt={user.name || user.email || "Avatar"}
+                  />
+                  <AvatarFallback>
+                    {user.name
+                      ? user.name[0]
+                      : user.email
+                      ? user.email[0]
+                      : "U"}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => {
+                    if (user.type === "CANDIDAT") {
+                      router.push("/dashboard-candidats");
+                    } else if (user.type === "RECRUTEUR") {
+                      router.push("/dashboard-recruteurs");
+                    }
+                  }}
+                >
+                  Mon espace
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={async () => {
+                    await fetch("/api/auth/logout", { method: "POST" });
+                    window.location.reload();
+                  }}
+                >
+                  Se déconnecter
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+
+          {!loadingCandidat && candidat && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar className="cursor-pointer">
+                  <AvatarImage
+                    src={candidat.image || undefined}
+                    alt={candidat.name || candidat.email || "Avatar"}
+                  />
+                  <AvatarFallback>
+                    {candidat.candidat?.nom
+                      ? candidat.candidat?.nom.charAt(0) +
+                        candidat.candidat?.prenom.charAt(0)
+                      : candidat.candidat?.prenom
+                      ? candidat.candidat?.prenom.charAt(0) +
+                        candidat.candidat?.nom.charAt(0)
+                      : "U"}
+                  </AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => {
+                    router.push("/dashboard-candidats");
+                  }}
+                >
+                  Mon espace
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={async () => {
+                    await fetch("/api/auth/logout", { method: "POST" });
+                    window.location.reload();
+                  }}
+                >
+                  Se déconnecter
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+
+          {!loadingCandidat && !candidat && !loading && !user && (
             <Button
-              variant="ghost"
-              className="text-muted-foreground hover:text-foreground hover:bg-accent"
+              onClick={() => setIsOpen(true)}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              Se connecter
-            </Button>
-          </Link>
-          <Link href="/recruteur/inscription">
-            <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
               Commencer gratuitement
             </Button>
-          </Link>
+          )}
+
+          {/* {!loadingCandidat && !candidat && (
+            <Button
+              onClick={() => setIsOpen(true)}
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              Commencer gratuitement
+            </Button>
+          )} */}
 
           <ModeToggle />
         </div>
@@ -159,17 +263,7 @@ const Header = () => {
               </Button>
             </Link>
             <Separator className="my-2" />
-            <Link
-              href="/recruteur/connexion"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <Button
-                variant="ghost"
-                className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-accent"
-              >
-                Se connecter
-              </Button>
-            </Link>
+
             <Link
               href="/recruteur/inscription"
               onClick={() => setIsMenuOpen(false)}
@@ -178,6 +272,76 @@ const Header = () => {
                 Commencer gratuitement
               </Button>
             </Link>
+          </div>
+        </div>
+      )}
+
+      {isOpen && (
+        <div className="min-h-screen bg-background">
+          <div className="fixed inset-0 w-full h-full bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="relative flex flex-col bg-card rounded-xl md:rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-2xl animate-in fade-in-0 zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto">
+              {/* Close button */}
+              <button
+                onClick={() => setIsOpen(false)}
+                className="absolute top-3 right-3 md:top-4 md:right-4 p-2 hover:bg-muted rounded-full transition-colors duration-200 group"
+              >
+                <X className="w-4 h-4 md:w-5 md:h-5 text-muted-foreground group-hover:text-foreground transition-colors" />
+              </button>
+
+              {/* Header */}
+              <div className="text-center mb-6 md:mb-8">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-2 md:mb-3">
+                  Bienvenue sur Ylsix
+                </h2>
+                <p className="text-muted-foreground text-base md:text-lg">
+                  Vous êtes un recruteur ou un candidat ?
+                </p>
+              </div>
+
+              {/* Options */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <Link href="/recruteur/inscription" className="group">
+                  <div className="flex flex-col items-center justify-center border-2 border-border hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-card to-muted hover:from-primary/5 hover:to-primary/10">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                      <UserCheck
+                        size={24}
+                        className="text-primary md:w-8 md:h-8"
+                      />
+                    </div>
+                    <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">
+                      Recruteur
+                    </h3>
+                    <p className="text-xs md:text-sm text-muted-foreground text-center">
+                      Publiez des offres et trouvez les meilleurs talents
+                    </p>
+                  </div>
+                </Link>
+
+                <Link href="/candidat/inscription" className="group">
+                  <div className="flex flex-col items-center justify-center border-2 border-border hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-card to-muted hover:from-primary/5 hover:to-primary/10">
+                    <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors duration-300">
+                      <Briefcase
+                        size={24}
+                        className="text-primary md:w-8 md:h-8"
+                      />
+                    </div>
+                    <h3 className="text-lg md:text-xl font-semibold text-foreground mb-2">
+                      Candidat
+                    </h3>
+                    <p className="text-xs md:text-sm text-muted-foreground text-center">
+                      Découvrez des opportunités et postulez facilement
+                    </p>
+                  </div>
+                </Link>
+              </div>
+
+              {/* Footer */}
+              <div className="text-center mt-4 md:mt-6">
+                <p className="text-xs md:text-sm text-muted-foreground">
+                  Rejoignez notre communauté de professionnels
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}

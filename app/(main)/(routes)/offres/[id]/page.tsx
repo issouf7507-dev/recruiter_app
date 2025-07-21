@@ -29,9 +29,21 @@ import {
   AlertCircle,
   Send,
   ExternalLink,
+  Loader2,
 } from "lucide-react";
 import Link from "next/link";
 import Header from "@/app/components/header/header";
+import {
+  Dialog,
+  DialogFooter,
+  DialogDescription,
+  DialogTitle,
+  DialogHeader,
+  DialogContent,
+} from "@/components/ui/dialog";
+import { useMutation } from "@tanstack/react-query";
+import { fetchData, postData } from "@/utils/utilts";
+import { toast } from "sonner";
 
 export default function OffreDetailPage() {
   const params = useParams();
@@ -42,6 +54,10 @@ export default function OffreDetailPage() {
   const [message, setMessage] = useState("");
   const [otherOffers, setOtherOffers] = useState<JobOffer[]>([]);
   const [loadingOtherOffers, setLoadingOtherOffers] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showCvAlert, setShowCvAlert] = useState(false);
+  const [postulatedOffers, setPostulatedOffers] = useState<number[]>([]);
+  const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
   const { user, loading: authLoading } = useAuth();
   const { candidat, loading: candidatLoading } = useAuthCandidat();
 
@@ -53,12 +69,32 @@ export default function OffreDetailPage() {
     }
   }, [params.id]);
 
+  const loadPostulatedOffers = async () => {
+    await fetchData("/api/candidat/postulations")
+      .then((res) => {
+        if (res.success) {
+          setPostulatedOffers(res.data.map((app: any) => app.jobOfferId));
+          // console.log(res.data);
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur lors du chargement des postulations:", error);
+      });
+  };
+
+  useEffect(() => {
+    if (candidat?.candidat?.id) {
+      loadPostulatedOffers();
+    }
+  }, [candidat]);
+
   const fetchOffre = async () => {
     try {
       const response = await fetch(`/api/recruteur/offres/${params.id}`);
       if (response.ok) {
         const data = await response.json();
         setOffre(data.data[0] || null);
+        console.log(data.data[0]);
       }
     } catch (error) {
       console.error("Erreur lors du chargement de l'offre:", error);
@@ -94,43 +130,47 @@ export default function OffreDetailPage() {
     }
   };
 
-  const handlePostuler = async () => {
-    if (!candidat) {
-      router.push("/candidat/connexion");
-      return;
-    }
-
-    if (!message.trim()) {
-      alert("Veuillez ajouter un message de motivation");
-      return;
-    }
-
-    setPostulating(true);
-    try {
-      const response = await fetch("/api/candidat/postuler", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          jobOfferId: offre?.id,
-          message: message.trim(),
-        }),
-      });
-
-      if (response.ok) {
-        alert("Candidature envoyée avec succès !");
-        setMessage("");
-      } else {
-        const error = await response.json();
-        alert(error.error || "Erreur lors de l'envoi de la candidature");
-      }
-    } catch (error) {
+  const postulerMutation = useMutation({
+    mutationFn: (data: { jobOfferId: number; message: string }) =>
+      postData(data, "/api/candidat/postuler"),
+    onSuccess: () => {
+      toast.success("Candidature envoyée avec succès");
+      loadPostulatedOffers();
+      // refetch();
+      setShowConfirmModal(false);
+      setSelectedOfferId(null);
+    },
+    onError: (error) => {
       console.error("Erreur lors de la candidature:", error);
-      alert("Erreur lors de l'envoi de la candidature");
-    } finally {
-      setPostulating(false);
+      toast.error("Erreur lors de la candidature");
+    },
+  });
+
+  const handleConfirmPostuler = () => {
+    if (!selectedOfferId) return;
+
+    if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
+      setShowCvAlert(true);
+      setShowConfirmModal(false);
+      return;
     }
+
+    postulerMutation.mutate(
+      {
+        jobOfferId: selectedOfferId,
+        message: "Je suis intéressé par cette offre",
+      },
+      {
+        onSuccess(data, variables, context) {
+          window.location.reload();
+        },
+      }
+    );
+  };
+
+  const handlePostuler = (jobOfferId: number) => {
+    setSelectedOfferId(jobOfferId);
+    setShowConfirmModal(true);
   };
 
   const formatSalary = (
@@ -361,7 +401,7 @@ export default function OffreDetailPage() {
               <CardContent className="space-y-4">
                 {candidat ? (
                   <>
-                    <div className="space-y-2">
+                    {/* <div className="space-y-2">
                       <label className="text-sm font-medium text-foreground">
                         Message de motivation
                       </label>
@@ -372,20 +412,17 @@ export default function OffreDetailPage() {
                         className="w-full p-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent resize-none bg-background text-foreground placeholder:text-muted-foreground"
                         rows={4}
                       />
-                    </div>
+                    </div> */}
                     <Button
-                      onClick={handlePostuler}
-                      disabled={postulating || !message.trim()}
+                      // onClick={handlePostuler}
+                      // disabled={postulating || !message.trim() }
+                      onClick={() => handlePostuler(offre.id)}
+                      disabled={postulatedOffers.includes(offre.id)}
                       className="w-full bg-primary hover:bg-primary/90"
                     >
-                      {postulating ? (
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      ) : (
-                        <Send className="h-4 w-4 mr-2" />
-                      )}
-                      {postulating
-                        ? "Envoi en cours..."
-                        : "Postuler maintenant"}
+                      {postulatedOffers.includes(offre.id)
+                        ? "Déjà postulé"
+                        : "Postuler"}
                     </Button>
                   </>
                 ) : (
@@ -473,28 +510,29 @@ export default function OffreDetailPage() {
             </Card>
 
             {/* Compétences */}
-            {offre.competences && offre.competences.length > 0 && (
-              <Card className="shadow-none border">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg font-semibold">
-                    Compétences recherchées
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {offre.competences.map((competence, index) => (
-                      <Badge
-                        key={index}
-                        variant="secondary"
-                        className="px-3 py-1"
-                      >
-                        {competence}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+            {offre.jobOfferCompetences &&
+              offre.jobOfferCompetences.length > 0 && (
+                <Card className="shadow-none border">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="text-lg font-semibold">
+                      Compétences recherchées
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="flex flex-wrap gap-2">
+                      {offre.jobOfferCompetences.map((competence, index) => (
+                        <Badge
+                          key={index}
+                          variant="secondary"
+                          className="px-3 py-1"
+                        >
+                          {competence.competence}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
           </div>
         </div>
 
@@ -583,10 +621,10 @@ export default function OffreDetailPage() {
                         {otherOffre.description}
                       </p>
 
-                      {otherOffre.competences &&
-                        otherOffre.competences.length > 0 && (
+                      {otherOffre.jobOfferCompetences &&
+                        otherOffre.jobOfferCompetences.length > 0 && (
                           <div className="flex flex-wrap gap-1">
-                            {otherOffre.competences
+                            {otherOffre.jobOfferCompetences
                               .slice(0, 3)
                               .map((competence, index) => (
                                 <Badge
@@ -594,12 +632,12 @@ export default function OffreDetailPage() {
                                   variant="secondary"
                                   className="text-xs"
                                 >
-                                  {competence}
+                                  {competence.competence}
                                 </Badge>
                               ))}
-                            {otherOffre.competences.length > 3 && (
+                            {otherOffre.jobOfferCompetences.length > 3 && (
                               <Badge variant="outline" className="text-xs">
-                                +{otherOffre.competences.length - 3}
+                                +{otherOffre.jobOfferCompetences.length - 3}
                               </Badge>
                             )}
                           </div>
@@ -641,6 +679,70 @@ export default function OffreDetailPage() {
           )}
         </div>
       </div>
+
+      <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
+        <DialogContent className="w-lg">
+          <DialogHeader>
+            <DialogTitle>Documents importants manquants</DialogTitle>
+            <DialogDescription>
+              Pour maximiser vos chances de trouver un emploi, il est important
+              de compléter votre profil en ajoutant votre CV et votre lettre de
+              motivation.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-muted-foreground">
+              Ces documents sont essentiels pour que les recruteurs puissent
+              vous connaître et vous contacter.
+            </p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowCvAlert(false)}>
+              Plus tard
+            </Button>
+            <Button asChild onClick={() => setShowCvAlert(false)}>
+              <Link href="/dashboard-candidats/informations-personnelles">
+                Compléter mon profil
+              </Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de confirmation de postulation */}
+      <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Confirmer votre candidature</DialogTitle>
+            <DialogDescription>
+              Êtes-vous sûr de vouloir postuler à cette offre ? Votre
+              candidature sera envoyée au recruteur.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowConfirmModal(false)}
+              disabled={postulerMutation.isPending}
+            >
+              Annuler
+            </Button>
+            <Button
+              onClick={handleConfirmPostuler}
+              disabled={postulerMutation.isPending}
+            >
+              {postulerMutation.isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Envoi en cours...
+                </>
+              ) : (
+                "Confirmer"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

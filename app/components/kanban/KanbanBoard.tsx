@@ -11,7 +11,13 @@ import {
 } from "@hello-pangea/dnd";
 
 import { Button } from "@/components/ui/button";
-import { Plus, Loader2, MoreVertical, RefreshCcw } from "lucide-react";
+import {
+  Plus,
+  Loader2,
+  MoreVertical,
+  RefreshCcw,
+  Calendar as CalendarIcon,
+} from "lucide-react";
 
 import {
   Dialog,
@@ -22,6 +28,14 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 import { useQuery } from "@tanstack/react-query";
 import { deleteData, fetchDataById, postData, putData } from "@/utils/utilts";
@@ -92,6 +106,7 @@ type Application = {
     prenom: string;
     email: string;
     competences: string[];
+    competencesList: { competence: string }[];
     cv: string;
     letterm: string;
   };
@@ -172,7 +187,15 @@ function getRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
-export default function KanbanBoard({ offerId }: { offerId: string }) {
+export default function KanbanBoard({
+  offerId,
+  selectedCardId,
+  onCardSelect,
+}: {
+  offerId: string;
+  selectedCardId?: string | null;
+  onCardSelect?: (cardId: string | null) => void;
+}) {
   const { user } = useUserStore();
 
   const {
@@ -264,8 +287,11 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
 
   // États pour la date d'échéance
   const [isDueDateModalOpen, setIsDueDateModalOpen] = useState(false);
-  const [selectedDueDate, setSelectedDueDate] = useState<string>("");
+  const [selectedDueDate, setSelectedDueDate] = useState<Date | undefined>(
+    undefined
+  );
   const [isUpdatingDueDate, setIsUpdatingDueDate] = useState(false);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   // Gestion des événements WebSocket
   useEffect(() => {
@@ -409,11 +435,27 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
       );
       if (updatedCard) {
         console.log("updatedCard", updatedCard);
-        ``;
         setSelectedCard(updatedCard);
       }
     }
   }, [applications, selectedCard?.id]);
+
+  // Effet pour mettre en surbrillance la carte sélectionnée depuis le calendrier
+  useEffect(() => {
+    if (selectedCardId && applications.length > 0) {
+      const cardToHighlight = applications.find(
+        (app) => app.id === selectedCardId
+      );
+      if (cardToHighlight) {
+        setSelectedCard(cardToHighlight);
+        setIsCardModalOpen(true);
+        // Effacer la sélection après un délai
+        setTimeout(() => {
+          onCardSelect?.(null);
+        }, 2000);
+      }
+    }
+  }, [selectedCardId, applications, onCardSelect]);
 
   const handleAddColumn = async () => {
     if (!newColumn.name) return;
@@ -1181,9 +1223,8 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
   // Fonctions pour gérer la date d'échéance
   const handleOpenDueDateModal = (card: Application) => {
     setSelectedCard(card);
-    setSelectedDueDate(
-      card.duedate ? new Date(card.duedate).toISOString().split("T")[0] : ""
-    );
+    setSelectedDueDate(card.duedate ? new Date(card.duedate) : undefined);
+    setIsCalendarOpen(false);
     setIsDueDateModalOpen(true);
   };
 
@@ -1200,9 +1241,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            duedate: selectedDueDate
-              ? new Date(selectedDueDate).toISOString()
-              : null,
+            duedate: selectedDueDate ? selectedDueDate.toISOString() : null,
           }),
         }
       );
@@ -1213,9 +1252,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
           // Mettre à jour l'état local immédiatement
           const updatedCard = {
             ...selectedCard,
-            duedate: selectedDueDate
-              ? new Date(selectedDueDate).toISOString()
-              : null,
+            duedate: selectedDueDate ? selectedDueDate.toISOString() : null,
           };
 
           setSelectedCard(updatedCard);
@@ -1237,6 +1274,13 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
       );
     } finally {
       setIsUpdatingDueDate(false);
+    }
+  };
+
+  const handleDateSelect = (date: Date | undefined) => {
+    setSelectedDueDate(date);
+    if (date) {
+      setIsCalendarOpen(false);
     }
   };
 
@@ -1895,13 +1939,13 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {selectedCard.candidat.competences.map(
+                          {selectedCard.candidat.competencesList?.map(
                             (competence) => (
                               <span
-                                key={competence}
+                                key={competence.competence}
                                 className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
                               >
-                                {competence}
+                                {competence.competence}
                               </span>
                             )
                           )}
@@ -2248,13 +2292,13 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {selectedCard.candidat.competences.map(
+                          {selectedCard.candidat.competencesList?.map(
                             (competence) => (
                               <span
-                                key={competence}
+                                key={competence.competence}
                                 className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
                               >
-                                {competence}
+                                {competence.competence}
                               </span>
                             )
                           )}
@@ -2572,13 +2616,13 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {selectedCard.candidat.competences.map(
+                          {selectedCard.candidat.competencesList?.map(
                             (competence) => (
                               <span
-                                key={competence}
+                                key={competence.competence}
                                 className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
                               >
-                                {competence}
+                                {competence.competence}
                               </span>
                             )
                           )}
@@ -3164,13 +3208,13 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {selectedCard.candidat.competences.map(
+                          {selectedCard.candidat.competencesList?.map(
                             (competence) => (
                               <span
-                                key={competence}
+                                key={competence.competence}
                                 className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
                               >
-                                {competence}
+                                {competence.competence}
                               </span>
                             )
                           )}
@@ -4054,13 +4098,54 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Date d'échéance
                 </label>
-                <input
-                  type="date"
-                  value={selectedDueDate}
-                  onChange={(e) => setSelectedDueDate(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  min={new Date().toISOString().split("T")[0]}
-                />
+                <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start text-left font-normal"
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {selectedDueDate ? (
+                        format(selectedDueDate, "PPP", { locale: fr })
+                      ) : (
+                        <span className="text-muted-foreground">
+                          Sélectionner une date
+                        </span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <div className="p-3 border-b">
+                      <Calendar
+                        mode="single"
+                        selected={selectedDueDate}
+                        onSelect={handleDateSelect}
+                        disabled={(date) => {
+                          const today = new Date();
+                          today.setHours(0, 0, 0, 0);
+                          return date < today;
+                        }}
+                        initialFocus
+                        locale={fr}
+                      />
+                    </div>
+                    {selectedDueDate && (
+                      <div className="p-3 border-t">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setSelectedDueDate(undefined);
+                            setIsCalendarOpen(false);
+                          }}
+                          className="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
+                        >
+                          Effacer la date
+                        </Button>
+                      </div>
+                    )}
+                  </PopoverContent>
+                </Popover>
                 <p className="text-xs text-gray-500 mt-1">
                   Sélectionnez une date pour définir l'échéance de cette
                   candidature
@@ -4141,7 +4226,7 @@ export default function KanbanBoard({ offerId }: { offerId: string }) {
               </Button>
               <Button
                 onClick={handleUpdateDueDate}
-                disabled={isUpdatingDueDate || !selectedDueDate}
+                disabled={isUpdatingDueDate || selectedDueDate === undefined}
               >
                 {isUpdatingDueDate ? (
                   <>

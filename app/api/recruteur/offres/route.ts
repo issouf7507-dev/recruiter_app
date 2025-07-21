@@ -117,37 +117,34 @@ export async function POST(req: Request) {
 export async function GET(req: NextRequest) {
   try {
     const token = req.cookies.get("token")?.value;
-    if (!token) {
+
+    const candidat = req.cookies.get("candidat")?.value;
+
+    if (!token && !candidat) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
+    let decoded;
 
-    if (decoded.type !== "RECRUTEUR") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    if (token) {
+      decoded = verify(token, process.env.JWT_SECRET!) as {
+        userId: string;
+        type: string;
+      };
+    } else if (candidat) {
+      decoded = verify(candidat, process.env.JWT_SECRET_CANDIDAT!) as {
+        userId: string;
+        type: string;
+      };
     }
 
-    // Récupérer le recruteur
-    const recruteur = await prisma.recruteur.findFirst({
-      where: {
-        userId: decoded.userId,
-      },
-    });
-
-    if (!recruteur) {
-      return NextResponse.json(
-        { error: "Recruteur non trouvé" },
-        { status: 404 }
-      );
+    if (!decoded?.type) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     // Récupérer toutes les offres du recruteur
     const offres = await prisma.jobOffer.findMany({
       where: {
-        recruteurId: recruteur.id,
         etat: "active",
       },
       select: {

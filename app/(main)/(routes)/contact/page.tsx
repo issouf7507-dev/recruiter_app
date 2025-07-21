@@ -89,21 +89,21 @@ const contactInfo = [
   {
     icon: <Mail className="h-6 w-6" />,
     title: "Email",
-    value: "contact@recruter.com",
+    value: "contact@ylsix-rh.com",
     description: "Réponse sous 24h",
     color: "text-blue-600",
   },
   {
     icon: <Phone className="h-6 w-6" />,
     title: "Téléphone",
-    value: "+33 1 23 45 67 89",
+    value: "+225 05 44 65 94 90",
     description: "Lun-Ven 9h-18h",
     color: "text-green-600",
   },
   {
     icon: <MapPin className="h-6 w-6" />,
     title: "Adresse",
-    value: "123 Rue de la Tech, 75001 Paris",
+    value: "Cocody Abatta",
     description: "Siège social",
     color: "text-purple-600",
   },
@@ -111,7 +111,7 @@ const contactInfo = [
     icon: <Clock className="h-6 w-6" />,
     title: "Horaires",
     value: "Lundi - Vendredi",
-    description: "9h00 - 18h00 (CET)",
+    description: "9h00 - 18h00 (UTC)",
     color: "text-orange-600",
   },
 ];
@@ -513,11 +513,9 @@ export default function ContactPage() {
                     {supportOptions.map((option, index) => (
                       <div
                         key={index}
-                        className="p-4 rounded-lg border hover:shadow-md transition-shadow cursor-pointer"
+                        className="p-4 rounded-lg border  hover:shadow-md transition-shadow cursor-pointer"
                       >
-                        <div className={`${option.color} mb-3`}>
-                          {option.icon}
-                        </div>
+                        <div className={` mb-3`}>{option.icon}</div>
                         <h3 className="font-semibold mb-2">{option.title}</h3>
                         <p className="text-sm text-muted-foreground mb-3">
                           {option.description}

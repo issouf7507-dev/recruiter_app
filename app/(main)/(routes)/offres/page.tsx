@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
+import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 import { JobOffer } from "@/types/types";
 import {
   Search,
@@ -58,6 +59,7 @@ function OffresPageContent() {
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const { user, loading: authLoading } = useAuth();
+  const { candidat, loading: candidatLoading } = useAuthCandidat();
 
   // Get search parameters from URL
   const urlQuery = searchParams.get("q") || "";
@@ -225,7 +227,7 @@ function OffresPageContent() {
   };
 
   const handlePostulerClick = () => {
-    if (!user) {
+    if (!candidat) {
       setLoginModalType("candidat");
       setShowLoginModal(true);
     }
@@ -324,24 +326,27 @@ function OffresPageContent() {
                   </div>
                 )}
 
-                {offre.competences && offre.competences.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {offre.competences.slice(0, 3).map((competence, index) => (
-                      <Badge
-                        key={index}
-                        variant="secondary"
-                        className="text-xs"
-                      >
-                        {competence}
-                      </Badge>
-                    ))}
-                    {offre.competences.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{offre.competences.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-                )}
+                {offre.jobOfferCompetences &&
+                  offre.jobOfferCompetences.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {offre.jobOfferCompetences
+                        .slice(0, 3)
+                        .map((competence, index) => (
+                          <Badge
+                            key={index}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {competence.competence}
+                          </Badge>
+                        ))}
+                      {offre.jobOfferCompetences.length > 3 && (
+                        <Badge variant="outline" className="text-xs">
+                          +{offre.jobOfferCompetences.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                  )}
               </div>
 
               <Link href={`/offres/${offre.id}`}>
@@ -405,16 +410,16 @@ function OffresPageContent() {
           {offre.description}
         </p>
 
-        {offre.competences && offre.competences.length > 0 && (
+        {offre.jobOfferCompetences && offre.jobOfferCompetences.length > 0 && (
           <div className="flex flex-wrap gap-1">
-            {offre.competences.slice(0, 3).map((competence, index) => (
+            {offre.jobOfferCompetences.slice(0, 3).map((competence, index) => (
               <Badge key={index} variant="secondary" className="text-xs">
-                {competence}
+                {competence.competence}
               </Badge>
             ))}
-            {offre.competences.length > 3 && (
+            {offre.jobOfferCompetences.length > 3 && (
               <Badge variant="outline" className="text-xs">
-                +{offre.competences.length - 3}
+                +{offre.jobOfferCompetences.length - 3}
               </Badge>
             )}
           </div>

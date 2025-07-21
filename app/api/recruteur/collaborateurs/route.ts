@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
-import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
+// import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,17 +10,17 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const cacheKey = CACHE_KEYS.COLLABORATEURS(authenticatedUser.recruteurId);
+    // const cacheKey = CACHE_KEYS.COLLABORATEURS(authenticatedUser.recruteurId);
 
     // Essayer de récupérer depuis le cache
-    const cachedData = await cacheUtils.get(cacheKey);
-    if (cachedData) {
-      return NextResponse.json({
-        success: true,
-        data: cachedData,
-        fromCache: true,
-      });
-    }
+    // const cachedData = await cacheUtils.get(cacheKey);
+    // if (cachedData) {
+    //   return NextResponse.json({
+    //     success: true,
+    //     data: cachedData,
+    //     fromCache: true,
+    //   });
+    // }
 
     // Récupérer les collaborateurs avec mise en cache
     const collaborateurs = await prisma.collaborateur.findMany({
@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
     });
 
     // Mettre en cache
-    await cacheUtils.set(cacheKey, collaborateurs, CACHE_TTL.COLLABORATEURS);
+    // await cacheUtils.set(cacheKey, collaborateurs, CACHE_TTL.COLLABORATEURS);
 
     return NextResponse.json({
       success: true,

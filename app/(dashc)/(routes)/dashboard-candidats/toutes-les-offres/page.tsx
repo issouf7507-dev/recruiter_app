@@ -95,6 +95,8 @@ const ToutesLesOffresPage = () => {
   });
   const [showSearchModal, setShowSearchModal] = useState(false);
 
+  // console.log(offertData);
+
   const loadPostulatedOffers = async () => {
     await fetchData("/api/candidat/postulations")
       .then((res) => {
@@ -224,7 +226,11 @@ const ToutesLesOffresPage = () => {
   };
 
   const handleSearchResults = (results: JobOffer[]) => {
-    setMatchOffersWithUser(results);
+    // Si des résultats de recherche sont fournis, les utiliser
+    // Sinon, garder les offres filtrées normales
+    if (results && results.length >= 0) {
+      setMatchOffersWithUser(results);
+    }
   };
 
   if (isLoading || filteredOffers.length < 0) {
@@ -240,10 +246,6 @@ const ToutesLesOffresPage = () => {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b pb-4">
         <h1 className="text-2xl font-bold">Toutes les offres</h1>
         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-          <div className="relative flex-1">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Rechercher une offre..." className="pl-8" />
-          </div>
           <Button
             variant="outline"
             onClick={() => setShowSearchModal(true)}

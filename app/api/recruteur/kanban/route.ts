@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
-import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
+// import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
 import { kanbanEvents } from "@/lib/socket";
 
 export async function POST(req: Request) {
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     await kanbanEvents.columnCreated(kanbanColumn, jobOfferId);
 
     // Invalider le cache
-    await cacheUtils.del(CACHE_KEYS.KANBAN_BOARD(jobOfferId));
+    // await cacheUtils.del(CACHE_KEYS.KANBAN_BOARD(jobOfferId));
 
     return NextResponse.json(
       { sucess: true, data: kanbanColumn },

@@ -35,6 +35,7 @@ import { useUserStore } from "@/store/userStore";
 import SidebarOffres from "@/components/SidebarOffres";
 import KanbanBoard from "@/app/components/kanban/KanbanBoard";
 import ManualKanbanBoard from "@/app/components/kanban/ManualKanbanBoard";
+import CalendarView from "@/app/components/kanban/CalendarView";
 import { useRecruteurId } from "@/hooks/useRecruteurId";
 
 // Types pour une meilleure sécurité des données
@@ -54,6 +55,7 @@ interface OfferData {
   requirements: string;
   benefits: string;
   competences: string[];
+  jobOfferCompetences: { competence: string }[];
   etat: "active" | "draft" | "closed";
   createdAt: string;
   views: number;
@@ -70,6 +72,8 @@ export default function OffreDetail({
   const router = useRouter();
   const { offerId } = use(params);
   const recruteurId = useRecruteurId();
+  const [activeTab, setActiveTab] = useState("details");
+  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
   // Récupérer les détails de l'offre actuelle
   const {
@@ -236,7 +240,11 @@ export default function OffreDetail({
 
         {/* Tabs navigation */}
         <div className="w-full h-[calc(100vh-200px)] overflow-y-auto">
-          <Tabs defaultValue="details" className="w-full">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full"
+          >
             <TabsList className="bg-transparent border">
               <TabsTrigger value="details" className="border shadow-none">
                 Détail
@@ -245,6 +253,7 @@ export default function OffreDetail({
               <TabsTrigger value="personnalise">
                 Tableau personnalisé
               </TabsTrigger>
+              <TabsTrigger value="calendrier">Calendrier</TabsTrigger>
             </TabsList>
 
             <TabsContent value="details">
@@ -348,14 +357,14 @@ export default function OffreDetail({
                                 Compétences requises
                               </h3>
                               <div className="flex flex-wrap gap-2">
-                                {offerData.competences?.map(
-                                  (skill: string, index: number) => (
+                                {offerData.jobOfferCompetences?.map(
+                                  (skill, index: number) => (
                                     <Badge
-                                      key={`${skill}-${index}`}
+                                      key={`${skill.competence}-${index}`}
                                       variant="secondary"
                                       className="capitalize"
                                     >
-                                      {skill}
+                                      {skill.competence}
                                     </Badge>
                                   )
                                 )}
@@ -441,12 +450,31 @@ export default function OffreDetail({
             </TabsContent>
 
             <TabsContent value="tableau" className="w-full">
-              <KanbanBoard offerId={offerId} />
+              <KanbanBoard
+                offerId={offerId}
+                selectedCardId={selectedCardId}
+                onCardSelect={(cardId: string | null) =>
+                  setSelectedCardId(cardId)
+                }
+              />
             </TabsContent>
 
             <TabsContent value="personnalise">
               <div className="w-full h-[calc(100vh-200px)] overflow-y-auto">
                 <ManualKanbanBoard offerId={offerId} />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="calendrier">
+              <div className="w-full h-[calc(100vh-200px)] overflow-y-auto">
+                <CalendarView
+                  applications={offerData.applications || []}
+                  onCardClick={(application) => {
+                    // Basculer vers l'onglet tableau et sélectionner la carte
+                    setActiveTab("tableau");
+                    setSelectedCardId(application.id);
+                  }}
+                />
               </div>
             </TabsContent>
           </Tabs>

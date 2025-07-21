@@ -212,20 +212,25 @@ export default function CandidatsLayout({
         )}
       >
         <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="justify-between gap-10 border bg-[#2a294b] dark:bg-card rounded-lg">
-            <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+          <SidebarBody className="flex flex-col justify-between border bg-[#2a294b] dark:bg-card rounded-lg p-4">
+            {/* Header avec logo */}
+            <div className="flex-shrink-0 mb-6">
               {open ? <Logo /> : <LogoIcon />}
-              <div className="mt-8 flex flex-col gap-2">
+            </div>
+
+            {/* Navigation principale */}
+            <div className="flex-1 overflow-y-auto">
+              <div className="flex flex-col gap-1">
                 {linksCandidat.map((link, idx) => (
-                  <div key={idx}>
+                  <div key={idx} className="w-full">
                     <SidebarLink link={link} />
                     {open && link.subItems && (
-                      <div className="ml-10 mt-1 flex flex-col gap-1">
+                      <div className="ml-6 mt-1 flex flex-col gap-1 border-l border-white/20 pl-4">
                         {link.subItems.map((subItem, subIdx) => (
                           <Link
                             key={subIdx}
                             href={subItem.href}
-                            className="text-sm text-white hover:text-neutral-800 py-1"
+                            className="text-sm text-white/80 hover:text-white py-1 px-2 rounded-md transition-colors duration-200 hover:bg-white/10"
                           >
                             {subItem.label}
                           </Link>
@@ -236,11 +241,21 @@ export default function CandidatsLayout({
                 ))}
               </div>
             </div>
-            <div className=" flex flex-col">
-              <div className="flex-shrink-0">
+
+            {/* Footer avec thème et profil */}
+            <div className="flex-shrink-0 mt-6 space-y-4">
+              {/* Séparateur */}
+              <div className="border-t border-white/20 pt-4"></div>
+
+              {/* Bouton thème */}
+              <div className="flex justify-center">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="icon">
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+                    >
                       <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                       <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                       <span className="sr-only">Toggle theme</span>
@@ -259,6 +274,8 @@ export default function CandidatsLayout({
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
+
+              {/* Profil utilisateur */}
               <SidebarLink
                 link={{
                   label: "Manu Arora",
