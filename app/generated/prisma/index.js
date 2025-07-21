@@ -774,11 +774,12 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "mysql://root:root0990@localhost:3306/db_recruter"
+        "value": null
       }
     }
   },
