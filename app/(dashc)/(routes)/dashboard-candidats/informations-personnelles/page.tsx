@@ -27,12 +27,21 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CalendarIcon, Camera, Loader2, Pencil, Save } from "lucide-react";
+import {
+  CalendarIcon,
+  Camera,
+  Loader2,
+  Pencil,
+  Save,
+  Plus,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { useUserStore } from "@/store/userStore";
 import { postData, putData } from "@/utils/utilts";
 import { useMutation } from "@tanstack/react-query";
+import { FileUpload } from "@/components/ui/file-upload";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 const formSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -61,7 +70,8 @@ const InformationsPersonnellesPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [date, setDate] = useState<Date>();
   const [formLoading, setFormLoading] = useState(true);
-  const [uploading, setUploading] = useState(false);
+  const [customCompetence, setCustomCompetence] = useState("");
+  const [showCustomInput, setShowCustomInput] = useState(false);
 
   const {
     register,
@@ -90,13 +100,10 @@ const InformationsPersonnellesPage = () => {
     },
   });
 
-  // const { user } = useAuth();
-
-  // console.log(user);
-
   useEffect(() => {
     if (candidat?.candidat) {
       const ucandidat = candidat?.candidat;
+      console.log(ucandidat);
       reset({
         nom: ucandidat.nom || "",
         prenom: ucandidat.prenom || "",
@@ -128,21 +135,6 @@ const InformationsPersonnellesPage = () => {
     onSuccess: (result) => {
       toast.success("Profil mis à jour avec succès");
       setIsEditing(false);
-
-      // console.log(result);
-
-      // if (candidat?.candidat) {
-      //   setCandidat({
-      //     ...candidat,
-      //     candidat: {
-      //       ...candidat.candidat,
-      //       ...data,
-      //       dateNaissance:
-      //         data.dateNaissance?.toISOString() ||
-      //         candidat.candidat.dateNaissance,
-      //     },
-      //   });
-      // }
     },
     onError: (error) => {
       console.error("Erreur lors de la mise à jour:", error);
@@ -164,74 +156,6 @@ const InformationsPersonnellesPage = () => {
             candidat.candidat.dateNaissance,
         },
       });
-    }
-
-    // try {
-    //   const response = await fetch("/api/candidat/update", {
-    //     method: "PUT",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       ...data,
-    //       dateNaissance: data.dateNaissance?.toISOString(),
-    //     }),
-    //   });
-
-    //   const result = await response.json();
-    //   if (result.success) {
-    //     toast.success("Profil mis à jour avec succès");
-    //     setIsEditing(false);
-    //     console.log(result);
-
-    //     // Mettre à jour le store avec les nouvelles données
-    //     if (candidat?.candidat) {
-    //       setCandidat({
-    //         ...candidat,
-    //         candidat: {
-    //           ...candidat.candidat,
-    //           ...data,
-    //           dateNaissance:
-    //             data.dateNaissance?.toISOString() ||
-    //             candidat.candidat.dateNaissance,
-    //         },
-    //       });
-    //     }
-    //   } else {
-    //     toast.error(result.error || "Erreur lors de la mise à jour");
-    //   }
-    // } catch (error) {
-    //   console.error("Erreur lors de la mise à jour:", error);
-    //   toast.error("Erreur lors de la mise à jour");
-    // }
-  };
-
-  const handleFileUpload = async (file: File, type: "cv" | "letterm") => {
-    try {
-      setUploading(true);
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("type", type);
-
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const result = await response.json();
-      if (result.url) {
-        setValue(type, result.url);
-        toast.success(
-          `${type === "cv" ? "CV" : "Lettre de motivation"} uploadé avec succès`
-        );
-      } else {
-        toast.error("Erreur lors de l'upload");
-      }
-    } catch (error) {
-      console.error("Erreur lors de l'upload:", error);
-      toast.error("Erreur lors de l'upload");
-    } finally {
-      setUploading(false);
     }
   };
 
@@ -304,39 +228,10 @@ const InformationsPersonnellesPage = () => {
                   </AvatarFallback>
                 </Avatar>
                 {isEditing && (
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className="absolute bottom-0 right-0 rounded-full"
-                    type="button"
-                    onClick={() => {
-                      const input = document.createElement("input");
-                      input.type = "file";
-                      input.accept = "image/*";
-                      input.onchange = async (e) => {
-                        const file = (e.target as HTMLInputElement).files?.[0];
-                        if (file) {
-                          const formData = new FormData();
-                          formData.append("file", file);
-                          try {
-                            const response = await fetch("/api/upload", {
-                              method: "POST",
-                              body: formData,
-                            });
-                            const data = await response.json();
-                            if (data.url) {
-                              setValue("image", data.url);
-                            }
-                          } catch (error) {
-                            console.error("Erreur lors de l'upload:", error);
-                          }
-                        }
-                      };
-                      input.click();
-                    }}
-                  >
-                    <Camera className="h-4 w-4" />
-                  </Button>
+                  <ImageUpload
+                    onUpload={(url) => setValue("image", url)}
+                    currentUrl={watch("image")}
+                  />
                 )}
               </div>
               {isEditing && (
@@ -525,39 +420,128 @@ const InformationsPersonnellesPage = () => {
 
               <div className="space-y-2">
                 <Label>Compétences</Label>
-                <Select
-                  disabled={!isEditing}
-                  onValueChange={(value) => {
-                    const currentCompetences = watch("competences") || [];
-                    if (!currentCompetences.includes(value)) {
-                      setValue("competences", [...currentCompetences, value]);
-                    }
-                  }}
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Sélectionnez vos compétences" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="javascript">JavaScript</SelectItem>
-                    <SelectItem value="typescript">TypeScript</SelectItem>
-                    <SelectItem value="react">React</SelectItem>
-                    <SelectItem value="nextjs">Next.js</SelectItem>
-                    <SelectItem value="nodejs">Node.js</SelectItem>
-                    <SelectItem value="python">Python</SelectItem>
-                    <SelectItem value="java">Java</SelectItem>
-                    <SelectItem value="php">PHP</SelectItem>
-                    <SelectItem value="sql">SQL</SelectItem>
-                    <SelectItem value="mongodb">MongoDB</SelectItem>
-                    <SelectItem value="git">Git</SelectItem>
-                    <SelectItem value="docker">Docker</SelectItem>
-                    <SelectItem value="aws">AWS</SelectItem>
-                    <SelectItem value="uiux">UI/UX Design</SelectItem>
-                    <SelectItem value="agile">Méthodologies Agiles</SelectItem>
-                    <SelectItem value="canva">Canva</SelectItem>
-                    <SelectItem value="rédaction">Rédaction</SelectItem>
-                    {/* <SelectItem value="agile">Méthodologies Agiles</SelectItem> */}
-                  </SelectContent>
-                </Select>
+                <div className="space-y-3">
+                  <Select
+                    disabled={!isEditing}
+                    onValueChange={(value) => {
+                      const currentCompetences = watch("competences") || [];
+                      if (!currentCompetences.includes(value)) {
+                        setValue("competences", [...currentCompetences, value]);
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Sélectionnez vos compétences" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="javascript">JavaScript</SelectItem>
+                      <SelectItem value="typescript">TypeScript</SelectItem>
+                      <SelectItem value="react">React</SelectItem>
+                      <SelectItem value="nextjs">Next.js</SelectItem>
+                      <SelectItem value="nodejs">Node.js</SelectItem>
+                      <SelectItem value="python">Python</SelectItem>
+                      <SelectItem value="java">Java</SelectItem>
+                      <SelectItem value="php">PHP</SelectItem>
+                      <SelectItem value="sql">SQL</SelectItem>
+                      <SelectItem value="mongodb">MongoDB</SelectItem>
+                      <SelectItem value="git">Git</SelectItem>
+                      <SelectItem value="docker">Docker</SelectItem>
+                      <SelectItem value="aws">AWS</SelectItem>
+                      <SelectItem value="uiux">UI/UX Design</SelectItem>
+                      <SelectItem value="agile">
+                        Méthodologies Agiles
+                      </SelectItem>
+                      <SelectItem value="canva">Canva</SelectItem>
+                      <SelectItem value="rédaction">Rédaction</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  {/* Ajout de compétence personnalisée */}
+                  {isEditing && (
+                    <div className="space-y-2">
+                      {!showCustomInput ? (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setShowCustomInput(true)}
+                          className="w-full"
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Ajouter une compétence personnalisée
+                        </Button>
+                      ) : (
+                        <div className="flex gap-2">
+                          <Input
+                            placeholder="Entrez votre compétence"
+                            value={customCompetence}
+                            onChange={(e) =>
+                              setCustomCompetence(e.target.value)
+                            }
+                            onKeyPress={(e) => {
+                              if (
+                                e.key === "Enter" &&
+                                customCompetence.trim()
+                              ) {
+                                const currentCompetences =
+                                  watch("competences") || [];
+                                if (
+                                  !currentCompetences.includes(
+                                    customCompetence.trim().toLowerCase()
+                                  )
+                                ) {
+                                  setValue("competences", [
+                                    ...currentCompetences,
+                                    customCompetence.trim().toLowerCase(),
+                                  ]);
+                                }
+                                setCustomCompetence("");
+                                setShowCustomInput(false);
+                              }
+                            }}
+                          />
+                          <Button
+                            type="button"
+                            size="sm"
+                            onClick={() => {
+                              if (customCompetence.trim()) {
+                                const currentCompetences =
+                                  watch("competences") || [];
+                                if (
+                                  !currentCompetences.includes(
+                                    customCompetence.trim().toLowerCase()
+                                  )
+                                ) {
+                                  setValue("competences", [
+                                    ...currentCompetences,
+                                    customCompetence.trim().toLowerCase(),
+                                  ]);
+                                }
+                                setCustomCompetence("");
+                                setShowCustomInput(false);
+                              }
+                            }}
+                          >
+                            Ajouter
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => {
+                              setCustomCompetence("");
+                              setShowCustomInput(false);
+                            }}
+                          >
+                            Annuler
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Affichage des compétences */}
                 <div className="flex flex-wrap gap-2 mt-2">
                   {watch("competences")?.map((competence) => (
                     <div
@@ -602,86 +586,62 @@ const InformationsPersonnellesPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>CV</Label>
-                  <div className="flex items-center gap-2">
-                    {watch("cv") ? (
-                      <a
-                        href={watch("cv")}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline"
-                      >
-                        Voir le CV
-                      </a>
-                    ) : (
-                      <span className="text-muted-foreground">Aucun CV</span>
-                    )}
-                    {isEditing && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        type="button"
-                        disabled={uploading}
-                        onClick={() => {
-                          const input = document.createElement("input");
-                          input.type = "file";
-                          input.accept = ".pdf,.doc,.docx";
-                          input.onchange = (e) => {
-                            const file = (e.target as HTMLInputElement)
-                              .files?.[0];
-                            if (file) {
-                              handleFileUpload(file, "cv");
-                            }
-                          };
-                          input.click();
-                        }}
-                      >
-                        {uploading ? "Upload en cours..." : "Changer le CV"}
-                      </Button>
-                    )}
-                  </div>
+                  {isEditing ? (
+                    <FileUpload
+                      onUpload={(url) => setValue("cv", url)}
+                      currentUrl={watch("cv")}
+                      type="document"
+                      label="CV"
+                      buttonText="Changer le CV"
+                      accept=".pdf,.doc,.docx"
+                    />
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      {watch("cv") ? (
+                        <a
+                          href={watch("cv")}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline"
+                        >
+                          Voir le CV
+                        </a>
+                      ) : (
+                        <span className="text-muted-foreground">Aucun CV</span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-2">
                   <Label>Lettre de motivation</Label>
-                  <div className="flex items-center gap-2">
-                    {watch("letterm") ? (
-                      <a
-                        href={watch("letterm")}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-primary hover:underline"
-                      >
-                        Voir la lettre
-                      </a>
-                    ) : (
-                      <span className="text-muted-foreground">
-                        Aucune lettre
-                      </span>
-                    )}
-                    {isEditing && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        type="button"
-                        disabled={uploading}
-                        onClick={() => {
-                          const input = document.createElement("input");
-                          input.type = "file";
-                          input.accept = ".pdf,.doc,.docx";
-                          input.onchange = (e) => {
-                            const file = (e.target as HTMLInputElement)
-                              .files?.[0];
-                            if (file) {
-                              handleFileUpload(file, "letterm");
-                            }
-                          };
-                          input.click();
-                        }}
-                      >
-                        {uploading ? "Upload en cours..." : "Changer la lettre"}
-                      </Button>
-                    )}
-                  </div>
+                  {isEditing ? (
+                    <FileUpload
+                      onUpload={(url) => setValue("letterm", url)}
+                      currentUrl={watch("letterm")}
+                      type="document"
+                      label="Lettre de motivation"
+                      buttonText="Changer la lettre"
+                      accept=".pdf,.doc,.docx"
+                    />
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      {watch("letterm") ? (
+                        <a
+                          href={watch("letterm")}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-primary hover:underline"
+                        >
+                          Voir la lettre
+                        </a>
+                      ) : (
+                        <span className="text-muted-foreground">
+                          Aucune lettre
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

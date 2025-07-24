@@ -1,26 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
 import prisma from "@/lib/prisma";
-
-// Configuration des types de fichiers autorisés
-const ALLOWED_TYPES = [
-  ".pdf",
-  ".doc",
-  ".docx",
-  ".txt",
-  ".jpg",
-  ".jpeg",
-  ".png",
-  ".gif",
-  ".xls",
-  ".xlsx",
-  ".ppt",
-  ".pptx",
-];
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,18 +9,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const formData = await req.formData();
-    const file = formData.get("file") as File;
-    const applicationId = formData.get("applicationId") as string;
-    const uploadedById = formData.get("uploadedById") as string;
-    const uploadedByType = formData.get("uploadedByType") as string;
+    // Accepter les données JSON au lieu de FormData
+    const body = await req.json();
+    const {
+      fileName,
+      fileUrl,
+      fileType,
+      fileSize,
+      uploadedById,
+      uploadedByType,
+      applicationId,
+    } = body;
 
     // Validation des données requises
-    if (!file || !applicationId || !uploadedById || !uploadedByType) {
+    if (
+      !fileName ||
+      !fileUrl ||
+      !fileType ||
+      !fileSize ||
+      !uploadedById ||
+      !uploadedByType ||
+      !applicationId
+    ) {
       return NextResponse.json(
         {
           error:
-            "Fichier, applicationId, uploadedById et uploadedByType requis",
+            "Toutes les données sont requises (fileName, fileUrl, fileType, fileSize, uploadedById, uploadedByType, applicationId)",
         },
         { status: 400 }
       );
@@ -63,55 +57,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validation du type de fichier
-    const fileExtension = "." + file.name.split(".").pop()?.toLowerCase();
-    if (!ALLOWED_TYPES.includes(fileExtension)) {
-      return NextResponse.json(
-        {
-          error:
-            "Type de fichier non autorisé. Utilisez PDF, DOC, DOCX, TXT, images, Excel ou PowerPoint.",
-        },
-        { status: 400 }
-      );
-    }
-
-    // Validation de la taille
-    if (file.size > MAX_FILE_SIZE) {
+    // Validation de la taille (si fournie)
+    if (fileSize && fileSize > 10 * 1024 * 1024) {
       return NextResponse.json(
         { error: "Fichier trop volumineux. Taille maximum: 10MB" },
         { status: 400 }
       );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    // Créer un nom de fichier unique
-    const timestamp = Date.now();
-    const filename = `app_${applicationId}_${timestamp}${fileExtension}`;
-
-    // Créer le dossier uploads s'il n'existe pas
-    const uploadDir = join(process.cwd(), "public", "uploads", "applications");
-    try {
-      await mkdir(uploadDir, { recursive: true });
-      await writeFile(join(uploadDir, filename), buffer);
-    } catch (error) {
-      console.error("Erreur lors de la sauvegarde du fichier:", error);
-      return NextResponse.json(
-        { error: "Erreur lors de la sauvegarde du fichier" },
-        { status: 500 }
-      );
-    }
-
-    const fileUrl = `/uploads/applications/${filename}`;
-
     // Sauvegarder les informations du fichier en base
     const savedFile = await prisma.applicationFile.create({
       data: {
-        fileName: file.name,
+        fileName,
         fileUrl,
-        fileType: fileExtension,
-        fileSize: file.size,
+        fileType,
+        fileSize: fileSize || 0,
         uploadedById,
         uploadedByType,
         applicationId,
@@ -123,9 +83,9 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Erreur lors de l'upload:", error);
+    console.error("Erreur lors de la sauvegarde du fichier:", error);
     return NextResponse.json(
-      { error: "Erreur lors de l'upload du fichier" },
+      { error: "Erreur lors de la sauvegarde du fichier" },
       { status: 500 }
     );
   }

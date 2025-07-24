@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
@@ -19,6 +20,8 @@ import {
   Briefcase,
   FileText,
   UserCheck,
+  Eye,
+  EyeOff,
 } from "lucide-react";
 
 const recruteurSchema = z.object({
@@ -36,6 +39,7 @@ type RecruteurFormData = z.infer<typeof recruteurSchema>;
 
 export default function InscriptionRecruteur() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -104,12 +108,30 @@ export default function InscriptionRecruteur() {
                 }
                 error={errors.password?.message}
               >
-                <CustomInput
-                  type="password"
-                  {...register("password")}
-                  className={errors.password ? "border-red-500" : ""}
-                  placeholder="Mot de passe"
-                />
+                <div className="relative">
+                  <CustomInput
+                    type={showPassword ? "text" : "password"}
+                    {...register("password")}
+                    className={`${
+                      errors.password ? "border-red-500" : ""
+                    } pr-10`}
+                    placeholder="Mot de passe"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent focus:outline-none"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-500" />
+                    )}
+                    <span className="sr-only">
+                      {showPassword ? "Masquer" : "Afficher"} le mot de passe
+                    </span>
+                  </button>
+                </div>
               </FormGroup>
 
               <FormGroup

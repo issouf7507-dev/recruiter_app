@@ -157,7 +157,7 @@ model ApplicationCollaborateur {
 model JobOffer {
   id                Int       @id @default(autoincrement()) // Identifiant unique de l'offre
   title             String                                   // Titre du poste (ex : Développeur Full Stack)
-  description       String                                   // Description générale du poste
+  description       String   @db.Text                                   // Description générale du poste
   company           String                                   // Nom de l'entreprise proposant l'offre
   location          String                                   // Lieu de travail (ex : Abidjan, télétravail)
   type              String                                   // Type de contrat (ex : Freelance, CDI, CDD)
@@ -167,9 +167,9 @@ model JobOffer {
   salaryMax         Float                                    // Salaire maximum proposé
   salaryCurrency    String                                   // Devise du salaire (ex : XOF, EUR, USD)
   salaryPeriod      String                                   // Périodicité du salaire (ex : mois, an)
-  benefits          String                                   // Avantages (ex : mutuelle, tickets resto)
-  requirements      String                                   // Exigences spécifiques du poste
-  responsibilities  String                                   // Responsabilités principales du poste
+  benefits          String  @db.Text                                     // Avantages (ex : mutuelle, tickets resto)
+  requirements      String @db.Text                             // Exigences spécifiques du poste
+  responsibilities  String  @db.Text                                    // Responsabilités principales du poste
   skills            String                                   // Compétences nécessaires (ex : JavaScript, React)
   favorite          Boolean? @default(false)
   templateId        Int?                                     // ID du modèle d'offre utilisé (optionnel)

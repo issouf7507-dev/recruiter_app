@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,7 +12,7 @@ import {
   CustomButton,
 } from "@/components/custom-form";
 import Link from "next/link";
-import { Mail, Lock } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.string().email("Email invalide"),
@@ -22,6 +23,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function ConnexionRecruteur() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -102,12 +104,30 @@ export default function ConnexionRecruteur() {
                 }
                 error={errors.password?.message}
               >
-                <CustomInput
-                  placeholder="Mot de passe"
-                  type="password"
-                  {...register("password")}
-                  className={errors.password ? "border-red-500" : ""}
-                />
+                <div className="relative">
+                  <CustomInput
+                    placeholder="Mot de passe"
+                    type={showPassword ? "text" : "password"}
+                    {...register("password")}
+                    className={`${
+                      errors.password ? "border-red-500" : ""
+                    } pr-10`}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent focus:outline-none"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-500" />
+                    )}
+                    <span className="sr-only">
+                      {showPassword ? "Masquer" : "Afficher"} le mot de passe
+                    </span>
+                  </button>
+                </div>
               </FormGroup>
 
               <div className="mt-6">

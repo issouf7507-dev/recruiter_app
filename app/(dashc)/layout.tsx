@@ -144,11 +144,6 @@ export default function CandidatsLayout({
       href: "/dashboard-candidats/aide",
       icon: <HelpCircle className="h-5 w-5 text-white" />,
     },
-    {
-      label: "Déconnexion",
-      href: "/logout",
-      icon: <LogOut className="h-5 w-5 text-white" />,
-    },
   ];
 
   const [open, setOpen] = useState(false);
@@ -291,6 +286,36 @@ export default function CandidatsLayout({
                   ),
                 }}
               />
+
+              {/* Bouton de déconnexion */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="w-full justify-start text-white/80 hover:text-white hover:bg-white/10"
+                onClick={async () => {
+                  try {
+                    // Appel de la route de déconnexion
+                    const response = await fetch("/api/auth/logout", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    });
+
+                    if (response.ok) {
+                      // Redirection vers la page de connexion après déconnexion
+                      window.location.href = "/candidat/connexion";
+                    } else {
+                      console.error("Erreur lors de la déconnexion");
+                    }
+                  } catch (error) {
+                    console.error("Erreur lors de la déconnexion:", error);
+                  }
+                }}
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                {open && "Se déconnecter"}
+              </Button>
             </div>
           </SidebarBody>
         </Sidebar>

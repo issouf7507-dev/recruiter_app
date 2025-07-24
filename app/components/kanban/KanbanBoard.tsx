@@ -49,6 +49,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useUserStore } from "@/store/userStore";
 import { useWebSocket } from "@/hooks/useWebSocket";
+import { useEdgeStore } from "@/lib/edgestore";
+import { FileUpload } from "@/components/ui/file-upload";
 
 // Types
 type KanbanColumn = {
@@ -191,12 +193,19 @@ export default function KanbanBoard({
   offerId,
   selectedCardId,
   onCardSelect,
+  queryoffresbyidrefetchP,
+  applications: externalApplications,
+  updateApplication,
 }: {
   offerId: string;
   selectedCardId?: string | null;
   onCardSelect?: (cardId: string | null) => void;
+  queryoffresbyidrefetchP: () => void;
+  applications?: Application[];
+  updateApplication?: (applicationId: string, updates: any) => void;
 }) {
   const { user } = useUserStore();
+  const { edgestore } = useEdgeStore();
 
   const {
     data: queryoffresbyid,
@@ -268,9 +277,7 @@ export default function KanbanBoard({
   const [applicationFiles, setApplicationFiles] = useState<ApplicationFile[]>(
     []
   );
-  const [isUploading, setIsUploading] = useState(false);
   const [isUpdatingMessage, setIsUpdatingMessage] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
 
   // États pour l'affectation des collaborateurs
   const [collaborateurs, setCollaborateurs] = useState<Collaborateur[]>([]);
@@ -326,6 +333,28 @@ export default function KanbanBoard({
       );
     };
 
+    // Écouter les événements de mise à jour de date d'échéance
+    const handleDuedateUpdated = (data: {
+      applicationId: string;
+      duedate: string | null;
+      offerId: string;
+    }) => {
+      console.log("Date d'échéance mise à jour via WebSocket:", data);
+      queryoffresbyidrefetchP();
+      setApplications((prevApps) =>
+        prevApps.map((app) =>
+          app.id === data.applicationId
+            ? { ...app, duedate: data.duedate }
+            : app
+        )
+      );
+
+      // Mettre à jour les applications externes si la fonction est fournie
+      if (updateApplication) {
+        updateApplication(data.applicationId, { duedate: data.duedate });
+      }
+    };
+
     // Écouter les événements de nouvelle application
     const handleApplicationCreated = (data: { application: Application }) => {
       console.log("Nouvelle application via WebSocket:", data);
@@ -379,6 +408,7 @@ export default function KanbanBoard({
     // S'abonner aux événements
     socket.on("application:moved", handleApplicationMoved);
     socket.on("application:updated", handleApplicationUpdated);
+    socket.on("duedate:updated", handleDuedateUpdated);
     socket.on("application:created", handleApplicationCreated);
     socket.on("application:deleted", handleApplicationDeleted);
     socket.on("note:added", handleNoteAdded);
@@ -390,6 +420,7 @@ export default function KanbanBoard({
     return () => {
       socket.off("application:moved", handleApplicationMoved);
       socket.off("application:updated", handleApplicationUpdated);
+      socket.off("duedate:updated", handleDuedateUpdated);
       socket.off("application:created", handleApplicationCreated);
       socket.off("application:deleted", handleApplicationDeleted);
       socket.off("note:added", handleNoteAdded);
@@ -425,7 +456,19 @@ export default function KanbanBoard({
     if (selectedCard) {
       setApplicationFiles(selectedCard.files || []);
     }
-  }, [selectedCard]);
+  }, [selectedCard?.files]);
+
+  // Synchroniser les fichiers quand les données de l'application changent
+  useEffect(() => {
+    if (selectedCard && applications.length > 0) {
+      const updatedApplication = applications.find(
+        (app) => app.id === selectedCard.id
+      );
+      if (updatedApplication && updatedApplication.files) {
+        setApplicationFiles(updatedApplication.files);
+      }
+    }
+  }, [applications, selectedCard?.id]);
 
   // Synchroniser la carte sélectionnée avec les données mises à jour
   useEffect(() => {
@@ -963,86 +1006,42 @@ export default function KanbanBoard({
     }
   };
 
-  // Fonctions pour gérer les pièces jointes
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = event.target.files;
-    if (!files || !selectedCard) return;
-
-    setIsUploading(true);
-    setUploadProgress(0);
-
-    try {
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-
-        // Vérifier la taille du fichier (max 10MB)
-        if (file.size > 10 * 1024 * 1024) {
-          alert(
-            `Le fichier ${file.name} est trop volumineux. Taille maximum: 10MB`
-          );
-          continue;
-        }
-
-        // Créer un FormData pour l'upload
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("applicationId", selectedCard.id);
-        formData.append("uploadedById", user?.id || "");
-        formData.append("uploadedByType", "RECRUTEUR");
-
-        // Simuler le progrès d'upload
-        const progressInterval = setInterval(() => {
-          setUploadProgress((prev) => Math.min(prev + 10, 90));
-        }, 100);
-
-        const response = await fetch(
-          "/api/recruteur/kanban/application/attachment",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-
-        clearInterval(progressInterval);
-        setUploadProgress(100);
-
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success) {
-            setApplicationFiles((prev) => [...prev, result.data]);
-
-            // Mettre à jour selectedCard
-            if (selectedCard) {
-              setSelectedCard({
-                ...selectedCard,
-                files: [...selectedCard.files, result.data],
-              });
-            }
-          } else {
-            alert(`Erreur lors de l'upload de ${file.name}: ${result.error}`);
-          }
-        } else {
-          const errorData = await response.json();
-          alert(`Erreur lors de l'upload de ${file.name}: ${errorData.error}`);
-        }
-      }
-    } catch (error) {
-      console.error("Erreur lors de l'upload:", error);
-      alert("Erreur lors de l'upload des fichiers");
-    } finally {
-      setIsUploading(false);
-      setUploadProgress(0);
-      // Réinitialiser l'input file
-      event.target.value = "";
-    }
-  };
-
   const handleDeleteAttachment = async (attachmentId: string) => {
     if (!selectedCard) return;
 
     try {
+      // Trouver le fichier à supprimer
+      const fileToDelete = applicationFiles.find(
+        (file) => file.id === attachmentId
+      );
+
+      if (!fileToDelete) {
+        alert("Fichier non trouvé");
+        return;
+      }
+
+      // Supprimer le fichier d'EdgeStore si c'est une URL EdgeStore
+      if (fileToDelete.fileUrl && fileToDelete.fileUrl.includes("edgestore")) {
+        try {
+          // Extraire l'URL du fichier EdgeStore
+          const fileUrl = fileToDelete.fileUrl;
+
+          // Supprimer le fichier d'EdgeStore
+          await edgestore.kanbanAttachments.delete({
+            url: fileUrl,
+          });
+
+          console.log("Fichier EdgeStore supprimé:", fileUrl);
+        } catch (edgeStoreError) {
+          console.error(
+            "Erreur lors de la suppression EdgeStore:",
+            edgeStoreError
+          );
+          // On continue même si la suppression EdgeStore échoue
+        }
+      }
+
+      // Supprimer de la base de données
       const response = await fetch(
         `/api/recruteur/kanban/application/attachment/${attachmentId}`,
         {
@@ -1066,6 +1065,9 @@ export default function KanbanBoard({
             ),
           });
         }
+
+        // Recharger les données pour s'assurer de la synchronisation
+        await queryoffresbyidrefetch();
       } else {
         alert(`Erreur lors de la suppression: ${result.error}`);
       }
@@ -1264,6 +1266,16 @@ export default function KanbanBoard({
             )
           );
 
+          // Mettre à jour les applications externes si la fonction est fournie
+          if (updateApplication) {
+            updateApplication(selectedCard.id, {
+              duedate: selectedDueDate ? selectedDueDate.toISOString() : null,
+            });
+          }
+
+          // Recharger les données depuis l'API pour synchroniser avec le CalendarView
+          await queryoffresbyidrefetch();
+
           setIsDueDateModalOpen(false);
         }
       }
@@ -1319,6 +1331,14 @@ export default function KanbanBoard({
               app.id === selectedCard.id ? updatedCard : app
             )
           );
+
+          // Mettre à jour les applications externes si la fonction est fournie
+          if (updateApplication) {
+            updateApplication(selectedCard.id, { duedate: null });
+          }
+
+          // Recharger les données depuis l'API pour synchroniser avec le CalendarView
+          await queryoffresbyidrefetch();
 
           setIsDueDateModalOpen(false);
         }
@@ -1532,7 +1552,7 @@ export default function KanbanBoard({
                                               ref={provided.innerRef}
                                               {...provided.draggableProps}
                                               {...provided.dragHandleProps}
-                                              className="bg-white rounded-xl shadow border border-gray-200 p-4 flex flex-col gap-2 hover:shadow-md transition-shadow min-h-[120px] cursor-pointer"
+                                              className="bg-white rounded-xl shadow border border-gray-200 p-4 flex flex-col gap-2 hover:shadow-md transition-shadow min-h-[120px] cursor-pointer dark:bg-background dark:border-gray-700"
                                               onClick={() => {
                                                 setSelectedCard(application);
                                                 setIsCardModalOpen(true);
@@ -1899,12 +1919,12 @@ export default function KanbanBoard({
 
         {/* Modal de détail de carte */}
         <Dialog open={isCardModalOpen} onOpenChange={setIsCardModalOpen}>
-          <DialogContent className="max-w-6xl w-full p-0 overflow-hidden h-[calc(100vh-20px)] ">
+          <DialogContent className="max-w-6xl w-full p-0 overflow-hidden h-[calc(100vh-20px)] dark:bg-background">
             {selectedCard && (
               <div className="grid grid-cols-3 w-full h-full">
                 {/* Partie principale */}
                 {cardApplicationDetailSpet === 1 && (
-                  <div className="col-span-2 p-6 bg-white h-[calc(100vh-10px)] overflow-y-auto">
+                  <div className="col-span-2 p-6 bg-white h-[calc(100vh-10px)] overflow-y-auto dark:bg-background">
                     {/* En-tête avec informations du candidat */}
                     <div className="flex flex-col gap-4 border-b border-gray-200 pb-6 mb-6">
                       {/* Avatar et nom */}
@@ -1914,7 +1934,7 @@ export default function KanbanBoard({
                           {selectedCard.candidat.prenom?.slice(0, 1)}
                         </div>
                         <div className="flex-1">
-                          <h1 className="text-2xl font-bold text-gray-900">
+                          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                             {selectedCard.candidat.nom}{" "}
                             {selectedCard.candidat.prenom}
                           </h1>
@@ -1935,7 +1955,7 @@ export default function KanbanBoard({
 
                       {/* Compétences */}
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white ">
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
@@ -1953,8 +1973,8 @@ export default function KanbanBoard({
                       </div>
 
                       {/* Documents téléchargeables */}
-                      <div className="bg-gray-50 rounded-lg py-4">
-                        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                      <div className="bg-gray-50 rounded-lg py-4 dark:bg-background">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white ">
                           Documents
                         </h3>
                         <div className="flex gap-3">
@@ -2021,7 +2041,7 @@ export default function KanbanBoard({
                       {/* Informations supplémentaires */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                          <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                             Informations de contact
                           </h3>
                           <div className="space-y-2 text-sm">
@@ -2044,7 +2064,7 @@ export default function KanbanBoard({
                           </div>
                         </div>
                         <div>
-                          <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                          <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                             Statut de candidature
                           </h3>
                           <div className="space-y-2 text-sm">
@@ -2064,13 +2084,13 @@ export default function KanbanBoard({
 
                     {/* Section Discussion */}
                     <div className="mb-6">
-                      <h2 className="text-xl font-semibold text-gray-700 mb-4">
+                      <h2 className="text-xl font-semibold text-gray-700 mb-4 dark:text-white">
                         {editingNote ? "Modifier la note" : "Discussion"}
                       </h2>
 
                       <div className="flex items-center gap-2 mb-4">
                         <Input
-                          className="w-full bg-gray-50 rounded-full p-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all shadow-none border"
+                          className="w-full bg-gray-50 rounded-full p-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all shadow-none border dark:bg-background"
                           placeholder="Écrire un message..."
                           value={cardNote}
                           onChange={(e) => {
@@ -2107,7 +2127,7 @@ export default function KanbanBoard({
                     </div>
 
                     {/* Messages */}
-                    <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
                       <div className="space-y-4 max-h-96 overflow-y-auto">
                         {selectedCard.notes
                           .sort(
@@ -2257,7 +2277,7 @@ export default function KanbanBoard({
 
                 {/* Notes */}
                 {cardApplicationDetailSpet === 2 && (
-                  <div className="col-span-2 p-6 bg-white h-[calc(100vh-10px)]  overflow-hidden">
+                  <div className="col-span-2 p-6 bg-white h-[calc(100vh-10px)]  overflow-hidden dark:bg-background">
                     {/* En-tête avec informations du candidat */}
                     <div className="flex flex-col gap-4 border-b border-gray-200 pb-6 mb-6">
                       {/* Avatar et nom */}
@@ -2267,7 +2287,7 @@ export default function KanbanBoard({
                           {selectedCard.candidat.prenom?.slice(0, 1)}
                         </div>
                         <div className="flex-1">
-                          <h1 className="text-2xl font-bold text-gray-900">
+                          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                             {selectedCard.candidat.nom}{" "}
                             {selectedCard.candidat.prenom}
                           </h1>
@@ -2288,7 +2308,7 @@ export default function KanbanBoard({
 
                       {/* Compétences */}
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
@@ -2306,8 +2326,8 @@ export default function KanbanBoard({
                       </div>
 
                       {/* Documents téléchargeables */}
-                      <div className="bg-gray-50 rounded-lg">
-                        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                      <div className="bg-gray-50 rounded-lg dark:bg-background  ">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white">
                           Documents
                         </h3>
                         <div className="flex gap-3">
@@ -2374,7 +2394,7 @@ export default function KanbanBoard({
                       {/* Informations supplémentaires */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                          <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                             Informations de contact
                           </h3>
                           <div className="space-y-2 text-sm">
@@ -2418,12 +2438,12 @@ export default function KanbanBoard({
                     <div>
                       <div>
                         <div className="mb-6">
-                          <h1 className="text-xl font-semibold text-gray-700 mb-4">
+                          <h1 className="text-xl font-semibold text-gray-700 mb-4 dark:text-white">
                             {editingNote ? "Modifier la note" : "Discussion"}
                           </h1>
                           <div className="flex items-center gap-2">
                             <Input
-                              className="w-full bg-gray-50 border-0 rounded-full p-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all shadow-none"
+                              className="w-full bg-gray-50 rounded-full p-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all shadow-none border dark:bg-background"
                               placeholder="Écrire un message..."
                               value={cardNote}
                               onChange={(e) => {
@@ -2432,7 +2452,7 @@ export default function KanbanBoard({
                             />
                             <div className="flex gap-2">
                               <Button
-                                className="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors text-sm font-medium"
+                                className="px-4 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors text-sm font-medium "
                                 onClick={handleNoteSubmit}
                                 disabled={cardNote.length === 0}
                               >
@@ -2460,7 +2480,7 @@ export default function KanbanBoard({
                           </div>
                         </div>
 
-                        <div className="bg-gray-50 rounded-lg p-4">
+                        <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
                           <div className="space-y-3 h-[calc(100vh-590px)] overflow-y-auto ">
                             {selectedCard.notes
                               .sort(
@@ -2581,7 +2601,7 @@ export default function KanbanBoard({
 
                 {/* Checklist */}
                 {cardApplicationDetailSpet === 3 && selectedCard && (
-                  <div className="col-span-2 p-6 bg-white h-[calc(100vh-10px)] overflow-y-auto">
+                  <div className="col-span-2 p-6 bg-white h-[calc(100vh-10px)] overflow-y-auto dark:bg-background dark:border dark:border-gray-700">
                     {/* En-tête avec informations du candidat */}
                     <div className="flex flex-col gap-4 border-b border-gray-200 pb-6 mb-6">
                       {/* Avatar et nom */}
@@ -2612,7 +2632,7 @@ export default function KanbanBoard({
 
                       {/* Compétences */}
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
@@ -2630,8 +2650,8 @@ export default function KanbanBoard({
                       </div>
 
                       {/* Documents téléchargeables */}
-                      <div className="bg-gray-50 rounded-lg">
-                        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                      <div className="bg-gray-50 rounded-lg dark:bg-background ">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white">
                           Documents
                         </h3>
                         <div className="flex gap-3">
@@ -2698,7 +2718,7 @@ export default function KanbanBoard({
                       {/* Informations supplémentaires */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                          <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                             Informations de contact
                           </h3>
                           <div className="space-y-2 text-sm">
@@ -2721,7 +2741,7 @@ export default function KanbanBoard({
                           </div>
                         </div>
                         <div>
-                          <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                          <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                             Statut de candidature
                           </h3>
                           <div className="space-y-2 text-sm">
@@ -2744,10 +2764,10 @@ export default function KanbanBoard({
                       {/* En-tête de la checklist */}
                       <div className="flex items-center justify-between">
                         <div>
-                          <h2 className="text-xl font-semibold text-gray-700">
+                          <h2 className="text-xl font-semibold text-gray-700 dark:text-white">
                             Checklist
                           </h2>
-                          <p className="text-sm text-gray-500 mt-1">
+                          <p className="text-sm text-gray-500 mt-1 dark:text-white">
                             Suivez les étapes du processus de recrutement
                           </p>
                         </div>
@@ -2768,12 +2788,12 @@ export default function KanbanBoard({
                       </div>
 
                       {/* Barre de progression */}
-                      <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700 ">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium text-gray-700">
+                          <span className="text-sm font-medium text-gray-700 dark:text-white">
                             Progression
                           </span>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-gray-500 dark:text-white">
                             {checklist.filter((i) => i.isCompleted).length} sur{" "}
                             {checklist.length}
                           </span>
@@ -2791,7 +2811,7 @@ export default function KanbanBoard({
                           />
                         </div>
                         <div className="flex items-center justify-between mt-2">
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-gray-500 dark:text-white">
                             {checklist.length === 0
                               ? "Aucune tâche"
                               : checklist.filter((i) => i.isCompleted)
@@ -2805,7 +2825,7 @@ export default function KanbanBoard({
                                 )}% terminé`}
                           </span>
                           {checklist.length > 0 && (
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 dark:text-white">
                               {checklist.filter((i) => i.isCompleted).length ===
                               checklist.length
                                 ? "🎉"
@@ -2816,8 +2836,8 @@ export default function KanbanBoard({
                       </div>
 
                       {/* Ajouter un nouvel élément */}
-                      <div className="bg-white border border-gray-200 rounded-lg p-4">
-                        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                      <div className="bg-white border border-gray-200 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white">
                           Ajouter une tâche
                         </h3>
                         <div className="flex gap-3">
@@ -2857,8 +2877,8 @@ export default function KanbanBoard({
                       {/* Liste des éléments de la checklist */}
                       <div className="space-y-3">
                         {checklist.length === 0 ? (
-                          <div className="text-center py-12 text-gray-500">
-                            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                          <div className="text-center py-12 text-gray-500 dark:text-white">
+                            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center dark:bg-background">
                               <svg
                                 className="w-8 h-8"
                                 fill="none"
@@ -2893,8 +2913,8 @@ export default function KanbanBoard({
                                 key={item.id}
                                 className={`flex items-start gap-4 p-4 rounded-lg border transition-all duration-200 ${
                                   item.isCompleted
-                                    ? "bg-green-50 border-green-200"
-                                    : "bg-white border-gray-200 hover:bg-gray-50"
+                                    ? "bg-green-50 border-green-200 dark:bg-green-900 dark:border dark:border-green-700"
+                                    : "bg-white border-gray-200 hover:bg-gray-50 dark:bg-background dark:border dark:border-gray-700 "
                                 }`}
                               >
                                 {/* Checkbox personnalisé */}
@@ -2993,8 +3013,8 @@ export default function KanbanBoard({
                                           <h3
                                             className={`font-medium ${
                                               item.isCompleted
-                                                ? "line-through text-gray-500"
-                                                : "text-gray-900"
+                                                ? "line-through text-gray-500 dark:text-white"
+                                                : "text-gray-900 dark:text-white"
                                             }`}
                                           >
                                             {item.title}
@@ -3173,7 +3193,7 @@ export default function KanbanBoard({
 
                 {/* Attachment */}
                 {cardApplicationDetailSpet === 5 && (
-                  <div className="col-span-2 p-6 bg-white">
+                  <div className="col-span-2 p-6 bg-white dark:bg-background dark:border dark:border-gray-700">
                     {/* En-tête avec informations du candidat */}
                     <div className="flex flex-col gap-4 border-b border-gray-200 pb-6 mb-6">
                       {/* Avatar et nom */}
@@ -3183,7 +3203,7 @@ export default function KanbanBoard({
                           {selectedCard.candidat.prenom?.slice(0, 1)}
                         </div>
                         <div className="flex-1">
-                          <h1 className="text-2xl font-bold text-gray-900">
+                          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                             {selectedCard.candidat.nom}{" "}
                             {selectedCard.candidat.prenom}
                           </h1>
@@ -3204,7 +3224,7 @@ export default function KanbanBoard({
 
                       {/* Compétences */}
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                        <h3 className="text-sm font-semibold text-gray-700 dark:text-white mb-2">
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
@@ -3222,8 +3242,8 @@ export default function KanbanBoard({
                       </div>
 
                       {/* Documents téléchargeables */}
-                      <div className="bg-gray-50 rounded-lg">
-                        <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                      <div className="bg-gray-50 rounded-lg dark:bg-background ">
+                        <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white">
                           Documents
                         </h3>
                         <div className="flex gap-3">
@@ -3290,7 +3310,7 @@ export default function KanbanBoard({
                       {/* Informations supplémentaires */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                          <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                             Informations de contact
                           </h3>
                           <div className="space-y-2 text-sm">
@@ -3313,7 +3333,7 @@ export default function KanbanBoard({
                           </div>
                         </div>
                         <div>
-                          <h3 className="text-sm font-semibold text-gray-700 mb-2">
+                          <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
                             Statut de candidature
                           </h3>
                           <div className="space-y-2 text-sm">
@@ -3334,69 +3354,90 @@ export default function KanbanBoard({
                     <div>
                       <div className="space-y-6">
                         <div className="flex items-center justify-between">
-                          <h2 className="text-xl font-semibold text-gray-700">
+                          <h2 className="text-xl font-semibold text-gray-700 dark:text-white">
                             Pièces jointes
                           </h2>
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="file"
-                              multiple
-                              accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif,.xls,.xlsx,.ppt,.pptx"
-                              onChange={handleFileUpload}
-                              className="hidden"
-                              id="file-upload"
-                              disabled={isUploading}
-                            />
-                            <label
-                              htmlFor="file-upload"
-                              className={`flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors cursor-pointer text-sm font-medium ${
-                                isUploading
-                                  ? "opacity-50 cursor-not-allowed"
-                                  : ""
-                              }`}
-                            >
-                              {isUploading ? (
-                                <>
-                                  <Loader2 className="h-4 w-4 animate-spin" />
-                                  Upload en cours...
-                                </>
-                              ) : (
-                                <>
-                                  <svg
-                                    className="w-4 h-4"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                  >
-                                    <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      strokeWidth={2}
-                                      d="M12 4v16m8-8H4"
-                                    />
-                                  </svg>
-                                  Ajouter des fichiers
-                                </>
-                              )}
-                            </label>
-                          </div>
                         </div>
 
-                        {/* Barre de progression */}
-                        {isUploading && (
-                          <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div
-                              className="bg-primary h-2 rounded-full transition-all duration-300"
-                              style={{ width: `${uploadProgress}%` }}
-                            ></div>
-                          </div>
-                        )}
+                        {/* Composant FileUpload */}
+                        <FileUpload
+                          onUpload={async (fileData) => {
+                            if (!selectedCard) return;
+
+                            try {
+                              // Créer l'objet fichier pour l'API
+                              const apiFileData = {
+                                ...fileData,
+                                uploadedById: user?.id || "",
+                                uploadedByType: "RECRUTEUR",
+                                applicationId: selectedCard.id,
+                              };
+
+                              // Sauvegarder dans la base de données via l'API
+                              const response = await fetch(
+                                "/api/recruteur/kanban/application/attachment",
+                                {
+                                  method: "POST",
+                                  headers: {
+                                    "Content-Type": "application/json",
+                                  },
+                                  body: JSON.stringify(apiFileData),
+                                }
+                              );
+
+                              if (response.ok) {
+                                const result = await response.json();
+                                if (result.success) {
+                                  setApplicationFiles((prev) => [
+                                    ...prev,
+                                    result.data,
+                                  ]);
+
+                                  // Mettre à jour selectedCard
+                                  if (selectedCard) {
+                                    setSelectedCard({
+                                      ...selectedCard,
+                                      files: [
+                                        ...selectedCard.files,
+                                        result.data,
+                                      ],
+                                    });
+                                  }
+
+                                  // Recharger les données pour s'assurer de la synchronisation
+                                  await queryoffresbyidrefetch();
+                                } else {
+                                  alert(
+                                    `Erreur lors de la sauvegarde: ${result.error}`
+                                  );
+                                }
+                              } else {
+                                const errorData = await response.json();
+                                alert(
+                                  `Erreur lors de la sauvegarde: ${errorData.error}`
+                                );
+                              }
+                            } catch (error) {
+                              console.error(
+                                "Erreur lors de la sauvegarde:",
+                                error
+                              );
+                              alert("Erreur lors de la sauvegarde du fichier");
+                            }
+                          }}
+                          accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif,.xls,.xlsx,.ppt,.pptx"
+                          multiple={true}
+                          maxSize={10 * 1024 * 1024} // 10MB
+                          disabled={!selectedCard}
+                          buttonText="Ajouter des fichiers"
+                          bucket="kanbanAttachments"
+                        />
 
                         {/* Liste des pièces jointes */}
                         <div className="space-y-3">
                           {applicationFiles.length === 0 ? (
                             <div className="text-center py-12 text-gray-500">
-                              <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                              <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-background rounded-full flex items-center justify-center">
                                 <svg
                                   className="w-8 h-8"
                                   fill="none"
@@ -3429,20 +3470,20 @@ export default function KanbanBoard({
                               .map((file) => (
                                 <div
                                   key={file.id}
-                                  className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
+                                  className="flex items-center gap-4 p-4 bg-gray-50 dark:bg-background rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
                                 >
                                   {/* Icône du fichier */}
-                                  <div className="flex-shrink-0">
+                                  <div className="flex-shrink-0 dark:bg-background">
                                     {getFileIcon(file.fileType)}
                                   </div>
 
                                   {/* Informations du fichier */}
                                   <div className="flex-1 min-w-0">
                                     <div className="flex items-center gap-2">
-                                      <h3 className="font-medium text-gray-900 truncate">
+                                      <h3 className="font-medium text-gray-900 dark:text-white truncate">
                                         {file.fileName}
                                       </h3>
-                                      <span className="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">
+                                      <span className="text-xs text-gray-500 bg-gray-200 dark:bg-background px-2 py-1 rounded">
                                         {file.fileType}
                                       </span>
                                     </div>
@@ -3577,8 +3618,8 @@ export default function KanbanBoard({
                 )}
 
                 {/* Sidebar actions */}
-                <div className="w-full bg-gray-50 border-l p-4 flex flex-col gap-2">
-                  <div className="font-semibold text-xs text-gray-500 mb-2">
+                <div className="w-full bg-gray-50 border-l p-4 flex flex-col gap-2 dark:bg-background dark:border dark:border-gray-700">
+                  <div className="font-semibold text-xs text-gray-500 mb-2 dark:text-white">
                     SUGGERER
                   </div>
 
@@ -3916,12 +3957,12 @@ export default function KanbanBoard({
             <div className="space-y-4">
               {/* Informations sur la candidature */}
               {selectedCard && (
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-900 mb-2">
+                <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
+                  <h4 className="font-semibold text-gray-900 mb-2 dark:text-white">
                     Candidature de {selectedCard.candidat.prenom}{" "}
                     {selectedCard.candidat.nom}
                   </h4>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-white">
                     {selectedCard.candidat.email}
                   </p>
                 </div>
@@ -3929,7 +3970,7 @@ export default function KanbanBoard({
 
               {/* Liste des collaborateurs */}
               <div>
-                <h4 className="font-semibold text-gray-900 mb-3">
+                <h4 className="font-semibold text-gray-900 mb-3 dark:text-white">
                   Collaborateurs disponibles
                 </h4>
                 {isLoadingCollaborateurs ? (
@@ -4082,8 +4123,8 @@ export default function KanbanBoard({
             <div className="space-y-4">
               {/* Informations sur la candidature */}
               {selectedCard && (
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-900 mb-2">
+                <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
+                  <h4 className="font-semibold text-gray-900 mb-2 dark:text-white">
                     Candidature de {selectedCard.candidat.prenom}{" "}
                     {selectedCard.candidat.nom}
                   </h4>
@@ -4154,8 +4195,8 @@ export default function KanbanBoard({
 
               {/* Affichage de la date actuelle si elle existe */}
               {selectedCard?.duedate && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                  <h4 className="text-sm font-semibold text-blue-800 mb-2">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 dark:bg-background dark:border dark:border-gray-700">
+                  <h4 className="text-sm font-semibold text-blue-800 mb-2 dark:text-white">
                     Date d'échéance actuelle
                   </h4>
                   <div className="flex items-center gap-2">
@@ -4250,7 +4291,7 @@ const getFileIcon = (fileType: string) => {
   const type = fileType.toLowerCase();
   if (type.includes("pdf")) {
     return (
-      <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+      <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center dark:bg-background">
         <svg
           className="w-6 h-6 text-red-600"
           fill="currentColor"
@@ -4266,7 +4307,7 @@ const getFileIcon = (fileType: string) => {
     );
   } else if (type.includes("doc") || type.includes("word")) {
     return (
-      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+      <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center dark:bg-background">
         <svg
           className="w-6 h-6 text-blue-600"
           fill="currentColor"
@@ -4282,7 +4323,7 @@ const getFileIcon = (fileType: string) => {
     );
   } else if (type.includes("excel")) {
     return (
-      <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+      <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center dark:bg-background">
         <svg
           className="w-6 h-6 text-green-600"
           fill="currentColor"
@@ -4298,7 +4339,7 @@ const getFileIcon = (fileType: string) => {
     );
   } else if (type.includes("powerpoint")) {
     return (
-      <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+      <div className="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center dark:bg-background">
         <svg
           className="w-6 h-6 text-yellow-600"
           fill="currentColor"
@@ -4314,7 +4355,7 @@ const getFileIcon = (fileType: string) => {
     );
   } else if (type.includes("image")) {
     return (
-      <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center">
+      <div className="w-10 h-10 bg-pink-100 rounded-lg flex items-center justify-center dark:bg-background">
         <svg
           className="w-6 h-6 text-pink-600"
           fill="currentColor"
@@ -4330,7 +4371,7 @@ const getFileIcon = (fileType: string) => {
     );
   } else if (type.includes("text")) {
     return (
-      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center dark:bg-background">
         <svg
           className="w-6 h-6 text-gray-600"
           fill="currentColor"
@@ -4346,7 +4387,7 @@ const getFileIcon = (fileType: string) => {
     );
   } else {
     return (
-      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center dark:bg-background">
         <svg
           className="w-6 h-6 text-gray-600"
           fill="currentColor"

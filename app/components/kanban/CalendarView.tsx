@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  Calendar,
   ChevronLeft,
   ChevronRight,
-  Clock,
   User,
   Eye,
   Calendar as CalendarIcon,
@@ -74,6 +72,12 @@ export default function CalendarView({
     useState<Application | null>(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState<string>("all");
+
+  // Forcer le re-render quand les applications changent
+  useEffect(() => {
+    // Cette fonction vide force le re-render du composant
+    // quand les applications changent
+  }, [applications]);
 
   // Fonction pour obtenir le statut de la date d'échéance
   const getDueDateStatus = (duedate: string | null | undefined) => {
@@ -295,7 +299,9 @@ export default function CalendarView({
             <div
               key={index}
               className={`min-h-[120px] p-2 border rounded-lg ${
-                isCurrentMonth ? "bg-background" : "bg-muted/20"
+                isCurrentMonth
+                  ? "bg-background dark:bg-background"
+                  : "bg-muted/20"
               } ${getDayBackgroundColor(day)} ${
                 isCurrentDay ? "ring-2 ring-blue-500" : ""
               }`}
@@ -319,7 +325,7 @@ export default function CalendarView({
                       className="cursor-pointer"
                       onClick={() => handleCardClick(app)}
                     >
-                      <Card className="shadow-sm border-0 bg-white/80 hover:bg-white transition-colors">
+                      <Card className="shadow-sm border-0 bg-white/80 hover:bg-white transition-colors dark:bg-background dark:border dark:border-gray-700">
                         <CardContent className="p-1.5">
                           <div className="flex items-center justify-between mb-1">
                             <div className="flex items-center gap-1 min-w-0 flex-1">

@@ -17,15 +17,17 @@ export async function GET(req: NextRequest) {
       type: string;
     };
 
-    // Récupérer l'utilisateur
+    // Récupérer l'utilisateur avec les compétences du candidat
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
       include: {
-        candidat: true,
+        candidat: {
+          include: {
+            candidatCompetences: true,
+          },
+        },
       },
     });
-
-    // console.log(user);
 
     if (!user) {
       return NextResponse.json(
@@ -34,10 +36,27 @@ export async function GET(req: NextRequest) {
       );
     }
 
+    // Transformer les données pour inclure les compétences dans le bon format
+    if (user.candidat) {
+      const competences = user.candidat.candidatCompetences.map(
+        (comp) => comp.competence
+      );
+
+      // Créer un nouvel objet candidat avec les compétences
+      const candidatWithCompetences = {
+        ...user.candidat,
+        competences: competences,
+      };
+
+      // Remplacer le candidat dans l'objet user
+      user.candidat = candidatWithCompetences as any;
+    }
+
     // Retourner l'utilisateur sans le mot de passe
     const { password, ...userWithoutPassword } = user;
     return NextResponse.json({ user: userWithoutPassword });
   } catch (error) {
+    console.error("Erreur dans /api/auth/me-cd:", error);
     return NextResponse.json(
       { error: "Erreur lors de la récupération des informations" },
       { status: 500 }

@@ -75,6 +75,9 @@ export default function OffreDetail({
   const [activeTab, setActiveTab] = useState("details");
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
+  // État local pour les applications (pour synchroniser avec CalendarView)
+  const [localApplications, setLocalApplications] = useState<any[]>([]);
+
   // Récupérer les détails de l'offre actuelle
   const {
     data: queryoffresbyid,
@@ -86,6 +89,22 @@ export default function OffreDetail({
     queryFn: () => fetchDataById(`/api/recruteur/offres/${offerId}`),
     enabled: !!offerId,
   });
+
+  // Mettre à jour les applications locales quand les données changent
+  useEffect(() => {
+    if (queryoffresbyid?.data?.[0]?.applications) {
+      setLocalApplications(queryoffresbyid.data[0].applications);
+    }
+  }, [queryoffresbyid?.data?.[0]?.applications]);
+
+  // Fonction pour mettre à jour une application spécifique
+  const updateApplication = (applicationId: string, updates: any) => {
+    setLocalApplications((prev) =>
+      prev.map((app) =>
+        app.id === applicationId ? { ...app, ...updates } : app
+      )
+    );
+  };
 
   console.log("user", user);
 
@@ -107,7 +126,7 @@ export default function OffreDetail({
     return queryoffresbyid?.data?.[0] || null;
   };
 
-  const offerData = getOfferData();
+  const offerDataFromQuery = getOfferData();
 
   // Fonction pour formater le salaire
   const formatSalary = (
@@ -174,7 +193,7 @@ export default function OffreDetail({
   }
 
   // Vérification si l'offre existe
-  if (!offerData) {
+  if (!offerDataFromQuery) {
     return (
       <div className="flex h-screen w-full overflow-x-hidden">
         <SidebarOffres offres={allOffers || []} selectedId={offerId} />
@@ -191,7 +210,7 @@ export default function OffreDetail({
     );
   }
 
-  const status = getOfferStatus(offerData.etat);
+  const status = getOfferStatus(offerDataFromQuery.etat);
 
   return (
     <div className="flex h-screen w-full overflow-x-hidden">
@@ -211,23 +230,6 @@ export default function OffreDetail({
             <h1 className="text-2xl font-bold">Détail de l'offre</h1>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
-            <Button variant="outline" className="flex items-center gap-2">
-              <Share2 className="h-4 w-4" />
-              <span className="hidden sm:inline">Partager</span>
-            </Button>
-            <Button variant="outline" className="flex items-center gap-2">
-              {offerData.etat === "active" ? (
-                <>
-                  <EyeOff className="h-4 w-4" />
-                  <span className="hidden sm:inline">Masquer l'offre</span>
-                </>
-              ) : (
-                <>
-                  <Eye className="h-4 w-4" />
-                  <span className="hidden sm:inline">Publier l'offre</span>
-                </>
-              )}
-            </Button>
             <Button
               className="flex items-center gap-2"
               onClick={() => router.push(`/mesoffres/modifier/${offerId}`)}
@@ -267,11 +269,11 @@ export default function OffreDetail({
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                           <div>
                             <CardTitle className="text-2xl">
-                              {offerData.title}
+                              {offerDataFromQuery.title}
                             </CardTitle>
                             <CardDescription className="flex items-center gap-2 mt-2">
                               <Building className="h-4 w-4" />
-                              {offerData.company}
+                              {offerDataFromQuery.company}
                             </CardDescription>
                           </div>
                           <Badge variant={status.variant}>{status.label}</Badge>
@@ -282,33 +284,33 @@ export default function OffreDetail({
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div className="flex items-center gap-2 text-sm">
                             <MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                            <span>{offerData.location}</span>
+                            <span>{offerDataFromQuery.location}</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
                             <BriefcaseIcon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                            <span>{offerData.type}</span>
+                            <span>{offerDataFromQuery.type}</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
                             <Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                             <span>
                               Publié le{" "}
                               {new Date(
-                                offerData.createdAt
+                                offerDataFromQuery.createdAt
                               ).toLocaleDateString()}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-sm">
                             <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                            <span>{offerData.experience}</span>
+                            <span>{offerDataFromQuery.experience}</span>
                           </div>
                           <div className="flex items-center gap-2 text-sm sm:col-span-2">
                             <Banknote className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                             <span>
                               {formatSalary(
-                                offerData.salaryMin,
-                                offerData.salaryMax,
-                                offerData.salaryCurrency,
-                                offerData.salaryPeriod
+                                offerDataFromQuery.salaryMin,
+                                offerDataFromQuery.salaryMax,
+                                offerDataFromQuery.salaryCurrency,
+                                offerDataFromQuery.salaryPeriod
                               )}
                             </span>
                           </div>
@@ -336,7 +338,7 @@ export default function OffreDetail({
                                 Description du poste
                               </h3>
                               <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                {offerData.description}
+                                {offerDataFromQuery.description}
                               </p>
                             </div>
                             <div>
@@ -344,7 +346,7 @@ export default function OffreDetail({
                                 Responsabilités
                               </h3>
                               <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                {offerData.responsibilities}
+                                {offerDataFromQuery.responsibilities}
                               </p>
                             </div>
                           </TabsContent>
@@ -357,7 +359,7 @@ export default function OffreDetail({
                                 Compétences requises
                               </h3>
                               <div className="flex flex-wrap gap-2">
-                                {offerData.jobOfferCompetences?.map(
+                                {offerDataFromQuery.jobOfferCompetences?.map(
                                   (skill, index: number) => (
                                     <Badge
                                       key={`${skill.competence}-${index}`}
@@ -373,7 +375,7 @@ export default function OffreDetail({
                             <div>
                               <h3 className="font-semibold mb-2">Prérequis</h3>
                               <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                {offerData.requirements}
+                                {offerDataFromQuery.requirements}
                               </p>
                             </div>
                           </TabsContent>
@@ -381,7 +383,7 @@ export default function OffreDetail({
                             <div>
                               <h3 className="font-semibold mb-2">Avantages</h3>
                               <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                {offerData.benefits}
+                                {offerDataFromQuery.benefits}
                               </p>
                             </div>
                           </TabsContent>
@@ -403,7 +405,7 @@ export default function OffreDetail({
                             Vues
                           </span>
                           <span className="font-semibold">
-                            {offerData.views || 0}
+                            {offerDataFromQuery.views || 0}
                           </span>
                         </div>
                         <div className="flex justify-between items-center">
@@ -411,7 +413,7 @@ export default function OffreDetail({
                             Candidatures totales
                           </span>
                           <span className="font-semibold">
-                            {offerData.applications?.length || 0}
+                            {offerDataFromQuery.applications?.length || 0}
                           </span>
                         </div>
                       </CardContent>
@@ -430,7 +432,7 @@ export default function OffreDetail({
                           variant="outline"
                           onClick={() =>
                             router.push(
-                              `/mesoffres/${offerData.id}/candidatures`
+                              `/mesoffres/${offerDataFromQuery.id}/candidatures`
                             )
                           }
                         >
@@ -456,6 +458,9 @@ export default function OffreDetail({
                 onCardSelect={(cardId: string | null) =>
                   setSelectedCardId(cardId)
                 }
+                queryoffresbyidrefetchP={queryoffresbyidrefetch}
+                applications={localApplications}
+                updateApplication={updateApplication}
               />
             </TabsContent>
 
@@ -468,7 +473,7 @@ export default function OffreDetail({
             <TabsContent value="calendrier">
               <div className="w-full h-[calc(100vh-200px)] overflow-y-auto">
                 <CalendarView
-                  applications={offerData.applications || []}
+                  applications={localApplications}
                   onCardClick={(application) => {
                     // Basculer vers l'onglet tableau et sélectionner la carte
                     setActiveTab("tableau");

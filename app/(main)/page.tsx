@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +25,39 @@ import {
 } from "lucide-react";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
+
+// Animation variants
+const fadeInUp = {
+  initial: { opacity: 0, y: 60 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, ease: "easeOut" },
+};
+
+const staggerContainer = {
+  animate: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const scaleIn = {
+  initial: { opacity: 0, scale: 0.8 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.5, ease: "easeOut" },
+};
+
+const slideInLeft = {
+  initial: { opacity: 0, x: -60 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.6, ease: "easeOut" },
+};
+
+const slideInRight = {
+  initial: { opacity: 0, x: 60 },
+  animate: { opacity: 1, x: 0 },
+  transition: { duration: 0.6, ease: "easeOut" },
+};
 
 // Data structure for pricing cards
 const pricingPlans = [
@@ -143,22 +177,41 @@ export default function Home() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-12 md:py-20 flex items-center gap-8 md:gap-12 justify-center flex-col min-h-screen">
         {/* Left: Text */}
-        <div className="text-center w-full">
-          <Badge
-            variant="secondary"
-            className="mb-4 md:mb-6 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm"
+        <motion.div
+          className="text-center w-full"
+          initial="initial"
+          animate="animate"
+          variants={fadeInUp}
+        >
+          <motion.div variants={fadeInUp} transition={{ delay: 0.1 }}>
+            <Badge
+              variant="secondary"
+              className="mb-4 md:mb-6 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm"
+            >
+              Plateforme de recrutement nouvelle génération
+            </Badge>
+          </motion.div>
+          <motion.h1
+            className="text-3xl md:text-5xl lg:text-7xl w-full mb-4 md:mb-5 leading-tight"
+            variants={fadeInUp}
+            transition={{ delay: 0.2 }}
           >
-            Plateforme de recrutement nouvelle génération
-          </Badge>
-          <h1 className="text-3xl md:text-5xl lg:text-7xl w-full mb-4 md:mb-5 leading-tight">
             Recrutement, RH et conformité pour{" "}
             <span className="text-primary">les équipes mondiales</span>
-          </h1>
-          <p className="w-full text-base md:text-lg lg:text-xl mb-6 md:mb-10 max-w-4xl mx-auto px-4">
+          </motion.h1>
+          <motion.p
+            className="w-full text-base md:text-lg lg:text-xl mb-6 md:mb-10 max-w-4xl mx-auto px-4"
+            variants={fadeInUp}
+            transition={{ delay: 0.3 }}
+          >
             Recrutez des talents dans 150+ pays, gérez la paie mondiale et
             restez 100% conformes—le tout sur une seule plateforme.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4">
+          </motion.p>
+          <motion.div
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4"
+            variants={fadeInUp}
+            transition={{ delay: 0.4 }}
+          >
             <Button
               onClick={() => setIsOpen(true)}
               size="lg"
@@ -177,8 +230,8 @@ export default function Home() {
             >
               Rechercher une offre
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
         {/* Right: Stat Card */}
       </section>
 
@@ -195,7 +248,13 @@ export default function Home() {
 
       {/* Features Section */}
       <section id="features" className="container mx-auto px-4 py-12 md:py-20">
-        <div className="text-center mb-12 md:mb-16">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInUp}
+        >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
             Boostez vos recrutements avec une plateforme intelligente
           </h2>
@@ -205,91 +264,117 @@ export default function Home() {
             profils sur LinkedIn et CVthèques, et activez la cooptation pour
             booster votre visibilité.
           </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          <Card className="border  hover:shadow-md transition-all duration-300 shadow-none">
-            <CardContent className="p-8 flex flex-col items-center text-center">
-              <Users className="w-8 h-8 text-primary mb-4" />
-              <h3 className="text-lg font-semibold mb-2 text-foreground">
-                Personnalisez vos processus de recrutement
-              </h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Sublimez l'expérience candidat. Adaptez votre processus de
-                recrutement en fonction de vos candidats et personnalisez les
-                étapes pour attirer, évaluer et recruter en toute simplicité.
-              </p>
-              <Button variant="link" className="text-primary">
-                En savoir plus
-              </Button>
-            </CardContent>
-          </Card>
-          <Card className=" hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground">
-            <CardContent className="p-8 flex flex-col items-center text-center">
-              <Briefcase className="w-8 h-8 mb-4" />
-              <h3 className="text-lg font-semibold mb-2">
-                Collaborez avec vos équipes
-              </h3>
-              <p className="text-sm mb-4">
-                Instaurez un processus de recrutement collaboratif. Créez plus
-                de synergie avec vos équipes pour évaluer et recruter vos futurs
-                collaborateurs. Recueillez les commentaires et évaluations de
-                chacun et décidez ensemble des meilleurs candidats pour votre
-                entreprise.
-              </p>
-              <Button variant="outline" className="border-white text-primary">
-                En savoir plus
-              </Button>
-            </CardContent>
-          </Card>
-          <Card className="border hover:shadow-md transition-all duration-300 shadow-none">
-            <CardContent className="p-8 flex flex-col items-center text-center">
-              <TrendingUp className="w-8 h-8 text-primary mb-4" />
-              <h3 className="text-lg font-semibold mb-2 text-foreground">
-                Simplifiez votre quotidien
-              </h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Automatisez vos tâches chronophages. Embauchez plus rapidement
-                avec une plateforme de recrutement qui automatise les tâches
-                comme la planification des entretiens et les demandes
-                d'approbation. Utilisez notre outil de statistiques pour
-                améliorer vos sources d'acquisition et vous concentrer sur
-                l'essentiel.
-              </p>
-              <Button variant="link" className="text-primary">
-                En savoir plus
-              </Button>
-            </CardContent>
-          </Card>
-          <Card className="border  hover:shadow-md transition-all duration-300 shadow-none ">
-            <CardContent className="p-8 flex flex-col items-center text-center">
-              <Shield className="w-8 h-8 text-primary mb-4" />
-              <h3 className="text-lg font-semibold mb-2 text-foreground">
-                Attirez et sourcez des candidats
-              </h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Multidiffusez, sourcez et cooptez. Élaborez une stratégie
-                multicanale pour recruter les bons candidats. Multidiffusez sur
-                +160 jobboards, sourcez vos candidats sur LinkedIn et CVthèques,
-                et utilisez le réseau de vos collaborateurs grâce à la
-                cooptation.
-              </p>
-              <Button variant="link" className="text-primary">
-                Commencer gratuitement
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+        </motion.div>
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={staggerContainer}
+        >
+          <motion.div variants={scaleIn}>
+            <Card className="border  hover:shadow-md transition-all duration-300 shadow-none">
+              <CardContent className="p-8 flex flex-col items-center text-center">
+                <Users className="w-8 h-8 text-primary mb-4" />
+                <h3 className="text-lg font-semibold mb-2 text-foreground">
+                  Personnalisez vos processus de recrutement
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Sublimez l'expérience candidat. Adaptez votre processus de
+                  recrutement en fonction de vos candidats et personnalisez les
+                  étapes pour attirer, évaluer et recruter en toute simplicité.
+                </p>
+                <Button variant="link" className="text-primary">
+                  En savoir plus
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+          <motion.div variants={scaleIn}>
+            <Card className=" hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground">
+              <CardContent className="p-8 flex flex-col items-center text-center">
+                <Briefcase className="w-8 h-8 mb-4" />
+                <h3 className="text-lg font-semibold mb-2">
+                  Collaborez avec vos équipes
+                </h3>
+                <p className="text-sm mb-4">
+                  Instaurez un processus de recrutement collaboratif. Créez plus
+                  de synergie avec vos équipes pour évaluer et recruter vos
+                  futurs collaborateurs. Recueillez les commentaires et
+                  évaluations de chacun et décidez ensemble des meilleurs
+                  candidats pour votre entreprise.
+                </p>
+                <Button variant="outline" className="border-white text-primary">
+                  En savoir plus
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+          <motion.div variants={scaleIn}>
+            <Card className="border hover:shadow-md transition-all duration-300 shadow-none">
+              <CardContent className="p-8 flex flex-col items-center text-center">
+                <TrendingUp className="w-8 h-8 text-primary mb-4" />
+                <h3 className="text-lg font-semibold mb-2 text-foreground">
+                  Simplifiez votre quotidien
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Automatisez vos tâches chronophages. Embauchez plus rapidement
+                  avec une plateforme de recrutement qui automatise les tâches
+                  comme la planification des entretiens et les demandes
+                  d'approbation. Utilisez notre outil de statistiques pour
+                  améliorer vos sources d'acquisition et vous concentrer sur
+                  l'essentiel.
+                </p>
+                <Button variant="link" className="text-primary">
+                  En savoir plus
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+          <motion.div variants={scaleIn}>
+            <Card className="border  hover:shadow-md transition-all duration-300 shadow-none ">
+              <CardContent className="p-8 flex flex-col items-center text-center">
+                <Shield className="w-8 h-8 text-primary mb-4" />
+                <h3 className="text-lg font-semibold mb-2 text-foreground">
+                  Attirez et sourcez des candidats
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Multidiffusez, sourcez et cooptez. Élaborez une stratégie
+                  multicanale pour recruter les bons candidats. Multidiffusez
+                  sur +160 jobboards, sourcez vos candidats sur LinkedIn et
+                  CVthèques, et utilisez le réseau de vos collaborateurs grâce à
+                  la cooptation.
+                </p>
+                <Button variant="link" className="text-primary">
+                  Commencer gratuitement
+                </Button>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Avantages Section */}
       <section className="bg-muted/50 py-12 md:py-20">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8 md:gap-16">
-          <div className="flex-1 order-2 md:order-1">
+          <motion.div
+            className="flex-1 order-2 md:order-1"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={slideInLeft}
+          >
             <div className="w-full h-48 md:h-64 bg-primary/10 rounded-xl flex items-center justify-center">
               <span className="text-4xl md:text-7xl text-primary">🎯</span>
             </div>
-          </div>
-          <div className="flex-1 order-1 md:order-2">
+          </motion.div>
+          <motion.div
+            className="flex-1 order-1 md:order-2"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={slideInRight}
+          >
             <Badge
               variant="secondary"
               className="mb-4 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm"
@@ -332,13 +417,19 @@ export default function Home() {
             >
               Commencer gratuitement
             </Button>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Pricing Section */}
       <section id="pricing" className="container mx-auto px-4 py-12 md:py-20">
-        <div className="text-center mb-12 md:mb-16">
+        <motion.div
+          className="text-center mb-12 md:mb-16"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInUp}
+        >
           <Badge
             variant="secondary"
             className="mb-4 px-3 md:px-4 py-1 md:py-2 text-xs md:text-sm"
@@ -348,93 +439,106 @@ export default function Home() {
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4 px-4">
             Nous avons des plans exclusifs pour vous
           </h2>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+        </motion.div>
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={staggerContainer}
+        >
           {pricingPlansWithHandlers.map((plan) => (
-            <Card
-              key={plan.id}
-              className={`shadow-none min-h-[600px] md:h-[650px] ${
-                plan.isPopular ? "border-2 border-primary bg-primary" : ""
-              }`}
-            >
-              <CardContent className="flex flex-col justify-between h-full">
-                <div className="p-6 md:p-8 flex flex-col">
-                  <h3
-                    className={`text-lg md:text-xl font-semibold mb-2 text-foreground ${
-                      plan.isPopular ? "text-white" : ""
-                    }`}
-                  >
-                    {plan.name}
-                  </h3>
-                  <div
-                    className={`text-3xl md:text-5xl font-bold text-primary mb-4 md:mb-7 ${
-                      plan.isPopular ? "text-white" : ""
-                    }`}
-                  >
-                    {plan.price}
-                    {plan.currency}
-                    <span
-                      className={`text-sm md:text-base font-normal ${
+            <motion.div key={plan.id} variants={scaleIn}>
+              <Card
+                className={`shadow-none min-h-[600px] md:h-[650px] ${
+                  plan.isPopular ? "border-2 border-primary bg-primary" : ""
+                }`}
+              >
+                <CardContent className="flex flex-col justify-between h-full">
+                  <div className="p-6 md:p-8 flex flex-col">
+                    <h3
+                      className={`text-lg md:text-xl font-semibold mb-2 text-foreground ${
                         plan.isPopular ? "text-white" : ""
                       }`}
                     >
-                      {" "}
-                      / {plan.period}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-center mb-4 md:mb-7">
-                    <p
-                      className={`text-muted-foreground text-xs md:text-sm text-center ${
+                      {plan.name}
+                    </h3>
+                    <div
+                      className={`text-3xl md:text-5xl font-bold text-primary mb-4 md:mb-7 ${
                         plan.isPopular ? "text-white" : ""
                       }`}
                     >
-                      {plan.description}
-                    </p>
-                  </div>
-                  <div
-                    className={`border-b border-gray-200 w-full mb-4 md:mb-7 ${
-                      plan.isPopular ? "border-white" : ""
-                    }`}
-                  ></div>
-
-                  <ul className="space-y-2 text-muted-foreground text-xs md:text-sm mb-4 md:mb-6 list-disc flex flex-col gap-2">
-                    {plan.features.map((feature, index) => (
-                      <li
-                        key={index}
-                        className={`flex items-start ${
+                      {plan.price}
+                      {plan.currency}
+                      <span
+                        className={`text-sm md:text-base font-normal ${
                           plan.isPopular ? "text-white" : ""
                         }`}
                       >
-                        <CheckCircle2
-                          className={`w-4 h-4 md:w-5 md:h-5 text-primary mr-2 md:mr-3 mt-0.5 flex-shrink-0 ${
+                        {" "}
+                        / {plan.period}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-center mb-4 md:mb-7">
+                      <p
+                        className={`text-muted-foreground text-xs md:text-sm text-center ${
+                          plan.isPopular ? "text-white" : ""
+                        }`}
+                      >
+                        {plan.description}
+                      </p>
+                    </div>
+                    <div
+                      className={`border-b border-gray-200 w-full mb-4 md:mb-7 ${
+                        plan.isPopular ? "border-white" : ""
+                      }`}
+                    ></div>
+
+                    <ul className="space-y-2 text-muted-foreground text-xs md:text-sm mb-4 md:mb-6 list-disc flex flex-col gap-2">
+                      {plan.features.map((feature, index) => (
+                        <li
+                          key={index}
+                          className={`flex items-start ${
                             plan.isPopular ? "text-white" : ""
                           }`}
-                        />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <Button
-                  onClick={plan.onClick}
-                  className={`w-full text-sm md:text-base ${
-                    plan.buttonVariant === "primary"
-                      ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                      : ""
-                  } ${plan.isPopular ? "bg-white text-primary" : ""}`}
-                >
-                  {plan.buttonText}
-                </Button>
-              </CardContent>
-            </Card>
+                        >
+                          <CheckCircle2
+                            className={`w-4 h-4 md:w-5 md:h-5 text-primary mr-2 md:mr-3 mt-0.5 flex-shrink-0 ${
+                              plan.isPopular ? "text-white" : ""
+                            }`}
+                          />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <Button
+                    onClick={plan.onClick}
+                    className={`w-full text-sm md:text-base ${
+                      plan.buttonVariant === "primary"
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                        : ""
+                    } ${plan.isPopular ? "bg-white text-primary" : ""}`}
+                  >
+                    {plan.buttonText}
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* Testimonial Section */}
       <section className="container mx-auto px-4 py-12 md:py-20">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-          <div className="flex-1 order-2 md:order-1">
+          <motion.div
+            className="flex-1 order-2 md:order-1"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={slideInLeft}
+          >
             <Card className="shadow-xl">
               <CardContent className="p-6 md:p-8">
                 <div className="flex items-center mb-4">
@@ -466,18 +570,30 @@ export default function Home() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-          <div className="flex-1 flex justify-center order-1 md:order-2">
+          </motion.div>
+          <motion.div
+            className="flex-1 flex justify-center order-1 md:order-2"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={slideInRight}
+          >
             <div className="w-full h-48 md:h-64 bg-primary/10 rounded-xl flex items-center justify-center">
               <span className="text-4xl md:text-7xl text-primary">💼</span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Newsletter Section */}
       <section className="bg-primary/10 py-12 md:py-16">
-        <div className="container mx-auto px-4 text-center">
+        <motion.div
+          className="container mx-auto px-4 text-center"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInUp}
+        >
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Abonnez-vous à notre newsletter
           </h2>
@@ -499,7 +615,7 @@ export default function Home() {
               Recevoir le guide
             </Button>
           </form>
-        </div>
+        </motion.div>
       </section>
 
       {/* Footer */}

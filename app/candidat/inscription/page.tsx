@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -21,6 +21,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -42,7 +55,24 @@ import {
   Users,
   Car,
   MapPin,
+  Loader2,
+  Check,
+  ChevronsUpDown,
+  Eye,
+  EyeOff,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+// Interface pour les pays
+interface Country {
+  name: {
+    common: string;
+    official: string;
+  };
+  cca2: string;
+  cca3: string;
+  flag: string;
+}
 
 const formSchema = z
   .object({
@@ -72,6 +102,12 @@ const formSchema = z
 export default function Inscription() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [isLoadingCountries, setIsLoadingCountries] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -89,6 +125,116 @@ export default function Inscription() {
       permisConduire: "",
     },
   });
+
+  // Fonction pour charger les pays depuis l'API
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        setIsLoadingCountries(true);
+        const response = await fetch(
+          "https://restcountries.com/v3.1/all?fields=name,cca2,cca3,flag"
+        );
+
+        if (!response.ok) {
+          throw new Error("Erreur lors du chargement des pays");
+        }
+
+        const data: Country[] = await response.json();
+
+        // Trier les pays par nom commun
+        const sortedCountries = data.sort((a, b) =>
+          a.name.common.localeCompare(b.name.common, "fr")
+        );
+
+        setCountries(sortedCountries);
+      } catch (error) {
+        console.error("Erreur lors du chargement des pays:", error);
+        toast.error("Erreur lors du chargement de la liste des pays");
+
+        // Fallback: pays par défaut en cas d'erreur
+        const fallbackCountries: Country[] = [
+          {
+            name: {
+              common: "Côte d'Ivoire",
+              official: "République de Côte d'Ivoire",
+            },
+            cca2: "CI",
+            cca3: "CIV",
+            flag: "🇨🇮",
+          },
+          {
+            name: { common: "France", official: "République française" },
+            cca2: "FR",
+            cca3: "FRA",
+            flag: "🇫🇷",
+          },
+          {
+            name: { common: "Sénégal", official: "République du Sénégal" },
+            cca2: "SN",
+            cca3: "SEN",
+            flag: "🇸🇳",
+          },
+          {
+            name: { common: "Mali", official: "République du Mali" },
+            cca2: "ML",
+            cca3: "MLI",
+            flag: "🇲🇱",
+          },
+          {
+            name: { common: "Burkina Faso", official: "Burkina Faso" },
+            cca2: "BF",
+            cca3: "BFA",
+            flag: "🇧🇫",
+          },
+          {
+            name: { common: "Canada", official: "Canada" },
+            cca2: "CA",
+            cca3: "CAN",
+            flag: "🇨🇦",
+          },
+          {
+            name: { common: "États-Unis", official: "États-Unis d'Amérique" },
+            cca2: "US",
+            cca3: "USA",
+            flag: "🇺🇸",
+          },
+          {
+            name: {
+              common: "Allemagne",
+              official: "République fédérale d'Allemagne",
+            },
+            cca2: "DE",
+            cca3: "DEU",
+            flag: "🇩🇪",
+          },
+          {
+            name: { common: "Belgique", official: "Royaume de Belgique" },
+            cca2: "BE",
+            cca3: "BEL",
+            flag: "🇧🇪",
+          },
+          {
+            name: { common: "Suisse", official: "Confédération suisse" },
+            cca2: "CH",
+            cca3: "CHE",
+            flag: "🇨🇭",
+          },
+        ];
+        setCountries(fallbackCountries);
+      } finally {
+        setIsLoadingCountries(false);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  // Fonction pour gérer la sélection d'un pays
+  const handleCountrySelect = (country: Country) => {
+    setSelectedCountry(country);
+    form.setValue("pays", country.cca2);
+    setOpen(false);
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -115,12 +261,12 @@ export default function Inscription() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Mobile: Full width, Desktop: Grid layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 min-h-screen">
         {/* Form Section */}
         <div className="col-span-1 lg:col-span-2 flex items-center justify-center p-4 sm:p-6 lg:p-8">
-          <Card className="w-full max-w-2xl shadow-none border-0 lg:border">
+          <Card className="w-full max-w-4xl shadow-none border-0 lg:border">
             <CardHeader className="space-y-1 px-4 sm:px-6 lg:px-8 pt-6">
               <CardTitle className="text-xl sm:text-2xl font-bold text-center">
                 Inscription
@@ -225,11 +371,31 @@ export default function Inscription() {
                             Mot de passe
                           </FormLabel>
                           <FormControl>
-                            <Input
-                              type="password"
-                              placeholder="••••••••"
-                              {...field}
-                            />
+                            <div className="relative">
+                              <Input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="••••••••"
+                                {...field}
+                                className="pr-10"
+                              />
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                {showPassword ? (
+                                  <EyeOff className="h-4 w-4 text-gray-500" />
+                                ) : (
+                                  <Eye className="h-4 w-4 text-gray-500" />
+                                )}
+                                <span className="sr-only">
+                                  {showPassword ? "Masquer" : "Afficher"} le mot
+                                  de passe
+                                </span>
+                              </Button>
+                            </div>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -245,11 +411,33 @@ export default function Inscription() {
                             Confirmer le mot de passe
                           </FormLabel>
                           <FormControl>
-                            <Input
-                              type="password"
-                              placeholder="••••••••"
-                              {...field}
-                            />
+                            <div className="relative">
+                              <Input
+                                type={showConfirmPassword ? "text" : "password"}
+                                placeholder="••••••••"
+                                {...field}
+                                className="pr-10"
+                              />
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                                onClick={() =>
+                                  setShowConfirmPassword(!showConfirmPassword)
+                                }
+                              >
+                                {showConfirmPassword ? (
+                                  <EyeOff className="h-4 w-4 text-gray-500" />
+                                ) : (
+                                  <Eye className="h-4 w-4 text-gray-500" />
+                                )}
+                                <span className="sr-only">
+                                  {showConfirmPassword ? "Masquer" : "Afficher"}{" "}
+                                  la confirmation du mot de passe
+                                </span>
+                              </Button>
+                            </div>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -300,28 +488,79 @@ export default function Inscription() {
                       control={form.control}
                       name="pays"
                       render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="flex flex-col">
                           <FormLabel className="flex items-center gap-2 text-sm">
                             <MapPin className="h-4 w-4" />
                             Pays
                           </FormLabel>
-                          <Select
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                          >
-                            <FormControl className="w-full">
-                              <SelectTrigger>
-                                <SelectValue placeholder="Sélectionnez votre pays" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="CI">Côte d'Ivoire</SelectItem>
-                              <SelectItem value="FR">France</SelectItem>
-                              <SelectItem value="SN">Sénégal</SelectItem>
-                              <SelectItem value="ML">Mali</SelectItem>
-                              <SelectItem value="BF">Burkina Faso</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <Popover open={open} onOpenChange={setOpen}>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant="outline"
+                                  role="combobox"
+                                  aria-expanded={open}
+                                  className="w-full justify-between"
+                                  disabled={isLoadingCountries}
+                                >
+                                  {isLoadingCountries ? (
+                                    <>
+                                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                      Chargement des pays...
+                                    </>
+                                  ) : selectedCountry ? (
+                                    <>
+                                      <span className="mr-2">
+                                        {selectedCountry.flag}
+                                      </span>
+                                      {selectedCountry.name.common}
+                                    </>
+                                  ) : (
+                                    "Sélectionnez votre pays"
+                                  )}
+                                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="w-full p-0"
+                              align="start"
+                            >
+                              <Command>
+                                <CommandInput placeholder="Rechercher un pays..." />
+                                <CommandList className="max-h-60">
+                                  <CommandEmpty>
+                                    Aucun pays trouvé.
+                                  </CommandEmpty>
+                                  <CommandGroup>
+                                    {countries.map((country) => (
+                                      <CommandItem
+                                        key={country.cca2}
+                                        value={`${country.name.common} ${country.name.official}`}
+                                        onSelect={() =>
+                                          handleCountrySelect(country)
+                                        }
+                                      >
+                                        <Check
+                                          className={cn(
+                                            "mr-2 h-4 w-4",
+                                            selectedCountry?.cca2 ===
+                                              country.cca2
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                        <span className="mr-2">
+                                          {country.flag}
+                                        </span>
+                                        {country.name.common}
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
                           <FormMessage />
                         </FormItem>
                       )}

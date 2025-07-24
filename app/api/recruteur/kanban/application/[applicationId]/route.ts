@@ -83,6 +83,15 @@ export async function PUT(
       }
     }
 
+    // Émettre un événement WebSocket si une date d'échéance a été mise à jour
+    if (duedate !== undefined) {
+      await kanbanEvents.duedateUpdated(
+        idapp,
+        duedate,
+        application.jobOffer.id.toString()
+      );
+    }
+
     // Invalider le cache Redis pour forcer le rechargement des données
     // Invalider avec l'ID du recruteur ET l'ID de l'offre pour être sûr
     // const cacheKeyRecruteur = CACHE_KEYS.KANBAN_BOARD(
