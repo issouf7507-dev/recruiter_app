@@ -588,12 +588,11 @@ const InformationsPersonnellesPage = () => {
                   <Label>CV</Label>
                   {isEditing ? (
                     <FileUpload
-                      onUpload={(url) => setValue("cv", url)}
-                      currentUrl={watch("cv")}
-                      type="document"
-                      label="CV"
+                      onUpload={(fileData) => setValue("cv", fileData.fileUrl)}
                       buttonText="Changer le CV"
                       accept=".pdf,.doc,.docx"
+                      multiple={false}
+                      currentFileUrl={watch("cv")}
                     />
                   ) : (
                     <div className="flex items-center gap-2">
@@ -617,12 +616,13 @@ const InformationsPersonnellesPage = () => {
                   <Label>Lettre de motivation</Label>
                   {isEditing ? (
                     <FileUpload
-                      onUpload={(url) => setValue("letterm", url)}
-                      currentUrl={watch("letterm")}
-                      type="document"
-                      label="Lettre de motivation"
+                      onUpload={(fileData) =>
+                        setValue("letterm", fileData.fileUrl)
+                      }
                       buttonText="Changer la lettre"
                       accept=".pdf,.doc,.docx"
+                      multiple={false}
+                      currentFileUrl={watch("letterm")}
                     />
                   ) : (
                     <div className="flex items-center gap-2">

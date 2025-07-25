@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useId } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2, Upload, X } from "lucide-react";
+import { Loader2, Upload, X, FileText, CheckCircle } from "lucide-react";
 import { useEdgeStore } from "@/lib/edgestore";
+import { toast } from "sonner";
 
 interface FileUploadProps {
   onUpload: (fileData: {
@@ -19,6 +20,7 @@ interface FileUploadProps {
   className?: string;
   buttonText?: string;
   bucket?: "publicFiles" | "kanbanAttachments";
+  currentFileUrl?: string;
 }
 
 export function FileUpload({
@@ -30,11 +32,19 @@ export function FileUpload({
   className = "",
   buttonText = "Sélectionner des fichiers",
   bucket = "kanbanAttachments",
+  currentFileUrl,
 }: FileUploadProps) {
   const { edgestore } = useEdgeStore();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [uploadedFile, setUploadedFile] = useState<{
+    fileName: string;
+    fileUrl: string;
+    fileType: string;
+    fileSize: number;
+  } | null>(null);
+  const inputId = useId();
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
@@ -75,13 +85,21 @@ export function FileUpload({
         });
 
         if (uploadedFile) {
-          // Appeler la fonction de callback avec les données du fichier
-          onUpload({
+          const fileData = {
             fileName: file.name,
             fileUrl: uploadedFile.url,
             fileType: file.type || "application/octet-stream",
             fileSize: file.size,
-          });
+          };
+
+          // Appeler la fonction de callback avec les données du fichier
+          onUpload(fileData);
+
+          // Sauvegarder le fichier uploadé pour l'affichage
+          setUploadedFile(fileData);
+
+          // Afficher un toast de succès
+          toast.success(`${file.name} uploadé avec succès !`);
         }
       }
 
@@ -114,15 +132,15 @@ export function FileUpload({
           accept={accept}
           onChange={handleFileSelect}
           className="hidden"
-          id="file-upload-input"
+          id={inputId}
           disabled={disabled || isUploading}
         />
         <label
-          htmlFor="file-upload-input"
+          htmlFor={inputId}
           className={`flex items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
             disabled || isUploading
               ? "border-gray-300 bg-gray-50 cursor-not-allowed"
-              : "border-gray-300 hover:border-primary hover:bg-gray-50"
+              : "border-gray-300 hover:border-primary hover:bg-gray-50 dark:border-gray-700 dark:hover:border-primary dark:hover:bg-gray-900"
           }`}
         >
           <div className="flex flex-col items-center space-y-2">
@@ -229,6 +247,56 @@ export function FileUpload({
             </>
           )}
         </Button>
+      )}
+
+      {/* Affichage du fichier uploadé ou existant */}
+      {(uploadedFile || currentFileUrl) && (
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <h4 className="text-sm font-medium text-gray-700 flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-green-600" />
+              {uploadedFile ? "Fichier uploadé" : "Fichier existant"}
+            </h4>
+          </div>
+          <div className="p-3 bg-green-50 border border-green-200 rounded-lg dark:bg-green-900 dark:border dark:border-green-700">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-green-100 rounded flex items-center justify-center">
+                <FileText className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">
+                  {uploadedFile ? uploadedFile.fileName : "Document"}
+                </p>
+                {uploadedFile && (
+                  <p className="text-xs text-gray-500">
+                    {(uploadedFile.fileSize / 1024 / 1024).toFixed(2)} MB
+                  </p>
+                )}
+              </div>
+              <div className="flex gap-2">
+                <a
+                  href={uploadedFile ? uploadedFile.fileUrl : currentFileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 hover:text-blue-800 underline"
+                >
+                  Voir
+                </a>
+                {uploadedFile && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setUploadedFile(null)}
+                    className="text-red-600 hover:text-red-700"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

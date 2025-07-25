@@ -147,19 +147,19 @@ export const configureSocket = (server: SocketServer) => {
           return;
         }
 
-        // Vérifier si Redis est connecté
-        if (!redisPubSub.isOpen) {
+        // Vérifier si Redis est disponible et connecté
+        if (!redisPubSub) {
           console.warn(
-            "Redis non connecté - WebSockets fonctionneront sans synchronisation entre serveurs"
+            "Redis non disponible - WebSockets fonctionneront sans synchronisation entre serveurs"
           );
           return;
         }
 
         // Créer un client Redis dédié pour les abonnements
-        const subscriber = redisPubSub.duplicate();
+        const subscriber = (redisPubSub as any).duplicate();
         await subscriber.connect();
 
-        await subscriber.subscribe("kanban:events", (message) => {
+        await subscriber.subscribe("kanban:events", (message: string) => {
           try {
             const event = JSON.parse(message);
             const { type, data, offerId } = event;
@@ -214,9 +214,9 @@ export const publishEvent = async (
       return;
     }
 
-    // Vérifier si Redis est connecté
-    if (!redisPubSub.isOpen) {
-      console.warn("Redis non connecté - événement non publié:", type);
+    // Vérifier si Redis est disponible
+    if (!redisPubSub) {
+      console.warn("Redis non disponible - événement non publié:", type);
       return;
     }
 
@@ -227,7 +227,7 @@ export const publishEvent = async (
       timestamp: new Date().toISOString(),
     };
 
-    await redisPubSub.publish("kanban:events", JSON.stringify(event));
+    await (redisPubSub as any).publish("kanban:events", JSON.stringify(event));
   } catch (error) {
     console.warn(
       "Erreur lors de la publication de l'événement (normal en local):",
