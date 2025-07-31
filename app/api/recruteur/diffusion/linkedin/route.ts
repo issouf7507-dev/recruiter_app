@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { verify } from "jsonwebtoken";
+import prisma from "@/lib/prisma";
 
 interface LinkedInShareRequest {
   offreId: number;
@@ -28,9 +28,18 @@ interface JobOffer {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const token = request.cookies.get("token")?.value;
 
-    if (!session?.user?.id) {
+    if (!token) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const decoded = verify(token, process.env.JWT_SECRET!) as {
+      userId: string;
+      type: string;
+    };
+
+    if (decoded.type !== "RECRUTEUR") {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -42,32 +51,68 @@ export async function POST(request: NextRequest) {
       visibility = "PUBLIC",
     } = body;
 
-    // Récupérer les détails de l'offre depuis la base de données
-    const offreResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/recruteur/offres/${offreId}`
-    );
-    if (!offreResponse.ok) {
-      return NextResponse.json({ error: "Offre non trouvée" }, { status: 404 });
+    console.log("Diffusion LinkedIn - Données reçues:", {
+      offreId,
+      customMessage,
+      includeSalary,
+      visibility,
+    });
+
+    // Récupérer les détails de l'offre directement depuis la base de données
+    const offre = await prisma.jobOffer.findFirst({
+      where: {
+        id: offreId,
+        // recruteurId: decoded.userId,
+      },
+      include: {
+        jobOfferCompetences: true,
+      },
+    });
+
+    if (!offre) {
+      console.error("Offre non trouvée:", {
+        offreId,
+        recruteurId: decoded.userId,
+      });
+      return NextResponse.json(
+        {
+          error: "Offre non trouvée ou non autorisée",
+          details:
+            "L'offre n'existe pas ou vous n'avez pas les permissions pour y accéder",
+        },
+        { status: 404 }
+      );
     }
 
-    const offreData = await offreResponse.json();
-    const offre: JobOffer = offreData.data;
+    console.log("Offre trouvée:", offre);
 
-    // Pour l'instant, utilisons un Person URN basé sur l'ID utilisateur
-    // En production, vous devriez récupérer les credentials depuis la base de données
+    // Vérifier la configuration LinkedIn
     const linkedinAccessToken = process.env.LINKEDIN_ACCESS_TOKEN;
-    const linkedinPersonUrn = `urn:li:person:${session.user.id}`;
 
     if (!linkedinAccessToken) {
+      console.error(
+        "Token LinkedIn manquant dans les variables d'environnement"
+      );
       return NextResponse.json(
         {
           error: "Configuration LinkedIn manquante",
           message:
             "Veuillez configurer vos credentials LinkedIn dans les paramètres",
+          details: "LINKEDIN_ACCESS_TOKEN n'est pas configuré",
         },
         { status: 400 }
       );
     }
+
+    // Construire le Person URN LinkedIn
+    // Note: En production, vous devriez récupérer le LinkedIn Person URN depuis la base de données
+    const linkedinPersonUrn =
+      process.env.LINKEDIN_PERSON_URN || `urn:li:person:${decoded.userId}`;
+
+    console.log("Configuration LinkedIn:", {
+      hasToken: !!linkedinAccessToken,
+      personUrn: linkedinPersonUrn,
+    });
 
     // Générer le contenu du post LinkedIn
     const shareCommentary = generateLinkedInContent(
@@ -75,6 +120,8 @@ export async function POST(request: NextRequest) {
       customMessage,
       includeSalary
     );
+
+    console.log("Contenu généré pour LinkedIn:", shareCommentary);
 
     // Préparer le payload pour l'API LinkedIn
     const linkedinPayload = {
@@ -93,6 +140,8 @@ export async function POST(request: NextRequest) {
       },
     };
 
+    console.log("Payload LinkedIn:", JSON.stringify(linkedinPayload, null, 2));
+
     // Appeler l'API LinkedIn
     const linkedinResponse = await fetch(
       "https://api.linkedin.com/v2/ugcPosts",
@@ -107,14 +156,21 @@ export async function POST(request: NextRequest) {
       }
     );
 
+    console.log("Réponse LinkedIn - Status:", linkedinResponse.status);
+
     if (!linkedinResponse.ok) {
       const errorData = await linkedinResponse.text();
-      console.error("Erreur LinkedIn API:", errorData);
+      console.error("Erreur LinkedIn API:", {
+        status: linkedinResponse.status,
+        statusText: linkedinResponse.statusText,
+        errorData,
+      });
 
       return NextResponse.json(
         {
           error: "Erreur lors de la publication sur LinkedIn",
           details: errorData,
+          status: linkedinResponse.status,
         },
         { status: linkedinResponse.status }
       );
@@ -123,8 +179,13 @@ export async function POST(request: NextRequest) {
     const linkedinData = await linkedinResponse.json();
     const postId = linkedinResponse.headers.get("X-RestLi-Id");
 
-    // Enregistrer la diffusion dans la base de données (optionnel)
-    // await saveDiffusionRecord(offreId, "linkedin", postId);
+    console.log("Publication LinkedIn réussie:", {
+      postId,
+      linkedinData,
+    });
+
+    // Note: L'enregistrement de diffusion n'est pas implémenté dans le schéma actuel
+    // Vous pouvez ajouter un modèle DiffusionRecord si nécessaire
 
     return NextResponse.json({
       success: true,
@@ -132,20 +193,26 @@ export async function POST(request: NextRequest) {
       data: {
         platform: "linkedin",
         postId: postId,
-        url: `https://www.linkedin.com/feed/update/${postId}/`,
+        url: postId ? `https://www.linkedin.com/feed/update/${postId}/` : null,
       },
     });
   } catch (error) {
     console.error("Erreur lors de la diffusion LinkedIn:", error);
+
+    // Retourner une erreur plus détaillée
     return NextResponse.json(
-      { error: "Erreur interne du serveur" },
+      {
+        error: "Erreur interne du serveur",
+        details: error instanceof Error ? error.message : "Erreur inconnue",
+        timestamp: new Date().toISOString(),
+      },
       { status: 500 }
     );
   }
 }
 
 function generateLinkedInContent(
-  offre: JobOffer,
+  offre: any,
   customMessage?: string,
   includeSalary?: boolean
 ): string {
@@ -164,18 +231,31 @@ function generateLinkedInContent(
   content += `${shortDescription}\n\n`;
 
   // Compétences principales
-  if (offre.skills) {
+  if (offre.jobOfferCompetences && offre.jobOfferCompetences.length > 0) {
+    const skills = offre.jobOfferCompetences
+      .slice(0, 5)
+      .map((comp: any) => comp.competence)
+      .filter(Boolean);
+
+    if (skills.length > 0) {
+      content += `🔧 Compétences: ${skills.join(", ")}\n\n`;
+    }
+  } else if (offre.skills) {
     const skills = offre.skills
       .split(",")
       .slice(0, 5)
-      .map((skill) => skill.trim());
-    content += `🔧 Compétences: ${skills.join(", ")}\n\n`;
+      .map((skill: string) => skill.trim())
+      .filter(Boolean);
+
+    if (skills.length > 0) {
+      content += `🔧 Compétences: ${skills.join(", ")}\n\n`;
+    }
   }
 
   // Salaire si demandé
   if (includeSalary && offre.salaryMin && offre.salaryMax) {
     content += `💰 Salaire: ${offre.salaryMin.toLocaleString()} - ${offre.salaryMax.toLocaleString()} ${
-      offre.salaryCurrency
+      offre.salaryCurrency || "EUR"
     }\n\n`;
   }
 

@@ -117,7 +117,7 @@ const formatStatus = (status: string) => {
 export default function CandidaturesPage({
   params,
 }: {
-  params: Promise<{ offerId: string }>;
+  params: Promise<{ id: string }>;
 }) {
   const [candidatures, setCandidatures] =
     useState<Candidature[]>(mockCandidatures);
@@ -127,6 +127,7 @@ export default function CandidaturesPage({
 
   const handleViewDetails = (candidature: Application) => {
     setSelectedCandidature(candidature);
+    console.log(candidature);
   };
 
   const handleToggleFavorite = (candidatureId: string) => {
@@ -137,7 +138,7 @@ export default function CandidaturesPage({
     );
   };
 
-  const { offerId } = use(params);
+  const { id: offerId } = use(params);
 
   const handleDownloadCV = (cvPath: string) => {
     // Ici, vous implémenteriez la logique de téléchargement
@@ -150,6 +151,28 @@ export default function CandidaturesPage({
     console.log("LettreMotivation", cvPath);
 
     window.open(cvPath, "_blank");
+  };
+
+  const handleDownloadAllCVs = () => {
+    if (!candidatdata?.data || candidatdata.data.length === 0) {
+      console.log("Aucun CV à télécharger");
+      return;
+    }
+
+    // Télécharger tous les CV un par un
+    candidatdata.data.forEach((candidature: Application, index: number) => {
+      if (candidature.candidat.cv) {
+        setTimeout(() => {
+          const link = document.createElement("a");
+          link.href = candidature.candidat.cv;
+          link.download = `CV_${candidature.candidat.nom}_${index + 1}.pdf`;
+          link.target = "_blank";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }, index * 500); // Délai de 500ms entre chaque téléchargement
+      }
+    });
   };
 
   const { data: candidatdata, isLoading } = useQuery({
@@ -180,16 +203,28 @@ export default function CandidaturesPage({
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
-      <div className="flex items-center gap-4">
-        <Link
-          // href={`/mesoffres/${params.offerId}`}
-          href={"/mesoffres"}
-        >
-          <Button variant="outline" size="icon">
-            <ArrowLeft className="h-4 w-4" />
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link
+            // href={`/mesoffres/${params.offerId}`}
+            href={"/mesoffres"}
+          >
+            <Button variant="outline" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <h1 className="text-2xl font-bold">Candidatures reçues</h1>
+        </div>
+
+        {candidatdata?.data && candidatdata.data.length > 0 && (
+          <Button
+            onClick={handleDownloadAllCVs}
+            className="flex items-center gap-2"
+          >
+            <Download className="h-4 w-4" />
+            Télécharger tous les CV ({candidatdata.data.length})
           </Button>
-        </Link>
-        <h1 className="text-2xl font-bold">Candidatures reçues</h1>
+        )}
       </div>
 
       <Card>
@@ -392,7 +427,7 @@ export default function CandidaturesPage({
                   <strong>Nom :</strong> {selectedCandidature?.candidat?.nom}
                 </p>
                 <p>
-                  <strong>Email :</strong> {selectedCandidature?.email}
+                  <strong>Email :</strong> {selectedCandidature?.candidat.email}
                 </p>
                 <p>
                   <strong>Téléphone :</strong>{" "}
@@ -404,13 +439,15 @@ export default function CandidaturesPage({
                 </p>
                 <p>
                   <strong>Statut :</strong>
-                  {/* <Badge
+                  <Badge
                     className={`ml-2 ${getStatusColor(
-                      selectedCandidature?.status || "nouvelle"
+                      selectedCandidature?.column.name.toString() || ""
                     )}`}
                   >
-                    {formatStatus(selectedCandidature?.status || "nouvelle")}
-                  </Badge> */}
+                    {formatStatus(
+                      selectedCandidature?.column.name.toString() || ""
+                    )}
+                  </Badge>
                 </p>
               </CardContent>
             </Card>
@@ -430,7 +467,7 @@ export default function CandidaturesPage({
                   <Button
                     variant="outline"
                     onClick={() =>
-                      handleDownloadCV(selectedCandidature?.cv || "")
+                      handleDownloadCV(selectedCandidature?.candidat.cv || "")
                     }
                   >
                     <Download className="h-4 w-4 mr-2" />
@@ -458,17 +495,6 @@ export default function CandidaturesPage({
                     Télécharger la lettre
                   </Button>
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Lettre de motivation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="whitespace-pre-wrap">
-                  {selectedCandidature?.candidat.letterm}
-                </p>
               </CardContent>
             </Card>
           </div>

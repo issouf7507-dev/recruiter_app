@@ -61,6 +61,7 @@ model Candidat {
   alertes             AlerteEmploi[]
   notifications       Notification[]
   candidatCompetences CandidatCompetence[]
+  conversations       Conversation[]
 }
 
 // Table pour remplacer competences String[] dans Candidat
@@ -96,6 +97,7 @@ model Recruteur {
   updatedAt      DateTime        @updatedAt
   invitations    Invitation[]
   collaborateurs Collaborateur[]
+  conversations  Conversation[]
 }
 
 model CompanySocial {
@@ -153,7 +155,7 @@ model ApplicationCollaborateur {
 model JobOffer {
   id                  Int                  @id @default(autoincrement()) // Identifiant unique de l'offre
   title               String // Titre du poste (ex : Développeur Full Stack)
-  description         String // Description générale du poste
+  description         String               @db.Text // Description générale du poste
   company             String // Nom de l'entreprise proposant l'offre
   location            String // Lieu de travail (ex : Abidjan, télétravail)
   type                String // Type de contrat (ex : Freelance, CDI, CDD)
@@ -163,9 +165,9 @@ model JobOffer {
   salaryMax           Float // Salaire maximum proposé
   salaryCurrency      String // Devise du salaire (ex : XOF, EUR, USD)
   salaryPeriod        String // Périodicité du salaire (ex : mois, an)
-  benefits            String // Avantages (ex : mutuelle, tickets resto)
-  requirements        String // Exigences spécifiques du poste
-  responsibilities    String // Responsabilités principales du poste
+  benefits            String               @db.Text // Avantages (ex : mutuelle, tickets resto)
+  requirements        String               @db.Text // Exigences spécifiques du poste
+  responsibilities    String               @db.Text // Responsabilités principales du poste
   skills              String // Compétences nécessaires (ex : JavaScript, React)
   favorite            Boolean?             @default(false)
   templateId          Int? // ID du modèle d'offre utilisé (optionnel)
@@ -178,6 +180,7 @@ model JobOffer {
   kanbanColumns       KanbanColumn[] // Liste des colonnes associées à cette offre
   applications        Application[]
   jobOfferCompetences JobOfferCompetence[]
+  conversations       Conversation[]
 }
 
 // Table pour remplacer competences String[] dans JobOffer
@@ -469,4 +472,38 @@ model Notification {
   offreId    Int? // ID de l'offre liée à la notification
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+// Modèles pour le système de messagerie
+model Conversation {
+  id          String    @id @default(cuid())
+  jobOfferId  Int
+  jobOffer    JobOffer  @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
+  candidatId  String
+  candidat    Candidat  @relation(fields: [candidatId], references: [id], onDelete: Cascade)
+  recruteurId String
+  recruteur   Recruteur @relation(fields: [recruteurId], references: [id], onDelete: Cascade)
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  messages    Message[]
+
+  @@unique([jobOfferId, candidatId, recruteurId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String // ID de l'expéditeur (candidat ou recruteur)
+  senderType     SenderType // CANDIDAT ou RECRUTEUR
+  content        String       @db.Text
+  isRead         Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+enum SenderType {
+  CANDIDAT
+  RECRUTEUR
 }

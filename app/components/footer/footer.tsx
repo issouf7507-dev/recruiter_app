@@ -24,6 +24,7 @@ import {
   HelpCircle,
   FileText,
 } from "lucide-react";
+import Image from "next/image";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -155,8 +156,15 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-              <span className="text-xl font-bold text-foreground">Ylsix</span>
+              <Link href="/">
+                <Image
+                  src="/SVG/Logo_normal.svg"
+                  alt="Ylsix"
+                  width={150}
+                  height={150}
+                  className="w-15 h-15"
+                />
+              </Link>
             </div>
             <p className="text-muted-foreground text-sm mb-6">
               Révolutionnez vos recrutements avec notre plateforme intelligente.

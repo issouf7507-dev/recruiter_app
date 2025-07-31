@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -169,6 +169,135 @@ export default function Home() {
       setIsSearching(false);
     }
   };
+
+  const [loadingLogo, setLoadingLogo] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingLogo(false);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loadingLogo) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-background">
+        <div className="flex flex-col items-center space-y-6">
+          {/* Animated Logo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              rotate: 0,
+            }}
+            transition={{
+              duration: 1.2,
+              ease: "easeOut",
+              type: "spring",
+              stiffness: 100,
+            }}
+            className="relative"
+          >
+            {/* Pulse effect background */}
+            <motion.div
+              className="absolute inset-0 bg-primary/20 rounded-full"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.1, 0.3],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+
+            {/* Main logo with subtle rotation */}
+            <motion.div
+              animate={{
+                rotate: [0, 5, -5, 0],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <Image
+                src="/SVG/Logo_normal.svg"
+                alt="Ylsix"
+                width={400}
+                height={400}
+                className="w-40 h-40 relative z-10"
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Loading text with typing effect */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="text-center"
+          >
+            <motion.h2
+              className="text-2xl md:text-3xl font-bold text-primary mb-2"
+              animate={{
+                opacity: [0.5, 1, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              Ylsix
+            </motion.h2>
+            <motion.p
+              className="text-muted-foreground text-sm md:text-base"
+              animate={{
+                opacity: [0.3, 0.8, 0.3],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
+            >
+              Plateforme de recrutement nouvelle génération
+            </motion.p>
+          </motion.div>
+
+          {/* Loading dots */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+            className="flex space-x-2"
+          >
+            {[0, 1, 2].map((index) => (
+              <motion.div
+                key={index}
+                className="w-2 h-2 bg-primary rounded-full"
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 1, 0.3],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: index * 0.2,
+                }}
+              />
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">

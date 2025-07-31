@@ -26,7 +26,17 @@ export async function GET(
         recruteur: true,
         applications: {
           include: {
-            candidat: true,
+            candidat: {
+              select: {
+                id: true,
+                nom: true,
+                prenom: true,
+                email: true,
+                candidatCompetences: true,
+                cv: true,
+                letterm: true,
+              },
+            },
             collaborateurs: {
               include: {
                 collaborateur: true,

@@ -14,6 +14,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+import Image from "next/image";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -34,9 +35,15 @@ const Header = () => {
     <header className="fixed w-full border-b border-border bg-background/80 backdrop-blur-sm top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
+          {/* <div className="h-5 w-6 bg-primary rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" /> */}
           <Link href="/">
-            <span className="text-xl font-bold text-foreground">Ylsix</span>
+            <Image
+              src="/SVG/Logo_normal.svg"
+              alt="Ylsix"
+              width={150}
+              height={150}
+              className="w-15 h-15"
+            />
           </Link>
         </div>
 

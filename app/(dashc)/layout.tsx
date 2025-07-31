@@ -55,6 +55,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+import NotificationBell from "@/app/components/notifications/alerte-notification";
 
 const queryClient = new QueryClient();
 export default function CandidatsLayout({
@@ -142,6 +143,11 @@ export default function CandidatsLayout({
     {
       label: "Aide",
       href: "/dashboard-candidats/aide",
+      icon: <HelpCircle className="h-5 w-5 text-white" />,
+    },
+    {
+      label: "Debug",
+      href: "/dashboard-candidats/debug",
       icon: <HelpCircle className="h-5 w-5 text-white" />,
     },
   ];
@@ -286,6 +292,11 @@ export default function CandidatsLayout({
                   ),
                 }}
               />
+
+              {/* Notifications */}
+              <div className="flex justify-center">
+                <NotificationBell />
+              </div>
 
               {/* Bouton de déconnexion */}
               <Button

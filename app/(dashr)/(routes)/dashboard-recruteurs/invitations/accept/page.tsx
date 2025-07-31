@@ -88,7 +88,7 @@ export default function AcceptInvitationPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto py-6">
+      <div className="container mx-auto py-6 w-full overflow-y-auto">
         <Card>
           <CardContent className="py-6">
             <p className="text-center">Vérification de l'invitation...</p>
@@ -100,7 +100,7 @@ export default function AcceptInvitationPage() {
 
   if (!isValid) {
     return (
-      <div className="container mx-auto py-6">
+      <div className="container mx-auto py-6 w-full overflow-y-auto">
         <Card>
           <CardContent className="py-6">
             <p className="text-center text-red-600">
@@ -113,7 +113,7 @@ export default function AcceptInvitationPage() {
   }
 
   return (
-    <div className="container mx-auto py-6">
+    <div className="container mx-auto py-6 w-full overflow-y-auto">
       <Card className="max-w-md mx-auto">
         <CardHeader>
           <CardTitle>Accepter l'invitation</CardTitle>

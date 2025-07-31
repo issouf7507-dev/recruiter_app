@@ -392,6 +392,7 @@ export default function ModifierOffre({
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
+                          <SelectItem value="XOF">XOF</SelectItem>
                           <SelectItem value="EUR">EUR</SelectItem>
                           <SelectItem value="USD">USD</SelectItem>
                           <SelectItem value="GBP">GBP</SelectItem>

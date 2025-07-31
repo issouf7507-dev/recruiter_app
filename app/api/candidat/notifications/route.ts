@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verify } from "jsonwebtoken";
 
-// GET /api/candidat/notifications - Récupérer les notifications
-export async function GET(req: NextRequest) {
+// GET - Récupérer les notifications d'un candidat
+export async function GET(request: NextRequest) {
   try {
-    const token = req.cookies.get("candidat")?.value;
+    const token = request.cookies.get("candidat")?.value;
+
     if (!token) {
-      return new NextResponse("Non autorisé", { status: 401 });
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
@@ -19,7 +20,8 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const candidat = await prisma.candidat.findFirst({
+    // Récupérer le candidat
+    const candidat = await prisma.candidat.findUnique({
       where: { userId: decoded.userId },
     });
 
@@ -32,24 +34,32 @@ export async function GET(req: NextRequest) {
 
     // Récupérer les notifications du candidat
     const notifications = await prisma.notification.findMany({
-      where: { candidatId: candidat.id },
-      orderBy: { createdAt: "desc" },
+      where: {
+        candidatId: candidat.id,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
       take: 50, // Limiter à 50 notifications
     });
 
     return NextResponse.json(notifications);
   } catch (error) {
-    console.error("[NOTIFICATIONS_GET]", error);
-    return new NextResponse("Erreur interne", { status: 500 });
+    console.error("Erreur lors de la récupération des notifications:", error);
+    return NextResponse.json(
+      { error: "Erreur interne du serveur" },
+      { status: 500 }
+    );
   }
 }
 
-// PATCH /api/candidat/notifications - Marquer les notifications comme lues
-export async function PATCH(req: NextRequest) {
+// POST - Marquer une notification comme lue
+export async function POST(request: NextRequest) {
   try {
-    const token = req.cookies.get("candidat")?.value;
+    const token = request.cookies.get("candidat")?.value;
+
     if (!token) {
-      return new NextResponse("Non autorisé", { status: 401 });
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
@@ -61,7 +71,17 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const candidat = await prisma.candidat.findFirst({
+    const { notificationId } = await request.json();
+
+    if (!notificationId) {
+      return NextResponse.json(
+        { error: "notificationId est requis" },
+        { status: 400 }
+      );
+    }
+
+    // Récupérer le candidat
+    const candidat = await prisma.candidat.findUnique({
       where: { userId: decoded.userId },
     });
 
@@ -72,21 +92,23 @@ export async function PATCH(req: NextRequest) {
       );
     }
 
-    const body = await req.json();
-    const { notificationIds } = body;
-
-    // Marquer les notifications comme lues
-    await prisma.notification.updateMany({
+    // Marquer la notification comme lue
+    const notification = await prisma.notification.update({
       where: {
-        id: { in: notificationIds },
+        id: notificationId,
         candidatId: candidat.id,
       },
-      data: { lu: true },
+      data: {
+        lu: true,
+      },
     });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(notification);
   } catch (error) {
-    console.error("[NOTIFICATIONS_PATCH]", error);
-    return new NextResponse("Erreur interne", { status: 500 });
+    console.error("Erreur lors de la mise à jour de la notification:", error);
+    return NextResponse.json(
+      { error: "Erreur interne du serveur" },
+      { status: 500 }
+    );
   }
 }

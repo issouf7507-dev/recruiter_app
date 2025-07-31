@@ -72,7 +72,7 @@ export default function CreerOffre() {
     resolver: zodResolver(offerFormSchema),
     defaultValues: {
       type: "CDI",
-      salaryCurrency: "EUR",
+      salaryCurrency: "XOF",
       salaryPeriod: "an",
       skills: [],
       template: "",
@@ -330,6 +330,7 @@ export default function CreerOffre() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
+                          <SelectItem value="XOF">XOF</SelectItem>
                           <SelectItem value="EUR">EUR</SelectItem>
                           <SelectItem value="USD">USD</SelectItem>
                           <SelectItem value="GBP">GBP</SelectItem>

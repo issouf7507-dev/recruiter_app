@@ -84,7 +84,7 @@ const AidePage = () => {
   );
 
   return (
-    <div className="p-6 space-y-6 w-full overflow-y-auto">
+    <div className="p-6 space-y-6 w-full overflow-y-auto ">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Centre d'aide</h1>
         <div className="flex gap-4">

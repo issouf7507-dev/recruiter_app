@@ -566,6 +566,30 @@ ${
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={async () => {
+              try {
+                const response = await fetch(
+                  "/api/recruteur/diffusion/linkedin/test"
+                );
+                const data = await response.json();
+                console.log("Test de configuration:", data);
+                if (data.success) {
+                  toast.success(
+                    "Configuration OK - Voir la console pour les détails"
+                  );
+                } else {
+                  toast.error("Problème de configuration - Voir la console");
+                }
+              } catch (error) {
+                console.error("Erreur lors du test:", error);
+                toast.error("Erreur lors du test de configuration");
+              }
+            }}
+          >
+            Test Config
+          </Button>
           <Button variant="outline" onClick={() => setShowSettingsDialog(true)}>
             <Settings className="h-4 w-4 mr-2" />
             Paramètres

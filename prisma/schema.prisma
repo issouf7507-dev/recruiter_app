@@ -63,6 +63,7 @@ model Candidat {
   alertes AlerteEmploi[]
   notifications Notification[]
   candidatCompetences CandidatCompetence[]
+  conversations Conversation[]
 }
 
 // Table pour remplacer competences String[] dans Candidat
@@ -98,6 +99,7 @@ model Recruteur {
   updatedAt   DateTime       @updatedAt
   invitations Invitation[]
   collaborateurs Collaborateur[]
+  conversations Conversation[]
 }
 
 model CompanySocial {
@@ -182,6 +184,7 @@ model JobOffer {
   kanbanColumns     KanbanColumn[]    // Liste des colonnes associées à cette offre
   applications      Application[]
   jobOfferCompetences JobOfferCompetence[]
+  conversations     Conversation[]
 }
 
 // Table pour remplacer competences String[] dans JobOffer
@@ -479,4 +482,38 @@ model Notification {
   offreId     Int?     // ID de l'offre liée à la notification
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+// Modèles pour le système de messagerie
+model Conversation {
+  id          String   @id @default(cuid())
+  jobOfferId  Int
+  jobOffer    JobOffer @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
+  candidatId  String
+  candidat    Candidat @relation(fields: [candidatId], references: [id], onDelete: Cascade)
+  recruteurId String
+  recruteur   Recruteur @relation(fields: [recruteurId], references: [id], onDelete: Cascade)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  messages    Message[]
+  
+  @@unique([jobOfferId, candidatId, recruteurId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String       // ID de l'expéditeur (candidat ou recruteur)
+  senderType     SenderType   // CANDIDAT ou RECRUTEUR
+  content        String       @db.Text
+  isRead         Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+enum SenderType {
+  CANDIDAT
+  RECRUTEUR
 }

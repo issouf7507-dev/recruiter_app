@@ -451,6 +451,27 @@ exports.Prisma.NotificationScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ConversationScalarFieldEnum = {
+  id: 'id',
+  jobOfferId: 'jobOfferId',
+  candidatId: 'candidatId',
+  recruteurId: 'recruteurId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderId: 'senderId',
+  senderType: 'senderType',
+  content: 'content',
+  isRead: 'isRead',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -712,6 +733,19 @@ exports.Prisma.NotificationOrderByRelevanceFieldEnum = {
   type: 'type',
   candidatId: 'candidatId'
 };
+
+exports.Prisma.ConversationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidatId: 'candidatId',
+  recruteurId: 'recruteurId'
+};
+
+exports.Prisma.MessageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  senderId: 'senderId',
+  content: 'content'
+};
 exports.UserType = exports.$Enums.UserType = {
   CANDIDAT: 'CANDIDAT',
   RECRUTEUR: 'RECRUTEUR',
@@ -729,6 +763,11 @@ exports.Role = exports.$Enums.Role = {
   USER: 'USER',
   MANAGER: 'MANAGER',
   VIEWER: 'VIEWER'
+};
+
+exports.SenderType = exports.$Enums.SenderType = {
+  CANDIDAT: 'CANDIDAT',
+  RECRUTEUR: 'RECRUTEUR'
 };
 
 exports.Prisma.ModelName = {
@@ -760,7 +799,9 @@ exports.Prisma.ModelName = {
   ObjectifEtape: 'ObjectifEtape',
   AlerteEmploi: 'AlerteEmploi',
   AlerteMotCle: 'AlerteMotCle',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  Conversation: 'Conversation',
+  Message: 'Message'
 };
 
 /**

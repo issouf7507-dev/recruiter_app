@@ -66,11 +66,11 @@ interface OfferData {
 export default function OffreDetail({
   params,
 }: {
-  params: Promise<{ offerId: string }>;
+  params: Promise<{ id: string }>;
 }) {
   const { user } = useUserStore();
   const router = useRouter();
-  const { offerId } = use(params);
+  const { id: offerId } = use(params);
   const recruteurId = useRecruteurId();
   const [activeTab, setActiveTab] = useState("details");
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);

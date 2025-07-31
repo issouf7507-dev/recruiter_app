@@ -250,7 +250,7 @@ const AlertesEmploiPage = () => {
   }
 
   return (
-    <div className="p-6 space-y-6 w-full overflow-y-auto">
+    <div className="p-6 space-y-6 w-full overflow-y-auto ">
       <div className="flex justify-between items-center border-b pb-4">
         <h1 className="text-2xl font-bold">Alertes emploi</h1>
         <div className="flex items-center gap-2">

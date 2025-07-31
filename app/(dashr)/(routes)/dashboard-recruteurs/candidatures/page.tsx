@@ -26,6 +26,7 @@ import {
   StarOff,
   Filter,
   Loader2,
+  MessageCircle,
 } from "lucide-react";
 import Link from "next/link";
 import {
@@ -57,6 +58,8 @@ import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/utils/utilts";
 import { Application } from "@/types/types";
+import { toast } from "sonner";
+import InitiateChatModal from "@/app/components/InitiateChatModal";
 
 // Fonction pour obtenir la couleur du badge selon le statut
 const getStatusColor = (status: string) => {
@@ -88,6 +91,11 @@ export default function CandidaturesPage() {
     showFavorites: false,
     offerId: "all",
   });
+  const [selectedCandidatForChat, setSelectedCandidatForChat] = useState<{
+    candidat: any;
+    jobOffer: any;
+  } | null>(null);
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
   const handleViewDetails = (candidature: Application) => {
     setSelectedCandidature(candidature);
@@ -115,6 +123,72 @@ export default function CandidaturesPage() {
     } else {
       console.log("Aucune lettre de motivation disponible");
     }
+  };
+
+  const handleDownloadAllCVs = async () => {
+    const candidaturesWithCV = filteredCandidatures.filter(
+      (candidature) => candidature.candidat.cv
+    );
+
+    console.log(candidaturesWithCV);
+
+    try {
+      // Télécharger tous les CV en parallèle
+      const downloadPromises = candidaturesWithCV.map(async (candidature) => {
+        try {
+          const response = await fetch(candidature.candidat.cv);
+          const blob = await response.blob();
+          const fileName = `CV_${candidature.candidat.nom}_${candidature.candidat.prenom}.pdf`;
+          return { blob, fileName };
+        } catch (error) {
+          console.error(
+            `Erreur lors du téléchargement du CV de ${candidature.candidat.nom}:`,
+            error
+          );
+          return null;
+        }
+      });
+
+      const results = await Promise.all(downloadPromises);
+      const validResults = results.filter((result) => result !== null);
+
+      // Télécharger chaque CV individuellement
+      validResults.forEach((result, index) => {
+        setTimeout(() => {
+          const url = window.URL.createObjectURL(result.blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = result.fileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(url);
+        }, index * 200); // Délai de 200ms entre chaque téléchargement
+      });
+
+      toast.success(`${validResults.length} CV(s) en cours de téléchargement`);
+    } catch (error) {
+      console.error("Erreur lors du téléchargement des CV:", error);
+      toast.error("Erreur lors du téléchargement des CV");
+    }
+  };
+
+  const handleInitiateChat = (candidature: Application) => {
+    setSelectedCandidatForChat({
+      candidat: {
+        id: candidature.candidat.id,
+        name: `${candidature.candidat.prenom || ""} ${
+          candidature.candidat.nom || ""
+        }`.trim(),
+        email: candidature.candidat.email,
+      },
+      jobOffer: {
+        id: candidature.jobOfferId,
+        title: `Offre ${candidature.jobOfferId}`,
+        company: "Votre entreprise", // Vous pouvez récupérer cette info depuis l'API
+      },
+    });
+    setIsChatModalOpen(true);
   };
 
   // Récupérer les candidatures depuis l'API
@@ -186,7 +260,7 @@ export default function CandidaturesPage() {
 
   if (error) {
     return (
-      <div className="p-6">
+      <div className="p-6 w-full overflow-y-auto">
         <div className="text-center text-red-500">
           Erreur lors du chargement des candidatures
         </div>
@@ -219,7 +293,7 @@ export default function CandidaturesPage() {
                   setFilters({ ...filters, offerId: value })
                 }
               >
-                <SelectTrigger className="border bg-transparent shadow-none">
+                <SelectTrigger className="border bg-transparent shadow-none w-full">
                   <SelectValue placeholder="Sélectionner une offre" />
                 </SelectTrigger>
                 <SelectContent>
@@ -240,7 +314,7 @@ export default function CandidaturesPage() {
                   setFilters({ ...filters, status: value })
                 }
               >
-                <SelectTrigger className="border bg-transparent shadow-none">
+                <SelectTrigger className="border bg-transparent shadow-none w-full">
                   <SelectValue placeholder="Sélectionner un statut" />
                 </SelectTrigger>
                 <SelectContent>
@@ -287,6 +361,17 @@ export default function CandidaturesPage() {
                   />
                 </PopoverContent>
               </Popover>
+            </div>
+            <div className="space-y-2">
+              <Label>Actions</Label>
+              <Button
+                onClick={handleDownloadAllCVs}
+                className="w-full border bg-transparent shadow-none"
+                variant="outline"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Télécharger tous les CV
+              </Button>
             </div>
           </div>
         </CardContent>
@@ -357,6 +442,14 @@ export default function CandidaturesPage() {
                           className="border bg-transparent shadow-none"
                         >
                           <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() => handleInitiateChat(candidature)}
+                          className="border bg-transparent shadow-none"
+                        >
+                          <MessageCircle className="h-4 w-4" />
                         </Button>
                         {candidature.candidat.cv && (
                           <Button
@@ -534,6 +627,24 @@ export default function CandidaturesPage() {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Modal de chat */}
+      {selectedCandidatForChat && (
+        <InitiateChatModal
+          isOpen={isChatModalOpen}
+          onClose={() => {
+            setIsChatModalOpen(false);
+            setSelectedCandidatForChat(null);
+          }}
+          candidat={selectedCandidatForChat.candidat}
+          jobOffer={selectedCandidatForChat.jobOffer}
+          onSuccess={(conversationId) => {
+            toast.success("Conversation initiée avec succès !");
+            // Optionnel : rediriger vers la messagerie
+            // router.push(`/dashboard-recruteurs/messagerie?conversation=${conversationId}`);
+          }}
+        />
+      )}
     </div>
   );
 }
