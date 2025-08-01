@@ -104,7 +104,10 @@ export async function POST(
     }
 
     const { conversationId } = await params;
-    const { content } = await request.json();
+
+    // Gérer FormData au lieu de JSON
+    const formData = await request.formData();
+    const content = formData.get("content") as string;
 
     if (!content) {
       return NextResponse.json(
