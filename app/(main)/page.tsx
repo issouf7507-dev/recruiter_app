@@ -83,8 +83,8 @@ const pricingPlans = [
   {
     id: 2,
     name: "Plan Pro",
-    price: 49,
-    currency: "€",
+    price: 15000,
+    currency: "XOF",
     period: "Mois",
     description:
       "Pour les équipes de recrutement qui veulent optimiser leurs processus",
@@ -103,8 +103,8 @@ const pricingPlans = [
   {
     id: 3,
     name: "Plan Entreprise",
-    price: 199,
-    currency: "€",
+    price: 25000,
+    currency: "XOF",
     period: "Mois",
     description:
       "Solution complète pour les grandes entreprises et agences de recrutement",
