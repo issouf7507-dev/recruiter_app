@@ -41,10 +41,10 @@ import {
 import { JobOffer, AlerteNotificationType } from "@/types/types";
 import { cn } from "@/lib/utils";
 
-import {
-  CompetenceAutocomplete,
-  type Competence,
-} from "@/app/components/ui/competence-autocomplete";
+// import {
+//   CompetenceAutocomplete,
+//   type Competence,
+// } from "@/app/components/ui/competence-autocomplete";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -61,6 +61,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { formatSalary } from "@/utils/utilts";
 import { toast } from "sonner";
+import CompetenceAutocomplete from "../ui/competence-autocomplete";
 
 interface AdvancedSearchProps {
   isOpen: boolean;
@@ -76,6 +77,11 @@ interface SearchQuery {
   skills: string;
   experience: string;
   salaryRange: string;
+}
+
+interface Competence {
+  value: string;
+  label: string;
 }
 
 const advancedSearchSchema = z.object({
@@ -247,9 +253,9 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
             <div className="space-y-2">
               <Label>Compétences</Label>
               <CompetenceAutocomplete
-                competences={competences}
-                selectedValues={selectedCompetences}
-                onChange={setSelectedCompetences}
+                maxCompetences={5}
+                selectedCompetences={selectedCompetences}
+                onCompetencesChange={setSelectedCompetences}
                 placeholder="Sélectionner des compétences..."
               />
             </div>

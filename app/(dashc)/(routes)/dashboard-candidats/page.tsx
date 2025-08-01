@@ -27,7 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
+
 import { useQuery } from "@tanstack/react-query";
 import { AlerteNotificationType } from "@/types/types";
 
@@ -79,12 +79,7 @@ const DashboardPage = () => {
 
       <div className="flex justify-between items-center border-b pb-4">
         <h1 className="text-2xl font-bold">Tableau de bord</h1>
-        <div className="flex items-center gap-2">
-          <AlerteNotification
-            notifications={(notifications && notifications) || []}
-            isLoading={notificationsLoading}
-          />
-        </div>
+        {/* <div className="flex items-center gap-2"></div> */}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

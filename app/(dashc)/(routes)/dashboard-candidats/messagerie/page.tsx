@@ -195,18 +195,16 @@ const MessageriePage = () => {
     try {
       setSending(true);
 
-      const formData = new FormData();
-      formData.append("content", newMessage);
-
-      attachments.forEach((file, index) => {
-        formData.append(`attachment-${index}`, file);
-      });
-
       const response = await fetch(
         `/api/candidat/conversations/${selectedConversation}/messages`,
         {
           method: "POST",
-          body: formData,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            content: newMessage,
+          }),
         }
       );
 

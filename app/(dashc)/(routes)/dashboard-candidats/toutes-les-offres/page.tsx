@@ -42,7 +42,7 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import AdvancedSearch from "@/app/components/search/AdvancedSearch";
-import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
+// import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
 // import AdvancedSearch from "./components/AdvancedSearch";
 
 const ToutesLesOffresPage = () => {
@@ -272,10 +272,10 @@ const ToutesLesOffresPage = () => {
               <Grid className="h-4 w-4" />
             </Button>
 
-            <AlerteNotification
+            {/* <AlerteNotification
               notifications={(notifications && notifications) || []}
               isLoading={notificationsLoading}
-            />
+            /> */}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -35,7 +35,13 @@ interface JobOffer {
   company: string;
 }
 
-export default function CandidatsPage({ params }: { params: { id: string } }) {
+export default function CandidatsPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
+
   const [candidats, setCandidats] = useState<Candidat[]>([]);
   const [jobOffer, setJobOffer] = useState<JobOffer | null>(null);
   const [loading, setLoading] = useState(true);
@@ -49,12 +55,12 @@ export default function CandidatsPage({ params }: { params: { id: string } }) {
   useEffect(() => {
     fetchCandidats();
     fetchJobOffer();
-  }, [params.id]);
+  }, [id]);
 
   const fetchCandidats = async () => {
     try {
       const response = await fetch(
-        `/api/recruteur/candidats-disponibles?jobOfferId=${params.id}`
+        `/api/recruteur/candidats-disponibles?jobOfferId=${id}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -72,7 +78,7 @@ export default function CandidatsPage({ params }: { params: { id: string } }) {
 
   const fetchJobOffer = async () => {
     try {
-      const response = await fetch(`/api/recruteur/offres/${params.id}`);
+      const response = await fetch(`/api/recruteur/offres/${id}`);
       if (response.ok) {
         const data = await response.json();
         setJobOffer(data);

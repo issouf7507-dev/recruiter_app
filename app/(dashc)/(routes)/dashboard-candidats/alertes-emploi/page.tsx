@@ -29,14 +29,11 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
+// import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
 
-import {
-  CompetenceAutocomplete,
-  type Competence,
-} from "@/app/components/ui/competence-autocomplete";
 import { AlerteNotificationType } from "@/types/types";
 import { Badge } from "@/components/ui/badge";
+import CompetenceAutocomplete from "@/app/components/ui/competence-autocomplete";
 
 const alerteSchema = z.object({
   titre: z.string().min(1, "Le titre est requis"),
@@ -56,6 +53,11 @@ interface Alerte extends AlerteFormData {
   id: string;
   derniereMiseAJour: Date;
   nombreResultats: number;
+}
+
+interface Competence {
+  value: string;
+  label: string;
 }
 
 // Liste des compétences disponibles
@@ -258,10 +260,10 @@ const AlertesEmploiPage = () => {
             <Plus className="h-4 w-4 mr-2" />
             Créer une alerte
           </Button>
-          <AlerteNotification
-            notifications={(notifications && notifications) || []}
-            isLoading={notificationsLoading}
-          />
+          {/* <AlerteNotification
+              notifications={(notifications && notifications) || []}
+              isLoading={notificationsLoading}
+            /> */}
         </div>
       </div>
 
@@ -366,9 +368,16 @@ const AlertesEmploiPage = () => {
                 <div className="space-y-2">
                   <Label>Compétences</Label>
                   <CompetenceAutocomplete
-                    competences={competences}
-                    selectedValues={form.watch("motsCles") || []}
-                    onChange={(values) => form.setValue("motsCles", values)}
+                    maxCompetences={5}
+                    selectedCompetences={[]}
+                    onCompetencesChange={(values) =>
+                      form.setValue("motsCles", values)
+                    }
+
+                    // selectedValues={form.watch("motsCles") || []}
+                    // onChange={(values: string[]) =>
+                    //   form.setValue("motsCles", values)
+                    // }
                   />
                 </div>
               </div>

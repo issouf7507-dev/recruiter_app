@@ -38,7 +38,6 @@ import { useUserStore } from "@/store/userStore";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
 
 const OffresRecommandeesPage = () => {
   const { candidat, loading: authLoading } = useUserStore();
@@ -274,10 +273,10 @@ const OffresRecommandeesPage = () => {
             </Button>
 
             <div className="flex items-center gap-2">
-              <AlerteNotification
+              {/* <AlerteNotification
                 notifications={(notifications && notifications) || []}
                 isLoading={notificationsLoading}
-              />
+              /> */}
             </div>
           </div>
         </div>

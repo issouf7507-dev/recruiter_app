@@ -104,11 +104,27 @@ export async function POST(
     }
 
     const { conversationId } = await params;
-    const { content } = await request.json();
 
-    if (!content) {
+    // Validation du corps de la requête
+    let body;
+    try {
+      body = await request.json();
+    } catch (error) {
+      console.error("Erreur de parsing JSON:", error);
       return NextResponse.json(
-        { error: "Le contenu du message est requis" },
+        { error: "Format JSON invalide" },
+        { status: 400 }
+      );
+    }
+
+    const { content } = body;
+
+    if (!content || typeof content !== "string" || content.trim() === "") {
+      return NextResponse.json(
+        {
+          error:
+            "Le contenu du message est requis et doit être une chaîne non vide",
+        },
         { status: 400 }
       );
     }
