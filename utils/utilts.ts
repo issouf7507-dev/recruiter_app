@@ -106,6 +106,35 @@ export const putData = async (data: any, urlApi: string) => {
   }
 };
 
+export const patchData = async (data: any, urlApi: string) => {
+  try {
+    const response = await fetch(urlApi, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        responseData.error ||
+          responseData.message ||
+          "Une erreur est survenue lors de la mise à jour"
+      );
+    }
+
+    return responseData;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error("Une erreur inattendue s'est produite");
+  }
+};
+
 export const deleteData = async (urlApi: string) => {
   try {
     const response = await fetch(urlApi, {

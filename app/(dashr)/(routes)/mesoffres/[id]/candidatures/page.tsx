@@ -263,7 +263,7 @@ export default function CandidaturesPage({
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-2">
                           {candidature.candidat.nom}
-                          <Button
+                          {/* <Button
                             variant="ghost"
                             size="icon"
                             className="h-6 w-6"
@@ -274,7 +274,7 @@ export default function CandidaturesPage({
                             ) : (
                               <Star className="h-4 w-4" />
                             )}
-                          </Button>
+                          </Button> */}
                         </div>
                       </TableCell>
                       <TableCell>{candidature.candidat.email}</TableCell>
@@ -333,7 +333,7 @@ export default function CandidaturesPage({
                       <TableCell className="font-medium">
                         <div className="flex items-center gap-2">
                           {candidature.candidat.nom}
-                          <Button
+                          {/* <Button
                             variant="ghost"
                             size="icon"
                             className="h-6 w-6"
@@ -344,7 +344,7 @@ export default function CandidaturesPage({
                             ) : (
                               <Star className="h-4 w-4" />
                             )}
-                          </Button>
+                          </Button> */}
                         </div>
                       </TableCell>
                       <TableCell>{candidature.candidat.email}</TableCell>

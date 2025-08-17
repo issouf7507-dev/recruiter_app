@@ -87,7 +87,7 @@ export default function CandidatsLayout({
     },
     {
       label: "Mes candidatures",
-      href: "/dashboard-candidats/candidatures",
+      href: "/#",
       icon: <ClipboardList className="h-5 w-5 text-white" />,
       subItems: [
         {
@@ -106,7 +106,7 @@ export default function CandidatsLayout({
     },
     {
       label: "Mon profil",
-      href: "/dashboard-candidats/profil",
+      href: "/#",
       icon: <User className="h-5 w-5 text-white" />,
       subItems: [
         {
@@ -145,11 +145,11 @@ export default function CandidatsLayout({
       href: "/dashboard-candidats/aide",
       icon: <HelpCircle className="h-5 w-5 text-white" />,
     },
-    {
-      label: "Debug",
-      href: "/dashboard-candidats/debug",
-      icon: <HelpCircle className="h-5 w-5 text-white" />,
-    },
+    // {
+    //   label: "Debug",
+    //   href: "/dashboard-candidats/debug",
+    //   icon: <HelpCircle className="h-5 w-5 text-white" />,
+    // },
   ];
 
   const [open, setOpen] = useState(false);
@@ -215,10 +215,16 @@ export default function CandidatsLayout({
         <Sidebar open={open} setOpen={setOpen}>
           <SidebarBody className="flex flex-col justify-between border bg-[#2a294b] dark:bg-card rounded-lg p-4">
             {/* Header avec logo */}
-            <div className="flex-shrink-0 mb-6">
-              {open ? <Logo /> : <LogoIcon />}
+            <div className="flex-shrink-0 mb-2">
+              {/* {open ? <Logo /> : <LogoIcon />} */}
+              <Image
+                src="/SVG/Logo_normal.svg"
+                alt="Ylsix"
+                width={400}
+                height={400}
+                className="w-20 h-20 relative z-10"
+              />
             </div>
-
             {/* Navigation principale */}
             <div className="flex-1 overflow-y-auto">
               <div className="flex flex-col gap-1">
@@ -279,17 +285,15 @@ export default function CandidatsLayout({
               {/* Profil utilisateur */}
               <SidebarLink
                 link={{
-                  label: "Manu Arora",
+                  label: `${candidat?.candidat?.nom
+                    .charAt(0)
+                    .toUpperCase()}${candidat?.candidat?.nom.slice(
+                    1
+                  )} ${candidat.candidat?.prenom
+                    .charAt(0)
+                    .toUpperCase()}${candidat.candidat?.prenom.slice(1)}`,
                   href: "#",
-                  icon: (
-                    <Image
-                      src="https://assets.aceternity.com/manu.png"
-                      className="h-7 w-7 flex-shrink-0 rounded-full"
-                      width={50}
-                      height={50}
-                      alt="Avatar"
-                    />
-                  ),
+                  icon: <User className="w-4 h-4" />,
                 }}
               />
 

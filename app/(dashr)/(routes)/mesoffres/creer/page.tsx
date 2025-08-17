@@ -33,6 +33,7 @@ import * as z from "zod";
 import { ArrowLeft, CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
+import { RichTextEditorWrapper } from "@/components/ui/rich-text-editor-wrapper";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchData, postData } from "@/utils/utilts";
@@ -57,7 +58,7 @@ const offerFormSchema = z.object({
   salaryMax: z.string().nonempty("Le salaire maximum est requis"),
   salaryCurrency: z.string().nonempty("La devise est requise"),
   salaryPeriod: z.string().nonempty("La période est requise"),
-
+  etat: z.string(),
   template: z.string().optional(),
 });
 
@@ -83,6 +84,7 @@ export default function CreerOffre() {
       responsibilities: "",
       requirements: "",
       benefits: "",
+      etat: "active",
 
       // education: "",
     },
@@ -231,7 +233,7 @@ export default function CreerOffre() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="border bg-transparent shadow-none">
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
                             <SelectValue placeholder="Sélectionnez le type de contrat" />
                           </SelectTrigger>
                         </FormControl>
@@ -259,15 +261,16 @@ export default function CreerOffre() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="border bg-transparent shadow-none">
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
                             <SelectValue placeholder="Sélectionnez l'expérience requise" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="0-1">0-1 an</SelectItem>
-                          <SelectItem value="1-2">1-2 ans</SelectItem>
-                          <SelectItem value="2-5">2-5 ans</SelectItem>
-                          <SelectItem value="5-10">5-10 ans</SelectItem>
+                          <SelectItem value="1">1 an</SelectItem>
+                          <SelectItem value="2">2 ans</SelectItem>
+                          <SelectItem value="3">3 ans</SelectItem>
+                          <SelectItem value="4">4 ans</SelectItem>
+                          <SelectItem value="5">5 ans</SelectItem>
                           <SelectItem value="10+">10+ ans</SelectItem>
                         </SelectContent>
                       </Select>
@@ -277,7 +280,7 @@ export default function CreerOffre() {
                 />
               </div>
 
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-5 gap-4">
                 <FormField
                   control={form.control}
                   name="salaryMin"
@@ -325,7 +328,7 @@ export default function CreerOffre() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="border bg-transparent shadow-none">
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
                             <SelectValue placeholder="Devise" />
                           </SelectTrigger>
                         </FormControl>
@@ -352,7 +355,7 @@ export default function CreerOffre() {
                         defaultValue={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="border bg-transparent shadow-none">
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
                             <SelectValue placeholder="Période" />
                           </SelectTrigger>
                         </FormControl>
@@ -361,6 +364,31 @@ export default function CreerOffre() {
                           <SelectItem value="mois">Par mois</SelectItem>
                           <SelectItem value="jour">Par jour</SelectItem>
                           <SelectItem value="heure">Par heure</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="etat"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Statut</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
+                            <SelectValue placeholder="Période" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="active">Actif</SelectItem>
+                          <SelectItem value="draft">Brouillon</SelectItem>
+                          <SelectItem value="closed">Fermée</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -385,11 +413,17 @@ export default function CreerOffre() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Description</FormLabel>
+                    <FormDescription>
+                      Utilisez l'éditeur riche pour formater votre description
+                      avec du texte en gras, italique, des listes, des liens,
+                      etc.
+                    </FormDescription>
                     <FormControl>
-                      <Textarea
-                        placeholder="Décrivez le poste en détail..."
-                        className="min-h-[100px] bg-transparent shadow-none"
-                        {...field}
+                      <RichTextEditorWrapper
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Décrivez le poste en détail avec un formatage riche..."
+                        className="bg-transparent"
                       />
                     </FormControl>
                     <FormMessage />

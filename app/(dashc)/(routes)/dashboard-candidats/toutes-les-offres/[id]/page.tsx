@@ -12,13 +12,22 @@ import {
   Calendar,
   ArrowLeft,
   Eye,
+  Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 import Link from "next/link";
 import { JobOffer } from "@/types/types";
-import { fetchData } from "@/utils/utilts";
+import { fetchData, postData } from "@/utils/utilts";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useUserStore } from "@/store/userStore";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
   //   const params = useParams();
@@ -28,6 +37,9 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const [postulatedOffers, setPostulatedOffers] = useState<number[]>([]);
   const hasIncrementedViews = useRef(false);
+  const [showCvAlert, setShowCvAlert] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  console.log(candidat?.candidat);
 
   // Récupérer les données de l'offre existante
   const { data: offertData, isLoading } = useQuery({
@@ -42,7 +54,7 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
     enabled: !!offertData?.data?.[0],
   });
 
-  console.log(offertData?.data?.[0]);
+  // console.log(offertData?.data?.[0]);
   // Mutation pour incrémenter les vues
   const { mutate: incrementViews } = useMutation({
     mutationFn: async () => {
@@ -88,13 +100,18 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
 
   const handlePostuler = async () => {
     try {
+      if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
+        setShowCvAlert(true);
+        setShowConfirmModal(false);
+        return;
+      }
       const response = await fetch("/api/candidat/postuler", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          jobOfferId: offre?.id,
+          jobOfferId: offertData?.data?.[0].id,
           message: "Je suis intéressé par cette offre",
         }),
       });
@@ -111,7 +128,37 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
     }
   };
 
-  console.log(offertData);
+  const postulerMutation = useMutation({
+    mutationFn: (data: { jobOfferId: number; message: string }) =>
+      postData(data, "/api/candidat/postuler"),
+    onSuccess: () => {
+      toast.success("Candidature envoyée avec succès");
+      loadPostulatedOffers();
+
+      setShowConfirmModal(false);
+    },
+    onError: (error) => {
+      console.error("Erreur lors de la candidature:", error);
+      toast.error("Erreur lors de la candidature");
+    },
+  });
+
+  const handleConfirmPostuler = () => {
+    if (!offertData?.data?.[0].id) return;
+
+    if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
+      setShowCvAlert(true);
+      setShowConfirmModal(false);
+      return;
+    }
+
+    postulerMutation.mutate({
+      jobOfferId: offertData?.data?.[0].id,
+      message: "Je suis intéressé par cette offre",
+    });
+  };
+
+  console.log(offertData?.data?.[0]);
   if (isLoading) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
@@ -145,7 +192,7 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
         </Link>
         <div className="flex gap-2">
           <Button
-            onClick={handlePostuler}
+            onClick={() => setShowConfirmModal(true)}
             disabled={postulatedOffers.includes(offertData?.data?.[0].id)}
           >
             {postulatedOffers.includes(offertData?.data?.[0].id)
@@ -209,9 +256,12 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
               <div className="space-y-4">
                 <div>
                   <h2 className="text-xl font-semibold mb-2">Description</h2>
-                  <p className="text-muted-foreground">
-                    {offertData?.data?.[0].description}
-                  </p>
+                  <div
+                    className="text-muted-foreground"
+                    dangerouslySetInnerHTML={{
+                      __html: offertData?.data?.[0].description,
+                    }}
+                  ></div>
                 </div>
 
                 <div>
@@ -299,6 +349,70 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
       </div>
+
+      <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
+        <DialogContent className="w-lg">
+          <DialogHeader>
+            <DialogTitle>Documents importants manquants</DialogTitle>
+            <DialogDescription>
+              Pour maximiser vos chances de trouver un emploi, il est important
+              de compléter votre profil en ajoutant votre CV et votre lettre de
+              motivation.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-muted-foreground">
+              Ces documents sont essentiels pour que les recruteurs puissent
+              vous connaître et vous contacter.
+            </p>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowCvAlert(false)}>
+              Plus tard
+            </Button>
+            <Button asChild onClick={() => setShowCvAlert(false)}>
+              <Link href="/dashboard-candidats/informations-personnelles">
+                Compléter mon profil
+              </Link>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de confirmation de postulation */}
+      <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Confirmer votre candidature</DialogTitle>
+            <DialogDescription>
+              Êtes-vous sûr de vouloir postuler à cette offre ? Votre
+              candidature sera envoyée au recruteur.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowConfirmModal(false)}
+              disabled={postulerMutation.isPending}
+            >
+              Annuler
+            </Button>
+            <Button
+              onClick={handleConfirmPostuler}
+              disabled={postulerMutation.isPending}
+            >
+              {postulerMutation.isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Envoi en cours...
+                </>
+              ) : (
+                "Confirmer"
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

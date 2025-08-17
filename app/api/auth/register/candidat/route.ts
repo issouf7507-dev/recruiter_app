@@ -44,6 +44,7 @@ export async function POST(req: Request) {
         password: hashedPassword,
         name: `${validatedData.prenom} ${validatedData.nom}`,
         type: "CANDIDAT",
+
         candidat: {
           create: {
             nom: validatedData.nom,

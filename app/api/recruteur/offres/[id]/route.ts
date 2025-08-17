@@ -26,6 +26,7 @@ export async function PUT(
       requirements,
       responsibilities,
       benefits,
+      etat,
       // recruteurId,
     } = body;
 
@@ -55,6 +56,7 @@ export async function PUT(
         requirements,
         responsibilities,
         benefits,
+        etat,
         jobOfferCompetences: {
           create: skills.map((skill: any) => ({
             competence: skill,
@@ -105,9 +107,11 @@ export async function GET(
                   nom: true,
                   prenom: true,
                   email: true,
-                  competencesList: true,
+                  candidatCompetences: true,
+                  // competencesList : true,
                   cv: true,
                   letterm: true,
+                  // statut: true,
                 },
               },
               notes: { orderBy: { createdAt: "desc" } },

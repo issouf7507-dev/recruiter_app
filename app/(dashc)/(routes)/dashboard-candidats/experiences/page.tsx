@@ -57,6 +57,9 @@ interface Experience {
   dateFin: Date | null;
   description: string;
   competences: string[];
+  experienceCompetences: {
+    competence: string;
+  }[];
 }
 
 const experienceSchema = z.object({
@@ -502,12 +505,12 @@ const ExperiencesPage = () => {
                 </p>
 
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {experience.competences.map((competence, index) => (
+                  {experience.experienceCompetences.map((competence, index) => (
                     <span
                       key={index}
                       className="px-2 py-1 bg-secondary text-secondary-foreground rounded-md text-sm"
                     >
-                      {competence}
+                      {competence.competence}
                     </span>
                   ))}
                 </div>

@@ -21,13 +21,11 @@ import {
   Building,
   Clock,
   DollarSign,
-  Calendar,
   Users,
   Eye,
   ArrowLeft,
   CheckCircle,
   AlertCircle,
-  Send,
   ExternalLink,
   Loader2,
 } from "lucide-react";
@@ -44,6 +42,15 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { fetchData, postData } from "@/utils/utilts";
 import { toast } from "sonner";
+import {
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetHeader,
+  SheetTrigger,
+  SheetDescription,
+} from "@/components/ui/sheet";
+import CandidatProfileForm from "@/components/CandidatProfileForm";
 
 export default function OffreDetailPage() {
   const params = useParams();
@@ -58,6 +65,7 @@ export default function OffreDetailPage() {
   const [showCvAlert, setShowCvAlert] = useState(false);
   const [postulatedOffers, setPostulatedOffers] = useState<number[]>([]);
   const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
+  const [isOpenCandidat, setIsOpenCandidat] = useState(false);
   const { user, loading: authLoading } = useAuth();
   const { candidat, loading: candidatLoading } = useAuthCandidat();
 
@@ -245,52 +253,57 @@ export default function OffreDetailPage() {
       <Header />
 
       {/* Contenu principal */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 mt-16 sm:mt-20">
         {/* Navigation et titre */}
-        <div className="bg-card rounded-lg shadow-none border p-6 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
+        <div className="bg-card rounded-lg shadow-none border p-4 sm:p-6 mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
               <Link href="/offres">
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-2 w-fit"
                 >
                   <ArrowLeft className="h-4 w-4" />
-                  Retour aux offres
+                  <span className="hidden sm:inline">Retour aux offres</span>
+                  <span className="sm:hidden">Retour</span>
                 </Button>
               </Link>
-              <div className="h-6 w-px bg-border"></div>
-              <h1 className="text-2xl font-bold text-foreground">
+              <div className="hidden sm:block h-6 w-px bg-border"></div>
+              <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground break-words">
                 {offre.title}
               </h1>
             </div>
-            <Badge className={`text-sm px-4 py-2 ${getTypeColor(offre.type)}`}>
+            <Badge
+              className={`text-sm px-3 sm:px-4 py-1 sm:py-2 w-fit ${getTypeColor(
+                offre.type
+              )}`}
+            >
               {offre.type}
             </Badge>
           </div>
 
-          <div className="flex items-center gap-6 text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
-              <Building className="h-4 w-4" />
-              <span className="font-medium text-foreground">
+              <Building className="h-4 w-4 flex-shrink-0" />
+              <span className="font-medium text-foreground break-words">
                 {offre.company}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
-              <span>{offre.location}</span>
+              <MapPin className="h-4 w-4 flex-shrink-0" />
+              <span className="break-words">{offre.location}</span>
             </div>
             <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              <span>{offre.experience}</span>
+              <Clock className="h-4 w-4 flex-shrink-0" />
+              <span className="break-words">{offre.experience} ans</span>
             </div>
             <div className="flex items-center gap-2">
-              <Eye className="h-4 w-4" />
+              <Eye className="h-4 w-4 flex-shrink-0" />
               <span>{offre.views || 0} vues</span>
             </div>
             <div className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
+              <Users className="h-4 w-4 flex-shrink-0" />
               <span>
                 {offre.applications?.length || 0} candidature
                 {(offre.applications?.length || 0) > 1 ? "s" : ""}
@@ -299,20 +312,23 @@ export default function OffreDetailPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
           {/* Contenu principal */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="xl:col-span-2 space-y-4 sm:space-y-6">
             {/* Description */}
             <Card className="shadow-none border">
               <CardHeader className="pb-4">
-                <CardTitle className="text-xl font-semibold">
+                <CardTitle className="text-lg sm:text-xl font-semibold">
                   Description du poste
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
-                  {offre.description}
-                </p>
+                <div
+                  className="text-sm md:text-base text-muted-foreground line-clamp-3 whitespace-pre-wrap"
+                  dangerouslySetInnerHTML={{ __html: offre.description }}
+                >
+                  {/* {offre.description} */}
+                </div>
               </CardContent>
             </Card>
 
@@ -320,7 +336,7 @@ export default function OffreDetailPage() {
             {offre.responsibilities && (
               <Card className="shadow-none border">
                 <CardHeader className="pb-4">
-                  <CardTitle className="text-xl font-semibold">
+                  <CardTitle className="text-lg sm:text-xl font-semibold">
                     Responsabilités
                   </CardTitle>
                 </CardHeader>
@@ -329,7 +345,7 @@ export default function OffreDetailPage() {
                     {offre.responsibilities.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-muted-foreground leading-relaxed">
+                        <span className="text-muted-foreground leading-relaxed text-sm sm:text-base">
                           {item}
                         </span>
                       </div>
@@ -343,7 +359,7 @@ export default function OffreDetailPage() {
             {offre.requirements && (
               <Card className="shadow-none border">
                 <CardHeader className="pb-4">
-                  <CardTitle className="text-xl font-semibold">
+                  <CardTitle className="text-lg sm:text-xl font-semibold">
                     Exigences
                   </CardTitle>
                 </CardHeader>
@@ -352,7 +368,7 @@ export default function OffreDetailPage() {
                     {offre.requirements.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-muted-foreground leading-relaxed">
+                        <span className="text-muted-foreground leading-relaxed text-sm sm:text-base">
                           {item}
                         </span>
                       </div>
@@ -366,7 +382,7 @@ export default function OffreDetailPage() {
             {offre.benefits && (
               <Card className="shadow-none border">
                 <CardHeader className="pb-4">
-                  <CardTitle className="text-xl font-semibold">
+                  <CardTitle className="text-lg sm:text-xl font-semibold">
                     Avantages
                   </CardTitle>
                 </CardHeader>
@@ -375,7 +391,7 @@ export default function OffreDetailPage() {
                     {offre.benefits.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-muted-foreground leading-relaxed">
+                        <span className="text-muted-foreground leading-relaxed text-sm sm:text-base">
                           {item}
                         </span>
                       </div>
@@ -387,35 +403,21 @@ export default function OffreDetailPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Carte de candidature */}
             <Card className="shadow-none border-2 border-primary/10">
               <CardHeader className="pb-4">
-                <CardTitle className="text-lg font-semibold">
+                <CardTitle className="text-base sm:text-lg font-semibold">
                   Postuler à cette offre
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-sm">
                   Envoyez votre candidature pour ce poste
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 {candidat ? (
                   <>
-                    {/* <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground">
-                        Message de motivation
-                      </label>
-                      <textarea
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Expliquez pourquoi vous êtes intéressé par ce poste..."
-                        className="w-full p-3 border border-input rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent resize-none bg-background text-foreground placeholder:text-muted-foreground"
-                        rows={4}
-                      />
-                    </div> */}
                     <Button
-                      // onClick={handlePostuler}
-                      // disabled={postulating || !message.trim() }
                       onClick={() => handlePostuler(offre.id)}
                       disabled={postulatedOffers.includes(offre.id)}
                       className="w-full bg-primary hover:bg-primary/90"
@@ -427,19 +429,19 @@ export default function OffreDetailPage() {
                   </>
                 ) : (
                   <div className="text-center space-y-4">
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
-                      <AlertCircle className="h-8 w-8 text-primary" />
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                      <AlertCircle className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-foreground mb-2">
+                      <h3 className="font-semibold text-foreground mb-2 text-sm sm:text-base">
                         Connexion requise
                       </h3>
-                      <p className="text-sm text-muted-foreground mb-4">
+                      <p className="text-xs sm:text-sm text-muted-foreground mb-4">
                         Vous devez être connecté en tant que candidat pour
                         postuler à cette offre.
                       </p>
                       <Link href="/candidat/connexion">
-                        <Button className="w-full bg-primary hover:bg-primary/90">
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-sm">
                           Se connecter
                         </Button>
                       </Link>
@@ -452,20 +454,20 @@ export default function OffreDetailPage() {
             {/* Informations clés */}
             <Card className="shadow-none border">
               <CardHeader className="pb-4">
-                <CardTitle className="text-lg font-semibold">
+                <CardTitle className="text-base sm:text-lg font-semibold">
                   Informations clés
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3 sm:space-y-4">
                 <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600 dark:text-blue-400" />
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs sm:text-sm font-medium text-foreground">
                       Expérience
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs sm:text-sm text-muted-foreground break-words">
                       {offre.experience}
                     </p>
                   </div>
@@ -473,14 +475,14 @@ export default function OffreDetailPage() {
 
                 {offre.salaryMin && offre.salaryMax && (
                   <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-                    <div className="w-10 h-10 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center">
-                      <DollarSign className="h-5 w-5 text-green-600 dark:text-green-400" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <DollarSign className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 dark:text-green-400" />
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-foreground">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm font-medium text-foreground">
                         Salaire
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-muted-foreground break-words">
                         {formatSalary(
                           offre.salaryMin,
                           offre.salaryMax,
@@ -493,14 +495,14 @@ export default function OffreDetailPage() {
                 )}
 
                 <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-                  <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
-                    <Users className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Users className="h-4 w-4 sm:h-5 sm:w-5 text-purple-600 dark:text-purple-400" />
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-foreground">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs sm:text-sm font-medium text-foreground">
                       Candidatures
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                       {offre.applications?.length || 0} candidature
                       {(offre.applications?.length || 0) > 1 ? "s" : ""}
                     </p>
@@ -514,7 +516,7 @@ export default function OffreDetailPage() {
               offre.jobOfferCompetences.length > 0 && (
                 <Card className="shadow-none border">
                   <CardHeader className="pb-4">
-                    <CardTitle className="text-lg font-semibold">
+                    <CardTitle className="text-base sm:text-lg font-semibold">
                       Compétences recherchées
                     </CardTitle>
                   </CardHeader>
@@ -524,7 +526,7 @@ export default function OffreDetailPage() {
                         <Badge
                           key={index}
                           variant="secondary"
-                          className="px-3 py-1"
+                          className="px-2 sm:px-3 py-1 text-xs"
                         >
                           {competence.competence}
                         </Badge>
@@ -537,18 +539,18 @@ export default function OffreDetailPage() {
         </div>
 
         {/* Section Autres offres */}
-        <div className="mt-12">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-foreground mb-2">
+        <div className="mt-8 sm:mt-12">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
               Autres offres qui pourraient vous intéresser
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-sm sm:text-base text-muted-foreground">
               Découvrez d'autres opportunités similaires
             </p>
           </div>
 
           {loadingOtherOffers ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {[...Array(6)].map((_, i) => (
                 <Card key={i} className="shadow-none border animate-pulse">
                   <CardHeader className="pb-4">
@@ -565,7 +567,7 @@ export default function OffreDetailPage() {
               ))}
             </div>
           ) : otherOffers.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {otherOffers.map((otherOffre) => (
                 <Card
                   key={otherOffre.id}
@@ -574,19 +576,21 @@ export default function OffreDetailPage() {
                   <Link href={`/offres/${otherOffre.id}`}>
                     <CardHeader>
                       <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <CardTitle className="text-lg font-semibold text-foreground line-clamp-2">
+                        <div className="flex-1 min-w-0">
+                          <CardTitle className="text-base sm:text-lg font-semibold text-foreground line-clamp-2 break-words">
                             {otherOffre.title}
                           </CardTitle>
                           <CardDescription className="mt-2">
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <Building className="h-4 w-4" />
-                              {otherOffre.company}
+                            <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                              <Building className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                              <span className="break-words">
+                                {otherOffre.company}
+                              </span>
                             </div>
                           </CardDescription>
                         </div>
                         <Badge
-                          className={`text-xs px-2 py-1 ${getTypeColor(
+                          className={`text-xs px-2 py-1 ml-2 flex-shrink-0 ${getTypeColor(
                             otherOffre.type
                           )}`}
                         >
@@ -594,32 +598,41 @@ export default function OffreDetailPage() {
                         </Badge>
                       </div>
                     </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <MapPin className="h-4 w-4" />
-                        {otherOffre.location}
+                    <CardContent className="space-y-2 sm:space-y-3">
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                        <MapPin className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                        <span className="break-words">
+                          {otherOffre.location}
+                        </span>
                       </div>
 
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Clock className="h-4 w-4" />
-                        {otherOffre.experience}
+                      <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                        <Clock className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                        <span className="break-words">
+                          {otherOffre.experience} ans
+                        </span>
                       </div>
 
                       {otherOffre.salaryMin && otherOffre.salaryMax && (
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <DollarSign className="h-4 w-4" />
-                          {formatSalary(
-                            otherOffre.salaryMin,
-                            otherOffre.salaryMax,
-                            otherOffre.salaryCurrency,
-                            otherOffre.salaryPeriod
-                          )}
+                        <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                          <DollarSign className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                          <span className="break-words">
+                            {formatSalary(
+                              otherOffre.salaryMin,
+                              otherOffre.salaryMax,
+                              otherOffre.salaryCurrency,
+                              otherOffre.salaryPeriod
+                            )}
+                          </span>
                         </div>
                       )}
 
-                      <p className="text-sm text-muted-foreground line-clamp-3">
-                        {otherOffre.description}
-                      </p>
+                      <div
+                        className="text-xs sm:text-sm text-muted-foreground line-clamp-3"
+                        dangerouslySetInnerHTML={{
+                          __html: otherOffre.description,
+                        }}
+                      />
 
                       {otherOffre.jobOfferCompetences &&
                         otherOffre.jobOfferCompetences.length > 0 && (
@@ -630,13 +643,16 @@ export default function OffreDetailPage() {
                                 <Badge
                                   key={index}
                                   variant="secondary"
-                                  className="text-xs"
+                                  className="text-xs px-2 py-1"
                                 >
                                   {competence.competence}
                                 </Badge>
                               ))}
                             {otherOffre.jobOfferCompetences.length > 3 && (
-                              <Badge variant="outline" className="text-xs">
+                              <Badge
+                                variant="outline"
+                                className="text-xs px-2 py-1"
+                              >
                                 +{otherOffre.jobOfferCompetences.length - 3}
                               </Badge>
                             )}
@@ -644,7 +660,9 @@ export default function OffreDetailPage() {
                         )}
                     </CardContent>
                     <CardFooter>
-                      <Button className="w-full">Voir l'offre</Button>
+                      <Button className="w-full text-sm mt-10">
+                        Voir l'offre
+                      </Button>
                     </CardFooter>
                   </Link>
                 </Card>
@@ -652,25 +670,31 @@ export default function OffreDetailPage() {
             </div>
           ) : (
             <div className="text-center py-8">
-              <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                <Building className="h-8 w-8 text-muted-foreground" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+                <Building className="h-6 w-6 sm:h-8 sm:w-8 text-muted-foreground" />
               </div>
-              <h3 className="text-lg font-medium text-foreground mb-2">
+              <h3 className="text-base sm:text-lg font-medium text-foreground mb-2">
                 Aucune autre offre disponible
               </h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-sm text-muted-foreground mb-4">
                 Pour le moment, il n'y a pas d'autres offres similaires.
               </p>
               <Link href="/offres">
-                <Button variant="outline">Voir toutes les offres</Button>
+                <Button variant="outline" size="sm">
+                  Voir toutes les offres
+                </Button>
               </Link>
             </div>
           )}
 
           {otherOffers.length > 0 && (
-            <div className="text-center mt-8">
+            <div className="text-center mt-6 sm:mt-8">
               <Link href="/offres">
-                <Button variant="outline" size="lg">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="text-sm sm:text-base"
+                >
                   Voir toutes les offres
                   <ExternalLink className="h-4 w-4 ml-2" />
                 </Button>
@@ -681,7 +705,7 @@ export default function OffreDetailPage() {
       </div>
 
       <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
-        <DialogContent className="w-lg">
+        <DialogContent className="w-[90vw] max-w-lg">
           <DialogHeader>
             <DialogTitle>Documents importants manquants</DialogTitle>
             <DialogDescription>
@@ -696,14 +720,22 @@ export default function OffreDetailPage() {
               vous connaître et vous contacter.
             </p>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCvAlert(false)}>
+          <DialogFooter className="flex flex-col sm:flex-row gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setShowCvAlert(false)}
+              className="w-full sm:w-auto"
+            >
               Plus tard
             </Button>
-            <Button asChild onClick={() => setShowCvAlert(false)}>
-              <Link href="/dashboard-candidats/informations-personnelles">
-                Compléter mon profil
-              </Link>
+            <Button
+              onClick={() => {
+                setShowCvAlert(false);
+                setIsOpenCandidat(true);
+              }}
+              className="w-full sm:w-auto"
+            >
+              Compléter mon profil
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -711,7 +743,7 @@ export default function OffreDetailPage() {
 
       {/* Modal de confirmation de postulation */}
       <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="w-[90vw] max-w-md">
           <DialogHeader>
             <DialogTitle>Confirmer votre candidature</DialogTitle>
             <DialogDescription>
@@ -719,17 +751,19 @@ export default function OffreDetailPage() {
               candidature sera envoyée au recruteur.
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="flex gap-2">
+          <DialogFooter className="flex flex-col sm:flex-row gap-2">
             <Button
               variant="outline"
               onClick={() => setShowConfirmModal(false)}
               disabled={postulerMutation.isPending}
+              className="w-full sm:w-auto"
             >
               Annuler
             </Button>
             <Button
               onClick={handleConfirmPostuler}
               disabled={postulerMutation.isPending}
+              className="w-full sm:w-auto"
             >
               {postulerMutation.isPending ? (
                 <>
@@ -743,6 +777,21 @@ export default function OffreDetailPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <Sheet open={isOpenCandidat} onOpenChange={setIsOpenCandidat}>
+        <SheetContent className="w-full sm:max-w-2xl overflow-y-auto px-6 py-8">
+          <SheetHeader className="mb-6">
+            <SheetTitle className="text-xl font-bold">
+              Modifier mon profil candidat
+            </SheetTitle>
+            <SheetDescription>
+              Mettez à jour vos informations personnelles et professionnelles
+            </SheetDescription>
+          </SheetHeader>
+
+          <CandidatProfileForm onClose={() => setIsOpenCandidat(false)} />
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

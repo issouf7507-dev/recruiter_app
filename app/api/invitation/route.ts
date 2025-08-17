@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
     });
 
     // Envoyer l'email d'invitation
-    const inviteUrl = `http://localhost:3000/accept?token=${token}`;
+    const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL}/accept?token=${token}`;
 
     await MailService.sendEmail(
       email,

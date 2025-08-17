@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { RichTextEditorWrapper } from "@/components/ui/rich-text-editor-wrapper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -43,18 +44,19 @@ const offerFormSchema = z.object({
   title: z.string().nonempty("Le titre est requis"),
   company: z.string().nonempty("L'entreprise est requise"),
   location: z.string().nonempty("La localisation est requise"),
-  type: z.string().nonempty("Le type de contrat est requis"),
-  experience: z.string().nonempty("L'expérience requise est requise"),
+  type: z.string(),
+  experience: z.string(),
   // education: z.string().nonempty("Le niveau d'études est requis"),
   description: z.string().nonempty("La description est requise"),
   responsibilities: z.string().nonempty("Les responsabilités sont requises"),
   requirements: z.string().nonempty("Les prérequis sont requis"),
-  skills: z.array(z.string()).nonempty("Au moins une compétence est requise"),
+  skills: z.array(z.string()),
   benefits: z.string().nonempty("Les avantages sont requis"),
   salaryMin: z.string().nonempty("Le salaire minimum est requis"),
   salaryMax: z.string().nonempty("Le salaire maximum est requis"),
-  salaryCurrency: z.string().nonempty("La devise est requise"),
-  salaryPeriod: z.string().nonempty("La période est requise"),
+  salaryCurrency: z.string(),
+  salaryPeriod: z.string(),
+  etat: z.string(),
   template: z.string().optional(),
 });
 
@@ -71,9 +73,10 @@ export default function ModifierOffre({
   const form = useForm<z.infer<typeof offerFormSchema>>({
     resolver: zodResolver(offerFormSchema),
     defaultValues: {
-      type: "CDI",
-      salaryCurrency: "EUR",
-      salaryPeriod: "an",
+      type: "",
+      salaryCurrency: "",
+      salaryPeriod: "",
+      etat: "",
       skills: [],
       title: "",
       company: "",
@@ -130,6 +133,7 @@ export default function ModifierOffre({
       form.setValue("salaryCurrency", offer.salaryCurrency || "EUR");
       form.setValue("salaryPeriod", offer.salaryPeriod || "an");
       form.setValue("template", offer.template || "");
+      form.setValue("etat", offer.etat || "active");
 
       // Forcer la mise à jour des champs Select après un court délai
       setTimeout(() => {
@@ -139,6 +143,7 @@ export default function ModifierOffre({
           form.setValue("salaryCurrency", offer.salaryCurrency);
         if (offer.salaryPeriod)
           form.setValue("salaryPeriod", offer.salaryPeriod);
+        if (offer.etat) form.setValue("etat", offer.etat);
       }, 100);
 
       console.log("Valeurs du formulaire après setValue:", {
@@ -293,7 +298,7 @@ export default function ModifierOffre({
                         value={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="border bg-transparent shadow-none">
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
                             <SelectValue placeholder="Sélectionnez le type de contrat" />
                           </SelectTrigger>
                         </FormControl>
@@ -321,15 +326,16 @@ export default function ModifierOffre({
                         value={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="border bg-transparent shadow-none">
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
                             <SelectValue placeholder="Sélectionnez l'expérience requise" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="0-1">0-1 an</SelectItem>
-                          <SelectItem value="1-2">1-2 ans</SelectItem>
-                          <SelectItem value="2-5">2-5 ans</SelectItem>
-                          <SelectItem value="5-10">5-10 ans</SelectItem>
+                          <SelectItem value="1">1 an</SelectItem>
+                          <SelectItem value="2">2 ans</SelectItem>
+                          <SelectItem value="3">3 ans</SelectItem>
+                          <SelectItem value="4">4 ans</SelectItem>
+                          <SelectItem value="5">5 ans</SelectItem>
                           <SelectItem value="10+">10+ ans</SelectItem>
                         </SelectContent>
                       </Select>
@@ -339,7 +345,7 @@ export default function ModifierOffre({
                 />
               </div>
 
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-5 gap-4">
                 <FormField
                   control={form.control}
                   name="salaryMin"
@@ -387,7 +393,7 @@ export default function ModifierOffre({
                         value={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="border bg-transparent shadow-none">
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
                             <SelectValue placeholder="Devise" />
                           </SelectTrigger>
                         </FormControl>
@@ -414,7 +420,7 @@ export default function ModifierOffre({
                         value={field.value}
                       >
                         <FormControl>
-                          <SelectTrigger className="border bg-transparent shadow-none">
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
                             <SelectValue placeholder="Période" />
                           </SelectTrigger>
                         </FormControl>
@@ -423,6 +429,31 @@ export default function ModifierOffre({
                           <SelectItem value="mois">Par mois</SelectItem>
                           <SelectItem value="jour">Par jour</SelectItem>
                           <SelectItem value="heure">Par heure</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="etat"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Statut</FormLabel>
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger className="border bg-transparent shadow-none w-full">
+                            <SelectValue placeholder="Statut" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="active">Actif</SelectItem>
+                          <SelectItem value="draft">Brouillon</SelectItem>
+                          <SelectItem value="closed">Fermée</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -447,11 +478,17 @@ export default function ModifierOffre({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Description</FormLabel>
+                    <FormDescription>
+                      Utilisez l'éditeur riche pour formater votre description
+                      avec du texte en gras, italique, des listes, des liens,
+                      etc.
+                    </FormDescription>
                     <FormControl>
-                      <Textarea
-                        placeholder="Décrivez le poste en détail..."
-                        className="min-h-[100px] bg-transparent shadow-none"
-                        {...field}
+                      <RichTextEditorWrapper
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Décrivez le poste en détail avec un formatage riche..."
+                        className="bg-transparent"
                       />
                     </FormControl>
                     <FormMessage />

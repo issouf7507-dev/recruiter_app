@@ -379,8 +379,15 @@ export default function RecruteursLayout({
           <Sidebar open={open} setOpen={setOpen}>
             <SidebarBody className="flex flex-col justify-between border bg-[#2a294b] dark:bg-card rounded-lg p-4">
               {/* Header avec logo */}
-              <div className="flex-shrink-0 mb-6">
-                {open ? <Logo /> : <LogoIcon />}
+              <div className="flex-shrink-0 mb-2">
+                {/* {open ? <Logo /> : <LogoIcon />} */}
+                <Image
+                  src="/SVG/Logo_normal.svg"
+                  alt="Ylsix"
+                  width={400}
+                  height={400}
+                  className="w-20 h-20 relative z-10"
+                />
               </div>
 
               {/* Navigation principale */}

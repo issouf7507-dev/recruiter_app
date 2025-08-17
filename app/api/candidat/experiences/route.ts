@@ -43,6 +43,9 @@ export async function GET(req: NextRequest) {
       orderBy: {
         dateDebut: "desc",
       },
+      include: {
+        experienceCompetences: true,
+      },
     });
 
     return NextResponse.json({ success: true, data: experiences });
@@ -99,6 +102,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    console.log("body", {
+      poste: poste,
+      entreprise: entreprise,
+      localisation: localisation,
+      typeContrat: typeContrat,
+      dateDebut: dateDebut,
+      dateFin: dateFin,
+      description: description,
+      competences: competences,
+    });
+
     const experience = await prisma.experience.create({
       data: {
         poste,
@@ -110,7 +124,7 @@ export async function POST(req: NextRequest) {
         description,
         experienceCompetences: {
           create: competences.map((competence: any) => ({
-            competenceId: competence.id,
+            competence: competence,
           })),
         },
         candidatId: candidat.id,

@@ -13,6 +13,13 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Search,
   MapPin,
   Briefcase,
@@ -34,6 +41,11 @@ import {
   Star,
   Users,
   Target,
+  X,
+  Download,
+  MessageSquare,
+  Phone,
+  Mail,
 } from "lucide-react";
 import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 
@@ -62,6 +74,7 @@ interface Candidature {
     order: number;
     color: string;
   };
+  jobOfferId: number;
 }
 
 const CandidaturesEnCoursPage = () => {
@@ -74,6 +87,9 @@ const CandidaturesEnCoursPage = () => {
   const [candidatures, setCandidatures] = useState<Candidature[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCandidature, setSelectedCandidature] =
+    useState<Candidature | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (candidat?.candidat?.id) {
@@ -89,6 +105,7 @@ const CandidaturesEnCoursPage = () => {
 
       if (data.success) {
         setCandidatures(data.data);
+        console.log("data", data.data);
       } else {
         console.error(
           "Erreur lors du chargement des candidatures:",
@@ -186,6 +203,12 @@ const CandidaturesEnCoursPage = () => {
     return matchesSearch && matchesStatus;
   });
 
+  const handleViewDetails = (candidature: Candidature) => {
+    setSelectedCandidature(candidature);
+    console.log(candidature);
+    setIsModalOpen(true);
+  };
+
   const stats = {
     total: candidatures.length,
     nouvelles: candidatures.filter((c) => c.status === "nouvelles").length,
@@ -237,80 +260,9 @@ const CandidaturesEnCoursPage = () => {
                   <RefreshCw className="h-4 w-4 mr-2" />
                   Actualiser
                 </Button>
-                <Button className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200">
-                  <TrendingUp className="h-4 w-4 mr-2" />
-                  Nouvelle candidature
-                </Button>
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-blue-100 text-sm font-medium">Total</p>
-                  <p className="text-2xl font-bold">{stats.total}</p>
-                </div>
-                <FileText className="h-8 w-8 text-blue-200" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-yellow-500 to-orange-500 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-yellow-100 text-sm font-medium">
-                    Nouvelles
-                  </p>
-                  <p className="text-2xl font-bold">{stats.nouvelles}</p>
-                </div>
-                <ClockIcon className="h-8 w-8 text-yellow-200" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-purple-500 to-pink-500 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-purple-100 text-sm font-medium">
-                    En revue
-                  </p>
-                  <p className="text-2xl font-bold">{stats.enRevue}</p>
-                </div>
-                <Eye className="h-8 w-8 text-purple-200" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-green-500 to-emerald-500 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-green-100 text-sm font-medium">
-                    Entretiens
-                  </p>
-                  <p className="text-2xl font-bold">{stats.entretien}</p>
-                </div>
-                <Users className="h-8 w-8 text-green-200" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-emerald-500 to-teal-500 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-emerald-100 text-sm font-medium">
-                    Acceptées
-                  </p>
-                  <p className="text-2xl font-bold">{stats.acceptees}</p>
-                </div>
-                <CheckCircle className="h-8 w-8 text-emerald-200" />
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Search and Filters */}
@@ -342,13 +294,9 @@ const CandidaturesEnCoursPage = () => {
                     <SelectContent>
                       <SelectItem value="all">Tous les statuts</SelectItem>
                       <SelectItem value="nouvelles">Nouvelles</SelectItem>
-                      <SelectItem value="en_revue">En revue</SelectItem>
-                      <SelectItem value="entretien">
-                        Entretien programmé
-                      </SelectItem>
-                      <SelectItem value="en_attente">En attente</SelectItem>
-                      <SelectItem value="acceptées">Acceptées</SelectItem>
-                      <SelectItem value="refusées">Refusées</SelectItem>
+                      <SelectItem value="en_cours">En cours</SelectItem>
+
+                      <SelectItem value="finalisées">Finalisées</SelectItem>
                     </SelectContent>
                   </Select>
 
@@ -477,7 +425,6 @@ const CandidaturesEnCoursPage = () => {
 
                       {candidature.salaire && (
                         <div className="flex items-center gap-2">
-                          <Star className="h-4 w-4 text-yellow-500" />
                           <span className="text-sm font-medium text-foreground">
                             {candidature.salaire}
                           </span>
@@ -501,16 +448,10 @@ const CandidaturesEnCoursPage = () => {
                         <Button
                           variant="outline"
                           className="flex-1 hover:bg-accent hover:border-accent-foreground transition-all duration-200"
+                          onClick={() => handleViewDetails(candidature)}
                         >
                           <Eye className="h-4 w-4 mr-2" />
                           Voir détails
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="hover:bg-accent hover:border-accent-foreground transition-all duration-200"
-                        >
-                          <ExternalLink className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
@@ -541,6 +482,8 @@ const CandidaturesEnCoursPage = () => {
                             >
                               {etape.statut === "complete" ? (
                                 <CheckCircle className="h-4 w-4" />
+                              ) : etape.statut === "current" ? (
+                                <Clock className="h-4 w-4" />
                               ) : (
                                 index + 1
                               )}
@@ -549,7 +492,11 @@ const CandidaturesEnCoursPage = () => {
                               {etape.nom}
                             </div>
                             <div className="text-xs text-muted-foreground mt-1">
-                              {etape.date}
+                              {etape.nom === "Refusées"
+                                ? "Refusé"
+                                : etape.nom === "Finalisées"
+                                ? "Finalisées"
+                                : etape.date}
                             </div>
                           </div>
                         ))}
@@ -626,6 +573,7 @@ const CandidaturesEnCoursPage = () => {
                       <Button
                         variant="outline"
                         className="flex-1 hover:bg-accent hover:border-accent-foreground transition-all duration-200"
+                        onClick={() => handleViewDetails(candidature)}
                       >
                         <Eye className="h-4 w-4 mr-2" />
                         Voir détails
@@ -679,6 +627,196 @@ const CandidaturesEnCoursPage = () => {
             ))}
           </div>
         )}
+
+        {/* Modal de détails de candidature */}
+        <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold text-foreground">
+                Détails de la candidature
+              </DialogTitle>
+            </DialogHeader>
+
+            {selectedCandidature && (
+              <div className="space-y-6">
+                {/* En-tête de l'offre */}
+                <div className="bg-gradient-to-r from-primary/10 to-primary/20 p-6 rounded-lg">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-2">
+                      <h2 className="text-2xl font-bold text-foreground">
+                        {selectedCandidature.titre}
+                      </h2>
+                      <div className="flex items-center gap-4 text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                          <Building className="h-4 w-4" />
+                          <span className="font-medium">
+                            {selectedCandidature.entreprise}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          <span>{selectedCandidature.localisation}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Briefcase className="h-4 w-4" />
+                          <span>{selectedCandidature.type}</span>
+                        </div>
+                      </div>
+                    </div>
+                    {getStatusBadge(selectedCandidature.status)}
+                  </div>
+                </div>
+
+                {/* Informations principales */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Card>
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-primary" />
+                        Informations de candidature
+                      </h3>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">
+                            Date de candidature:
+                          </span>
+                          <span className="font-medium">
+                            {selectedCandidature.dateCandidature}
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">
+                            Statut actuel:
+                          </span>
+                          <span className="font-medium">
+                            {selectedCandidature.colonneActuelle.name}
+                          </span>
+                        </div>
+                        {selectedCandidature.salaire && (
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">
+                              Salaire:
+                            </span>
+                            <span className="font-medium">
+                              {selectedCandidature.salaire.replaceAll(",", " ")}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                        <Target className="h-4 w-4 text-primary" />
+                        Actions rapides
+                      </h3>
+                      <div className="space-y-2">
+                        <Button
+                          variant="outline"
+                          className="w-full justify-start"
+                          onClick={() => {
+                            window.location.href = `/dashboard-candidats/toutes-les-offres/${selectedCandidature.jobOfferId}`;
+                          }}
+                        >
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Voir l'offre complète
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Description de l'offre */}
+                {selectedCandidature.description && (
+                  <Card>
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                        <FileText className="h-4 w-4 text-primary" />
+                        Description de l'offre
+                      </h3>
+                      <div
+                        className="text-sm text-muted-foreground bg-muted p-4 rounded-lg"
+                        dangerouslySetInnerHTML={{
+                          __html: selectedCandidature.description,
+                        }}
+                      />
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Message de candidature */}
+                {selectedCandidature.message && (
+                  <Card>
+                    <CardContent className="p-4">
+                      <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                        <MessageSquare className="h-4 w-4 text-primary" />
+                        Votre message de candidature
+                      </h3>
+                      <div className="text-sm text-muted-foreground bg-muted p-4 rounded-lg">
+                        {selectedCandidature.message}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Progression détaillée */}
+                <Card>
+                  <CardContent className="p-4">
+                    <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                      <TrendingUp className="h-4 w-4 text-primary" />
+                      Progression détaillée de la candidature
+                    </h3>
+                    <div className="space-y-4">
+                      {selectedCandidature.etapes.map((etape, index) => (
+                        <div
+                          key={index}
+                          className={`flex items-center gap-4 p-3 rounded-lg transition-all duration-200 ${
+                            etape.statut === "complete"
+                              ? "bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800"
+                              : etape.statut === "current"
+                              ? "bg-primary/10 border border-primary/20"
+                              : "bg-muted border border-border"
+                          }`}
+                        >
+                          <div
+                            className={`w-10 h-10 rounded-full flex items-center justify-center font-medium ${
+                              etape.statut === "complete"
+                                ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white"
+                                : etape.statut === "current"
+                                ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ring-4 ring-primary/20"
+                                : "bg-muted text-muted-foreground border-2 border-border"
+                            }`}
+                          >
+                            {etape.statut === "complete" ? (
+                              <CheckCircle className="h-5 w-5" />
+                            ) : (
+                              index + 1
+                            )}
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-medium text-foreground">
+                              {etape.nom}
+                            </h4>
+                            <p className="text-sm text-muted-foreground">
+                              {etape.date}
+                            </p>
+                          </div>
+                          {etape.statut === "current" && (
+                            <Badge className="bg-primary/20 text-primary">
+                              En cours
+                            </Badge>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
+import ChatBox from "@/components/ChatBox";
+import { useTheme } from "next-themes";
 
 // Animation variants
 const fadeInUp = {
@@ -65,7 +67,7 @@ const pricingPlans = [
     id: 1,
     name: "Plan Gratuit",
     price: 0,
-    currency: "€",
+    currency: "XOF",
     period: "Mois",
     description:
       "Parfait pour découvrir la plateforme et commencer vos premiers recrutements",
@@ -95,7 +97,7 @@ const pricingPlans = [
       "Recherche avancée de candidats",
       "Statistiques détaillées",
     ],
-    buttonText: "Commencer l'essai gratuit",
+    buttonText: "Commencer maintenant",
     buttonVariant: "primary",
     isPopular: true,
     onClick: () => {}, // Will be set in component
@@ -116,7 +118,7 @@ const pricingPlans = [
       "Gestionnaire de compte dédié",
       "Support 24/7",
     ],
-    buttonText: "Contacter les ventes",
+    buttonText: "Commencer maintenant",
     buttonVariant: "default",
     isPopular: false,
     onClick: () => {}, // Will be set in component
@@ -126,10 +128,9 @@ const pricingPlans = [
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [isStep, setIsStep] = useState(1);
-  const [isRecruteur, setIsRecruteur] = useState(false);
-  const [isCandidat, setIsCandidat] = useState(false);
   const router = useRouter();
+  const { theme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   // Search states
   const [searchQuery, setSearchQuery] = useState("");
@@ -173,6 +174,7 @@ export default function Home() {
   const [loadingLogo, setLoadingLogo] = useState(true);
 
   useEffect(() => {
+    setMounted(true);
     const timer = setTimeout(() => {
       setLoadingLogo(false);
     }, 4000);
@@ -304,10 +306,10 @@ export default function Home() {
       {/* Header */}
       <Header />
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-20 flex items-center gap-8 md:gap-12 justify-center flex-col min-h-screen">
+      <section className=" mx-auto px-4 py-12  flex  gap-8 justify-center flex-col min-h-screen items-center">
         {/* Left: Text */}
         <motion.div
-          className="text-center w-full"
+          className="text-center  w-full "
           initial="initial"
           animate="animate"
           variants={fadeInUp}
@@ -321,15 +323,15 @@ export default function Home() {
             </Badge>
           </motion.div>
           <motion.h1
-            className="text-3xl md:text-5xl lg:text-7xl w-full mb-4 md:mb-5 leading-tight"
+            className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl w-full mb-4 md:mb-5 leading-tight"
             variants={fadeInUp}
             transition={{ delay: 0.2 }}
           >
-            Recrutement, RH et conformité pour{" "}
+            Recrutement, RH et conformité pour <br />
             <span className="text-primary">les équipes mondiales</span>
           </motion.h1>
           <motion.p
-            className="w-full text-base md:text-lg lg:text-xl mb-6 md:mb-10 max-w-4xl mx-auto px-4"
+            className="w-full text-base md:text-lg lg:text-xl mb-6 md:mb-10 max-w-2xl lg:max-w-none mx-auto lg:mx-0 px-4 lg:px-0"
             variants={fadeInUp}
             transition={{ delay: 0.3 }}
           >
@@ -337,7 +339,7 @@ export default function Home() {
             restez 100% conformes—le tout sur une seule plateforme.
           </motion.p>
           <motion.div
-            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center px-4"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center  items-center px-4 lg:px-0"
             variants={fadeInUp}
             transition={{ delay: 0.4 }}
           >
@@ -361,19 +363,59 @@ export default function Home() {
             </Button>
           </motion.div>
         </motion.div>
-        {/* Right: Stat Card */}
+
+        {/* Right: Dashboard Image */}
+        <motion.div
+          className="w-full flex justify-center items-center"
+          initial="initial"
+          animate="animate"
+          variants={slideInRight}
+          transition={{ delay: 0.5 }}
+        >
+          <div className="relative w-full max-w-5xl">
+            {mounted && (
+              <Image
+                src={
+                  resolvedTheme === "dark" ? "/dashdark.png" : "/dashlight.png"
+                }
+                alt="Dashboard Ylsix"
+                width={800}
+                height={600}
+                className="w-full h-auto rounded-xl shadow-2xl border border-border/50"
+                priority
+              />
+            )}
+            {/* Floating elements for visual appeal */}
+            <motion.div
+              className="absolute -top-4 -right-4 w-8 h-8 bg-primary/20 rounded-full"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.8, 0.5],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="absolute -bottom-4 -left-4 w-6 h-6 bg-secondary/30 rounded-full"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
+            />
+          </div>
+        </motion.div>
       </section>
 
       {/* Logos Clients */}
-      {/* <section className="container mx-auto px-4 py-8">
-        <div className="flex flex-wrap justify-center items-center gap-8 opacity-70">
-          <Image src="/vercel.svg" alt="Vercel" width={100} height={32} />
-          <Image src="/globe.svg" alt="Globe" width={100} height={32} />
-          <Image src="/next.svg" alt="Next.js" width={100} height={32} />
-          <Image src="/window.svg" alt="Window" width={100} height={32} />
-          <span className="text-lg font-semibold">Microsoft</span>
-        </div>
-      </section> */}
 
       {/* Features Section */}
       <section id="features" className="container mx-auto px-4 py-12 md:py-20">
@@ -402,7 +444,7 @@ export default function Home() {
           variants={staggerContainer}
         >
           <motion.div variants={scaleIn}>
-            <Card className="border  hover:shadow-md transition-all duration-300 shadow-none">
+            <Card className="border bg-transparent hover:shadow-md transition-all duration-300 shadow-none h-[450px]">
               <CardContent className="p-8 flex flex-col items-center text-center">
                 <Users className="w-8 h-8 text-primary mb-4" />
                 <h3 className="text-lg font-semibold mb-2 text-foreground">
@@ -413,14 +455,20 @@ export default function Home() {
                   recrutement en fonction de vos candidats et personnalisez les
                   étapes pour attirer, évaluer et recruter en toute simplicité.
                 </p>
-                <Button variant="link" className="text-primary">
+                <Button
+                  variant="link"
+                  className="text-primary"
+                  onClick={() => {
+                    window.location.href = "/a-propos";
+                  }}
+                >
                   En savoir plus
                 </Button>
               </CardContent>
             </Card>
           </motion.div>
           <motion.div variants={scaleIn}>
-            <Card className=" hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground">
+            <Card className=" hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground h-[450px]">
               <CardContent className="p-8 flex flex-col items-center text-center">
                 <Briefcase className="w-8 h-8 mb-4" />
                 <h3 className="text-lg font-semibold mb-2">
@@ -433,14 +481,20 @@ export default function Home() {
                   évaluations de chacun et décidez ensemble des meilleurs
                   candidats pour votre entreprise.
                 </p>
-                <Button variant="outline" className="border-white text-primary">
+                <Button
+                  variant="outline"
+                  className="border-white text-primary"
+                  onClick={() => {
+                    window.location.href = "/a-propos";
+                  }}
+                >
                   En savoir plus
                 </Button>
               </CardContent>
             </Card>
           </motion.div>
           <motion.div variants={scaleIn}>
-            <Card className="border hover:shadow-md transition-all duration-300 shadow-none">
+            <Card className="border bg-transparent hover:shadow-md transition-all duration-300 shadow-none h-[450px]">
               <CardContent className="p-8 flex flex-col items-center text-center">
                 <TrendingUp className="w-8 h-8 text-primary mb-4" />
                 <h3 className="text-lg font-semibold mb-2 text-foreground">
@@ -454,14 +508,20 @@ export default function Home() {
                   améliorer vos sources d'acquisition et vous concentrer sur
                   l'essentiel.
                 </p>
-                <Button variant="link" className="text-primary">
+                <Button
+                  variant="link"
+                  className="text-primary"
+                  onClick={() => {
+                    window.location.href = "/a-propos";
+                  }}
+                >
                   En savoir plus
                 </Button>
               </CardContent>
             </Card>
           </motion.div>
           <motion.div variants={scaleIn}>
-            <Card className="border  hover:shadow-md transition-all duration-300 shadow-none ">
+            <Card className="border bg-transparent hover:shadow-md transition-all duration-300 shadow-none h-[450px]">
               <CardContent className="p-8 flex flex-col items-center text-center">
                 <Shield className="w-8 h-8 text-primary mb-4" />
                 <h3 className="text-lg font-semibold mb-2 text-foreground">
@@ -474,7 +534,13 @@ export default function Home() {
                   CVthèques, et utilisez le réseau de vos collaborateurs grâce à
                   la cooptation.
                 </p>
-                <Button variant="link" className="text-primary">
+                <Button
+                  variant="link"
+                  className="text-primary"
+                  onClick={() => {
+                    window.location.href = "/a-propos";
+                  }}
+                >
                   Commencer gratuitement
                 </Button>
               </CardContent>
@@ -580,7 +646,9 @@ export default function Home() {
             <motion.div key={plan.id} variants={scaleIn}>
               <Card
                 className={`shadow-none min-h-[600px] md:h-[650px] ${
-                  plan.isPopular ? "border-2 border-primary bg-primary" : ""
+                  plan.isPopular
+                    ? "border-2 border-primary bg-primary"
+                    : "bg-transparent"
                 }`}
               >
                 <CardContent className="flex flex-col justify-between h-full">
@@ -593,12 +661,11 @@ export default function Home() {
                       {plan.name}
                     </h3>
                     <div
-                      className={`text-3xl md:text-5xl font-bold text-primary mb-4 md:mb-7 ${
+                      className={`text-xl md:text-3xl font-bold text-primary mb-4 md:mb-7 ${
                         plan.isPopular ? "text-white" : ""
                       }`}
                     >
-                      {plan.price}
-                      {plan.currency}
+                      {plan.price} {plan.currency}
                       <span
                         className={`text-sm md:text-base font-normal ${
                           plan.isPopular ? "text-white" : ""
@@ -668,7 +735,7 @@ export default function Home() {
             viewport={{ once: true, amount: 0.3 }}
             variants={slideInLeft}
           >
-            <Card className="shadow-xl">
+            <Card className="shadow-xl bg-transparent">
               <CardContent className="p-6 md:p-8">
                 <div className="flex items-center mb-4">
                   {[...Array(5)].map((_, i) => (
@@ -749,6 +816,9 @@ export default function Home() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Chat Box */}
+      <ChatBox />
 
       {/* les absoulutes  */}
 

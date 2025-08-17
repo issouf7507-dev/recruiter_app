@@ -46,9 +46,9 @@ export type Candidat = {
   letterm: string;
   competences: string[];
   image: string;
-  favorite: boolean;
   statut: string | null;
   email: string | null;
+  favorite: boolean;
 };
 
 export type Application = {
@@ -61,6 +61,7 @@ export type Application = {
   message: string;
   cv: string | null;
   email?: string | null;
+  favorite: boolean;
   createdAt: string;
   candidat: Candidat;
   column: Column;

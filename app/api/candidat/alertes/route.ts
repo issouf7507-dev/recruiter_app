@@ -37,6 +37,9 @@ export async function GET(req: NextRequest) {
     const alertes = await prisma.alerteEmploi.findMany({
       where: { candidatId: candidat.id },
       orderBy: { createdAt: "desc" },
+      include: {
+        alerteMotsCles: true,
+      },
     });
 
     return NextResponse.json(alertes);
@@ -79,6 +82,17 @@ export async function POST(req: NextRequest) {
       return new NextResponse("Données manquantes", { status: 400 });
     }
 
+    console.log("body", {
+      titre: titre || "",
+      motsCles: motsCles || [],
+      localisation: localisation || "",
+      typeContrat: typeContrat || "",
+      salaireMin: salaireMin || "",
+      salaireMax: salaireMax || "",
+      experience: experience || "",
+      frequence: frequence || "",
+    });
+
     const candidat = await prisma.candidat.findFirst({
       where: { userId: decoded.userId },
     });
@@ -93,7 +107,7 @@ export async function POST(req: NextRequest) {
         // motsCles: motsCles || [],
         alerteMotsCles: {
           create: motsCles.map((mot: any) => ({
-            mot: mot,
+            motCle: mot,
           })),
         },
         localisation,

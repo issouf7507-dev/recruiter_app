@@ -90,6 +90,8 @@ export default function OffreDetail({
     enabled: !!offerId,
   });
 
+  console.log("queryoffresbyid", queryoffresbyid);
+
   // Mettre à jour les applications locales quand les données changent
   useEffect(() => {
     if (queryoffresbyid?.data?.[0]?.applications) {
@@ -337,9 +339,12 @@ export default function OffreDetail({
                               <h3 className="font-semibold mb-2">
                                 Description du poste
                               </h3>
-                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                {offerDataFromQuery.description}
-                              </p>
+                              <div
+                                className="text-sm text-muted-foreground whitespace-pre-wrap"
+                                dangerouslySetInnerHTML={{
+                                  __html: offerDataFromQuery.description,
+                                }}
+                              />
                             </div>
                             <div>
                               <h3 className="font-semibold mb-2">

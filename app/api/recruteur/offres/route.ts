@@ -24,6 +24,7 @@ export async function POST(req: Request) {
       requirements,
       responsibilities,
       benefits,
+      etat,
       education,
       // template,
       recruteurId,
@@ -58,6 +59,7 @@ export async function POST(req: Request) {
         requirements,
         responsibilities,
         benefits,
+        etat,
         // education,
         // templateId: template,
         recruteurId: recruteur.id,
@@ -83,6 +85,12 @@ export async function POST(req: Request) {
         order: 3,
         isDefault: true,
       },
+      {
+        name: "Refusées",
+        color: "bg-red-300/30",
+        order: 4,
+        isDefault: true,
+      },
     ];
 
     await Promise.all(
@@ -95,11 +103,6 @@ export async function POST(req: Request) {
         })
       )
     );
-
-    // Invalider le cache après création d'une nouvelle offre
-    // const cacheKey = CACHE_KEYS.KANBAN_BOARD(recruteur.id);
-    // await cacheUtils.del(cacheKey);
-    // console.log("Cache invalidé après création d'offre:", cacheKey);
 
     return NextResponse.json(
       { success: true, data: jobOffer },
@@ -163,13 +166,11 @@ export async function GET(req: NextRequest) {
         requirements: true,
         responsibilities: true,
         benefits: true,
-
         jobOfferCompetences: {
           select: {
             competence: true,
           },
         },
-
         createdAt: true,
         updatedAt: true,
         etat: true,

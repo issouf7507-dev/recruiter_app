@@ -55,8 +55,8 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useQuery } from "@tanstack/react-query";
-import { fetchData } from "@/utils/utilts";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchData, patchData } from "@/utils/utilts";
 import { Application } from "@/types/types";
 import { toast } from "sonner";
 import InitiateChatModal from "@/app/components/InitiateChatModal";
@@ -83,6 +83,7 @@ const formatStatus = (status: string) => {
 };
 
 export default function CandidaturesPage() {
+  const queryClient = useQueryClient();
   const [selectedCandidature, setSelectedCandidature] =
     useState<Application | null>(null);
   const [filters, setFilters] = useState({
@@ -130,7 +131,7 @@ export default function CandidaturesPage() {
       (candidature) => candidature.candidat.cv
     );
 
-    console.log(candidaturesWithCV);
+    // console.log(candidaturesWithCV);
 
     try {
       // Télécharger tous les CV en parallèle
@@ -191,6 +192,56 @@ export default function CandidaturesPage() {
     setIsChatModalOpen(true);
   };
 
+  // Mutation pour basculer le statut favori
+  const toggleFavoriteMutation = useMutation({
+    mutationFn: async ({
+      applicationId,
+      favorite,
+    }: {
+      applicationId: string;
+      favorite: boolean;
+    }) => {
+      return patchData(
+        { favorite },
+        `/api/recruteur/candidatures/${applicationId}/favorite`
+      );
+    },
+    onSuccess: (data, variables) => {
+      // Mettre à jour le cache des candidatures
+      queryClient.setQueryData(["candidatures"], (oldData: any) => {
+        if (!oldData?.data) return oldData;
+
+        return {
+          ...oldData,
+          data: oldData.data.map((candidature: Application) => {
+            if (candidature.id === variables.applicationId) {
+              return {
+                ...candidature,
+                favorite: variables.favorite,
+              };
+            }
+            return candidature;
+          }),
+        };
+      });
+
+      toast.success(data.message);
+    },
+    onError: (error) => {
+      toast.error("Erreur lors de la mise à jour du favori");
+    },
+  });
+
+  const handleToggleFavorite = (
+    applicationId: string,
+    currentFavorite: boolean
+  ) => {
+    toggleFavoriteMutation.mutate({
+      applicationId,
+      favorite: !currentFavorite,
+    });
+  };
+
   // Récupérer les candidatures depuis l'API
   const {
     data: candidaturesData,
@@ -202,6 +253,7 @@ export default function CandidaturesPage() {
   });
 
   const candidatures: Application[] = candidaturesData?.data || [];
+  // console.log(candidaturesData?.data);
 
   const filteredCandidatures = candidatures.filter(
     (candidature: Application) => {
@@ -222,7 +274,7 @@ export default function CandidaturesPage() {
           return false;
         }
       }
-      if (filters.showFavorites && !candidature.candidat.favorite) {
+      if (filters.showFavorites && !candidature.favorite) {
         return false;
       }
       if (
@@ -270,13 +322,24 @@ export default function CandidaturesPage() {
 
   return (
     <div className="p-6 space-y-6 w-full overflow-y-auto">
-      <div className="flex items-center gap-4">
-        <Link href="/mesoffres">
-          <Button variant="outline" size="icon">
-            <ArrowLeft className="h-4 w-4" />
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link href="/mesoffres">
+            <Button variant="outline" size="icon">
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          </Link>
+          <h1 className="text-2xl font-bold">Toutes les candidatures</h1>
+        </div>
+        <Link href="/dashboard-recruteurs/candidatures-favoris">
+          <Button
+            variant="outline"
+            className="border bg-transparent shadow-none"
+          >
+            <Star className="h-4 w-4 mr-2" />
+            Voir les favoris ({candidatures.filter((c) => c.favorite).length})
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold">Toutes les candidatures</h1>
       </div>
 
       <Card className="border bg-transparent shadow-none">
@@ -414,7 +477,7 @@ export default function CandidaturesPage() {
                     <TableCell className="font-medium">
                       <div className="flex items-center gap-2">
                         {candidature.candidat.nom} {candidature.candidat.prenom}
-                        {candidature.candidat.favorite && (
+                        {candidature.favorite && (
                           <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                         )}
                       </div>
@@ -435,6 +498,24 @@ export default function CandidaturesPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          onClick={() =>
+                            handleToggleFavorite(
+                              candidature.id,
+                              candidature.favorite || false
+                            )
+                          }
+                          className="border bg-transparent shadow-none"
+                          disabled={toggleFavoriteMutation.isPending}
+                        >
+                          {candidature.favorite ? (
+                            <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                          ) : (
+                            <Star className="h-4 w-4" />
+                          )}
+                        </Button>
                         <Button
                           variant="outline"
                           size="icon"
@@ -491,9 +572,24 @@ export default function CandidaturesPage() {
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span>Informations du candidat</span>
-                  {selectedCandidature?.candidat.favorite && (
-                    <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-                  )}
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() =>
+                      selectedCandidature &&
+                      handleToggleFavorite(
+                        selectedCandidature.id,
+                        selectedCandidature.favorite || false
+                      )
+                    }
+                    disabled={toggleFavoriteMutation.isPending}
+                  >
+                    {selectedCandidature?.favorite ? (
+                      <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
+                    ) : (
+                      <Star className="h-5 w-5" />
+                    )}
+                  </Button>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">

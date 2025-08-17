@@ -108,7 +108,8 @@ type Application = {
     prenom: string;
     email: string;
     competences: string[];
-    competencesList: { competence: string }[];
+    // competencesList: { competence: string }[];
+    candidatCompetences: { competence: string }[];
     cv: string;
     letterm: string;
   };
@@ -219,7 +220,7 @@ export default function KanbanBoard({
     gcTime: 60000, // Les données sont gardées en cache pendant 1 minute
   });
 
-  console.log("queryoffresbyid", queryoffresbyid);
+  // console.log("queryoffresbyid", queryoffresbyid);
 
   // Hook WebSocket pour les mises à jour en temps réel
   const { socket, isConnected } = useWebSocket({
@@ -339,7 +340,7 @@ export default function KanbanBoard({
       duedate: string | null;
       offerId: string;
     }) => {
-      console.log("Date d'échéance mise à jour via WebSocket:", data);
+      // console.log("Date d'échéance mise à jour via WebSocket:", data);
       queryoffresbyidrefetchP();
       setApplications((prevApps) =>
         prevApps.map((app) =>
@@ -357,13 +358,13 @@ export default function KanbanBoard({
 
     // Écouter les événements de nouvelle application
     const handleApplicationCreated = (data: { application: Application }) => {
-      console.log("Nouvelle application via WebSocket:", data);
+      // console.log("Nouvelle application via WebSocket:", data);
       setApplications((prevApps) => [...prevApps, data.application]);
     };
 
     // Écouter les événements de suppression d'application
     const handleApplicationDeleted = (data: { applicationId: string }) => {
-      console.log("Application supprimée via WebSocket:", data);
+      // console.log("Application supprimée via WebSocket:", data);
       setApplications((prevApps) =>
         prevApps.filter((app) => app.id !== data.applicationId)
       );
@@ -375,7 +376,7 @@ export default function KanbanBoard({
       note: any;
       offerId: string;
     }) => {
-      console.log("Note ajoutée via WebSocket:", data);
+      // console.log("Note ajoutée via WebSocket:", data);
       setApplications((prevApps) =>
         prevApps.map((app) =>
           app.id === data.applicationId
@@ -390,7 +391,7 @@ export default function KanbanBoard({
       note: any;
       offerId: string;
     }) => {
-      console.log("Note modifiée via WebSocket:", data);
+      // console.log("Note modifiée via WebSocket:", data);
       setApplications((prevApps) =>
         prevApps.map((app) =>
           app.id === data.applicationId
@@ -678,7 +679,7 @@ export default function KanbanBoard({
     try {
       if (editingNote) {
         // Modification d'une note existante
-        console.log("Modification d'une note existante:", editingNote);
+        // console.log("Modification d'une note existante:", editingNote);
         const response = await fetch(
           `/api/recruteur/kanban/application/${selectedCard.id}/notes/${editingNote.id}`,
           {
@@ -690,7 +691,7 @@ export default function KanbanBoard({
 
         if (response.ok) {
           const responseData = await response.json();
-          console.log("Réponse modification note:", responseData);
+          // console.log("Réponse modification note:", responseData);
 
           // Mettre à jour l'état local avec la réponse de l'API
           if (responseData.note) {
@@ -717,7 +718,7 @@ export default function KanbanBoard({
         }
       } else {
         // Création d'une nouvelle note
-        console.log("Création d'une nouvelle note");
+        // console.log("Création d'une nouvelle note");
         const response = await putData(
           { notes: cardNote },
           `/api/recruteur/kanban/application/${selectedCard.id}`
@@ -726,8 +727,8 @@ export default function KanbanBoard({
         console.log("Réponse création note:", response);
 
         if (response.success && response.application) {
-          console.log("Application mise à jour:", response.application);
-          console.log("Notes de l'application:", response.application.notes);
+          // console.log("Application mise à jour:", response.application);
+          // console.log("Notes de l'application:", response.application.notes);
 
           // Mettre à jour immédiatement l'état local avec la réponse de l'API
           const updatedNotes = response.application.notes || [];
@@ -1389,6 +1390,15 @@ export default function KanbanBoard({
     }
   };
 
+  // Refuser une candidature
+  const [isRefusingCandidate, setIsRefusingCandidate] = useState(false);
+  const handleRefuseCandidate = async (card: Application) => {
+    setIsRefusingCandidate(true);
+    setSelectedCard(card);
+
+    // console.log(card);
+  };
+
   if (isLoading || isReordering || queryoffresbyidrefetchisPending) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
@@ -1560,10 +1570,7 @@ export default function KanbanBoard({
                                                   "Carte sélectionnée:",
                                                   application
                                                 );
-                                                console.log(
-                                                  "Notes de la carte:",
-                                                  application.notes
-                                                );
+
                                                 // Charger les collaborateurs affectés
                                                 loadAssignedCollaborateurs(
                                                   application.id
@@ -1571,7 +1578,6 @@ export default function KanbanBoard({
                                                 // setDescription(
                                                 //   application.note || ""
                                                 // );
-                                                console.log(application);
                                               }}
                                             >
                                               {/* ID et priorité */}
@@ -1959,7 +1965,7 @@ export default function KanbanBoard({
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {selectedCard.candidat.competencesList?.map(
+                          {selectedCard.candidat.candidatCompetences?.map(
                             (competence) => (
                               <span
                                 key={competence.competence}
@@ -2312,7 +2318,7 @@ export default function KanbanBoard({
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {selectedCard.candidat.competencesList?.map(
+                          {selectedCard.candidat.candidatCompetences?.map(
                             (competence) => (
                               <span
                                 key={competence.competence}
@@ -2636,7 +2642,7 @@ export default function KanbanBoard({
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {selectedCard.candidat.competencesList?.map(
+                          {selectedCard.candidat.candidatCompetences?.map(
                             (competence) => (
                               <span
                                 key={competence.competence}
@@ -3228,7 +3234,7 @@ export default function KanbanBoard({
                           Compétences
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {selectedCard.candidat.competencesList?.map(
+                          {selectedCard.candidat.candidatCompetences?.map(
                             (competence) => (
                               <span
                                 key={competence.competence}
@@ -3709,6 +3715,31 @@ export default function KanbanBoard({
                     {selectedCard?.duedate
                       ? "Modifier échéance"
                       : "Définir échéance"}
+                  </button>
+
+                  <button
+                    onClick={() => handleRefuseCandidate(selectedCard!)}
+                    className={`text-left text-sm hover:bg-primary/10 text-primary rounded px-2 py-1 flex items-center gap-2`}
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
+                    {/* {selectedCard?.duedate
+                      ? "Modifier échéance"
+                      : "Définir échéance"} */}
+                    Refuser la candidature
                   </button>
 
                   {/* Affichage de la date d'échéance */}
@@ -4277,6 +4308,35 @@ export default function KanbanBoard({
                 ) : (
                   "Enregistrer"
                 )}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Modal de refus de candidature */}
+        <Dialog
+          open={isRefusingCandidate}
+          onOpenChange={setIsRefusingCandidate}
+        >
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Refuser la candidature</DialogTitle>
+            </DialogHeader>
+            <DialogDescription>
+              Êtes-vous sûr de vouloir refuser cette candidature ?
+            </DialogDescription>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setIsRefusingCandidate(false)}
+              >
+                Annuler
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={() => handleRefuseCandidate(selectedCard!)}
+              >
+                Refuser
               </Button>
             </DialogFooter>
           </DialogContent>

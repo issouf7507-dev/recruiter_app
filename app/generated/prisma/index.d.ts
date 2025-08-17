@@ -3448,27 +3448,27 @@ export namespace Prisma {
    */
 
   export type CandidatCountOutputType = {
+    alertes: number
     applications: number
+    candidatCompetences: number
+    competencesList: number
+    conversations: number
     experiences: number
     formations: number
-    competencesList: number
-    objectifs: number
-    alertes: number
     notifications: number
-    candidatCompetences: number
-    conversations: number
+    objectifs: number
   }
 
   export type CandidatCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    alertes?: boolean | CandidatCountOutputTypeCountAlertesArgs
     applications?: boolean | CandidatCountOutputTypeCountApplicationsArgs
+    candidatCompetences?: boolean | CandidatCountOutputTypeCountCandidatCompetencesArgs
+    competencesList?: boolean | CandidatCountOutputTypeCountCompetencesListArgs
+    conversations?: boolean | CandidatCountOutputTypeCountConversationsArgs
     experiences?: boolean | CandidatCountOutputTypeCountExperiencesArgs
     formations?: boolean | CandidatCountOutputTypeCountFormationsArgs
-    competencesList?: boolean | CandidatCountOutputTypeCountCompetencesListArgs
-    objectifs?: boolean | CandidatCountOutputTypeCountObjectifsArgs
-    alertes?: boolean | CandidatCountOutputTypeCountAlertesArgs
     notifications?: boolean | CandidatCountOutputTypeCountNotificationsArgs
-    candidatCompetences?: boolean | CandidatCountOutputTypeCountCandidatCompetencesArgs
-    conversations?: boolean | CandidatCountOutputTypeCountConversationsArgs
+    objectifs?: boolean | CandidatCountOutputTypeCountObjectifsArgs
   }
 
   // Custom InputTypes
@@ -3485,8 +3485,36 @@ export namespace Prisma {
   /**
    * CandidatCountOutputType without action
    */
+  export type CandidatCountOutputTypeCountAlertesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AlerteEmploiWhereInput
+  }
+
+  /**
+   * CandidatCountOutputType without action
+   */
   export type CandidatCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ApplicationWhereInput
+  }
+
+  /**
+   * CandidatCountOutputType without action
+   */
+  export type CandidatCountOutputTypeCountCandidatCompetencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CandidatCompetenceWhereInput
+  }
+
+  /**
+   * CandidatCountOutputType without action
+   */
+  export type CandidatCountOutputTypeCountCompetencesListArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CompetenceWhereInput
+  }
+
+  /**
+   * CandidatCountOutputType without action
+   */
+  export type CandidatCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversationWhereInput
   }
 
   /**
@@ -3506,8 +3534,8 @@ export namespace Prisma {
   /**
    * CandidatCountOutputType without action
    */
-  export type CandidatCountOutputTypeCountCompetencesListArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CompetenceWhereInput
+  export type CandidatCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
   /**
@@ -3517,53 +3545,25 @@ export namespace Prisma {
     where?: ObjectifCarriereWhereInput
   }
 
-  /**
-   * CandidatCountOutputType without action
-   */
-  export type CandidatCountOutputTypeCountAlertesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AlerteEmploiWhereInput
-  }
-
-  /**
-   * CandidatCountOutputType without action
-   */
-  export type CandidatCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: NotificationWhereInput
-  }
-
-  /**
-   * CandidatCountOutputType without action
-   */
-  export type CandidatCountOutputTypeCountCandidatCompetencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CandidatCompetenceWhereInput
-  }
-
-  /**
-   * CandidatCountOutputType without action
-   */
-  export type CandidatCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ConversationWhereInput
-  }
-
 
   /**
    * Count Type RecruteurCountOutputType
    */
 
   export type RecruteurCountOutputType = {
-    OfferTemplate: number
-    JobOffer: number
-    invitations: number
     collaborateurs: number
     conversations: number
+    invitations: number
+    JobOffer: number
+    OfferTemplate: number
   }
 
   export type RecruteurCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    OfferTemplate?: boolean | RecruteurCountOutputTypeCountOfferTemplateArgs
-    JobOffer?: boolean | RecruteurCountOutputTypeCountJobOfferArgs
-    invitations?: boolean | RecruteurCountOutputTypeCountInvitationsArgs
     collaborateurs?: boolean | RecruteurCountOutputTypeCountCollaborateursArgs
     conversations?: boolean | RecruteurCountOutputTypeCountConversationsArgs
+    invitations?: boolean | RecruteurCountOutputTypeCountInvitationsArgs
+    JobOffer?: boolean | RecruteurCountOutputTypeCountJobOfferArgs
+    OfferTemplate?: boolean | RecruteurCountOutputTypeCountOfferTemplateArgs
   }
 
   // Custom InputTypes
@@ -3580,15 +3580,15 @@ export namespace Prisma {
   /**
    * RecruteurCountOutputType without action
    */
-  export type RecruteurCountOutputTypeCountOfferTemplateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: OfferTemplateWhereInput
+  export type RecruteurCountOutputTypeCountCollaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CollaborateurWhereInput
   }
 
   /**
    * RecruteurCountOutputType without action
    */
-  export type RecruteurCountOutputTypeCountJobOfferArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: JobOfferWhereInput
+  export type RecruteurCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversationWhereInput
   }
 
   /**
@@ -3601,15 +3601,15 @@ export namespace Prisma {
   /**
    * RecruteurCountOutputType without action
    */
-  export type RecruteurCountOutputTypeCountCollaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: CollaborateurWhereInput
+  export type RecruteurCountOutputTypeCountJobOfferArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobOfferWhereInput
   }
 
   /**
    * RecruteurCountOutputType without action
    */
-  export type RecruteurCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ConversationWhereInput
+  export type RecruteurCountOutputTypeCountOfferTemplateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OfferTemplateWhereInput
   }
 
 
@@ -3649,17 +3649,17 @@ export namespace Prisma {
    */
 
   export type JobOfferCountOutputType = {
-    kanbanColumns: number
     applications: number
-    jobOfferCompetences: number
     conversations: number
+    jobOfferCompetences: number
+    kanbanColumns: number
   }
 
   export type JobOfferCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    kanbanColumns?: boolean | JobOfferCountOutputTypeCountKanbanColumnsArgs
     applications?: boolean | JobOfferCountOutputTypeCountApplicationsArgs
-    jobOfferCompetences?: boolean | JobOfferCountOutputTypeCountJobOfferCompetencesArgs
     conversations?: boolean | JobOfferCountOutputTypeCountConversationsArgs
+    jobOfferCompetences?: boolean | JobOfferCountOutputTypeCountJobOfferCompetencesArgs
+    kanbanColumns?: boolean | JobOfferCountOutputTypeCountKanbanColumnsArgs
   }
 
   // Custom InputTypes
@@ -3676,15 +3676,15 @@ export namespace Prisma {
   /**
    * JobOfferCountOutputType without action
    */
-  export type JobOfferCountOutputTypeCountKanbanColumnsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: KanbanColumnWhereInput
+  export type JobOfferCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationWhereInput
   }
 
   /**
    * JobOfferCountOutputType without action
    */
-  export type JobOfferCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ApplicationWhereInput
+  export type JobOfferCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversationWhereInput
   }
 
   /**
@@ -3697,8 +3697,8 @@ export namespace Prisma {
   /**
    * JobOfferCountOutputType without action
    */
-  export type JobOfferCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ConversationWhereInput
+  export type JobOfferCountOutputTypeCountKanbanColumnsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KanbanColumnWhereInput
   }
 
 
@@ -3738,17 +3738,17 @@ export namespace Prisma {
    */
 
   export type ApplicationCountOutputType = {
+    collaborateurs: number
+    files: number
     notes: number
     checklist: number
-    files: number
-    collaborateurs: number
   }
 
   export type ApplicationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    collaborateurs?: boolean | ApplicationCountOutputTypeCountCollaborateursArgs
+    files?: boolean | ApplicationCountOutputTypeCountFilesArgs
     notes?: boolean | ApplicationCountOutputTypeCountNotesArgs
     checklist?: boolean | ApplicationCountOutputTypeCountChecklistArgs
-    files?: boolean | ApplicationCountOutputTypeCountFilesArgs
-    collaborateurs?: boolean | ApplicationCountOutputTypeCountCollaborateursArgs
   }
 
   // Custom InputTypes
@@ -3765,15 +3765,8 @@ export namespace Prisma {
   /**
    * ApplicationCountOutputType without action
    */
-  export type ApplicationCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ApplicationNoteWhereInput
-  }
-
-  /**
-   * ApplicationCountOutputType without action
-   */
-  export type ApplicationCountOutputTypeCountChecklistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ChecklistItemWhereInput
+  export type ApplicationCountOutputTypeCountCollaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCollaborateurWhereInput
   }
 
   /**
@@ -3786,8 +3779,15 @@ export namespace Prisma {
   /**
    * ApplicationCountOutputType without action
    */
-  export type ApplicationCountOutputTypeCountCollaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ApplicationCollaborateurWhereInput
+  export type ApplicationCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationNoteWhereInput
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountChecklistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChecklistItemWhereInput
   }
 
 
@@ -4177,10 +4177,10 @@ export namespace Prisma {
     type?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    candidat?: boolean | User$candidatArgs<ExtArgs>
-    recruteur?: boolean | User$recruteurArgs<ExtArgs>
-    collaborateur?: boolean | User$collaborateurArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
+    candidat?: boolean | User$candidatArgs<ExtArgs>
+    collaborateur?: boolean | User$collaborateurArgs<ExtArgs>
+    recruteur?: boolean | User$recruteurArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -4201,10 +4201,10 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "password" | "image" | "type" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    candidat?: boolean | User$candidatArgs<ExtArgs>
-    recruteur?: boolean | User$recruteurArgs<ExtArgs>
-    collaborateur?: boolean | User$collaborateurArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
+    candidat?: boolean | User$candidatArgs<ExtArgs>
+    collaborateur?: boolean | User$collaborateurArgs<ExtArgs>
+    recruteur?: boolean | User$recruteurArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -4212,10 +4212,10 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      candidat: Prisma.$CandidatPayload<ExtArgs> | null
-      recruteur: Prisma.$RecruteurPayload<ExtArgs> | null
-      collaborateur: Prisma.$CollaborateurPayload<ExtArgs> | null
       accounts: Prisma.$AccountPayload<ExtArgs>[]
+      candidat: Prisma.$CandidatPayload<ExtArgs> | null
+      collaborateur: Prisma.$CollaborateurPayload<ExtArgs> | null
+      recruteur: Prisma.$RecruteurPayload<ExtArgs> | null
       sessions: Prisma.$SessionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -4568,10 +4568,10 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    candidat<T extends User$candidatArgs<ExtArgs> = {}>(args?: Subset<T, User$candidatArgs<ExtArgs>>): Prisma__CandidatClient<$Result.GetResult<Prisma.$CandidatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    recruteur<T extends User$recruteurArgs<ExtArgs> = {}>(args?: Subset<T, User$recruteurArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    collaborateur<T extends User$collaborateurArgs<ExtArgs> = {}>(args?: Subset<T, User$collaborateurArgs<ExtArgs>>): Prisma__CollaborateurClient<$Result.GetResult<Prisma.$CollaborateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    candidat<T extends User$candidatArgs<ExtArgs> = {}>(args?: Subset<T, User$candidatArgs<ExtArgs>>): Prisma__CandidatClient<$Result.GetResult<Prisma.$CandidatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    collaborateur<T extends User$collaborateurArgs<ExtArgs> = {}>(args?: Subset<T, User$collaborateurArgs<ExtArgs>>): Prisma__CollaborateurClient<$Result.GetResult<Prisma.$CollaborateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    recruteur<T extends User$recruteurArgs<ExtArgs> = {}>(args?: Subset<T, User$recruteurArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4954,6 +4954,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.accounts
+   */
+  export type User$accountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Account
+     */
+    select?: AccountSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Account
+     */
+    omit?: AccountOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AccountInclude<ExtArgs> | null
+    where?: AccountWhereInput
+    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
+    cursor?: AccountWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
+  }
+
+  /**
    * User.candidat
    */
   export type User$candidatArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4970,25 +4994,6 @@ export namespace Prisma {
      */
     include?: CandidatInclude<ExtArgs> | null
     where?: CandidatWhereInput
-  }
-
-  /**
-   * User.recruteur
-   */
-  export type User$recruteurArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Recruteur
-     */
-    select?: RecruteurSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Recruteur
-     */
-    omit?: RecruteurOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: RecruteurInclude<ExtArgs> | null
-    where?: RecruteurWhereInput
   }
 
   /**
@@ -5011,27 +5016,22 @@ export namespace Prisma {
   }
 
   /**
-   * User.accounts
+   * User.recruteur
    */
-  export type User$accountsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$recruteurArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Account
+     * Select specific fields to fetch from the Recruteur
      */
-    select?: AccountSelect<ExtArgs> | null
+    select?: RecruteurSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Account
+     * Omit specific fields from the Recruteur
      */
-    omit?: AccountOmit<ExtArgs> | null
+    omit?: RecruteurOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AccountInclude<ExtArgs> | null
-    where?: AccountWhereInput
-    orderBy?: AccountOrderByWithRelationInput | AccountOrderByWithRelationInput[]
-    cursor?: AccountWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AccountScalarFieldEnum | AccountScalarFieldEnum[]
+    include?: RecruteurInclude<ExtArgs> | null
+    where?: RecruteurWhereInput
   }
 
   /**
@@ -5106,7 +5106,6 @@ export namespace Prisma {
     situationFamiliale: string | null
     permisConduire: string | null
     image: string | null
-    favorite: boolean | null
   }
 
   export type CandidatMaxAggregateOutputType = {
@@ -5128,7 +5127,6 @@ export namespace Prisma {
     situationFamiliale: string | null
     permisConduire: string | null
     image: string | null
-    favorite: boolean | null
   }
 
   export type CandidatCountAggregateOutputType = {
@@ -5150,7 +5148,6 @@ export namespace Prisma {
     situationFamiliale: number
     permisConduire: number
     image: number
-    favorite: number
     _all: number
   }
 
@@ -5174,7 +5171,6 @@ export namespace Prisma {
     situationFamiliale?: true
     permisConduire?: true
     image?: true
-    favorite?: true
   }
 
   export type CandidatMaxAggregateInputType = {
@@ -5196,7 +5192,6 @@ export namespace Prisma {
     situationFamiliale?: true
     permisConduire?: true
     image?: true
-    favorite?: true
   }
 
   export type CandidatCountAggregateInputType = {
@@ -5218,7 +5213,6 @@ export namespace Prisma {
     situationFamiliale?: true
     permisConduire?: true
     image?: true
-    favorite?: true
     _all?: true
   }
 
@@ -5313,7 +5307,6 @@ export namespace Prisma {
     situationFamiliale: string | null
     permisConduire: string | null
     image: string | null
-    favorite: boolean | null
     _count: CandidatCountAggregateOutputType | null
     _min: CandidatMinAggregateOutputType | null
     _max: CandidatMaxAggregateOutputType | null
@@ -5352,17 +5345,16 @@ export namespace Prisma {
     situationFamiliale?: boolean
     permisConduire?: boolean
     image?: boolean
-    favorite?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    alertes?: boolean | Candidat$alertesArgs<ExtArgs>
     applications?: boolean | Candidat$applicationsArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    candidatCompetences?: boolean | Candidat$candidatCompetencesArgs<ExtArgs>
+    competencesList?: boolean | Candidat$competencesListArgs<ExtArgs>
+    conversations?: boolean | Candidat$conversationsArgs<ExtArgs>
     experiences?: boolean | Candidat$experiencesArgs<ExtArgs>
     formations?: boolean | Candidat$formationsArgs<ExtArgs>
-    competencesList?: boolean | Candidat$competencesListArgs<ExtArgs>
-    objectifs?: boolean | Candidat$objectifsArgs<ExtArgs>
-    alertes?: boolean | Candidat$alertesArgs<ExtArgs>
     notifications?: boolean | Candidat$notificationsArgs<ExtArgs>
-    candidatCompetences?: boolean | Candidat$candidatCompetencesArgs<ExtArgs>
-    conversations?: boolean | Candidat$conversationsArgs<ExtArgs>
+    objectifs?: boolean | Candidat$objectifsArgs<ExtArgs>
     _count?: boolean | CandidatCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["candidat"]>
 
@@ -5387,37 +5379,36 @@ export namespace Prisma {
     situationFamiliale?: boolean
     permisConduire?: boolean
     image?: boolean
-    favorite?: boolean
   }
 
-  export type CandidatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "nom" | "prenom" | "telephone" | "cv" | "letterm" | "email" | "bio" | "adresse" | "ville" | "statut" | "pays" | "dateNaissance" | "nationalite" | "situationFamiliale" | "permisConduire" | "image" | "favorite", ExtArgs["result"]["candidat"]>
+  export type CandidatOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "nom" | "prenom" | "telephone" | "cv" | "letterm" | "email" | "bio" | "adresse" | "ville" | "statut" | "pays" | "dateNaissance" | "nationalite" | "situationFamiliale" | "permisConduire" | "image", ExtArgs["result"]["candidat"]>
   export type CandidatInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    alertes?: boolean | Candidat$alertesArgs<ExtArgs>
     applications?: boolean | Candidat$applicationsArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    candidatCompetences?: boolean | Candidat$candidatCompetencesArgs<ExtArgs>
+    competencesList?: boolean | Candidat$competencesListArgs<ExtArgs>
+    conversations?: boolean | Candidat$conversationsArgs<ExtArgs>
     experiences?: boolean | Candidat$experiencesArgs<ExtArgs>
     formations?: boolean | Candidat$formationsArgs<ExtArgs>
-    competencesList?: boolean | Candidat$competencesListArgs<ExtArgs>
-    objectifs?: boolean | Candidat$objectifsArgs<ExtArgs>
-    alertes?: boolean | Candidat$alertesArgs<ExtArgs>
     notifications?: boolean | Candidat$notificationsArgs<ExtArgs>
-    candidatCompetences?: boolean | Candidat$candidatCompetencesArgs<ExtArgs>
-    conversations?: boolean | Candidat$conversationsArgs<ExtArgs>
+    objectifs?: boolean | Candidat$objectifsArgs<ExtArgs>
     _count?: boolean | CandidatCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $CandidatPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Candidat"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
+      alertes: Prisma.$AlerteEmploiPayload<ExtArgs>[]
       applications: Prisma.$ApplicationPayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs>
+      candidatCompetences: Prisma.$CandidatCompetencePayload<ExtArgs>[]
+      competencesList: Prisma.$CompetencePayload<ExtArgs>[]
+      conversations: Prisma.$ConversationPayload<ExtArgs>[]
       experiences: Prisma.$ExperiencePayload<ExtArgs>[]
       formations: Prisma.$FormationPayload<ExtArgs>[]
-      competencesList: Prisma.$CompetencePayload<ExtArgs>[]
-      objectifs: Prisma.$ObjectifCarrierePayload<ExtArgs>[]
-      alertes: Prisma.$AlerteEmploiPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
-      candidatCompetences: Prisma.$CandidatCompetencePayload<ExtArgs>[]
-      conversations: Prisma.$ConversationPayload<ExtArgs>[]
+      objectifs: Prisma.$ObjectifCarrierePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5438,7 +5429,6 @@ export namespace Prisma {
       situationFamiliale: string | null
       permisConduire: string | null
       image: string | null
-      favorite: boolean | null
     }, ExtArgs["result"]["candidat"]>
     composites: {}
   }
@@ -5779,16 +5769,16 @@ export namespace Prisma {
    */
   export interface Prisma__CandidatClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    alertes<T extends Candidat$alertesArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$alertesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlerteEmploiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     applications<T extends Candidat$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    candidatCompetences<T extends Candidat$candidatCompetencesArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$candidatCompetencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidatCompetencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    competencesList<T extends Candidat$competencesListArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$competencesListArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompetencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    conversations<T extends Candidat$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     experiences<T extends Candidat$experiencesArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$experiencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExperiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     formations<T extends Candidat$formationsArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$formationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FormationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    competencesList<T extends Candidat$competencesListArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$competencesListArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompetencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    objectifs<T extends Candidat$objectifsArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$objectifsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObjectifCarrierePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    alertes<T extends Candidat$alertesArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$alertesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlerteEmploiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends Candidat$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    candidatCompetences<T extends Candidat$candidatCompetencesArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$candidatCompetencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidatCompetencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    conversations<T extends Candidat$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    objectifs<T extends Candidat$objectifsArgs<ExtArgs> = {}>(args?: Subset<T, Candidat$objectifsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ObjectifCarrierePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5836,7 +5826,6 @@ export namespace Prisma {
     readonly situationFamiliale: FieldRef<"Candidat", 'String'>
     readonly permisConduire: FieldRef<"Candidat", 'String'>
     readonly image: FieldRef<"Candidat", 'String'>
-    readonly favorite: FieldRef<"Candidat", 'Boolean'>
   }
     
 
@@ -6180,6 +6169,30 @@ export namespace Prisma {
   }
 
   /**
+   * Candidat.alertes
+   */
+  export type Candidat$alertesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AlerteEmploi
+     */
+    select?: AlerteEmploiSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AlerteEmploi
+     */
+    omit?: AlerteEmploiOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlerteEmploiInclude<ExtArgs> | null
+    where?: AlerteEmploiWhereInput
+    orderBy?: AlerteEmploiOrderByWithRelationInput | AlerteEmploiOrderByWithRelationInput[]
+    cursor?: AlerteEmploiWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AlerteEmploiScalarFieldEnum | AlerteEmploiScalarFieldEnum[]
+  }
+
+  /**
    * Candidat.applications
    */
   export type Candidat$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6201,6 +6214,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ApplicationScalarFieldEnum | ApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * Candidat.candidatCompetences
+   */
+  export type Candidat$candidatCompetencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCompetence
+     */
+    select?: CandidatCompetenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCompetence
+     */
+    omit?: CandidatCompetenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCompetenceInclude<ExtArgs> | null
+    where?: CandidatCompetenceWhereInput
+    orderBy?: CandidatCompetenceOrderByWithRelationInput | CandidatCompetenceOrderByWithRelationInput[]
+    cursor?: CandidatCompetenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CandidatCompetenceScalarFieldEnum | CandidatCompetenceScalarFieldEnum[]
+  }
+
+  /**
+   * Candidat.competencesList
+   */
+  export type Candidat$competencesListArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Competence
+     */
+    select?: CompetenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Competence
+     */
+    omit?: CompetenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CompetenceInclude<ExtArgs> | null
+    where?: CompetenceWhereInput
+    orderBy?: CompetenceOrderByWithRelationInput | CompetenceOrderByWithRelationInput[]
+    cursor?: CompetenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CompetenceScalarFieldEnum | CompetenceScalarFieldEnum[]
+  }
+
+  /**
+   * Candidat.conversations
+   */
+  export type Candidat$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversation
+     */
+    select?: ConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversation
+     */
+    omit?: ConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationInclude<ExtArgs> | null
+    where?: ConversationWhereInput
+    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
+    cursor?: ConversationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
   }
 
   /**
@@ -6252,78 +6337,6 @@ export namespace Prisma {
   }
 
   /**
-   * Candidat.competencesList
-   */
-  export type Candidat$competencesListArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Competence
-     */
-    select?: CompetenceSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Competence
-     */
-    omit?: CompetenceOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: CompetenceInclude<ExtArgs> | null
-    where?: CompetenceWhereInput
-    orderBy?: CompetenceOrderByWithRelationInput | CompetenceOrderByWithRelationInput[]
-    cursor?: CompetenceWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: CompetenceScalarFieldEnum | CompetenceScalarFieldEnum[]
-  }
-
-  /**
-   * Candidat.objectifs
-   */
-  export type Candidat$objectifsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ObjectifCarriere
-     */
-    select?: ObjectifCarriereSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ObjectifCarriere
-     */
-    omit?: ObjectifCarriereOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ObjectifCarriereInclude<ExtArgs> | null
-    where?: ObjectifCarriereWhereInput
-    orderBy?: ObjectifCarriereOrderByWithRelationInput | ObjectifCarriereOrderByWithRelationInput[]
-    cursor?: ObjectifCarriereWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ObjectifCarriereScalarFieldEnum | ObjectifCarriereScalarFieldEnum[]
-  }
-
-  /**
-   * Candidat.alertes
-   */
-  export type Candidat$alertesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AlerteEmploi
-     */
-    select?: AlerteEmploiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the AlerteEmploi
-     */
-    omit?: AlerteEmploiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AlerteEmploiInclude<ExtArgs> | null
-    where?: AlerteEmploiWhereInput
-    orderBy?: AlerteEmploiOrderByWithRelationInput | AlerteEmploiOrderByWithRelationInput[]
-    cursor?: AlerteEmploiWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: AlerteEmploiScalarFieldEnum | AlerteEmploiScalarFieldEnum[]
-  }
-
-  /**
    * Candidat.notifications
    */
   export type Candidat$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6348,51 +6361,27 @@ export namespace Prisma {
   }
 
   /**
-   * Candidat.candidatCompetences
+   * Candidat.objectifs
    */
-  export type Candidat$candidatCompetencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Candidat$objectifsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the CandidatCompetence
+     * Select specific fields to fetch from the ObjectifCarriere
      */
-    select?: CandidatCompetenceSelect<ExtArgs> | null
+    select?: ObjectifCarriereSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the CandidatCompetence
+     * Omit specific fields from the ObjectifCarriere
      */
-    omit?: CandidatCompetenceOmit<ExtArgs> | null
+    omit?: ObjectifCarriereOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CandidatCompetenceInclude<ExtArgs> | null
-    where?: CandidatCompetenceWhereInput
-    orderBy?: CandidatCompetenceOrderByWithRelationInput | CandidatCompetenceOrderByWithRelationInput[]
-    cursor?: CandidatCompetenceWhereUniqueInput
+    include?: ObjectifCarriereInclude<ExtArgs> | null
+    where?: ObjectifCarriereWhereInput
+    orderBy?: ObjectifCarriereOrderByWithRelationInput | ObjectifCarriereOrderByWithRelationInput[]
+    cursor?: ObjectifCarriereWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: CandidatCompetenceScalarFieldEnum | CandidatCompetenceScalarFieldEnum[]
-  }
-
-  /**
-   * Candidat.conversations
-   */
-  export type Candidat$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Conversation
-     */
-    select?: ConversationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Conversation
-     */
-    omit?: ConversationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ConversationInclude<ExtArgs> | null
-    where?: ConversationWhereInput
-    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
-    cursor?: ConversationWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+    distinct?: ObjectifCarriereScalarFieldEnum | ObjectifCarriereScalarFieldEnum[]
   }
 
   /**
@@ -7576,13 +7565,13 @@ export namespace Prisma {
     phone?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    social?: boolean | Recruteur$socialArgs<ExtArgs>
-    OfferTemplate?: boolean | Recruteur$OfferTemplateArgs<ExtArgs>
-    JobOffer?: boolean | Recruteur$JobOfferArgs<ExtArgs>
-    invitations?: boolean | Recruteur$invitationsArgs<ExtArgs>
     collaborateurs?: boolean | Recruteur$collaborateursArgs<ExtArgs>
+    social?: boolean | Recruteur$socialArgs<ExtArgs>
     conversations?: boolean | Recruteur$conversationsArgs<ExtArgs>
+    invitations?: boolean | Recruteur$invitationsArgs<ExtArgs>
+    JobOffer?: boolean | Recruteur$JobOfferArgs<ExtArgs>
+    OfferTemplate?: boolean | Recruteur$OfferTemplateArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | RecruteurCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["recruteur"]>
 
@@ -7608,26 +7597,26 @@ export namespace Prisma {
 
   export type RecruteurOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "type" | "entreprise" | "description" | "name" | "logo" | "industry" | "size" | "location" | "website" | "email" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["recruteur"]>
   export type RecruteurInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-    social?: boolean | Recruteur$socialArgs<ExtArgs>
-    OfferTemplate?: boolean | Recruteur$OfferTemplateArgs<ExtArgs>
-    JobOffer?: boolean | Recruteur$JobOfferArgs<ExtArgs>
-    invitations?: boolean | Recruteur$invitationsArgs<ExtArgs>
     collaborateurs?: boolean | Recruteur$collaborateursArgs<ExtArgs>
+    social?: boolean | Recruteur$socialArgs<ExtArgs>
     conversations?: boolean | Recruteur$conversationsArgs<ExtArgs>
+    invitations?: boolean | Recruteur$invitationsArgs<ExtArgs>
+    JobOffer?: boolean | Recruteur$JobOfferArgs<ExtArgs>
+    OfferTemplate?: boolean | Recruteur$OfferTemplateArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | RecruteurCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $RecruteurPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Recruteur"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-      social: Prisma.$CompanySocialPayload<ExtArgs> | null
-      OfferTemplate: Prisma.$OfferTemplatePayload<ExtArgs>[]
-      JobOffer: Prisma.$JobOfferPayload<ExtArgs>[]
-      invitations: Prisma.$InvitationPayload<ExtArgs>[]
       collaborateurs: Prisma.$CollaborateurPayload<ExtArgs>[]
+      social: Prisma.$CompanySocialPayload<ExtArgs> | null
       conversations: Prisma.$ConversationPayload<ExtArgs>[]
+      invitations: Prisma.$InvitationPayload<ExtArgs>[]
+      JobOffer: Prisma.$JobOfferPayload<ExtArgs>[]
+      OfferTemplate: Prisma.$OfferTemplatePayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7985,13 +7974,13 @@ export namespace Prisma {
    */
   export interface Prisma__RecruteurClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    social<T extends Recruteur$socialArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$socialArgs<ExtArgs>>): Prisma__CompanySocialClient<$Result.GetResult<Prisma.$CompanySocialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    OfferTemplate<T extends Recruteur$OfferTemplateArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$OfferTemplateArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    JobOffer<T extends Recruteur$JobOfferArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$JobOfferArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    invitations<T extends Recruteur$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     collaborateurs<T extends Recruteur$collaborateursArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$collaborateursArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CollaborateurPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    social<T extends Recruteur$socialArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$socialArgs<ExtArgs>>): Prisma__CompanySocialClient<$Result.GetResult<Prisma.$CompanySocialPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     conversations<T extends Recruteur$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    invitations<T extends Recruteur$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    JobOffer<T extends Recruteur$JobOfferArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$JobOfferArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    OfferTemplate<T extends Recruteur$OfferTemplateArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$OfferTemplateArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8379,6 +8368,30 @@ export namespace Prisma {
   }
 
   /**
+   * Recruteur.collaborateurs
+   */
+  export type Recruteur$collaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Collaborateur
+     */
+    select?: CollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Collaborateur
+     */
+    omit?: CollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurInclude<ExtArgs> | null
+    where?: CollaborateurWhereInput
+    orderBy?: CollaborateurOrderByWithRelationInput | CollaborateurOrderByWithRelationInput[]
+    cursor?: CollaborateurWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CollaborateurScalarFieldEnum | CollaborateurScalarFieldEnum[]
+  }
+
+  /**
    * Recruteur.social
    */
   export type Recruteur$socialArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8398,51 +8411,27 @@ export namespace Prisma {
   }
 
   /**
-   * Recruteur.OfferTemplate
+   * Recruteur.conversations
    */
-  export type Recruteur$OfferTemplateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Recruteur$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the OfferTemplate
+     * Select specific fields to fetch from the Conversation
      */
-    select?: OfferTemplateSelect<ExtArgs> | null
+    select?: ConversationSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the OfferTemplate
+     * Omit specific fields from the Conversation
      */
-    omit?: OfferTemplateOmit<ExtArgs> | null
+    omit?: ConversationOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: OfferTemplateInclude<ExtArgs> | null
-    where?: OfferTemplateWhereInput
-    orderBy?: OfferTemplateOrderByWithRelationInput | OfferTemplateOrderByWithRelationInput[]
-    cursor?: OfferTemplateWhereUniqueInput
+    include?: ConversationInclude<ExtArgs> | null
+    where?: ConversationWhereInput
+    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
+    cursor?: ConversationWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: OfferTemplateScalarFieldEnum | OfferTemplateScalarFieldEnum[]
-  }
-
-  /**
-   * Recruteur.JobOffer
-   */
-  export type Recruteur$JobOfferArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the JobOffer
-     */
-    select?: JobOfferSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the JobOffer
-     */
-    omit?: JobOfferOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: JobOfferInclude<ExtArgs> | null
-    where?: JobOfferWhereInput
-    orderBy?: JobOfferOrderByWithRelationInput | JobOfferOrderByWithRelationInput[]
-    cursor?: JobOfferWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: JobOfferScalarFieldEnum | JobOfferScalarFieldEnum[]
+    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
   }
 
   /**
@@ -8470,51 +8459,51 @@ export namespace Prisma {
   }
 
   /**
-   * Recruteur.collaborateurs
+   * Recruteur.JobOffer
    */
-  export type Recruteur$collaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Recruteur$JobOfferArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Collaborateur
+     * Select specific fields to fetch from the JobOffer
      */
-    select?: CollaborateurSelect<ExtArgs> | null
+    select?: JobOfferSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Collaborateur
+     * Omit specific fields from the JobOffer
      */
-    omit?: CollaborateurOmit<ExtArgs> | null
+    omit?: JobOfferOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: CollaborateurInclude<ExtArgs> | null
-    where?: CollaborateurWhereInput
-    orderBy?: CollaborateurOrderByWithRelationInput | CollaborateurOrderByWithRelationInput[]
-    cursor?: CollaborateurWhereUniqueInput
+    include?: JobOfferInclude<ExtArgs> | null
+    where?: JobOfferWhereInput
+    orderBy?: JobOfferOrderByWithRelationInput | JobOfferOrderByWithRelationInput[]
+    cursor?: JobOfferWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: CollaborateurScalarFieldEnum | CollaborateurScalarFieldEnum[]
+    distinct?: JobOfferScalarFieldEnum | JobOfferScalarFieldEnum[]
   }
 
   /**
-   * Recruteur.conversations
+   * Recruteur.OfferTemplate
    */
-  export type Recruteur$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Recruteur$OfferTemplateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the OfferTemplate
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: OfferTemplateSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the OfferTemplate
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: OfferTemplateOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
-    where?: ConversationWhereInput
-    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
-    cursor?: ConversationWhereUniqueInput
+    include?: OfferTemplateInclude<ExtArgs> | null
+    where?: OfferTemplateWhereInput
+    orderBy?: OfferTemplateOrderByWithRelationInput | OfferTemplateOrderByWithRelationInput[]
+    cursor?: OfferTemplateWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+    distinct?: OfferTemplateScalarFieldEnum | OfferTemplateScalarFieldEnum[]
   }
 
   /**
@@ -9642,8 +9631,8 @@ export namespace Prisma {
     accepted?: boolean
     createdAt?: boolean
     expiresAt?: boolean
-    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
     collaborateur?: boolean | Invitation$collaborateurArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["invitation"]>
 
 
@@ -9661,15 +9650,15 @@ export namespace Prisma {
 
   export type InvitationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "recruteurId" | "role" | "token" | "accepted" | "createdAt" | "expiresAt", ExtArgs["result"]["invitation"]>
   export type InvitationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
     collaborateur?: boolean | Invitation$collaborateurArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
   }
 
   export type $InvitationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Invitation"
     objects: {
-      recruteur: Prisma.$RecruteurPayload<ExtArgs>
       collaborateur: Prisma.$CollaborateurPayload<ExtArgs> | null
+      recruteur: Prisma.$RecruteurPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10020,8 +10009,8 @@ export namespace Prisma {
    */
   export interface Prisma__InvitationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     collaborateur<T extends Invitation$collaborateurArgs<ExtArgs> = {}>(args?: Subset<T, Invitation$collaborateurArgs<ExtArgs>>): Prisma__CollaborateurClient<$Result.GetResult<Prisma.$CollaborateurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10643,10 +10632,10 @@ export namespace Prisma {
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
-    invitation?: boolean | Collaborateur$invitationArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
     applications?: boolean | Collaborateur$applicationsArgs<ExtArgs>
+    invitation?: boolean | Collaborateur$invitationArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | CollaborateurCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["collaborateur"]>
 
@@ -10667,20 +10656,20 @@ export namespace Prisma {
 
   export type CollaborateurOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "nom" | "prenom" | "role" | "recruteurId" | "invitationId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["collaborateur"]>
   export type CollaborateurInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
-    invitation?: boolean | Collaborateur$invitationArgs<ExtArgs>
-    user?: boolean | UserDefaultArgs<ExtArgs>
     applications?: boolean | Collaborateur$applicationsArgs<ExtArgs>
+    invitation?: boolean | Collaborateur$invitationArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | CollaborateurCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $CollaborateurPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Collaborateur"
     objects: {
-      recruteur: Prisma.$RecruteurPayload<ExtArgs>
-      invitation: Prisma.$InvitationPayload<ExtArgs> | null
-      user: Prisma.$UserPayload<ExtArgs>
       applications: Prisma.$ApplicationCollaborateurPayload<ExtArgs>[]
+      invitation: Prisma.$InvitationPayload<ExtArgs> | null
+      recruteur: Prisma.$RecruteurPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11033,10 +11022,10 @@ export namespace Prisma {
    */
   export interface Prisma__CollaborateurClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    invitation<T extends Collaborateur$invitationArgs<ExtArgs> = {}>(args?: Subset<T, Collaborateur$invitationArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     applications<T extends Collaborateur$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, Collaborateur$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    invitation<T extends Collaborateur$invitationArgs<ExtArgs> = {}>(args?: Subset<T, Collaborateur$invitationArgs<ExtArgs>>): Prisma__InvitationClient<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11419,25 +11408,6 @@ export namespace Prisma {
   }
 
   /**
-   * Collaborateur.invitation
-   */
-  export type Collaborateur$invitationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Invitation
-     */
-    select?: InvitationSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Invitation
-     */
-    omit?: InvitationOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: InvitationInclude<ExtArgs> | null
-    where?: InvitationWhereInput
-  }
-
-  /**
    * Collaborateur.applications
    */
   export type Collaborateur$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11459,6 +11429,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ApplicationCollaborateurScalarFieldEnum | ApplicationCollaborateurScalarFieldEnum[]
+  }
+
+  /**
+   * Collaborateur.invitation
+   */
+  export type Collaborateur$invitationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Invitation
+     */
+    select?: InvitationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Invitation
+     */
+    omit?: InvitationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InvitationInclude<ExtArgs> | null
+    where?: InvitationWhereInput
   }
 
   /**
@@ -12763,12 +12752,12 @@ export namespace Prisma {
     recruteurId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    template?: boolean | JobOffer$templateArgs<ExtArgs>
-    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
-    kanbanColumns?: boolean | JobOffer$kanbanColumnsArgs<ExtArgs>
     applications?: boolean | JobOffer$applicationsArgs<ExtArgs>
-    jobOfferCompetences?: boolean | JobOffer$jobOfferCompetencesArgs<ExtArgs>
     conversations?: boolean | JobOffer$conversationsArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
+    template?: boolean | JobOffer$templateArgs<ExtArgs>
+    jobOfferCompetences?: boolean | JobOffer$jobOfferCompetencesArgs<ExtArgs>
+    kanbanColumns?: boolean | JobOffer$kanbanColumnsArgs<ExtArgs>
     _count?: boolean | JobOfferCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobOffer"]>
 
@@ -12801,24 +12790,24 @@ export namespace Prisma {
 
   export type JobOfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "company" | "location" | "type" | "etat" | "experience" | "salaryMin" | "salaryMax" | "salaryCurrency" | "salaryPeriod" | "benefits" | "requirements" | "responsibilities" | "skills" | "favorite" | "templateId" | "views" | "recruteurId" | "createdAt" | "updatedAt", ExtArgs["result"]["jobOffer"]>
   export type JobOfferInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    template?: boolean | JobOffer$templateArgs<ExtArgs>
-    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
-    kanbanColumns?: boolean | JobOffer$kanbanColumnsArgs<ExtArgs>
     applications?: boolean | JobOffer$applicationsArgs<ExtArgs>
-    jobOfferCompetences?: boolean | JobOffer$jobOfferCompetencesArgs<ExtArgs>
     conversations?: boolean | JobOffer$conversationsArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
+    template?: boolean | JobOffer$templateArgs<ExtArgs>
+    jobOfferCompetences?: boolean | JobOffer$jobOfferCompetencesArgs<ExtArgs>
+    kanbanColumns?: boolean | JobOffer$kanbanColumnsArgs<ExtArgs>
     _count?: boolean | JobOfferCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $JobOfferPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "JobOffer"
     objects: {
-      template: Prisma.$OfferTemplatePayload<ExtArgs> | null
-      recruteur: Prisma.$RecruteurPayload<ExtArgs>
-      kanbanColumns: Prisma.$KanbanColumnPayload<ExtArgs>[]
       applications: Prisma.$ApplicationPayload<ExtArgs>[]
-      jobOfferCompetences: Prisma.$JobOfferCompetencePayload<ExtArgs>[]
       conversations: Prisma.$ConversationPayload<ExtArgs>[]
+      recruteur: Prisma.$RecruteurPayload<ExtArgs>
+      template: Prisma.$OfferTemplatePayload<ExtArgs> | null
+      jobOfferCompetences: Prisma.$JobOfferCompetencePayload<ExtArgs>[]
+      kanbanColumns: Prisma.$KanbanColumnPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -13183,12 +13172,12 @@ export namespace Prisma {
    */
   export interface Prisma__JobOfferClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    template<T extends JobOffer$templateArgs<ExtArgs> = {}>(args?: Subset<T, JobOffer$templateArgs<ExtArgs>>): Prisma__OfferTemplateClient<$Result.GetResult<Prisma.$OfferTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    kanbanColumns<T extends JobOffer$kanbanColumnsArgs<ExtArgs> = {}>(args?: Subset<T, JobOffer$kanbanColumnsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KanbanColumnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     applications<T extends JobOffer$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, JobOffer$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    jobOfferCompetences<T extends JobOffer$jobOfferCompetencesArgs<ExtArgs> = {}>(args?: Subset<T, JobOffer$jobOfferCompetencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobOfferCompetencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     conversations<T extends JobOffer$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, JobOffer$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    template<T extends JobOffer$templateArgs<ExtArgs> = {}>(args?: Subset<T, JobOffer$templateArgs<ExtArgs>>): Prisma__OfferTemplateClient<$Result.GetResult<Prisma.$OfferTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    jobOfferCompetences<T extends JobOffer$jobOfferCompetencesArgs<ExtArgs> = {}>(args?: Subset<T, JobOffer$jobOfferCompetencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobOfferCompetencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    kanbanColumns<T extends JobOffer$kanbanColumnsArgs<ExtArgs> = {}>(args?: Subset<T, JobOffer$kanbanColumnsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KanbanColumnPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13583,49 +13572,6 @@ export namespace Prisma {
   }
 
   /**
-   * JobOffer.template
-   */
-  export type JobOffer$templateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OfferTemplate
-     */
-    select?: OfferTemplateSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OfferTemplate
-     */
-    omit?: OfferTemplateOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: OfferTemplateInclude<ExtArgs> | null
-    where?: OfferTemplateWhereInput
-  }
-
-  /**
-   * JobOffer.kanbanColumns
-   */
-  export type JobOffer$kanbanColumnsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the KanbanColumn
-     */
-    select?: KanbanColumnSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the KanbanColumn
-     */
-    omit?: KanbanColumnOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: KanbanColumnInclude<ExtArgs> | null
-    where?: KanbanColumnWhereInput
-    orderBy?: KanbanColumnOrderByWithRelationInput | KanbanColumnOrderByWithRelationInput[]
-    cursor?: KanbanColumnWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: KanbanColumnScalarFieldEnum | KanbanColumnScalarFieldEnum[]
-  }
-
-  /**
    * JobOffer.applications
    */
   export type JobOffer$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13647,6 +13593,49 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ApplicationScalarFieldEnum | ApplicationScalarFieldEnum[]
+  }
+
+  /**
+   * JobOffer.conversations
+   */
+  export type JobOffer$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversation
+     */
+    select?: ConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversation
+     */
+    omit?: ConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationInclude<ExtArgs> | null
+    where?: ConversationWhereInput
+    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
+    cursor?: ConversationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+  }
+
+  /**
+   * JobOffer.template
+   */
+  export type JobOffer$templateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OfferTemplate
+     */
+    select?: OfferTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OfferTemplate
+     */
+    omit?: OfferTemplateOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OfferTemplateInclude<ExtArgs> | null
+    where?: OfferTemplateWhereInput
   }
 
   /**
@@ -13674,27 +13663,27 @@ export namespace Prisma {
   }
 
   /**
-   * JobOffer.conversations
+   * JobOffer.kanbanColumns
    */
-  export type JobOffer$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobOffer$kanbanColumnsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Conversation
+     * Select specific fields to fetch from the KanbanColumn
      */
-    select?: ConversationSelect<ExtArgs> | null
+    select?: KanbanColumnSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Conversation
+     * Omit specific fields from the KanbanColumn
      */
-    omit?: ConversationOmit<ExtArgs> | null
+    omit?: KanbanColumnOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ConversationInclude<ExtArgs> | null
-    where?: ConversationWhereInput
-    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
-    cursor?: ConversationWhereUniqueInput
+    include?: KanbanColumnInclude<ExtArgs> | null
+    where?: KanbanColumnWhereInput
+    orderBy?: KanbanColumnOrderByWithRelationInput | KanbanColumnOrderByWithRelationInput[]
+    cursor?: KanbanColumnWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+    distinct?: KanbanColumnScalarFieldEnum | KanbanColumnScalarFieldEnum[]
   }
 
   /**
@@ -15713,6 +15702,7 @@ export namespace Prisma {
     rating: number | null
     message: string | null
     cv: string | null
+    favorite: boolean | null
     duedate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -15726,6 +15716,7 @@ export namespace Prisma {
     rating: number | null
     message: string | null
     cv: string | null
+    favorite: boolean | null
     duedate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -15739,6 +15730,7 @@ export namespace Prisma {
     rating: number
     message: number
     cv: number
+    favorite: number
     duedate: number
     createdAt: number
     updatedAt: number
@@ -15764,6 +15756,7 @@ export namespace Prisma {
     rating?: true
     message?: true
     cv?: true
+    favorite?: true
     duedate?: true
     createdAt?: true
     updatedAt?: true
@@ -15777,6 +15770,7 @@ export namespace Prisma {
     rating?: true
     message?: true
     cv?: true
+    favorite?: true
     duedate?: true
     createdAt?: true
     updatedAt?: true
@@ -15790,6 +15784,7 @@ export namespace Prisma {
     rating?: true
     message?: true
     cv?: true
+    favorite?: true
     duedate?: true
     createdAt?: true
     updatedAt?: true
@@ -15890,6 +15885,7 @@ export namespace Prisma {
     rating: number | null
     message: string | null
     cv: string | null
+    favorite: boolean | null
     duedate: Date | null
     createdAt: Date
     updatedAt: Date
@@ -15922,16 +15918,17 @@ export namespace Prisma {
     rating?: boolean
     message?: boolean
     cv?: boolean
+    favorite?: boolean
     duedate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
-    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     column?: boolean | KanbanColumnDefaultArgs<ExtArgs>
+    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
+    collaborateurs?: boolean | Application$collaborateursArgs<ExtArgs>
+    files?: boolean | Application$filesArgs<ExtArgs>
     notes?: boolean | Application$notesArgs<ExtArgs>
     checklist?: boolean | Application$checklistArgs<ExtArgs>
-    files?: boolean | Application$filesArgs<ExtArgs>
-    collaborateurs?: boolean | Application$collaborateursArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
@@ -15945,20 +15942,21 @@ export namespace Prisma {
     rating?: boolean
     message?: boolean
     cv?: boolean
+    favorite?: boolean
     duedate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidatId" | "jobOfferId" | "columnId" | "rating" | "message" | "cv" | "duedate" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
+  export type ApplicationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "candidatId" | "jobOfferId" | "columnId" | "rating" | "message" | "cv" | "favorite" | "duedate" | "createdAt" | "updatedAt", ExtArgs["result"]["application"]>
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
-    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     column?: boolean | KanbanColumnDefaultArgs<ExtArgs>
+    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
+    collaborateurs?: boolean | Application$collaborateursArgs<ExtArgs>
+    files?: boolean | Application$filesArgs<ExtArgs>
     notes?: boolean | Application$notesArgs<ExtArgs>
     checklist?: boolean | Application$checklistArgs<ExtArgs>
-    files?: boolean | Application$filesArgs<ExtArgs>
-    collaborateurs?: boolean | Application$collaborateursArgs<ExtArgs>
     _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -15966,12 +15964,12 @@ export namespace Prisma {
     name: "Application"
     objects: {
       candidat: Prisma.$CandidatPayload<ExtArgs>
-      jobOffer: Prisma.$JobOfferPayload<ExtArgs>
       column: Prisma.$KanbanColumnPayload<ExtArgs>
+      jobOffer: Prisma.$JobOfferPayload<ExtArgs>
+      collaborateurs: Prisma.$ApplicationCollaborateurPayload<ExtArgs>[]
+      files: Prisma.$ApplicationFilePayload<ExtArgs>[]
       notes: Prisma.$ApplicationNotePayload<ExtArgs>[]
       checklist: Prisma.$ChecklistItemPayload<ExtArgs>[]
-      files: Prisma.$ApplicationFilePayload<ExtArgs>[]
-      collaborateurs: Prisma.$ApplicationCollaborateurPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -15981,6 +15979,7 @@ export namespace Prisma {
       rating: number | null
       message: string | null
       cv: string | null
+      favorite: boolean | null
       duedate: Date | null
       createdAt: Date
       updatedAt: Date
@@ -16325,12 +16324,12 @@ export namespace Prisma {
   export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     candidat<T extends CandidatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidatDefaultArgs<ExtArgs>>): Prisma__CandidatClient<$Result.GetResult<Prisma.$CandidatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    jobOffer<T extends JobOfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobOfferDefaultArgs<ExtArgs>>): Prisma__JobOfferClient<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     column<T extends KanbanColumnDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KanbanColumnDefaultArgs<ExtArgs>>): Prisma__KanbanColumnClient<$Result.GetResult<Prisma.$KanbanColumnPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    jobOffer<T extends JobOfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobOfferDefaultArgs<ExtArgs>>): Prisma__JobOfferClient<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    collaborateurs<T extends Application$collaborateursArgs<ExtArgs> = {}>(args?: Subset<T, Application$collaborateursArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    files<T extends Application$filesArgs<ExtArgs> = {}>(args?: Subset<T, Application$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notes<T extends Application$notesArgs<ExtArgs> = {}>(args?: Subset<T, Application$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationNotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     checklist<T extends Application$checklistArgs<ExtArgs> = {}>(args?: Subset<T, Application$checklistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    files<T extends Application$filesArgs<ExtArgs> = {}>(args?: Subset<T, Application$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    collaborateurs<T extends Application$collaborateursArgs<ExtArgs> = {}>(args?: Subset<T, Application$collaborateursArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16367,6 +16366,7 @@ export namespace Prisma {
     readonly rating: FieldRef<"Application", 'Int'>
     readonly message: FieldRef<"Application", 'String'>
     readonly cv: FieldRef<"Application", 'String'>
+    readonly favorite: FieldRef<"Application", 'Boolean'>
     readonly duedate: FieldRef<"Application", 'DateTime'>
     readonly createdAt: FieldRef<"Application", 'DateTime'>
     readonly updatedAt: FieldRef<"Application", 'DateTime'>
@@ -16713,6 +16713,54 @@ export namespace Prisma {
   }
 
   /**
+   * Application.collaborateurs
+   */
+  export type Application$collaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateur
+     */
+    select?: ApplicationCollaborateurSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateur
+     */
+    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurInclude<ExtArgs> | null
+    where?: ApplicationCollaborateurWhereInput
+    orderBy?: ApplicationCollaborateurOrderByWithRelationInput | ApplicationCollaborateurOrderByWithRelationInput[]
+    cursor?: ApplicationCollaborateurWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationCollaborateurScalarFieldEnum | ApplicationCollaborateurScalarFieldEnum[]
+  }
+
+  /**
+   * Application.files
+   */
+  export type Application$filesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFile
+     */
+    select?: ApplicationFileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFile
+     */
+    omit?: ApplicationFileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileInclude<ExtArgs> | null
+    where?: ApplicationFileWhereInput
+    orderBy?: ApplicationFileOrderByWithRelationInput | ApplicationFileOrderByWithRelationInput[]
+    cursor?: ApplicationFileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationFileScalarFieldEnum | ApplicationFileScalarFieldEnum[]
+  }
+
+  /**
    * Application.notes
    */
   export type Application$notesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -16758,54 +16806,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ChecklistItemScalarFieldEnum | ChecklistItemScalarFieldEnum[]
-  }
-
-  /**
-   * Application.files
-   */
-  export type Application$filesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ApplicationFile
-     */
-    select?: ApplicationFileSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ApplicationFile
-     */
-    omit?: ApplicationFileOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ApplicationFileInclude<ExtArgs> | null
-    where?: ApplicationFileWhereInput
-    orderBy?: ApplicationFileOrderByWithRelationInput | ApplicationFileOrderByWithRelationInput[]
-    cursor?: ApplicationFileWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ApplicationFileScalarFieldEnum | ApplicationFileScalarFieldEnum[]
-  }
-
-  /**
-   * Application.collaborateurs
-   */
-  export type Application$collaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the ApplicationCollaborateur
-     */
-    select?: ApplicationCollaborateurSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the ApplicationCollaborateur
-     */
-    omit?: ApplicationCollaborateurOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ApplicationCollaborateurInclude<ExtArgs> | null
-    where?: ApplicationCollaborateurWhereInput
-    orderBy?: ApplicationCollaborateurOrderByWithRelationInput | ApplicationCollaborateurOrderByWithRelationInput[]
-    cursor?: ApplicationCollaborateurWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ApplicationCollaborateurScalarFieldEnum | ApplicationCollaborateurScalarFieldEnum[]
   }
 
   /**
@@ -20006,8 +20006,8 @@ export namespace Prisma {
     jobOfferId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     applications?: boolean | KanbanColumn$applicationsArgs<ExtArgs>
+    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     _count?: boolean | KanbanColumnCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["kanbanColumn"]>
 
@@ -20026,16 +20026,16 @@ export namespace Prisma {
 
   export type KanbanColumnOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "color" | "name" | "order" | "isDefault" | "jobOfferId" | "createdAt" | "updatedAt", ExtArgs["result"]["kanbanColumn"]>
   export type KanbanColumnInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     applications?: boolean | KanbanColumn$applicationsArgs<ExtArgs>
+    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     _count?: boolean | KanbanColumnCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $KanbanColumnPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "KanbanColumn"
     objects: {
-      jobOffer: Prisma.$JobOfferPayload<ExtArgs>
       applications: Prisma.$ApplicationPayload<ExtArgs>[]
+      jobOffer: Prisma.$JobOfferPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -20386,8 +20386,8 @@ export namespace Prisma {
    */
   export interface Prisma__KanbanColumnClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    jobOffer<T extends JobOfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobOfferDefaultArgs<ExtArgs>>): Prisma__JobOfferClient<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     applications<T extends KanbanColumn$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, KanbanColumn$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    jobOffer<T extends JobOfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobOfferDefaultArgs<ExtArgs>>): Prisma__JobOfferClient<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -33682,8 +33682,8 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
+    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
@@ -33703,8 +33703,8 @@ export namespace Prisma {
 
   export type ConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobOfferId" | "candidatId" | "recruteurId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["conversation"]>
   export type ConversationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     candidat?: boolean | CandidatDefaultArgs<ExtArgs>
+    jobOffer?: boolean | JobOfferDefaultArgs<ExtArgs>
     recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
@@ -33713,8 +33713,8 @@ export namespace Prisma {
   export type $ConversationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Conversation"
     objects: {
-      jobOffer: Prisma.$JobOfferPayload<ExtArgs>
       candidat: Prisma.$CandidatPayload<ExtArgs>
+      jobOffer: Prisma.$JobOfferPayload<ExtArgs>
       recruteur: Prisma.$RecruteurPayload<ExtArgs>
       messages: Prisma.$MessagePayload<ExtArgs>[]
     }
@@ -34066,8 +34066,8 @@ export namespace Prisma {
    */
   export interface Prisma__ConversationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    jobOffer<T extends JobOfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobOfferDefaultArgs<ExtArgs>>): Prisma__JobOfferClient<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     candidat<T extends CandidatDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidatDefaultArgs<ExtArgs>>): Prisma__CandidatClient<$Result.GetResult<Prisma.$CandidatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    jobOffer<T extends JobOfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobOfferDefaultArgs<ExtArgs>>): Prisma__JobOfferClient<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     messages<T extends Conversation$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -35500,8 +35500,7 @@ export namespace Prisma {
     nationalite: 'nationalite',
     situationFamiliale: 'situationFamiliale',
     permisConduire: 'permisConduire',
-    image: 'image',
-    favorite: 'favorite'
+    image: 'image'
   };
 
   export type CandidatScalarFieldEnum = (typeof CandidatScalarFieldEnum)[keyof typeof CandidatScalarFieldEnum]
@@ -35648,6 +35647,7 @@ export namespace Prisma {
     rating: 'rating',
     message: 'message',
     cv: 'cv',
+    favorite: 'favorite',
     duedate: 'duedate',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -36316,13 +36316,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'RecruteurType'
    */
   export type EnumRecruteurTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RecruteurType'>
@@ -36333,6 +36326,13 @@ export namespace Prisma {
    * Reference to a field of type 'Role'
    */
   export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -36373,10 +36373,10 @@ export namespace Prisma {
     type?: EnumUserTypeFilter<"User"> | $Enums.UserType
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    candidat?: XOR<CandidatNullableScalarRelationFilter, CandidatWhereInput> | null
-    recruteur?: XOR<RecruteurNullableScalarRelationFilter, RecruteurWhereInput> | null
-    collaborateur?: XOR<CollaborateurNullableScalarRelationFilter, CollaborateurWhereInput> | null
     accounts?: AccountListRelationFilter
+    candidat?: XOR<CandidatNullableScalarRelationFilter, CandidatWhereInput> | null
+    collaborateur?: XOR<CollaborateurNullableScalarRelationFilter, CollaborateurWhereInput> | null
+    recruteur?: XOR<RecruteurNullableScalarRelationFilter, RecruteurWhereInput> | null
     sessions?: SessionListRelationFilter
   }
 
@@ -36390,10 +36390,10 @@ export namespace Prisma {
     type?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    candidat?: CandidatOrderByWithRelationInput
-    recruteur?: RecruteurOrderByWithRelationInput
-    collaborateur?: CollaborateurOrderByWithRelationInput
     accounts?: AccountOrderByRelationAggregateInput
+    candidat?: CandidatOrderByWithRelationInput
+    collaborateur?: CollaborateurOrderByWithRelationInput
+    recruteur?: RecruteurOrderByWithRelationInput
     sessions?: SessionOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
@@ -36411,10 +36411,10 @@ export namespace Prisma {
     type?: EnumUserTypeFilter<"User"> | $Enums.UserType
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    candidat?: XOR<CandidatNullableScalarRelationFilter, CandidatWhereInput> | null
-    recruteur?: XOR<RecruteurNullableScalarRelationFilter, RecruteurWhereInput> | null
-    collaborateur?: XOR<CollaborateurNullableScalarRelationFilter, CollaborateurWhereInput> | null
     accounts?: AccountListRelationFilter
+    candidat?: XOR<CandidatNullableScalarRelationFilter, CandidatWhereInput> | null
+    collaborateur?: XOR<CollaborateurNullableScalarRelationFilter, CollaborateurWhereInput> | null
+    recruteur?: XOR<RecruteurNullableScalarRelationFilter, RecruteurWhereInput> | null
     sessions?: SessionListRelationFilter
   }, "id" | "email">
 
@@ -36470,17 +36470,16 @@ export namespace Prisma {
     situationFamiliale?: StringNullableFilter<"Candidat"> | string | null
     permisConduire?: StringNullableFilter<"Candidat"> | string | null
     image?: StringNullableFilter<"Candidat"> | string | null
-    favorite?: BoolNullableFilter<"Candidat"> | boolean | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    alertes?: AlerteEmploiListRelationFilter
     applications?: ApplicationListRelationFilter
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    candidatCompetences?: CandidatCompetenceListRelationFilter
+    competencesList?: CompetenceListRelationFilter
+    conversations?: ConversationListRelationFilter
     experiences?: ExperienceListRelationFilter
     formations?: FormationListRelationFilter
-    competencesList?: CompetenceListRelationFilter
-    objectifs?: ObjectifCarriereListRelationFilter
-    alertes?: AlerteEmploiListRelationFilter
     notifications?: NotificationListRelationFilter
-    candidatCompetences?: CandidatCompetenceListRelationFilter
-    conversations?: ConversationListRelationFilter
+    objectifs?: ObjectifCarriereListRelationFilter
   }
 
   export type CandidatOrderByWithRelationInput = {
@@ -36502,17 +36501,16 @@ export namespace Prisma {
     situationFamiliale?: SortOrderInput | SortOrder
     permisConduire?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
-    favorite?: SortOrderInput | SortOrder
-    user?: UserOrderByWithRelationInput
+    alertes?: AlerteEmploiOrderByRelationAggregateInput
     applications?: ApplicationOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
+    candidatCompetences?: CandidatCompetenceOrderByRelationAggregateInput
+    competencesList?: CompetenceOrderByRelationAggregateInput
+    conversations?: ConversationOrderByRelationAggregateInput
     experiences?: ExperienceOrderByRelationAggregateInput
     formations?: FormationOrderByRelationAggregateInput
-    competencesList?: CompetenceOrderByRelationAggregateInput
-    objectifs?: ObjectifCarriereOrderByRelationAggregateInput
-    alertes?: AlerteEmploiOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
-    candidatCompetences?: CandidatCompetenceOrderByRelationAggregateInput
-    conversations?: ConversationOrderByRelationAggregateInput
+    objectifs?: ObjectifCarriereOrderByRelationAggregateInput
     _relevance?: CandidatOrderByRelevanceInput
   }
 
@@ -36538,17 +36536,16 @@ export namespace Prisma {
     situationFamiliale?: StringNullableFilter<"Candidat"> | string | null
     permisConduire?: StringNullableFilter<"Candidat"> | string | null
     image?: StringNullableFilter<"Candidat"> | string | null
-    favorite?: BoolNullableFilter<"Candidat"> | boolean | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    alertes?: AlerteEmploiListRelationFilter
     applications?: ApplicationListRelationFilter
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    candidatCompetences?: CandidatCompetenceListRelationFilter
+    competencesList?: CompetenceListRelationFilter
+    conversations?: ConversationListRelationFilter
     experiences?: ExperienceListRelationFilter
     formations?: FormationListRelationFilter
-    competencesList?: CompetenceListRelationFilter
-    objectifs?: ObjectifCarriereListRelationFilter
-    alertes?: AlerteEmploiListRelationFilter
     notifications?: NotificationListRelationFilter
-    candidatCompetences?: CandidatCompetenceListRelationFilter
-    conversations?: ConversationListRelationFilter
+    objectifs?: ObjectifCarriereListRelationFilter
   }, "id" | "userId" | "email">
 
   export type CandidatOrderByWithAggregationInput = {
@@ -36570,7 +36567,6 @@ export namespace Prisma {
     situationFamiliale?: SortOrderInput | SortOrder
     permisConduire?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
-    favorite?: SortOrderInput | SortOrder
     _count?: CandidatCountOrderByAggregateInput
     _max?: CandidatMaxOrderByAggregateInput
     _min?: CandidatMinOrderByAggregateInput
@@ -36598,7 +36594,6 @@ export namespace Prisma {
     situationFamiliale?: StringNullableWithAggregatesFilter<"Candidat"> | string | null
     permisConduire?: StringNullableWithAggregatesFilter<"Candidat"> | string | null
     image?: StringNullableWithAggregatesFilter<"Candidat"> | string | null
-    favorite?: BoolNullableWithAggregatesFilter<"Candidat"> | boolean | null
   }
 
   export type CandidatCompetenceWhereInput = {
@@ -36672,13 +36667,13 @@ export namespace Prisma {
     phone?: StringNullableFilter<"Recruteur"> | string | null
     createdAt?: DateTimeFilter<"Recruteur"> | Date | string
     updatedAt?: DateTimeFilter<"Recruteur"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    social?: XOR<CompanySocialNullableScalarRelationFilter, CompanySocialWhereInput> | null
-    OfferTemplate?: OfferTemplateListRelationFilter
-    JobOffer?: JobOfferListRelationFilter
-    invitations?: InvitationListRelationFilter
     collaborateurs?: CollaborateurListRelationFilter
+    social?: XOR<CompanySocialNullableScalarRelationFilter, CompanySocialWhereInput> | null
     conversations?: ConversationListRelationFilter
+    invitations?: InvitationListRelationFilter
+    JobOffer?: JobOfferListRelationFilter
+    OfferTemplate?: OfferTemplateListRelationFilter
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type RecruteurOrderByWithRelationInput = {
@@ -36697,13 +36692,13 @@ export namespace Prisma {
     phone?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
-    social?: CompanySocialOrderByWithRelationInput
-    OfferTemplate?: OfferTemplateOrderByRelationAggregateInput
-    JobOffer?: JobOfferOrderByRelationAggregateInput
-    invitations?: InvitationOrderByRelationAggregateInput
     collaborateurs?: CollaborateurOrderByRelationAggregateInput
+    social?: CompanySocialOrderByWithRelationInput
     conversations?: ConversationOrderByRelationAggregateInput
+    invitations?: InvitationOrderByRelationAggregateInput
+    JobOffer?: JobOfferOrderByRelationAggregateInput
+    OfferTemplate?: OfferTemplateOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
     _relevance?: RecruteurOrderByRelevanceInput
   }
 
@@ -36726,13 +36721,13 @@ export namespace Prisma {
     phone?: StringNullableFilter<"Recruteur"> | string | null
     createdAt?: DateTimeFilter<"Recruteur"> | Date | string
     updatedAt?: DateTimeFilter<"Recruteur"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    social?: XOR<CompanySocialNullableScalarRelationFilter, CompanySocialWhereInput> | null
-    OfferTemplate?: OfferTemplateListRelationFilter
-    JobOffer?: JobOfferListRelationFilter
-    invitations?: InvitationListRelationFilter
     collaborateurs?: CollaborateurListRelationFilter
+    social?: XOR<CompanySocialNullableScalarRelationFilter, CompanySocialWhereInput> | null
     conversations?: ConversationListRelationFilter
+    invitations?: InvitationListRelationFilter
+    JobOffer?: JobOfferListRelationFilter
+    OfferTemplate?: OfferTemplateListRelationFilter
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId" | "email">
 
   export type RecruteurOrderByWithAggregationInput = {
@@ -36840,8 +36835,8 @@ export namespace Prisma {
     accepted?: BoolFilter<"Invitation"> | boolean
     createdAt?: DateTimeFilter<"Invitation"> | Date | string
     expiresAt?: DateTimeFilter<"Invitation"> | Date | string
-    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
     collaborateur?: XOR<CollaborateurNullableScalarRelationFilter, CollaborateurWhereInput> | null
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
   }
 
   export type InvitationOrderByWithRelationInput = {
@@ -36853,8 +36848,8 @@ export namespace Prisma {
     accepted?: SortOrder
     createdAt?: SortOrder
     expiresAt?: SortOrder
-    recruteur?: RecruteurOrderByWithRelationInput
     collaborateur?: CollaborateurOrderByWithRelationInput
+    recruteur?: RecruteurOrderByWithRelationInput
     _relevance?: InvitationOrderByRelevanceInput
   }
 
@@ -36870,8 +36865,8 @@ export namespace Prisma {
     accepted?: BoolFilter<"Invitation"> | boolean
     createdAt?: DateTimeFilter<"Invitation"> | Date | string
     expiresAt?: DateTimeFilter<"Invitation"> | Date | string
-    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
     collaborateur?: XOR<CollaborateurNullableScalarRelationFilter, CollaborateurWhereInput> | null
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
   }, "id" | "token">
 
   export type InvitationOrderByWithAggregationInput = {
@@ -36916,10 +36911,10 @@ export namespace Prisma {
     userId?: StringFilter<"Collaborateur"> | string
     createdAt?: DateTimeFilter<"Collaborateur"> | Date | string
     updatedAt?: DateTimeFilter<"Collaborateur"> | Date | string
-    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
-    invitation?: XOR<InvitationNullableScalarRelationFilter, InvitationWhereInput> | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     applications?: ApplicationCollaborateurListRelationFilter
+    invitation?: XOR<InvitationNullableScalarRelationFilter, InvitationWhereInput> | null
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type CollaborateurOrderByWithRelationInput = {
@@ -36933,10 +36928,10 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    recruteur?: RecruteurOrderByWithRelationInput
-    invitation?: InvitationOrderByWithRelationInput
-    user?: UserOrderByWithRelationInput
     applications?: ApplicationCollaborateurOrderByRelationAggregateInput
+    invitation?: InvitationOrderByWithRelationInput
+    recruteur?: RecruteurOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
     _relevance?: CollaborateurOrderByRelevanceInput
   }
 
@@ -36954,10 +36949,10 @@ export namespace Prisma {
     recruteurId?: StringFilter<"Collaborateur"> | string
     createdAt?: DateTimeFilter<"Collaborateur"> | Date | string
     updatedAt?: DateTimeFilter<"Collaborateur"> | Date | string
-    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
-    invitation?: XOR<InvitationNullableScalarRelationFilter, InvitationWhereInput> | null
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     applications?: ApplicationCollaborateurListRelationFilter
+    invitation?: XOR<InvitationNullableScalarRelationFilter, InvitationWhereInput> | null
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "email" | "invitationId" | "userId">
 
   export type CollaborateurOrderByWithAggregationInput = {
@@ -37078,12 +37073,12 @@ export namespace Prisma {
     recruteurId?: StringFilter<"JobOffer"> | string
     createdAt?: DateTimeFilter<"JobOffer"> | Date | string
     updatedAt?: DateTimeFilter<"JobOffer"> | Date | string
-    template?: XOR<OfferTemplateNullableScalarRelationFilter, OfferTemplateWhereInput> | null
-    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
-    kanbanColumns?: KanbanColumnListRelationFilter
     applications?: ApplicationListRelationFilter
-    jobOfferCompetences?: JobOfferCompetenceListRelationFilter
     conversations?: ConversationListRelationFilter
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
+    template?: XOR<OfferTemplateNullableScalarRelationFilter, OfferTemplateWhereInput> | null
+    jobOfferCompetences?: JobOfferCompetenceListRelationFilter
+    kanbanColumns?: KanbanColumnListRelationFilter
   }
 
   export type JobOfferOrderByWithRelationInput = {
@@ -37109,12 +37104,12 @@ export namespace Prisma {
     recruteurId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    template?: OfferTemplateOrderByWithRelationInput
-    recruteur?: RecruteurOrderByWithRelationInput
-    kanbanColumns?: KanbanColumnOrderByRelationAggregateInput
     applications?: ApplicationOrderByRelationAggregateInput
-    jobOfferCompetences?: JobOfferCompetenceOrderByRelationAggregateInput
     conversations?: ConversationOrderByRelationAggregateInput
+    recruteur?: RecruteurOrderByWithRelationInput
+    template?: OfferTemplateOrderByWithRelationInput
+    jobOfferCompetences?: JobOfferCompetenceOrderByRelationAggregateInput
+    kanbanColumns?: KanbanColumnOrderByRelationAggregateInput
     _relevance?: JobOfferOrderByRelevanceInput
   }
 
@@ -37144,12 +37139,12 @@ export namespace Prisma {
     recruteurId?: StringFilter<"JobOffer"> | string
     createdAt?: DateTimeFilter<"JobOffer"> | Date | string
     updatedAt?: DateTimeFilter<"JobOffer"> | Date | string
-    template?: XOR<OfferTemplateNullableScalarRelationFilter, OfferTemplateWhereInput> | null
-    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
-    kanbanColumns?: KanbanColumnListRelationFilter
     applications?: ApplicationListRelationFilter
-    jobOfferCompetences?: JobOfferCompetenceListRelationFilter
     conversations?: ConversationListRelationFilter
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
+    template?: XOR<OfferTemplateNullableScalarRelationFilter, OfferTemplateWhereInput> | null
+    jobOfferCompetences?: JobOfferCompetenceListRelationFilter
+    kanbanColumns?: KanbanColumnListRelationFilter
   }, "id">
 
   export type JobOfferOrderByWithAggregationInput = {
@@ -37346,16 +37341,17 @@ export namespace Prisma {
     rating?: IntNullableFilter<"Application"> | number | null
     message?: StringNullableFilter<"Application"> | string | null
     cv?: StringNullableFilter<"Application"> | string | null
+    favorite?: BoolNullableFilter<"Application"> | boolean | null
     duedate?: DateTimeNullableFilter<"Application"> | Date | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     updatedAt?: DateTimeFilter<"Application"> | Date | string
     candidat?: XOR<CandidatScalarRelationFilter, CandidatWhereInput>
-    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     column?: XOR<KanbanColumnScalarRelationFilter, KanbanColumnWhereInput>
+    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
+    collaborateurs?: ApplicationCollaborateurListRelationFilter
+    files?: ApplicationFileListRelationFilter
     notes?: ApplicationNoteListRelationFilter
     checklist?: ChecklistItemListRelationFilter
-    files?: ApplicationFileListRelationFilter
-    collaborateurs?: ApplicationCollaborateurListRelationFilter
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -37366,16 +37362,17 @@ export namespace Prisma {
     rating?: SortOrderInput | SortOrder
     message?: SortOrderInput | SortOrder
     cv?: SortOrderInput | SortOrder
+    favorite?: SortOrderInput | SortOrder
     duedate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     candidat?: CandidatOrderByWithRelationInput
-    jobOffer?: JobOfferOrderByWithRelationInput
     column?: KanbanColumnOrderByWithRelationInput
+    jobOffer?: JobOfferOrderByWithRelationInput
+    collaborateurs?: ApplicationCollaborateurOrderByRelationAggregateInput
+    files?: ApplicationFileOrderByRelationAggregateInput
     notes?: ApplicationNoteOrderByRelationAggregateInput
     checklist?: ChecklistItemOrderByRelationAggregateInput
-    files?: ApplicationFileOrderByRelationAggregateInput
-    collaborateurs?: ApplicationCollaborateurOrderByRelationAggregateInput
     _relevance?: ApplicationOrderByRelevanceInput
   }
 
@@ -37390,16 +37387,17 @@ export namespace Prisma {
     rating?: IntNullableFilter<"Application"> | number | null
     message?: StringNullableFilter<"Application"> | string | null
     cv?: StringNullableFilter<"Application"> | string | null
+    favorite?: BoolNullableFilter<"Application"> | boolean | null
     duedate?: DateTimeNullableFilter<"Application"> | Date | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     updatedAt?: DateTimeFilter<"Application"> | Date | string
     candidat?: XOR<CandidatScalarRelationFilter, CandidatWhereInput>
-    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     column?: XOR<KanbanColumnScalarRelationFilter, KanbanColumnWhereInput>
+    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
+    collaborateurs?: ApplicationCollaborateurListRelationFilter
+    files?: ApplicationFileListRelationFilter
     notes?: ApplicationNoteListRelationFilter
     checklist?: ChecklistItemListRelationFilter
-    files?: ApplicationFileListRelationFilter
-    collaborateurs?: ApplicationCollaborateurListRelationFilter
   }, "id">
 
   export type ApplicationOrderByWithAggregationInput = {
@@ -37410,6 +37408,7 @@ export namespace Prisma {
     rating?: SortOrderInput | SortOrder
     message?: SortOrderInput | SortOrder
     cv?: SortOrderInput | SortOrder
+    favorite?: SortOrderInput | SortOrder
     duedate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -37431,6 +37430,7 @@ export namespace Prisma {
     rating?: IntNullableWithAggregatesFilter<"Application"> | number | null
     message?: StringNullableWithAggregatesFilter<"Application"> | string | null
     cv?: StringNullableWithAggregatesFilter<"Application"> | string | null
+    favorite?: BoolNullableWithAggregatesFilter<"Application"> | boolean | null
     duedate?: DateTimeNullableWithAggregatesFilter<"Application"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
@@ -37678,8 +37678,8 @@ export namespace Prisma {
     jobOfferId?: IntFilter<"KanbanColumn"> | number
     createdAt?: DateTimeFilter<"KanbanColumn"> | Date | string
     updatedAt?: DateTimeFilter<"KanbanColumn"> | Date | string
-    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     applications?: ApplicationListRelationFilter
+    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
   }
 
   export type KanbanColumnOrderByWithRelationInput = {
@@ -37691,8 +37691,8 @@ export namespace Prisma {
     jobOfferId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    jobOffer?: JobOfferOrderByWithRelationInput
     applications?: ApplicationOrderByRelationAggregateInput
+    jobOffer?: JobOfferOrderByWithRelationInput
     _relevance?: KanbanColumnOrderByRelevanceInput
   }
 
@@ -37708,8 +37708,8 @@ export namespace Prisma {
     jobOfferId?: IntFilter<"KanbanColumn"> | number
     createdAt?: DateTimeFilter<"KanbanColumn"> | Date | string
     updatedAt?: DateTimeFilter<"KanbanColumn"> | Date | string
-    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     applications?: ApplicationListRelationFilter
+    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
   }, "id">
 
   export type KanbanColumnOrderByWithAggregationInput = {
@@ -38656,8 +38656,8 @@ export namespace Prisma {
     isActive?: BoolFilter<"Conversation"> | boolean
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
     updatedAt?: DateTimeFilter<"Conversation"> | Date | string
-    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     candidat?: XOR<CandidatScalarRelationFilter, CandidatWhereInput>
+    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
     messages?: MessageListRelationFilter
   }
@@ -38670,8 +38670,8 @@ export namespace Prisma {
     isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    jobOffer?: JobOfferOrderByWithRelationInput
     candidat?: CandidatOrderByWithRelationInput
+    jobOffer?: JobOfferOrderByWithRelationInput
     recruteur?: RecruteurOrderByWithRelationInput
     messages?: MessageOrderByRelationAggregateInput
     _relevance?: ConversationOrderByRelevanceInput
@@ -38689,8 +38689,8 @@ export namespace Prisma {
     isActive?: BoolFilter<"Conversation"> | boolean
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
     updatedAt?: DateTimeFilter<"Conversation"> | Date | string
-    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     candidat?: XOR<CandidatScalarRelationFilter, CandidatWhereInput>
+    jobOffer?: XOR<JobOfferScalarRelationFilter, JobOfferWhereInput>
     recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
     messages?: MessageListRelationFilter
   }, "id" | "jobOfferId_candidatId_recruteurId">
@@ -38804,10 +38804,10 @@ export namespace Prisma {
     type: $Enums.UserType
     createdAt?: Date | string
     updatedAt?: Date | string
-    candidat?: CandidatCreateNestedOneWithoutUserInput
-    recruteur?: RecruteurCreateNestedOneWithoutUserInput
-    collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    candidat?: CandidatCreateNestedOneWithoutUserInput
+    collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
+    recruteur?: RecruteurCreateNestedOneWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
@@ -38821,10 +38821,10 @@ export namespace Prisma {
     type: $Enums.UserType
     createdAt?: Date | string
     updatedAt?: Date | string
-    candidat?: CandidatUncheckedCreateNestedOneWithoutUserInput
-    recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
-    collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    candidat?: CandidatUncheckedCreateNestedOneWithoutUserInput
+    collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
+    recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -38838,10 +38838,10 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidat?: CandidatUpdateOneWithoutUserNestedInput
-    recruteur?: RecruteurUpdateOneWithoutUserNestedInput
-    collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    candidat?: CandidatUpdateOneWithoutUserNestedInput
+    collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
+    recruteur?: RecruteurUpdateOneWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
@@ -38855,10 +38855,10 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidat?: CandidatUncheckedUpdateOneWithoutUserNestedInput
-    recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
-    collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    candidat?: CandidatUncheckedUpdateOneWithoutUserNestedInput
+    collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
+    recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -38916,17 +38916,16 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
+    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceCreateNestedManyWithoutCandidatInput
     formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     notifications?: NotificationCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateInput = {
@@ -38948,16 +38947,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
+    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
     formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUpdateInput = {
@@ -38978,17 +38976,16 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
     formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateInput = {
@@ -39010,16 +39007,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
     formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatCreateManyInput = {
@@ -39041,7 +39037,6 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
   }
 
   export type CandidatUpdateManyMutationInput = {
@@ -39062,7 +39057,6 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type CandidatUncheckedUpdateManyInput = {
@@ -39084,7 +39078,6 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type CandidatCompetenceCreateInput = {
@@ -39150,13 +39143,13 @@ export namespace Prisma {
     phone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutRecruteurInput
-    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
     conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
   }
 
   export type RecruteurUncheckedCreateInput = {
@@ -39175,12 +39168,12 @@ export namespace Prisma {
     phone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurUpdateInput = {
@@ -39198,13 +39191,13 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
-    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
     conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
   export type RecruteurUncheckedUpdateInput = {
@@ -39223,12 +39216,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type RecruteurCreateManyInput = {
@@ -39340,8 +39333,8 @@ export namespace Prisma {
     accepted?: boolean
     createdAt?: Date | string
     expiresAt: Date | string
-    recruteur: RecruteurCreateNestedOneWithoutInvitationsInput
     collaborateur?: CollaborateurCreateNestedOneWithoutInvitationInput
+    recruteur: RecruteurCreateNestedOneWithoutInvitationsInput
   }
 
   export type InvitationUncheckedCreateInput = {
@@ -39364,8 +39357,8 @@ export namespace Prisma {
     accepted?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recruteur?: RecruteurUpdateOneRequiredWithoutInvitationsNestedInput
     collaborateur?: CollaborateurUpdateOneWithoutInvitationNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutInvitationsNestedInput
   }
 
   export type InvitationUncheckedUpdateInput = {
@@ -39420,10 +39413,10 @@ export namespace Prisma {
     role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
-    invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
-    user: UserCreateNestedOneWithoutCollaborateurInput
     applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
+    invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
+    recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
+    user: UserCreateNestedOneWithoutCollaborateurInput
   }
 
   export type CollaborateurUncheckedCreateInput = {
@@ -39448,10 +39441,10 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
-    invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
-    user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
     applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
+    invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
+    user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
   }
 
   export type CollaborateurUncheckedUpdateInput = {
@@ -39578,12 +39571,12 @@ export namespace Prisma {
     views?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    template?: OfferTemplateCreateNestedOneWithoutOffersInput
-    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
-    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
     conversations?: ConversationCreateNestedManyWithoutJobOfferInput
+    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
+    template?: OfferTemplateCreateNestedOneWithoutOffersInput
+    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferUncheckedCreateInput = {
@@ -39609,10 +39602,10 @@ export namespace Prisma {
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutJobOfferInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferUpdateInput = {
@@ -39635,12 +39628,12 @@ export namespace Prisma {
     views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
-    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
-    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
     conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
+    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
   }
 
   export type JobOfferUncheckedUpdateInput = {
@@ -39666,10 +39659,10 @@ export namespace Prisma {
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutJobOfferNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
   }
 
   export type JobOfferCreateManyInput = {
@@ -39867,16 +39860,17 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     candidat: CandidatCreateNestedOneWithoutApplicationsInput
-    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -39887,13 +39881,14 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
@@ -39901,16 +39896,17 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
-    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -39921,13 +39917,14 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
@@ -39938,6 +39935,7 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39948,6 +39946,7 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39961,6 +39960,7 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40223,8 +40223,8 @@ export namespace Prisma {
     isDefault?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    jobOffer: JobOfferCreateNestedOneWithoutKanbanColumnsInput
     applications?: ApplicationCreateNestedManyWithoutColumnInput
+    jobOffer: JobOfferCreateNestedOneWithoutKanbanColumnsInput
   }
 
   export type KanbanColumnUncheckedCreateInput = {
@@ -40247,8 +40247,8 @@ export namespace Prisma {
     isDefault?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobOffer?: JobOfferUpdateOneRequiredWithoutKanbanColumnsNestedInput
     applications?: ApplicationUpdateManyWithoutColumnNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutKanbanColumnsNestedInput
   }
 
   export type KanbanColumnUncheckedUpdateInput = {
@@ -41242,8 +41242,8 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    jobOffer: JobOfferCreateNestedOneWithoutConversationsInput
     candidat: CandidatCreateNestedOneWithoutConversationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutConversationsInput
     recruteur: RecruteurCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
@@ -41264,8 +41264,8 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobOffer?: JobOfferUpdateOneRequiredWithoutConversationsNestedInput
     candidat?: CandidatUpdateOneRequiredWithoutConversationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutConversationsNestedInput
     recruteur?: RecruteurUpdateOneRequiredWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
@@ -41443,14 +41443,15 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type AccountListRelationFilter = {
+    every?: AccountWhereInput
+    some?: AccountWhereInput
+    none?: AccountWhereInput
+  }
+
   export type CandidatNullableScalarRelationFilter = {
     is?: CandidatWhereInput | null
     isNot?: CandidatWhereInput | null
-  }
-
-  export type RecruteurNullableScalarRelationFilter = {
-    is?: RecruteurWhereInput | null
-    isNot?: RecruteurWhereInput | null
   }
 
   export type CollaborateurNullableScalarRelationFilter = {
@@ -41458,10 +41459,9 @@ export namespace Prisma {
     isNot?: CollaborateurWhereInput | null
   }
 
-  export type AccountListRelationFilter = {
-    every?: AccountWhereInput
-    some?: AccountWhereInput
-    none?: AccountWhereInput
+  export type RecruteurNullableScalarRelationFilter = {
+    is?: RecruteurWhereInput | null
+    isNot?: RecruteurWhereInput | null
   }
 
   export type SessionListRelationFilter = {
@@ -41599,9 +41599,16 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type BoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  export type AlerteEmploiListRelationFilter = {
+    every?: AlerteEmploiWhereInput
+    some?: AlerteEmploiWhereInput
+    none?: AlerteEmploiWhereInput
+  }
+
+  export type ApplicationListRelationFilter = {
+    every?: ApplicationWhereInput
+    some?: ApplicationWhereInput
+    none?: ApplicationWhereInput
   }
 
   export type UserScalarRelationFilter = {
@@ -41609,10 +41616,22 @@ export namespace Prisma {
     isNot?: UserWhereInput
   }
 
-  export type ApplicationListRelationFilter = {
-    every?: ApplicationWhereInput
-    some?: ApplicationWhereInput
-    none?: ApplicationWhereInput
+  export type CandidatCompetenceListRelationFilter = {
+    every?: CandidatCompetenceWhereInput
+    some?: CandidatCompetenceWhereInput
+    none?: CandidatCompetenceWhereInput
+  }
+
+  export type CompetenceListRelationFilter = {
+    every?: CompetenceWhereInput
+    some?: CompetenceWhereInput
+    none?: CompetenceWhereInput
+  }
+
+  export type ConversationListRelationFilter = {
+    every?: ConversationWhereInput
+    some?: ConversationWhereInput
+    none?: ConversationWhereInput
   }
 
   export type ExperienceListRelationFilter = {
@@ -41627,10 +41646,10 @@ export namespace Prisma {
     none?: FormationWhereInput
   }
 
-  export type CompetenceListRelationFilter = {
-    every?: CompetenceWhereInput
-    some?: CompetenceWhereInput
-    none?: CompetenceWhereInput
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
   }
 
   export type ObjectifCarriereListRelationFilter = {
@@ -41639,31 +41658,23 @@ export namespace Prisma {
     none?: ObjectifCarriereWhereInput
   }
 
-  export type AlerteEmploiListRelationFilter = {
-    every?: AlerteEmploiWhereInput
-    some?: AlerteEmploiWhereInput
-    none?: AlerteEmploiWhereInput
-  }
-
-  export type NotificationListRelationFilter = {
-    every?: NotificationWhereInput
-    some?: NotificationWhereInput
-    none?: NotificationWhereInput
-  }
-
-  export type CandidatCompetenceListRelationFilter = {
-    every?: CandidatCompetenceWhereInput
-    some?: CandidatCompetenceWhereInput
-    none?: CandidatCompetenceWhereInput
-  }
-
-  export type ConversationListRelationFilter = {
-    every?: ConversationWhereInput
-    some?: ConversationWhereInput
-    none?: ConversationWhereInput
+  export type AlerteEmploiOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ApplicationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CandidatCompetenceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CompetenceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ConversationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -41675,27 +41686,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type CompetenceOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ObjectifCarriereOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type AlerteEmploiOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type CandidatCompetenceOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ConversationOrderByRelationAggregateInput = {
+  export type ObjectifCarriereOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -41724,7 +41719,6 @@ export namespace Prisma {
     situationFamiliale?: SortOrder
     permisConduire?: SortOrder
     image?: SortOrder
-    favorite?: SortOrder
   }
 
   export type CandidatMaxOrderByAggregateInput = {
@@ -41746,7 +41740,6 @@ export namespace Prisma {
     situationFamiliale?: SortOrder
     permisConduire?: SortOrder
     image?: SortOrder
-    favorite?: SortOrder
   }
 
   export type CandidatMinOrderByAggregateInput = {
@@ -41768,15 +41761,6 @@ export namespace Prisma {
     situationFamiliale?: SortOrder
     permisConduire?: SortOrder
     image?: SortOrder
-    favorite?: SortOrder
-  }
-
-  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type CandidatScalarRelationFilter = {
@@ -41823,21 +41807,15 @@ export namespace Prisma {
     not?: NestedEnumRecruteurTypeFilter<$PrismaModel> | $Enums.RecruteurType
   }
 
+  export type CollaborateurListRelationFilter = {
+    every?: CollaborateurWhereInput
+    some?: CollaborateurWhereInput
+    none?: CollaborateurWhereInput
+  }
+
   export type CompanySocialNullableScalarRelationFilter = {
     is?: CompanySocialWhereInput | null
     isNot?: CompanySocialWhereInput | null
-  }
-
-  export type OfferTemplateListRelationFilter = {
-    every?: OfferTemplateWhereInput
-    some?: OfferTemplateWhereInput
-    none?: OfferTemplateWhereInput
-  }
-
-  export type JobOfferListRelationFilter = {
-    every?: JobOfferWhereInput
-    some?: JobOfferWhereInput
-    none?: JobOfferWhereInput
   }
 
   export type InvitationListRelationFilter = {
@@ -41846,17 +41824,19 @@ export namespace Prisma {
     none?: InvitationWhereInput
   }
 
-  export type CollaborateurListRelationFilter = {
-    every?: CollaborateurWhereInput
-    some?: CollaborateurWhereInput
-    none?: CollaborateurWhereInput
+  export type JobOfferListRelationFilter = {
+    every?: JobOfferWhereInput
+    some?: JobOfferWhereInput
+    none?: JobOfferWhereInput
   }
 
-  export type OfferTemplateOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type OfferTemplateListRelationFilter = {
+    every?: OfferTemplateWhereInput
+    some?: OfferTemplateWhereInput
+    none?: OfferTemplateWhereInput
   }
 
-  export type JobOfferOrderByRelationAggregateInput = {
+  export type CollaborateurOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -41864,7 +41844,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type CollaborateurOrderByRelationAggregateInput = {
+  export type JobOfferOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OfferTemplateOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -42039,15 +42023,15 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type InvitationNullableScalarRelationFilter = {
-    is?: InvitationWhereInput | null
-    isNot?: InvitationWhereInput | null
-  }
-
   export type ApplicationCollaborateurListRelationFilter = {
     every?: ApplicationCollaborateurWhereInput
     some?: ApplicationCollaborateurWhereInput
     none?: ApplicationCollaborateurWhereInput
+  }
+
+  export type InvitationNullableScalarRelationFilter = {
+    is?: InvitationWhereInput | null
+    isNot?: InvitationWhereInput | null
   }
 
   export type ApplicationCollaborateurOrderByRelationAggregateInput = {
@@ -42166,6 +42150,11 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -42182,23 +42171,23 @@ export namespace Prisma {
     isNot?: OfferTemplateWhereInput | null
   }
 
-  export type KanbanColumnListRelationFilter = {
-    every?: KanbanColumnWhereInput
-    some?: KanbanColumnWhereInput
-    none?: KanbanColumnWhereInput
-  }
-
   export type JobOfferCompetenceListRelationFilter = {
     every?: JobOfferCompetenceWhereInput
     some?: JobOfferCompetenceWhereInput
     none?: JobOfferCompetenceWhereInput
   }
 
-  export type KanbanColumnOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type KanbanColumnListRelationFilter = {
+    every?: KanbanColumnWhereInput
+    some?: KanbanColumnWhereInput
+    none?: KanbanColumnWhereInput
   }
 
   export type JobOfferCompetenceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KanbanColumnOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -42331,6 +42320,14 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -42441,6 +42438,12 @@ export namespace Prisma {
     isNot?: KanbanColumnWhereInput
   }
 
+  export type ApplicationFileListRelationFilter = {
+    every?: ApplicationFileWhereInput
+    some?: ApplicationFileWhereInput
+    none?: ApplicationFileWhereInput
+  }
+
   export type ApplicationNoteListRelationFilter = {
     every?: ApplicationNoteWhereInput
     some?: ApplicationNoteWhereInput
@@ -42453,10 +42456,8 @@ export namespace Prisma {
     none?: ChecklistItemWhereInput
   }
 
-  export type ApplicationFileListRelationFilter = {
-    every?: ApplicationFileWhereInput
-    some?: ApplicationFileWhereInput
-    none?: ApplicationFileWhereInput
+  export type ApplicationFileOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type ApplicationNoteOrderByRelationAggregateInput = {
@@ -42464,10 +42465,6 @@ export namespace Prisma {
   }
 
   export type ChecklistItemOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ApplicationFileOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -42485,6 +42482,7 @@ export namespace Prisma {
     rating?: SortOrder
     message?: SortOrder
     cv?: SortOrder
+    favorite?: SortOrder
     duedate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42503,6 +42501,7 @@ export namespace Prisma {
     rating?: SortOrder
     message?: SortOrder
     cv?: SortOrder
+    favorite?: SortOrder
     duedate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42516,6 +42515,7 @@ export namespace Prisma {
     rating?: SortOrder
     message?: SortOrder
     cv?: SortOrder
+    favorite?: SortOrder
     duedate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -43471,16 +43471,17 @@ export namespace Prisma {
     _max?: NestedEnumSenderTypeFilter<$PrismaModel>
   }
 
+  export type AccountCreateNestedManyWithoutUserInput = {
+    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
+    createMany?: AccountCreateManyUserInputEnvelope
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+  }
+
   export type CandidatCreateNestedOneWithoutUserInput = {
     create?: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
     connectOrCreate?: CandidatCreateOrConnectWithoutUserInput
     connect?: CandidatWhereUniqueInput
-  }
-
-  export type RecruteurCreateNestedOneWithoutUserInput = {
-    create?: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutUserInput
-    connect?: RecruteurWhereUniqueInput
   }
 
   export type CollaborateurCreateNestedOneWithoutUserInput = {
@@ -43489,11 +43490,10 @@ export namespace Prisma {
     connect?: CollaborateurWhereUniqueInput
   }
 
-  export type AccountCreateNestedManyWithoutUserInput = {
-    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
-    createMany?: AccountCreateManyUserInputEnvelope
-    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+  export type RecruteurCreateNestedOneWithoutUserInput = {
+    create?: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutUserInput
+    connect?: RecruteurWhereUniqueInput
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {
@@ -43503,16 +43503,17 @@ export namespace Prisma {
     connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
+  export type AccountUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
+    createMany?: AccountCreateManyUserInputEnvelope
+    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+  }
+
   export type CandidatUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
     connectOrCreate?: CandidatCreateOrConnectWithoutUserInput
     connect?: CandidatWhereUniqueInput
-  }
-
-  export type RecruteurUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutUserInput
-    connect?: RecruteurWhereUniqueInput
   }
 
   export type CollaborateurUncheckedCreateNestedOneWithoutUserInput = {
@@ -43521,11 +43522,10 @@ export namespace Prisma {
     connect?: CollaborateurWhereUniqueInput
   }
 
-  export type AccountUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
-    createMany?: AccountCreateManyUserInputEnvelope
-    connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
+  export type RecruteurUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutUserInput
+    connect?: RecruteurWhereUniqueInput
   }
 
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
@@ -43555,36 +43555,6 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type CandidatUpdateOneWithoutUserNestedInput = {
-    create?: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
-    connectOrCreate?: CandidatCreateOrConnectWithoutUserInput
-    upsert?: CandidatUpsertWithoutUserInput
-    disconnect?: CandidatWhereInput | boolean
-    delete?: CandidatWhereInput | boolean
-    connect?: CandidatWhereUniqueInput
-    update?: XOR<XOR<CandidatUpdateToOneWithWhereWithoutUserInput, CandidatUpdateWithoutUserInput>, CandidatUncheckedUpdateWithoutUserInput>
-  }
-
-  export type RecruteurUpdateOneWithoutUserNestedInput = {
-    create?: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutUserInput
-    upsert?: RecruteurUpsertWithoutUserInput
-    disconnect?: RecruteurWhereInput | boolean
-    delete?: RecruteurWhereInput | boolean
-    connect?: RecruteurWhereUniqueInput
-    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutUserInput, RecruteurUpdateWithoutUserInput>, RecruteurUncheckedUpdateWithoutUserInput>
-  }
-
-  export type CollaborateurUpdateOneWithoutUserNestedInput = {
-    create?: XOR<CollaborateurCreateWithoutUserInput, CollaborateurUncheckedCreateWithoutUserInput>
-    connectOrCreate?: CollaborateurCreateOrConnectWithoutUserInput
-    upsert?: CollaborateurUpsertWithoutUserInput
-    disconnect?: CollaborateurWhereInput | boolean
-    delete?: CollaborateurWhereInput | boolean
-    connect?: CollaborateurWhereUniqueInput
-    update?: XOR<XOR<CollaborateurUpdateToOneWithWhereWithoutUserInput, CollaborateurUpdateWithoutUserInput>, CollaborateurUncheckedUpdateWithoutUserInput>
-  }
-
   export type AccountUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -43597,6 +43567,36 @@ export namespace Prisma {
     update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
+  }
+
+  export type CandidatUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CandidatCreateOrConnectWithoutUserInput
+    upsert?: CandidatUpsertWithoutUserInput
+    disconnect?: CandidatWhereInput | boolean
+    delete?: CandidatWhereInput | boolean
+    connect?: CandidatWhereUniqueInput
+    update?: XOR<XOR<CandidatUpdateToOneWithWhereWithoutUserInput, CandidatUpdateWithoutUserInput>, CandidatUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CollaborateurUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CollaborateurCreateWithoutUserInput, CollaborateurUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CollaborateurCreateOrConnectWithoutUserInput
+    upsert?: CollaborateurUpsertWithoutUserInput
+    disconnect?: CollaborateurWhereInput | boolean
+    delete?: CollaborateurWhereInput | boolean
+    connect?: CollaborateurWhereUniqueInput
+    update?: XOR<XOR<CollaborateurUpdateToOneWithWhereWithoutUserInput, CollaborateurUpdateWithoutUserInput>, CollaborateurUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RecruteurUpdateOneWithoutUserNestedInput = {
+    create?: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutUserInput
+    upsert?: RecruteurUpsertWithoutUserInput
+    disconnect?: RecruteurWhereInput | boolean
+    delete?: RecruteurWhereInput | boolean
+    connect?: RecruteurWhereUniqueInput
+    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutUserInput, RecruteurUpdateWithoutUserInput>, RecruteurUncheckedUpdateWithoutUserInput>
   }
 
   export type SessionUpdateManyWithoutUserNestedInput = {
@@ -43613,36 +43613,6 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
-  export type CandidatUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
-    connectOrCreate?: CandidatCreateOrConnectWithoutUserInput
-    upsert?: CandidatUpsertWithoutUserInput
-    disconnect?: CandidatWhereInput | boolean
-    delete?: CandidatWhereInput | boolean
-    connect?: CandidatWhereUniqueInput
-    update?: XOR<XOR<CandidatUpdateToOneWithWhereWithoutUserInput, CandidatUpdateWithoutUserInput>, CandidatUncheckedUpdateWithoutUserInput>
-  }
-
-  export type RecruteurUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutUserInput
-    upsert?: RecruteurUpsertWithoutUserInput
-    disconnect?: RecruteurWhereInput | boolean
-    delete?: RecruteurWhereInput | boolean
-    connect?: RecruteurWhereUniqueInput
-    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutUserInput, RecruteurUpdateWithoutUserInput>, RecruteurUncheckedUpdateWithoutUserInput>
-  }
-
-  export type CollaborateurUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<CollaborateurCreateWithoutUserInput, CollaborateurUncheckedCreateWithoutUserInput>
-    connectOrCreate?: CollaborateurCreateOrConnectWithoutUserInput
-    upsert?: CollaborateurUpsertWithoutUserInput
-    disconnect?: CollaborateurWhereInput | boolean
-    delete?: CollaborateurWhereInput | boolean
-    connect?: CollaborateurWhereUniqueInput
-    update?: XOR<XOR<CollaborateurUpdateToOneWithWhereWithoutUserInput, CollaborateurUpdateWithoutUserInput>, CollaborateurUncheckedUpdateWithoutUserInput>
-  }
-
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -43655,6 +43625,36 @@ export namespace Prisma {
     update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
+  }
+
+  export type CandidatUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CandidatCreateOrConnectWithoutUserInput
+    upsert?: CandidatUpsertWithoutUserInput
+    disconnect?: CandidatWhereInput | boolean
+    delete?: CandidatWhereInput | boolean
+    connect?: CandidatWhereUniqueInput
+    update?: XOR<XOR<CandidatUpdateToOneWithWhereWithoutUserInput, CandidatUpdateWithoutUserInput>, CandidatUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CollaborateurUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<CollaborateurCreateWithoutUserInput, CollaborateurUncheckedCreateWithoutUserInput>
+    connectOrCreate?: CollaborateurCreateOrConnectWithoutUserInput
+    upsert?: CollaborateurUpsertWithoutUserInput
+    disconnect?: CollaborateurWhereInput | boolean
+    delete?: CollaborateurWhereInput | boolean
+    connect?: CollaborateurWhereUniqueInput
+    update?: XOR<XOR<CollaborateurUpdateToOneWithWhereWithoutUserInput, CollaborateurUpdateWithoutUserInput>, CollaborateurUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RecruteurUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutUserInput
+    upsert?: RecruteurUpsertWithoutUserInput
+    disconnect?: RecruteurWhereInput | boolean
+    delete?: RecruteurWhereInput | boolean
+    connect?: RecruteurWhereUniqueInput
+    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutUserInput, RecruteurUpdateWithoutUserInput>, RecruteurUncheckedUpdateWithoutUserInput>
   }
 
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
@@ -43671,10 +43671,11 @@ export namespace Prisma {
     deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutCandidatInput = {
-    create?: XOR<UserCreateWithoutCandidatInput, UserUncheckedCreateWithoutCandidatInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCandidatInput
-    connect?: UserWhereUniqueInput
+  export type AlerteEmploiCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<AlerteEmploiCreateWithoutCandidatInput, AlerteEmploiUncheckedCreateWithoutCandidatInput> | AlerteEmploiCreateWithoutCandidatInput[] | AlerteEmploiUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: AlerteEmploiCreateOrConnectWithoutCandidatInput | AlerteEmploiCreateOrConnectWithoutCandidatInput[]
+    createMany?: AlerteEmploiCreateManyCandidatInputEnvelope
+    connect?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
   }
 
   export type ApplicationCreateNestedManyWithoutCandidatInput = {
@@ -43682,6 +43683,33 @@ export namespace Prisma {
     connectOrCreate?: ApplicationCreateOrConnectWithoutCandidatInput | ApplicationCreateOrConnectWithoutCandidatInput[]
     createMany?: ApplicationCreateManyCandidatInputEnvelope
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutCandidatInput = {
+    create?: XOR<UserCreateWithoutCandidatInput, UserUncheckedCreateWithoutCandidatInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCandidatInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type CandidatCompetenceCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput> | CandidatCompetenceCreateWithoutCandidatInput[] | CandidatCompetenceUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CandidatCompetenceCreateOrConnectWithoutCandidatInput | CandidatCompetenceCreateOrConnectWithoutCandidatInput[]
+    createMany?: CandidatCompetenceCreateManyCandidatInputEnvelope
+    connect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+  }
+
+  export type CompetenceCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput> | CompetenceCreateWithoutCandidatInput[] | CompetenceUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CompetenceCreateOrConnectWithoutCandidatInput | CompetenceCreateOrConnectWithoutCandidatInput[]
+    createMany?: CompetenceCreateManyCandidatInputEnvelope
+    connect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+  }
+
+  export type ConversationCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput> | ConversationCreateWithoutCandidatInput[] | ConversationUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutCandidatInput | ConversationCreateOrConnectWithoutCandidatInput[]
+    createMany?: ConversationCreateManyCandidatInputEnvelope
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
   export type ExperienceCreateNestedManyWithoutCandidatInput = {
@@ -43698,11 +43726,11 @@ export namespace Prisma {
     connect?: FormationWhereUniqueInput | FormationWhereUniqueInput[]
   }
 
-  export type CompetenceCreateNestedManyWithoutCandidatInput = {
-    create?: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput> | CompetenceCreateWithoutCandidatInput[] | CompetenceUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: CompetenceCreateOrConnectWithoutCandidatInput | CompetenceCreateOrConnectWithoutCandidatInput[]
-    createMany?: CompetenceCreateManyCandidatInputEnvelope
-    connect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+  export type NotificationCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput> | NotificationCreateWithoutCandidatInput[] | NotificationUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCandidatInput | NotificationCreateOrConnectWithoutCandidatInput[]
+    createMany?: NotificationCreateManyCandidatInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type ObjectifCarriereCreateNestedManyWithoutCandidatInput = {
@@ -43712,32 +43740,11 @@ export namespace Prisma {
     connect?: ObjectifCarriereWhereUniqueInput | ObjectifCarriereWhereUniqueInput[]
   }
 
-  export type AlerteEmploiCreateNestedManyWithoutCandidatInput = {
+  export type AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput = {
     create?: XOR<AlerteEmploiCreateWithoutCandidatInput, AlerteEmploiUncheckedCreateWithoutCandidatInput> | AlerteEmploiCreateWithoutCandidatInput[] | AlerteEmploiUncheckedCreateWithoutCandidatInput[]
     connectOrCreate?: AlerteEmploiCreateOrConnectWithoutCandidatInput | AlerteEmploiCreateOrConnectWithoutCandidatInput[]
     createMany?: AlerteEmploiCreateManyCandidatInputEnvelope
     connect?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
-  }
-
-  export type NotificationCreateNestedManyWithoutCandidatInput = {
-    create?: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput> | NotificationCreateWithoutCandidatInput[] | NotificationUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutCandidatInput | NotificationCreateOrConnectWithoutCandidatInput[]
-    createMany?: NotificationCreateManyCandidatInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type CandidatCompetenceCreateNestedManyWithoutCandidatInput = {
-    create?: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput> | CandidatCompetenceCreateWithoutCandidatInput[] | CandidatCompetenceUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: CandidatCompetenceCreateOrConnectWithoutCandidatInput | CandidatCompetenceCreateOrConnectWithoutCandidatInput[]
-    createMany?: CandidatCompetenceCreateManyCandidatInputEnvelope
-    connect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-  }
-
-  export type ConversationCreateNestedManyWithoutCandidatInput = {
-    create?: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput> | ConversationCreateWithoutCandidatInput[] | ConversationUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutCandidatInput | ConversationCreateOrConnectWithoutCandidatInput[]
-    createMany?: ConversationCreateManyCandidatInputEnvelope
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
   export type ApplicationUncheckedCreateNestedManyWithoutCandidatInput = {
@@ -43745,6 +43752,27 @@ export namespace Prisma {
     connectOrCreate?: ApplicationCreateOrConnectWithoutCandidatInput | ApplicationCreateOrConnectWithoutCandidatInput[]
     createMany?: ApplicationCreateManyCandidatInputEnvelope
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
+  }
+
+  export type CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput> | CandidatCompetenceCreateWithoutCandidatInput[] | CandidatCompetenceUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CandidatCompetenceCreateOrConnectWithoutCandidatInput | CandidatCompetenceCreateOrConnectWithoutCandidatInput[]
+    createMany?: CandidatCompetenceCreateManyCandidatInputEnvelope
+    connect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+  }
+
+  export type CompetenceUncheckedCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput> | CompetenceCreateWithoutCandidatInput[] | CompetenceUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CompetenceCreateOrConnectWithoutCandidatInput | CompetenceCreateOrConnectWithoutCandidatInput[]
+    createMany?: CompetenceCreateManyCandidatInputEnvelope
+    connect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+  }
+
+  export type ConversationUncheckedCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput> | ConversationCreateWithoutCandidatInput[] | ConversationUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutCandidatInput | ConversationCreateOrConnectWithoutCandidatInput[]
+    createMany?: ConversationCreateManyCandidatInputEnvelope
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
   export type ExperienceUncheckedCreateNestedManyWithoutCandidatInput = {
@@ -43761,11 +43789,11 @@ export namespace Prisma {
     connect?: FormationWhereUniqueInput | FormationWhereUniqueInput[]
   }
 
-  export type CompetenceUncheckedCreateNestedManyWithoutCandidatInput = {
-    create?: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput> | CompetenceCreateWithoutCandidatInput[] | CompetenceUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: CompetenceCreateOrConnectWithoutCandidatInput | CompetenceCreateOrConnectWithoutCandidatInput[]
-    createMany?: CompetenceCreateManyCandidatInputEnvelope
-    connect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+  export type NotificationUncheckedCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput> | NotificationCreateWithoutCandidatInput[] | NotificationUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCandidatInput | NotificationCreateOrConnectWithoutCandidatInput[]
+    createMany?: NotificationCreateManyCandidatInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput = {
@@ -43775,44 +43803,18 @@ export namespace Prisma {
     connect?: ObjectifCarriereWhereUniqueInput | ObjectifCarriereWhereUniqueInput[]
   }
 
-  export type AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput = {
+  export type AlerteEmploiUpdateManyWithoutCandidatNestedInput = {
     create?: XOR<AlerteEmploiCreateWithoutCandidatInput, AlerteEmploiUncheckedCreateWithoutCandidatInput> | AlerteEmploiCreateWithoutCandidatInput[] | AlerteEmploiUncheckedCreateWithoutCandidatInput[]
     connectOrCreate?: AlerteEmploiCreateOrConnectWithoutCandidatInput | AlerteEmploiCreateOrConnectWithoutCandidatInput[]
+    upsert?: AlerteEmploiUpsertWithWhereUniqueWithoutCandidatInput | AlerteEmploiUpsertWithWhereUniqueWithoutCandidatInput[]
     createMany?: AlerteEmploiCreateManyCandidatInputEnvelope
+    set?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
+    disconnect?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
+    delete?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
     connect?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
-  }
-
-  export type NotificationUncheckedCreateNestedManyWithoutCandidatInput = {
-    create?: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput> | NotificationCreateWithoutCandidatInput[] | NotificationUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutCandidatInput | NotificationCreateOrConnectWithoutCandidatInput[]
-    createMany?: NotificationCreateManyCandidatInputEnvelope
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-  }
-
-  export type CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput = {
-    create?: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput> | CandidatCompetenceCreateWithoutCandidatInput[] | CandidatCompetenceUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: CandidatCompetenceCreateOrConnectWithoutCandidatInput | CandidatCompetenceCreateOrConnectWithoutCandidatInput[]
-    createMany?: CandidatCompetenceCreateManyCandidatInputEnvelope
-    connect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-  }
-
-  export type ConversationUncheckedCreateNestedManyWithoutCandidatInput = {
-    create?: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput> | ConversationCreateWithoutCandidatInput[] | ConversationUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutCandidatInput | ConversationCreateOrConnectWithoutCandidatInput[]
-    createMany?: ConversationCreateManyCandidatInputEnvelope
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-  }
-
-  export type NullableBoolFieldUpdateOperationsInput = {
-    set?: boolean | null
-  }
-
-  export type UserUpdateOneRequiredWithoutCandidatNestedInput = {
-    create?: XOR<UserCreateWithoutCandidatInput, UserUncheckedCreateWithoutCandidatInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCandidatInput
-    upsert?: UserUpsertWithoutCandidatInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCandidatInput, UserUpdateWithoutCandidatInput>, UserUncheckedUpdateWithoutCandidatInput>
+    update?: AlerteEmploiUpdateWithWhereUniqueWithoutCandidatInput | AlerteEmploiUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: AlerteEmploiUpdateManyWithWhereWithoutCandidatInput | AlerteEmploiUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: AlerteEmploiScalarWhereInput | AlerteEmploiScalarWhereInput[]
   }
 
   export type ApplicationUpdateManyWithoutCandidatNestedInput = {
@@ -43827,6 +43829,56 @@ export namespace Prisma {
     update?: ApplicationUpdateWithWhereUniqueWithoutCandidatInput | ApplicationUpdateWithWhereUniqueWithoutCandidatInput[]
     updateMany?: ApplicationUpdateManyWithWhereWithoutCandidatInput | ApplicationUpdateManyWithWhereWithoutCandidatInput[]
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutCandidatNestedInput = {
+    create?: XOR<UserCreateWithoutCandidatInput, UserUncheckedCreateWithoutCandidatInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCandidatInput
+    upsert?: UserUpsertWithoutCandidatInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCandidatInput, UserUpdateWithoutCandidatInput>, UserUncheckedUpdateWithoutCandidatInput>
+  }
+
+  export type CandidatCompetenceUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput> | CandidatCompetenceCreateWithoutCandidatInput[] | CandidatCompetenceUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CandidatCompetenceCreateOrConnectWithoutCandidatInput | CandidatCompetenceCreateOrConnectWithoutCandidatInput[]
+    upsert?: CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput | CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: CandidatCompetenceCreateManyCandidatInputEnvelope
+    set?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+    disconnect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+    delete?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+    connect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+    update?: CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput | CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput | CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: CandidatCompetenceScalarWhereInput | CandidatCompetenceScalarWhereInput[]
+  }
+
+  export type CompetenceUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput> | CompetenceCreateWithoutCandidatInput[] | CompetenceUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CompetenceCreateOrConnectWithoutCandidatInput | CompetenceCreateOrConnectWithoutCandidatInput[]
+    upsert?: CompetenceUpsertWithWhereUniqueWithoutCandidatInput | CompetenceUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: CompetenceCreateManyCandidatInputEnvelope
+    set?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+    disconnect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+    delete?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+    connect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+    update?: CompetenceUpdateWithWhereUniqueWithoutCandidatInput | CompetenceUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: CompetenceUpdateManyWithWhereWithoutCandidatInput | CompetenceUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: CompetenceScalarWhereInput | CompetenceScalarWhereInput[]
+  }
+
+  export type ConversationUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput> | ConversationCreateWithoutCandidatInput[] | ConversationUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutCandidatInput | ConversationCreateOrConnectWithoutCandidatInput[]
+    upsert?: ConversationUpsertWithWhereUniqueWithoutCandidatInput | ConversationUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: ConversationCreateManyCandidatInputEnvelope
+    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    update?: ConversationUpdateWithWhereUniqueWithoutCandidatInput | ConversationUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: ConversationUpdateManyWithWhereWithoutCandidatInput | ConversationUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
   export type ExperienceUpdateManyWithoutCandidatNestedInput = {
@@ -43857,18 +43909,18 @@ export namespace Prisma {
     deleteMany?: FormationScalarWhereInput | FormationScalarWhereInput[]
   }
 
-  export type CompetenceUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput> | CompetenceCreateWithoutCandidatInput[] | CompetenceUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: CompetenceCreateOrConnectWithoutCandidatInput | CompetenceCreateOrConnectWithoutCandidatInput[]
-    upsert?: CompetenceUpsertWithWhereUniqueWithoutCandidatInput | CompetenceUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: CompetenceCreateManyCandidatInputEnvelope
-    set?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
-    disconnect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
-    delete?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
-    connect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
-    update?: CompetenceUpdateWithWhereUniqueWithoutCandidatInput | CompetenceUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: CompetenceUpdateManyWithWhereWithoutCandidatInput | CompetenceUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: CompetenceScalarWhereInput | CompetenceScalarWhereInput[]
+  export type NotificationUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput> | NotificationCreateWithoutCandidatInput[] | NotificationUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCandidatInput | NotificationCreateOrConnectWithoutCandidatInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutCandidatInput | NotificationUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: NotificationCreateManyCandidatInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutCandidatInput | NotificationUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutCandidatInput | NotificationUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type ObjectifCarriereUpdateManyWithoutCandidatNestedInput = {
@@ -43885,7 +43937,7 @@ export namespace Prisma {
     deleteMany?: ObjectifCarriereScalarWhereInput | ObjectifCarriereScalarWhereInput[]
   }
 
-  export type AlerteEmploiUpdateManyWithoutCandidatNestedInput = {
+  export type AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput = {
     create?: XOR<AlerteEmploiCreateWithoutCandidatInput, AlerteEmploiUncheckedCreateWithoutCandidatInput> | AlerteEmploiCreateWithoutCandidatInput[] | AlerteEmploiUncheckedCreateWithoutCandidatInput[]
     connectOrCreate?: AlerteEmploiCreateOrConnectWithoutCandidatInput | AlerteEmploiCreateOrConnectWithoutCandidatInput[]
     upsert?: AlerteEmploiUpsertWithWhereUniqueWithoutCandidatInput | AlerteEmploiUpsertWithWhereUniqueWithoutCandidatInput[]
@@ -43897,48 +43949,6 @@ export namespace Prisma {
     update?: AlerteEmploiUpdateWithWhereUniqueWithoutCandidatInput | AlerteEmploiUpdateWithWhereUniqueWithoutCandidatInput[]
     updateMany?: AlerteEmploiUpdateManyWithWhereWithoutCandidatInput | AlerteEmploiUpdateManyWithWhereWithoutCandidatInput[]
     deleteMany?: AlerteEmploiScalarWhereInput | AlerteEmploiScalarWhereInput[]
-  }
-
-  export type NotificationUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput> | NotificationCreateWithoutCandidatInput[] | NotificationUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutCandidatInput | NotificationCreateOrConnectWithoutCandidatInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutCandidatInput | NotificationUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: NotificationCreateManyCandidatInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutCandidatInput | NotificationUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutCandidatInput | NotificationUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type CandidatCompetenceUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput> | CandidatCompetenceCreateWithoutCandidatInput[] | CandidatCompetenceUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: CandidatCompetenceCreateOrConnectWithoutCandidatInput | CandidatCompetenceCreateOrConnectWithoutCandidatInput[]
-    upsert?: CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput | CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: CandidatCompetenceCreateManyCandidatInputEnvelope
-    set?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-    disconnect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-    delete?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-    connect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-    update?: CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput | CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput | CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: CandidatCompetenceScalarWhereInput | CandidatCompetenceScalarWhereInput[]
-  }
-
-  export type ConversationUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput> | ConversationCreateWithoutCandidatInput[] | ConversationUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutCandidatInput | ConversationCreateOrConnectWithoutCandidatInput[]
-    upsert?: ConversationUpsertWithWhereUniqueWithoutCandidatInput | ConversationUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: ConversationCreateManyCandidatInputEnvelope
-    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    update?: ConversationUpdateWithWhereUniqueWithoutCandidatInput | ConversationUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: ConversationUpdateManyWithWhereWithoutCandidatInput | ConversationUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
   export type ApplicationUncheckedUpdateManyWithoutCandidatNestedInput = {
@@ -43953,6 +43963,48 @@ export namespace Prisma {
     update?: ApplicationUpdateWithWhereUniqueWithoutCandidatInput | ApplicationUpdateWithWhereUniqueWithoutCandidatInput[]
     updateMany?: ApplicationUpdateManyWithWhereWithoutCandidatInput | ApplicationUpdateManyWithWhereWithoutCandidatInput[]
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+  }
+
+  export type CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput> | CandidatCompetenceCreateWithoutCandidatInput[] | CandidatCompetenceUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CandidatCompetenceCreateOrConnectWithoutCandidatInput | CandidatCompetenceCreateOrConnectWithoutCandidatInput[]
+    upsert?: CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput | CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: CandidatCompetenceCreateManyCandidatInputEnvelope
+    set?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+    disconnect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+    delete?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+    connect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
+    update?: CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput | CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput | CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: CandidatCompetenceScalarWhereInput | CandidatCompetenceScalarWhereInput[]
+  }
+
+  export type CompetenceUncheckedUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput> | CompetenceCreateWithoutCandidatInput[] | CompetenceUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CompetenceCreateOrConnectWithoutCandidatInput | CompetenceCreateOrConnectWithoutCandidatInput[]
+    upsert?: CompetenceUpsertWithWhereUniqueWithoutCandidatInput | CompetenceUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: CompetenceCreateManyCandidatInputEnvelope
+    set?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+    disconnect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+    delete?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+    connect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
+    update?: CompetenceUpdateWithWhereUniqueWithoutCandidatInput | CompetenceUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: CompetenceUpdateManyWithWhereWithoutCandidatInput | CompetenceUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: CompetenceScalarWhereInput | CompetenceScalarWhereInput[]
+  }
+
+  export type ConversationUncheckedUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput> | ConversationCreateWithoutCandidatInput[] | ConversationUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutCandidatInput | ConversationCreateOrConnectWithoutCandidatInput[]
+    upsert?: ConversationUpsertWithWhereUniqueWithoutCandidatInput | ConversationUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: ConversationCreateManyCandidatInputEnvelope
+    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    update?: ConversationUpdateWithWhereUniqueWithoutCandidatInput | ConversationUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: ConversationUpdateManyWithWhereWithoutCandidatInput | ConversationUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
   export type ExperienceUncheckedUpdateManyWithoutCandidatNestedInput = {
@@ -43983,18 +44035,18 @@ export namespace Prisma {
     deleteMany?: FormationScalarWhereInput | FormationScalarWhereInput[]
   }
 
-  export type CompetenceUncheckedUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput> | CompetenceCreateWithoutCandidatInput[] | CompetenceUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: CompetenceCreateOrConnectWithoutCandidatInput | CompetenceCreateOrConnectWithoutCandidatInput[]
-    upsert?: CompetenceUpsertWithWhereUniqueWithoutCandidatInput | CompetenceUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: CompetenceCreateManyCandidatInputEnvelope
-    set?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
-    disconnect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
-    delete?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
-    connect?: CompetenceWhereUniqueInput | CompetenceWhereUniqueInput[]
-    update?: CompetenceUpdateWithWhereUniqueWithoutCandidatInput | CompetenceUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: CompetenceUpdateManyWithWhereWithoutCandidatInput | CompetenceUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: CompetenceScalarWhereInput | CompetenceScalarWhereInput[]
+  export type NotificationUncheckedUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput> | NotificationCreateWithoutCandidatInput[] | NotificationUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutCandidatInput | NotificationCreateOrConnectWithoutCandidatInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutCandidatInput | NotificationUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: NotificationCreateManyCandidatInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutCandidatInput | NotificationUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutCandidatInput | NotificationUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput = {
@@ -44011,62 +44063,6 @@ export namespace Prisma {
     deleteMany?: ObjectifCarriereScalarWhereInput | ObjectifCarriereScalarWhereInput[]
   }
 
-  export type AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<AlerteEmploiCreateWithoutCandidatInput, AlerteEmploiUncheckedCreateWithoutCandidatInput> | AlerteEmploiCreateWithoutCandidatInput[] | AlerteEmploiUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: AlerteEmploiCreateOrConnectWithoutCandidatInput | AlerteEmploiCreateOrConnectWithoutCandidatInput[]
-    upsert?: AlerteEmploiUpsertWithWhereUniqueWithoutCandidatInput | AlerteEmploiUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: AlerteEmploiCreateManyCandidatInputEnvelope
-    set?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
-    disconnect?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
-    delete?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
-    connect?: AlerteEmploiWhereUniqueInput | AlerteEmploiWhereUniqueInput[]
-    update?: AlerteEmploiUpdateWithWhereUniqueWithoutCandidatInput | AlerteEmploiUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: AlerteEmploiUpdateManyWithWhereWithoutCandidatInput | AlerteEmploiUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: AlerteEmploiScalarWhereInput | AlerteEmploiScalarWhereInput[]
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput> | NotificationCreateWithoutCandidatInput[] | NotificationUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: NotificationCreateOrConnectWithoutCandidatInput | NotificationCreateOrConnectWithoutCandidatInput[]
-    upsert?: NotificationUpsertWithWhereUniqueWithoutCandidatInput | NotificationUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: NotificationCreateManyCandidatInputEnvelope
-    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
-    update?: NotificationUpdateWithWhereUniqueWithoutCandidatInput | NotificationUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: NotificationUpdateManyWithWhereWithoutCandidatInput | NotificationUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-  }
-
-  export type CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput> | CandidatCompetenceCreateWithoutCandidatInput[] | CandidatCompetenceUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: CandidatCompetenceCreateOrConnectWithoutCandidatInput | CandidatCompetenceCreateOrConnectWithoutCandidatInput[]
-    upsert?: CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput | CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: CandidatCompetenceCreateManyCandidatInputEnvelope
-    set?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-    disconnect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-    delete?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-    connect?: CandidatCompetenceWhereUniqueInput | CandidatCompetenceWhereUniqueInput[]
-    update?: CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput | CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput | CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: CandidatCompetenceScalarWhereInput | CandidatCompetenceScalarWhereInput[]
-  }
-
-  export type ConversationUncheckedUpdateManyWithoutCandidatNestedInput = {
-    create?: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput> | ConversationCreateWithoutCandidatInput[] | ConversationUncheckedCreateWithoutCandidatInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutCandidatInput | ConversationCreateOrConnectWithoutCandidatInput[]
-    upsert?: ConversationUpsertWithWhereUniqueWithoutCandidatInput | ConversationUpsertWithWhereUniqueWithoutCandidatInput[]
-    createMany?: ConversationCreateManyCandidatInputEnvelope
-    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    update?: ConversationUpdateWithWhereUniqueWithoutCandidatInput | ConversationUpdateWithWhereUniqueWithoutCandidatInput[]
-    updateMany?: ConversationUpdateManyWithWhereWithoutCandidatInput | ConversationUpdateManyWithWhereWithoutCandidatInput[]
-    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
-  }
-
   export type CandidatCreateNestedOneWithoutCandidatCompetencesInput = {
     create?: XOR<CandidatCreateWithoutCandidatCompetencesInput, CandidatUncheckedCreateWithoutCandidatCompetencesInput>
     connectOrCreate?: CandidatCreateOrConnectWithoutCandidatCompetencesInput
@@ -44081,44 +44077,17 @@ export namespace Prisma {
     update?: XOR<XOR<CandidatUpdateToOneWithWhereWithoutCandidatCompetencesInput, CandidatUpdateWithoutCandidatCompetencesInput>, CandidatUncheckedUpdateWithoutCandidatCompetencesInput>
   }
 
-  export type UserCreateNestedOneWithoutRecruteurInput = {
-    create?: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRecruteurInput
-    connect?: UserWhereUniqueInput
+  export type CollaborateurCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<CollaborateurCreateWithoutRecruteurInput, CollaborateurUncheckedCreateWithoutRecruteurInput> | CollaborateurCreateWithoutRecruteurInput[] | CollaborateurUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: CollaborateurCreateOrConnectWithoutRecruteurInput | CollaborateurCreateOrConnectWithoutRecruteurInput[]
+    createMany?: CollaborateurCreateManyRecruteurInputEnvelope
+    connect?: CollaborateurWhereUniqueInput | CollaborateurWhereUniqueInput[]
   }
 
   export type CompanySocialCreateNestedOneWithoutRecruteurInput = {
     create?: XOR<CompanySocialCreateWithoutRecruteurInput, CompanySocialUncheckedCreateWithoutRecruteurInput>
     connectOrCreate?: CompanySocialCreateOrConnectWithoutRecruteurInput
     connect?: CompanySocialWhereUniqueInput
-  }
-
-  export type OfferTemplateCreateNestedManyWithoutRecruteurInput = {
-    create?: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput> | OfferTemplateCreateWithoutRecruteurInput[] | OfferTemplateUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
-    createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
-    connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-  }
-
-  export type JobOfferCreateNestedManyWithoutRecruteurInput = {
-    create?: XOR<JobOfferCreateWithoutRecruteurInput, JobOfferUncheckedCreateWithoutRecruteurInput> | JobOfferCreateWithoutRecruteurInput[] | JobOfferUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: JobOfferCreateOrConnectWithoutRecruteurInput | JobOfferCreateOrConnectWithoutRecruteurInput[]
-    createMany?: JobOfferCreateManyRecruteurInputEnvelope
-    connect?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
-  }
-
-  export type InvitationCreateNestedManyWithoutRecruteurInput = {
-    create?: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput> | InvitationCreateWithoutRecruteurInput[] | InvitationUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: InvitationCreateOrConnectWithoutRecruteurInput | InvitationCreateOrConnectWithoutRecruteurInput[]
-    createMany?: InvitationCreateManyRecruteurInputEnvelope
-    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-  }
-
-  export type CollaborateurCreateNestedManyWithoutRecruteurInput = {
-    create?: XOR<CollaborateurCreateWithoutRecruteurInput, CollaborateurUncheckedCreateWithoutRecruteurInput> | CollaborateurCreateWithoutRecruteurInput[] | CollaborateurUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: CollaborateurCreateOrConnectWithoutRecruteurInput | CollaborateurCreateOrConnectWithoutRecruteurInput[]
-    createMany?: CollaborateurCreateManyRecruteurInputEnvelope
-    connect?: CollaborateurWhereUniqueInput | CollaborateurWhereUniqueInput[]
   }
 
   export type ConversationCreateNestedManyWithoutRecruteurInput = {
@@ -44128,31 +44097,31 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
-  export type CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput = {
-    create?: XOR<CompanySocialCreateWithoutRecruteurInput, CompanySocialUncheckedCreateWithoutRecruteurInput>
-    connectOrCreate?: CompanySocialCreateOrConnectWithoutRecruteurInput
-    connect?: CompanySocialWhereUniqueInput
+  export type InvitationCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput> | InvitationCreateWithoutRecruteurInput[] | InvitationUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: InvitationCreateOrConnectWithoutRecruteurInput | InvitationCreateOrConnectWithoutRecruteurInput[]
+    createMany?: InvitationCreateManyRecruteurInputEnvelope
+    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
   }
 
-  export type OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput = {
-    create?: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput> | OfferTemplateCreateWithoutRecruteurInput[] | OfferTemplateUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
-    createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
-    connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-  }
-
-  export type JobOfferUncheckedCreateNestedManyWithoutRecruteurInput = {
+  export type JobOfferCreateNestedManyWithoutRecruteurInput = {
     create?: XOR<JobOfferCreateWithoutRecruteurInput, JobOfferUncheckedCreateWithoutRecruteurInput> | JobOfferCreateWithoutRecruteurInput[] | JobOfferUncheckedCreateWithoutRecruteurInput[]
     connectOrCreate?: JobOfferCreateOrConnectWithoutRecruteurInput | JobOfferCreateOrConnectWithoutRecruteurInput[]
     createMany?: JobOfferCreateManyRecruteurInputEnvelope
     connect?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
   }
 
-  export type InvitationUncheckedCreateNestedManyWithoutRecruteurInput = {
-    create?: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput> | InvitationCreateWithoutRecruteurInput[] | InvitationUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: InvitationCreateOrConnectWithoutRecruteurInput | InvitationCreateOrConnectWithoutRecruteurInput[]
-    createMany?: InvitationCreateManyRecruteurInputEnvelope
-    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+  export type OfferTemplateCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput> | OfferTemplateCreateWithoutRecruteurInput[] | OfferTemplateUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
+    createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
+    connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutRecruteurInput = {
+    create?: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRecruteurInput
+    connect?: UserWhereUniqueInput
   }
 
   export type CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput = {
@@ -44162,6 +44131,12 @@ export namespace Prisma {
     connect?: CollaborateurWhereUniqueInput | CollaborateurWhereUniqueInput[]
   }
 
+  export type CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput = {
+    create?: XOR<CompanySocialCreateWithoutRecruteurInput, CompanySocialUncheckedCreateWithoutRecruteurInput>
+    connectOrCreate?: CompanySocialCreateOrConnectWithoutRecruteurInput
+    connect?: CompanySocialWhereUniqueInput
+  }
+
   export type ConversationUncheckedCreateNestedManyWithoutRecruteurInput = {
     create?: XOR<ConversationCreateWithoutRecruteurInput, ConversationUncheckedCreateWithoutRecruteurInput> | ConversationCreateWithoutRecruteurInput[] | ConversationUncheckedCreateWithoutRecruteurInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutRecruteurInput | ConversationCreateOrConnectWithoutRecruteurInput[]
@@ -44169,68 +44144,29 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
-  export type EnumRecruteurTypeFieldUpdateOperationsInput = {
-    set?: $Enums.RecruteurType
-  }
-
-  export type UserUpdateOneRequiredWithoutRecruteurNestedInput = {
-    create?: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
-    connectOrCreate?: UserCreateOrConnectWithoutRecruteurInput
-    upsert?: UserUpsertWithoutRecruteurInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRecruteurInput, UserUpdateWithoutRecruteurInput>, UserUncheckedUpdateWithoutRecruteurInput>
-  }
-
-  export type CompanySocialUpdateOneWithoutRecruteurNestedInput = {
-    create?: XOR<CompanySocialCreateWithoutRecruteurInput, CompanySocialUncheckedCreateWithoutRecruteurInput>
-    connectOrCreate?: CompanySocialCreateOrConnectWithoutRecruteurInput
-    upsert?: CompanySocialUpsertWithoutRecruteurInput
-    disconnect?: CompanySocialWhereInput | boolean
-    delete?: CompanySocialWhereInput | boolean
-    connect?: CompanySocialWhereUniqueInput
-    update?: XOR<XOR<CompanySocialUpdateToOneWithWhereWithoutRecruteurInput, CompanySocialUpdateWithoutRecruteurInput>, CompanySocialUncheckedUpdateWithoutRecruteurInput>
-  }
-
-  export type OfferTemplateUpdateManyWithoutRecruteurNestedInput = {
-    create?: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput> | OfferTemplateCreateWithoutRecruteurInput[] | OfferTemplateUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
-    upsert?: OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput[]
-    createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
-    set?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-    disconnect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-    delete?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-    connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-    update?: OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput[]
-    updateMany?: OfferTemplateUpdateManyWithWhereWithoutRecruteurInput | OfferTemplateUpdateManyWithWhereWithoutRecruteurInput[]
-    deleteMany?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
-  }
-
-  export type JobOfferUpdateManyWithoutRecruteurNestedInput = {
-    create?: XOR<JobOfferCreateWithoutRecruteurInput, JobOfferUncheckedCreateWithoutRecruteurInput> | JobOfferCreateWithoutRecruteurInput[] | JobOfferUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: JobOfferCreateOrConnectWithoutRecruteurInput | JobOfferCreateOrConnectWithoutRecruteurInput[]
-    upsert?: JobOfferUpsertWithWhereUniqueWithoutRecruteurInput | JobOfferUpsertWithWhereUniqueWithoutRecruteurInput[]
-    createMany?: JobOfferCreateManyRecruteurInputEnvelope
-    set?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
-    disconnect?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
-    delete?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
-    connect?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
-    update?: JobOfferUpdateWithWhereUniqueWithoutRecruteurInput | JobOfferUpdateWithWhereUniqueWithoutRecruteurInput[]
-    updateMany?: JobOfferUpdateManyWithWhereWithoutRecruteurInput | JobOfferUpdateManyWithWhereWithoutRecruteurInput[]
-    deleteMany?: JobOfferScalarWhereInput | JobOfferScalarWhereInput[]
-  }
-
-  export type InvitationUpdateManyWithoutRecruteurNestedInput = {
+  export type InvitationUncheckedCreateNestedManyWithoutRecruteurInput = {
     create?: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput> | InvitationCreateWithoutRecruteurInput[] | InvitationUncheckedCreateWithoutRecruteurInput[]
     connectOrCreate?: InvitationCreateOrConnectWithoutRecruteurInput | InvitationCreateOrConnectWithoutRecruteurInput[]
-    upsert?: InvitationUpsertWithWhereUniqueWithoutRecruteurInput | InvitationUpsertWithWhereUniqueWithoutRecruteurInput[]
     createMany?: InvitationCreateManyRecruteurInputEnvelope
-    set?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    disconnect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    delete?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
     connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    update?: InvitationUpdateWithWhereUniqueWithoutRecruteurInput | InvitationUpdateWithWhereUniqueWithoutRecruteurInput[]
-    updateMany?: InvitationUpdateManyWithWhereWithoutRecruteurInput | InvitationUpdateManyWithWhereWithoutRecruteurInput[]
-    deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
+  }
+
+  export type JobOfferUncheckedCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<JobOfferCreateWithoutRecruteurInput, JobOfferUncheckedCreateWithoutRecruteurInput> | JobOfferCreateWithoutRecruteurInput[] | JobOfferUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: JobOfferCreateOrConnectWithoutRecruteurInput | JobOfferCreateOrConnectWithoutRecruteurInput[]
+    createMany?: JobOfferCreateManyRecruteurInputEnvelope
+    connect?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
+  }
+
+  export type OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput> | OfferTemplateCreateWithoutRecruteurInput[] | OfferTemplateUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
+    createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
+    connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+  }
+
+  export type EnumRecruteurTypeFieldUpdateOperationsInput = {
+    set?: $Enums.RecruteurType
   }
 
   export type CollaborateurUpdateManyWithoutRecruteurNestedInput = {
@@ -44247,6 +44183,16 @@ export namespace Prisma {
     deleteMany?: CollaborateurScalarWhereInput | CollaborateurScalarWhereInput[]
   }
 
+  export type CompanySocialUpdateOneWithoutRecruteurNestedInput = {
+    create?: XOR<CompanySocialCreateWithoutRecruteurInput, CompanySocialUncheckedCreateWithoutRecruteurInput>
+    connectOrCreate?: CompanySocialCreateOrConnectWithoutRecruteurInput
+    upsert?: CompanySocialUpsertWithoutRecruteurInput
+    disconnect?: CompanySocialWhereInput | boolean
+    delete?: CompanySocialWhereInput | boolean
+    connect?: CompanySocialWhereUniqueInput
+    update?: XOR<XOR<CompanySocialUpdateToOneWithWhereWithoutRecruteurInput, CompanySocialUpdateWithoutRecruteurInput>, CompanySocialUncheckedUpdateWithoutRecruteurInput>
+  }
+
   export type ConversationUpdateManyWithoutRecruteurNestedInput = {
     create?: XOR<ConversationCreateWithoutRecruteurInput, ConversationUncheckedCreateWithoutRecruteurInput> | ConversationCreateWithoutRecruteurInput[] | ConversationUncheckedCreateWithoutRecruteurInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutRecruteurInput | ConversationCreateOrConnectWithoutRecruteurInput[]
@@ -44261,31 +44207,21 @@ export namespace Prisma {
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
-  export type CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput = {
-    create?: XOR<CompanySocialCreateWithoutRecruteurInput, CompanySocialUncheckedCreateWithoutRecruteurInput>
-    connectOrCreate?: CompanySocialCreateOrConnectWithoutRecruteurInput
-    upsert?: CompanySocialUpsertWithoutRecruteurInput
-    disconnect?: CompanySocialWhereInput | boolean
-    delete?: CompanySocialWhereInput | boolean
-    connect?: CompanySocialWhereUniqueInput
-    update?: XOR<XOR<CompanySocialUpdateToOneWithWhereWithoutRecruteurInput, CompanySocialUpdateWithoutRecruteurInput>, CompanySocialUncheckedUpdateWithoutRecruteurInput>
+  export type InvitationUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput> | InvitationCreateWithoutRecruteurInput[] | InvitationUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: InvitationCreateOrConnectWithoutRecruteurInput | InvitationCreateOrConnectWithoutRecruteurInput[]
+    upsert?: InvitationUpsertWithWhereUniqueWithoutRecruteurInput | InvitationUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: InvitationCreateManyRecruteurInputEnvelope
+    set?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+    disconnect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+    delete?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+    update?: InvitationUpdateWithWhereUniqueWithoutRecruteurInput | InvitationUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: InvitationUpdateManyWithWhereWithoutRecruteurInput | InvitationUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
   }
 
-  export type OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput = {
-    create?: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput> | OfferTemplateCreateWithoutRecruteurInput[] | OfferTemplateUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
-    upsert?: OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput[]
-    createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
-    set?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-    disconnect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-    delete?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-    connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
-    update?: OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput[]
-    updateMany?: OfferTemplateUpdateManyWithWhereWithoutRecruteurInput | OfferTemplateUpdateManyWithWhereWithoutRecruteurInput[]
-    deleteMany?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
-  }
-
-  export type JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput = {
+  export type JobOfferUpdateManyWithoutRecruteurNestedInput = {
     create?: XOR<JobOfferCreateWithoutRecruteurInput, JobOfferUncheckedCreateWithoutRecruteurInput> | JobOfferCreateWithoutRecruteurInput[] | JobOfferUncheckedCreateWithoutRecruteurInput[]
     connectOrCreate?: JobOfferCreateOrConnectWithoutRecruteurInput | JobOfferCreateOrConnectWithoutRecruteurInput[]
     upsert?: JobOfferUpsertWithWhereUniqueWithoutRecruteurInput | JobOfferUpsertWithWhereUniqueWithoutRecruteurInput[]
@@ -44299,18 +44235,26 @@ export namespace Prisma {
     deleteMany?: JobOfferScalarWhereInput | JobOfferScalarWhereInput[]
   }
 
-  export type InvitationUncheckedUpdateManyWithoutRecruteurNestedInput = {
-    create?: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput> | InvitationCreateWithoutRecruteurInput[] | InvitationUncheckedCreateWithoutRecruteurInput[]
-    connectOrCreate?: InvitationCreateOrConnectWithoutRecruteurInput | InvitationCreateOrConnectWithoutRecruteurInput[]
-    upsert?: InvitationUpsertWithWhereUniqueWithoutRecruteurInput | InvitationUpsertWithWhereUniqueWithoutRecruteurInput[]
-    createMany?: InvitationCreateManyRecruteurInputEnvelope
-    set?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    disconnect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    delete?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
-    update?: InvitationUpdateWithWhereUniqueWithoutRecruteurInput | InvitationUpdateWithWhereUniqueWithoutRecruteurInput[]
-    updateMany?: InvitationUpdateManyWithWhereWithoutRecruteurInput | InvitationUpdateManyWithWhereWithoutRecruteurInput[]
-    deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
+  export type OfferTemplateUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput> | OfferTemplateCreateWithoutRecruteurInput[] | OfferTemplateUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
+    upsert?: OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
+    set?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+    disconnect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+    delete?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+    connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+    update?: OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: OfferTemplateUpdateManyWithWhereWithoutRecruteurInput | OfferTemplateUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutRecruteurNestedInput = {
+    create?: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRecruteurInput
+    upsert?: UserUpsertWithoutRecruteurInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRecruteurInput, UserUpdateWithoutRecruteurInput>, UserUncheckedUpdateWithoutRecruteurInput>
   }
 
   export type CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput = {
@@ -44327,6 +44271,16 @@ export namespace Prisma {
     deleteMany?: CollaborateurScalarWhereInput | CollaborateurScalarWhereInput[]
   }
 
+  export type CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput = {
+    create?: XOR<CompanySocialCreateWithoutRecruteurInput, CompanySocialUncheckedCreateWithoutRecruteurInput>
+    connectOrCreate?: CompanySocialCreateOrConnectWithoutRecruteurInput
+    upsert?: CompanySocialUpsertWithoutRecruteurInput
+    disconnect?: CompanySocialWhereInput | boolean
+    delete?: CompanySocialWhereInput | boolean
+    connect?: CompanySocialWhereUniqueInput
+    update?: XOR<XOR<CompanySocialUpdateToOneWithWhereWithoutRecruteurInput, CompanySocialUpdateWithoutRecruteurInput>, CompanySocialUncheckedUpdateWithoutRecruteurInput>
+  }
+
   export type ConversationUncheckedUpdateManyWithoutRecruteurNestedInput = {
     create?: XOR<ConversationCreateWithoutRecruteurInput, ConversationUncheckedCreateWithoutRecruteurInput> | ConversationCreateWithoutRecruteurInput[] | ConversationUncheckedCreateWithoutRecruteurInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutRecruteurInput | ConversationCreateOrConnectWithoutRecruteurInput[]
@@ -44339,6 +44293,48 @@ export namespace Prisma {
     update?: ConversationUpdateWithWhereUniqueWithoutRecruteurInput | ConversationUpdateWithWhereUniqueWithoutRecruteurInput[]
     updateMany?: ConversationUpdateManyWithWhereWithoutRecruteurInput | ConversationUpdateManyWithWhereWithoutRecruteurInput[]
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  }
+
+  export type InvitationUncheckedUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput> | InvitationCreateWithoutRecruteurInput[] | InvitationUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: InvitationCreateOrConnectWithoutRecruteurInput | InvitationCreateOrConnectWithoutRecruteurInput[]
+    upsert?: InvitationUpsertWithWhereUniqueWithoutRecruteurInput | InvitationUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: InvitationCreateManyRecruteurInputEnvelope
+    set?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+    disconnect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+    delete?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+    connect?: InvitationWhereUniqueInput | InvitationWhereUniqueInput[]
+    update?: InvitationUpdateWithWhereUniqueWithoutRecruteurInput | InvitationUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: InvitationUpdateManyWithWhereWithoutRecruteurInput | InvitationUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
+  }
+
+  export type JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<JobOfferCreateWithoutRecruteurInput, JobOfferUncheckedCreateWithoutRecruteurInput> | JobOfferCreateWithoutRecruteurInput[] | JobOfferUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: JobOfferCreateOrConnectWithoutRecruteurInput | JobOfferCreateOrConnectWithoutRecruteurInput[]
+    upsert?: JobOfferUpsertWithWhereUniqueWithoutRecruteurInput | JobOfferUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: JobOfferCreateManyRecruteurInputEnvelope
+    set?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
+    disconnect?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
+    delete?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
+    connect?: JobOfferWhereUniqueInput | JobOfferWhereUniqueInput[]
+    update?: JobOfferUpdateWithWhereUniqueWithoutRecruteurInput | JobOfferUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: JobOfferUpdateManyWithWhereWithoutRecruteurInput | JobOfferUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: JobOfferScalarWhereInput | JobOfferScalarWhereInput[]
+  }
+
+  export type OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput> | OfferTemplateCreateWithoutRecruteurInput[] | OfferTemplateUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
+    upsert?: OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
+    set?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+    disconnect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+    delete?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+    connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+    update?: OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: OfferTemplateUpdateManyWithWhereWithoutRecruteurInput | OfferTemplateUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
   }
 
   export type RecruteurCreateNestedOneWithoutSocialInput = {
@@ -44355,16 +44351,16 @@ export namespace Prisma {
     update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutSocialInput, RecruteurUpdateWithoutSocialInput>, RecruteurUncheckedUpdateWithoutSocialInput>
   }
 
-  export type RecruteurCreateNestedOneWithoutInvitationsInput = {
-    create?: XOR<RecruteurCreateWithoutInvitationsInput, RecruteurUncheckedCreateWithoutInvitationsInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutInvitationsInput
-    connect?: RecruteurWhereUniqueInput
-  }
-
   export type CollaborateurCreateNestedOneWithoutInvitationInput = {
     create?: XOR<CollaborateurCreateWithoutInvitationInput, CollaborateurUncheckedCreateWithoutInvitationInput>
     connectOrCreate?: CollaborateurCreateOrConnectWithoutInvitationInput
     connect?: CollaborateurWhereUniqueInput
+  }
+
+  export type RecruteurCreateNestedOneWithoutInvitationsInput = {
+    create?: XOR<RecruteurCreateWithoutInvitationsInput, RecruteurUncheckedCreateWithoutInvitationsInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutInvitationsInput
+    connect?: RecruteurWhereUniqueInput
   }
 
   export type CollaborateurUncheckedCreateNestedOneWithoutInvitationInput = {
@@ -44381,14 +44377,6 @@ export namespace Prisma {
     set?: boolean
   }
 
-  export type RecruteurUpdateOneRequiredWithoutInvitationsNestedInput = {
-    create?: XOR<RecruteurCreateWithoutInvitationsInput, RecruteurUncheckedCreateWithoutInvitationsInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutInvitationsInput
-    upsert?: RecruteurUpsertWithoutInvitationsInput
-    connect?: RecruteurWhereUniqueInput
-    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutInvitationsInput, RecruteurUpdateWithoutInvitationsInput>, RecruteurUncheckedUpdateWithoutInvitationsInput>
-  }
-
   export type CollaborateurUpdateOneWithoutInvitationNestedInput = {
     create?: XOR<CollaborateurCreateWithoutInvitationInput, CollaborateurUncheckedCreateWithoutInvitationInput>
     connectOrCreate?: CollaborateurCreateOrConnectWithoutInvitationInput
@@ -44397,6 +44385,14 @@ export namespace Prisma {
     delete?: CollaborateurWhereInput | boolean
     connect?: CollaborateurWhereUniqueInput
     update?: XOR<XOR<CollaborateurUpdateToOneWithWhereWithoutInvitationInput, CollaborateurUpdateWithoutInvitationInput>, CollaborateurUncheckedUpdateWithoutInvitationInput>
+  }
+
+  export type RecruteurUpdateOneRequiredWithoutInvitationsNestedInput = {
+    create?: XOR<RecruteurCreateWithoutInvitationsInput, RecruteurUncheckedCreateWithoutInvitationsInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutInvitationsInput
+    upsert?: RecruteurUpsertWithoutInvitationsInput
+    connect?: RecruteurWhereUniqueInput
+    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutInvitationsInput, RecruteurUpdateWithoutInvitationsInput>, RecruteurUncheckedUpdateWithoutInvitationsInput>
   }
 
   export type CollaborateurUncheckedUpdateOneWithoutInvitationNestedInput = {
@@ -44409,10 +44405,11 @@ export namespace Prisma {
     update?: XOR<XOR<CollaborateurUpdateToOneWithWhereWithoutInvitationInput, CollaborateurUpdateWithoutInvitationInput>, CollaborateurUncheckedUpdateWithoutInvitationInput>
   }
 
-  export type RecruteurCreateNestedOneWithoutCollaborateursInput = {
-    create?: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutCollaborateursInput
-    connect?: RecruteurWhereUniqueInput
+  export type ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCreateWithoutCollaborateurInput[] | ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCreateManyCollaborateurInputEnvelope
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
   }
 
   export type InvitationCreateNestedOneWithoutCollaborateurInput = {
@@ -44421,17 +44418,16 @@ export namespace Prisma {
     connect?: InvitationWhereUniqueInput
   }
 
+  export type RecruteurCreateNestedOneWithoutCollaborateursInput = {
+    create?: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutCollaborateursInput
+    connect?: RecruteurWhereUniqueInput
+  }
+
   export type UserCreateNestedOneWithoutCollaborateurInput = {
     create?: XOR<UserCreateWithoutCollaborateurInput, UserUncheckedCreateWithoutCollaborateurInput>
     connectOrCreate?: UserCreateOrConnectWithoutCollaborateurInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput = {
-    create?: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCreateWithoutCollaborateurInput[] | ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput[]
-    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput[]
-    createMany?: ApplicationCollaborateurCreateManyCollaborateurInputEnvelope
-    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
   }
 
   export type ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput = {
@@ -44439,32 +44435,6 @@ export namespace Prisma {
     connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput[]
     createMany?: ApplicationCollaborateurCreateManyCollaborateurInputEnvelope
     connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
-  }
-
-  export type RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput = {
-    create?: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutCollaborateursInput
-    upsert?: RecruteurUpsertWithoutCollaborateursInput
-    connect?: RecruteurWhereUniqueInput
-    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutCollaborateursInput, RecruteurUpdateWithoutCollaborateursInput>, RecruteurUncheckedUpdateWithoutCollaborateursInput>
-  }
-
-  export type InvitationUpdateOneWithoutCollaborateurNestedInput = {
-    create?: XOR<InvitationCreateWithoutCollaborateurInput, InvitationUncheckedCreateWithoutCollaborateurInput>
-    connectOrCreate?: InvitationCreateOrConnectWithoutCollaborateurInput
-    upsert?: InvitationUpsertWithoutCollaborateurInput
-    disconnect?: InvitationWhereInput | boolean
-    delete?: InvitationWhereInput | boolean
-    connect?: InvitationWhereUniqueInput
-    update?: XOR<XOR<InvitationUpdateToOneWithWhereWithoutCollaborateurInput, InvitationUpdateWithoutCollaborateurInput>, InvitationUncheckedUpdateWithoutCollaborateurInput>
-  }
-
-  export type UserUpdateOneRequiredWithoutCollaborateurNestedInput = {
-    create?: XOR<UserCreateWithoutCollaborateurInput, UserUncheckedCreateWithoutCollaborateurInput>
-    connectOrCreate?: UserCreateOrConnectWithoutCollaborateurInput
-    upsert?: UserUpsertWithoutCollaborateurInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCollaborateurInput, UserUpdateWithoutCollaborateurInput>, UserUncheckedUpdateWithoutCollaborateurInput>
   }
 
   export type ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput = {
@@ -44479,6 +44449,32 @@ export namespace Prisma {
     update?: ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput[]
     updateMany?: ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput | ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput[]
     deleteMany?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+  }
+
+  export type InvitationUpdateOneWithoutCollaborateurNestedInput = {
+    create?: XOR<InvitationCreateWithoutCollaborateurInput, InvitationUncheckedCreateWithoutCollaborateurInput>
+    connectOrCreate?: InvitationCreateOrConnectWithoutCollaborateurInput
+    upsert?: InvitationUpsertWithoutCollaborateurInput
+    disconnect?: InvitationWhereInput | boolean
+    delete?: InvitationWhereInput | boolean
+    connect?: InvitationWhereUniqueInput
+    update?: XOR<XOR<InvitationUpdateToOneWithWhereWithoutCollaborateurInput, InvitationUpdateWithoutCollaborateurInput>, InvitationUncheckedUpdateWithoutCollaborateurInput>
+  }
+
+  export type RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput = {
+    create?: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutCollaborateursInput
+    upsert?: RecruteurUpsertWithoutCollaborateursInput
+    connect?: RecruteurWhereUniqueInput
+    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutCollaborateursInput, RecruteurUpdateWithoutCollaborateursInput>, RecruteurUncheckedUpdateWithoutCollaborateursInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCollaborateurNestedInput = {
+    create?: XOR<UserCreateWithoutCollaborateurInput, UserUncheckedCreateWithoutCollaborateurInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCollaborateurInput
+    upsert?: UserUpsertWithoutCollaborateurInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCollaborateurInput, UserUpdateWithoutCollaborateurInput>, UserUncheckedUpdateWithoutCollaborateurInput>
   }
 
   export type ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput = {
@@ -44523,37 +44519,11 @@ export namespace Prisma {
     update?: XOR<XOR<CollaborateurUpdateToOneWithWhereWithoutApplicationsInput, CollaborateurUpdateWithoutApplicationsInput>, CollaborateurUncheckedUpdateWithoutApplicationsInput>
   }
 
-  export type OfferTemplateCreateNestedOneWithoutOffersInput = {
-    create?: XOR<OfferTemplateCreateWithoutOffersInput, OfferTemplateUncheckedCreateWithoutOffersInput>
-    connectOrCreate?: OfferTemplateCreateOrConnectWithoutOffersInput
-    connect?: OfferTemplateWhereUniqueInput
-  }
-
-  export type RecruteurCreateNestedOneWithoutJobOfferInput = {
-    create?: XOR<RecruteurCreateWithoutJobOfferInput, RecruteurUncheckedCreateWithoutJobOfferInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutJobOfferInput
-    connect?: RecruteurWhereUniqueInput
-  }
-
-  export type KanbanColumnCreateNestedManyWithoutJobOfferInput = {
-    create?: XOR<KanbanColumnCreateWithoutJobOfferInput, KanbanColumnUncheckedCreateWithoutJobOfferInput> | KanbanColumnCreateWithoutJobOfferInput[] | KanbanColumnUncheckedCreateWithoutJobOfferInput[]
-    connectOrCreate?: KanbanColumnCreateOrConnectWithoutJobOfferInput | KanbanColumnCreateOrConnectWithoutJobOfferInput[]
-    createMany?: KanbanColumnCreateManyJobOfferInputEnvelope
-    connect?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
-  }
-
   export type ApplicationCreateNestedManyWithoutJobOfferInput = {
     create?: XOR<ApplicationCreateWithoutJobOfferInput, ApplicationUncheckedCreateWithoutJobOfferInput> | ApplicationCreateWithoutJobOfferInput[] | ApplicationUncheckedCreateWithoutJobOfferInput[]
     connectOrCreate?: ApplicationCreateOrConnectWithoutJobOfferInput | ApplicationCreateOrConnectWithoutJobOfferInput[]
     createMany?: ApplicationCreateManyJobOfferInputEnvelope
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-  }
-
-  export type JobOfferCompetenceCreateNestedManyWithoutJobOfferInput = {
-    create?: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput> | JobOfferCompetenceCreateWithoutJobOfferInput[] | JobOfferCompetenceUncheckedCreateWithoutJobOfferInput[]
-    connectOrCreate?: JobOfferCompetenceCreateOrConnectWithoutJobOfferInput | JobOfferCompetenceCreateOrConnectWithoutJobOfferInput[]
-    createMany?: JobOfferCompetenceCreateManyJobOfferInputEnvelope
-    connect?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
   }
 
   export type ConversationCreateNestedManyWithoutJobOfferInput = {
@@ -44563,7 +44533,26 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
-  export type KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput = {
+  export type RecruteurCreateNestedOneWithoutJobOfferInput = {
+    create?: XOR<RecruteurCreateWithoutJobOfferInput, RecruteurUncheckedCreateWithoutJobOfferInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutJobOfferInput
+    connect?: RecruteurWhereUniqueInput
+  }
+
+  export type OfferTemplateCreateNestedOneWithoutOffersInput = {
+    create?: XOR<OfferTemplateCreateWithoutOffersInput, OfferTemplateUncheckedCreateWithoutOffersInput>
+    connectOrCreate?: OfferTemplateCreateOrConnectWithoutOffersInput
+    connect?: OfferTemplateWhereUniqueInput
+  }
+
+  export type JobOfferCompetenceCreateNestedManyWithoutJobOfferInput = {
+    create?: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput> | JobOfferCompetenceCreateWithoutJobOfferInput[] | JobOfferCompetenceUncheckedCreateWithoutJobOfferInput[]
+    connectOrCreate?: JobOfferCompetenceCreateOrConnectWithoutJobOfferInput | JobOfferCompetenceCreateOrConnectWithoutJobOfferInput[]
+    createMany?: JobOfferCompetenceCreateManyJobOfferInputEnvelope
+    connect?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
+  }
+
+  export type KanbanColumnCreateNestedManyWithoutJobOfferInput = {
     create?: XOR<KanbanColumnCreateWithoutJobOfferInput, KanbanColumnUncheckedCreateWithoutJobOfferInput> | KanbanColumnCreateWithoutJobOfferInput[] | KanbanColumnUncheckedCreateWithoutJobOfferInput[]
     connectOrCreate?: KanbanColumnCreateOrConnectWithoutJobOfferInput | KanbanColumnCreateOrConnectWithoutJobOfferInput[]
     createMany?: KanbanColumnCreateManyJobOfferInputEnvelope
@@ -44577,6 +44566,13 @@ export namespace Prisma {
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
   }
 
+  export type ConversationUncheckedCreateNestedManyWithoutJobOfferInput = {
+    create?: XOR<ConversationCreateWithoutJobOfferInput, ConversationUncheckedCreateWithoutJobOfferInput> | ConversationCreateWithoutJobOfferInput[] | ConversationUncheckedCreateWithoutJobOfferInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutJobOfferInput | ConversationCreateOrConnectWithoutJobOfferInput[]
+    createMany?: ConversationCreateManyJobOfferInputEnvelope
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  }
+
   export type JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput = {
     create?: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput> | JobOfferCompetenceCreateWithoutJobOfferInput[] | JobOfferCompetenceUncheckedCreateWithoutJobOfferInput[]
     connectOrCreate?: JobOfferCompetenceCreateOrConnectWithoutJobOfferInput | JobOfferCompetenceCreateOrConnectWithoutJobOfferInput[]
@@ -44584,11 +44580,11 @@ export namespace Prisma {
     connect?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
   }
 
-  export type ConversationUncheckedCreateNestedManyWithoutJobOfferInput = {
-    create?: XOR<ConversationCreateWithoutJobOfferInput, ConversationUncheckedCreateWithoutJobOfferInput> | ConversationCreateWithoutJobOfferInput[] | ConversationUncheckedCreateWithoutJobOfferInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutJobOfferInput | ConversationCreateOrConnectWithoutJobOfferInput[]
-    createMany?: ConversationCreateManyJobOfferInputEnvelope
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  export type KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput = {
+    create?: XOR<KanbanColumnCreateWithoutJobOfferInput, KanbanColumnUncheckedCreateWithoutJobOfferInput> | KanbanColumnCreateWithoutJobOfferInput[] | KanbanColumnUncheckedCreateWithoutJobOfferInput[]
+    connectOrCreate?: KanbanColumnCreateOrConnectWithoutJobOfferInput | KanbanColumnCreateOrConnectWithoutJobOfferInput[]
+    createMany?: KanbanColumnCreateManyJobOfferInputEnvelope
+    connect?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
   }
 
   export type FloatFieldUpdateOperationsInput = {
@@ -44599,44 +44595,16 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type OfferTemplateUpdateOneWithoutOffersNestedInput = {
-    create?: XOR<OfferTemplateCreateWithoutOffersInput, OfferTemplateUncheckedCreateWithoutOffersInput>
-    connectOrCreate?: OfferTemplateCreateOrConnectWithoutOffersInput
-    upsert?: OfferTemplateUpsertWithoutOffersInput
-    disconnect?: OfferTemplateWhereInput | boolean
-    delete?: OfferTemplateWhereInput | boolean
-    connect?: OfferTemplateWhereUniqueInput
-    update?: XOR<XOR<OfferTemplateUpdateToOneWithWhereWithoutOffersInput, OfferTemplateUpdateWithoutOffersInput>, OfferTemplateUncheckedUpdateWithoutOffersInput>
-  }
-
-  export type RecruteurUpdateOneRequiredWithoutJobOfferNestedInput = {
-    create?: XOR<RecruteurCreateWithoutJobOfferInput, RecruteurUncheckedCreateWithoutJobOfferInput>
-    connectOrCreate?: RecruteurCreateOrConnectWithoutJobOfferInput
-    upsert?: RecruteurUpsertWithoutJobOfferInput
-    connect?: RecruteurWhereUniqueInput
-    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutJobOfferInput, RecruteurUpdateWithoutJobOfferInput>, RecruteurUncheckedUpdateWithoutJobOfferInput>
-  }
-
-  export type KanbanColumnUpdateManyWithoutJobOfferNestedInput = {
-    create?: XOR<KanbanColumnCreateWithoutJobOfferInput, KanbanColumnUncheckedCreateWithoutJobOfferInput> | KanbanColumnCreateWithoutJobOfferInput[] | KanbanColumnUncheckedCreateWithoutJobOfferInput[]
-    connectOrCreate?: KanbanColumnCreateOrConnectWithoutJobOfferInput | KanbanColumnCreateOrConnectWithoutJobOfferInput[]
-    upsert?: KanbanColumnUpsertWithWhereUniqueWithoutJobOfferInput | KanbanColumnUpsertWithWhereUniqueWithoutJobOfferInput[]
-    createMany?: KanbanColumnCreateManyJobOfferInputEnvelope
-    set?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
-    disconnect?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
-    delete?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
-    connect?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
-    update?: KanbanColumnUpdateWithWhereUniqueWithoutJobOfferInput | KanbanColumnUpdateWithWhereUniqueWithoutJobOfferInput[]
-    updateMany?: KanbanColumnUpdateManyWithWhereWithoutJobOfferInput | KanbanColumnUpdateManyWithWhereWithoutJobOfferInput[]
-    deleteMany?: KanbanColumnScalarWhereInput | KanbanColumnScalarWhereInput[]
   }
 
   export type ApplicationUpdateManyWithoutJobOfferNestedInput = {
@@ -44653,20 +44621,6 @@ export namespace Prisma {
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
-  export type JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput = {
-    create?: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput> | JobOfferCompetenceCreateWithoutJobOfferInput[] | JobOfferCompetenceUncheckedCreateWithoutJobOfferInput[]
-    connectOrCreate?: JobOfferCompetenceCreateOrConnectWithoutJobOfferInput | JobOfferCompetenceCreateOrConnectWithoutJobOfferInput[]
-    upsert?: JobOfferCompetenceUpsertWithWhereUniqueWithoutJobOfferInput | JobOfferCompetenceUpsertWithWhereUniqueWithoutJobOfferInput[]
-    createMany?: JobOfferCompetenceCreateManyJobOfferInputEnvelope
-    set?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
-    disconnect?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
-    delete?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
-    connect?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
-    update?: JobOfferCompetenceUpdateWithWhereUniqueWithoutJobOfferInput | JobOfferCompetenceUpdateWithWhereUniqueWithoutJobOfferInput[]
-    updateMany?: JobOfferCompetenceUpdateManyWithWhereWithoutJobOfferInput | JobOfferCompetenceUpdateManyWithWhereWithoutJobOfferInput[]
-    deleteMany?: JobOfferCompetenceScalarWhereInput | JobOfferCompetenceScalarWhereInput[]
-  }
-
   export type ConversationUpdateManyWithoutJobOfferNestedInput = {
     create?: XOR<ConversationCreateWithoutJobOfferInput, ConversationUncheckedCreateWithoutJobOfferInput> | ConversationCreateWithoutJobOfferInput[] | ConversationUncheckedCreateWithoutJobOfferInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutJobOfferInput | ConversationCreateOrConnectWithoutJobOfferInput[]
@@ -44681,15 +44635,39 @@ export namespace Prisma {
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type RecruteurUpdateOneRequiredWithoutJobOfferNestedInput = {
+    create?: XOR<RecruteurCreateWithoutJobOfferInput, RecruteurUncheckedCreateWithoutJobOfferInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutJobOfferInput
+    upsert?: RecruteurUpsertWithoutJobOfferInput
+    connect?: RecruteurWhereUniqueInput
+    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutJobOfferInput, RecruteurUpdateWithoutJobOfferInput>, RecruteurUncheckedUpdateWithoutJobOfferInput>
   }
 
-  export type KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput = {
+  export type OfferTemplateUpdateOneWithoutOffersNestedInput = {
+    create?: XOR<OfferTemplateCreateWithoutOffersInput, OfferTemplateUncheckedCreateWithoutOffersInput>
+    connectOrCreate?: OfferTemplateCreateOrConnectWithoutOffersInput
+    upsert?: OfferTemplateUpsertWithoutOffersInput
+    disconnect?: OfferTemplateWhereInput | boolean
+    delete?: OfferTemplateWhereInput | boolean
+    connect?: OfferTemplateWhereUniqueInput
+    update?: XOR<XOR<OfferTemplateUpdateToOneWithWhereWithoutOffersInput, OfferTemplateUpdateWithoutOffersInput>, OfferTemplateUncheckedUpdateWithoutOffersInput>
+  }
+
+  export type JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput = {
+    create?: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput> | JobOfferCompetenceCreateWithoutJobOfferInput[] | JobOfferCompetenceUncheckedCreateWithoutJobOfferInput[]
+    connectOrCreate?: JobOfferCompetenceCreateOrConnectWithoutJobOfferInput | JobOfferCompetenceCreateOrConnectWithoutJobOfferInput[]
+    upsert?: JobOfferCompetenceUpsertWithWhereUniqueWithoutJobOfferInput | JobOfferCompetenceUpsertWithWhereUniqueWithoutJobOfferInput[]
+    createMany?: JobOfferCompetenceCreateManyJobOfferInputEnvelope
+    set?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
+    disconnect?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
+    delete?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
+    connect?: JobOfferCompetenceWhereUniqueInput | JobOfferCompetenceWhereUniqueInput[]
+    update?: JobOfferCompetenceUpdateWithWhereUniqueWithoutJobOfferInput | JobOfferCompetenceUpdateWithWhereUniqueWithoutJobOfferInput[]
+    updateMany?: JobOfferCompetenceUpdateManyWithWhereWithoutJobOfferInput | JobOfferCompetenceUpdateManyWithWhereWithoutJobOfferInput[]
+    deleteMany?: JobOfferCompetenceScalarWhereInput | JobOfferCompetenceScalarWhereInput[]
+  }
+
+  export type KanbanColumnUpdateManyWithoutJobOfferNestedInput = {
     create?: XOR<KanbanColumnCreateWithoutJobOfferInput, KanbanColumnUncheckedCreateWithoutJobOfferInput> | KanbanColumnCreateWithoutJobOfferInput[] | KanbanColumnUncheckedCreateWithoutJobOfferInput[]
     connectOrCreate?: KanbanColumnCreateOrConnectWithoutJobOfferInput | KanbanColumnCreateOrConnectWithoutJobOfferInput[]
     upsert?: KanbanColumnUpsertWithWhereUniqueWithoutJobOfferInput | KanbanColumnUpsertWithWhereUniqueWithoutJobOfferInput[]
@@ -44701,6 +44679,14 @@ export namespace Prisma {
     update?: KanbanColumnUpdateWithWhereUniqueWithoutJobOfferInput | KanbanColumnUpdateWithWhereUniqueWithoutJobOfferInput[]
     updateMany?: KanbanColumnUpdateManyWithWhereWithoutJobOfferInput | KanbanColumnUpdateManyWithWhereWithoutJobOfferInput[]
     deleteMany?: KanbanColumnScalarWhereInput | KanbanColumnScalarWhereInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput = {
@@ -44717,6 +44703,20 @@ export namespace Prisma {
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
   }
 
+  export type ConversationUncheckedUpdateManyWithoutJobOfferNestedInput = {
+    create?: XOR<ConversationCreateWithoutJobOfferInput, ConversationUncheckedCreateWithoutJobOfferInput> | ConversationCreateWithoutJobOfferInput[] | ConversationUncheckedCreateWithoutJobOfferInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutJobOfferInput | ConversationCreateOrConnectWithoutJobOfferInput[]
+    upsert?: ConversationUpsertWithWhereUniqueWithoutJobOfferInput | ConversationUpsertWithWhereUniqueWithoutJobOfferInput[]
+    createMany?: ConversationCreateManyJobOfferInputEnvelope
+    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    update?: ConversationUpdateWithWhereUniqueWithoutJobOfferInput | ConversationUpdateWithWhereUniqueWithoutJobOfferInput[]
+    updateMany?: ConversationUpdateManyWithWhereWithoutJobOfferInput | ConversationUpdateManyWithWhereWithoutJobOfferInput[]
+    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  }
+
   export type JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput = {
     create?: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput> | JobOfferCompetenceCreateWithoutJobOfferInput[] | JobOfferCompetenceUncheckedCreateWithoutJobOfferInput[]
     connectOrCreate?: JobOfferCompetenceCreateOrConnectWithoutJobOfferInput | JobOfferCompetenceCreateOrConnectWithoutJobOfferInput[]
@@ -44731,18 +44731,18 @@ export namespace Prisma {
     deleteMany?: JobOfferCompetenceScalarWhereInput | JobOfferCompetenceScalarWhereInput[]
   }
 
-  export type ConversationUncheckedUpdateManyWithoutJobOfferNestedInput = {
-    create?: XOR<ConversationCreateWithoutJobOfferInput, ConversationUncheckedCreateWithoutJobOfferInput> | ConversationCreateWithoutJobOfferInput[] | ConversationUncheckedCreateWithoutJobOfferInput[]
-    connectOrCreate?: ConversationCreateOrConnectWithoutJobOfferInput | ConversationCreateOrConnectWithoutJobOfferInput[]
-    upsert?: ConversationUpsertWithWhereUniqueWithoutJobOfferInput | ConversationUpsertWithWhereUniqueWithoutJobOfferInput[]
-    createMany?: ConversationCreateManyJobOfferInputEnvelope
-    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
-    update?: ConversationUpdateWithWhereUniqueWithoutJobOfferInput | ConversationUpdateWithWhereUniqueWithoutJobOfferInput[]
-    updateMany?: ConversationUpdateManyWithWhereWithoutJobOfferInput | ConversationUpdateManyWithWhereWithoutJobOfferInput[]
-    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  export type KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput = {
+    create?: XOR<KanbanColumnCreateWithoutJobOfferInput, KanbanColumnUncheckedCreateWithoutJobOfferInput> | KanbanColumnCreateWithoutJobOfferInput[] | KanbanColumnUncheckedCreateWithoutJobOfferInput[]
+    connectOrCreate?: KanbanColumnCreateOrConnectWithoutJobOfferInput | KanbanColumnCreateOrConnectWithoutJobOfferInput[]
+    upsert?: KanbanColumnUpsertWithWhereUniqueWithoutJobOfferInput | KanbanColumnUpsertWithWhereUniqueWithoutJobOfferInput[]
+    createMany?: KanbanColumnCreateManyJobOfferInputEnvelope
+    set?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
+    disconnect?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
+    delete?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
+    connect?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
+    update?: KanbanColumnUpdateWithWhereUniqueWithoutJobOfferInput | KanbanColumnUpdateWithWhereUniqueWithoutJobOfferInput[]
+    updateMany?: KanbanColumnUpdateManyWithWhereWithoutJobOfferInput | KanbanColumnUpdateManyWithWhereWithoutJobOfferInput[]
+    deleteMany?: KanbanColumnScalarWhereInput | KanbanColumnScalarWhereInput[]
   }
 
   export type JobOfferCreateNestedOneWithoutJobOfferCompetencesInput = {
@@ -44821,16 +44821,30 @@ export namespace Prisma {
     connect?: CandidatWhereUniqueInput
   }
 
+  export type KanbanColumnCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<KanbanColumnCreateWithoutApplicationsInput, KanbanColumnUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: KanbanColumnCreateOrConnectWithoutApplicationsInput
+    connect?: KanbanColumnWhereUniqueInput
+  }
+
   export type JobOfferCreateNestedOneWithoutApplicationsInput = {
     create?: XOR<JobOfferCreateWithoutApplicationsInput, JobOfferUncheckedCreateWithoutApplicationsInput>
     connectOrCreate?: JobOfferCreateOrConnectWithoutApplicationsInput
     connect?: JobOfferWhereUniqueInput
   }
 
-  export type KanbanColumnCreateNestedOneWithoutApplicationsInput = {
-    create?: XOR<KanbanColumnCreateWithoutApplicationsInput, KanbanColumnUncheckedCreateWithoutApplicationsInput>
-    connectOrCreate?: KanbanColumnCreateOrConnectWithoutApplicationsInput
-    connect?: KanbanColumnWhereUniqueInput
+  export type ApplicationCollaborateurCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+  }
+
+  export type ApplicationFileCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
+    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
   }
 
   export type ApplicationNoteCreateNestedManyWithoutApplicationInput = {
@@ -44847,18 +44861,18 @@ export namespace Prisma {
     connect?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
   }
 
-  export type ApplicationFileCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
-    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
-    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-  }
-
-  export type ApplicationCollaborateurCreateNestedManyWithoutApplicationInput = {
+  export type ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput = {
     create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
     createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
     connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+  }
+
+  export type ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
+    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
   }
 
   export type ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput = {
@@ -44875,26 +44889,20 @@ export namespace Prisma {
     connect?: ChecklistItemWhereUniqueInput | ChecklistItemWhereUniqueInput[]
   }
 
-  export type ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
-    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
-    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-  }
-
-  export type ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput = {
-    create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
-    createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
-    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
-  }
-
   export type CandidatUpdateOneRequiredWithoutApplicationsNestedInput = {
     create?: XOR<CandidatCreateWithoutApplicationsInput, CandidatUncheckedCreateWithoutApplicationsInput>
     connectOrCreate?: CandidatCreateOrConnectWithoutApplicationsInput
     upsert?: CandidatUpsertWithoutApplicationsInput
     connect?: CandidatWhereUniqueInput
     update?: XOR<XOR<CandidatUpdateToOneWithWhereWithoutApplicationsInput, CandidatUpdateWithoutApplicationsInput>, CandidatUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput = {
+    create?: XOR<KanbanColumnCreateWithoutApplicationsInput, KanbanColumnUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: KanbanColumnCreateOrConnectWithoutApplicationsInput
+    upsert?: KanbanColumnUpsertWithoutApplicationsInput
+    connect?: KanbanColumnWhereUniqueInput
+    update?: XOR<XOR<KanbanColumnUpdateToOneWithWhereWithoutApplicationsInput, KanbanColumnUpdateWithoutApplicationsInput>, KanbanColumnUncheckedUpdateWithoutApplicationsInput>
   }
 
   export type JobOfferUpdateOneRequiredWithoutApplicationsNestedInput = {
@@ -44905,12 +44913,32 @@ export namespace Prisma {
     update?: XOR<XOR<JobOfferUpdateToOneWithWhereWithoutApplicationsInput, JobOfferUpdateWithoutApplicationsInput>, JobOfferUncheckedUpdateWithoutApplicationsInput>
   }
 
-  export type KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput = {
-    create?: XOR<KanbanColumnCreateWithoutApplicationsInput, KanbanColumnUncheckedCreateWithoutApplicationsInput>
-    connectOrCreate?: KanbanColumnCreateOrConnectWithoutApplicationsInput
-    upsert?: KanbanColumnUpsertWithoutApplicationsInput
-    connect?: KanbanColumnWhereUniqueInput
-    update?: XOR<XOR<KanbanColumnUpdateToOneWithWhereWithoutApplicationsInput, KanbanColumnUpdateWithoutApplicationsInput>, KanbanColumnUncheckedUpdateWithoutApplicationsInput>
+  export type ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
+    set?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    delete?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
+    update?: ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput | ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+  }
+
+  export type ApplicationFileUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput | ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
+    set?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    disconnect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    delete?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    update?: ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationFileUpdateManyWithWhereWithoutApplicationInput | ApplicationFileUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
   }
 
   export type ApplicationNoteUpdateManyWithoutApplicationNestedInput = {
@@ -44941,21 +44969,7 @@ export namespace Prisma {
     deleteMany?: ChecklistItemScalarWhereInput | ChecklistItemScalarWhereInput[]
   }
 
-  export type ApplicationFileUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
-    upsert?: ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput | ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
-    set?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-    disconnect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-    delete?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-    update?: ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: ApplicationFileUpdateManyWithWhereWithoutApplicationInput | ApplicationFileUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
-  }
-
-  export type ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput = {
+  export type ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput = {
     create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
     connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
     upsert?: ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput[]
@@ -44967,6 +44981,20 @@ export namespace Prisma {
     update?: ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput | ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+  }
+
+  export type ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput | ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
+    set?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    disconnect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    delete?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
+    update?: ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationFileUpdateManyWithWhereWithoutApplicationInput | ApplicationFileUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
   }
 
   export type ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput = {
@@ -44995,34 +45023,6 @@ export namespace Prisma {
     update?: ChecklistItemUpdateWithWhereUniqueWithoutApplicationInput | ChecklistItemUpdateWithWhereUniqueWithoutApplicationInput[]
     updateMany?: ChecklistItemUpdateManyWithWhereWithoutApplicationInput | ChecklistItemUpdateManyWithWhereWithoutApplicationInput[]
     deleteMany?: ChecklistItemScalarWhereInput | ChecklistItemScalarWhereInput[]
-  }
-
-  export type ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput> | ApplicationFileCreateWithoutApplicationInput[] | ApplicationFileUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: ApplicationFileCreateOrConnectWithoutApplicationInput | ApplicationFileCreateOrConnectWithoutApplicationInput[]
-    upsert?: ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput | ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: ApplicationFileCreateManyApplicationInputEnvelope
-    set?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-    disconnect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-    delete?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-    connect?: ApplicationFileWhereUniqueInput | ApplicationFileWhereUniqueInput[]
-    update?: ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: ApplicationFileUpdateManyWithWhereWithoutApplicationInput | ApplicationFileUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
-  }
-
-  export type ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput = {
-    create?: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCreateWithoutApplicationInput[] | ApplicationCollaborateurUncheckedCreateWithoutApplicationInput[]
-    connectOrCreate?: ApplicationCollaborateurCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCreateOrConnectWithoutApplicationInput[]
-    upsert?: ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput[]
-    createMany?: ApplicationCollaborateurCreateManyApplicationInputEnvelope
-    set?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
-    disconnect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
-    delete?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
-    connect?: ApplicationCollaborateurWhereUniqueInput | ApplicationCollaborateurWhereUniqueInput[]
-    update?: ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput[]
-    updateMany?: ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput | ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput[]
-    deleteMany?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
   }
 
   export type ApplicationCreateNestedOneWithoutNotesInput = {
@@ -45067,12 +45067,6 @@ export namespace Prisma {
     update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutFilesInput, ApplicationUpdateWithoutFilesInput>, ApplicationUncheckedUpdateWithoutFilesInput>
   }
 
-  export type JobOfferCreateNestedOneWithoutKanbanColumnsInput = {
-    create?: XOR<JobOfferCreateWithoutKanbanColumnsInput, JobOfferUncheckedCreateWithoutKanbanColumnsInput>
-    connectOrCreate?: JobOfferCreateOrConnectWithoutKanbanColumnsInput
-    connect?: JobOfferWhereUniqueInput
-  }
-
   export type ApplicationCreateNestedManyWithoutColumnInput = {
     create?: XOR<ApplicationCreateWithoutColumnInput, ApplicationUncheckedCreateWithoutColumnInput> | ApplicationCreateWithoutColumnInput[] | ApplicationUncheckedCreateWithoutColumnInput[]
     connectOrCreate?: ApplicationCreateOrConnectWithoutColumnInput | ApplicationCreateOrConnectWithoutColumnInput[]
@@ -45080,19 +45074,17 @@ export namespace Prisma {
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
   }
 
+  export type JobOfferCreateNestedOneWithoutKanbanColumnsInput = {
+    create?: XOR<JobOfferCreateWithoutKanbanColumnsInput, JobOfferUncheckedCreateWithoutKanbanColumnsInput>
+    connectOrCreate?: JobOfferCreateOrConnectWithoutKanbanColumnsInput
+    connect?: JobOfferWhereUniqueInput
+  }
+
   export type ApplicationUncheckedCreateNestedManyWithoutColumnInput = {
     create?: XOR<ApplicationCreateWithoutColumnInput, ApplicationUncheckedCreateWithoutColumnInput> | ApplicationCreateWithoutColumnInput[] | ApplicationUncheckedCreateWithoutColumnInput[]
     connectOrCreate?: ApplicationCreateOrConnectWithoutColumnInput | ApplicationCreateOrConnectWithoutColumnInput[]
     createMany?: ApplicationCreateManyColumnInputEnvelope
     connect?: ApplicationWhereUniqueInput | ApplicationWhereUniqueInput[]
-  }
-
-  export type JobOfferUpdateOneRequiredWithoutKanbanColumnsNestedInput = {
-    create?: XOR<JobOfferCreateWithoutKanbanColumnsInput, JobOfferUncheckedCreateWithoutKanbanColumnsInput>
-    connectOrCreate?: JobOfferCreateOrConnectWithoutKanbanColumnsInput
-    upsert?: JobOfferUpsertWithoutKanbanColumnsInput
-    connect?: JobOfferWhereUniqueInput
-    update?: XOR<XOR<JobOfferUpdateToOneWithWhereWithoutKanbanColumnsInput, JobOfferUpdateWithoutKanbanColumnsInput>, JobOfferUncheckedUpdateWithoutKanbanColumnsInput>
   }
 
   export type ApplicationUpdateManyWithoutColumnNestedInput = {
@@ -45107,6 +45099,14 @@ export namespace Prisma {
     update?: ApplicationUpdateWithWhereUniqueWithoutColumnInput | ApplicationUpdateWithWhereUniqueWithoutColumnInput[]
     updateMany?: ApplicationUpdateManyWithWhereWithoutColumnInput | ApplicationUpdateManyWithWhereWithoutColumnInput[]
     deleteMany?: ApplicationScalarWhereInput | ApplicationScalarWhereInput[]
+  }
+
+  export type JobOfferUpdateOneRequiredWithoutKanbanColumnsNestedInput = {
+    create?: XOR<JobOfferCreateWithoutKanbanColumnsInput, JobOfferUncheckedCreateWithoutKanbanColumnsInput>
+    connectOrCreate?: JobOfferCreateOrConnectWithoutKanbanColumnsInput
+    upsert?: JobOfferUpsertWithoutKanbanColumnsInput
+    connect?: JobOfferWhereUniqueInput
+    update?: XOR<XOR<JobOfferUpdateToOneWithWhereWithoutKanbanColumnsInput, JobOfferUpdateWithoutKanbanColumnsInput>, JobOfferUncheckedUpdateWithoutKanbanColumnsInput>
   }
 
   export type ApplicationUncheckedUpdateManyWithoutColumnNestedInput = {
@@ -45467,16 +45467,16 @@ export namespace Prisma {
     update?: XOR<XOR<CandidatUpdateToOneWithWhereWithoutNotificationsInput, CandidatUpdateWithoutNotificationsInput>, CandidatUncheckedUpdateWithoutNotificationsInput>
   }
 
-  export type JobOfferCreateNestedOneWithoutConversationsInput = {
-    create?: XOR<JobOfferCreateWithoutConversationsInput, JobOfferUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: JobOfferCreateOrConnectWithoutConversationsInput
-    connect?: JobOfferWhereUniqueInput
-  }
-
   export type CandidatCreateNestedOneWithoutConversationsInput = {
     create?: XOR<CandidatCreateWithoutConversationsInput, CandidatUncheckedCreateWithoutConversationsInput>
     connectOrCreate?: CandidatCreateOrConnectWithoutConversationsInput
     connect?: CandidatWhereUniqueInput
+  }
+
+  export type JobOfferCreateNestedOneWithoutConversationsInput = {
+    create?: XOR<JobOfferCreateWithoutConversationsInput, JobOfferUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: JobOfferCreateOrConnectWithoutConversationsInput
+    connect?: JobOfferWhereUniqueInput
   }
 
   export type RecruteurCreateNestedOneWithoutConversationsInput = {
@@ -45499,20 +45499,20 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
-  export type JobOfferUpdateOneRequiredWithoutConversationsNestedInput = {
-    create?: XOR<JobOfferCreateWithoutConversationsInput, JobOfferUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: JobOfferCreateOrConnectWithoutConversationsInput
-    upsert?: JobOfferUpsertWithoutConversationsInput
-    connect?: JobOfferWhereUniqueInput
-    update?: XOR<XOR<JobOfferUpdateToOneWithWhereWithoutConversationsInput, JobOfferUpdateWithoutConversationsInput>, JobOfferUncheckedUpdateWithoutConversationsInput>
-  }
-
   export type CandidatUpdateOneRequiredWithoutConversationsNestedInput = {
     create?: XOR<CandidatCreateWithoutConversationsInput, CandidatUncheckedCreateWithoutConversationsInput>
     connectOrCreate?: CandidatCreateOrConnectWithoutConversationsInput
     upsert?: CandidatUpsertWithoutConversationsInput
     connect?: CandidatWhereUniqueInput
     update?: XOR<XOR<CandidatUpdateToOneWithWhereWithoutConversationsInput, CandidatUpdateWithoutConversationsInput>, CandidatUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type JobOfferUpdateOneRequiredWithoutConversationsNestedInput = {
+    create?: XOR<JobOfferCreateWithoutConversationsInput, JobOfferUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: JobOfferCreateOrConnectWithoutConversationsInput
+    upsert?: JobOfferUpsertWithoutConversationsInput
+    connect?: JobOfferWhereUniqueInput
+    update?: XOR<XOR<JobOfferUpdateToOneWithWhereWithoutConversationsInput, JobOfferUpdateWithoutConversationsInput>, JobOfferUncheckedUpdateWithoutConversationsInput>
   }
 
   export type RecruteurUpdateOneRequiredWithoutConversationsNestedInput = {
@@ -45724,19 +45724,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
-  }
-
   export type NestedEnumRecruteurTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.RecruteurType | EnumRecruteurTypeFieldRefInput<$PrismaModel>
     in?: $Enums.RecruteurType[]
@@ -45795,6 +45782,11 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[]
@@ -45825,6 +45817,14 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -45887,153 +45887,6 @@ export namespace Prisma {
     _max?: NestedEnumSenderTypeFilter<$PrismaModel>
   }
 
-  export type CandidatCreateWithoutUserInput = {
-    id?: string
-    nom?: string | null
-    prenom?: string | null
-    telephone?: string | null
-    cv?: string | null
-    letterm?: string | null
-    email: string
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays: string
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
-    favorite?: boolean | null
-    applications?: ApplicationCreateNestedManyWithoutCandidatInput
-    experiences?: ExperienceCreateNestedManyWithoutCandidatInput
-    formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationCreateNestedManyWithoutCandidatInput
-  }
-
-  export type CandidatUncheckedCreateWithoutUserInput = {
-    id?: string
-    nom?: string | null
-    prenom?: string | null
-    telephone?: string | null
-    cv?: string | null
-    letterm?: string | null
-    email: string
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays: string
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
-    favorite?: boolean | null
-    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
-    experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
-    formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
-  }
-
-  export type CandidatCreateOrConnectWithoutUserInput = {
-    where: CandidatWhereUniqueInput
-    create: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
-  }
-
-  export type RecruteurCreateWithoutUserInput = {
-    id?: string
-    type: $Enums.RecruteurType
-    entreprise?: string | null
-    description?: string | null
-    name: string
-    logo?: string | null
-    industry?: string | null
-    size?: string | null
-    location?: string | null
-    website?: string | null
-    email: string
-    phone?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
-    collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
-    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
-  }
-
-  export type RecruteurUncheckedCreateWithoutUserInput = {
-    id?: string
-    type: $Enums.RecruteurType
-    entreprise?: string | null
-    description?: string | null
-    name: string
-    logo?: string | null
-    industry?: string | null
-    size?: string | null
-    location?: string | null
-    website?: string | null
-    email: string
-    phone?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
-    collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
-  }
-
-  export type RecruteurCreateOrConnectWithoutUserInput = {
-    where: RecruteurWhereUniqueInput
-    create: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
-  }
-
-  export type CollaborateurCreateWithoutUserInput = {
-    id?: string
-    email: string
-    nom: string
-    prenom: string
-    role: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
-    invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
-    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
-  }
-
-  export type CollaborateurUncheckedCreateWithoutUserInput = {
-    id?: string
-    email: string
-    nom: string
-    prenom: string
-    role: $Enums.Role
-    recruteurId: string
-    invitationId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
-  }
-
-  export type CollaborateurCreateOrConnectWithoutUserInput = {
-    where: CollaborateurWhereUniqueInput
-    create: XOR<CollaborateurCreateWithoutUserInput, CollaborateurUncheckedCreateWithoutUserInput>
-  }
-
   export type AccountCreateWithoutUserInput = {
     id?: string
     type: string
@@ -46072,6 +45925,151 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CandidatCreateWithoutUserInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    email: string
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays: string
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationCreateNestedManyWithoutCandidatInput
+    experiences?: ExperienceCreateNestedManyWithoutCandidatInput
+    formations?: FormationCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
+  }
+
+  export type CandidatUncheckedCreateWithoutUserInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    email: string
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays: string
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
+    experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
+    formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
+  }
+
+  export type CandidatCreateOrConnectWithoutUserInput = {
+    where: CandidatWhereUniqueInput
+    create: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
+  }
+
+  export type CollaborateurCreateWithoutUserInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
+    invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
+    recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
+  }
+
+  export type CollaborateurUncheckedCreateWithoutUserInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    recruteurId: string
+    invitationId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
+  }
+
+  export type CollaborateurCreateOrConnectWithoutUserInput = {
+    where: CollaborateurWhereUniqueInput
+    create: XOR<CollaborateurCreateWithoutUserInput, CollaborateurUncheckedCreateWithoutUserInput>
+  }
+
+  export type RecruteurCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type RecruteurUncheckedCreateWithoutUserInput = {
+    id?: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type RecruteurCreateOrConnectWithoutUserInput = {
+    where: RecruteurWhereUniqueInput
+    create: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
+  }
+
   export type SessionCreateWithoutUserInput = {
     id?: string
     sessionToken: string
@@ -46092,171 +46090,6 @@ export namespace Prisma {
   export type SessionCreateManyUserInputEnvelope = {
     data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
     skipDuplicates?: boolean
-  }
-
-  export type CandidatUpsertWithoutUserInput = {
-    update: XOR<CandidatUpdateWithoutUserInput, CandidatUncheckedUpdateWithoutUserInput>
-    create: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
-    where?: CandidatWhereInput
-  }
-
-  export type CandidatUpdateToOneWithWhereWithoutUserInput = {
-    where?: CandidatWhereInput
-    data: XOR<CandidatUpdateWithoutUserInput, CandidatUncheckedUpdateWithoutUserInput>
-  }
-
-  export type CandidatUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
-    cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: StringFieldUpdateOperationsInput | string
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
-    experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
-    formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
-  }
-
-  export type CandidatUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
-    cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: StringFieldUpdateOperationsInput | string
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
-    experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
-    formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
-  }
-
-  export type RecruteurUpsertWithoutUserInput = {
-    update: XOR<RecruteurUpdateWithoutUserInput, RecruteurUncheckedUpdateWithoutUserInput>
-    create: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
-    where?: RecruteurWhereInput
-  }
-
-  export type RecruteurUpdateToOneWithWhereWithoutUserInput = {
-    where?: RecruteurWhereInput
-    data: XOR<RecruteurUpdateWithoutUserInput, RecruteurUncheckedUpdateWithoutUserInput>
-  }
-
-  export type RecruteurUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
-    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    logo?: NullableStringFieldUpdateOperationsInput | string | null
-    industry?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
-    collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
-    conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
-  }
-
-  export type RecruteurUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
-    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    logo?: NullableStringFieldUpdateOperationsInput | string | null
-    industry?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
-    collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
-  }
-
-  export type CollaborateurUpsertWithoutUserInput = {
-    update: XOR<CollaborateurUpdateWithoutUserInput, CollaborateurUncheckedUpdateWithoutUserInput>
-    create: XOR<CollaborateurCreateWithoutUserInput, CollaborateurUncheckedCreateWithoutUserInput>
-    where?: CollaborateurWhereInput
-  }
-
-  export type CollaborateurUpdateToOneWithWhereWithoutUserInput = {
-    where?: CollaborateurWhereInput
-    data: XOR<CollaborateurUpdateWithoutUserInput, CollaborateurUncheckedUpdateWithoutUserInput>
-  }
-
-  export type CollaborateurUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    prenom?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
-    invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
-    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
-  }
-
-  export type CollaborateurUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    prenom?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    recruteurId?: StringFieldUpdateOperationsInput | string
-    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
@@ -46293,6 +46126,169 @@ export namespace Prisma {
     session_state?: StringNullableFilter<"Account"> | string | null
   }
 
+  export type CandidatUpsertWithoutUserInput = {
+    update: XOR<CandidatUpdateWithoutUserInput, CandidatUncheckedUpdateWithoutUserInput>
+    create: XOR<CandidatCreateWithoutUserInput, CandidatUncheckedCreateWithoutUserInput>
+    where?: CandidatWhereInput
+  }
+
+  export type CandidatUpdateToOneWithWhereWithoutUserInput = {
+    where?: CandidatWhereInput
+    data: XOR<CandidatUpdateWithoutUserInput, CandidatUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CandidatUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: StringFieldUpdateOperationsInput | string
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
+    experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
+    formations?: FormationUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
+  }
+
+  export type CandidatUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: StringFieldUpdateOperationsInput | string
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
+    experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
+    formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
+  }
+
+  export type CollaborateurUpsertWithoutUserInput = {
+    update: XOR<CollaborateurUpdateWithoutUserInput, CollaborateurUncheckedUpdateWithoutUserInput>
+    create: XOR<CollaborateurCreateWithoutUserInput, CollaborateurUncheckedCreateWithoutUserInput>
+    where?: CollaborateurWhereInput
+  }
+
+  export type CollaborateurUpdateToOneWithWhereWithoutUserInput = {
+    where?: CollaborateurWhereInput
+    data: XOR<CollaborateurUpdateWithoutUserInput, CollaborateurUncheckedUpdateWithoutUserInput>
+  }
+
+  export type CollaborateurUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
+    invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
+  }
+
+  export type CollaborateurUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
+  }
+
+  export type RecruteurUpsertWithoutUserInput = {
+    update: XOR<RecruteurUpdateWithoutUserInput, RecruteurUncheckedUpdateWithoutUserInput>
+    create: XOR<RecruteurCreateWithoutUserInput, RecruteurUncheckedCreateWithoutUserInput>
+    where?: RecruteurWhereInput
+  }
+
+  export type RecruteurUpdateToOneWithWhereWithoutUserInput = {
+    where?: RecruteurWhereInput
+    data: XOR<RecruteurUpdateWithoutUserInput, RecruteurUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RecruteurUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+  }
+
+  export type RecruteurUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+  }
+
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
     where: SessionWhereUniqueInput
     update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
@@ -46319,6 +46315,94 @@ export namespace Prisma {
     expires?: DateTimeFilter<"Session"> | Date | string
   }
 
+  export type AlerteEmploiCreateWithoutCandidatInput = {
+    id?: string
+    titre: string
+    localisation: string
+    typeContrat: string
+    salaireMin?: number | null
+    salaireMax?: number | null
+    experience: string
+    frequence: string
+    active?: boolean
+    derniereMiseAJour?: Date | string
+    nombreResultats?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    alerteMotsCles?: AlerteMotCleCreateNestedManyWithoutAlerteInput
+  }
+
+  export type AlerteEmploiUncheckedCreateWithoutCandidatInput = {
+    id?: string
+    titre: string
+    localisation: string
+    typeContrat: string
+    salaireMin?: number | null
+    salaireMax?: number | null
+    experience: string
+    frequence: string
+    active?: boolean
+    derniereMiseAJour?: Date | string
+    nombreResultats?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    alerteMotsCles?: AlerteMotCleUncheckedCreateNestedManyWithoutAlerteInput
+  }
+
+  export type AlerteEmploiCreateOrConnectWithoutCandidatInput = {
+    where: AlerteEmploiWhereUniqueInput
+    create: XOR<AlerteEmploiCreateWithoutCandidatInput, AlerteEmploiUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type AlerteEmploiCreateManyCandidatInputEnvelope = {
+    data: AlerteEmploiCreateManyCandidatInput | AlerteEmploiCreateManyCandidatInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationCreateWithoutCandidatInput = {
+    id?: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    favorite?: boolean | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutCandidatInput = {
+    id?: string
+    jobOfferId: number
+    columnId: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    favorite?: boolean | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutCandidatInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutCandidatInput, ApplicationUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type ApplicationCreateManyCandidatInputEnvelope = {
+    data: ApplicationCreateManyCandidatInput | ApplicationCreateManyCandidatInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserCreateWithoutCandidatInput = {
     id?: string
     name?: string | null
@@ -46329,9 +46413,9 @@ export namespace Prisma {
     type: $Enums.UserType
     createdAt?: Date | string
     updatedAt?: Date | string
-    recruteur?: RecruteurCreateNestedOneWithoutUserInput
-    collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
+    recruteur?: RecruteurCreateNestedOneWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
@@ -46345,9 +46429,9 @@ export namespace Prisma {
     type: $Enums.UserType
     createdAt?: Date | string
     updatedAt?: Date | string
-    recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
-    collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
+    recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -46356,45 +46440,83 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutCandidatInput, UserUncheckedCreateWithoutCandidatInput>
   }
 
-  export type ApplicationCreateWithoutCandidatInput = {
+  export type CandidatCompetenceCreateWithoutCandidatInput = {
     id?: string
-    rating?: number | null
-    message?: string | null
-    cv?: string | null
-    duedate?: Date | string | null
+    competence: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
-    column: KanbanColumnCreateNestedOneWithoutApplicationsInput
-    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
-    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
-  export type ApplicationUncheckedCreateWithoutCandidatInput = {
+  export type CandidatCompetenceUncheckedCreateWithoutCandidatInput = {
+    id?: string
+    competence: string
+    createdAt?: Date | string
+  }
+
+  export type CandidatCompetenceCreateOrConnectWithoutCandidatInput = {
+    where: CandidatCompetenceWhereUniqueInput
+    create: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type CandidatCompetenceCreateManyCandidatInputEnvelope = {
+    data: CandidatCompetenceCreateManyCandidatInput | CandidatCompetenceCreateManyCandidatInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CompetenceCreateWithoutCandidatInput = {
+    id?: string
+    categorie: string
+    nom: string
+    niveau: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompetenceUncheckedCreateWithoutCandidatInput = {
+    id?: string
+    categorie: string
+    nom: string
+    niveau: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CompetenceCreateOrConnectWithoutCandidatInput = {
+    where: CompetenceWhereUniqueInput
+    create: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type CompetenceCreateManyCandidatInputEnvelope = {
+    data: CompetenceCreateManyCandidatInput | CompetenceCreateManyCandidatInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ConversationCreateWithoutCandidatInput = {
+    id?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    jobOffer: JobOfferCreateNestedOneWithoutConversationsInput
+    recruteur: RecruteurCreateNestedOneWithoutConversationsInput
+    messages?: MessageCreateNestedManyWithoutConversationInput
+  }
+
+  export type ConversationUncheckedCreateWithoutCandidatInput = {
     id?: string
     jobOfferId: number
-    columnId: string
-    rating?: number | null
-    message?: string | null
-    cv?: string | null
-    duedate?: Date | string | null
+    recruteurId: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
-    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
+    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
-  export type ApplicationCreateOrConnectWithoutCandidatInput = {
-    where: ApplicationWhereUniqueInput
-    create: XOR<ApplicationCreateWithoutCandidatInput, ApplicationUncheckedCreateWithoutCandidatInput>
+  export type ConversationCreateOrConnectWithoutCandidatInput = {
+    where: ConversationWhereUniqueInput
+    create: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput>
   }
 
-  export type ApplicationCreateManyCandidatInputEnvelope = {
-    data: ApplicationCreateManyCandidatInput | ApplicationCreateManyCandidatInput[]
+  export type ConversationCreateManyCandidatInputEnvelope = {
+    data: ConversationCreateManyCandidatInput | ConversationCreateManyCandidatInput[]
     skipDuplicates?: boolean
   }
 
@@ -46472,31 +46594,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type CompetenceCreateWithoutCandidatInput = {
+  export type NotificationCreateWithoutCandidatInput = {
     id?: string
-    categorie: string
-    nom: string
-    niveau: number
+    titre: string
+    message: string
+    type: string
+    lu?: boolean
+    offreId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CompetenceUncheckedCreateWithoutCandidatInput = {
+  export type NotificationUncheckedCreateWithoutCandidatInput = {
     id?: string
-    categorie: string
-    nom: string
-    niveau: number
+    titre: string
+    message: string
+    type: string
+    lu?: boolean
+    offreId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type CompetenceCreateOrConnectWithoutCandidatInput = {
-    where: CompetenceWhereUniqueInput
-    create: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput>
+  export type NotificationCreateOrConnectWithoutCandidatInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput>
   }
 
-  export type CompetenceCreateManyCandidatInputEnvelope = {
-    data: CompetenceCreateManyCandidatInput | CompetenceCreateManyCandidatInput[]
+  export type NotificationCreateManyCandidatInputEnvelope = {
+    data: NotificationCreateManyCandidatInput | NotificationCreateManyCandidatInput[]
     skipDuplicates?: boolean
   }
 
@@ -46534,175 +46660,40 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AlerteEmploiCreateWithoutCandidatInput = {
-    id?: string
-    titre: string
-    localisation: string
-    typeContrat: string
-    salaireMin?: number | null
-    salaireMax?: number | null
-    experience: string
-    frequence: string
-    active?: boolean
-    derniereMiseAJour?: Date | string
-    nombreResultats?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    alerteMotsCles?: AlerteMotCleCreateNestedManyWithoutAlerteInput
-  }
-
-  export type AlerteEmploiUncheckedCreateWithoutCandidatInput = {
-    id?: string
-    titre: string
-    localisation: string
-    typeContrat: string
-    salaireMin?: number | null
-    salaireMax?: number | null
-    experience: string
-    frequence: string
-    active?: boolean
-    derniereMiseAJour?: Date | string
-    nombreResultats?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    alerteMotsCles?: AlerteMotCleUncheckedCreateNestedManyWithoutAlerteInput
-  }
-
-  export type AlerteEmploiCreateOrConnectWithoutCandidatInput = {
+  export type AlerteEmploiUpsertWithWhereUniqueWithoutCandidatInput = {
     where: AlerteEmploiWhereUniqueInput
+    update: XOR<AlerteEmploiUpdateWithoutCandidatInput, AlerteEmploiUncheckedUpdateWithoutCandidatInput>
     create: XOR<AlerteEmploiCreateWithoutCandidatInput, AlerteEmploiUncheckedCreateWithoutCandidatInput>
   }
 
-  export type AlerteEmploiCreateManyCandidatInputEnvelope = {
-    data: AlerteEmploiCreateManyCandidatInput | AlerteEmploiCreateManyCandidatInput[]
-    skipDuplicates?: boolean
+  export type AlerteEmploiUpdateWithWhereUniqueWithoutCandidatInput = {
+    where: AlerteEmploiWhereUniqueInput
+    data: XOR<AlerteEmploiUpdateWithoutCandidatInput, AlerteEmploiUncheckedUpdateWithoutCandidatInput>
   }
 
-  export type NotificationCreateWithoutCandidatInput = {
-    id?: string
-    titre: string
-    message: string
-    type: string
-    lu?: boolean
-    offreId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type AlerteEmploiUpdateManyWithWhereWithoutCandidatInput = {
+    where: AlerteEmploiScalarWhereInput
+    data: XOR<AlerteEmploiUpdateManyMutationInput, AlerteEmploiUncheckedUpdateManyWithoutCandidatInput>
   }
 
-  export type NotificationUncheckedCreateWithoutCandidatInput = {
-    id?: string
-    titre: string
-    message: string
-    type: string
-    lu?: boolean
-    offreId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type NotificationCreateOrConnectWithoutCandidatInput = {
-    where: NotificationWhereUniqueInput
-    create: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput>
-  }
-
-  export type NotificationCreateManyCandidatInputEnvelope = {
-    data: NotificationCreateManyCandidatInput | NotificationCreateManyCandidatInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CandidatCompetenceCreateWithoutCandidatInput = {
-    id?: string
-    competence: string
-    createdAt?: Date | string
-  }
-
-  export type CandidatCompetenceUncheckedCreateWithoutCandidatInput = {
-    id?: string
-    competence: string
-    createdAt?: Date | string
-  }
-
-  export type CandidatCompetenceCreateOrConnectWithoutCandidatInput = {
-    where: CandidatCompetenceWhereUniqueInput
-    create: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput>
-  }
-
-  export type CandidatCompetenceCreateManyCandidatInputEnvelope = {
-    data: CandidatCompetenceCreateManyCandidatInput | CandidatCompetenceCreateManyCandidatInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ConversationCreateWithoutCandidatInput = {
-    id?: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    jobOffer: JobOfferCreateNestedOneWithoutConversationsInput
-    recruteur: RecruteurCreateNestedOneWithoutConversationsInput
-    messages?: MessageCreateNestedManyWithoutConversationInput
-  }
-
-  export type ConversationUncheckedCreateWithoutCandidatInput = {
-    id?: string
-    jobOfferId: number
-    recruteurId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
-  }
-
-  export type ConversationCreateOrConnectWithoutCandidatInput = {
-    where: ConversationWhereUniqueInput
-    create: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput>
-  }
-
-  export type ConversationCreateManyCandidatInputEnvelope = {
-    data: ConversationCreateManyCandidatInput | ConversationCreateManyCandidatInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithoutCandidatInput = {
-    update: XOR<UserUpdateWithoutCandidatInput, UserUncheckedUpdateWithoutCandidatInput>
-    create: XOR<UserCreateWithoutCandidatInput, UserUncheckedCreateWithoutCandidatInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutCandidatInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutCandidatInput, UserUncheckedUpdateWithoutCandidatInput>
-  }
-
-  export type UserUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recruteur?: RecruteurUpdateOneWithoutUserNestedInput
-    collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
-    collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  export type AlerteEmploiScalarWhereInput = {
+    AND?: AlerteEmploiScalarWhereInput | AlerteEmploiScalarWhereInput[]
+    OR?: AlerteEmploiScalarWhereInput[]
+    NOT?: AlerteEmploiScalarWhereInput | AlerteEmploiScalarWhereInput[]
+    id?: StringFilter<"AlerteEmploi"> | string
+    titre?: StringFilter<"AlerteEmploi"> | string
+    localisation?: StringFilter<"AlerteEmploi"> | string
+    typeContrat?: StringFilter<"AlerteEmploi"> | string
+    salaireMin?: FloatNullableFilter<"AlerteEmploi"> | number | null
+    salaireMax?: FloatNullableFilter<"AlerteEmploi"> | number | null
+    experience?: StringFilter<"AlerteEmploi"> | string
+    frequence?: StringFilter<"AlerteEmploi"> | string
+    active?: BoolFilter<"AlerteEmploi"> | boolean
+    derniereMiseAJour?: DateTimeFilter<"AlerteEmploi"> | Date | string
+    nombreResultats?: IntFilter<"AlerteEmploi"> | number
+    candidatId?: StringFilter<"AlerteEmploi"> | string
+    createdAt?: DateTimeFilter<"AlerteEmploi"> | Date | string
+    updatedAt?: DateTimeFilter<"AlerteEmploi"> | Date | string
   }
 
   export type ApplicationUpsertWithWhereUniqueWithoutCandidatInput = {
@@ -46732,9 +46723,137 @@ export namespace Prisma {
     rating?: IntNullableFilter<"Application"> | number | null
     message?: StringNullableFilter<"Application"> | string | null
     cv?: StringNullableFilter<"Application"> | string | null
+    favorite?: BoolNullableFilter<"Application"> | boolean | null
     duedate?: DateTimeNullableFilter<"Application"> | Date | string | null
     createdAt?: DateTimeFilter<"Application"> | Date | string
     updatedAt?: DateTimeFilter<"Application"> | Date | string
+  }
+
+  export type UserUpsertWithoutCandidatInput = {
+    update: XOR<UserUpdateWithoutCandidatInput, UserUncheckedUpdateWithoutCandidatInput>
+    create: XOR<UserCreateWithoutCandidatInput, UserUncheckedCreateWithoutCandidatInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCandidatInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCandidatInput, UserUncheckedUpdateWithoutCandidatInput>
+  }
+
+  export type UserUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
+    recruteur?: RecruteurUpdateOneWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
+    recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput = {
+    where: CandidatCompetenceWhereUniqueInput
+    update: XOR<CandidatCompetenceUpdateWithoutCandidatInput, CandidatCompetenceUncheckedUpdateWithoutCandidatInput>
+    create: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput = {
+    where: CandidatCompetenceWhereUniqueInput
+    data: XOR<CandidatCompetenceUpdateWithoutCandidatInput, CandidatCompetenceUncheckedUpdateWithoutCandidatInput>
+  }
+
+  export type CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput = {
+    where: CandidatCompetenceScalarWhereInput
+    data: XOR<CandidatCompetenceUpdateManyMutationInput, CandidatCompetenceUncheckedUpdateManyWithoutCandidatInput>
+  }
+
+  export type CandidatCompetenceScalarWhereInput = {
+    AND?: CandidatCompetenceScalarWhereInput | CandidatCompetenceScalarWhereInput[]
+    OR?: CandidatCompetenceScalarWhereInput[]
+    NOT?: CandidatCompetenceScalarWhereInput | CandidatCompetenceScalarWhereInput[]
+    id?: StringFilter<"CandidatCompetence"> | string
+    candidatId?: StringFilter<"CandidatCompetence"> | string
+    competence?: StringFilter<"CandidatCompetence"> | string
+    createdAt?: DateTimeFilter<"CandidatCompetence"> | Date | string
+  }
+
+  export type CompetenceUpsertWithWhereUniqueWithoutCandidatInput = {
+    where: CompetenceWhereUniqueInput
+    update: XOR<CompetenceUpdateWithoutCandidatInput, CompetenceUncheckedUpdateWithoutCandidatInput>
+    create: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type CompetenceUpdateWithWhereUniqueWithoutCandidatInput = {
+    where: CompetenceWhereUniqueInput
+    data: XOR<CompetenceUpdateWithoutCandidatInput, CompetenceUncheckedUpdateWithoutCandidatInput>
+  }
+
+  export type CompetenceUpdateManyWithWhereWithoutCandidatInput = {
+    where: CompetenceScalarWhereInput
+    data: XOR<CompetenceUpdateManyMutationInput, CompetenceUncheckedUpdateManyWithoutCandidatInput>
+  }
+
+  export type CompetenceScalarWhereInput = {
+    AND?: CompetenceScalarWhereInput | CompetenceScalarWhereInput[]
+    OR?: CompetenceScalarWhereInput[]
+    NOT?: CompetenceScalarWhereInput | CompetenceScalarWhereInput[]
+    id?: StringFilter<"Competence"> | string
+    categorie?: StringFilter<"Competence"> | string
+    nom?: StringFilter<"Competence"> | string
+    niveau?: IntFilter<"Competence"> | number
+    candidatId?: StringFilter<"Competence"> | string
+    createdAt?: DateTimeFilter<"Competence"> | Date | string
+    updatedAt?: DateTimeFilter<"Competence"> | Date | string
+  }
+
+  export type ConversationUpsertWithWhereUniqueWithoutCandidatInput = {
+    where: ConversationWhereUniqueInput
+    update: XOR<ConversationUpdateWithoutCandidatInput, ConversationUncheckedUpdateWithoutCandidatInput>
+    create: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type ConversationUpdateWithWhereUniqueWithoutCandidatInput = {
+    where: ConversationWhereUniqueInput
+    data: XOR<ConversationUpdateWithoutCandidatInput, ConversationUncheckedUpdateWithoutCandidatInput>
+  }
+
+  export type ConversationUpdateManyWithWhereWithoutCandidatInput = {
+    where: ConversationScalarWhereInput
+    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutCandidatInput>
+  }
+
+  export type ConversationScalarWhereInput = {
+    AND?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+    OR?: ConversationScalarWhereInput[]
+    NOT?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+    id?: StringFilter<"Conversation"> | string
+    jobOfferId?: IntFilter<"Conversation"> | number
+    candidatId?: StringFilter<"Conversation"> | string
+    recruteurId?: StringFilter<"Conversation"> | string
+    isActive?: BoolFilter<"Conversation"> | boolean
+    createdAt?: DateTimeFilter<"Conversation"> | Date | string
+    updatedAt?: DateTimeFilter<"Conversation"> | Date | string
   }
 
   export type ExperienceUpsertWithWhereUniqueWithoutCandidatInput = {
@@ -46802,33 +46921,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Formation"> | Date | string
   }
 
-  export type CompetenceUpsertWithWhereUniqueWithoutCandidatInput = {
-    where: CompetenceWhereUniqueInput
-    update: XOR<CompetenceUpdateWithoutCandidatInput, CompetenceUncheckedUpdateWithoutCandidatInput>
-    create: XOR<CompetenceCreateWithoutCandidatInput, CompetenceUncheckedCreateWithoutCandidatInput>
+  export type NotificationUpsertWithWhereUniqueWithoutCandidatInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutCandidatInput, NotificationUncheckedUpdateWithoutCandidatInput>
+    create: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput>
   }
 
-  export type CompetenceUpdateWithWhereUniqueWithoutCandidatInput = {
-    where: CompetenceWhereUniqueInput
-    data: XOR<CompetenceUpdateWithoutCandidatInput, CompetenceUncheckedUpdateWithoutCandidatInput>
+  export type NotificationUpdateWithWhereUniqueWithoutCandidatInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutCandidatInput, NotificationUncheckedUpdateWithoutCandidatInput>
   }
 
-  export type CompetenceUpdateManyWithWhereWithoutCandidatInput = {
-    where: CompetenceScalarWhereInput
-    data: XOR<CompetenceUpdateManyMutationInput, CompetenceUncheckedUpdateManyWithoutCandidatInput>
+  export type NotificationUpdateManyWithWhereWithoutCandidatInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutCandidatInput>
   }
 
-  export type CompetenceScalarWhereInput = {
-    AND?: CompetenceScalarWhereInput | CompetenceScalarWhereInput[]
-    OR?: CompetenceScalarWhereInput[]
-    NOT?: CompetenceScalarWhereInput | CompetenceScalarWhereInput[]
-    id?: StringFilter<"Competence"> | string
-    categorie?: StringFilter<"Competence"> | string
-    nom?: StringFilter<"Competence"> | string
-    niveau?: IntFilter<"Competence"> | number
-    candidatId?: StringFilter<"Competence"> | string
-    createdAt?: DateTimeFilter<"Competence"> | Date | string
-    updatedAt?: DateTimeFilter<"Competence"> | Date | string
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    id?: StringFilter<"Notification"> | string
+    titre?: StringFilter<"Notification"> | string
+    message?: StringFilter<"Notification"> | string
+    type?: StringFilter<"Notification"> | string
+    lu?: BoolFilter<"Notification"> | boolean
+    candidatId?: StringFilter<"Notification"> | string
+    offreId?: IntNullableFilter<"Notification"> | number | null
+    createdAt?: DateTimeFilter<"Notification"> | Date | string
+    updatedAt?: DateTimeFilter<"Notification"> | Date | string
   }
 
   export type ObjectifCarriereUpsertWithWhereUniqueWithoutCandidatInput = {
@@ -46862,128 +46983,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ObjectifCarriere"> | Date | string
   }
 
-  export type AlerteEmploiUpsertWithWhereUniqueWithoutCandidatInput = {
-    where: AlerteEmploiWhereUniqueInput
-    update: XOR<AlerteEmploiUpdateWithoutCandidatInput, AlerteEmploiUncheckedUpdateWithoutCandidatInput>
-    create: XOR<AlerteEmploiCreateWithoutCandidatInput, AlerteEmploiUncheckedCreateWithoutCandidatInput>
-  }
-
-  export type AlerteEmploiUpdateWithWhereUniqueWithoutCandidatInput = {
-    where: AlerteEmploiWhereUniqueInput
-    data: XOR<AlerteEmploiUpdateWithoutCandidatInput, AlerteEmploiUncheckedUpdateWithoutCandidatInput>
-  }
-
-  export type AlerteEmploiUpdateManyWithWhereWithoutCandidatInput = {
-    where: AlerteEmploiScalarWhereInput
-    data: XOR<AlerteEmploiUpdateManyMutationInput, AlerteEmploiUncheckedUpdateManyWithoutCandidatInput>
-  }
-
-  export type AlerteEmploiScalarWhereInput = {
-    AND?: AlerteEmploiScalarWhereInput | AlerteEmploiScalarWhereInput[]
-    OR?: AlerteEmploiScalarWhereInput[]
-    NOT?: AlerteEmploiScalarWhereInput | AlerteEmploiScalarWhereInput[]
-    id?: StringFilter<"AlerteEmploi"> | string
-    titre?: StringFilter<"AlerteEmploi"> | string
-    localisation?: StringFilter<"AlerteEmploi"> | string
-    typeContrat?: StringFilter<"AlerteEmploi"> | string
-    salaireMin?: FloatNullableFilter<"AlerteEmploi"> | number | null
-    salaireMax?: FloatNullableFilter<"AlerteEmploi"> | number | null
-    experience?: StringFilter<"AlerteEmploi"> | string
-    frequence?: StringFilter<"AlerteEmploi"> | string
-    active?: BoolFilter<"AlerteEmploi"> | boolean
-    derniereMiseAJour?: DateTimeFilter<"AlerteEmploi"> | Date | string
-    nombreResultats?: IntFilter<"AlerteEmploi"> | number
-    candidatId?: StringFilter<"AlerteEmploi"> | string
-    createdAt?: DateTimeFilter<"AlerteEmploi"> | Date | string
-    updatedAt?: DateTimeFilter<"AlerteEmploi"> | Date | string
-  }
-
-  export type NotificationUpsertWithWhereUniqueWithoutCandidatInput = {
-    where: NotificationWhereUniqueInput
-    update: XOR<NotificationUpdateWithoutCandidatInput, NotificationUncheckedUpdateWithoutCandidatInput>
-    create: XOR<NotificationCreateWithoutCandidatInput, NotificationUncheckedCreateWithoutCandidatInput>
-  }
-
-  export type NotificationUpdateWithWhereUniqueWithoutCandidatInput = {
-    where: NotificationWhereUniqueInput
-    data: XOR<NotificationUpdateWithoutCandidatInput, NotificationUncheckedUpdateWithoutCandidatInput>
-  }
-
-  export type NotificationUpdateManyWithWhereWithoutCandidatInput = {
-    where: NotificationScalarWhereInput
-    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutCandidatInput>
-  }
-
-  export type NotificationScalarWhereInput = {
-    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    OR?: NotificationScalarWhereInput[]
-    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
-    id?: StringFilter<"Notification"> | string
-    titre?: StringFilter<"Notification"> | string
-    message?: StringFilter<"Notification"> | string
-    type?: StringFilter<"Notification"> | string
-    lu?: BoolFilter<"Notification"> | boolean
-    candidatId?: StringFilter<"Notification"> | string
-    offreId?: IntNullableFilter<"Notification"> | number | null
-    createdAt?: DateTimeFilter<"Notification"> | Date | string
-    updatedAt?: DateTimeFilter<"Notification"> | Date | string
-  }
-
-  export type CandidatCompetenceUpsertWithWhereUniqueWithoutCandidatInput = {
-    where: CandidatCompetenceWhereUniqueInput
-    update: XOR<CandidatCompetenceUpdateWithoutCandidatInput, CandidatCompetenceUncheckedUpdateWithoutCandidatInput>
-    create: XOR<CandidatCompetenceCreateWithoutCandidatInput, CandidatCompetenceUncheckedCreateWithoutCandidatInput>
-  }
-
-  export type CandidatCompetenceUpdateWithWhereUniqueWithoutCandidatInput = {
-    where: CandidatCompetenceWhereUniqueInput
-    data: XOR<CandidatCompetenceUpdateWithoutCandidatInput, CandidatCompetenceUncheckedUpdateWithoutCandidatInput>
-  }
-
-  export type CandidatCompetenceUpdateManyWithWhereWithoutCandidatInput = {
-    where: CandidatCompetenceScalarWhereInput
-    data: XOR<CandidatCompetenceUpdateManyMutationInput, CandidatCompetenceUncheckedUpdateManyWithoutCandidatInput>
-  }
-
-  export type CandidatCompetenceScalarWhereInput = {
-    AND?: CandidatCompetenceScalarWhereInput | CandidatCompetenceScalarWhereInput[]
-    OR?: CandidatCompetenceScalarWhereInput[]
-    NOT?: CandidatCompetenceScalarWhereInput | CandidatCompetenceScalarWhereInput[]
-    id?: StringFilter<"CandidatCompetence"> | string
-    candidatId?: StringFilter<"CandidatCompetence"> | string
-    competence?: StringFilter<"CandidatCompetence"> | string
-    createdAt?: DateTimeFilter<"CandidatCompetence"> | Date | string
-  }
-
-  export type ConversationUpsertWithWhereUniqueWithoutCandidatInput = {
-    where: ConversationWhereUniqueInput
-    update: XOR<ConversationUpdateWithoutCandidatInput, ConversationUncheckedUpdateWithoutCandidatInput>
-    create: XOR<ConversationCreateWithoutCandidatInput, ConversationUncheckedCreateWithoutCandidatInput>
-  }
-
-  export type ConversationUpdateWithWhereUniqueWithoutCandidatInput = {
-    where: ConversationWhereUniqueInput
-    data: XOR<ConversationUpdateWithoutCandidatInput, ConversationUncheckedUpdateWithoutCandidatInput>
-  }
-
-  export type ConversationUpdateManyWithWhereWithoutCandidatInput = {
-    where: ConversationScalarWhereInput
-    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutCandidatInput>
-  }
-
-  export type ConversationScalarWhereInput = {
-    AND?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
-    OR?: ConversationScalarWhereInput[]
-    NOT?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
-    id?: StringFilter<"Conversation"> | string
-    jobOfferId?: IntFilter<"Conversation"> | number
-    candidatId?: StringFilter<"Conversation"> | string
-    recruteurId?: StringFilter<"Conversation"> | string
-    isActive?: BoolFilter<"Conversation"> | boolean
-    createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeFilter<"Conversation"> | Date | string
-  }
-
   export type CandidatCreateWithoutCandidatCompetencesInput = {
     id?: string
     nom?: string | null
@@ -47002,16 +47001,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
+    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceCreateNestedManyWithoutCandidatInput
     formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     notifications?: NotificationCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateWithoutCandidatCompetencesInput = {
@@ -47033,15 +47031,14 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
+    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
     formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCreateOrConnectWithoutCandidatCompetencesInput = {
@@ -47078,16 +47075,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
     formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateWithoutCandidatCompetencesInput = {
@@ -47109,52 +47105,50 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
     formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
-  export type UserCreateWithoutRecruteurInput = {
+  export type CollaborateurCreateWithoutRecruteurInput = {
     id?: string
-    name?: string | null
     email: string
-    emailVerified?: Date | string | null
-    password?: string | null
-    image?: string | null
-    type: $Enums.UserType
+    nom: string
+    prenom: string
+    role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    candidat?: CandidatCreateNestedOneWithoutUserInput
-    collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
+    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
+    invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
+    user: UserCreateNestedOneWithoutCollaborateurInput
   }
 
-  export type UserUncheckedCreateWithoutRecruteurInput = {
+  export type CollaborateurUncheckedCreateWithoutRecruteurInput = {
     id?: string
-    name?: string | null
     email: string
-    emailVerified?: Date | string | null
-    password?: string | null
-    image?: string | null
-    type: $Enums.UserType
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    invitationId?: string | null
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    candidat?: CandidatUncheckedCreateNestedOneWithoutUserInput
-    collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
   }
 
-  export type UserCreateOrConnectWithoutRecruteurInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
+  export type CollaborateurCreateOrConnectWithoutRecruteurInput = {
+    where: CollaborateurWhereUniqueInput
+    create: XOR<CollaborateurCreateWithoutRecruteurInput, CollaborateurUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type CollaborateurCreateManyRecruteurInputEnvelope = {
+    data: CollaborateurCreateManyRecruteurInput | CollaborateurCreateManyRecruteurInput[]
+    skipDuplicates?: boolean
   }
 
   export type CompanySocialCreateWithoutRecruteurInput = {
@@ -47174,97 +47168,33 @@ export namespace Prisma {
     create: XOR<CompanySocialCreateWithoutRecruteurInput, CompanySocialUncheckedCreateWithoutRecruteurInput>
   }
 
-  export type OfferTemplateCreateWithoutRecruteurInput = {
-    name: string
-    description: string
-    content: string
+  export type ConversationCreateWithoutRecruteurInput = {
+    id?: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    offers?: JobOfferCreateNestedManyWithoutTemplateInput
+    candidat: CandidatCreateNestedOneWithoutConversationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutConversationsInput
+    messages?: MessageCreateNestedManyWithoutConversationInput
   }
 
-  export type OfferTemplateUncheckedCreateWithoutRecruteurInput = {
-    id?: number
-    name: string
-    description: string
-    content: string
+  export type ConversationUncheckedCreateWithoutRecruteurInput = {
+    id?: string
+    jobOfferId: number
+    candidatId: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    offers?: JobOfferUncheckedCreateNestedManyWithoutTemplateInput
+    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
-  export type OfferTemplateCreateOrConnectWithoutRecruteurInput = {
-    where: OfferTemplateWhereUniqueInput
-    create: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput>
+  export type ConversationCreateOrConnectWithoutRecruteurInput = {
+    where: ConversationWhereUniqueInput
+    create: XOR<ConversationCreateWithoutRecruteurInput, ConversationUncheckedCreateWithoutRecruteurInput>
   }
 
-  export type OfferTemplateCreateManyRecruteurInputEnvelope = {
-    data: OfferTemplateCreateManyRecruteurInput | OfferTemplateCreateManyRecruteurInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type JobOfferCreateWithoutRecruteurInput = {
-    title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
-    favorite?: boolean | null
-    views?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    template?: OfferTemplateCreateNestedOneWithoutOffersInput
-    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
-    applications?: ApplicationCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
-    conversations?: ConversationCreateNestedManyWithoutJobOfferInput
-  }
-
-  export type JobOfferUncheckedCreateWithoutRecruteurInput = {
-    id?: number
-    title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
-    favorite?: boolean | null
-    templateId?: number | null
-    views?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
-    applications?: ApplicationUncheckedCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutJobOfferInput
-  }
-
-  export type JobOfferCreateOrConnectWithoutRecruteurInput = {
-    where: JobOfferWhereUniqueInput
-    create: XOR<JobOfferCreateWithoutRecruteurInput, JobOfferUncheckedCreateWithoutRecruteurInput>
-  }
-
-  export type JobOfferCreateManyRecruteurInputEnvelope = {
-    data: JobOfferCreateManyRecruteurInput | JobOfferCreateManyRecruteurInput[]
+  export type ConversationCreateManyRecruteurInputEnvelope = {
+    data: ConversationCreateManyRecruteurInput | ConversationCreateManyRecruteurInput[]
     skipDuplicates?: boolean
   }
 
@@ -47300,113 +47230,167 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type CollaborateurCreateWithoutRecruteurInput = {
-    id?: string
-    email: string
-    nom: string
-    prenom: string
-    role: $Enums.Role
+  export type JobOfferCreateWithoutRecruteurInput = {
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    favorite?: boolean | null
+    views?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
-    user: UserCreateNestedOneWithoutCollaborateurInput
-    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
+    applications?: ApplicationCreateNestedManyWithoutJobOfferInput
+    conversations?: ConversationCreateNestedManyWithoutJobOfferInput
+    template?: OfferTemplateCreateNestedOneWithoutOffersInput
+    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
   }
 
-  export type CollaborateurUncheckedCreateWithoutRecruteurInput = {
-    id?: string
-    email: string
-    nom: string
-    prenom: string
-    role: $Enums.Role
-    invitationId?: string | null
-    userId: string
+  export type JobOfferUncheckedCreateWithoutRecruteurInput = {
+    id?: number
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    favorite?: boolean | null
+    templateId?: number | null
+    views?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutJobOfferInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutJobOfferInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
   }
 
-  export type CollaborateurCreateOrConnectWithoutRecruteurInput = {
+  export type JobOfferCreateOrConnectWithoutRecruteurInput = {
+    where: JobOfferWhereUniqueInput
+    create: XOR<JobOfferCreateWithoutRecruteurInput, JobOfferUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type JobOfferCreateManyRecruteurInputEnvelope = {
+    data: JobOfferCreateManyRecruteurInput | JobOfferCreateManyRecruteurInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type OfferTemplateCreateWithoutRecruteurInput = {
+    name: string
+    description: string
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    offers?: JobOfferCreateNestedManyWithoutTemplateInput
+  }
+
+  export type OfferTemplateUncheckedCreateWithoutRecruteurInput = {
+    id?: number
+    name: string
+    description: string
+    content: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    offers?: JobOfferUncheckedCreateNestedManyWithoutTemplateInput
+  }
+
+  export type OfferTemplateCreateOrConnectWithoutRecruteurInput = {
+    where: OfferTemplateWhereUniqueInput
+    create: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type OfferTemplateCreateManyRecruteurInputEnvelope = {
+    data: OfferTemplateCreateManyRecruteurInput | OfferTemplateCreateManyRecruteurInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserCreateWithoutRecruteurInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password?: string | null
+    image?: string | null
+    type: $Enums.UserType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    candidat?: CandidatCreateNestedOneWithoutUserInput
+    collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutRecruteurInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    password?: string | null
+    image?: string | null
+    type: $Enums.UserType
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    candidat?: CandidatUncheckedCreateNestedOneWithoutUserInput
+    collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutRecruteurInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type CollaborateurUpsertWithWhereUniqueWithoutRecruteurInput = {
     where: CollaborateurWhereUniqueInput
+    update: XOR<CollaborateurUpdateWithoutRecruteurInput, CollaborateurUncheckedUpdateWithoutRecruteurInput>
     create: XOR<CollaborateurCreateWithoutRecruteurInput, CollaborateurUncheckedCreateWithoutRecruteurInput>
   }
 
-  export type CollaborateurCreateManyRecruteurInputEnvelope = {
-    data: CollaborateurCreateManyRecruteurInput | CollaborateurCreateManyRecruteurInput[]
-    skipDuplicates?: boolean
+  export type CollaborateurUpdateWithWhereUniqueWithoutRecruteurInput = {
+    where: CollaborateurWhereUniqueInput
+    data: XOR<CollaborateurUpdateWithoutRecruteurInput, CollaborateurUncheckedUpdateWithoutRecruteurInput>
   }
 
-  export type ConversationCreateWithoutRecruteurInput = {
-    id?: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    jobOffer: JobOfferCreateNestedOneWithoutConversationsInput
-    candidat: CandidatCreateNestedOneWithoutConversationsInput
-    messages?: MessageCreateNestedManyWithoutConversationInput
+  export type CollaborateurUpdateManyWithWhereWithoutRecruteurInput = {
+    where: CollaborateurScalarWhereInput
+    data: XOR<CollaborateurUpdateManyMutationInput, CollaborateurUncheckedUpdateManyWithoutRecruteurInput>
   }
 
-  export type ConversationUncheckedCreateWithoutRecruteurInput = {
-    id?: string
-    jobOfferId: number
-    candidatId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
-  }
-
-  export type ConversationCreateOrConnectWithoutRecruteurInput = {
-    where: ConversationWhereUniqueInput
-    create: XOR<ConversationCreateWithoutRecruteurInput, ConversationUncheckedCreateWithoutRecruteurInput>
-  }
-
-  export type ConversationCreateManyRecruteurInputEnvelope = {
-    data: ConversationCreateManyRecruteurInput | ConversationCreateManyRecruteurInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithoutRecruteurInput = {
-    update: XOR<UserUpdateWithoutRecruteurInput, UserUncheckedUpdateWithoutRecruteurInput>
-    create: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutRecruteurInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutRecruteurInput, UserUncheckedUpdateWithoutRecruteurInput>
-  }
-
-  export type UserUpdateWithoutRecruteurInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidat?: CandidatUpdateOneWithoutUserNestedInput
-    collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutRecruteurInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    password?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidat?: CandidatUncheckedUpdateOneWithoutUserNestedInput
-    collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+  export type CollaborateurScalarWhereInput = {
+    AND?: CollaborateurScalarWhereInput | CollaborateurScalarWhereInput[]
+    OR?: CollaborateurScalarWhereInput[]
+    NOT?: CollaborateurScalarWhereInput | CollaborateurScalarWhereInput[]
+    id?: StringFilter<"Collaborateur"> | string
+    email?: StringFilter<"Collaborateur"> | string
+    nom?: StringFilter<"Collaborateur"> | string
+    prenom?: StringFilter<"Collaborateur"> | string
+    role?: EnumRoleFilter<"Collaborateur"> | $Enums.Role
+    recruteurId?: StringFilter<"Collaborateur"> | string
+    invitationId?: StringNullableFilter<"Collaborateur"> | string | null
+    userId?: StringFilter<"Collaborateur"> | string
+    createdAt?: DateTimeFilter<"Collaborateur"> | Date | string
+    updatedAt?: DateTimeFilter<"Collaborateur"> | Date | string
   }
 
   export type CompanySocialUpsertWithoutRecruteurInput = {
@@ -47432,33 +47416,50 @@ export namespace Prisma {
     twitter?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput = {
-    where: OfferTemplateWhereUniqueInput
-    update: XOR<OfferTemplateUpdateWithoutRecruteurInput, OfferTemplateUncheckedUpdateWithoutRecruteurInput>
-    create: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput>
+  export type ConversationUpsertWithWhereUniqueWithoutRecruteurInput = {
+    where: ConversationWhereUniqueInput
+    update: XOR<ConversationUpdateWithoutRecruteurInput, ConversationUncheckedUpdateWithoutRecruteurInput>
+    create: XOR<ConversationCreateWithoutRecruteurInput, ConversationUncheckedCreateWithoutRecruteurInput>
   }
 
-  export type OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput = {
-    where: OfferTemplateWhereUniqueInput
-    data: XOR<OfferTemplateUpdateWithoutRecruteurInput, OfferTemplateUncheckedUpdateWithoutRecruteurInput>
+  export type ConversationUpdateWithWhereUniqueWithoutRecruteurInput = {
+    where: ConversationWhereUniqueInput
+    data: XOR<ConversationUpdateWithoutRecruteurInput, ConversationUncheckedUpdateWithoutRecruteurInput>
   }
 
-  export type OfferTemplateUpdateManyWithWhereWithoutRecruteurInput = {
-    where: OfferTemplateScalarWhereInput
-    data: XOR<OfferTemplateUpdateManyMutationInput, OfferTemplateUncheckedUpdateManyWithoutRecruteurInput>
+  export type ConversationUpdateManyWithWhereWithoutRecruteurInput = {
+    where: ConversationScalarWhereInput
+    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutRecruteurInput>
   }
 
-  export type OfferTemplateScalarWhereInput = {
-    AND?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
-    OR?: OfferTemplateScalarWhereInput[]
-    NOT?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
-    id?: IntFilter<"OfferTemplate"> | number
-    name?: StringFilter<"OfferTemplate"> | string
-    description?: StringFilter<"OfferTemplate"> | string
-    content?: StringFilter<"OfferTemplate"> | string
-    recruteurId?: StringFilter<"OfferTemplate"> | string
-    createdAt?: DateTimeFilter<"OfferTemplate"> | Date | string
-    updatedAt?: DateTimeFilter<"OfferTemplate"> | Date | string
+  export type InvitationUpsertWithWhereUniqueWithoutRecruteurInput = {
+    where: InvitationWhereUniqueInput
+    update: XOR<InvitationUpdateWithoutRecruteurInput, InvitationUncheckedUpdateWithoutRecruteurInput>
+    create: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type InvitationUpdateWithWhereUniqueWithoutRecruteurInput = {
+    where: InvitationWhereUniqueInput
+    data: XOR<InvitationUpdateWithoutRecruteurInput, InvitationUncheckedUpdateWithoutRecruteurInput>
+  }
+
+  export type InvitationUpdateManyWithWhereWithoutRecruteurInput = {
+    where: InvitationScalarWhereInput
+    data: XOR<InvitationUpdateManyMutationInput, InvitationUncheckedUpdateManyWithoutRecruteurInput>
+  }
+
+  export type InvitationScalarWhereInput = {
+    AND?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
+    OR?: InvitationScalarWhereInput[]
+    NOT?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
+    id?: StringFilter<"Invitation"> | string
+    email?: StringFilter<"Invitation"> | string
+    recruteurId?: StringFilter<"Invitation"> | string
+    role?: EnumRoleFilter<"Invitation"> | $Enums.Role
+    token?: StringFilter<"Invitation"> | string
+    accepted?: BoolFilter<"Invitation"> | boolean
+    createdAt?: DateTimeFilter<"Invitation"> | Date | string
+    expiresAt?: DateTimeFilter<"Invitation"> | Date | string
   }
 
   export type JobOfferUpsertWithWhereUniqueWithoutRecruteurInput = {
@@ -47505,82 +47506,76 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"JobOffer"> | Date | string
   }
 
-  export type InvitationUpsertWithWhereUniqueWithoutRecruteurInput = {
-    where: InvitationWhereUniqueInput
-    update: XOR<InvitationUpdateWithoutRecruteurInput, InvitationUncheckedUpdateWithoutRecruteurInput>
-    create: XOR<InvitationCreateWithoutRecruteurInput, InvitationUncheckedCreateWithoutRecruteurInput>
+  export type OfferTemplateUpsertWithWhereUniqueWithoutRecruteurInput = {
+    where: OfferTemplateWhereUniqueInput
+    update: XOR<OfferTemplateUpdateWithoutRecruteurInput, OfferTemplateUncheckedUpdateWithoutRecruteurInput>
+    create: XOR<OfferTemplateCreateWithoutRecruteurInput, OfferTemplateUncheckedCreateWithoutRecruteurInput>
   }
 
-  export type InvitationUpdateWithWhereUniqueWithoutRecruteurInput = {
-    where: InvitationWhereUniqueInput
-    data: XOR<InvitationUpdateWithoutRecruteurInput, InvitationUncheckedUpdateWithoutRecruteurInput>
+  export type OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput = {
+    where: OfferTemplateWhereUniqueInput
+    data: XOR<OfferTemplateUpdateWithoutRecruteurInput, OfferTemplateUncheckedUpdateWithoutRecruteurInput>
   }
 
-  export type InvitationUpdateManyWithWhereWithoutRecruteurInput = {
-    where: InvitationScalarWhereInput
-    data: XOR<InvitationUpdateManyMutationInput, InvitationUncheckedUpdateManyWithoutRecruteurInput>
+  export type OfferTemplateUpdateManyWithWhereWithoutRecruteurInput = {
+    where: OfferTemplateScalarWhereInput
+    data: XOR<OfferTemplateUpdateManyMutationInput, OfferTemplateUncheckedUpdateManyWithoutRecruteurInput>
   }
 
-  export type InvitationScalarWhereInput = {
-    AND?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
-    OR?: InvitationScalarWhereInput[]
-    NOT?: InvitationScalarWhereInput | InvitationScalarWhereInput[]
-    id?: StringFilter<"Invitation"> | string
-    email?: StringFilter<"Invitation"> | string
-    recruteurId?: StringFilter<"Invitation"> | string
-    role?: EnumRoleFilter<"Invitation"> | $Enums.Role
-    token?: StringFilter<"Invitation"> | string
-    accepted?: BoolFilter<"Invitation"> | boolean
-    createdAt?: DateTimeFilter<"Invitation"> | Date | string
-    expiresAt?: DateTimeFilter<"Invitation"> | Date | string
+  export type OfferTemplateScalarWhereInput = {
+    AND?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
+    OR?: OfferTemplateScalarWhereInput[]
+    NOT?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
+    id?: IntFilter<"OfferTemplate"> | number
+    name?: StringFilter<"OfferTemplate"> | string
+    description?: StringFilter<"OfferTemplate"> | string
+    content?: StringFilter<"OfferTemplate"> | string
+    recruteurId?: StringFilter<"OfferTemplate"> | string
+    createdAt?: DateTimeFilter<"OfferTemplate"> | Date | string
+    updatedAt?: DateTimeFilter<"OfferTemplate"> | Date | string
   }
 
-  export type CollaborateurUpsertWithWhereUniqueWithoutRecruteurInput = {
-    where: CollaborateurWhereUniqueInput
-    update: XOR<CollaborateurUpdateWithoutRecruteurInput, CollaborateurUncheckedUpdateWithoutRecruteurInput>
-    create: XOR<CollaborateurCreateWithoutRecruteurInput, CollaborateurUncheckedCreateWithoutRecruteurInput>
+  export type UserUpsertWithoutRecruteurInput = {
+    update: XOR<UserUpdateWithoutRecruteurInput, UserUncheckedUpdateWithoutRecruteurInput>
+    create: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
+    where?: UserWhereInput
   }
 
-  export type CollaborateurUpdateWithWhereUniqueWithoutRecruteurInput = {
-    where: CollaborateurWhereUniqueInput
-    data: XOR<CollaborateurUpdateWithoutRecruteurInput, CollaborateurUncheckedUpdateWithoutRecruteurInput>
+  export type UserUpdateToOneWithWhereWithoutRecruteurInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRecruteurInput, UserUncheckedUpdateWithoutRecruteurInput>
   }
 
-  export type CollaborateurUpdateManyWithWhereWithoutRecruteurInput = {
-    where: CollaborateurScalarWhereInput
-    data: XOR<CollaborateurUpdateManyMutationInput, CollaborateurUncheckedUpdateManyWithoutRecruteurInput>
+  export type UserUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    candidat?: CandidatUpdateOneWithoutUserNestedInput
+    collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
-  export type CollaborateurScalarWhereInput = {
-    AND?: CollaborateurScalarWhereInput | CollaborateurScalarWhereInput[]
-    OR?: CollaborateurScalarWhereInput[]
-    NOT?: CollaborateurScalarWhereInput | CollaborateurScalarWhereInput[]
-    id?: StringFilter<"Collaborateur"> | string
-    email?: StringFilter<"Collaborateur"> | string
-    nom?: StringFilter<"Collaborateur"> | string
-    prenom?: StringFilter<"Collaborateur"> | string
-    role?: EnumRoleFilter<"Collaborateur"> | $Enums.Role
-    recruteurId?: StringFilter<"Collaborateur"> | string
-    invitationId?: StringNullableFilter<"Collaborateur"> | string | null
-    userId?: StringFilter<"Collaborateur"> | string
-    createdAt?: DateTimeFilter<"Collaborateur"> | Date | string
-    updatedAt?: DateTimeFilter<"Collaborateur"> | Date | string
-  }
-
-  export type ConversationUpsertWithWhereUniqueWithoutRecruteurInput = {
-    where: ConversationWhereUniqueInput
-    update: XOR<ConversationUpdateWithoutRecruteurInput, ConversationUncheckedUpdateWithoutRecruteurInput>
-    create: XOR<ConversationCreateWithoutRecruteurInput, ConversationUncheckedCreateWithoutRecruteurInput>
-  }
-
-  export type ConversationUpdateWithWhereUniqueWithoutRecruteurInput = {
-    where: ConversationWhereUniqueInput
-    data: XOR<ConversationUpdateWithoutRecruteurInput, ConversationUncheckedUpdateWithoutRecruteurInput>
-  }
-
-  export type ConversationUpdateManyWithWhereWithoutRecruteurInput = {
-    where: ConversationScalarWhereInput
-    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutRecruteurInput>
+  export type UserUncheckedUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    candidat?: CandidatUncheckedUpdateOneWithoutUserNestedInput
+    collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RecruteurCreateWithoutSocialInput = {
@@ -47598,12 +47593,12 @@ export namespace Prisma {
     phone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
     conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
   }
 
   export type RecruteurUncheckedCreateWithoutSocialInput = {
@@ -47622,11 +47617,11 @@ export namespace Prisma {
     phone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutSocialInput = {
@@ -47660,12 +47655,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
     conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
   export type RecruteurUncheckedUpdateWithoutSocialInput = {
@@ -47684,62 +47679,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
-  }
-
-  export type RecruteurCreateWithoutInvitationsInput = {
-    id?: string
-    type: $Enums.RecruteurType
-    entreprise?: string | null
-    description?: string | null
-    name: string
-    logo?: string | null
-    industry?: string | null
-    size?: string | null
-    location?: string | null
-    website?: string | null
-    email: string
-    phone?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutRecruteurInput
-    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
-    collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
-    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
-  }
-
-  export type RecruteurUncheckedCreateWithoutInvitationsInput = {
-    id?: string
-    userId: string
-    type: $Enums.RecruteurType
-    entreprise?: string | null
-    description?: string | null
-    name: string
-    logo?: string | null
-    industry?: string | null
-    size?: string | null
-    location?: string | null
-    website?: string | null
-    email: string
-    phone?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
-    collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
-  }
-
-  export type RecruteurCreateOrConnectWithoutInvitationsInput = {
-    where: RecruteurWhereUniqueInput
-    create: XOR<RecruteurCreateWithoutInvitationsInput, RecruteurUncheckedCreateWithoutInvitationsInput>
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type CollaborateurCreateWithoutInvitationInput = {
@@ -47750,9 +47694,9 @@ export namespace Prisma {
     role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
+    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
     recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
     user: UserCreateNestedOneWithoutCollaborateurInput
-    applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
   }
 
   export type CollaborateurUncheckedCreateWithoutInvitationInput = {
@@ -47771,6 +47715,94 @@ export namespace Prisma {
   export type CollaborateurCreateOrConnectWithoutInvitationInput = {
     where: CollaborateurWhereUniqueInput
     create: XOR<CollaborateurCreateWithoutInvitationInput, CollaborateurUncheckedCreateWithoutInvitationInput>
+  }
+
+  export type RecruteurCreateWithoutInvitationsInput = {
+    id?: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
+  }
+
+  export type RecruteurUncheckedCreateWithoutInvitationsInput = {
+    id?: string
+    userId: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type RecruteurCreateOrConnectWithoutInvitationsInput = {
+    where: RecruteurWhereUniqueInput
+    create: XOR<RecruteurCreateWithoutInvitationsInput, RecruteurUncheckedCreateWithoutInvitationsInput>
+  }
+
+  export type CollaborateurUpsertWithoutInvitationInput = {
+    update: XOR<CollaborateurUpdateWithoutInvitationInput, CollaborateurUncheckedUpdateWithoutInvitationInput>
+    create: XOR<CollaborateurCreateWithoutInvitationInput, CollaborateurUncheckedCreateWithoutInvitationInput>
+    where?: CollaborateurWhereInput
+  }
+
+  export type CollaborateurUpdateToOneWithWhereWithoutInvitationInput = {
+    where?: CollaborateurWhereInput
+    data: XOR<CollaborateurUpdateWithoutInvitationInput, CollaborateurUncheckedUpdateWithoutInvitationInput>
+  }
+
+  export type CollaborateurUpdateWithoutInvitationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
+    user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
+  }
+
+  export type CollaborateurUncheckedUpdateWithoutInvitationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
   }
 
   export type RecruteurUpsertWithoutInvitationsInput = {
@@ -47799,12 +47831,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
-    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
     conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
   export type RecruteurUncheckedUpdateWithoutInvitationsInput = {
@@ -47823,99 +47855,35 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
-  export type CollaborateurUpsertWithoutInvitationInput = {
-    update: XOR<CollaborateurUpdateWithoutInvitationInput, CollaborateurUncheckedUpdateWithoutInvitationInput>
-    create: XOR<CollaborateurCreateWithoutInvitationInput, CollaborateurUncheckedCreateWithoutInvitationInput>
-    where?: CollaborateurWhereInput
-  }
-
-  export type CollaborateurUpdateToOneWithWhereWithoutInvitationInput = {
-    where?: CollaborateurWhereInput
-    data: XOR<CollaborateurUpdateWithoutInvitationInput, CollaborateurUncheckedUpdateWithoutInvitationInput>
-  }
-
-  export type CollaborateurUpdateWithoutInvitationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    prenom?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
-    user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
-    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
-  }
-
-  export type CollaborateurUncheckedUpdateWithoutInvitationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    prenom?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    recruteurId?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
-  }
-
-  export type RecruteurCreateWithoutCollaborateursInput = {
+  export type ApplicationCollaborateurCreateWithoutCollaborateurInput = {
     id?: string
-    type: $Enums.RecruteurType
-    entreprise?: string | null
-    description?: string | null
-    name: string
-    logo?: string | null
-    industry?: string | null
-    size?: string | null
-    location?: string | null
-    website?: string | null
-    email: string
-    phone?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutRecruteurInput
-    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
-    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    assignedAt?: Date | string
+    assignedBy: string
+    application: ApplicationCreateNestedOneWithoutCollaborateursInput
   }
 
-  export type RecruteurUncheckedCreateWithoutCollaborateursInput = {
+  export type ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput = {
     id?: string
-    userId: string
-    type: $Enums.RecruteurType
-    entreprise?: string | null
-    description?: string | null
-    name: string
-    logo?: string | null
-    industry?: string | null
-    size?: string | null
-    location?: string | null
-    website?: string | null
-    email: string
-    phone?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    applicationId: string
+    assignedAt?: Date | string
+    assignedBy: string
   }
 
-  export type RecruteurCreateOrConnectWithoutCollaborateursInput = {
-    where: RecruteurWhereUniqueInput
-    create: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
+  export type ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    create: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurCreateManyCollaborateurInputEnvelope = {
+    data: ApplicationCollaborateurCreateManyCollaborateurInput | ApplicationCollaborateurCreateManyCollaborateurInput[]
+    skipDuplicates?: boolean
   }
 
   export type InvitationCreateWithoutCollaborateurInput = {
@@ -47945,6 +47913,57 @@ export namespace Prisma {
     create: XOR<InvitationCreateWithoutCollaborateurInput, InvitationUncheckedCreateWithoutCollaborateurInput>
   }
 
+  export type RecruteurCreateWithoutCollaborateursInput = {
+    id?: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
+  }
+
+  export type RecruteurUncheckedCreateWithoutCollaborateursInput = {
+    id?: string
+    userId: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type RecruteurCreateOrConnectWithoutCollaborateursInput = {
+    where: RecruteurWhereUniqueInput
+    create: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
+  }
+
   export type UserCreateWithoutCollaborateurInput = {
     id?: string
     name?: string | null
@@ -47955,9 +47974,9 @@ export namespace Prisma {
     type: $Enums.UserType
     createdAt?: Date | string
     updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
     candidat?: CandidatCreateNestedOneWithoutUserInput
     recruteur?: RecruteurCreateNestedOneWithoutUserInput
-    accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
@@ -47971,9 +47990,9 @@ export namespace Prisma {
     type: $Enums.UserType
     createdAt?: Date | string
     updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     candidat?: CandidatUncheckedCreateNestedOneWithoutUserInput
     recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
-    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -47982,85 +48001,31 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutCollaborateurInput, UserUncheckedCreateWithoutCollaborateurInput>
   }
 
-  export type ApplicationCollaborateurCreateWithoutCollaborateurInput = {
-    id?: string
-    assignedAt?: Date | string
-    assignedBy: string
-    application: ApplicationCreateNestedOneWithoutCollaborateursInput
-  }
-
-  export type ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput = {
-    id?: string
-    applicationId: string
-    assignedAt?: Date | string
-    assignedBy: string
-  }
-
-  export type ApplicationCollaborateurCreateOrConnectWithoutCollaborateurInput = {
+  export type ApplicationCollaborateurUpsertWithWhereUniqueWithoutCollaborateurInput = {
     where: ApplicationCollaborateurWhereUniqueInput
+    update: XOR<ApplicationCollaborateurUpdateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedUpdateWithoutCollaborateurInput>
     create: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput>
   }
 
-  export type ApplicationCollaborateurCreateManyCollaborateurInputEnvelope = {
-    data: ApplicationCollaborateurCreateManyCollaborateurInput | ApplicationCollaborateurCreateManyCollaborateurInput[]
-    skipDuplicates?: boolean
+  export type ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    data: XOR<ApplicationCollaborateurUpdateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedUpdateWithoutCollaborateurInput>
   }
 
-  export type RecruteurUpsertWithoutCollaborateursInput = {
-    update: XOR<RecruteurUpdateWithoutCollaborateursInput, RecruteurUncheckedUpdateWithoutCollaborateursInput>
-    create: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
-    where?: RecruteurWhereInput
+  export type ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurScalarWhereInput
+    data: XOR<ApplicationCollaborateurUpdateManyMutationInput, ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurInput>
   }
 
-  export type RecruteurUpdateToOneWithWhereWithoutCollaborateursInput = {
-    where?: RecruteurWhereInput
-    data: XOR<RecruteurUpdateWithoutCollaborateursInput, RecruteurUncheckedUpdateWithoutCollaborateursInput>
-  }
-
-  export type RecruteurUpdateWithoutCollaborateursInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
-    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    logo?: NullableStringFieldUpdateOperationsInput | string | null
-    industry?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
-    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
-    conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
-  }
-
-  export type RecruteurUncheckedUpdateWithoutCollaborateursInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
-    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    logo?: NullableStringFieldUpdateOperationsInput | string | null
-    industry?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+  export type ApplicationCollaborateurScalarWhereInput = {
+    AND?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+    OR?: ApplicationCollaborateurScalarWhereInput[]
+    NOT?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
+    id?: StringFilter<"ApplicationCollaborateur"> | string
+    applicationId?: StringFilter<"ApplicationCollaborateur"> | string
+    collaborateurId?: StringFilter<"ApplicationCollaborateur"> | string
+    assignedAt?: DateTimeFilter<"ApplicationCollaborateur"> | Date | string
+    assignedBy?: StringFilter<"ApplicationCollaborateur"> | string
   }
 
   export type InvitationUpsertWithoutCollaborateurInput = {
@@ -48096,6 +48061,63 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RecruteurUpsertWithoutCollaborateursInput = {
+    update: XOR<RecruteurUpdateWithoutCollaborateursInput, RecruteurUncheckedUpdateWithoutCollaborateursInput>
+    create: XOR<RecruteurCreateWithoutCollaborateursInput, RecruteurUncheckedCreateWithoutCollaborateursInput>
+    where?: RecruteurWhereInput
+  }
+
+  export type RecruteurUpdateToOneWithWhereWithoutCollaborateursInput = {
+    where?: RecruteurWhereInput
+    data: XOR<RecruteurUpdateWithoutCollaborateursInput, RecruteurUncheckedUpdateWithoutCollaborateursInput>
+  }
+
+  export type RecruteurUpdateWithoutCollaborateursInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
+  }
+
+  export type RecruteurUncheckedUpdateWithoutCollaborateursInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+  }
+
   export type UserUpsertWithoutCollaborateurInput = {
     update: XOR<UserUpdateWithoutCollaborateurInput, UserUncheckedUpdateWithoutCollaborateurInput>
     create: XOR<UserCreateWithoutCollaborateurInput, UserUncheckedCreateWithoutCollaborateurInput>
@@ -48117,9 +48139,9 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
     candidat?: CandidatUpdateOneWithoutUserNestedInput
     recruteur?: RecruteurUpdateOneWithoutUserNestedInput
-    accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
@@ -48133,37 +48155,10 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     candidat?: CandidatUncheckedUpdateOneWithoutUserNestedInput
     recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
-    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type ApplicationCollaborateurUpsertWithWhereUniqueWithoutCollaborateurInput = {
-    where: ApplicationCollaborateurWhereUniqueInput
-    update: XOR<ApplicationCollaborateurUpdateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedUpdateWithoutCollaborateurInput>
-    create: XOR<ApplicationCollaborateurCreateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedCreateWithoutCollaborateurInput>
-  }
-
-  export type ApplicationCollaborateurUpdateWithWhereUniqueWithoutCollaborateurInput = {
-    where: ApplicationCollaborateurWhereUniqueInput
-    data: XOR<ApplicationCollaborateurUpdateWithoutCollaborateurInput, ApplicationCollaborateurUncheckedUpdateWithoutCollaborateurInput>
-  }
-
-  export type ApplicationCollaborateurUpdateManyWithWhereWithoutCollaborateurInput = {
-    where: ApplicationCollaborateurScalarWhereInput
-    data: XOR<ApplicationCollaborateurUpdateManyMutationInput, ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurInput>
-  }
-
-  export type ApplicationCollaborateurScalarWhereInput = {
-    AND?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
-    OR?: ApplicationCollaborateurScalarWhereInput[]
-    NOT?: ApplicationCollaborateurScalarWhereInput | ApplicationCollaborateurScalarWhereInput[]
-    id?: StringFilter<"ApplicationCollaborateur"> | string
-    applicationId?: StringFilter<"ApplicationCollaborateur"> | string
-    collaborateurId?: StringFilter<"ApplicationCollaborateur"> | string
-    assignedAt?: DateTimeFilter<"ApplicationCollaborateur"> | Date | string
-    assignedBy?: StringFilter<"ApplicationCollaborateur"> | string
   }
 
   export type ApplicationCreateWithoutCollaborateursInput = {
@@ -48171,15 +48166,16 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     candidat: CandidatCreateNestedOneWithoutApplicationsInput
-    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutCollaborateursInput = {
@@ -48190,12 +48186,13 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutCollaborateursInput = {
@@ -48211,8 +48208,8 @@ export namespace Prisma {
     role: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
     invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
+    recruteur: RecruteurCreateNestedOneWithoutCollaborateursInput
     user: UserCreateNestedOneWithoutCollaborateurInput
   }
 
@@ -48250,15 +48247,16 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
-    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutCollaborateursInput = {
@@ -48269,12 +48267,13 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type CollaborateurUpsertWithoutApplicationsInput = {
@@ -48296,8 +48295,8 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
     invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateursNestedInput
     user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
   }
 
@@ -48312,6 +48311,131 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCreateWithoutJobOfferInput = {
+    id?: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    favorite?: boolean | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidat: CandidatCreateNestedOneWithoutApplicationsInput
+    column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutJobOfferInput = {
+    id?: string
+    candidatId: string
+    columnId: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    favorite?: boolean | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutJobOfferInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutJobOfferInput, ApplicationUncheckedCreateWithoutJobOfferInput>
+  }
+
+  export type ApplicationCreateManyJobOfferInputEnvelope = {
+    data: ApplicationCreateManyJobOfferInput | ApplicationCreateManyJobOfferInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ConversationCreateWithoutJobOfferInput = {
+    id?: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidat: CandidatCreateNestedOneWithoutConversationsInput
+    recruteur: RecruteurCreateNestedOneWithoutConversationsInput
+    messages?: MessageCreateNestedManyWithoutConversationInput
+  }
+
+  export type ConversationUncheckedCreateWithoutJobOfferInput = {
+    id?: string
+    candidatId: string
+    recruteurId: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
+  }
+
+  export type ConversationCreateOrConnectWithoutJobOfferInput = {
+    where: ConversationWhereUniqueInput
+    create: XOR<ConversationCreateWithoutJobOfferInput, ConversationUncheckedCreateWithoutJobOfferInput>
+  }
+
+  export type ConversationCreateManyJobOfferInputEnvelope = {
+    data: ConversationCreateManyJobOfferInput | ConversationCreateManyJobOfferInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RecruteurCreateWithoutJobOfferInput = {
+    id?: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
+  }
+
+  export type RecruteurUncheckedCreateWithoutJobOfferInput = {
+    id?: string
+    userId: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type RecruteurCreateOrConnectWithoutJobOfferInput = {
+    where: RecruteurWhereUniqueInput
+    create: XOR<RecruteurCreateWithoutJobOfferInput, RecruteurUncheckedCreateWithoutJobOfferInput>
   }
 
   export type OfferTemplateCreateWithoutOffersInput = {
@@ -48338,55 +48462,26 @@ export namespace Prisma {
     create: XOR<OfferTemplateCreateWithoutOffersInput, OfferTemplateUncheckedCreateWithoutOffersInput>
   }
 
-  export type RecruteurCreateWithoutJobOfferInput = {
+  export type JobOfferCompetenceCreateWithoutJobOfferInput = {
     id?: string
-    type: $Enums.RecruteurType
-    entreprise?: string | null
-    description?: string | null
-    name: string
-    logo?: string | null
-    industry?: string | null
-    size?: string | null
-    location?: string | null
-    website?: string | null
-    email: string
-    phone?: string | null
+    competence: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutRecruteurInput
-    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
-    collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
-    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
   }
 
-  export type RecruteurUncheckedCreateWithoutJobOfferInput = {
+  export type JobOfferCompetenceUncheckedCreateWithoutJobOfferInput = {
     id?: string
-    userId: string
-    type: $Enums.RecruteurType
-    entreprise?: string | null
-    description?: string | null
-    name: string
-    logo?: string | null
-    industry?: string | null
-    size?: string | null
-    location?: string | null
-    website?: string | null
-    email: string
-    phone?: string | null
+    competence: string
     createdAt?: Date | string
-    updatedAt?: Date | string
-    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
-    collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
-  export type RecruteurCreateOrConnectWithoutJobOfferInput = {
-    where: RecruteurWhereUniqueInput
-    create: XOR<RecruteurCreateWithoutJobOfferInput, RecruteurUncheckedCreateWithoutJobOfferInput>
+  export type JobOfferCompetenceCreateOrConnectWithoutJobOfferInput = {
+    where: JobOfferCompetenceWhereUniqueInput
+    create: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput>
+  }
+
+  export type JobOfferCompetenceCreateManyJobOfferInputEnvelope = {
+    data: JobOfferCompetenceCreateManyJobOfferInput | JobOfferCompetenceCreateManyJobOfferInput[]
+    skipDuplicates?: boolean
   }
 
   export type KanbanColumnCreateWithoutJobOfferInput = {
@@ -48421,98 +48516,93 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ApplicationCreateWithoutJobOfferInput = {
-    id?: string
-    rating?: number | null
-    message?: string | null
-    cv?: string | null
-    duedate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    candidat: CandidatCreateNestedOneWithoutApplicationsInput
-    column: KanbanColumnCreateNestedOneWithoutApplicationsInput
-    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
-    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationUncheckedCreateWithoutJobOfferInput = {
-    id?: string
-    candidatId: string
-    columnId: string
-    rating?: number | null
-    message?: string | null
-    cv?: string | null
-    duedate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
-    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationCreateOrConnectWithoutJobOfferInput = {
+  export type ApplicationUpsertWithWhereUniqueWithoutJobOfferInput = {
     where: ApplicationWhereUniqueInput
+    update: XOR<ApplicationUpdateWithoutJobOfferInput, ApplicationUncheckedUpdateWithoutJobOfferInput>
     create: XOR<ApplicationCreateWithoutJobOfferInput, ApplicationUncheckedCreateWithoutJobOfferInput>
   }
 
-  export type ApplicationCreateManyJobOfferInputEnvelope = {
-    data: ApplicationCreateManyJobOfferInput | ApplicationCreateManyJobOfferInput[]
-    skipDuplicates?: boolean
+  export type ApplicationUpdateWithWhereUniqueWithoutJobOfferInput = {
+    where: ApplicationWhereUniqueInput
+    data: XOR<ApplicationUpdateWithoutJobOfferInput, ApplicationUncheckedUpdateWithoutJobOfferInput>
   }
 
-  export type JobOfferCompetenceCreateWithoutJobOfferInput = {
-    id?: string
-    competence: string
-    createdAt?: Date | string
+  export type ApplicationUpdateManyWithWhereWithoutJobOfferInput = {
+    where: ApplicationScalarWhereInput
+    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutJobOfferInput>
   }
 
-  export type JobOfferCompetenceUncheckedCreateWithoutJobOfferInput = {
-    id?: string
-    competence: string
-    createdAt?: Date | string
-  }
-
-  export type JobOfferCompetenceCreateOrConnectWithoutJobOfferInput = {
-    where: JobOfferCompetenceWhereUniqueInput
-    create: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput>
-  }
-
-  export type JobOfferCompetenceCreateManyJobOfferInputEnvelope = {
-    data: JobOfferCompetenceCreateManyJobOfferInput | JobOfferCompetenceCreateManyJobOfferInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ConversationCreateWithoutJobOfferInput = {
-    id?: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    candidat: CandidatCreateNestedOneWithoutConversationsInput
-    recruteur: RecruteurCreateNestedOneWithoutConversationsInput
-    messages?: MessageCreateNestedManyWithoutConversationInput
-  }
-
-  export type ConversationUncheckedCreateWithoutJobOfferInput = {
-    id?: string
-    candidatId: string
-    recruteurId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
-  }
-
-  export type ConversationCreateOrConnectWithoutJobOfferInput = {
+  export type ConversationUpsertWithWhereUniqueWithoutJobOfferInput = {
     where: ConversationWhereUniqueInput
+    update: XOR<ConversationUpdateWithoutJobOfferInput, ConversationUncheckedUpdateWithoutJobOfferInput>
     create: XOR<ConversationCreateWithoutJobOfferInput, ConversationUncheckedCreateWithoutJobOfferInput>
   }
 
-  export type ConversationCreateManyJobOfferInputEnvelope = {
-    data: ConversationCreateManyJobOfferInput | ConversationCreateManyJobOfferInput[]
-    skipDuplicates?: boolean
+  export type ConversationUpdateWithWhereUniqueWithoutJobOfferInput = {
+    where: ConversationWhereUniqueInput
+    data: XOR<ConversationUpdateWithoutJobOfferInput, ConversationUncheckedUpdateWithoutJobOfferInput>
+  }
+
+  export type ConversationUpdateManyWithWhereWithoutJobOfferInput = {
+    where: ConversationScalarWhereInput
+    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutJobOfferInput>
+  }
+
+  export type RecruteurUpsertWithoutJobOfferInput = {
+    update: XOR<RecruteurUpdateWithoutJobOfferInput, RecruteurUncheckedUpdateWithoutJobOfferInput>
+    create: XOR<RecruteurCreateWithoutJobOfferInput, RecruteurUncheckedCreateWithoutJobOfferInput>
+    where?: RecruteurWhereInput
+  }
+
+  export type RecruteurUpdateToOneWithWhereWithoutJobOfferInput = {
+    where?: RecruteurWhereInput
+    data: XOR<RecruteurUpdateWithoutJobOfferInput, RecruteurUncheckedUpdateWithoutJobOfferInput>
+  }
+
+  export type RecruteurUpdateWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
+  }
+
+  export type RecruteurUncheckedUpdateWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type OfferTemplateUpsertWithoutOffersInput = {
@@ -48545,61 +48635,30 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RecruteurUpsertWithoutJobOfferInput = {
-    update: XOR<RecruteurUpdateWithoutJobOfferInput, RecruteurUncheckedUpdateWithoutJobOfferInput>
-    create: XOR<RecruteurCreateWithoutJobOfferInput, RecruteurUncheckedCreateWithoutJobOfferInput>
-    where?: RecruteurWhereInput
+  export type JobOfferCompetenceUpsertWithWhereUniqueWithoutJobOfferInput = {
+    where: JobOfferCompetenceWhereUniqueInput
+    update: XOR<JobOfferCompetenceUpdateWithoutJobOfferInput, JobOfferCompetenceUncheckedUpdateWithoutJobOfferInput>
+    create: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput>
   }
 
-  export type RecruteurUpdateToOneWithWhereWithoutJobOfferInput = {
-    where?: RecruteurWhereInput
-    data: XOR<RecruteurUpdateWithoutJobOfferInput, RecruteurUncheckedUpdateWithoutJobOfferInput>
+  export type JobOfferCompetenceUpdateWithWhereUniqueWithoutJobOfferInput = {
+    where: JobOfferCompetenceWhereUniqueInput
+    data: XOR<JobOfferCompetenceUpdateWithoutJobOfferInput, JobOfferCompetenceUncheckedUpdateWithoutJobOfferInput>
   }
 
-  export type RecruteurUpdateWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
-    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    logo?: NullableStringFieldUpdateOperationsInput | string | null
-    industry?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
-    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
-    collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
-    conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+  export type JobOfferCompetenceUpdateManyWithWhereWithoutJobOfferInput = {
+    where: JobOfferCompetenceScalarWhereInput
+    data: XOR<JobOfferCompetenceUpdateManyMutationInput, JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferInput>
   }
 
-  export type RecruteurUncheckedUpdateWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
-    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    name?: StringFieldUpdateOperationsInput | string
-    logo?: NullableStringFieldUpdateOperationsInput | string | null
-    industry?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
-    website?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
-    collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+  export type JobOfferCompetenceScalarWhereInput = {
+    AND?: JobOfferCompetenceScalarWhereInput | JobOfferCompetenceScalarWhereInput[]
+    OR?: JobOfferCompetenceScalarWhereInput[]
+    NOT?: JobOfferCompetenceScalarWhereInput | JobOfferCompetenceScalarWhereInput[]
+    id?: StringFilter<"JobOfferCompetence"> | string
+    jobOfferId?: IntFilter<"JobOfferCompetence"> | number
+    competence?: StringFilter<"JobOfferCompetence"> | string
+    createdAt?: DateTimeFilter<"JobOfferCompetence"> | Date | string
   }
 
   export type KanbanColumnUpsertWithWhereUniqueWithoutJobOfferInput = {
@@ -48632,64 +48691,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"KanbanColumn"> | Date | string
   }
 
-  export type ApplicationUpsertWithWhereUniqueWithoutJobOfferInput = {
-    where: ApplicationWhereUniqueInput
-    update: XOR<ApplicationUpdateWithoutJobOfferInput, ApplicationUncheckedUpdateWithoutJobOfferInput>
-    create: XOR<ApplicationCreateWithoutJobOfferInput, ApplicationUncheckedCreateWithoutJobOfferInput>
-  }
-
-  export type ApplicationUpdateWithWhereUniqueWithoutJobOfferInput = {
-    where: ApplicationWhereUniqueInput
-    data: XOR<ApplicationUpdateWithoutJobOfferInput, ApplicationUncheckedUpdateWithoutJobOfferInput>
-  }
-
-  export type ApplicationUpdateManyWithWhereWithoutJobOfferInput = {
-    where: ApplicationScalarWhereInput
-    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutJobOfferInput>
-  }
-
-  export type JobOfferCompetenceUpsertWithWhereUniqueWithoutJobOfferInput = {
-    where: JobOfferCompetenceWhereUniqueInput
-    update: XOR<JobOfferCompetenceUpdateWithoutJobOfferInput, JobOfferCompetenceUncheckedUpdateWithoutJobOfferInput>
-    create: XOR<JobOfferCompetenceCreateWithoutJobOfferInput, JobOfferCompetenceUncheckedCreateWithoutJobOfferInput>
-  }
-
-  export type JobOfferCompetenceUpdateWithWhereUniqueWithoutJobOfferInput = {
-    where: JobOfferCompetenceWhereUniqueInput
-    data: XOR<JobOfferCompetenceUpdateWithoutJobOfferInput, JobOfferCompetenceUncheckedUpdateWithoutJobOfferInput>
-  }
-
-  export type JobOfferCompetenceUpdateManyWithWhereWithoutJobOfferInput = {
-    where: JobOfferCompetenceScalarWhereInput
-    data: XOR<JobOfferCompetenceUpdateManyMutationInput, JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferInput>
-  }
-
-  export type JobOfferCompetenceScalarWhereInput = {
-    AND?: JobOfferCompetenceScalarWhereInput | JobOfferCompetenceScalarWhereInput[]
-    OR?: JobOfferCompetenceScalarWhereInput[]
-    NOT?: JobOfferCompetenceScalarWhereInput | JobOfferCompetenceScalarWhereInput[]
-    id?: StringFilter<"JobOfferCompetence"> | string
-    jobOfferId?: IntFilter<"JobOfferCompetence"> | number
-    competence?: StringFilter<"JobOfferCompetence"> | string
-    createdAt?: DateTimeFilter<"JobOfferCompetence"> | Date | string
-  }
-
-  export type ConversationUpsertWithWhereUniqueWithoutJobOfferInput = {
-    where: ConversationWhereUniqueInput
-    update: XOR<ConversationUpdateWithoutJobOfferInput, ConversationUncheckedUpdateWithoutJobOfferInput>
-    create: XOR<ConversationCreateWithoutJobOfferInput, ConversationUncheckedCreateWithoutJobOfferInput>
-  }
-
-  export type ConversationUpdateWithWhereUniqueWithoutJobOfferInput = {
-    where: ConversationWhereUniqueInput
-    data: XOR<ConversationUpdateWithoutJobOfferInput, ConversationUncheckedUpdateWithoutJobOfferInput>
-  }
-
-  export type ConversationUpdateManyWithWhereWithoutJobOfferInput = {
-    where: ConversationScalarWhereInput
-    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutJobOfferInput>
-  }
-
   export type JobOfferCreateWithoutJobOfferCompetencesInput = {
     title: string
     description: string
@@ -48710,11 +48711,11 @@ export namespace Prisma {
     views?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    template?: OfferTemplateCreateNestedOneWithoutOffersInput
-    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
-    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
     conversations?: ConversationCreateNestedManyWithoutJobOfferInput
+    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
+    template?: OfferTemplateCreateNestedOneWithoutOffersInput
+    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferUncheckedCreateWithoutJobOfferCompetencesInput = {
@@ -48740,9 +48741,9 @@ export namespace Prisma {
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobOfferInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferCreateOrConnectWithoutJobOfferCompetencesInput = {
@@ -48781,11 +48782,11 @@ export namespace Prisma {
     views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
-    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
-    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
     conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
+    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
+    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
   }
 
   export type JobOfferUncheckedUpdateWithoutJobOfferCompetencesInput = {
@@ -48811,9 +48812,9 @@ export namespace Prisma {
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
   }
 
   export type JobOfferCreateWithoutTemplateInput = {
@@ -48836,11 +48837,11 @@ export namespace Prisma {
     views?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
-    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
     conversations?: ConversationCreateNestedManyWithoutJobOfferInput
+    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
+    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferUncheckedCreateWithoutTemplateInput = {
@@ -48865,10 +48866,10 @@ export namespace Prisma {
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutJobOfferInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferCreateOrConnectWithoutTemplateInput = {
@@ -48896,12 +48897,12 @@ export namespace Prisma {
     phone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutRecruteurInput
-    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
-    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
     conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
   }
 
   export type RecruteurUncheckedCreateWithoutOfferTemplateInput = {
@@ -48920,11 +48921,11 @@ export namespace Prisma {
     phone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
-    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutOfferTemplateInput = {
@@ -48974,12 +48975,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
-    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
     conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
   export type RecruteurUncheckedUpdateWithoutOfferTemplateInput = {
@@ -48998,11 +48999,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type CandidatCreateWithoutApplicationsInput = {
@@ -49023,16 +49024,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
+    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     user: UserCreateNestedOneWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceCreateNestedManyWithoutCandidatInput
     formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     notifications?: NotificationCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateWithoutApplicationsInput = {
@@ -49054,80 +49054,19 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
+    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
     formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCreateOrConnectWithoutApplicationsInput = {
     where: CandidatWhereUniqueInput
     create: XOR<CandidatCreateWithoutApplicationsInput, CandidatUncheckedCreateWithoutApplicationsInput>
-  }
-
-  export type JobOfferCreateWithoutApplicationsInput = {
-    title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
-    favorite?: boolean | null
-    views?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    template?: OfferTemplateCreateNestedOneWithoutOffersInput
-    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
-    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
-    conversations?: ConversationCreateNestedManyWithoutJobOfferInput
-  }
-
-  export type JobOfferUncheckedCreateWithoutApplicationsInput = {
-    id?: number
-    title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
-    favorite?: boolean | null
-    templateId?: number | null
-    views?: number
-    recruteurId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutJobOfferInput
-  }
-
-  export type JobOfferCreateOrConnectWithoutApplicationsInput = {
-    where: JobOfferWhereUniqueInput
-    create: XOR<JobOfferCreateWithoutApplicationsInput, JobOfferUncheckedCreateWithoutApplicationsInput>
   }
 
   export type KanbanColumnCreateWithoutApplicationsInput = {
@@ -49155,6 +49094,124 @@ export namespace Prisma {
   export type KanbanColumnCreateOrConnectWithoutApplicationsInput = {
     where: KanbanColumnWhereUniqueInput
     create: XOR<KanbanColumnCreateWithoutApplicationsInput, KanbanColumnUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type JobOfferCreateWithoutApplicationsInput = {
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    favorite?: boolean | null
+    views?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutJobOfferInput
+    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
+    template?: OfferTemplateCreateNestedOneWithoutOffersInput
+    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
+  }
+
+  export type JobOfferUncheckedCreateWithoutApplicationsInput = {
+    id?: number
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    favorite?: boolean | null
+    templateId?: number | null
+    views?: number
+    recruteurId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutJobOfferInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
+  }
+
+  export type JobOfferCreateOrConnectWithoutApplicationsInput = {
+    where: JobOfferWhereUniqueInput
+    create: XOR<JobOfferCreateWithoutApplicationsInput, JobOfferUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type ApplicationCollaborateurCreateWithoutApplicationInput = {
+    id?: string
+    assignedAt?: Date | string
+    assignedBy: string
+    collaborateur: CollaborateurCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type ApplicationCollaborateurUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    create: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurCreateManyApplicationInputEnvelope = {
+    data: ApplicationCollaborateurCreateManyApplicationInput | ApplicationCollaborateurCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationFileCreateWithoutApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationFileWhereUniqueInput
+    create: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileCreateManyApplicationInputEnvelope = {
+    data: ApplicationFileCreateManyApplicationInput | ApplicationFileCreateManyApplicationInput[]
+    skipDuplicates?: boolean
   }
 
   export type ApplicationNoteCreateWithoutApplicationInput = {
@@ -49219,64 +49276,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ApplicationFileCreateWithoutApplicationInput = {
-    id?: string
-    fileName: string
-    fileUrl: string
-    fileType: string
-    fileSize: number
-    uploadedById: string
-    uploadedByType: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ApplicationFileUncheckedCreateWithoutApplicationInput = {
-    id?: string
-    fileName: string
-    fileUrl: string
-    fileType: string
-    fileSize: number
-    uploadedById: string
-    uploadedByType: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ApplicationFileCreateOrConnectWithoutApplicationInput = {
-    where: ApplicationFileWhereUniqueInput
-    create: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type ApplicationFileCreateManyApplicationInputEnvelope = {
-    data: ApplicationFileCreateManyApplicationInput | ApplicationFileCreateManyApplicationInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ApplicationCollaborateurCreateWithoutApplicationInput = {
-    id?: string
-    assignedAt?: Date | string
-    assignedBy: string
-    collaborateur: CollaborateurCreateNestedOneWithoutApplicationsInput
-  }
-
-  export type ApplicationCollaborateurUncheckedCreateWithoutApplicationInput = {
-    id?: string
-    collaborateurId: string
-    assignedAt?: Date | string
-    assignedBy: string
-  }
-
-  export type ApplicationCollaborateurCreateOrConnectWithoutApplicationInput = {
-    where: ApplicationCollaborateurWhereUniqueInput
-    create: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type ApplicationCollaborateurCreateManyApplicationInputEnvelope = {
-    data: ApplicationCollaborateurCreateManyApplicationInput | ApplicationCollaborateurCreateManyApplicationInput[]
-    skipDuplicates?: boolean
-  }
-
   export type CandidatUpsertWithoutApplicationsInput = {
     update: XOR<CandidatUpdateWithoutApplicationsInput, CandidatUncheckedUpdateWithoutApplicationsInput>
     create: XOR<CandidatCreateWithoutApplicationsInput, CandidatUncheckedCreateWithoutApplicationsInput>
@@ -49306,16 +49305,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
     formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateWithoutApplicationsInput = {
@@ -49337,81 +49335,14 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
     formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
-  }
-
-  export type JobOfferUpsertWithoutApplicationsInput = {
-    update: XOR<JobOfferUpdateWithoutApplicationsInput, JobOfferUncheckedUpdateWithoutApplicationsInput>
-    create: XOR<JobOfferCreateWithoutApplicationsInput, JobOfferUncheckedCreateWithoutApplicationsInput>
-    where?: JobOfferWhereInput
-  }
-
-  export type JobOfferUpdateToOneWithWhereWithoutApplicationsInput = {
-    where?: JobOfferWhereInput
-    data: XOR<JobOfferUpdateWithoutApplicationsInput, JobOfferUncheckedUpdateWithoutApplicationsInput>
-  }
-
-  export type JobOfferUpdateWithoutApplicationsInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
-    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
-    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
-    conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
-  }
-
-  export type JobOfferUncheckedUpdateWithoutApplicationsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
-    recruteurId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutJobOfferNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type KanbanColumnUpsertWithoutApplicationsInput = {
@@ -49445,6 +49376,120 @@ export namespace Prisma {
     jobOfferId?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JobOfferUpsertWithoutApplicationsInput = {
+    update: XOR<JobOfferUpdateWithoutApplicationsInput, JobOfferUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<JobOfferCreateWithoutApplicationsInput, JobOfferUncheckedCreateWithoutApplicationsInput>
+    where?: JobOfferWhereInput
+  }
+
+  export type JobOfferUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: JobOfferWhereInput
+    data: XOR<JobOfferUpdateWithoutApplicationsInput, JobOfferUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type JobOfferUpdateWithoutApplicationsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    views?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
+    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
+  }
+
+  export type JobOfferUncheckedUpdateWithoutApplicationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    views?: IntFieldUpdateOperationsInput | number
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutJobOfferNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
+  }
+
+  export type ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    update: XOR<ApplicationCollaborateurUpdateWithoutApplicationInput, ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationCollaborateurWhereUniqueInput
+    data: XOR<ApplicationCollaborateurUpdateWithoutApplicationInput, ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationCollaborateurScalarWhereInput
+    data: XOR<ApplicationCollaborateurUpdateManyMutationInput, ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationFileWhereUniqueInput
+    update: XOR<ApplicationFileUpdateWithoutApplicationInput, ApplicationFileUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationFileWhereUniqueInput
+    data: XOR<ApplicationFileUpdateWithoutApplicationInput, ApplicationFileUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationFileScalarWhereInput
+    data: XOR<ApplicationFileUpdateManyMutationInput, ApplicationFileUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationFileScalarWhereInput = {
+    AND?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
+    OR?: ApplicationFileScalarWhereInput[]
+    NOT?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
+    id?: StringFilter<"ApplicationFile"> | string
+    applicationId?: StringFilter<"ApplicationFile"> | string
+    fileName?: StringFilter<"ApplicationFile"> | string
+    fileUrl?: StringFilter<"ApplicationFile"> | string
+    fileType?: StringFilter<"ApplicationFile"> | string
+    fileSize?: IntFilter<"ApplicationFile"> | number
+    uploadedById?: StringFilter<"ApplicationFile"> | string
+    uploadedByType?: StringFilter<"ApplicationFile"> | string
+    createdAt?: DateTimeFilter<"ApplicationFile"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationFile"> | Date | string
   }
 
   export type ApplicationNoteUpsertWithWhereUniqueWithoutApplicationInput = {
@@ -49508,68 +49553,21 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"ChecklistItem"> | Date | string
   }
 
-  export type ApplicationFileUpsertWithWhereUniqueWithoutApplicationInput = {
-    where: ApplicationFileWhereUniqueInput
-    update: XOR<ApplicationFileUpdateWithoutApplicationInput, ApplicationFileUncheckedUpdateWithoutApplicationInput>
-    create: XOR<ApplicationFileCreateWithoutApplicationInput, ApplicationFileUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type ApplicationFileUpdateWithWhereUniqueWithoutApplicationInput = {
-    where: ApplicationFileWhereUniqueInput
-    data: XOR<ApplicationFileUpdateWithoutApplicationInput, ApplicationFileUncheckedUpdateWithoutApplicationInput>
-  }
-
-  export type ApplicationFileUpdateManyWithWhereWithoutApplicationInput = {
-    where: ApplicationFileScalarWhereInput
-    data: XOR<ApplicationFileUpdateManyMutationInput, ApplicationFileUncheckedUpdateManyWithoutApplicationInput>
-  }
-
-  export type ApplicationFileScalarWhereInput = {
-    AND?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
-    OR?: ApplicationFileScalarWhereInput[]
-    NOT?: ApplicationFileScalarWhereInput | ApplicationFileScalarWhereInput[]
-    id?: StringFilter<"ApplicationFile"> | string
-    applicationId?: StringFilter<"ApplicationFile"> | string
-    fileName?: StringFilter<"ApplicationFile"> | string
-    fileUrl?: StringFilter<"ApplicationFile"> | string
-    fileType?: StringFilter<"ApplicationFile"> | string
-    fileSize?: IntFilter<"ApplicationFile"> | number
-    uploadedById?: StringFilter<"ApplicationFile"> | string
-    uploadedByType?: StringFilter<"ApplicationFile"> | string
-    createdAt?: DateTimeFilter<"ApplicationFile"> | Date | string
-    updatedAt?: DateTimeFilter<"ApplicationFile"> | Date | string
-  }
-
-  export type ApplicationCollaborateurUpsertWithWhereUniqueWithoutApplicationInput = {
-    where: ApplicationCollaborateurWhereUniqueInput
-    update: XOR<ApplicationCollaborateurUpdateWithoutApplicationInput, ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput>
-    create: XOR<ApplicationCollaborateurCreateWithoutApplicationInput, ApplicationCollaborateurUncheckedCreateWithoutApplicationInput>
-  }
-
-  export type ApplicationCollaborateurUpdateWithWhereUniqueWithoutApplicationInput = {
-    where: ApplicationCollaborateurWhereUniqueInput
-    data: XOR<ApplicationCollaborateurUpdateWithoutApplicationInput, ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput>
-  }
-
-  export type ApplicationCollaborateurUpdateManyWithWhereWithoutApplicationInput = {
-    where: ApplicationCollaborateurScalarWhereInput
-    data: XOR<ApplicationCollaborateurUpdateManyMutationInput, ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationInput>
-  }
-
   export type ApplicationCreateWithoutNotesInput = {
     id?: string
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     candidat: CandidatCreateNestedOneWithoutApplicationsInput
-    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
-    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutNotesInput = {
@@ -49580,12 +49578,13 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
     collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutNotesInput = {
@@ -49609,15 +49608,16 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
-    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
-    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutNotesInput = {
@@ -49628,12 +49628,13 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
     collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateWithoutChecklistInput = {
@@ -49641,15 +49642,16 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     candidat: CandidatCreateNestedOneWithoutApplicationsInput
-    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
-    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutChecklistInput = {
@@ -49660,12 +49662,13 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
     collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutChecklistInput = {
@@ -49689,15 +49692,16 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
-    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
-    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutChecklistInput = {
@@ -49708,12 +49712,13 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
     collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateWithoutFilesInput = {
@@ -49721,15 +49726,16 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     candidat: CandidatCreateNestedOneWithoutApplicationsInput
-    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
     column: KanbanColumnCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
     notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutFilesInput = {
@@ -49740,12 +49746,13 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
     notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
     checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutFilesInput = {
@@ -49769,15 +49776,16 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
-    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutFilesInput = {
@@ -49788,12 +49796,57 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCreateWithoutColumnInput = {
+    id?: string
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    favorite?: boolean | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    candidat: CandidatCreateNestedOneWithoutApplicationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
+    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutColumnInput = {
+    id?: string
+    candidatId: string
+    jobOfferId: number
+    rating?: number | null
+    message?: string | null
+    cv?: string | null
+    favorite?: boolean | null
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCreateOrConnectWithoutColumnInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutColumnInput, ApplicationUncheckedCreateWithoutColumnInput>
+  }
+
+  export type ApplicationCreateManyColumnInputEnvelope = {
+    data: ApplicationCreateManyColumnInput | ApplicationCreateManyColumnInput[]
+    skipDuplicates?: boolean
   }
 
   export type JobOfferCreateWithoutKanbanColumnsInput = {
@@ -49816,11 +49869,11 @@ export namespace Prisma {
     views?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    template?: OfferTemplateCreateNestedOneWithoutOffersInput
-    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
     conversations?: ConversationCreateNestedManyWithoutJobOfferInput
+    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
+    template?: OfferTemplateCreateNestedOneWithoutOffersInput
+    jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferUncheckedCreateWithoutKanbanColumnsInput = {
@@ -49847,8 +49900,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobOfferInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutJobOfferInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferCreateOrConnectWithoutKanbanColumnsInput = {
@@ -49856,46 +49909,20 @@ export namespace Prisma {
     create: XOR<JobOfferCreateWithoutKanbanColumnsInput, JobOfferUncheckedCreateWithoutKanbanColumnsInput>
   }
 
-  export type ApplicationCreateWithoutColumnInput = {
-    id?: string
-    rating?: number | null
-    message?: string | null
-    cv?: string | null
-    duedate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    candidat: CandidatCreateNestedOneWithoutApplicationsInput
-    jobOffer: JobOfferCreateNestedOneWithoutApplicationsInput
-    notes?: ApplicationNoteCreateNestedManyWithoutApplicationInput
-    checklist?: ChecklistItemCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationUncheckedCreateWithoutColumnInput = {
-    id?: string
-    candidatId: string
-    jobOfferId: number
-    rating?: number | null
-    message?: string | null
-    cv?: string | null
-    duedate?: Date | string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    notes?: ApplicationNoteUncheckedCreateNestedManyWithoutApplicationInput
-    checklist?: ChecklistItemUncheckedCreateNestedManyWithoutApplicationInput
-    files?: ApplicationFileUncheckedCreateNestedManyWithoutApplicationInput
-    collaborateurs?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutApplicationInput
-  }
-
-  export type ApplicationCreateOrConnectWithoutColumnInput = {
+  export type ApplicationUpsertWithWhereUniqueWithoutColumnInput = {
     where: ApplicationWhereUniqueInput
+    update: XOR<ApplicationUpdateWithoutColumnInput, ApplicationUncheckedUpdateWithoutColumnInput>
     create: XOR<ApplicationCreateWithoutColumnInput, ApplicationUncheckedCreateWithoutColumnInput>
   }
 
-  export type ApplicationCreateManyColumnInputEnvelope = {
-    data: ApplicationCreateManyColumnInput | ApplicationCreateManyColumnInput[]
-    skipDuplicates?: boolean
+  export type ApplicationUpdateWithWhereUniqueWithoutColumnInput = {
+    where: ApplicationWhereUniqueInput
+    data: XOR<ApplicationUpdateWithoutColumnInput, ApplicationUncheckedUpdateWithoutColumnInput>
+  }
+
+  export type ApplicationUpdateManyWithWhereWithoutColumnInput = {
+    where: ApplicationScalarWhereInput
+    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutColumnInput>
   }
 
   export type JobOfferUpsertWithoutKanbanColumnsInput = {
@@ -49929,11 +49956,11 @@ export namespace Prisma {
     views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
-    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
     conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
+    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
   }
 
   export type JobOfferUncheckedUpdateWithoutKanbanColumnsInput = {
@@ -49960,24 +49987,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutJobOfferNestedInput
-  }
-
-  export type ApplicationUpsertWithWhereUniqueWithoutColumnInput = {
-    where: ApplicationWhereUniqueInput
-    update: XOR<ApplicationUpdateWithoutColumnInput, ApplicationUncheckedUpdateWithoutColumnInput>
-    create: XOR<ApplicationCreateWithoutColumnInput, ApplicationUncheckedCreateWithoutColumnInput>
-  }
-
-  export type ApplicationUpdateWithWhereUniqueWithoutColumnInput = {
-    where: ApplicationWhereUniqueInput
-    data: XOR<ApplicationUpdateWithoutColumnInput, ApplicationUncheckedUpdateWithoutColumnInput>
-  }
-
-  export type ApplicationUpdateManyWithWhereWithoutColumnInput = {
-    where: ApplicationScalarWhereInput
-    data: XOR<ApplicationUpdateManyMutationInput, ApplicationUncheckedUpdateManyWithoutColumnInput>
+    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -49991,8 +50002,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     candidat?: CandidatCreateNestedOneWithoutUserInput
-    recruteur?: RecruteurCreateNestedOneWithoutUserInput
     collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
+    recruteur?: RecruteurCreateNestedOneWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
@@ -50007,8 +50018,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     candidat?: CandidatUncheckedCreateNestedOneWithoutUserInput
-    recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
     collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
+    recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -50039,8 +50050,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneWithoutUserNestedInput
-    recruteur?: RecruteurUpdateOneWithoutUserNestedInput
     collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
+    recruteur?: RecruteurUpdateOneWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
@@ -50055,8 +50066,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUncheckedUpdateOneWithoutUserNestedInput
-    recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
     collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
+    recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -50070,10 +50081,10 @@ export namespace Prisma {
     type: $Enums.UserType
     createdAt?: Date | string
     updatedAt?: Date | string
-    candidat?: CandidatCreateNestedOneWithoutUserInput
-    recruteur?: RecruteurCreateNestedOneWithoutUserInput
-    collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
+    candidat?: CandidatCreateNestedOneWithoutUserInput
+    collaborateur?: CollaborateurCreateNestedOneWithoutUserInput
+    recruteur?: RecruteurCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -50086,10 +50097,10 @@ export namespace Prisma {
     type: $Enums.UserType
     createdAt?: Date | string
     updatedAt?: Date | string
-    candidat?: CandidatUncheckedCreateNestedOneWithoutUserInput
-    recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
-    collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    candidat?: CandidatUncheckedCreateNestedOneWithoutUserInput
+    collaborateur?: CollaborateurUncheckedCreateNestedOneWithoutUserInput
+    recruteur?: RecruteurUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -50118,10 +50129,10 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidat?: CandidatUpdateOneWithoutUserNestedInput
-    recruteur?: RecruteurUpdateOneWithoutUserNestedInput
-    collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
+    candidat?: CandidatUpdateOneWithoutUserNestedInput
+    collaborateur?: CollaborateurUpdateOneWithoutUserNestedInput
+    recruteur?: RecruteurUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -50134,10 +50145,10 @@ export namespace Prisma {
     type?: EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidat?: CandidatUncheckedUpdateOneWithoutUserNestedInput
-    recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
-    collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    candidat?: CandidatUncheckedUpdateOneWithoutUserNestedInput
+    collaborateur?: CollaborateurUncheckedUpdateOneWithoutUserNestedInput
+    recruteur?: RecruteurUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type CandidatCreateWithoutExperiencesInput = {
@@ -50158,16 +50169,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
-    applications?: ApplicationCreateNestedManyWithoutCandidatInput
-    formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
     alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
     candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
     conversations?: ConversationCreateNestedManyWithoutCandidatInput
+    formations?: FormationCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateWithoutExperiencesInput = {
@@ -50189,15 +50199,14 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
-    formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
     alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
     candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
+    formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCreateOrConnectWithoutExperiencesInput = {
@@ -50256,16 +50265,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
-    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
-    formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
     alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
     candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
     conversations?: ConversationUpdateManyWithoutCandidatNestedInput
+    formations?: FormationUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateWithoutExperiencesInput = {
@@ -50287,15 +50295,14 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
-    formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
     alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
     candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
+    formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type ExperienceCompetenceUpsertWithWhereUniqueWithoutExperienceInput = {
@@ -50414,16 +50421,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
-    applications?: ApplicationCreateNestedManyWithoutCandidatInput
-    experiences?: ExperienceCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
     alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
     candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
     conversations?: ConversationCreateNestedManyWithoutCandidatInput
+    experiences?: ExperienceCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateWithoutFormationsInput = {
@@ -50445,15 +50451,14 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
-    experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
     alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
     candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
+    experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCreateOrConnectWithoutFormationsInput = {
@@ -50512,16 +50517,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
-    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
-    experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
     alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
     candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
     conversations?: ConversationUpdateManyWithoutCandidatNestedInput
+    experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateWithoutFormationsInput = {
@@ -50543,15 +50547,14 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
-    experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
     alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
     candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
+    experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type FormationEtapeUpsertWithWhereUniqueWithoutFormationInput = {
@@ -50666,16 +50669,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
-    applications?: ApplicationCreateNestedManyWithoutCandidatInput
-    experiences?: ExperienceCreateNestedManyWithoutCandidatInput
-    formations?: FormationCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
     alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
     candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
     conversations?: ConversationCreateNestedManyWithoutCandidatInput
+    experiences?: ExperienceCreateNestedManyWithoutCandidatInput
+    formations?: FormationCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateWithoutCompetencesListInput = {
@@ -50697,15 +50699,14 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
-    experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
-    formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
     alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
     candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
     conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
+    experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
+    formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCreateOrConnectWithoutCompetencesListInput = {
@@ -50742,16 +50743,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
-    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
-    experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
-    formations?: FormationUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
     alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
     candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
     conversations?: ConversationUpdateManyWithoutCandidatNestedInput
+    experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
+    formations?: FormationUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateWithoutCompetencesListInput = {
@@ -50773,15 +50773,14 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
-    experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
-    formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
     alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
     candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
+    experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
+    formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatCreateWithoutObjectifsInput = {
@@ -50802,16 +50801,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
+    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceCreateNestedManyWithoutCandidatInput
     formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     notifications?: NotificationCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateWithoutObjectifsInput = {
@@ -50833,15 +50831,14 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
+    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
     formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCreateOrConnectWithoutObjectifsInput = {
@@ -50900,16 +50897,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
     formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateWithoutObjectifsInput = {
@@ -50931,15 +50927,14 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
     formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type ObjectifEtapeUpsertWithWhereUniqueWithoutObjectifInput = {
@@ -51050,16 +51045,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
     applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceCreateNestedManyWithoutCandidatInput
     formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
     notifications?: NotificationCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateWithoutAlertesInput = {
@@ -51081,15 +51075,14 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
     applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
     formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCreateOrConnectWithoutAlertesInput = {
@@ -51148,16 +51141,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
     applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
     formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateWithoutAlertesInput = {
@@ -51179,15 +51171,14 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
     formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type AlerteMotCleUpsertWithWhereUniqueWithoutAlerteInput = {
@@ -51318,16 +51309,15 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
+    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
     applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceCreateNestedManyWithoutCandidatInput
     formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
     objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatUncheckedCreateWithoutNotificationsInput = {
@@ -51349,15 +51339,14 @@ export namespace Prisma {
     situationFamiliale?: string | null
     permisConduire?: string | null
     image?: string | null
-    favorite?: boolean | null
+    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
     experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
     formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
     objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    conversations?: ConversationUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCreateOrConnectWithoutNotificationsInput = {
@@ -51394,16 +51383,15 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
     applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
     formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
     objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatUncheckedUpdateWithoutNotificationsInput = {
@@ -51425,15 +51413,77 @@ export namespace Prisma {
     situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
     permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
     experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
     formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
     objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutCandidatNestedInput
+  }
+
+  export type CandidatCreateWithoutConversationsInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    email: string
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays: string
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationCreateNestedManyWithoutCandidatInput
+    user: UserCreateNestedOneWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
+    experiences?: ExperienceCreateNestedManyWithoutCandidatInput
+    formations?: FormationCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
+  }
+
+  export type CandidatUncheckedCreateWithoutConversationsInput = {
+    id?: string
+    userId: string
+    nom?: string | null
+    prenom?: string | null
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    email: string
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays: string
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
+    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
+    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
+    experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
+    formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
+    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
+  }
+
+  export type CandidatCreateOrConnectWithoutConversationsInput = {
+    where: CandidatWhereUniqueInput
+    create: XOR<CandidatCreateWithoutConversationsInput, CandidatUncheckedCreateWithoutConversationsInput>
   }
 
   export type JobOfferCreateWithoutConversationsInput = {
@@ -51456,11 +51506,11 @@ export namespace Prisma {
     views?: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    template?: OfferTemplateCreateNestedOneWithoutOffersInput
-    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
-    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
+    recruteur: RecruteurCreateNestedOneWithoutJobOfferInput
+    template?: OfferTemplateCreateNestedOneWithoutOffersInput
     jobOfferCompetences?: JobOfferCompetenceCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferUncheckedCreateWithoutConversationsInput = {
@@ -51486,79 +51536,14 @@ export namespace Prisma {
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobOfferInput
     jobOfferCompetences?: JobOfferCompetenceUncheckedCreateNestedManyWithoutJobOfferInput
+    kanbanColumns?: KanbanColumnUncheckedCreateNestedManyWithoutJobOfferInput
   }
 
   export type JobOfferCreateOrConnectWithoutConversationsInput = {
     where: JobOfferWhereUniqueInput
     create: XOR<JobOfferCreateWithoutConversationsInput, JobOfferUncheckedCreateWithoutConversationsInput>
-  }
-
-  export type CandidatCreateWithoutConversationsInput = {
-    id?: string
-    nom?: string | null
-    prenom?: string | null
-    telephone?: string | null
-    cv?: string | null
-    letterm?: string | null
-    email: string
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays: string
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
-    favorite?: boolean | null
-    user: UserCreateNestedOneWithoutCandidatInput
-    applications?: ApplicationCreateNestedManyWithoutCandidatInput
-    experiences?: ExperienceCreateNestedManyWithoutCandidatInput
-    formations?: FormationCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceCreateNestedManyWithoutCandidatInput
-  }
-
-  export type CandidatUncheckedCreateWithoutConversationsInput = {
-    id?: string
-    userId: string
-    nom?: string | null
-    prenom?: string | null
-    telephone?: string | null
-    cv?: string | null
-    letterm?: string | null
-    email: string
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays: string
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
-    favorite?: boolean | null
-    applications?: ApplicationUncheckedCreateNestedManyWithoutCandidatInput
-    experiences?: ExperienceUncheckedCreateNestedManyWithoutCandidatInput
-    formations?: FormationUncheckedCreateNestedManyWithoutCandidatInput
-    competencesList?: CompetenceUncheckedCreateNestedManyWithoutCandidatInput
-    objectifs?: ObjectifCarriereUncheckedCreateNestedManyWithoutCandidatInput
-    alertes?: AlerteEmploiUncheckedCreateNestedManyWithoutCandidatInput
-    notifications?: NotificationUncheckedCreateNestedManyWithoutCandidatInput
-    candidatCompetences?: CandidatCompetenceUncheckedCreateNestedManyWithoutCandidatInput
-  }
-
-  export type CandidatCreateOrConnectWithoutConversationsInput = {
-    where: CandidatWhereUniqueInput
-    create: XOR<CandidatCreateWithoutConversationsInput, CandidatUncheckedCreateWithoutConversationsInput>
   }
 
   export type RecruteurCreateWithoutConversationsInput = {
@@ -51576,12 +51561,12 @@ export namespace Prisma {
     phone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutRecruteurInput
-    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
   }
 
   export type RecruteurUncheckedCreateWithoutConversationsInput = {
@@ -51600,11 +51585,11 @@ export namespace Prisma {
     phone?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
-    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
-    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
-    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutConversationsInput = {
@@ -51642,6 +51627,75 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CandidatUpsertWithoutConversationsInput = {
+    update: XOR<CandidatUpdateWithoutConversationsInput, CandidatUncheckedUpdateWithoutConversationsInput>
+    create: XOR<CandidatCreateWithoutConversationsInput, CandidatUncheckedCreateWithoutConversationsInput>
+    where?: CandidatWhereInput
+  }
+
+  export type CandidatUpdateToOneWithWhereWithoutConversationsInput = {
+    where?: CandidatWhereInput
+    data: XOR<CandidatUpdateWithoutConversationsInput, CandidatUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type CandidatUpdateWithoutConversationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: StringFieldUpdateOperationsInput | string
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
+    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
+    experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
+    formations?: FormationUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
+  }
+
+  export type CandidatUncheckedUpdateWithoutConversationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: StringFieldUpdateOperationsInput | string
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
+    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
+    formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
+    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
+  }
+
   export type JobOfferUpsertWithoutConversationsInput = {
     update: XOR<JobOfferUpdateWithoutConversationsInput, JobOfferUncheckedUpdateWithoutConversationsInput>
     create: XOR<JobOfferCreateWithoutConversationsInput, JobOfferUncheckedCreateWithoutConversationsInput>
@@ -51673,11 +51727,11 @@ export namespace Prisma {
     views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
-    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
-    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
+    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
     jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
   }
 
   export type JobOfferUncheckedUpdateWithoutConversationsInput = {
@@ -51703,80 +51757,9 @@ export namespace Prisma {
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput
     jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
-  }
-
-  export type CandidatUpsertWithoutConversationsInput = {
-    update: XOR<CandidatUpdateWithoutConversationsInput, CandidatUncheckedUpdateWithoutConversationsInput>
-    create: XOR<CandidatCreateWithoutConversationsInput, CandidatUncheckedCreateWithoutConversationsInput>
-    where?: CandidatWhereInput
-  }
-
-  export type CandidatUpdateToOneWithWhereWithoutConversationsInput = {
-    where?: CandidatWhereInput
-    data: XOR<CandidatUpdateWithoutConversationsInput, CandidatUncheckedUpdateWithoutConversationsInput>
-  }
-
-  export type CandidatUpdateWithoutConversationsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
-    cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: StringFieldUpdateOperationsInput | string
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutCandidatNestedInput
-    applications?: ApplicationUpdateManyWithoutCandidatNestedInput
-    experiences?: ExperienceUpdateManyWithoutCandidatNestedInput
-    formations?: FormationUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUpdateManyWithoutCandidatNestedInput
-  }
-
-  export type CandidatUncheckedUpdateWithoutConversationsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
-    cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    email?: StringFieldUpdateOperationsInput | string
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: StringFieldUpdateOperationsInput | string
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    applications?: ApplicationUncheckedUpdateManyWithoutCandidatNestedInput
-    experiences?: ExperienceUncheckedUpdateManyWithoutCandidatNestedInput
-    formations?: FormationUncheckedUpdateManyWithoutCandidatNestedInput
-    competencesList?: CompetenceUncheckedUpdateManyWithoutCandidatNestedInput
-    objectifs?: ObjectifCarriereUncheckedUpdateManyWithoutCandidatNestedInput
-    alertes?: AlerteEmploiUncheckedUpdateManyWithoutCandidatNestedInput
-    notifications?: NotificationUncheckedUpdateManyWithoutCandidatNestedInput
-    candidatCompetences?: CandidatCompetenceUncheckedUpdateManyWithoutCandidatNestedInput
+    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
   }
 
   export type RecruteurUpsertWithoutConversationsInput = {
@@ -51805,12 +51788,12 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
-    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
   export type RecruteurUncheckedUpdateWithoutConversationsInput = {
@@ -51829,11 +51812,11 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
-    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
-    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
-    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -51871,8 +51854,8 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    jobOffer: JobOfferCreateNestedOneWithoutConversationsInput
     candidat: CandidatCreateNestedOneWithoutConversationsInput
+    jobOffer: JobOfferCreateNestedOneWithoutConversationsInput
     recruteur: RecruteurCreateNestedOneWithoutConversationsInput
   }
 
@@ -51907,8 +51890,8 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobOffer?: JobOfferUpdateOneRequiredWithoutConversationsNestedInput
     candidat?: CandidatUpdateOneRequiredWithoutConversationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutConversationsNestedInput
     recruteur?: RecruteurUpdateOneRequiredWithoutConversationsNestedInput
   }
 
@@ -52002,6 +51985,22 @@ export namespace Prisma {
     expires?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AlerteEmploiCreateManyCandidatInput = {
+    id?: string
+    titre: string
+    localisation: string
+    typeContrat: string
+    salaireMin?: number | null
+    salaireMax?: number | null
+    experience: string
+    frequence: string
+    active?: boolean
+    derniereMiseAJour?: Date | string
+    nombreResultats?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ApplicationCreateManyCandidatInput = {
     id?: string
     jobOfferId: number
@@ -52009,7 +52008,32 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidatCompetenceCreateManyCandidatInput = {
+    id?: string
+    competence: string
+    createdAt?: Date | string
+  }
+
+  export type CompetenceCreateManyCandidatInput = {
+    id?: string
+    categorie: string
+    nom: string
+    niveau: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConversationCreateManyCandidatInput = {
+    id?: string
+    jobOfferId: number
+    recruteurId: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -52039,11 +52063,13 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type CompetenceCreateManyCandidatInput = {
+  export type NotificationCreateManyCandidatInput = {
     id?: string
-    categorie: string
-    nom: string
-    niveau: number
+    titre: string
+    message: string
+    type: string
+    lu?: boolean
+    offreId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -52059,46 +52085,54 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type AlerteEmploiCreateManyCandidatInput = {
-    id?: string
-    titre: string
-    localisation: string
-    typeContrat: string
-    salaireMin?: number | null
-    salaireMax?: number | null
-    experience: string
-    frequence: string
-    active?: boolean
-    derniereMiseAJour?: Date | string
-    nombreResultats?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type AlerteEmploiUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    localisation?: StringFieldUpdateOperationsInput | string
+    typeContrat?: StringFieldUpdateOperationsInput | string
+    salaireMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaireMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    experience?: StringFieldUpdateOperationsInput | string
+    frequence?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    derniereMiseAJour?: DateTimeFieldUpdateOperationsInput | Date | string
+    nombreResultats?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    alerteMotsCles?: AlerteMotCleUpdateManyWithoutAlerteNestedInput
   }
 
-  export type NotificationCreateManyCandidatInput = {
-    id?: string
-    titre: string
-    message: string
-    type: string
-    lu?: boolean
-    offreId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type AlerteEmploiUncheckedUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    localisation?: StringFieldUpdateOperationsInput | string
+    typeContrat?: StringFieldUpdateOperationsInput | string
+    salaireMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaireMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    experience?: StringFieldUpdateOperationsInput | string
+    frequence?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    derniereMiseAJour?: DateTimeFieldUpdateOperationsInput | Date | string
+    nombreResultats?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    alerteMotsCles?: AlerteMotCleUncheckedUpdateManyWithoutAlerteNestedInput
   }
 
-  export type CandidatCompetenceCreateManyCandidatInput = {
-    id?: string
-    competence: string
-    createdAt?: Date | string
-  }
-
-  export type ConversationCreateManyCandidatInput = {
-    id?: string
-    jobOfferId: number
-    recruteurId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type AlerteEmploiUncheckedUpdateManyWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    titre?: StringFieldUpdateOperationsInput | string
+    localisation?: StringFieldUpdateOperationsInput | string
+    typeContrat?: StringFieldUpdateOperationsInput | string
+    salaireMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaireMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    experience?: StringFieldUpdateOperationsInput | string
+    frequence?: StringFieldUpdateOperationsInput | string
+    active?: BoolFieldUpdateOperationsInput | boolean
+    derniereMiseAJour?: DateTimeFieldUpdateOperationsInput | Date | string
+    nombreResultats?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApplicationUpdateWithoutCandidatInput = {
@@ -52106,15 +52140,16 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
     column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutCandidatInput = {
@@ -52124,13 +52159,14 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutCandidatInput = {
@@ -52140,7 +52176,82 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidatCompetenceUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    competence?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidatCompetenceUncheckedUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    competence?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidatCompetenceUncheckedUpdateManyWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    competence?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompetenceUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categorie?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    niveau?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompetenceUncheckedUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categorie?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    niveau?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CompetenceUncheckedUpdateManyWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categorie?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    niveau?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConversationUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    jobOffer?: JobOfferUpdateOneRequiredWithoutConversationsNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutConversationsNestedInput
+    messages?: MessageUpdateManyWithoutConversationNestedInput
+  }
+
+  export type ConversationUncheckedUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
+  }
+
+  export type ConversationUncheckedUpdateManyWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52224,29 +52335,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CompetenceUpdateWithoutCandidatInput = {
+  export type NotificationUpdateWithoutCandidatInput = {
     id?: StringFieldUpdateOperationsInput | string
-    categorie?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    niveau?: IntFieldUpdateOperationsInput | number
+    titre?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    lu?: BoolFieldUpdateOperationsInput | boolean
+    offreId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CompetenceUncheckedUpdateWithoutCandidatInput = {
+  export type NotificationUncheckedUpdateWithoutCandidatInput = {
     id?: StringFieldUpdateOperationsInput | string
-    categorie?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    niveau?: IntFieldUpdateOperationsInput | number
+    titre?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    lu?: BoolFieldUpdateOperationsInput | boolean
+    offreId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CompetenceUncheckedUpdateManyWithoutCandidatInput = {
+  export type NotificationUncheckedUpdateManyWithoutCandidatInput = {
     id?: StringFieldUpdateOperationsInput | string
-    categorie?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    niveau?: IntFieldUpdateOperationsInput | number
+    titre?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    lu?: BoolFieldUpdateOperationsInput | boolean
+    offreId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52286,143 +52403,35 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AlerteEmploiUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    titre?: StringFieldUpdateOperationsInput | string
-    localisation?: StringFieldUpdateOperationsInput | string
-    typeContrat?: StringFieldUpdateOperationsInput | string
-    salaireMin?: NullableFloatFieldUpdateOperationsInput | number | null
-    salaireMax?: NullableFloatFieldUpdateOperationsInput | number | null
-    experience?: StringFieldUpdateOperationsInput | string
-    frequence?: StringFieldUpdateOperationsInput | string
-    active?: BoolFieldUpdateOperationsInput | boolean
-    derniereMiseAJour?: DateTimeFieldUpdateOperationsInput | Date | string
-    nombreResultats?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    alerteMotsCles?: AlerteMotCleUpdateManyWithoutAlerteNestedInput
-  }
-
-  export type AlerteEmploiUncheckedUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    titre?: StringFieldUpdateOperationsInput | string
-    localisation?: StringFieldUpdateOperationsInput | string
-    typeContrat?: StringFieldUpdateOperationsInput | string
-    salaireMin?: NullableFloatFieldUpdateOperationsInput | number | null
-    salaireMax?: NullableFloatFieldUpdateOperationsInput | number | null
-    experience?: StringFieldUpdateOperationsInput | string
-    frequence?: StringFieldUpdateOperationsInput | string
-    active?: BoolFieldUpdateOperationsInput | boolean
-    derniereMiseAJour?: DateTimeFieldUpdateOperationsInput | Date | string
-    nombreResultats?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    alerteMotsCles?: AlerteMotCleUncheckedUpdateManyWithoutAlerteNestedInput
-  }
-
-  export type AlerteEmploiUncheckedUpdateManyWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    titre?: StringFieldUpdateOperationsInput | string
-    localisation?: StringFieldUpdateOperationsInput | string
-    typeContrat?: StringFieldUpdateOperationsInput | string
-    salaireMin?: NullableFloatFieldUpdateOperationsInput | number | null
-    salaireMax?: NullableFloatFieldUpdateOperationsInput | number | null
-    experience?: StringFieldUpdateOperationsInput | string
-    frequence?: StringFieldUpdateOperationsInput | string
-    active?: BoolFieldUpdateOperationsInput | boolean
-    derniereMiseAJour?: DateTimeFieldUpdateOperationsInput | Date | string
-    nombreResultats?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    titre?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    lu?: BoolFieldUpdateOperationsInput | boolean
-    offreId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUncheckedUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    titre?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    lu?: BoolFieldUpdateOperationsInput | boolean
-    offreId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type NotificationUncheckedUpdateManyWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    titre?: StringFieldUpdateOperationsInput | string
-    message?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    lu?: BoolFieldUpdateOperationsInput | boolean
-    offreId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CandidatCompetenceUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    competence?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CandidatCompetenceUncheckedUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    competence?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type CandidatCompetenceUncheckedUpdateManyWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    competence?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ConversationUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobOffer?: JobOfferUpdateOneRequiredWithoutConversationsNestedInput
-    recruteur?: RecruteurUpdateOneRequiredWithoutConversationsNestedInput
-    messages?: MessageUpdateManyWithoutConversationNestedInput
-  }
-
-  export type ConversationUncheckedUpdateWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    jobOfferId?: IntFieldUpdateOperationsInput | number
-    recruteurId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
-  }
-
-  export type ConversationUncheckedUpdateManyWithoutCandidatInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    jobOfferId?: IntFieldUpdateOperationsInput | number
-    recruteurId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OfferTemplateCreateManyRecruteurInput = {
-    id?: number
-    name: string
-    description: string
-    content: string
+  export type CollaborateurCreateManyRecruteurInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    invitationId?: string | null
+    userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type ConversationCreateManyRecruteurInput = {
+    id?: string
+    jobOfferId: number
+    candidatId: string
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InvitationCreateManyRecruteurInput = {
+    id?: string
+    email: string
+    role: $Enums.Role
+    token: string
+    accepted?: boolean
+    createdAt?: Date | string
+    expiresAt: Date | string
   }
 
   export type JobOfferCreateManyRecruteurInput = {
@@ -52449,140 +52458,78 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type InvitationCreateManyRecruteurInput = {
-    id?: string
-    email: string
-    role: $Enums.Role
-    token: string
-    accepted?: boolean
-    createdAt?: Date | string
-    expiresAt: Date | string
-  }
-
-  export type CollaborateurCreateManyRecruteurInput = {
-    id?: string
-    email: string
-    nom: string
-    prenom: string
-    role: $Enums.Role
-    invitationId?: string | null
-    userId: string
+  export type OfferTemplateCreateManyRecruteurInput = {
+    id?: number
+    name: string
+    description: string
+    content: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type ConversationCreateManyRecruteurInput = {
-    id?: string
-    jobOfferId: number
-    candidatId: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type OfferTemplateUpdateWithoutRecruteurInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
+  export type CollaborateurUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    offers?: JobOfferUpdateManyWithoutTemplateNestedInput
+    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
+    invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
+    user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
   }
 
-  export type OfferTemplateUncheckedUpdateWithoutRecruteurInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
+  export type CollaborateurUncheckedUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    offers?: JobOfferUncheckedUpdateManyWithoutTemplateNestedInput
+    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
   }
 
-  export type OfferTemplateUncheckedUpdateManyWithoutRecruteurInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
+  export type CollaborateurUncheckedUpdateManyWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type JobOfferUpdateWithoutRecruteurInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+  export type ConversationUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
-    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
-    applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
-    conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
+    candidat?: CandidatUpdateOneRequiredWithoutConversationsNestedInput
+    jobOffer?: JobOfferUpdateOneRequiredWithoutConversationsNestedInput
+    messages?: MessageUpdateManyWithoutConversationNestedInput
   }
 
-  export type JobOfferUncheckedUpdateWithoutRecruteurInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+  export type ConversationUncheckedUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    candidatId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
-    applications?: ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
-    conversations?: ConversationUncheckedUpdateManyWithoutJobOfferNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
-  export type JobOfferUncheckedUpdateManyWithoutRecruteurInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
-    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+  export type ConversationUncheckedUpdateManyWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    candidatId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52619,69 +52566,109 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type CollaborateurUpdateWithoutRecruteurInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    prenom?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  export type JobOfferUpdateWithoutRecruteurInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
-    user?: UserUpdateOneRequiredWithoutCollaborateurNestedInput
-    applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
+    applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
+    conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
+    template?: OfferTemplateUpdateOneWithoutOffersNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
   }
 
-  export type CollaborateurUncheckedUpdateWithoutRecruteurInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    prenom?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: StringFieldUpdateOperationsInput | string
+  export type JobOfferUncheckedUpdateWithoutRecruteurInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
+    applications?: ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutJobOfferNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
   }
 
-  export type CollaborateurUncheckedUpdateManyWithoutRecruteurInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    nom?: StringFieldUpdateOperationsInput | string
-    prenom?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: StringFieldUpdateOperationsInput | string
+  export type JobOfferUncheckedUpdateManyWithoutRecruteurInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    templateId?: NullableIntFieldUpdateOperationsInput | number | null
+    views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ConversationUpdateWithoutRecruteurInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
+  export type OfferTemplateUpdateWithoutRecruteurInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    jobOffer?: JobOfferUpdateOneRequiredWithoutConversationsNestedInput
-    candidat?: CandidatUpdateOneRequiredWithoutConversationsNestedInput
-    messages?: MessageUpdateManyWithoutConversationNestedInput
+    offers?: JobOfferUpdateManyWithoutTemplateNestedInput
   }
 
-  export type ConversationUncheckedUpdateWithoutRecruteurInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    jobOfferId?: IntFieldUpdateOperationsInput | number
-    candidatId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
+  export type OfferTemplateUncheckedUpdateWithoutRecruteurInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
+    offers?: JobOfferUncheckedUpdateManyWithoutTemplateNestedInput
   }
 
-  export type ConversationUncheckedUpdateManyWithoutRecruteurInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    jobOfferId?: IntFieldUpdateOperationsInput | number
-    candidatId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
+  export type OfferTemplateUncheckedUpdateManyWithoutRecruteurInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52714,16 +52701,6 @@ export namespace Prisma {
     assignedBy?: StringFieldUpdateOperationsInput | string
   }
 
-  export type KanbanColumnCreateManyJobOfferInput = {
-    id?: string
-    color: string
-    name: string
-    order: number
-    isDefault?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type ApplicationCreateManyJobOfferInput = {
     id?: string
     candidatId: string
@@ -52731,7 +52708,17 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConversationCreateManyJobOfferInput = {
+    id?: string
+    candidatId: string
+    recruteurId: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -52742,13 +52729,108 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type ConversationCreateManyJobOfferInput = {
+  export type KanbanColumnCreateManyJobOfferInput = {
     id?: string
-    candidatId: string
-    recruteurId: string
-    isActive?: boolean
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type ApplicationUpdateWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
+    column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidatId?: StringFieldUpdateOperationsInput | string
+    columnId?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateManyWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidatId?: StringFieldUpdateOperationsInput | string
+    columnId?: StringFieldUpdateOperationsInput | string
+    rating?: NullableIntFieldUpdateOperationsInput | number | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConversationUpdateWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    candidat?: CandidatUpdateOneRequiredWithoutConversationsNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutConversationsNestedInput
+    messages?: MessageUpdateManyWithoutConversationNestedInput
+  }
+
+  export type ConversationUncheckedUpdateWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidatId?: StringFieldUpdateOperationsInput | string
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
+  }
+
+  export type ConversationUncheckedUpdateManyWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    candidatId?: StringFieldUpdateOperationsInput | string
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JobOfferCompetenceUpdateWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    competence?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JobOfferCompetenceUncheckedUpdateWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    competence?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    competence?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type KanbanColumnUpdateWithoutJobOfferInput = {
@@ -52779,97 +52861,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     order?: IntFieldUpdateOperationsInput | number
     isDefault?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApplicationUpdateWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
-    message?: NullableStringFieldUpdateOperationsInput | string | null
-    cv?: NullableStringFieldUpdateOperationsInput | string | null
-    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
-    column?: KanbanColumnUpdateOneRequiredWithoutApplicationsNestedInput
-    notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
-    checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationUncheckedUpdateWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    candidatId?: StringFieldUpdateOperationsInput | string
-    columnId?: StringFieldUpdateOperationsInput | string
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
-    message?: NullableStringFieldUpdateOperationsInput | string | null
-    cv?: NullableStringFieldUpdateOperationsInput | string | null
-    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
-    checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
-  }
-
-  export type ApplicationUncheckedUpdateManyWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    candidatId?: StringFieldUpdateOperationsInput | string
-    columnId?: StringFieldUpdateOperationsInput | string
-    rating?: NullableIntFieldUpdateOperationsInput | number | null
-    message?: NullableStringFieldUpdateOperationsInput | string | null
-    cv?: NullableStringFieldUpdateOperationsInput | string | null
-    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type JobOfferCompetenceUpdateWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    competence?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type JobOfferCompetenceUncheckedUpdateWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    competence?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    competence?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ConversationUpdateWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    candidat?: CandidatUpdateOneRequiredWithoutConversationsNestedInput
-    recruteur?: RecruteurUpdateOneRequiredWithoutConversationsNestedInput
-    messages?: MessageUpdateManyWithoutConversationNestedInput
-  }
-
-  export type ConversationUncheckedUpdateWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    candidatId?: StringFieldUpdateOperationsInput | string
-    recruteurId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
-  }
-
-  export type ConversationUncheckedUpdateManyWithoutJobOfferInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    candidatId?: StringFieldUpdateOperationsInput | string
-    recruteurId?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52918,11 +52909,11 @@ export namespace Prisma {
     views?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
-    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
     conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutJobOfferNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUpdateManyWithoutJobOfferNestedInput
   }
 
   export type JobOfferUncheckedUpdateWithoutTemplateInput = {
@@ -52947,10 +52938,10 @@ export namespace Prisma {
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
     applications?: ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput
-    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
     conversations?: ConversationUncheckedUpdateManyWithoutJobOfferNestedInput
+    jobOfferCompetences?: JobOfferCompetenceUncheckedUpdateManyWithoutJobOfferNestedInput
+    kanbanColumns?: KanbanColumnUncheckedUpdateManyWithoutJobOfferNestedInput
   }
 
   export type JobOfferUncheckedUpdateManyWithoutTemplateInput = {
@@ -52977,6 +52968,25 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ApplicationCollaborateurCreateManyApplicationInput = {
+    id?: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationFileCreateManyApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ApplicationNoteCreateManyApplicationInput = {
     id?: string
     content: string
@@ -52998,23 +53008,61 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type ApplicationFileCreateManyApplicationInput = {
-    id?: string
-    fileName: string
-    fileUrl: string
-    fileType: string
-    fileSize: number
-    uploadedById: string
-    uploadedByType: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type ApplicationCollaborateurUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+    collaborateur?: CollaborateurUpdateOneRequiredWithoutApplicationsNestedInput
   }
 
-  export type ApplicationCollaborateurCreateManyApplicationInput = {
-    id?: string
-    collaborateurId: string
-    assignedAt?: Date | string
-    assignedBy: string
+  export type ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationFileUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ApplicationNoteUpdateWithoutApplicationInput = {
@@ -53080,63 +53128,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type ApplicationFileUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileUrl?: StringFieldUpdateOperationsInput | string
-    fileType?: StringFieldUpdateOperationsInput | string
-    fileSize?: IntFieldUpdateOperationsInput | number
-    uploadedById?: StringFieldUpdateOperationsInput | string
-    uploadedByType?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApplicationFileUncheckedUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileUrl?: StringFieldUpdateOperationsInput | string
-    fileType?: StringFieldUpdateOperationsInput | string
-    fileSize?: IntFieldUpdateOperationsInput | number
-    uploadedById?: StringFieldUpdateOperationsInput | string
-    uploadedByType?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApplicationFileUncheckedUpdateManyWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    fileName?: StringFieldUpdateOperationsInput | string
-    fileUrl?: StringFieldUpdateOperationsInput | string
-    fileType?: StringFieldUpdateOperationsInput | string
-    fileSize?: IntFieldUpdateOperationsInput | number
-    uploadedById?: StringFieldUpdateOperationsInput | string
-    uploadedByType?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ApplicationCollaborateurUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignedBy?: StringFieldUpdateOperationsInput | string
-    collaborateur?: CollaborateurUpdateOneRequiredWithoutApplicationsNestedInput
-  }
-
-  export type ApplicationCollaborateurUncheckedUpdateWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    collaborateurId?: StringFieldUpdateOperationsInput | string
-    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignedBy?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    collaborateurId?: StringFieldUpdateOperationsInput | string
-    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    assignedBy?: StringFieldUpdateOperationsInput | string
-  }
-
   export type ApplicationCreateManyColumnInput = {
     id?: string
     candidatId: string
@@ -53144,6 +53135,7 @@ export namespace Prisma {
     rating?: number | null
     message?: string | null
     cv?: string | null
+    favorite?: boolean | null
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53154,15 +53146,16 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     candidat?: CandidatUpdateOneRequiredWithoutApplicationsNestedInput
     jobOffer?: JobOfferUpdateOneRequiredWithoutApplicationsNestedInput
+    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutColumnInput = {
@@ -53172,13 +53165,14 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemUncheckedUpdateManyWithoutApplicationNestedInput
-    files?: ApplicationFileUncheckedUpdateManyWithoutApplicationNestedInput
-    collaborateurs?: ApplicationCollaborateurUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutColumnInput = {
@@ -53188,6 +53182,7 @@ export namespace Prisma {
     rating?: NullableIntFieldUpdateOperationsInput | number | null
     message?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
+    favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

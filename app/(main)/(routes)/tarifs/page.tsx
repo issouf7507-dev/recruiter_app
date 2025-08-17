@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,106 +14,71 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import {
-  Check,
-  X,
-  Star,
-  Users,
-  Briefcase,
-  Zap,
-  Shield,
-  Globe,
-  MessageSquare,
-  BarChart2,
-  FileText,
-  Building,
-  Clock,
-  Mail,
-  Phone,
-  ArrowRight,
-  Crown,
-  Sparkles,
-} from "lucide-react";
+import { Check, X, Star, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Header from "../../../components/header/header";
 import Footer from "../../../components/footer/footer";
 
 const pricingPlans = [
   {
-    id: "gratuit",
-    name: "Gratuit",
+    id: 1,
+    name: "Plan Gratuit",
     price: 0,
-    currency: "€",
-    period: "mois",
-    description: "Parfait pour découvrir la plateforme",
-    popular: false,
+    currency: "XOF",
+    period: "Mois",
+    description:
+      "Parfait pour découvrir la plateforme et commencer vos premiers recrutements",
     features: [
-      { text: "Jusqu'à 3 offres d'emploi actives", included: true },
-      { text: "Tableau Kanban basique", included: true },
-      { text: "Profil candidat complet", included: true },
-      { text: "Recherche d'offres", included: true },
-      { text: "Support par email", included: true },
-      { text: "Templates d'offres", included: false },
-      { text: "Collaboration d'équipe", included: false },
-      { text: "Statistiques avancées", included: false },
-      { text: "Diffusion multi-canal", included: false },
-      { text: "API personnalisée", included: false },
+      "Jusqu'à 3 offres d'emploi actives",
+      "Tableau Kanban basique",
+      "Profil candidat complet",
+      "Support par email",
     ],
     buttonText: "Commencer gratuitement",
-    buttonVariant: "outline" as const,
+    buttonVariant: "default",
+    isPopular: false,
     cta: "/recruteur/inscription",
   },
   {
-    id: "pro",
-    name: "Pro",
-    price: 49,
-    currency: "€",
-    period: "mois",
-    description: "Pour les équipes de recrutement",
-    popular: true,
+    id: 2,
+    name: "Plan Pro",
+    price: 15000,
+    currency: "XOF",
+    period: "Mois",
+    description:
+      "Pour les équipes de recrutement qui veulent optimiser leurs processus",
     features: [
-      { text: "Offres d'emploi illimitées", included: true },
-      { text: "Tableau Kanban avancé", included: true },
-      { text: "Profil candidat complet", included: true },
-      { text: "Recherche d'offres", included: true },
-      { text: "Support par email", included: true },
-      { text: "Templates d'offres personnalisables", included: true },
-      { text: "Collaboration d'équipe (jusqu'à 5 membres)", included: true },
-      { text: "Recherche avancée de candidats", included: true },
-      { text: "Statistiques détaillées", included: true },
-      { text: "Diffusion multi-canal", included: false },
-      { text: "API personnalisée", included: false },
+      "Offres d'emploi illimitées",
+      "Templates d'offres personnalisables",
+      "Collaboration d'équipe (jusqu'à 5 membres)",
+      "Recherche avancée de candidats",
+      "Statistiques détaillées",
     ],
-    buttonText: "Commencer l'essai gratuit",
-    buttonVariant: "default" as const,
+    buttonText: "Commencer maintenant",
+    buttonVariant: "primary",
+    isPopular: true,
     cta: "/recruteur/inscription",
   },
   {
-    id: "entreprise",
-    name: "Entreprise",
-    price: 199,
-    currency: "€",
-    period: "mois",
-    description: "Solution complète pour grandes entreprises",
-    popular: false,
+    id: 3,
+    name: "Plan Entreprise",
+    price: 25000,
+    currency: "XOF",
+    period: "Mois",
+    description:
+      "Solution complète pour les grandes entreprises et agences de recrutement",
     features: [
-      { text: "Offres d'emploi illimitées", included: true },
-      { text: "Tableau Kanban avancé", included: true },
-      { text: "Profil candidat complet", included: true },
-      { text: "Recherche d'offres", included: true },
-      { text: "Support par email", included: true },
-      { text: "Templates d'offres personnalisables", included: true },
-      { text: "Collaboration d'équipe illimitée", included: true },
-      { text: "Recherche avancée de candidats", included: true },
-      { text: "Statistiques détaillées", included: true },
-      { text: "Diffusion multi-canal (160+ plateformes)", included: true },
-      { text: "API personnalisée", included: true },
-      { text: "Gestionnaire de compte dédié", included: true },
-      { text: "Support 24/7", included: true },
+      "Tout du plan Pro",
+      "Équipe illimitée",
+      "Diffusion multi-canal",
+      "API personnalisée",
+      "Gestionnaire de compte dédié",
+      "Support 24/7",
     ],
-    buttonText: "Contacter les ventes",
-    buttonVariant: "default" as const,
-    cta: "/contact",
+    buttonText: "Commencer maintenant",
+    buttonVariant: "default",
+    isPopular: false,
+    cta: "/recruteur/inscription",
   },
 ];
 
@@ -213,7 +179,7 @@ export default function TarifsPage() {
 
   const getPeriod = (plan: (typeof pricingPlans)[0]) => {
     if (annualBilling) {
-      return "mois (facturé annuellement)";
+      return "an (facturé annuellement)";
     }
     return plan.period;
   };
@@ -223,22 +189,45 @@ export default function TarifsPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-12 px-4">
+      <section className="pt-32 pb-12 px-4">
         <div className="container mx-auto text-center">
-          <Badge variant="secondary" className="mb-4 px-4 py-2">
-            Tarifs transparents
-          </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Badge variant="secondary" className="mb-4 px-4 py-2">
+              Tarifs transparents
+            </Badge>
+          </motion.div>
+
+          <motion.h1
+            className="text-4xl md:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             Des tarifs adaptés à{" "}
             <span className="text-primary">vos besoins</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          </motion.h1>
+
+          <motion.p
+            className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             Choisissez le plan qui correspond le mieux à votre entreprise.
             Commencez gratuitement et évoluez selon vos besoins.
-          </p>
+          </motion.p>
 
           {/* Billing Toggle */}
-          <div className="flex items-center justify-center gap-4 mb-12">
+          <motion.div
+            className="flex items-center justify-center gap-4 mb-12"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
             <Label htmlFor="billing-toggle" className="text-sm">
               Facturation mensuelle
             </Label>
@@ -250,12 +239,21 @@ export default function TarifsPage() {
             <Label htmlFor="billing-toggle" className="text-sm">
               Facturation annuelle
             </Label>
-            {annualBilling && (
-              <Badge variant="secondary" className="ml-2">
-                Économisez 20%
-              </Badge>
-            )}
-          </div>
+            <AnimatePresence>
+              {annualBilling && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Badge variant="secondary" className="ml-2">
+                    Économisez 20%
+                  </Badge>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </div>
       </section>
 
@@ -263,87 +261,106 @@ export default function TarifsPage() {
       <section className="py-12 px-4">
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {pricingPlans.map((plan) => (
-              <Card
+            {pricingPlans.map((plan, index) => (
+              <motion.div
                 key={plan.id}
-                className={`relative ${
-                  plan.popular ? "border-primary shadow-lg scale-105" : "border"
-                }`}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{
+                  y: -10,
+                  transition: { duration: 0.3 },
+                }}
               >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-primary text-primary-foreground px-4 py-2">
-                      <Star className="h-4 w-4 mr-1" />
-                      Le plus populaire
-                    </Badge>
-                  </div>
-                )}
-
-                <CardHeader className="text-center pb-8">
-                  <CardTitle className="text-2xl font-bold">
-                    {plan.name}
-                  </CardTitle>
-                  <CardDescription className="text-base">
-                    {plan.description}
-                  </CardDescription>
-                  <div className="mt-6">
-                    <div className="flex items-baseline justify-center">
-                      <span className="text-4xl font-bold">
-                        {getPrice(plan)}
-                      </span>
-                      <span className="text-xl text-muted-foreground ml-1">
-                        {plan.currency}
-                      </span>
-                      <span className="text-muted-foreground ml-1">
-                        /{getPeriod(plan)}
-                      </span>
-                    </div>
-                    {annualBilling && plan.price > 0 && (
-                      <p className="text-sm text-muted-foreground mt-2">
-                        Économisez {plan.price * 2}€ par an
-                      </p>
-                    )}
-                  </div>
-                </CardHeader>
-
-                <CardContent className="space-y-4">
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, index) => (
-                      <li
-                        key={index}
-                        className={`flex items-center gap-3 ${
-                          feature.included
-                            ? "text-foreground"
-                            : "text-muted-foreground"
+                <Card
+                  className={`shadow-none min-h-[600px] md:h-[650px] ${
+                    plan.isPopular
+                      ? "border-2 border-primary bg-primary"
+                      : "bg-transparent"
+                  }`}
+                >
+                  <CardContent className="flex flex-col justify-between h-full">
+                    <div className="p-6 md:p-8 flex flex-col">
+                      <h3
+                        className={`text-lg md:text-xl font-semibold mb-2 text-foreground ${
+                          plan.isPopular ? "text-white" : ""
                         }`}
                       >
-                        {feature.included ? (
-                          <Check className="h-5 w-5 text-green-500 flex-shrink-0" />
-                        ) : (
-                          <X className="h-5 w-5 text-gray-400 flex-shrink-0" />
-                        )}
-                        <span className="text-sm">{feature.text}</span>
-                      </li>
-                    ))}
-                  </ul>
+                        {plan.name}
+                      </h3>
+                      <div
+                        className={`text-xl md:text-3xl font-bold text-primary mb-4 md:mb-7 ${
+                          plan.isPopular ? "text-white" : ""
+                        }`}
+                      >
+                        {getPrice(plan)} {plan.currency}
+                        <span
+                          className={`text-sm md:text-base font-normal ${
+                            plan.isPopular ? "text-white" : ""
+                          }`}
+                        >
+                          {" "}
+                          {/* {annualBilling ? "/an" : "/mois"} */}/{" "}
+                          {getPeriod(plan)}
+                        </span>
+                      </div>
+                      {annualBilling && plan.price > 0 && (
+                        <p
+                          className={`text-sm text-muted-foreground mt-2 ${
+                            plan.isPopular ? "text-white" : ""
+                          }`}
+                        >
+                          Économisez {plan.price * 2} XOF par an
+                        </p>
+                      )}
+                      <div className="flex items-center justify-center mb-4 md:mb-7">
+                        <p
+                          className={`text-muted-foreground text-xs md:text-sm text-center ${
+                            plan.isPopular ? "text-white" : ""
+                          }`}
+                        >
+                          {plan.description}
+                        </p>
+                      </div>
+                      <div
+                        className={`border-b border-gray-200 w-full mb-4 md:mb-7 ${
+                          plan.isPopular ? "border-white" : ""
+                        }`}
+                      ></div>
 
-                  <Separator className="my-6" />
-
-                  <Link href={plan.cta} className="block">
-                    <Button
-                      className={`w-full ${
-                        plan.popular
-                          ? "bg-primary text-primary-foreground hover:bg-primary/90"
-                          : ""
-                      }`}
-                      variant={plan.buttonVariant}
-                    >
-                      {plan.buttonText}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
+                      <ul className="space-y-2 text-muted-foreground text-xs md:text-sm mb-4 md:mb-6 list-disc flex flex-col gap-2">
+                        {plan.features.map((feature, index) => (
+                          <li
+                            key={index}
+                            className={`flex items-start ${
+                              plan.isPopular ? "text-white" : ""
+                            }`}
+                          >
+                            <Check
+                              className={`w-4 h-4 md:w-5 md:h-5 text-primary mr-2 md:mr-3 mt-0.5 flex-shrink-0 ${
+                                plan.isPopular ? "text-white" : ""
+                              }`}
+                            />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <Link href={plan.cta} className="block">
+                      <Button
+                        className={`w-full text-sm md:text-base ${
+                          plan.buttonVariant === "primary"
+                            ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                            : ""
+                        } ${plan.isPopular ? "bg-white text-primary" : ""}`}
+                      >
+                        {plan.buttonText}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -354,16 +371,28 @@ export default function TarifsPage() {
       {/* Feature Comparison */}
       <section className="py-16 px-4">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Comparaison détaillée des fonctionnalités
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Découvrez toutes les fonctionnalités incluses dans chaque plan
             </p>
-          </div>
+          </motion.div>
 
-          <div className="overflow-x-auto">
+          <motion.div
+            className="overflow-x-auto"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <table className="w-full border-collapse">
               <thead>
                 <tr className="border-b">
@@ -376,18 +405,35 @@ export default function TarifsPage() {
                 </tr>
               </thead>
               <tbody>
-                {features.map((category) => (
+                {features.map((category, categoryIndex) => (
                   <React.Fragment key={category.category}>
-                    <tr className="bg-muted/30">
+                    <motion.tr
+                      className="bg-muted/30"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: categoryIndex * 0.1 }}
+                    >
                       <td className="p-4 font-semibold text-primary">
                         {category.category}
                       </td>
                       <td></td>
                       <td></td>
                       <td></td>
-                    </tr>
-                    {category.items.map((item) => (
-                      <tr key={item.name} className="border-b">
+                    </motion.tr>
+                    {category.items.map((item, itemIndex) => (
+                      <motion.tr
+                        key={item.name}
+                        className="border-b"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{
+                          duration: 0.4,
+                          delay: categoryIndex * 0.1 + itemIndex * 0.05,
+                        }}
+                        whileHover={{ backgroundColor: "rgba(0,0,0,0.02)" }}
+                      >
                         <td className="p-4">{item.name}</td>
                         <td className="text-center p-4">
                           <X className="h-5 w-5 text-gray-400 mx-auto" />
@@ -406,38 +452,56 @@ export default function TarifsPage() {
                             <X className="h-5 w-5 text-gray-400 mx-auto" />
                           )}
                         </td>
-                      </tr>
+                      </motion.tr>
                     ))}
                   </React.Fragment>
                 ))}
               </tbody>
             </table>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ Section */}
       <section className="py-16 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
+        <div className=" mx-auto">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Questions fréquentes
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               Tout ce que vous devez savoir sur nos tarifs et services
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {faqs.map((faq, index) => (
-              <Card key={index} className="shadow-none border">
-                <CardHeader>
-                  <CardTitle className="text-lg">{faq.question}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">{faq.answer}</p>
-                </CardContent>
-              </Card>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{
+                  y: -5,
+                  transition: { duration: 0.3 },
+                }}
+              >
+                <Card className="shadow-none border bg-transparent">
+                  <CardHeader>
+                    <CardTitle className="text-lg">{faq.question}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{faq.answer}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -446,31 +510,71 @@ export default function TarifsPage() {
       {/* CTA Section */}
       <section className="py-16 px-4">
         <div className="container mx-auto text-center">
-          <div className="bg-primary/5 rounded-2xl p-8 md:p-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <motion.div
+            className="bg-primary/5 rounded-2xl p-8 md:p-12"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            whileHover={{
+              scale: 1.02,
+              transition: { duration: 0.3 },
+            }}
+          >
+            <motion.h2
+              className="text-3xl md:text-4xl font-bold mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
               Prêt à révolutionner vos recrutements ?
-            </h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            </motion.h2>
+            <motion.p
+              className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               Rejoignez des milliers de recruteurs qui font confiance à notre
               plateforme. Commencez gratuitement dès aujourd'hui.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/recruteur/inscription">
-                <Button
-                  size="lg"
-                  className="bg-primary text-primary-foreground hover:bg-primary/90"
-                >
-                  Commencer gratuitement
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/contact">
-                <Button variant="outline" size="lg">
-                  Parler à un expert
-                </Button>
-              </Link>
-            </div>
-          </div>
+            </motion.p>
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Link href="/recruteur/inscription">
+                  <Button
+                    size="lg"
+                    className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  >
+                    Commencer gratuitement
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Link href="/contact">
+                  <Button variant="outline" size="lg">
+                    Parler à un expert
+                  </Button>
+                </Link>
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 

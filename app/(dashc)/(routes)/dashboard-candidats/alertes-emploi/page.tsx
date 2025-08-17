@@ -11,6 +11,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 import {
   Plus,
@@ -33,6 +42,7 @@ import * as z from "zod";
 
 import { AlerteNotificationType } from "@/types/types";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import CompetenceAutocomplete from "@/app/components/ui/competence-autocomplete";
 
 const alerteSchema = z.object({
@@ -53,6 +63,9 @@ interface Alerte extends AlerteFormData {
   id: string;
   derniereMiseAJour: Date;
   nombreResultats: number;
+  alerteMotsCles: {
+    motCle: string;
+  }[];
 }
 
 interface Competence {
@@ -114,7 +127,11 @@ const AlertesEmploiPage = () => {
   });
 
   // Fetch alertes
-  const { data: alertes = [], isLoading } = useQuery<Alerte[]>({
+  const {
+    data: alertes = [],
+    isLoading,
+    refetch,
+  } = useQuery<Alerte[]>({
     queryKey: ["alertes"],
     queryFn: async () => {
       const response = await fetch("/api/candidat/alertes");
@@ -124,6 +141,8 @@ const AlertesEmploiPage = () => {
       return response.json();
     },
   });
+
+  // console.log("alerte", alertes);
 
   const {
     data: notifications,
@@ -154,8 +173,10 @@ const AlertesEmploiPage = () => {
             throw new Error("Erreur lors de la vérification des alertes");
           }
 
+          // console.log("response", response);
+
           const data = await response.json();
-          console.log("Résultats de la vérification:", data);
+          // console.log("Résultats de la vérification:", data);
 
           // Rafraîchir les notifications
           await refetchNotifications();
@@ -167,7 +188,7 @@ const AlertesEmploiPage = () => {
     }
   }, [refetchNotifications]);
 
-  console.log(notifications);
+  // console.log(notifications);
 
   // Create alerte
   const createAlerte = useMutation({
@@ -187,6 +208,8 @@ const AlertesEmploiPage = () => {
       form.reset();
       setIsCreating(false);
       toast.success("Alerte créée avec succès");
+      refetchNotifications();
+      refetch();
     },
     onError: () => {
       toast.error("Erreur lors de la création de l'alerte");
@@ -272,128 +295,353 @@ const AlertesEmploiPage = () => {
         <Card>
           <CardContent className="p-6 space-y-4">
             <h2 className="font-semibold">Nouvelle alerte</h2>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="titre">Titre de l'alerte</Label>
-                  <Input
-                    id="titre"
-                    {...form.register("titre")}
-                    placeholder="Ex: Développeur Full Stack"
-                  />
-                  {form.formState.errors.titre && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.titre.message}
-                    </p>
-                  )}
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="titre">Titre de l'alerte</Label>
+                    <FormField
+                      control={form.control}
+                      name="titre"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              id="titre"
+                              placeholder="Ex: Développeur Full Stack"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="localisation">Localisation</Label>
+                    <FormField
+                      control={form.control}
+                      name="localisation"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              id="localisation"
+                              placeholder="Ex: Paris, Remote"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="localisation">Localisation</Label>
-                  <Input
-                    id="localisation"
-                    {...form.register("localisation")}
-                    placeholder="Ex: Paris, Remote"
-                  />
-                  {form.formState.errors.localisation && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.localisation.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="typeContrat">Type de contrat</Label>
-                  <Select
-                    onValueChange={(value) =>
-                      form.setValue("typeContrat", value)
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Sélectionner" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="CDI">CDI</SelectItem>
-                      <SelectItem value="CDD">CDD</SelectItem>
-                      <SelectItem value="Stage">Stage</SelectItem>
-                      <SelectItem value="Alternance">Alternance</SelectItem>
-                      <SelectItem value="Freelance">Freelance</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {form.formState.errors.typeContrat && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.typeContrat.message}
-                    </p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="experience">Niveau d'expérience</Label>
-                  <Select
-                    onValueChange={(value) =>
-                      form.setValue("experience", value)
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Sélectionner" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Débutant">Débutant</SelectItem>
-                      <SelectItem value="1-3 ans">1-3 ans</SelectItem>
-                      <SelectItem value="3-5 ans">3-5 ans</SelectItem>
-                      <SelectItem value="5+ ans">5+ ans</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  {form.formState.errors.experience && (
-                    <p className="text-sm text-red-500">
-                      {form.formState.errors.experience.message}
-                    </p>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="frequence">Fréquence des alertes</Label>
-                  <Select
-                    onValueChange={(value) => form.setValue("frequence", value)}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Sélectionner" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Quotidienne">Quotidienne</SelectItem>
-                      <SelectItem value="Hebdomadaire">Hebdomadaire</SelectItem>
-                      <SelectItem value="Mensuelle">Mensuelle</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="typeContrat">Type de contrat</Label>
+                    <FormField
+                      control={form.control}
+                      name="typeContrat"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Sélectionner" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="CDI">CDI</SelectItem>
+                                <SelectItem value="CDD">CDD</SelectItem>
+                                <SelectItem value="Stage">Stage</SelectItem>
+                                <SelectItem value="Alternance">
+                                  Alternance
+                                </SelectItem>
+                                <SelectItem value="Freelance">
+                                  Freelance
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="experience">Niveau d'expérience</Label>
+                    <FormField
+                      control={form.control}
+                      name="experience"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Sélectionner" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="1">1 an</SelectItem>
+                                <SelectItem value="2">2 ans</SelectItem>
+                                <SelectItem value="3">3 ans</SelectItem>
+                                <SelectItem value="4">4 ans</SelectItem>
+                                <SelectItem value="5">5 ans</SelectItem>
+                                <SelectItem value="10+">10+ ans</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="frequence">Fréquence des alertes</Label>
+                    <FormField
+                      control={form.control}
+                      name="frequence"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Sélectionner" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="Quotidienne">
+                                  Quotidienne
+                                </SelectItem>
+                                <SelectItem value="Hebdomadaire">
+                                  Hebdomadaire
+                                </SelectItem>
+                                <SelectItem value="Mensuelle">
+                                  Mensuelle
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label>Compétences</Label>
+                    <FormField
+                      control={form.control}
+                      name="motsCles"
+                      render={({ field }) => {
+                        const [customSkill, setCustomSkill] = useState("");
+
+                        const addCustomSkill = () => {
+                          if (
+                            customSkill.trim() &&
+                            !field.value?.includes(
+                              customSkill.trim().toLowerCase()
+                            )
+                          ) {
+                            const currentSkills = field.value || [];
+                            field.onChange([
+                              ...currentSkills,
+                              customSkill.trim().toLowerCase(),
+                            ]);
+                            setCustomSkill("");
+                          }
+                        };
+
+                        const handleKeyPress = (e: React.KeyboardEvent) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            addCustomSkill();
+                          }
+                        };
+
+                        return (
+                          <FormItem>
+                            <FormLabel>Compétences techniques</FormLabel>
+                            <FormDescription>
+                              Sélectionnez des compétences prédéfinies ou
+                              ajoutez vos propres compétences
+                            </FormDescription>
+
+                            {/* Sélection de compétences prédéfinies */}
+                            <Select
+                              onValueChange={(value) => {
+                                const currentSkills = field.value || [];
+                                if (!currentSkills.includes(value)) {
+                                  field.onChange([...currentSkills, value]);
+                                }
+                              }}
+                              value=""
+                            >
+                              <FormControl>
+                                <SelectTrigger className="w-full border bg-transparent shadow-none">
+                                  <SelectValue placeholder="Sélectionnez des compétences prédéfinies" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="javascript">
+                                  JavaScript
+                                </SelectItem>
+                                <SelectItem value="typescript">
+                                  TypeScript
+                                </SelectItem>
+                                <SelectItem value="react">React</SelectItem>
+                                <SelectItem value="nextjs">Next.js</SelectItem>
+                                <SelectItem value="nodejs">Node.js</SelectItem>
+                                <SelectItem value="python">Python</SelectItem>
+                                <SelectItem value="java">Java</SelectItem>
+                                <SelectItem value="php">PHP</SelectItem>
+                                <SelectItem value="sql">SQL</SelectItem>
+                                <SelectItem value="mongodb">MongoDB</SelectItem>
+                                <SelectItem value="git">Git</SelectItem>
+                                <SelectItem value="docker">Docker</SelectItem>
+                                <SelectItem value="aws">AWS</SelectItem>
+                                <SelectItem value="uiux">
+                                  UI/UX Design
+                                </SelectItem>
+                                <SelectItem value="agile">
+                                  Méthodologies Agiles
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+
+                            {/* Ajout de compétences personnalisées */}
+                            <div className="flex gap-2 mt-2">
+                              <Input
+                                placeholder="Ajouter une compétence personnalisée..."
+                                value={customSkill}
+                                onChange={(e) => setCustomSkill(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                className="flex-1"
+                              />
+                              <Button
+                                type="button"
+                                variant="outline"
+                                onClick={addCustomSkill}
+                                disabled={!customSkill.trim()}
+                              >
+                                Ajouter
+                              </Button>
+                            </div>
+
+                            {/* Affichage des compétences sélectionnées */}
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {field.value?.map((skill) => (
+                                <div
+                                  key={skill}
+                                  className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md"
+                                >
+                                  <span className="text-sm">
+                                    {skill.charAt(0).toUpperCase() +
+                                      skill.slice(1)}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      field.onChange(
+                                        field.value.filter((s) => s !== skill)
+                                      );
+                                    }}
+                                    className="text-primary hover:text-primary/80"
+                                  >
+                                    ×
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                            <FormMessage />
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label>Compétences</Label>
-                  <CompetenceAutocomplete
-                    maxCompetences={5}
-                    selectedCompetences={[]}
-                    onCompetencesChange={(values) =>
-                      form.setValue("motsCles", values)
-                    }
-
-                    // selectedValues={form.watch("motsCles") || []}
-                    // onChange={(values: string[]) =>
-                    //   form.setValue("motsCles", values)
-                    // }
-                  />
+                {/* Champs pour les salaires */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="salaireMin">Salaire minimum </Label>
+                    <FormField
+                      control={form.control}
+                      name="salaireMin"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              id="salaireMin"
+                              type="number"
+                              placeholder="Ex: 30000"
+                              {...field}
+                              onChange={(e) =>
+                                field.onChange(
+                                  e.target.value
+                                    ? Number(e.target.value)
+                                    : undefined
+                                )
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="salaireMax">Salaire maximum </Label>
+                    <FormField
+                      control={form.control}
+                      name="salaireMax"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              id="salaireMax"
+                              type="number"
+                              placeholder="Ex: 50000"
+                              {...field}
+                              onChange={(e) =>
+                                field.onChange(
+                                  e.target.value
+                                    ? Number(e.target.value)
+                                    : undefined
+                                )
+                              }
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="flex justify-end gap-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setIsCreating(false)}
-                >
-                  Annuler
-                </Button>
-                <Button type="submit" disabled={createAlerte.isPending}>
-                  {createAlerte.isPending ? "Création..." : "Créer l'alerte"}
-                </Button>
-              </div>
-            </form>
+                <div className="flex justify-end gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsCreating(false)}
+                  >
+                    Annuler
+                  </Button>
+                  <Button type="submit" disabled={createAlerte.isPending}>
+                    {createAlerte.isPending ? "Création..." : "Créer l'alerte"}
+                  </Button>
+                </div>
+              </form>
+            </Form>
           </CardContent>
         </Card>
       )}
@@ -425,20 +673,20 @@ const AlertesEmploiPage = () => {
                       <>
                         <DollarSign className="h-4 w-4 ml-2" />
                         <span>
-                          {alerte.salaireMin}€ - {alerte.salaireMax}€
+                          {alerte.salaireMin} - {alerte.salaireMax}
                         </span>
                       </>
                     )}
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  {/* <Switch
+                  <Switch
                     checked={alerte.active}
                     onCheckedChange={(checked) =>
                       toggleAlerte.mutate({ id: alerte.id, active: checked })
                     }
                     disabled={toggleAlerte.isPending}
-                  /> */}
+                  />
                   <Button variant="ghost" size="icon">
                     <Pencil className="h-4 w-4" />
                   </Button>
@@ -466,20 +714,31 @@ const AlertesEmploiPage = () => {
                   <span>Fréquence : </span>
                   <span className="font-medium">{alerte.frequence}</span>
                 </div>
-                {/* <div className="flex items-center gap-2 text-sm">
-                      <span className="font-medium">
-                        {alerte.nombreResultats} nouvelles offres
-                      </span>
-                    </div> */}
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="font-medium">
+                    {alerte.nombreResultats || 0} nouvelles offres
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <span
+                    className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      alerte.active
+                        ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                        : "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+                    }`}
+                  >
+                    {alerte.active ? "Active" : "Inactive"}
+                  </span>
+                </div>
               </div>
 
-              {alerte.motsCles.length > 0 && (
+              {alerte.alerteMotsCles?.length > 0 && (
                 <div className="mt-4">
                   <div className="text-sm text-muted-foreground mb-2">
                     Compétences :
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {alerte.motsCles.map((motCle, index) => (
+                    {alerte.alerteMotsCles?.map((motCle: any, index: any) => (
                       <div key={index}>
                         {/* <span
                           key={index}
@@ -489,7 +748,7 @@ const AlertesEmploiPage = () => {
                         </span> */}
 
                         <Badge className="" variant="outline">
-                          {motCle}
+                          {motCle.motCle}
                         </Badge>
                       </div>
                     ))}

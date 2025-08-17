@@ -26,6 +26,7 @@ export class AlerteService {
       typeContrat: false,
       experience: false,
       competences: false,
+      salaire: false,
     };
 
     // Vérification du titre
@@ -45,19 +46,26 @@ export class AlerteService {
       jobOffer.type.toLowerCase() === alerte.typeContrat.toLowerCase();
     matchDetails.typeContrat = typeContratMatch;
 
-    // Vérification de l'expérience
-    // const experienceMatch = this.compareExperience(
-    //   jobOffer.experience,
-    //   alerte.experience
-    // );
-    // matchDetails.experience = experienceMatch;
+    // Vérification du salaire
+    const salaireMatch =
+      jobOffer.salaryMin >= alerte.salaireMin &&
+      jobOffer.salaryMax <= alerte.salaireMax;
+    matchDetails.salaire = salaireMatch;
 
     // Vérification des compétences
-    const competencesMatch = alerte.motsCles.some((motCle: string) =>
-      jobOffer.competences.some((comp: string) =>
-        comp.toLowerCase().trim().includes(motCle.toLowerCase().trim())
-      )
-    );
+    const competencesMatch =
+      alerte.alerteMotsCles && alerte.alerteMotsCles.length > 0
+        ? alerte.alerteMotsCles.some(
+            (motCleObj: any) =>
+              jobOffer.competences &&
+              jobOffer.competences.some((comp: string) =>
+                comp
+                  .toLowerCase()
+                  .trim()
+                  .includes(motCleObj.motCle.toLowerCase().trim())
+              )
+          )
+        : false;
 
     matchDetails.competences = competencesMatch;
 
@@ -77,31 +85,15 @@ export class AlerteService {
     return null;
   }
 
-  // Compare les niveaux d'expérience
-  // private static compareExperience(
-  //   jobExperience: string,
-  //   alerteExperience: string
-  // ): boolean {
-  //   const experienceMap: { [key: string]: number } = {
-  //     Débutant: 0,
-  //     "1-3 ans": 1,
-  //     "3-5 ans": 2,
-  //     "5+ ans": 3,
-  //   };
-
-  //   const jobExpLevel = experienceMap[jobExperience] || 0;
-  //   const alerteExpLevel = experienceMap[alerteExperience] || 0;
-
-  //   return jobExpLevel >= alerteExpLevel;
-  // }
-
-  // Vérifie toutes les alertes actives contre les nouvelles offres
   public static async checkNouvellesOffres() {
     try {
-      // Récupérer toutes les alertes actives
+      // Récupérer toutes les alertes actives avec leurs mots-clés
       const alertes = await prisma.alerteEmploi.findMany({
         where: { active: true },
-        include: { candidat: true },
+        include: {
+          candidat: true,
+          alerteMotsCles: true,
+        },
       });
 
       // Récupérer les offres créées depuis la dernière vérification
@@ -111,8 +103,7 @@ export class AlerteService {
       const nouvellesOffres = await prisma.jobOffer.findMany({});
 
       const matches: AlerteMatch[] = [];
-      // console.log("alertes", alertes);
-      console.log("nouvellesOffres", nouvellesOffres);
+
       // Vérifier chaque alerte contre chaque nouvelle offre
       for (const alerte of alertes) {
         // Récupérer toutes les notifications existantes pour ce candidat

@@ -113,6 +113,7 @@ export async function GET(req: NextRequest) {
         etapes: etapes,
         message: candidature.message,
         colonneActuelle: colonneActuelle,
+        jobOfferId: candidature.jobOffer.id,
       };
     });
 

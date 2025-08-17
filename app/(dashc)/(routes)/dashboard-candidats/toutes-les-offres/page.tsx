@@ -79,6 +79,7 @@ const ToutesLesOffresPage = () => {
     queryFn: () => fetchData("/api/recruteur/offres"),
   });
 
+  console.log(offertData);
   const {
     data: notifications,
     isLoading: notificationsLoading,
@@ -389,11 +390,13 @@ const ToutesLesOffresPage = () => {
                         </div>
                         <div className="flex flex-col justify-between gap-4">
                           <div className="flex flex-wrap gap-2">
-                            {offre.jobOfferCompetences?.map((skill, index) => (
-                              <Badge key={index} variant="outline">
-                                {skill.competence}
-                              </Badge>
-                            ))}
+                            {offre.jobOfferCompetences?.map(
+                              (skill: any, index: any) => (
+                                <Badge key={index} variant="default">
+                                  {skill.competence}
+                                </Badge>
+                              )
+                            )}
                           </div>
                           <div className="flex gap-2 items-center justify-end">
                             <Button
@@ -407,9 +410,12 @@ const ToutesLesOffresPage = () => {
                           </div>
                         </div>
                       </div>
-                      <p className="mt-4 text-sm text-muted-foreground">
-                        {offre.description}
-                      </p>
+                      <div
+                        className="mt-4 text-sm text-muted-foreground"
+                        dangerouslySetInnerHTML={{ __html: offre.description }}
+                      >
+                        {/* {offre.description} */}
+                      </div>
                     </CardContent>
                   </Card>
                 ))
@@ -633,9 +639,12 @@ const ToutesLesOffresPage = () => {
                           </div>
                         </div>
                       </div>
-                      <p className="mt-4 text-sm text-muted-foreground">
-                        {offre.description}
-                      </p>
+                      <div
+                        className="mt-4 text-sm text-muted-foreground"
+                        dangerouslySetInnerHTML={{ __html: offre.description }}
+                      >
+                        {/* {offre.description} */}
+                      </div>
                     </CardContent>
                   </Card>
                 ))
@@ -710,9 +719,14 @@ const ToutesLesOffresPage = () => {
                             </Badge>
                           ))}
                         </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {offre.description}
-                        </p>
+                        <div
+                          className="text-sm text-muted-foreground line-clamp-2"
+                          dangerouslySetInnerHTML={{
+                            __html: offre.description,
+                          }}
+                        >
+                          {/* {offre.description} */}
+                        </div>
                         <div className="flex gap-2">
                           <Button variant="outline" className="flex-1">
                             Sauvegarder

@@ -1,17 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Camera, Save } from "lucide-react";
+import { Camera, Save, Loader2, Pencil } from "lucide-react";
+import { toast } from "sonner";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 type CompanyProfile = {
   name: string;
-  logo: string;
+  entreprise: string;
   description: string;
   industry: string;
   size: string;
@@ -19,6 +21,7 @@ type CompanyProfile = {
   website: string;
   email: string;
   phone: string;
+  logo: string;
   social: {
     linkedin: string;
     twitter: string;
@@ -26,46 +29,142 @@ type CompanyProfile = {
 };
 
 const initialProfile: CompanyProfile = {
-  name: "TechCorp",
-  logo: "/logos/techcorp.png",
-  description:
-    "Une entreprise innovante spécialisée dans le développement de solutions technologiques de pointe.",
-  industry: "Technologie",
-  size: "50-200 employés",
-  location: "Paris, France",
-  website: "https://techcorp.com",
-  email: "contact@techcorp.com",
-  phone: "+33 1 23 45 67 89",
+  name: "",
+  entreprise: "",
+  description: "",
+  industry: "",
+  size: "",
+  location: "",
+  website: "",
+  email: "",
+  phone: "",
+  logo: "",
   social: {
-    linkedin: "https://linkedin.com/company/techcorp",
-    twitter: "https://twitter.com/techcorp",
+    linkedin: "",
+    twitter: "",
   },
 };
 
 export default function ProfilPage() {
   const [profile, setProfile] = useState<CompanyProfile>(initialProfile);
   const [isEditing, setIsEditing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSave = () => {
-    // Ici, vous implémenteriez la sauvegarde des données
-    console.log("Sauvegarde du profil:", profile);
-    setIsEditing(false);
+  // Charger les données du profil
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch("/api/recruteur/profil");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            setProfile(data.data);
+            // window.location.reload();
+          }
+        } else {
+          toast.error("Erreur lors du chargement du profil");
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement du profil:", error);
+        toast.error("Erreur lors du chargement du profil");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      const response = await fetch("/api/recruteur/profil", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: profile.name,
+          entreprise: profile.entreprise,
+          description: profile.description,
+          industry: profile.industry,
+          size: profile.size,
+          location: profile.location,
+          website: profile.website,
+          email: profile.email,
+          phone: profile.phone,
+          logo: profile.logo,
+          linkedin: profile.social.linkedin,
+          twitter: profile.social.twitter,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          toast.success("Profil mis à jour avec succès");
+          setIsEditing(false);
+        } else {
+          toast.error("Erreur lors de la mise à jour");
+        }
+      } else {
+        toast.error("Erreur lors de la mise à jour");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la sauvegarde:", error);
+      toast.error("Erreur lors de la sauvegarde");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
+  if (isLoading) {
+    return (
+      <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
+
   return (
-    <div className="p-6 space-y-6 w-full overflow-y-auto h-full ">
+    <div className="p-6 space-y-6 w-full overflow-y-auto h-full">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Profil de l'entreprise</h1>
-        <Button onClick={() => setIsEditing(!isEditing)}>
-          {isEditing ? (
-            <>
-              <Save className="h-4 w-4 mr-2" />
-              Enregistrer
-            </>
-          ) : (
-            "Modifier"
+        <div className="flex items-center gap-2">
+          {isEditing && (
+            <Button variant="outline" onClick={() => setIsEditing(false)}>
+              Annuler
+            </Button>
           )}
-        </Button>
+          <Button
+            onClick={() => {
+              if (isEditing) {
+                handleSave();
+              } else {
+                setIsEditing(true);
+              }
+            }}
+            disabled={isSaving}
+          >
+            {isSaving ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Enregistrement...
+              </>
+            ) : isEditing ? (
+              <>
+                <Save className="h-4 w-4 mr-2" />
+                Enregistrer
+              </>
+            ) : (
+              <>
+                <Pencil className="h-4 w-4 mr-2" />
+                Modifier
+              </>
+            )}
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -83,6 +182,19 @@ export default function ProfilPage() {
                   setProfile({ ...profile, name: e.target.value })
                 }
                 disabled={!isEditing}
+                placeholder="Nom de votre entreprise"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Nom commercial (optionnel)</Label>
+              <Input
+                value={profile.entreprise}
+                onChange={(e) =>
+                  setProfile({ ...profile, entreprise: e.target.value })
+                }
+                disabled={!isEditing}
+                placeholder="Nom commercial si différent"
               />
             </div>
 
@@ -95,6 +207,7 @@ export default function ProfilPage() {
                 }
                 disabled={!isEditing}
                 rows={4}
+                placeholder="Décrivez votre entreprise, ses valeurs, sa mission..."
               />
             </div>
 
@@ -107,17 +220,19 @@ export default function ProfilPage() {
                     setProfile({ ...profile, industry: e.target.value })
                   }
                   disabled={!isEditing}
+                  placeholder="Ex: Technologie, Santé, Finance..."
                 />
               </div>
 
               <div className="space-y-2">
-                <Label>Taille</Label>
+                <Label>Taille de l'entreprise</Label>
                 <Input
                   value={profile.size}
                   onChange={(e) =>
                     setProfile({ ...profile, size: e.target.value })
                   }
                   disabled={!isEditing}
+                  placeholder="Ex: 50-200 employés"
                 />
               </div>
             </div>
@@ -130,6 +245,7 @@ export default function ProfilPage() {
                   setProfile({ ...profile, location: e.target.value })
                 }
                 disabled={!isEditing}
+                placeholder="Ville, Pays"
               />
             </div>
           </CardContent>
@@ -144,19 +260,22 @@ export default function ProfilPage() {
             <CardContent>
               <div className="flex flex-col items-center space-y-4">
                 <Avatar className="h-32 w-32">
-                  <AvatarImage src={profile.logo} />
+                  <AvatarImage
+                    src={profile.logo || "/placeholder-avatar.jpg"}
+                  />
                   <AvatarFallback>
                     {profile.name
                       .split(" ")
                       .map((n) => n[0])
-                      .join("")}
+                      .join("")
+                      .toUpperCase() || "LOGO"}
                   </AvatarFallback>
                 </Avatar>
                 {isEditing && (
-                  <Button variant="outline">
-                    <Camera className="h-4 w-4 mr-2" />
-                    Changer le logo
-                  </Button>
+                  <ImageUpload
+                    onUpload={(url) => setProfile({ ...profile, logo: url })}
+                    currentUrl={profile.logo}
+                  />
                 )}
               </div>
             </CardContent>
@@ -175,6 +294,7 @@ export default function ProfilPage() {
                     setProfile({ ...profile, website: e.target.value })
                   }
                   disabled={!isEditing}
+                  placeholder="https://votre-site.com"
                 />
               </div>
 
@@ -186,6 +306,7 @@ export default function ProfilPage() {
                     setProfile({ ...profile, email: e.target.value })
                   }
                   disabled={!isEditing}
+                  placeholder="contact@ylsix-rh.com"
                 />
               </div>
 
@@ -197,6 +318,7 @@ export default function ProfilPage() {
                     setProfile({ ...profile, phone: e.target.value })
                   }
                   disabled={!isEditing}
+                  placeholder="+33 1 23 45 67 89"
                 />
               </div>
             </CardContent>
@@ -218,6 +340,7 @@ export default function ProfilPage() {
                     })
                   }
                   disabled={!isEditing}
+                  placeholder="https://linkedin.com/company/votre-entreprise"
                 />
               </div>
 
@@ -232,6 +355,7 @@ export default function ProfilPage() {
                     })
                   }
                   disabled={!isEditing}
+                  placeholder="https://twitter.com/votre-entreprise"
                 />
               </div>
             </CardContent>

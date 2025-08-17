@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,24 +25,14 @@ import {
   Shield,
   Globe,
   Target,
-  TrendingUp,
   CheckCircle2,
   ArrowRight,
   LayoutDashboard,
   ClipboardList,
   UserCheck,
   Building,
-  Mail,
   Bell,
-  Settings,
-  Eye,
   Heart,
-  Calendar,
-  MapPin,
-  DollarSign,
-  Clock,
-  Award,
-  Lightbulb,
   Cpu,
   Database,
   Lock,
@@ -297,24 +288,52 @@ function page() {
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-12 px-4">
+      <section className="pt-32 pb-12 px-4">
         <div className="container mx-auto text-center">
-          <Badge variant="secondary" className="mb-4 px-4 py-2">
-            Découvrez nos fonctionnalités
-          </Badge>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Badge variant="secondary" className="mb-4 px-4 py-2">
+              Découvrez nos fonctionnalités
+            </Badge>
+          </motion.div>
+
+          <motion.h1
+            className="text-4xl md:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             Une plateforme complète pour{" "}
             <span className="text-primary">optimiser vos recrutements</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          </motion.h1>
+
+          <motion.p
+            className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             Découvrez toutes les fonctionnalités qui font de notre plateforme
             l'outil idéal pour les recruteurs et les candidats.
-          </p>
+          </motion.p>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
+              <motion.div
+                key={index}
+                className="text-center"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 + index * 0.1 }}
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: 0.3 },
+                }}
+              >
                 <div className="flex items-center justify-center mb-2">
                   {stat.icon}
                 </div>
@@ -324,7 +343,7 @@ function page() {
                 <div className="text-sm text-muted-foreground">
                   {stat.label}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -333,124 +352,161 @@ function page() {
       {/* Features Tabs */}
       <section className="py-12 px-4">
         <div className="container mx-auto">
-          <Tabs defaultValue="recruteurs" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-12 bg-transparent border">
-              <TabsTrigger
-                value="recruteurs"
-                className="flex items-center gap-2"
-              >
-                <Users className="h-4 w-4" />
-                Recruteurs
-              </TabsTrigger>
-              <TabsTrigger
-                value="candidats"
-                className="flex items-center gap-2"
-              >
-                <UserCheck className="h-4 w-4" />
-                Candidats
-              </TabsTrigger>
-              <TabsTrigger
-                value="plateforme"
-                className="flex items-center gap-2"
-              >
-                <Cpu className="h-4 w-4" />
-                Plateforme
-              </TabsTrigger>
-            </TabsList>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Tabs defaultValue="recruteurs" className="w-full">
+              <TabsList className="grid w-full grid-cols-3 mb-12 bg-transparent border">
+                <TabsTrigger
+                  value="recruteurs"
+                  className="flex items-center gap-2"
+                >
+                  <Users className="h-4 w-4" />
+                  Recruteurs
+                </TabsTrigger>
+                <TabsTrigger
+                  value="candidats"
+                  className="flex items-center gap-2"
+                >
+                  <UserCheck className="h-4 w-4" />
+                  Candidats
+                </TabsTrigger>
+                <TabsTrigger
+                  value="plateforme"
+                  className="flex items-center gap-2"
+                >
+                  <Cpu className="h-4 w-4" />
+                  Plateforme
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="recruteurs">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {features.recruteurs.map((feature, index) => (
-                  <Card
-                    key={index}
-                    className="hover:shadow-lg transition-all duration-300 shadow-none border"
-                  >
-                    <CardHeader>
-                      <div className="flex items-center gap-3 mb-4">
-                        {feature.icon}
-                        <CardTitle className="text-lg">
-                          {feature.title}
-                        </CardTitle>
-                      </div>
-                      <CardDescription>{feature.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2">
-                        {feature.features.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
+              <TabsContent value="recruteurs">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {features.recruteurs.map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      whileHover={{
+                        y: -10,
+                        transition: { duration: 0.3 },
+                      }}
+                    >
+                      <Card className="hover:shadow-lg transition-all duration-300 shadow-none border bg-transparent">
+                        <CardHeader>
+                          <div className="flex items-center gap-3 mb-4">
+                            {feature.icon}
+                            <CardTitle className="text-lg">
+                              {feature.title}
+                            </CardTitle>
+                          </div>
+                          <CardDescription>
+                            {feature.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-2">
+                            {feature.features.map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-2">
+                                <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                                <span className="text-sm">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </TabsContent>
 
-            <TabsContent value="candidats">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {features.candidats.map((feature, index) => (
-                  <Card
-                    key={index}
-                    className="hover:shadow-lg transition-all duration-300 shadow-none border"
-                  >
-                    <CardHeader>
-                      <div className="flex items-center gap-3 mb-4">
-                        {feature.icon}
-                        <CardTitle className="text-lg">
-                          {feature.title}
-                        </CardTitle>
-                      </div>
-                      <CardDescription>{feature.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2">
-                        {feature.features.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
+              <TabsContent value="candidats">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {features.candidats.map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      whileHover={{
+                        y: -10,
+                        transition: { duration: 0.3 },
+                      }}
+                    >
+                      <Card className="hover:shadow-lg transition-all duration-300 shadow-none border bg-transparent">
+                        <CardHeader>
+                          <div className="flex items-center gap-3 mb-4">
+                            {feature.icon}
+                            <CardTitle className="text-lg">
+                              {feature.title}
+                            </CardTitle>
+                          </div>
+                          <CardDescription>
+                            {feature.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-2">
+                            {feature.features.map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-2">
+                                <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                                <span className="text-sm">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </TabsContent>
 
-            <TabsContent value="plateforme">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {features.plateforme.map((feature, index) => (
-                  <Card
-                    key={index}
-                    className="hover:shadow-lg transition-all duration-300 shadow-none border"
-                  >
-                    <CardHeader>
-                      <div className="flex items-center gap-3 mb-4">
-                        {feature.icon}
-                        <CardTitle className="text-lg">
-                          {feature.title}
-                        </CardTitle>
-                      </div>
-                      <CardDescription>{feature.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="space-y-2">
-                        {feature.features.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+              <TabsContent value="plateforme">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {features.plateforme.map((feature, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 50 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      whileHover={{
+                        y: -10,
+                        transition: { duration: 0.3 },
+                      }}
+                    >
+                      <Card className="hover:shadow-lg transition-all duration-300 shadow-none border bg-transparent">
+                        <CardHeader>
+                          <div className="flex items-center gap-3 mb-4">
+                            {feature.icon}
+                            <CardTitle className="text-lg">
+                              {feature.title}
+                            </CardTitle>
+                          </div>
+                          <CardDescription>
+                            {feature.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <ul className="space-y-2">
+                            {feature.features.map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-2">
+                                <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                                <span className="text-sm">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </motion.div>
         </div>
       </section>
 
@@ -459,7 +515,13 @@ function page() {
       {/* Workflow Section */}
       <section className="py-16 px-4 bg-muted/30">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
+          <motion.div
+            className="text-center mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Workflow de recrutement simplifié
             </h2>
@@ -467,52 +529,59 @@ function page() {
               Découvrez comment notre plateforme optimise chaque étape de votre
               processus de recrutement
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">
-                1. Création d'offre
-              </h3>
-              <p className="text-muted-foreground">
-                Utilisez nos templates ou créez des offres personnalisées
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Globe className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">
-                2. Diffusion multi-canal
-              </h3>
-              <p className="text-muted-foreground">
-                Publiez automatiquement sur 160+ plateformes
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <LayoutDashboard className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">3. Gestion Kanban</h3>
-              <p className="text-muted-foreground">
-                Suivez vos candidatures avec notre tableau intelligent
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <UserCheck className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">4. Recrutement</h3>
-              <p className="text-muted-foreground">
-                Collaborez avec votre équipe pour choisir le meilleur candidat
-              </p>
-            </div>
+            {[
+              {
+                icon: <FileText className="h-8 w-8 text-primary" />,
+                title: "1. Création d'offre",
+                description:
+                  "Utilisez nos templates ou créez des offres personnalisées",
+              },
+              {
+                icon: <Globe className="h-8 w-8 text-primary" />,
+                title: "2. Diffusion multi-canal",
+                description: "Publiez automatiquement sur 160+ plateformes",
+              },
+              {
+                icon: <LayoutDashboard className="h-8 w-8 text-primary" />,
+                title: "3. Gestion Kanban",
+                description:
+                  "Suivez vos candidatures avec notre tableau intelligent",
+              },
+              {
+                icon: <UserCheck className="h-8 w-8 text-primary" />,
+                title: "4. Recrutement",
+                description:
+                  "Collaborez avec votre équipe pour choisir le meilleur candidat",
+              },
+            ].map((step, index) => (
+              <motion.div
+                key={index}
+                className="text-center"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                whileHover={{
+                  y: -5,
+                  transition: { duration: 0.3 },
+                }}
+              >
+                <motion.div
+                  className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4"
+                  whileHover={{
+                    scale: 1.1,
+                    transition: { duration: 0.3 },
+                  }}
+                >
+                  {step.icon}
+                </motion.div>
+                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                <p className="text-muted-foreground">{step.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -520,25 +589,65 @@ function page() {
       {/* CTA Section */}
       <section className="py-16 px-4">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Prêt à révolutionner vos recrutements ?
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Rejoignez des milliers de recruteurs qui font confiance à notre
-            plateforme
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.h2
+              className="text-3xl md:text-4xl font-bold mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Commencer gratuitement
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button variant="outline" size="lg">
-              Voir la démo
-            </Button>
-          </div>
+              Prêt à révolutionner vos recrutements ?
+            </motion.h2>
+            <motion.p
+              className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Rejoignez des milliers de recruteurs qui font confiance à notre
+              plateforme
+            </motion.p>
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Button
+                  size="lg"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90"
+                  onClick={() => {
+                    window.location.href = "/recruteur/inscription";
+                  }}
+                >
+                  Commencer gratuitement
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </motion.div>
+              {/* <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Button variant="outline" size="lg">
+                  Voir la démo
+                </Button>
+              </motion.div> */}
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 

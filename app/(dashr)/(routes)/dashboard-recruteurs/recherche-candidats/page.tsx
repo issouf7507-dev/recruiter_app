@@ -123,6 +123,7 @@ const paysList = [
 
 const RechercheCandidatsPage = () => {
   const [selectedCompetences, setSelectedCompetences] = useState<string[]>([]);
+  const [competencesm, setCompetencesm] = useState("");
   const [ville, setVille] = useState("");
   const [pays, setPays] = useState("");
   const [page, setPage] = useState(1);
@@ -145,8 +146,11 @@ const RechercheCandidatsPage = () => {
       params.append("pays", pays);
     }
     params.append("page", page.toString());
+    if (competencesm) {
+      params.append("competencesm", competencesm);
+    }
     setSearchParams(params.toString());
-  }, [selectedCompetences, ville, pays, page]);
+  }, [selectedCompetences, ville, pays, page, competencesm]);
 
   // Requête de recherche
   const { data, isLoading, error } = useQuery<SearchResponse>({
@@ -251,6 +255,15 @@ const RechercheCandidatsPage = () => {
                 </Badge>
               ))}
             </div>
+          </div>
+          <div className="space-y-2">
+            <Label>Compétences recherchées(manuel)</Label>
+            <Input
+              id="competencesm"
+              placeholder="Ex: Javascript, React, Nodejs"
+              value={competencesm}
+              onChange={(e) => setCompetencesm(e.target.value)}
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

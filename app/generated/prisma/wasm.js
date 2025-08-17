@@ -147,8 +147,7 @@ exports.Prisma.CandidatScalarFieldEnum = {
   nationalite: 'nationalite',
   situationFamiliale: 'situationFamiliale',
   permisConduire: 'permisConduire',
-  image: 'image',
-  favorite: 'favorite'
+  image: 'image'
 };
 
 exports.Prisma.CandidatCompetenceScalarFieldEnum = {
@@ -265,6 +264,7 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   rating: 'rating',
   message: 'message',
   cv: 'cv',
+  favorite: 'favorite',
   duedate: 'duedate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

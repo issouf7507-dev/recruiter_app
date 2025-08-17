@@ -208,9 +208,9 @@ export default function ContactPage() {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="container mx-auto px-4 py-24">
+        <div className="container mx-auto px-4 py-24 m">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="mb-8">
+            <div className="mb-8 flex flex-col items-center justify-center">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
               <h1 className="text-3xl font-bold mb-4">Message envoyé !</h1>
               <p className="text-lg text-muted-foreground mb-8">
@@ -221,8 +221,8 @@ export default function ContactPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {contactInfo.slice(0, 2).map((info, index) => (
-                <Card key={index} className="text-center">
-                  <CardContent className="pt-6">
+                <Card key={index} className="text-center bg-transparent">
+                  <CardContent className="pt-6 flex flex-col items-center justify-center">
                     <div className={`${info.color} mb-2`}>{info.icon}</div>
                     <h3 className="font-semibold mb-1">{info.title}</h3>
                     <p className="text-sm text-muted-foreground">
@@ -234,7 +234,7 @@ export default function ContactPage() {
             </div>
 
             <Button onClick={() => setIsSubmitted(false)}>
-              Envoyer un autre message
+              Retour à la page de contact
             </Button>
           </div>
         </div>
@@ -247,7 +247,7 @@ export default function ContactPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-12 px-4">
+      <section className="pt-32 pb-12 px-4">
         <div className="container mx-auto text-center">
           <Badge variant="secondary" className="mb-4 px-4 py-2">
             Contactez-nous
@@ -284,7 +284,7 @@ export default function ContactPage() {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Form */}
-            <Card className="shadow-none border">
+            <Card className="shadow-none border bg-transparent">
               <CardHeader>
                 <CardTitle className="text-2xl">
                   Envoyez-nous un message
@@ -381,11 +381,11 @@ export default function ContactPage() {
                               defaultValue={field.value}
                             >
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="w-full">
                                   <SelectValue placeholder="Sélectionnez votre profil" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
+                              <SelectContent className="w-full bg-background  ">
                                 {typesUtilisateur.map((type) => (
                                   <SelectItem
                                     key={type.value}
@@ -411,11 +411,11 @@ export default function ContactPage() {
                               defaultValue={field.value}
                             >
                               <FormControl>
-                                <SelectTrigger>
+                                <SelectTrigger className="w-full">
                                   <SelectValue placeholder="Sélectionnez un sujet" />
                                 </SelectTrigger>
                               </FormControl>
-                              <SelectContent>
+                              <SelectContent className="w-full bg-background">
                                 {sujets.map((sujet) => (
                                   <SelectItem
                                     key={sujet.value}
@@ -474,7 +474,7 @@ export default function ContactPage() {
 
             {/* Contact Info */}
             <div className="space-y-6">
-              <Card className="shadow-none border">
+              <Card className="shadow-none border bg-transparent  ">
                 <CardHeader>
                   <CardTitle className="text-2xl">
                     Informations de contact
@@ -499,7 +499,7 @@ export default function ContactPage() {
                 </CardContent>
               </Card>
 
-              <Card className="shadow-none border">
+              <Card className="shadow-none border bg-transparent">
                 <CardHeader>
                   <CardTitle className="text-2xl">
                     Autres options de support
@@ -524,6 +524,9 @@ export default function ContactPage() {
                           variant="ghost"
                           size="sm"
                           className="p-0 h-auto"
+                          onClick={() => {
+                            window.location.href = "/a-propos";
+                          }}
                         >
                           En savoir plus
                           <ArrowRight className="ml-1 h-3 w-3" />
@@ -550,8 +553,8 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Card className="shadow-none border">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            <Card className="shadow-none border bg-transparent">
               <CardHeader>
                 <CardTitle className="text-lg">
                   Quel est le délai de réponse ?
@@ -565,7 +568,7 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-none border">
+            <Card className="shadow-none border bg-transparent">
               <CardHeader>
                 <CardTitle className="text-lg">
                   Proposez-vous des démonstrations ?
@@ -580,7 +583,7 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-none border">
+            <Card className="shadow-none border bg-transparent">
               <CardHeader>
                 <CardTitle className="text-lg">
                   Comment devenir partenaire ?
@@ -595,7 +598,7 @@ export default function ContactPage() {
               </CardContent>
             </Card>
 
-            <Card className="shadow-none border">
+            <Card className="shadow-none border bg-transparent">
               <CardHeader>
                 <CardTitle className="text-lg">
                   Supportez-vous plusieurs langues ?

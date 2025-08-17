@@ -24,6 +24,7 @@ export async function GET(req: NextRequest) {
     const competences = searchParams.get("competences");
     const ville = searchParams.get("ville");
     const pays = searchParams.get("pays");
+    const competencesm = searchParams.get("competencesm");
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
@@ -47,6 +48,21 @@ export async function GET(req: NextRequest) {
       whereClause.pays = pays;
     }
 
+    // console.log(competencesm?.split(","));
+
+    if (competencesm) {
+      const competencesArray = competencesm.split(",").map((c) => c.trim());
+      whereClause.candidatCompetences = {
+        some: {
+          competence: {
+            in: competencesArray,
+          },
+        },
+      };
+    }
+
+    // console.log(competencesm?.split(","));
+
     // Filtrer par compétences si spécifiées
     if (competences) {
       const competencesArray = competences.split(",").map((c) => c.trim());
@@ -58,6 +74,8 @@ export async function GET(req: NextRequest) {
         },
       };
     }
+
+    console.log(whereClause);
 
     // Récupérer les candidats avec pagination
     const candidats = await prisma.candidat.findMany({

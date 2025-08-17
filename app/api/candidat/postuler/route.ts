@@ -35,6 +35,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // console.log(jobOfferId);
+
     // Vérifier si l'offre existe
     const jobOffer = await prisma.jobOffer.findUnique({
       where: {

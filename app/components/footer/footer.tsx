@@ -73,11 +73,19 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { name: "LinkedIn", icon: <Linkedin className="h-5 w-5" />, href: "#" },
-    { name: "Twitter", icon: <Twitter className="h-5 w-5" />, href: "#" },
-    { name: "Facebook", icon: <Facebook className="h-5 w-5" />, href: "#" },
-    { name: "Instagram", icon: <Instagram className="h-5 w-5" />, href: "#" },
-    { name: "YouTube", icon: <Youtube className="h-5 w-5" />, href: "#" },
+    {
+      name: "LinkedIn",
+      icon: <Linkedin className="h-5 w-5" />,
+      href: "https://www.linkedin.com/company/ylsix-tech/",
+    },
+    // { name: "Twitter", icon: <Twitter className="h-5 w-5" />, href: "#" },
+    {
+      name: "Facebook",
+      icon: <Facebook className="h-5 w-5" />,
+      href: "https://web.facebook.com/p/YLSIX-TECH-100066544575464/?_rdc=1&_rdr#",
+    },
+    // { name: "Instagram", icon: <Instagram className="h-5 w-5" />, href: "#" },
+    // { name: "YouTube", icon: <Youtube className="h-5 w-5" />, href: "#" },
   ];
 
   const contactInfo = [
@@ -85,7 +93,7 @@ const Footer = () => {
       icon: <Mail className="h-4 w-4" />,
       label: "Email",
       value: "contact@ylsix-rh.com",
-      href: "mailto:contact@recruter.com",
+      href: "mailto:contact@ylsix-rh.com",
     },
     {
       icon: <Phone className="h-4 w-4" />,
@@ -102,7 +110,7 @@ const Footer = () => {
     {
       icon: <Clock className="h-4 w-4" />,
       label: "Horaires",
-      value: "Lun-Ven 9h-18h (UTA)",
+      value: "Lun-Ven 9h-18h",
       href: "#",
     },
   ];
@@ -245,15 +253,18 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Recevez nos dernières actualités et conseils de recrutement.
             </p>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <input
                 type="email"
                 placeholder="Votre email"
                 className="flex-1 px-3 py-2 border border-input rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
               />
               <Button
-                size="sm"
+                // size="sm"
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={() => {
+                  window.location.href = "/contact";
+                }}
               >
                 S'abonner
                 <ArrowRight className="ml-1 h-3 w-3" />

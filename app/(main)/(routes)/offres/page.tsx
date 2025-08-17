@@ -21,17 +21,14 @@ import {
   Building,
   Clock,
   DollarSign,
-  Plus,
-  LogIn,
-  Filter,
   X,
   Grid3X3,
   List,
+  Calendar,
 } from "lucide-react";
 import Link from "next/link";
 import LoginModal from "@/components/auth/LoginModal";
 import OffresStats from "@/components/offres/OffresStats";
-import OffresFilters from "@/components/offres/OffresFilters";
 import Header from "@/app/components/header/header";
 import Footer from "@/app/components/footer/footer";
 
@@ -277,7 +274,7 @@ function OffresPageContent() {
 
   // Composant pour l'affichage en liste
   const ListView = ({ offre }: { offre: JobOffer }) => (
-    <Card className="shadow-none border mb-3 md:mb-4">
+    <Card className="shadow-none border mb-3 md:mb-4 bg-transparent">
       <CardContent className="p-4 md:p-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4">
           <div className="flex-1">
@@ -290,6 +287,14 @@ function OffresPageContent() {
                   <div className="flex items-center gap-1">
                     <Building className="h-3 w-3 md:h-4 md:w-4" />
                     {offre.company}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-3 w-3 md:h-4 md:w-4" />
+                    {new Date(offre.createdAt).toLocaleDateString("fr-FR", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}
                   </div>
                   <div className="flex items-center gap-1">
                     <MapPin className="h-3 w-3 md:h-4 md:w-4" />
@@ -308,9 +313,12 @@ function OffresPageContent() {
               </Badge>
             </div>
 
-            <p className="text-sm md:text-base text-muted-foreground mb-3 line-clamp-2">
-              {offre.description}
-            </p>
+            <div
+              className="text-xs md:text-sm text-muted-foreground line-clamp-3"
+              dangerouslySetInnerHTML={{ __html: offre.description }}
+            >
+              {/* {offre.description} */}
+            </div>
 
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 md:gap-4">
@@ -363,17 +371,27 @@ function OffresPageContent() {
 
   // Composant pour l'affichage en grille
   const GridView = ({ offre }: { offre: JobOffer }) => (
-    <Card className="hover:shadow-md transition-shadow duration-200 shadow-none">
-      <CardHeader className="p-4 md:p-6">
+    <Card className="hover:shadow-md transition-shadow duration-200 shadow-none bg-transparent">
+      {/* <CardHeader className="p-4 md:p-6"></CardHeader> */}
+
+      <CardContent className="space-y-2 md:space-y-3 p-4 md:p-6 pt-0">
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <CardTitle className="text-base md:text-lg font-semibold text-foreground line-clamp-2">
               {offre.title}
             </CardTitle>
             <CardDescription className="mt-2">
-              <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-                <Building className="h-3 w-3 md:h-4 md:w-4" />
+              <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground capitalize">
+                <Building className="h-3 w-3 md:h-4 md:w-4 " />
                 {offre.company}
+              </div>
+              <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground mt-2">
+                <Calendar className="h-3 w-3 md:h-4 md:w-4" />
+                {new Date(offre.createdAt).toLocaleDateString("fr-FR", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })}
               </div>
             </CardDescription>
           </div>
@@ -381,9 +399,6 @@ function OffresPageContent() {
             {offre.type}
           </Badge>
         </div>
-      </CardHeader>
-
-      <CardContent className="space-y-2 md:space-y-3 p-4 md:p-6 pt-0">
         <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
           <MapPin className="h-3 w-3 md:h-4 md:w-4" />
           {offre.location}
@@ -391,7 +406,7 @@ function OffresPageContent() {
 
         <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
           <Clock className="h-3 w-3 md:h-4 md:w-4" />
-          {offre.experience}
+          {offre.experience} ans
         </div>
 
         {offre.salaryMin && offre.salaryMax && (
@@ -403,12 +418,16 @@ function OffresPageContent() {
               offre.salaryCurrency,
               offre.salaryPeriod
             )}
+            {/* {offre.salaryCurrency} */}
           </div>
         )}
 
-        <p className="text-xs md:text-sm text-muted-foreground line-clamp-3">
-          {offre.description}
-        </p>
+        <div
+          className="text-xs md:text-sm text-muted-foreground line-clamp-3"
+          dangerouslySetInnerHTML={{ __html: offre.description }}
+        >
+          {/* {offre.description} */}
+        </div>
 
         {offre.jobOfferCompetences && offre.jobOfferCompetences.length > 0 && (
           <div className="flex flex-wrap gap-1">
@@ -471,7 +490,7 @@ function OffresPageContent() {
       {/* Filtres et recherche */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6 mt-16 md:mt-20">
         {/* Barre de recherche */}
-        <div className="bg-card rounded-lg shadow-none border p-4 md:p-6 mb-4 md:mb-6">
+        <div className="bg-transparent rounded-lg shadow-none border p-4 md:p-6 mb-4 md:mb-6">
           <div className="flex flex-col lg:flex-row gap-3 md:gap-4">
             <div className="flex-1">
               <div className="relative">
@@ -514,7 +533,7 @@ function OffresPageContent() {
             </div>
             <Button
               onClick={handleSearch}
-              className="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base"
+              className="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base h-full"
             >
               <Search className="h-4 w-4 mr-2" />
               <span className="hidden sm:inline">Rechercher</span>
@@ -597,7 +616,7 @@ function OffresPageContent() {
           </p>
           <div className="flex items-center gap-3 md:gap-4">
             {/* Toggle de vue */}
-            <div className="flex items-center bg-card border rounded-lg p-1">
+            <div className="flex items-center bg-transparent border rounded-lg p-1">
               <Button
                 variant={viewMode === "grid" ? "default" : "ghost"}
                 size="sm"
