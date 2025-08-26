@@ -23,6 +23,7 @@ import {
   Filter,
   Loader2,
   Eye,
+  Clock,
 } from "lucide-react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
@@ -70,6 +71,8 @@ export default function MesOffres() {
     queryFn: () => fetchData(`/api/recruteur/offresbyuser/${recruteurId}`),
     enabled: !!recruteurId,
   });
+
+  // console.log("offertData", offertData);
 
   const [viewMode, setViewMode] = useState<ViewMode>("list");
   const [searchQuery, setSearchQuery] = useState("");
@@ -152,6 +155,12 @@ export default function MesOffres() {
             <Calendar className="h-4 w-4" />
             {new Date(offer.createdAt).toLocaleDateString()}
           </div>
+          {offer.duedate && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Clock className="h-4 w-4" />
+              Échéance: {new Date(offer.duedate).toLocaleDateString()}
+            </div>
+          )}
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Users className="h-4 w-4" />
             {offer.applications?.length} candidat
@@ -249,6 +258,12 @@ export default function MesOffres() {
               <Calendar className="h-4 w-4" />
               {new Date(offer.createdAt).toLocaleDateString()}
             </div>
+            {offer.duedate && (
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                Échéance: {new Date(offer.duedate).toLocaleDateString()}
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               {offer.applications?.length} candidat

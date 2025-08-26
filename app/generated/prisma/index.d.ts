@@ -168,6 +168,46 @@ export type Conversation = $Result.DefaultSelection<Prisma.$ConversationPayload>
  * 
  */
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
+/**
+ * Model KanbanColumnCustom
+ * 
+ */
+export type KanbanColumnCustom = $Result.DefaultSelection<Prisma.$KanbanColumnCustomPayload>
+/**
+ * Model CollaborateurCustom
+ * 
+ */
+export type CollaborateurCustom = $Result.DefaultSelection<Prisma.$CollaborateurCustomPayload>
+/**
+ * Model ApplicationFileCustom
+ * 
+ */
+export type ApplicationFileCustom = $Result.DefaultSelection<Prisma.$ApplicationFileCustomPayload>
+/**
+ * Model ApplicationCollaborateurCustom
+ * 
+ */
+export type ApplicationCollaborateurCustom = $Result.DefaultSelection<Prisma.$ApplicationCollaborateurCustomPayload>
+/**
+ * Model ApplicationNoteCustom
+ * 
+ */
+export type ApplicationNoteCustom = $Result.DefaultSelection<Prisma.$ApplicationNoteCustomPayload>
+/**
+ * Model ChecklistItemCustom
+ * 
+ */
+export type ChecklistItemCustom = $Result.DefaultSelection<Prisma.$ChecklistItemCustomPayload>
+/**
+ * Model CandidatCustom
+ * 
+ */
+export type CandidatCustom = $Result.DefaultSelection<Prisma.$CandidatCustomPayload>
+/**
+ * Model ApplicationCustom
+ * 
+ */
+export type ApplicationCustom = $Result.DefaultSelection<Prisma.$ApplicationCustomPayload>
 
 /**
  * Enums
@@ -660,6 +700,86 @@ export class PrismaClient<
     * ```
     */
   get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.kanbanColumnCustom`: Exposes CRUD operations for the **KanbanColumnCustom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KanbanColumnCustoms
+    * const kanbanColumnCustoms = await prisma.kanbanColumnCustom.findMany()
+    * ```
+    */
+  get kanbanColumnCustom(): Prisma.KanbanColumnCustomDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.collaborateurCustom`: Exposes CRUD operations for the **CollaborateurCustom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CollaborateurCustoms
+    * const collaborateurCustoms = await prisma.collaborateurCustom.findMany()
+    * ```
+    */
+  get collaborateurCustom(): Prisma.CollaborateurCustomDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationFileCustom`: Exposes CRUD operations for the **ApplicationFileCustom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationFileCustoms
+    * const applicationFileCustoms = await prisma.applicationFileCustom.findMany()
+    * ```
+    */
+  get applicationFileCustom(): Prisma.ApplicationFileCustomDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationCollaborateurCustom`: Exposes CRUD operations for the **ApplicationCollaborateurCustom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationCollaborateurCustoms
+    * const applicationCollaborateurCustoms = await prisma.applicationCollaborateurCustom.findMany()
+    * ```
+    */
+  get applicationCollaborateurCustom(): Prisma.ApplicationCollaborateurCustomDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationNoteCustom`: Exposes CRUD operations for the **ApplicationNoteCustom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationNoteCustoms
+    * const applicationNoteCustoms = await prisma.applicationNoteCustom.findMany()
+    * ```
+    */
+  get applicationNoteCustom(): Prisma.ApplicationNoteCustomDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.checklistItemCustom`: Exposes CRUD operations for the **ChecklistItemCustom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ChecklistItemCustoms
+    * const checklistItemCustoms = await prisma.checklistItemCustom.findMany()
+    * ```
+    */
+  get checklistItemCustom(): Prisma.ChecklistItemCustomDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.candidatCustom`: Exposes CRUD operations for the **CandidatCustom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CandidatCustoms
+    * const candidatCustoms = await prisma.candidatCustom.findMany()
+    * ```
+    */
+  get candidatCustom(): Prisma.CandidatCustomDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationCustom`: Exposes CRUD operations for the **ApplicationCustom** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationCustoms
+    * const applicationCustoms = await prisma.applicationCustom.findMany()
+    * ```
+    */
+  get applicationCustom(): Prisma.ApplicationCustomDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1130,7 +1250,15 @@ export namespace Prisma {
     AlerteMotCle: 'AlerteMotCle',
     Notification: 'Notification',
     Conversation: 'Conversation',
-    Message: 'Message'
+    Message: 'Message',
+    KanbanColumnCustom: 'KanbanColumnCustom',
+    CollaborateurCustom: 'CollaborateurCustom',
+    ApplicationFileCustom: 'ApplicationFileCustom',
+    ApplicationCollaborateurCustom: 'ApplicationCollaborateurCustom',
+    ApplicationNoteCustom: 'ApplicationNoteCustom',
+    ChecklistItemCustom: 'ChecklistItemCustom',
+    CandidatCustom: 'CandidatCustom',
+    ApplicationCustom: 'ApplicationCustom'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1149,7 +1277,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "candidat" | "candidatCompetence" | "recruteur" | "companySocial" | "invitation" | "collaborateur" | "applicationCollaborateur" | "jobOffer" | "jobOfferCompetence" | "offerTemplate" | "application" | "applicationNote" | "checklistItem" | "applicationFile" | "kanbanColumn" | "account" | "session" | "verificationToken" | "experience" | "experienceCompetence" | "formation" | "formationEtape" | "competence" | "objectifCarriere" | "objectifEtape" | "alerteEmploi" | "alerteMotCle" | "notification" | "conversation" | "message"
+      modelProps: "user" | "candidat" | "candidatCompetence" | "recruteur" | "companySocial" | "invitation" | "collaborateur" | "applicationCollaborateur" | "jobOffer" | "jobOfferCompetence" | "offerTemplate" | "application" | "applicationNote" | "checklistItem" | "applicationFile" | "kanbanColumn" | "account" | "session" | "verificationToken" | "experience" | "experienceCompetence" | "formation" | "formationEtape" | "competence" | "objectifCarriere" | "objectifEtape" | "alerteEmploi" | "alerteMotCle" | "notification" | "conversation" | "message" | "kanbanColumnCustom" | "collaborateurCustom" | "applicationFileCustom" | "applicationCollaborateurCustom" | "applicationNoteCustom" | "checklistItemCustom" | "candidatCustom" | "applicationCustom"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3199,6 +3327,534 @@ export namespace Prisma {
           }
         }
       }
+      KanbanColumnCustom: {
+        payload: Prisma.$KanbanColumnCustomPayload<ExtArgs>
+        fields: Prisma.KanbanColumnCustomFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KanbanColumnCustomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KanbanColumnCustomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload>
+          }
+          findFirst: {
+            args: Prisma.KanbanColumnCustomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KanbanColumnCustomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload>
+          }
+          findMany: {
+            args: Prisma.KanbanColumnCustomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload>[]
+          }
+          create: {
+            args: Prisma.KanbanColumnCustomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload>
+          }
+          createMany: {
+            args: Prisma.KanbanColumnCustomCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.KanbanColumnCustomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload>
+          }
+          update: {
+            args: Prisma.KanbanColumnCustomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload>
+          }
+          deleteMany: {
+            args: Prisma.KanbanColumnCustomDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KanbanColumnCustomUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.KanbanColumnCustomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KanbanColumnCustomPayload>
+          }
+          aggregate: {
+            args: Prisma.KanbanColumnCustomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKanbanColumnCustom>
+          }
+          groupBy: {
+            args: Prisma.KanbanColumnCustomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KanbanColumnCustomGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KanbanColumnCustomCountArgs<ExtArgs>
+            result: $Utils.Optional<KanbanColumnCustomCountAggregateOutputType> | number
+          }
+        }
+      }
+      CollaborateurCustom: {
+        payload: Prisma.$CollaborateurCustomPayload<ExtArgs>
+        fields: Prisma.CollaborateurCustomFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CollaborateurCustomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CollaborateurCustomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload>
+          }
+          findFirst: {
+            args: Prisma.CollaborateurCustomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CollaborateurCustomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload>
+          }
+          findMany: {
+            args: Prisma.CollaborateurCustomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload>[]
+          }
+          create: {
+            args: Prisma.CollaborateurCustomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload>
+          }
+          createMany: {
+            args: Prisma.CollaborateurCustomCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.CollaborateurCustomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload>
+          }
+          update: {
+            args: Prisma.CollaborateurCustomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload>
+          }
+          deleteMany: {
+            args: Prisma.CollaborateurCustomDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CollaborateurCustomUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CollaborateurCustomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CollaborateurCustomPayload>
+          }
+          aggregate: {
+            args: Prisma.CollaborateurCustomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCollaborateurCustom>
+          }
+          groupBy: {
+            args: Prisma.CollaborateurCustomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CollaborateurCustomGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CollaborateurCustomCountArgs<ExtArgs>
+            result: $Utils.Optional<CollaborateurCustomCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApplicationFileCustom: {
+        payload: Prisma.$ApplicationFileCustomPayload<ExtArgs>
+        fields: Prisma.ApplicationFileCustomFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationFileCustomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationFileCustomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationFileCustomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationFileCustomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationFileCustomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationFileCustomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationFileCustomCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ApplicationFileCustomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload>
+          }
+          update: {
+            args: Prisma.ApplicationFileCustomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationFileCustomDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationFileCustomUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ApplicationFileCustomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationFileCustomPayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationFileCustomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationFileCustom>
+          }
+          groupBy: {
+            args: Prisma.ApplicationFileCustomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationFileCustomGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationFileCustomCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationFileCustomCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApplicationCollaborateurCustom: {
+        payload: Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>
+        fields: Prisma.ApplicationCollaborateurCustomFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationCollaborateurCustomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationCollaborateurCustomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationCollaborateurCustomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationCollaborateurCustomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationCollaborateurCustomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationCollaborateurCustomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationCollaborateurCustomCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ApplicationCollaborateurCustomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload>
+          }
+          update: {
+            args: Prisma.ApplicationCollaborateurCustomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationCollaborateurCustomDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationCollaborateurCustomUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ApplicationCollaborateurCustomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCollaborateurCustomPayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationCollaborateurCustomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationCollaborateurCustom>
+          }
+          groupBy: {
+            args: Prisma.ApplicationCollaborateurCustomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationCollaborateurCustomGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationCollaborateurCustomCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationCollaborateurCustomCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApplicationNoteCustom: {
+        payload: Prisma.$ApplicationNoteCustomPayload<ExtArgs>
+        fields: Prisma.ApplicationNoteCustomFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationNoteCustomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationNoteCustomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationNoteCustomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationNoteCustomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationNoteCustomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationNoteCustomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationNoteCustomCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ApplicationNoteCustomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload>
+          }
+          update: {
+            args: Prisma.ApplicationNoteCustomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationNoteCustomDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationNoteCustomUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ApplicationNoteCustomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationNoteCustomPayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationNoteCustomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationNoteCustom>
+          }
+          groupBy: {
+            args: Prisma.ApplicationNoteCustomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationNoteCustomGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationNoteCustomCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationNoteCustomCountAggregateOutputType> | number
+          }
+        }
+      }
+      ChecklistItemCustom: {
+        payload: Prisma.$ChecklistItemCustomPayload<ExtArgs>
+        fields: Prisma.ChecklistItemCustomFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ChecklistItemCustomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ChecklistItemCustomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload>
+          }
+          findFirst: {
+            args: Prisma.ChecklistItemCustomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ChecklistItemCustomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload>
+          }
+          findMany: {
+            args: Prisma.ChecklistItemCustomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload>[]
+          }
+          create: {
+            args: Prisma.ChecklistItemCustomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload>
+          }
+          createMany: {
+            args: Prisma.ChecklistItemCustomCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ChecklistItemCustomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload>
+          }
+          update: {
+            args: Prisma.ChecklistItemCustomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload>
+          }
+          deleteMany: {
+            args: Prisma.ChecklistItemCustomDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ChecklistItemCustomUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ChecklistItemCustomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ChecklistItemCustomPayload>
+          }
+          aggregate: {
+            args: Prisma.ChecklistItemCustomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateChecklistItemCustom>
+          }
+          groupBy: {
+            args: Prisma.ChecklistItemCustomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ChecklistItemCustomGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ChecklistItemCustomCountArgs<ExtArgs>
+            result: $Utils.Optional<ChecklistItemCustomCountAggregateOutputType> | number
+          }
+        }
+      }
+      CandidatCustom: {
+        payload: Prisma.$CandidatCustomPayload<ExtArgs>
+        fields: Prisma.CandidatCustomFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CandidatCustomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CandidatCustomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload>
+          }
+          findFirst: {
+            args: Prisma.CandidatCustomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CandidatCustomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload>
+          }
+          findMany: {
+            args: Prisma.CandidatCustomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload>[]
+          }
+          create: {
+            args: Prisma.CandidatCustomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload>
+          }
+          createMany: {
+            args: Prisma.CandidatCustomCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.CandidatCustomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload>
+          }
+          update: {
+            args: Prisma.CandidatCustomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload>
+          }
+          deleteMany: {
+            args: Prisma.CandidatCustomDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CandidatCustomUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CandidatCustomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatCustomPayload>
+          }
+          aggregate: {
+            args: Prisma.CandidatCustomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCandidatCustom>
+          }
+          groupBy: {
+            args: Prisma.CandidatCustomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CandidatCustomGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CandidatCustomCountArgs<ExtArgs>
+            result: $Utils.Optional<CandidatCustomCountAggregateOutputType> | number
+          }
+        }
+      }
+      ApplicationCustom: {
+        payload: Prisma.$ApplicationCustomPayload<ExtArgs>
+        fields: Prisma.ApplicationCustomFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationCustomFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationCustomFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationCustomFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationCustomFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationCustomFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationCustomCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationCustomCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ApplicationCustomDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload>
+          }
+          update: {
+            args: Prisma.ApplicationCustomUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationCustomDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationCustomUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ApplicationCustomUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationCustomPayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationCustomAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationCustom>
+          }
+          groupBy: {
+            args: Prisma.ApplicationCustomGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationCustomGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationCustomCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationCustomCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3314,6 +3970,14 @@ export namespace Prisma {
     notification?: NotificationOmit
     conversation?: ConversationOmit
     message?: MessageOmit
+    kanbanColumnCustom?: KanbanColumnCustomOmit
+    collaborateurCustom?: CollaborateurCustomOmit
+    applicationFileCustom?: ApplicationFileCustomOmit
+    applicationCollaborateurCustom?: ApplicationCollaborateurCustomOmit
+    applicationNoteCustom?: ApplicationNoteCustomOmit
+    checklistItemCustom?: ChecklistItemCustomOmit
+    candidatCustom?: CandidatCustomOmit
+    applicationCustom?: ApplicationCustomOmit
   }
 
   /* Types for Logging */
@@ -3556,6 +4220,8 @@ export namespace Prisma {
     invitations: number
     JobOffer: number
     OfferTemplate: number
+    CollaborateurCustom: number
+    KanbanColumnCustom: number
   }
 
   export type RecruteurCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3564,6 +4230,8 @@ export namespace Prisma {
     invitations?: boolean | RecruteurCountOutputTypeCountInvitationsArgs
     JobOffer?: boolean | RecruteurCountOutputTypeCountJobOfferArgs
     OfferTemplate?: boolean | RecruteurCountOutputTypeCountOfferTemplateArgs
+    CollaborateurCustom?: boolean | RecruteurCountOutputTypeCountCollaborateurCustomArgs
+    KanbanColumnCustom?: boolean | RecruteurCountOutputTypeCountKanbanColumnCustomArgs
   }
 
   // Custom InputTypes
@@ -3610,6 +4278,20 @@ export namespace Prisma {
    */
   export type RecruteurCountOutputTypeCountOfferTemplateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: OfferTemplateWhereInput
+  }
+
+  /**
+   * RecruteurCountOutputType without action
+   */
+  export type RecruteurCountOutputTypeCountCollaborateurCustomArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CollaborateurCustomWhereInput
+  }
+
+  /**
+   * RecruteurCountOutputType without action
+   */
+  export type RecruteurCountOutputTypeCountKanbanColumnCustomArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KanbanColumnCustomWhereInput
   }
 
 
@@ -3974,6 +4656,135 @@ export namespace Prisma {
    */
   export type ConversationCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MessageWhereInput
+  }
+
+
+  /**
+   * Count Type KanbanColumnCustomCountOutputType
+   */
+
+  export type KanbanColumnCustomCountOutputType = {
+    applicationsCustom: number
+  }
+
+  export type KanbanColumnCustomCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applicationsCustom?: boolean | KanbanColumnCustomCountOutputTypeCountApplicationsCustomArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * KanbanColumnCustomCountOutputType without action
+   */
+  export type KanbanColumnCustomCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustomCountOutputType
+     */
+    select?: KanbanColumnCustomCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * KanbanColumnCustomCountOutputType without action
+   */
+  export type KanbanColumnCustomCountOutputTypeCountApplicationsCustomArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCustomWhereInput
+  }
+
+
+  /**
+   * Count Type CollaborateurCustomCountOutputType
+   */
+
+  export type CollaborateurCustomCountOutputType = {
+    applications: number
+  }
+
+  export type CollaborateurCustomCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | CollaborateurCustomCountOutputTypeCountApplicationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CollaborateurCustomCountOutputType without action
+   */
+  export type CollaborateurCustomCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustomCountOutputType
+     */
+    select?: CollaborateurCustomCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CollaborateurCustomCountOutputType without action
+   */
+  export type CollaborateurCustomCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCollaborateurCustomWhereInput
+  }
+
+
+  /**
+   * Count Type ApplicationCustomCountOutputType
+   */
+
+  export type ApplicationCustomCountOutputType = {
+    collaborateurs: number
+    files: number
+    notes: number
+    checklist: number
+    candidatCustom: number
+  }
+
+  export type ApplicationCustomCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    collaborateurs?: boolean | ApplicationCustomCountOutputTypeCountCollaborateursArgs
+    files?: boolean | ApplicationCustomCountOutputTypeCountFilesArgs
+    notes?: boolean | ApplicationCustomCountOutputTypeCountNotesArgs
+    checklist?: boolean | ApplicationCustomCountOutputTypeCountChecklistArgs
+    candidatCustom?: boolean | ApplicationCustomCountOutputTypeCountCandidatCustomArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ApplicationCustomCountOutputType without action
+   */
+  export type ApplicationCustomCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustomCountOutputType
+     */
+    select?: ApplicationCustomCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationCustomCountOutputType without action
+   */
+  export type ApplicationCustomCountOutputTypeCountCollaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCollaborateurCustomWhereInput
+  }
+
+  /**
+   * ApplicationCustomCountOutputType without action
+   */
+  export type ApplicationCustomCountOutputTypeCountFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationFileCustomWhereInput
+  }
+
+  /**
+   * ApplicationCustomCountOutputType without action
+   */
+  export type ApplicationCustomCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationNoteCustomWhereInput
+  }
+
+  /**
+   * ApplicationCustomCountOutputType without action
+   */
+  export type ApplicationCustomCountOutputTypeCountChecklistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChecklistItemCustomWhereInput
+  }
+
+  /**
+   * ApplicationCustomCountOutputType without action
+   */
+  export type ApplicationCustomCountOutputTypeCountCandidatCustomArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CandidatCustomWhereInput
   }
 
 
@@ -7571,6 +8382,8 @@ export namespace Prisma {
     invitations?: boolean | Recruteur$invitationsArgs<ExtArgs>
     JobOffer?: boolean | Recruteur$JobOfferArgs<ExtArgs>
     OfferTemplate?: boolean | Recruteur$OfferTemplateArgs<ExtArgs>
+    CollaborateurCustom?: boolean | Recruteur$CollaborateurCustomArgs<ExtArgs>
+    KanbanColumnCustom?: boolean | Recruteur$KanbanColumnCustomArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | RecruteurCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["recruteur"]>
@@ -7603,6 +8416,8 @@ export namespace Prisma {
     invitations?: boolean | Recruteur$invitationsArgs<ExtArgs>
     JobOffer?: boolean | Recruteur$JobOfferArgs<ExtArgs>
     OfferTemplate?: boolean | Recruteur$OfferTemplateArgs<ExtArgs>
+    CollaborateurCustom?: boolean | Recruteur$CollaborateurCustomArgs<ExtArgs>
+    KanbanColumnCustom?: boolean | Recruteur$KanbanColumnCustomArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | RecruteurCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -7616,6 +8431,8 @@ export namespace Prisma {
       invitations: Prisma.$InvitationPayload<ExtArgs>[]
       JobOffer: Prisma.$JobOfferPayload<ExtArgs>[]
       OfferTemplate: Prisma.$OfferTemplatePayload<ExtArgs>[]
+      CollaborateurCustom: Prisma.$CollaborateurCustomPayload<ExtArgs>[]
+      KanbanColumnCustom: Prisma.$KanbanColumnCustomPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -7980,6 +8797,8 @@ export namespace Prisma {
     invitations<T extends Recruteur$invitationsArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     JobOffer<T extends Recruteur$JobOfferArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$JobOfferArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobOfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     OfferTemplate<T extends Recruteur$OfferTemplateArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$OfferTemplateArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    CollaborateurCustom<T extends Recruteur$CollaborateurCustomArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$CollaborateurCustomArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    KanbanColumnCustom<T extends Recruteur$KanbanColumnCustomArgs<ExtArgs> = {}>(args?: Subset<T, Recruteur$KanbanColumnCustomArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -8504,6 +9323,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: OfferTemplateScalarFieldEnum | OfferTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * Recruteur.CollaborateurCustom
+   */
+  export type Recruteur$CollaborateurCustomArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    where?: CollaborateurCustomWhereInput
+    orderBy?: CollaborateurCustomOrderByWithRelationInput | CollaborateurCustomOrderByWithRelationInput[]
+    cursor?: CollaborateurCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CollaborateurCustomScalarFieldEnum | CollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * Recruteur.KanbanColumnCustom
+   */
+  export type Recruteur$KanbanColumnCustomArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    where?: KanbanColumnCustomWhereInput
+    orderBy?: KanbanColumnCustomOrderByWithRelationInput | KanbanColumnCustomOrderByWithRelationInput[]
+    cursor?: KanbanColumnCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KanbanColumnCustomScalarFieldEnum | KanbanColumnCustomScalarFieldEnum[]
   }
 
   /**
@@ -10447,6 +11314,7 @@ export namespace Prisma {
     recruteurId: string | null
     invitationId: string | null
     userId: string | null
+    dueDate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10460,6 +11328,7 @@ export namespace Prisma {
     recruteurId: string | null
     invitationId: string | null
     userId: string | null
+    dueDate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -10473,6 +11342,7 @@ export namespace Prisma {
     recruteurId: number
     invitationId: number
     userId: number
+    dueDate: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -10488,6 +11358,7 @@ export namespace Prisma {
     recruteurId?: true
     invitationId?: true
     userId?: true
+    dueDate?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10501,6 +11372,7 @@ export namespace Prisma {
     recruteurId?: true
     invitationId?: true
     userId?: true
+    dueDate?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -10514,6 +11386,7 @@ export namespace Prisma {
     recruteurId?: true
     invitationId?: true
     userId?: true
+    dueDate?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -10600,6 +11473,7 @@ export namespace Prisma {
     recruteurId: string
     invitationId: string | null
     userId: string
+    dueDate: Date | null
     createdAt: Date
     updatedAt: Date
     _count: CollaborateurCountAggregateOutputType | null
@@ -10630,6 +11504,7 @@ export namespace Prisma {
     recruteurId?: boolean
     invitationId?: boolean
     userId?: boolean
+    dueDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     applications?: boolean | Collaborateur$applicationsArgs<ExtArgs>
@@ -10650,11 +11525,12 @@ export namespace Prisma {
     recruteurId?: boolean
     invitationId?: boolean
     userId?: boolean
+    dueDate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type CollaborateurOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "nom" | "prenom" | "role" | "recruteurId" | "invitationId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["collaborateur"]>
+  export type CollaborateurOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "nom" | "prenom" | "role" | "recruteurId" | "invitationId" | "userId" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["collaborateur"]>
   export type CollaborateurInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | Collaborateur$applicationsArgs<ExtArgs>
     invitation?: boolean | Collaborateur$invitationArgs<ExtArgs>
@@ -10680,6 +11556,7 @@ export namespace Prisma {
       recruteurId: string
       invitationId: string | null
       userId: string
+      dueDate: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["collaborateur"]>
@@ -11063,6 +11940,7 @@ export namespace Prisma {
     readonly recruteurId: FieldRef<"Collaborateur", 'String'>
     readonly invitationId: FieldRef<"Collaborateur", 'String'>
     readonly userId: FieldRef<"Collaborateur", 'String'>
+    readonly dueDate: FieldRef<"Collaborateur", 'DateTime'>
     readonly createdAt: FieldRef<"Collaborateur", 'DateTime'>
     readonly updatedAt: FieldRef<"Collaborateur", 'DateTime'>
   }
@@ -12446,6 +13324,7 @@ export namespace Prisma {
     benefits: string | null
     requirements: string | null
     responsibilities: string | null
+    duedate: Date | null
     skills: string | null
     favorite: boolean | null
     templateId: number | null
@@ -12471,6 +13350,7 @@ export namespace Prisma {
     benefits: string | null
     requirements: string | null
     responsibilities: string | null
+    duedate: Date | null
     skills: string | null
     favorite: boolean | null
     templateId: number | null
@@ -12496,6 +13376,7 @@ export namespace Prisma {
     benefits: number
     requirements: number
     responsibilities: number
+    duedate: number
     skills: number
     favorite: number
     templateId: number
@@ -12539,6 +13420,7 @@ export namespace Prisma {
     benefits?: true
     requirements?: true
     responsibilities?: true
+    duedate?: true
     skills?: true
     favorite?: true
     templateId?: true
@@ -12564,6 +13446,7 @@ export namespace Prisma {
     benefits?: true
     requirements?: true
     responsibilities?: true
+    duedate?: true
     skills?: true
     favorite?: true
     templateId?: true
@@ -12589,6 +13472,7 @@ export namespace Prisma {
     benefits?: true
     requirements?: true
     responsibilities?: true
+    duedate?: true
     skills?: true
     favorite?: true
     templateId?: true
@@ -12701,6 +13585,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate: Date | null
     skills: string
     favorite: boolean | null
     templateId: number | null
@@ -12745,6 +13630,7 @@ export namespace Prisma {
     benefits?: boolean
     requirements?: boolean
     responsibilities?: boolean
+    duedate?: boolean
     skills?: boolean
     favorite?: boolean
     templateId?: boolean
@@ -12779,6 +13665,7 @@ export namespace Prisma {
     benefits?: boolean
     requirements?: boolean
     responsibilities?: boolean
+    duedate?: boolean
     skills?: boolean
     favorite?: boolean
     templateId?: boolean
@@ -12788,7 +13675,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type JobOfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "company" | "location" | "type" | "etat" | "experience" | "salaryMin" | "salaryMax" | "salaryCurrency" | "salaryPeriod" | "benefits" | "requirements" | "responsibilities" | "skills" | "favorite" | "templateId" | "views" | "recruteurId" | "createdAt" | "updatedAt", ExtArgs["result"]["jobOffer"]>
+  export type JobOfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "company" | "location" | "type" | "etat" | "experience" | "salaryMin" | "salaryMax" | "salaryCurrency" | "salaryPeriod" | "benefits" | "requirements" | "responsibilities" | "duedate" | "skills" | "favorite" | "templateId" | "views" | "recruteurId" | "createdAt" | "updatedAt", ExtArgs["result"]["jobOffer"]>
   export type JobOfferInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     applications?: boolean | JobOffer$applicationsArgs<ExtArgs>
     conversations?: boolean | JobOffer$conversationsArgs<ExtArgs>
@@ -12825,6 +13712,7 @@ export namespace Prisma {
       benefits: string
       requirements: string
       responsibilities: string
+      duedate: Date | null
       skills: string
       favorite: boolean | null
       templateId: number | null
@@ -13222,6 +14110,7 @@ export namespace Prisma {
     readonly benefits: FieldRef<"JobOffer", 'String'>
     readonly requirements: FieldRef<"JobOffer", 'String'>
     readonly responsibilities: FieldRef<"JobOffer", 'String'>
+    readonly duedate: FieldRef<"JobOffer", 'DateTime'>
     readonly skills: FieldRef<"JobOffer", 'String'>
     readonly favorite: FieldRef<"JobOffer", 'Boolean'>
     readonly templateId: FieldRef<"JobOffer", 'Int'>
@@ -35454,6 +36343,8337 @@ export namespace Prisma {
 
 
   /**
+   * Model KanbanColumnCustom
+   */
+
+  export type AggregateKanbanColumnCustom = {
+    _count: KanbanColumnCustomCountAggregateOutputType | null
+    _avg: KanbanColumnCustomAvgAggregateOutputType | null
+    _sum: KanbanColumnCustomSumAggregateOutputType | null
+    _min: KanbanColumnCustomMinAggregateOutputType | null
+    _max: KanbanColumnCustomMaxAggregateOutputType | null
+  }
+
+  export type KanbanColumnCustomAvgAggregateOutputType = {
+    order: number | null
+    jobOfferId: number | null
+  }
+
+  export type KanbanColumnCustomSumAggregateOutputType = {
+    order: number | null
+    jobOfferId: number | null
+  }
+
+  export type KanbanColumnCustomMinAggregateOutputType = {
+    id: string | null
+    color: string | null
+    name: string | null
+    order: number | null
+    isDefault: boolean | null
+    jobOfferId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    recruteurId: string | null
+    applicationsCustomid: string | null
+  }
+
+  export type KanbanColumnCustomMaxAggregateOutputType = {
+    id: string | null
+    color: string | null
+    name: string | null
+    order: number | null
+    isDefault: boolean | null
+    jobOfferId: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    recruteurId: string | null
+    applicationsCustomid: string | null
+  }
+
+  export type KanbanColumnCustomCountAggregateOutputType = {
+    id: number
+    color: number
+    name: number
+    order: number
+    isDefault: number
+    jobOfferId: number
+    createdAt: number
+    updatedAt: number
+    recruteurId: number
+    applicationsCustomid: number
+    _all: number
+  }
+
+
+  export type KanbanColumnCustomAvgAggregateInputType = {
+    order?: true
+    jobOfferId?: true
+  }
+
+  export type KanbanColumnCustomSumAggregateInputType = {
+    order?: true
+    jobOfferId?: true
+  }
+
+  export type KanbanColumnCustomMinAggregateInputType = {
+    id?: true
+    color?: true
+    name?: true
+    order?: true
+    isDefault?: true
+    jobOfferId?: true
+    createdAt?: true
+    updatedAt?: true
+    recruteurId?: true
+    applicationsCustomid?: true
+  }
+
+  export type KanbanColumnCustomMaxAggregateInputType = {
+    id?: true
+    color?: true
+    name?: true
+    order?: true
+    isDefault?: true
+    jobOfferId?: true
+    createdAt?: true
+    updatedAt?: true
+    recruteurId?: true
+    applicationsCustomid?: true
+  }
+
+  export type KanbanColumnCustomCountAggregateInputType = {
+    id?: true
+    color?: true
+    name?: true
+    order?: true
+    isDefault?: true
+    jobOfferId?: true
+    createdAt?: true
+    updatedAt?: true
+    recruteurId?: true
+    applicationsCustomid?: true
+    _all?: true
+  }
+
+  export type KanbanColumnCustomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KanbanColumnCustom to aggregate.
+     */
+    where?: KanbanColumnCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KanbanColumnCustoms to fetch.
+     */
+    orderBy?: KanbanColumnCustomOrderByWithRelationInput | KanbanColumnCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KanbanColumnCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KanbanColumnCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KanbanColumnCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KanbanColumnCustoms
+    **/
+    _count?: true | KanbanColumnCustomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: KanbanColumnCustomAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: KanbanColumnCustomSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KanbanColumnCustomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KanbanColumnCustomMaxAggregateInputType
+  }
+
+  export type GetKanbanColumnCustomAggregateType<T extends KanbanColumnCustomAggregateArgs> = {
+        [P in keyof T & keyof AggregateKanbanColumnCustom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKanbanColumnCustom[P]>
+      : GetScalarType<T[P], AggregateKanbanColumnCustom[P]>
+  }
+
+
+
+
+  export type KanbanColumnCustomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KanbanColumnCustomWhereInput
+    orderBy?: KanbanColumnCustomOrderByWithAggregationInput | KanbanColumnCustomOrderByWithAggregationInput[]
+    by: KanbanColumnCustomScalarFieldEnum[] | KanbanColumnCustomScalarFieldEnum
+    having?: KanbanColumnCustomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KanbanColumnCustomCountAggregateInputType | true
+    _avg?: KanbanColumnCustomAvgAggregateInputType
+    _sum?: KanbanColumnCustomSumAggregateInputType
+    _min?: KanbanColumnCustomMinAggregateInputType
+    _max?: KanbanColumnCustomMaxAggregateInputType
+  }
+
+  export type KanbanColumnCustomGroupByOutputType = {
+    id: string
+    color: string
+    name: string
+    order: number
+    isDefault: boolean
+    jobOfferId: number
+    createdAt: Date
+    updatedAt: Date
+    recruteurId: string
+    applicationsCustomid: string
+    _count: KanbanColumnCustomCountAggregateOutputType | null
+    _avg: KanbanColumnCustomAvgAggregateOutputType | null
+    _sum: KanbanColumnCustomSumAggregateOutputType | null
+    _min: KanbanColumnCustomMinAggregateOutputType | null
+    _max: KanbanColumnCustomMaxAggregateOutputType | null
+  }
+
+  type GetKanbanColumnCustomGroupByPayload<T extends KanbanColumnCustomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KanbanColumnCustomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KanbanColumnCustomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KanbanColumnCustomGroupByOutputType[P]>
+            : GetScalarType<T[P], KanbanColumnCustomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KanbanColumnCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    color?: boolean
+    name?: boolean
+    order?: boolean
+    isDefault?: boolean
+    jobOfferId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    recruteurId?: boolean
+    applicationsCustomid?: boolean
+    applicationsCustom?: boolean | KanbanColumnCustom$applicationsCustomArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
+    _count?: boolean | KanbanColumnCustomCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["kanbanColumnCustom"]>
+
+
+
+  export type KanbanColumnCustomSelectScalar = {
+    id?: boolean
+    color?: boolean
+    name?: boolean
+    order?: boolean
+    isDefault?: boolean
+    jobOfferId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    recruteurId?: boolean
+    applicationsCustomid?: boolean
+  }
+
+  export type KanbanColumnCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "color" | "name" | "order" | "isDefault" | "jobOfferId" | "createdAt" | "updatedAt" | "recruteurId" | "applicationsCustomid", ExtArgs["result"]["kanbanColumnCustom"]>
+  export type KanbanColumnCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applicationsCustom?: boolean | KanbanColumnCustom$applicationsCustomArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
+    _count?: boolean | KanbanColumnCustomCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $KanbanColumnCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KanbanColumnCustom"
+    objects: {
+      applicationsCustom: Prisma.$ApplicationCustomPayload<ExtArgs>[]
+      recruteur: Prisma.$RecruteurPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      color: string
+      name: string
+      order: number
+      isDefault: boolean
+      jobOfferId: number
+      createdAt: Date
+      updatedAt: Date
+      recruteurId: string
+      applicationsCustomid: string
+    }, ExtArgs["result"]["kanbanColumnCustom"]>
+    composites: {}
+  }
+
+  type KanbanColumnCustomGetPayload<S extends boolean | null | undefined | KanbanColumnCustomDefaultArgs> = $Result.GetResult<Prisma.$KanbanColumnCustomPayload, S>
+
+  type KanbanColumnCustomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<KanbanColumnCustomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: KanbanColumnCustomCountAggregateInputType | true
+    }
+
+  export interface KanbanColumnCustomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KanbanColumnCustom'], meta: { name: 'KanbanColumnCustom' } }
+    /**
+     * Find zero or one KanbanColumnCustom that matches the filter.
+     * @param {KanbanColumnCustomFindUniqueArgs} args - Arguments to find a KanbanColumnCustom
+     * @example
+     * // Get one KanbanColumnCustom
+     * const kanbanColumnCustom = await prisma.kanbanColumnCustom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KanbanColumnCustomFindUniqueArgs>(args: SelectSubset<T, KanbanColumnCustomFindUniqueArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one KanbanColumnCustom that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {KanbanColumnCustomFindUniqueOrThrowArgs} args - Arguments to find a KanbanColumnCustom
+     * @example
+     * // Get one KanbanColumnCustom
+     * const kanbanColumnCustom = await prisma.kanbanColumnCustom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KanbanColumnCustomFindUniqueOrThrowArgs>(args: SelectSubset<T, KanbanColumnCustomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KanbanColumnCustom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KanbanColumnCustomFindFirstArgs} args - Arguments to find a KanbanColumnCustom
+     * @example
+     * // Get one KanbanColumnCustom
+     * const kanbanColumnCustom = await prisma.kanbanColumnCustom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KanbanColumnCustomFindFirstArgs>(args?: SelectSubset<T, KanbanColumnCustomFindFirstArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KanbanColumnCustom that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KanbanColumnCustomFindFirstOrThrowArgs} args - Arguments to find a KanbanColumnCustom
+     * @example
+     * // Get one KanbanColumnCustom
+     * const kanbanColumnCustom = await prisma.kanbanColumnCustom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KanbanColumnCustomFindFirstOrThrowArgs>(args?: SelectSubset<T, KanbanColumnCustomFindFirstOrThrowArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more KanbanColumnCustoms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KanbanColumnCustomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KanbanColumnCustoms
+     * const kanbanColumnCustoms = await prisma.kanbanColumnCustom.findMany()
+     * 
+     * // Get first 10 KanbanColumnCustoms
+     * const kanbanColumnCustoms = await prisma.kanbanColumnCustom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const kanbanColumnCustomWithIdOnly = await prisma.kanbanColumnCustom.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KanbanColumnCustomFindManyArgs>(args?: SelectSubset<T, KanbanColumnCustomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a KanbanColumnCustom.
+     * @param {KanbanColumnCustomCreateArgs} args - Arguments to create a KanbanColumnCustom.
+     * @example
+     * // Create one KanbanColumnCustom
+     * const KanbanColumnCustom = await prisma.kanbanColumnCustom.create({
+     *   data: {
+     *     // ... data to create a KanbanColumnCustom
+     *   }
+     * })
+     * 
+     */
+    create<T extends KanbanColumnCustomCreateArgs>(args: SelectSubset<T, KanbanColumnCustomCreateArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many KanbanColumnCustoms.
+     * @param {KanbanColumnCustomCreateManyArgs} args - Arguments to create many KanbanColumnCustoms.
+     * @example
+     * // Create many KanbanColumnCustoms
+     * const kanbanColumnCustom = await prisma.kanbanColumnCustom.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KanbanColumnCustomCreateManyArgs>(args?: SelectSubset<T, KanbanColumnCustomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a KanbanColumnCustom.
+     * @param {KanbanColumnCustomDeleteArgs} args - Arguments to delete one KanbanColumnCustom.
+     * @example
+     * // Delete one KanbanColumnCustom
+     * const KanbanColumnCustom = await prisma.kanbanColumnCustom.delete({
+     *   where: {
+     *     // ... filter to delete one KanbanColumnCustom
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KanbanColumnCustomDeleteArgs>(args: SelectSubset<T, KanbanColumnCustomDeleteArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one KanbanColumnCustom.
+     * @param {KanbanColumnCustomUpdateArgs} args - Arguments to update one KanbanColumnCustom.
+     * @example
+     * // Update one KanbanColumnCustom
+     * const kanbanColumnCustom = await prisma.kanbanColumnCustom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KanbanColumnCustomUpdateArgs>(args: SelectSubset<T, KanbanColumnCustomUpdateArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more KanbanColumnCustoms.
+     * @param {KanbanColumnCustomDeleteManyArgs} args - Arguments to filter KanbanColumnCustoms to delete.
+     * @example
+     * // Delete a few KanbanColumnCustoms
+     * const { count } = await prisma.kanbanColumnCustom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KanbanColumnCustomDeleteManyArgs>(args?: SelectSubset<T, KanbanColumnCustomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KanbanColumnCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KanbanColumnCustomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KanbanColumnCustoms
+     * const kanbanColumnCustom = await prisma.kanbanColumnCustom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KanbanColumnCustomUpdateManyArgs>(args: SelectSubset<T, KanbanColumnCustomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one KanbanColumnCustom.
+     * @param {KanbanColumnCustomUpsertArgs} args - Arguments to update or create a KanbanColumnCustom.
+     * @example
+     * // Update or create a KanbanColumnCustom
+     * const kanbanColumnCustom = await prisma.kanbanColumnCustom.upsert({
+     *   create: {
+     *     // ... data to create a KanbanColumnCustom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KanbanColumnCustom we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KanbanColumnCustomUpsertArgs>(args: SelectSubset<T, KanbanColumnCustomUpsertArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of KanbanColumnCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KanbanColumnCustomCountArgs} args - Arguments to filter KanbanColumnCustoms to count.
+     * @example
+     * // Count the number of KanbanColumnCustoms
+     * const count = await prisma.kanbanColumnCustom.count({
+     *   where: {
+     *     // ... the filter for the KanbanColumnCustoms we want to count
+     *   }
+     * })
+    **/
+    count<T extends KanbanColumnCustomCountArgs>(
+      args?: Subset<T, KanbanColumnCustomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KanbanColumnCustomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KanbanColumnCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KanbanColumnCustomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KanbanColumnCustomAggregateArgs>(args: Subset<T, KanbanColumnCustomAggregateArgs>): Prisma.PrismaPromise<GetKanbanColumnCustomAggregateType<T>>
+
+    /**
+     * Group by KanbanColumnCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KanbanColumnCustomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KanbanColumnCustomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KanbanColumnCustomGroupByArgs['orderBy'] }
+        : { orderBy?: KanbanColumnCustomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KanbanColumnCustomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKanbanColumnCustomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KanbanColumnCustom model
+   */
+  readonly fields: KanbanColumnCustomFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KanbanColumnCustom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KanbanColumnCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    applicationsCustom<T extends KanbanColumnCustom$applicationsCustomArgs<ExtArgs> = {}>(args?: Subset<T, KanbanColumnCustom$applicationsCustomArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KanbanColumnCustom model
+   */
+  interface KanbanColumnCustomFieldRefs {
+    readonly id: FieldRef<"KanbanColumnCustom", 'String'>
+    readonly color: FieldRef<"KanbanColumnCustom", 'String'>
+    readonly name: FieldRef<"KanbanColumnCustom", 'String'>
+    readonly order: FieldRef<"KanbanColumnCustom", 'Int'>
+    readonly isDefault: FieldRef<"KanbanColumnCustom", 'Boolean'>
+    readonly jobOfferId: FieldRef<"KanbanColumnCustom", 'Int'>
+    readonly createdAt: FieldRef<"KanbanColumnCustom", 'DateTime'>
+    readonly updatedAt: FieldRef<"KanbanColumnCustom", 'DateTime'>
+    readonly recruteurId: FieldRef<"KanbanColumnCustom", 'String'>
+    readonly applicationsCustomid: FieldRef<"KanbanColumnCustom", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KanbanColumnCustom findUnique
+   */
+  export type KanbanColumnCustomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which KanbanColumnCustom to fetch.
+     */
+    where: KanbanColumnCustomWhereUniqueInput
+  }
+
+  /**
+   * KanbanColumnCustom findUniqueOrThrow
+   */
+  export type KanbanColumnCustomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which KanbanColumnCustom to fetch.
+     */
+    where: KanbanColumnCustomWhereUniqueInput
+  }
+
+  /**
+   * KanbanColumnCustom findFirst
+   */
+  export type KanbanColumnCustomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which KanbanColumnCustom to fetch.
+     */
+    where?: KanbanColumnCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KanbanColumnCustoms to fetch.
+     */
+    orderBy?: KanbanColumnCustomOrderByWithRelationInput | KanbanColumnCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KanbanColumnCustoms.
+     */
+    cursor?: KanbanColumnCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KanbanColumnCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KanbanColumnCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KanbanColumnCustoms.
+     */
+    distinct?: KanbanColumnCustomScalarFieldEnum | KanbanColumnCustomScalarFieldEnum[]
+  }
+
+  /**
+   * KanbanColumnCustom findFirstOrThrow
+   */
+  export type KanbanColumnCustomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which KanbanColumnCustom to fetch.
+     */
+    where?: KanbanColumnCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KanbanColumnCustoms to fetch.
+     */
+    orderBy?: KanbanColumnCustomOrderByWithRelationInput | KanbanColumnCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KanbanColumnCustoms.
+     */
+    cursor?: KanbanColumnCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KanbanColumnCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KanbanColumnCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KanbanColumnCustoms.
+     */
+    distinct?: KanbanColumnCustomScalarFieldEnum | KanbanColumnCustomScalarFieldEnum[]
+  }
+
+  /**
+   * KanbanColumnCustom findMany
+   */
+  export type KanbanColumnCustomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which KanbanColumnCustoms to fetch.
+     */
+    where?: KanbanColumnCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KanbanColumnCustoms to fetch.
+     */
+    orderBy?: KanbanColumnCustomOrderByWithRelationInput | KanbanColumnCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KanbanColumnCustoms.
+     */
+    cursor?: KanbanColumnCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KanbanColumnCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KanbanColumnCustoms.
+     */
+    skip?: number
+    distinct?: KanbanColumnCustomScalarFieldEnum | KanbanColumnCustomScalarFieldEnum[]
+  }
+
+  /**
+   * KanbanColumnCustom create
+   */
+  export type KanbanColumnCustomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to create a KanbanColumnCustom.
+     */
+    data: XOR<KanbanColumnCustomCreateInput, KanbanColumnCustomUncheckedCreateInput>
+  }
+
+  /**
+   * KanbanColumnCustom createMany
+   */
+  export type KanbanColumnCustomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KanbanColumnCustoms.
+     */
+    data: KanbanColumnCustomCreateManyInput | KanbanColumnCustomCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KanbanColumnCustom update
+   */
+  export type KanbanColumnCustomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to update a KanbanColumnCustom.
+     */
+    data: XOR<KanbanColumnCustomUpdateInput, KanbanColumnCustomUncheckedUpdateInput>
+    /**
+     * Choose, which KanbanColumnCustom to update.
+     */
+    where: KanbanColumnCustomWhereUniqueInput
+  }
+
+  /**
+   * KanbanColumnCustom updateMany
+   */
+  export type KanbanColumnCustomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KanbanColumnCustoms.
+     */
+    data: XOR<KanbanColumnCustomUpdateManyMutationInput, KanbanColumnCustomUncheckedUpdateManyInput>
+    /**
+     * Filter which KanbanColumnCustoms to update
+     */
+    where?: KanbanColumnCustomWhereInput
+    /**
+     * Limit how many KanbanColumnCustoms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * KanbanColumnCustom upsert
+   */
+  export type KanbanColumnCustomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * The filter to search for the KanbanColumnCustom to update in case it exists.
+     */
+    where: KanbanColumnCustomWhereUniqueInput
+    /**
+     * In case the KanbanColumnCustom found by the `where` argument doesn't exist, create a new KanbanColumnCustom with this data.
+     */
+    create: XOR<KanbanColumnCustomCreateInput, KanbanColumnCustomUncheckedCreateInput>
+    /**
+     * In case the KanbanColumnCustom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KanbanColumnCustomUpdateInput, KanbanColumnCustomUncheckedUpdateInput>
+  }
+
+  /**
+   * KanbanColumnCustom delete
+   */
+  export type KanbanColumnCustomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+    /**
+     * Filter which KanbanColumnCustom to delete.
+     */
+    where: KanbanColumnCustomWhereUniqueInput
+  }
+
+  /**
+   * KanbanColumnCustom deleteMany
+   */
+  export type KanbanColumnCustomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KanbanColumnCustoms to delete
+     */
+    where?: KanbanColumnCustomWhereInput
+    /**
+     * Limit how many KanbanColumnCustoms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * KanbanColumnCustom.applicationsCustom
+   */
+  export type KanbanColumnCustom$applicationsCustomArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    where?: ApplicationCustomWhereInput
+    orderBy?: ApplicationCustomOrderByWithRelationInput | ApplicationCustomOrderByWithRelationInput[]
+    cursor?: ApplicationCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationCustomScalarFieldEnum | ApplicationCustomScalarFieldEnum[]
+  }
+
+  /**
+   * KanbanColumnCustom without action
+   */
+  export type KanbanColumnCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KanbanColumnCustom
+     */
+    select?: KanbanColumnCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KanbanColumnCustom
+     */
+    omit?: KanbanColumnCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KanbanColumnCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CollaborateurCustom
+   */
+
+  export type AggregateCollaborateurCustom = {
+    _count: CollaborateurCustomCountAggregateOutputType | null
+    _min: CollaborateurCustomMinAggregateOutputType | null
+    _max: CollaborateurCustomMaxAggregateOutputType | null
+  }
+
+  export type CollaborateurCustomMinAggregateOutputType = {
+    id: string | null
+    email: string | null
+    nom: string | null
+    prenom: string | null
+    role: $Enums.Role | null
+    recruteurId: string | null
+    invitationId: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CollaborateurCustomMaxAggregateOutputType = {
+    id: string | null
+    email: string | null
+    nom: string | null
+    prenom: string | null
+    role: $Enums.Role | null
+    recruteurId: string | null
+    invitationId: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type CollaborateurCustomCountAggregateOutputType = {
+    id: number
+    email: number
+    nom: number
+    prenom: number
+    role: number
+    recruteurId: number
+    invitationId: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type CollaborateurCustomMinAggregateInputType = {
+    id?: true
+    email?: true
+    nom?: true
+    prenom?: true
+    role?: true
+    recruteurId?: true
+    invitationId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CollaborateurCustomMaxAggregateInputType = {
+    id?: true
+    email?: true
+    nom?: true
+    prenom?: true
+    role?: true
+    recruteurId?: true
+    invitationId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type CollaborateurCustomCountAggregateInputType = {
+    id?: true
+    email?: true
+    nom?: true
+    prenom?: true
+    role?: true
+    recruteurId?: true
+    invitationId?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type CollaborateurCustomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CollaborateurCustom to aggregate.
+     */
+    where?: CollaborateurCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CollaborateurCustoms to fetch.
+     */
+    orderBy?: CollaborateurCustomOrderByWithRelationInput | CollaborateurCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CollaborateurCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CollaborateurCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CollaborateurCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CollaborateurCustoms
+    **/
+    _count?: true | CollaborateurCustomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CollaborateurCustomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CollaborateurCustomMaxAggregateInputType
+  }
+
+  export type GetCollaborateurCustomAggregateType<T extends CollaborateurCustomAggregateArgs> = {
+        [P in keyof T & keyof AggregateCollaborateurCustom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCollaborateurCustom[P]>
+      : GetScalarType<T[P], AggregateCollaborateurCustom[P]>
+  }
+
+
+
+
+  export type CollaborateurCustomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CollaborateurCustomWhereInput
+    orderBy?: CollaborateurCustomOrderByWithAggregationInput | CollaborateurCustomOrderByWithAggregationInput[]
+    by: CollaborateurCustomScalarFieldEnum[] | CollaborateurCustomScalarFieldEnum
+    having?: CollaborateurCustomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CollaborateurCustomCountAggregateInputType | true
+    _min?: CollaborateurCustomMinAggregateInputType
+    _max?: CollaborateurCustomMaxAggregateInputType
+  }
+
+  export type CollaborateurCustomGroupByOutputType = {
+    id: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    recruteurId: string
+    invitationId: string | null
+    userId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: CollaborateurCustomCountAggregateOutputType | null
+    _min: CollaborateurCustomMinAggregateOutputType | null
+    _max: CollaborateurCustomMaxAggregateOutputType | null
+  }
+
+  type GetCollaborateurCustomGroupByPayload<T extends CollaborateurCustomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CollaborateurCustomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CollaborateurCustomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CollaborateurCustomGroupByOutputType[P]>
+            : GetScalarType<T[P], CollaborateurCustomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CollaborateurCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    email?: boolean
+    nom?: boolean
+    prenom?: boolean
+    role?: boolean
+    recruteurId?: boolean
+    invitationId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    applications?: boolean | CollaborateurCustom$applicationsArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
+    _count?: boolean | CollaborateurCustomCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["collaborateurCustom"]>
+
+
+
+  export type CollaborateurCustomSelectScalar = {
+    id?: boolean
+    email?: boolean
+    nom?: boolean
+    prenom?: boolean
+    role?: boolean
+    recruteurId?: boolean
+    invitationId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type CollaborateurCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "nom" | "prenom" | "role" | "recruteurId" | "invitationId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["collaborateurCustom"]>
+  export type CollaborateurCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    applications?: boolean | CollaborateurCustom$applicationsArgs<ExtArgs>
+    recruteur?: boolean | RecruteurDefaultArgs<ExtArgs>
+    _count?: boolean | CollaborateurCustomCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $CollaborateurCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CollaborateurCustom"
+    objects: {
+      applications: Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>[]
+      recruteur: Prisma.$RecruteurPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      email: string
+      nom: string
+      prenom: string
+      role: $Enums.Role
+      recruteurId: string
+      invitationId: string | null
+      userId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["collaborateurCustom"]>
+    composites: {}
+  }
+
+  type CollaborateurCustomGetPayload<S extends boolean | null | undefined | CollaborateurCustomDefaultArgs> = $Result.GetResult<Prisma.$CollaborateurCustomPayload, S>
+
+  type CollaborateurCustomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CollaborateurCustomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CollaborateurCustomCountAggregateInputType | true
+    }
+
+  export interface CollaborateurCustomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CollaborateurCustom'], meta: { name: 'CollaborateurCustom' } }
+    /**
+     * Find zero or one CollaborateurCustom that matches the filter.
+     * @param {CollaborateurCustomFindUniqueArgs} args - Arguments to find a CollaborateurCustom
+     * @example
+     * // Get one CollaborateurCustom
+     * const collaborateurCustom = await prisma.collaborateurCustom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CollaborateurCustomFindUniqueArgs>(args: SelectSubset<T, CollaborateurCustomFindUniqueArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CollaborateurCustom that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CollaborateurCustomFindUniqueOrThrowArgs} args - Arguments to find a CollaborateurCustom
+     * @example
+     * // Get one CollaborateurCustom
+     * const collaborateurCustom = await prisma.collaborateurCustom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CollaborateurCustomFindUniqueOrThrowArgs>(args: SelectSubset<T, CollaborateurCustomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CollaborateurCustom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaborateurCustomFindFirstArgs} args - Arguments to find a CollaborateurCustom
+     * @example
+     * // Get one CollaborateurCustom
+     * const collaborateurCustom = await prisma.collaborateurCustom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CollaborateurCustomFindFirstArgs>(args?: SelectSubset<T, CollaborateurCustomFindFirstArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CollaborateurCustom that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaborateurCustomFindFirstOrThrowArgs} args - Arguments to find a CollaborateurCustom
+     * @example
+     * // Get one CollaborateurCustom
+     * const collaborateurCustom = await prisma.collaborateurCustom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CollaborateurCustomFindFirstOrThrowArgs>(args?: SelectSubset<T, CollaborateurCustomFindFirstOrThrowArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CollaborateurCustoms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaborateurCustomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CollaborateurCustoms
+     * const collaborateurCustoms = await prisma.collaborateurCustom.findMany()
+     * 
+     * // Get first 10 CollaborateurCustoms
+     * const collaborateurCustoms = await prisma.collaborateurCustom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const collaborateurCustomWithIdOnly = await prisma.collaborateurCustom.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CollaborateurCustomFindManyArgs>(args?: SelectSubset<T, CollaborateurCustomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CollaborateurCustom.
+     * @param {CollaborateurCustomCreateArgs} args - Arguments to create a CollaborateurCustom.
+     * @example
+     * // Create one CollaborateurCustom
+     * const CollaborateurCustom = await prisma.collaborateurCustom.create({
+     *   data: {
+     *     // ... data to create a CollaborateurCustom
+     *   }
+     * })
+     * 
+     */
+    create<T extends CollaborateurCustomCreateArgs>(args: SelectSubset<T, CollaborateurCustomCreateArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CollaborateurCustoms.
+     * @param {CollaborateurCustomCreateManyArgs} args - Arguments to create many CollaborateurCustoms.
+     * @example
+     * // Create many CollaborateurCustoms
+     * const collaborateurCustom = await prisma.collaborateurCustom.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CollaborateurCustomCreateManyArgs>(args?: SelectSubset<T, CollaborateurCustomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a CollaborateurCustom.
+     * @param {CollaborateurCustomDeleteArgs} args - Arguments to delete one CollaborateurCustom.
+     * @example
+     * // Delete one CollaborateurCustom
+     * const CollaborateurCustom = await prisma.collaborateurCustom.delete({
+     *   where: {
+     *     // ... filter to delete one CollaborateurCustom
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CollaborateurCustomDeleteArgs>(args: SelectSubset<T, CollaborateurCustomDeleteArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CollaborateurCustom.
+     * @param {CollaborateurCustomUpdateArgs} args - Arguments to update one CollaborateurCustom.
+     * @example
+     * // Update one CollaborateurCustom
+     * const collaborateurCustom = await prisma.collaborateurCustom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CollaborateurCustomUpdateArgs>(args: SelectSubset<T, CollaborateurCustomUpdateArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CollaborateurCustoms.
+     * @param {CollaborateurCustomDeleteManyArgs} args - Arguments to filter CollaborateurCustoms to delete.
+     * @example
+     * // Delete a few CollaborateurCustoms
+     * const { count } = await prisma.collaborateurCustom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CollaborateurCustomDeleteManyArgs>(args?: SelectSubset<T, CollaborateurCustomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CollaborateurCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaborateurCustomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CollaborateurCustoms
+     * const collaborateurCustom = await prisma.collaborateurCustom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CollaborateurCustomUpdateManyArgs>(args: SelectSubset<T, CollaborateurCustomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CollaborateurCustom.
+     * @param {CollaborateurCustomUpsertArgs} args - Arguments to update or create a CollaborateurCustom.
+     * @example
+     * // Update or create a CollaborateurCustom
+     * const collaborateurCustom = await prisma.collaborateurCustom.upsert({
+     *   create: {
+     *     // ... data to create a CollaborateurCustom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CollaborateurCustom we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CollaborateurCustomUpsertArgs>(args: SelectSubset<T, CollaborateurCustomUpsertArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CollaborateurCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaborateurCustomCountArgs} args - Arguments to filter CollaborateurCustoms to count.
+     * @example
+     * // Count the number of CollaborateurCustoms
+     * const count = await prisma.collaborateurCustom.count({
+     *   where: {
+     *     // ... the filter for the CollaborateurCustoms we want to count
+     *   }
+     * })
+    **/
+    count<T extends CollaborateurCustomCountArgs>(
+      args?: Subset<T, CollaborateurCustomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CollaborateurCustomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CollaborateurCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaborateurCustomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CollaborateurCustomAggregateArgs>(args: Subset<T, CollaborateurCustomAggregateArgs>): Prisma.PrismaPromise<GetCollaborateurCustomAggregateType<T>>
+
+    /**
+     * Group by CollaborateurCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CollaborateurCustomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CollaborateurCustomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CollaborateurCustomGroupByArgs['orderBy'] }
+        : { orderBy?: CollaborateurCustomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CollaborateurCustomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCollaborateurCustomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CollaborateurCustom model
+   */
+  readonly fields: CollaborateurCustomFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CollaborateurCustom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CollaborateurCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    applications<T extends CollaborateurCustom$applicationsArgs<ExtArgs> = {}>(args?: Subset<T, CollaborateurCustom$applicationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recruteur<T extends RecruteurDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RecruteurDefaultArgs<ExtArgs>>): Prisma__RecruteurClient<$Result.GetResult<Prisma.$RecruteurPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CollaborateurCustom model
+   */
+  interface CollaborateurCustomFieldRefs {
+    readonly id: FieldRef<"CollaborateurCustom", 'String'>
+    readonly email: FieldRef<"CollaborateurCustom", 'String'>
+    readonly nom: FieldRef<"CollaborateurCustom", 'String'>
+    readonly prenom: FieldRef<"CollaborateurCustom", 'String'>
+    readonly role: FieldRef<"CollaborateurCustom", 'Role'>
+    readonly recruteurId: FieldRef<"CollaborateurCustom", 'String'>
+    readonly invitationId: FieldRef<"CollaborateurCustom", 'String'>
+    readonly userId: FieldRef<"CollaborateurCustom", 'String'>
+    readonly createdAt: FieldRef<"CollaborateurCustom", 'DateTime'>
+    readonly updatedAt: FieldRef<"CollaborateurCustom", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CollaborateurCustom findUnique
+   */
+  export type CollaborateurCustomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CollaborateurCustom to fetch.
+     */
+    where: CollaborateurCustomWhereUniqueInput
+  }
+
+  /**
+   * CollaborateurCustom findUniqueOrThrow
+   */
+  export type CollaborateurCustomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CollaborateurCustom to fetch.
+     */
+    where: CollaborateurCustomWhereUniqueInput
+  }
+
+  /**
+   * CollaborateurCustom findFirst
+   */
+  export type CollaborateurCustomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CollaborateurCustom to fetch.
+     */
+    where?: CollaborateurCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CollaborateurCustoms to fetch.
+     */
+    orderBy?: CollaborateurCustomOrderByWithRelationInput | CollaborateurCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CollaborateurCustoms.
+     */
+    cursor?: CollaborateurCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CollaborateurCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CollaborateurCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CollaborateurCustoms.
+     */
+    distinct?: CollaborateurCustomScalarFieldEnum | CollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * CollaborateurCustom findFirstOrThrow
+   */
+  export type CollaborateurCustomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CollaborateurCustom to fetch.
+     */
+    where?: CollaborateurCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CollaborateurCustoms to fetch.
+     */
+    orderBy?: CollaborateurCustomOrderByWithRelationInput | CollaborateurCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CollaborateurCustoms.
+     */
+    cursor?: CollaborateurCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CollaborateurCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CollaborateurCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CollaborateurCustoms.
+     */
+    distinct?: CollaborateurCustomScalarFieldEnum | CollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * CollaborateurCustom findMany
+   */
+  export type CollaborateurCustomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CollaborateurCustoms to fetch.
+     */
+    where?: CollaborateurCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CollaborateurCustoms to fetch.
+     */
+    orderBy?: CollaborateurCustomOrderByWithRelationInput | CollaborateurCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CollaborateurCustoms.
+     */
+    cursor?: CollaborateurCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CollaborateurCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CollaborateurCustoms.
+     */
+    skip?: number
+    distinct?: CollaborateurCustomScalarFieldEnum | CollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * CollaborateurCustom create
+   */
+  export type CollaborateurCustomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CollaborateurCustom.
+     */
+    data: XOR<CollaborateurCustomCreateInput, CollaborateurCustomUncheckedCreateInput>
+  }
+
+  /**
+   * CollaborateurCustom createMany
+   */
+  export type CollaborateurCustomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CollaborateurCustoms.
+     */
+    data: CollaborateurCustomCreateManyInput | CollaborateurCustomCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CollaborateurCustom update
+   */
+  export type CollaborateurCustomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CollaborateurCustom.
+     */
+    data: XOR<CollaborateurCustomUpdateInput, CollaborateurCustomUncheckedUpdateInput>
+    /**
+     * Choose, which CollaborateurCustom to update.
+     */
+    where: CollaborateurCustomWhereUniqueInput
+  }
+
+  /**
+   * CollaborateurCustom updateMany
+   */
+  export type CollaborateurCustomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CollaborateurCustoms.
+     */
+    data: XOR<CollaborateurCustomUpdateManyMutationInput, CollaborateurCustomUncheckedUpdateManyInput>
+    /**
+     * Filter which CollaborateurCustoms to update
+     */
+    where?: CollaborateurCustomWhereInput
+    /**
+     * Limit how many CollaborateurCustoms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CollaborateurCustom upsert
+   */
+  export type CollaborateurCustomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CollaborateurCustom to update in case it exists.
+     */
+    where: CollaborateurCustomWhereUniqueInput
+    /**
+     * In case the CollaborateurCustom found by the `where` argument doesn't exist, create a new CollaborateurCustom with this data.
+     */
+    create: XOR<CollaborateurCustomCreateInput, CollaborateurCustomUncheckedCreateInput>
+    /**
+     * In case the CollaborateurCustom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CollaborateurCustomUpdateInput, CollaborateurCustomUncheckedUpdateInput>
+  }
+
+  /**
+   * CollaborateurCustom delete
+   */
+  export type CollaborateurCustomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter which CollaborateurCustom to delete.
+     */
+    where: CollaborateurCustomWhereUniqueInput
+  }
+
+  /**
+   * CollaborateurCustom deleteMany
+   */
+  export type CollaborateurCustomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CollaborateurCustoms to delete
+     */
+    where?: CollaborateurCustomWhereInput
+    /**
+     * Limit how many CollaborateurCustoms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CollaborateurCustom.applications
+   */
+  export type CollaborateurCustom$applicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    where?: ApplicationCollaborateurCustomWhereInput
+    orderBy?: ApplicationCollaborateurCustomOrderByWithRelationInput | ApplicationCollaborateurCustomOrderByWithRelationInput[]
+    cursor?: ApplicationCollaborateurCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationCollaborateurCustomScalarFieldEnum | ApplicationCollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * CollaborateurCustom without action
+   */
+  export type CollaborateurCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CollaborateurCustom
+     */
+    select?: CollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CollaborateurCustom
+     */
+    omit?: CollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CollaborateurCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApplicationFileCustom
+   */
+
+  export type AggregateApplicationFileCustom = {
+    _count: ApplicationFileCustomCountAggregateOutputType | null
+    _avg: ApplicationFileCustomAvgAggregateOutputType | null
+    _sum: ApplicationFileCustomSumAggregateOutputType | null
+    _min: ApplicationFileCustomMinAggregateOutputType | null
+    _max: ApplicationFileCustomMaxAggregateOutputType | null
+  }
+
+  export type ApplicationFileCustomAvgAggregateOutputType = {
+    fileSize: number | null
+  }
+
+  export type ApplicationFileCustomSumAggregateOutputType = {
+    fileSize: number | null
+  }
+
+  export type ApplicationFileCustomMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    fileName: string | null
+    fileUrl: string | null
+    fileType: string | null
+    fileSize: number | null
+    uploadedById: string | null
+    uploadedByType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApplicationFileCustomMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    fileName: string | null
+    fileUrl: string | null
+    fileType: string | null
+    fileSize: number | null
+    uploadedById: string | null
+    uploadedByType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApplicationFileCustomCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    fileName: number
+    fileUrl: number
+    fileType: number
+    fileSize: number
+    uploadedById: number
+    uploadedByType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ApplicationFileCustomAvgAggregateInputType = {
+    fileSize?: true
+  }
+
+  export type ApplicationFileCustomSumAggregateInputType = {
+    fileSize?: true
+  }
+
+  export type ApplicationFileCustomMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    uploadedById?: true
+    uploadedByType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApplicationFileCustomMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    uploadedById?: true
+    uploadedByType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApplicationFileCustomCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    uploadedById?: true
+    uploadedByType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ApplicationFileCustomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationFileCustom to aggregate.
+     */
+    where?: ApplicationFileCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationFileCustoms to fetch.
+     */
+    orderBy?: ApplicationFileCustomOrderByWithRelationInput | ApplicationFileCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationFileCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationFileCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationFileCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationFileCustoms
+    **/
+    _count?: true | ApplicationFileCustomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ApplicationFileCustomAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ApplicationFileCustomSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationFileCustomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationFileCustomMaxAggregateInputType
+  }
+
+  export type GetApplicationFileCustomAggregateType<T extends ApplicationFileCustomAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationFileCustom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationFileCustom[P]>
+      : GetScalarType<T[P], AggregateApplicationFileCustom[P]>
+  }
+
+
+
+
+  export type ApplicationFileCustomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationFileCustomWhereInput
+    orderBy?: ApplicationFileCustomOrderByWithAggregationInput | ApplicationFileCustomOrderByWithAggregationInput[]
+    by: ApplicationFileCustomScalarFieldEnum[] | ApplicationFileCustomScalarFieldEnum
+    having?: ApplicationFileCustomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationFileCustomCountAggregateInputType | true
+    _avg?: ApplicationFileCustomAvgAggregateInputType
+    _sum?: ApplicationFileCustomSumAggregateInputType
+    _min?: ApplicationFileCustomMinAggregateInputType
+    _max?: ApplicationFileCustomMaxAggregateInputType
+  }
+
+  export type ApplicationFileCustomGroupByOutputType = {
+    id: string
+    applicationId: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ApplicationFileCustomCountAggregateOutputType | null
+    _avg: ApplicationFileCustomAvgAggregateOutputType | null
+    _sum: ApplicationFileCustomSumAggregateOutputType | null
+    _min: ApplicationFileCustomMinAggregateOutputType | null
+    _max: ApplicationFileCustomMaxAggregateOutputType | null
+  }
+
+  type GetApplicationFileCustomGroupByPayload<T extends ApplicationFileCustomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationFileCustomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationFileCustomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationFileCustomGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationFileCustomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationFileCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    fileName?: boolean
+    fileUrl?: boolean
+    fileType?: boolean
+    fileSize?: boolean
+    uploadedById?: boolean
+    uploadedByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationFileCustom"]>
+
+
+
+  export type ApplicationFileCustomSelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    fileName?: boolean
+    fileUrl?: boolean
+    fileType?: boolean
+    fileSize?: boolean
+    uploadedById?: boolean
+    uploadedByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ApplicationFileCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "fileName" | "fileUrl" | "fileType" | "fileSize" | "uploadedById" | "uploadedByType" | "createdAt" | "updatedAt", ExtArgs["result"]["applicationFileCustom"]>
+  export type ApplicationFileCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationFileCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationFileCustom"
+    objects: {
+      application: Prisma.$ApplicationCustomPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      fileName: string
+      fileUrl: string
+      fileType: string
+      fileSize: number
+      uploadedById: string
+      uploadedByType: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["applicationFileCustom"]>
+    composites: {}
+  }
+
+  type ApplicationFileCustomGetPayload<S extends boolean | null | undefined | ApplicationFileCustomDefaultArgs> = $Result.GetResult<Prisma.$ApplicationFileCustomPayload, S>
+
+  type ApplicationFileCustomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationFileCustomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationFileCustomCountAggregateInputType | true
+    }
+
+  export interface ApplicationFileCustomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationFileCustom'], meta: { name: 'ApplicationFileCustom' } }
+    /**
+     * Find zero or one ApplicationFileCustom that matches the filter.
+     * @param {ApplicationFileCustomFindUniqueArgs} args - Arguments to find a ApplicationFileCustom
+     * @example
+     * // Get one ApplicationFileCustom
+     * const applicationFileCustom = await prisma.applicationFileCustom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationFileCustomFindUniqueArgs>(args: SelectSubset<T, ApplicationFileCustomFindUniqueArgs<ExtArgs>>): Prisma__ApplicationFileCustomClient<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationFileCustom that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationFileCustomFindUniqueOrThrowArgs} args - Arguments to find a ApplicationFileCustom
+     * @example
+     * // Get one ApplicationFileCustom
+     * const applicationFileCustom = await prisma.applicationFileCustom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationFileCustomFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationFileCustomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationFileCustomClient<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationFileCustom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileCustomFindFirstArgs} args - Arguments to find a ApplicationFileCustom
+     * @example
+     * // Get one ApplicationFileCustom
+     * const applicationFileCustom = await prisma.applicationFileCustom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationFileCustomFindFirstArgs>(args?: SelectSubset<T, ApplicationFileCustomFindFirstArgs<ExtArgs>>): Prisma__ApplicationFileCustomClient<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationFileCustom that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileCustomFindFirstOrThrowArgs} args - Arguments to find a ApplicationFileCustom
+     * @example
+     * // Get one ApplicationFileCustom
+     * const applicationFileCustom = await prisma.applicationFileCustom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationFileCustomFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationFileCustomFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationFileCustomClient<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationFileCustoms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileCustomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationFileCustoms
+     * const applicationFileCustoms = await prisma.applicationFileCustom.findMany()
+     * 
+     * // Get first 10 ApplicationFileCustoms
+     * const applicationFileCustoms = await prisma.applicationFileCustom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationFileCustomWithIdOnly = await prisma.applicationFileCustom.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationFileCustomFindManyArgs>(args?: SelectSubset<T, ApplicationFileCustomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationFileCustom.
+     * @param {ApplicationFileCustomCreateArgs} args - Arguments to create a ApplicationFileCustom.
+     * @example
+     * // Create one ApplicationFileCustom
+     * const ApplicationFileCustom = await prisma.applicationFileCustom.create({
+     *   data: {
+     *     // ... data to create a ApplicationFileCustom
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationFileCustomCreateArgs>(args: SelectSubset<T, ApplicationFileCustomCreateArgs<ExtArgs>>): Prisma__ApplicationFileCustomClient<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationFileCustoms.
+     * @param {ApplicationFileCustomCreateManyArgs} args - Arguments to create many ApplicationFileCustoms.
+     * @example
+     * // Create many ApplicationFileCustoms
+     * const applicationFileCustom = await prisma.applicationFileCustom.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationFileCustomCreateManyArgs>(args?: SelectSubset<T, ApplicationFileCustomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ApplicationFileCustom.
+     * @param {ApplicationFileCustomDeleteArgs} args - Arguments to delete one ApplicationFileCustom.
+     * @example
+     * // Delete one ApplicationFileCustom
+     * const ApplicationFileCustom = await prisma.applicationFileCustom.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationFileCustom
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationFileCustomDeleteArgs>(args: SelectSubset<T, ApplicationFileCustomDeleteArgs<ExtArgs>>): Prisma__ApplicationFileCustomClient<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationFileCustom.
+     * @param {ApplicationFileCustomUpdateArgs} args - Arguments to update one ApplicationFileCustom.
+     * @example
+     * // Update one ApplicationFileCustom
+     * const applicationFileCustom = await prisma.applicationFileCustom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationFileCustomUpdateArgs>(args: SelectSubset<T, ApplicationFileCustomUpdateArgs<ExtArgs>>): Prisma__ApplicationFileCustomClient<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationFileCustoms.
+     * @param {ApplicationFileCustomDeleteManyArgs} args - Arguments to filter ApplicationFileCustoms to delete.
+     * @example
+     * // Delete a few ApplicationFileCustoms
+     * const { count } = await prisma.applicationFileCustom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationFileCustomDeleteManyArgs>(args?: SelectSubset<T, ApplicationFileCustomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationFileCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileCustomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationFileCustoms
+     * const applicationFileCustom = await prisma.applicationFileCustom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationFileCustomUpdateManyArgs>(args: SelectSubset<T, ApplicationFileCustomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ApplicationFileCustom.
+     * @param {ApplicationFileCustomUpsertArgs} args - Arguments to update or create a ApplicationFileCustom.
+     * @example
+     * // Update or create a ApplicationFileCustom
+     * const applicationFileCustom = await prisma.applicationFileCustom.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationFileCustom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationFileCustom we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationFileCustomUpsertArgs>(args: SelectSubset<T, ApplicationFileCustomUpsertArgs<ExtArgs>>): Prisma__ApplicationFileCustomClient<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationFileCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileCustomCountArgs} args - Arguments to filter ApplicationFileCustoms to count.
+     * @example
+     * // Count the number of ApplicationFileCustoms
+     * const count = await prisma.applicationFileCustom.count({
+     *   where: {
+     *     // ... the filter for the ApplicationFileCustoms we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationFileCustomCountArgs>(
+      args?: Subset<T, ApplicationFileCustomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationFileCustomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationFileCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileCustomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationFileCustomAggregateArgs>(args: Subset<T, ApplicationFileCustomAggregateArgs>): Prisma.PrismaPromise<GetApplicationFileCustomAggregateType<T>>
+
+    /**
+     * Group by ApplicationFileCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationFileCustomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationFileCustomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationFileCustomGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationFileCustomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationFileCustomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationFileCustomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationFileCustom model
+   */
+  readonly fields: ApplicationFileCustomFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationFileCustom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationFileCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustomDefaultArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationFileCustom model
+   */
+  interface ApplicationFileCustomFieldRefs {
+    readonly id: FieldRef<"ApplicationFileCustom", 'String'>
+    readonly applicationId: FieldRef<"ApplicationFileCustom", 'String'>
+    readonly fileName: FieldRef<"ApplicationFileCustom", 'String'>
+    readonly fileUrl: FieldRef<"ApplicationFileCustom", 'String'>
+    readonly fileType: FieldRef<"ApplicationFileCustom", 'String'>
+    readonly fileSize: FieldRef<"ApplicationFileCustom", 'Int'>
+    readonly uploadedById: FieldRef<"ApplicationFileCustom", 'String'>
+    readonly uploadedByType: FieldRef<"ApplicationFileCustom", 'String'>
+    readonly createdAt: FieldRef<"ApplicationFileCustom", 'DateTime'>
+    readonly updatedAt: FieldRef<"ApplicationFileCustom", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationFileCustom findUnique
+   */
+  export type ApplicationFileCustomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFileCustom to fetch.
+     */
+    where: ApplicationFileCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationFileCustom findUniqueOrThrow
+   */
+  export type ApplicationFileCustomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFileCustom to fetch.
+     */
+    where: ApplicationFileCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationFileCustom findFirst
+   */
+  export type ApplicationFileCustomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFileCustom to fetch.
+     */
+    where?: ApplicationFileCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationFileCustoms to fetch.
+     */
+    orderBy?: ApplicationFileCustomOrderByWithRelationInput | ApplicationFileCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationFileCustoms.
+     */
+    cursor?: ApplicationFileCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationFileCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationFileCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationFileCustoms.
+     */
+    distinct?: ApplicationFileCustomScalarFieldEnum | ApplicationFileCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationFileCustom findFirstOrThrow
+   */
+  export type ApplicationFileCustomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFileCustom to fetch.
+     */
+    where?: ApplicationFileCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationFileCustoms to fetch.
+     */
+    orderBy?: ApplicationFileCustomOrderByWithRelationInput | ApplicationFileCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationFileCustoms.
+     */
+    cursor?: ApplicationFileCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationFileCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationFileCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationFileCustoms.
+     */
+    distinct?: ApplicationFileCustomScalarFieldEnum | ApplicationFileCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationFileCustom findMany
+   */
+  export type ApplicationFileCustomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationFileCustoms to fetch.
+     */
+    where?: ApplicationFileCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationFileCustoms to fetch.
+     */
+    orderBy?: ApplicationFileCustomOrderByWithRelationInput | ApplicationFileCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationFileCustoms.
+     */
+    cursor?: ApplicationFileCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationFileCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationFileCustoms.
+     */
+    skip?: number
+    distinct?: ApplicationFileCustomScalarFieldEnum | ApplicationFileCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationFileCustom create
+   */
+  export type ApplicationFileCustomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationFileCustom.
+     */
+    data: XOR<ApplicationFileCustomCreateInput, ApplicationFileCustomUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationFileCustom createMany
+   */
+  export type ApplicationFileCustomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationFileCustoms.
+     */
+    data: ApplicationFileCustomCreateManyInput | ApplicationFileCustomCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationFileCustom update
+   */
+  export type ApplicationFileCustomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationFileCustom.
+     */
+    data: XOR<ApplicationFileCustomUpdateInput, ApplicationFileCustomUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationFileCustom to update.
+     */
+    where: ApplicationFileCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationFileCustom updateMany
+   */
+  export type ApplicationFileCustomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationFileCustoms.
+     */
+    data: XOR<ApplicationFileCustomUpdateManyMutationInput, ApplicationFileCustomUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationFileCustoms to update
+     */
+    where?: ApplicationFileCustomWhereInput
+    /**
+     * Limit how many ApplicationFileCustoms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationFileCustom upsert
+   */
+  export type ApplicationFileCustomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationFileCustom to update in case it exists.
+     */
+    where: ApplicationFileCustomWhereUniqueInput
+    /**
+     * In case the ApplicationFileCustom found by the `where` argument doesn't exist, create a new ApplicationFileCustom with this data.
+     */
+    create: XOR<ApplicationFileCustomCreateInput, ApplicationFileCustomUncheckedCreateInput>
+    /**
+     * In case the ApplicationFileCustom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationFileCustomUpdateInput, ApplicationFileCustomUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationFileCustom delete
+   */
+  export type ApplicationFileCustomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationFileCustom to delete.
+     */
+    where: ApplicationFileCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationFileCustom deleteMany
+   */
+  export type ApplicationFileCustomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationFileCustoms to delete
+     */
+    where?: ApplicationFileCustomWhereInput
+    /**
+     * Limit how many ApplicationFileCustoms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationFileCustom without action
+   */
+  export type ApplicationFileCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApplicationCollaborateurCustom
+   */
+
+  export type AggregateApplicationCollaborateurCustom = {
+    _count: ApplicationCollaborateurCustomCountAggregateOutputType | null
+    _min: ApplicationCollaborateurCustomMinAggregateOutputType | null
+    _max: ApplicationCollaborateurCustomMaxAggregateOutputType | null
+  }
+
+  export type ApplicationCollaborateurCustomMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    collaborateurId: string | null
+    assignedAt: Date | null
+    assignedBy: string | null
+  }
+
+  export type ApplicationCollaborateurCustomMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    collaborateurId: string | null
+    assignedAt: Date | null
+    assignedBy: string | null
+  }
+
+  export type ApplicationCollaborateurCustomCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    collaborateurId: number
+    assignedAt: number
+    assignedBy: number
+    _all: number
+  }
+
+
+  export type ApplicationCollaborateurCustomMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    collaborateurId?: true
+    assignedAt?: true
+    assignedBy?: true
+  }
+
+  export type ApplicationCollaborateurCustomMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    collaborateurId?: true
+    assignedAt?: true
+    assignedBy?: true
+  }
+
+  export type ApplicationCollaborateurCustomCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    collaborateurId?: true
+    assignedAt?: true
+    assignedBy?: true
+    _all?: true
+  }
+
+  export type ApplicationCollaborateurCustomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationCollaborateurCustom to aggregate.
+     */
+    where?: ApplicationCollaborateurCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCollaborateurCustoms to fetch.
+     */
+    orderBy?: ApplicationCollaborateurCustomOrderByWithRelationInput | ApplicationCollaborateurCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationCollaborateurCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCollaborateurCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCollaborateurCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationCollaborateurCustoms
+    **/
+    _count?: true | ApplicationCollaborateurCustomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationCollaborateurCustomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationCollaborateurCustomMaxAggregateInputType
+  }
+
+  export type GetApplicationCollaborateurCustomAggregateType<T extends ApplicationCollaborateurCustomAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationCollaborateurCustom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationCollaborateurCustom[P]>
+      : GetScalarType<T[P], AggregateApplicationCollaborateurCustom[P]>
+  }
+
+
+
+
+  export type ApplicationCollaborateurCustomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCollaborateurCustomWhereInput
+    orderBy?: ApplicationCollaborateurCustomOrderByWithAggregationInput | ApplicationCollaborateurCustomOrderByWithAggregationInput[]
+    by: ApplicationCollaborateurCustomScalarFieldEnum[] | ApplicationCollaborateurCustomScalarFieldEnum
+    having?: ApplicationCollaborateurCustomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationCollaborateurCustomCountAggregateInputType | true
+    _min?: ApplicationCollaborateurCustomMinAggregateInputType
+    _max?: ApplicationCollaborateurCustomMaxAggregateInputType
+  }
+
+  export type ApplicationCollaborateurCustomGroupByOutputType = {
+    id: string
+    applicationId: string
+    collaborateurId: string
+    assignedAt: Date
+    assignedBy: string
+    _count: ApplicationCollaborateurCustomCountAggregateOutputType | null
+    _min: ApplicationCollaborateurCustomMinAggregateOutputType | null
+    _max: ApplicationCollaborateurCustomMaxAggregateOutputType | null
+  }
+
+  type GetApplicationCollaborateurCustomGroupByPayload<T extends ApplicationCollaborateurCustomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationCollaborateurCustomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationCollaborateurCustomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationCollaborateurCustomGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationCollaborateurCustomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationCollaborateurCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    collaborateurId?: boolean
+    assignedAt?: boolean
+    assignedBy?: boolean
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+    collaborateur?: boolean | CollaborateurCustomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationCollaborateurCustom"]>
+
+
+
+  export type ApplicationCollaborateurCustomSelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    collaborateurId?: boolean
+    assignedAt?: boolean
+    assignedBy?: boolean
+  }
+
+  export type ApplicationCollaborateurCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "collaborateurId" | "assignedAt" | "assignedBy", ExtArgs["result"]["applicationCollaborateurCustom"]>
+  export type ApplicationCollaborateurCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+    collaborateur?: boolean | CollaborateurCustomDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationCollaborateurCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationCollaborateurCustom"
+    objects: {
+      application: Prisma.$ApplicationCustomPayload<ExtArgs>
+      collaborateur: Prisma.$CollaborateurCustomPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      collaborateurId: string
+      assignedAt: Date
+      assignedBy: string
+    }, ExtArgs["result"]["applicationCollaborateurCustom"]>
+    composites: {}
+  }
+
+  type ApplicationCollaborateurCustomGetPayload<S extends boolean | null | undefined | ApplicationCollaborateurCustomDefaultArgs> = $Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload, S>
+
+  type ApplicationCollaborateurCustomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationCollaborateurCustomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationCollaborateurCustomCountAggregateInputType | true
+    }
+
+  export interface ApplicationCollaborateurCustomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationCollaborateurCustom'], meta: { name: 'ApplicationCollaborateurCustom' } }
+    /**
+     * Find zero or one ApplicationCollaborateurCustom that matches the filter.
+     * @param {ApplicationCollaborateurCustomFindUniqueArgs} args - Arguments to find a ApplicationCollaborateurCustom
+     * @example
+     * // Get one ApplicationCollaborateurCustom
+     * const applicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationCollaborateurCustomFindUniqueArgs>(args: SelectSubset<T, ApplicationCollaborateurCustomFindUniqueArgs<ExtArgs>>): Prisma__ApplicationCollaborateurCustomClient<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationCollaborateurCustom that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationCollaborateurCustomFindUniqueOrThrowArgs} args - Arguments to find a ApplicationCollaborateurCustom
+     * @example
+     * // Get one ApplicationCollaborateurCustom
+     * const applicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationCollaborateurCustomFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationCollaborateurCustomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationCollaborateurCustomClient<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationCollaborateurCustom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurCustomFindFirstArgs} args - Arguments to find a ApplicationCollaborateurCustom
+     * @example
+     * // Get one ApplicationCollaborateurCustom
+     * const applicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationCollaborateurCustomFindFirstArgs>(args?: SelectSubset<T, ApplicationCollaborateurCustomFindFirstArgs<ExtArgs>>): Prisma__ApplicationCollaborateurCustomClient<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationCollaborateurCustom that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurCustomFindFirstOrThrowArgs} args - Arguments to find a ApplicationCollaborateurCustom
+     * @example
+     * // Get one ApplicationCollaborateurCustom
+     * const applicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationCollaborateurCustomFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationCollaborateurCustomFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationCollaborateurCustomClient<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationCollaborateurCustoms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurCustomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationCollaborateurCustoms
+     * const applicationCollaborateurCustoms = await prisma.applicationCollaborateurCustom.findMany()
+     * 
+     * // Get first 10 ApplicationCollaborateurCustoms
+     * const applicationCollaborateurCustoms = await prisma.applicationCollaborateurCustom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationCollaborateurCustomWithIdOnly = await prisma.applicationCollaborateurCustom.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationCollaborateurCustomFindManyArgs>(args?: SelectSubset<T, ApplicationCollaborateurCustomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationCollaborateurCustom.
+     * @param {ApplicationCollaborateurCustomCreateArgs} args - Arguments to create a ApplicationCollaborateurCustom.
+     * @example
+     * // Create one ApplicationCollaborateurCustom
+     * const ApplicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.create({
+     *   data: {
+     *     // ... data to create a ApplicationCollaborateurCustom
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationCollaborateurCustomCreateArgs>(args: SelectSubset<T, ApplicationCollaborateurCustomCreateArgs<ExtArgs>>): Prisma__ApplicationCollaborateurCustomClient<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationCollaborateurCustoms.
+     * @param {ApplicationCollaborateurCustomCreateManyArgs} args - Arguments to create many ApplicationCollaborateurCustoms.
+     * @example
+     * // Create many ApplicationCollaborateurCustoms
+     * const applicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationCollaborateurCustomCreateManyArgs>(args?: SelectSubset<T, ApplicationCollaborateurCustomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ApplicationCollaborateurCustom.
+     * @param {ApplicationCollaborateurCustomDeleteArgs} args - Arguments to delete one ApplicationCollaborateurCustom.
+     * @example
+     * // Delete one ApplicationCollaborateurCustom
+     * const ApplicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationCollaborateurCustom
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationCollaborateurCustomDeleteArgs>(args: SelectSubset<T, ApplicationCollaborateurCustomDeleteArgs<ExtArgs>>): Prisma__ApplicationCollaborateurCustomClient<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationCollaborateurCustom.
+     * @param {ApplicationCollaborateurCustomUpdateArgs} args - Arguments to update one ApplicationCollaborateurCustom.
+     * @example
+     * // Update one ApplicationCollaborateurCustom
+     * const applicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationCollaborateurCustomUpdateArgs>(args: SelectSubset<T, ApplicationCollaborateurCustomUpdateArgs<ExtArgs>>): Prisma__ApplicationCollaborateurCustomClient<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationCollaborateurCustoms.
+     * @param {ApplicationCollaborateurCustomDeleteManyArgs} args - Arguments to filter ApplicationCollaborateurCustoms to delete.
+     * @example
+     * // Delete a few ApplicationCollaborateurCustoms
+     * const { count } = await prisma.applicationCollaborateurCustom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationCollaborateurCustomDeleteManyArgs>(args?: SelectSubset<T, ApplicationCollaborateurCustomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationCollaborateurCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurCustomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationCollaborateurCustoms
+     * const applicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationCollaborateurCustomUpdateManyArgs>(args: SelectSubset<T, ApplicationCollaborateurCustomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ApplicationCollaborateurCustom.
+     * @param {ApplicationCollaborateurCustomUpsertArgs} args - Arguments to update or create a ApplicationCollaborateurCustom.
+     * @example
+     * // Update or create a ApplicationCollaborateurCustom
+     * const applicationCollaborateurCustom = await prisma.applicationCollaborateurCustom.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationCollaborateurCustom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationCollaborateurCustom we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationCollaborateurCustomUpsertArgs>(args: SelectSubset<T, ApplicationCollaborateurCustomUpsertArgs<ExtArgs>>): Prisma__ApplicationCollaborateurCustomClient<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationCollaborateurCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurCustomCountArgs} args - Arguments to filter ApplicationCollaborateurCustoms to count.
+     * @example
+     * // Count the number of ApplicationCollaborateurCustoms
+     * const count = await prisma.applicationCollaborateurCustom.count({
+     *   where: {
+     *     // ... the filter for the ApplicationCollaborateurCustoms we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationCollaborateurCustomCountArgs>(
+      args?: Subset<T, ApplicationCollaborateurCustomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationCollaborateurCustomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationCollaborateurCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurCustomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationCollaborateurCustomAggregateArgs>(args: Subset<T, ApplicationCollaborateurCustomAggregateArgs>): Prisma.PrismaPromise<GetApplicationCollaborateurCustomAggregateType<T>>
+
+    /**
+     * Group by ApplicationCollaborateurCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCollaborateurCustomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationCollaborateurCustomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationCollaborateurCustomGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationCollaborateurCustomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationCollaborateurCustomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationCollaborateurCustomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationCollaborateurCustom model
+   */
+  readonly fields: ApplicationCollaborateurCustomFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationCollaborateurCustom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationCollaborateurCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustomDefaultArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    collaborateur<T extends CollaborateurCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CollaborateurCustomDefaultArgs<ExtArgs>>): Prisma__CollaborateurCustomClient<$Result.GetResult<Prisma.$CollaborateurCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationCollaborateurCustom model
+   */
+  interface ApplicationCollaborateurCustomFieldRefs {
+    readonly id: FieldRef<"ApplicationCollaborateurCustom", 'String'>
+    readonly applicationId: FieldRef<"ApplicationCollaborateurCustom", 'String'>
+    readonly collaborateurId: FieldRef<"ApplicationCollaborateurCustom", 'String'>
+    readonly assignedAt: FieldRef<"ApplicationCollaborateurCustom", 'DateTime'>
+    readonly assignedBy: FieldRef<"ApplicationCollaborateurCustom", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationCollaborateurCustom findUnique
+   */
+  export type ApplicationCollaborateurCustomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateurCustom to fetch.
+     */
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCollaborateurCustom findUniqueOrThrow
+   */
+  export type ApplicationCollaborateurCustomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateurCustom to fetch.
+     */
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCollaborateurCustom findFirst
+   */
+  export type ApplicationCollaborateurCustomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateurCustom to fetch.
+     */
+    where?: ApplicationCollaborateurCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCollaborateurCustoms to fetch.
+     */
+    orderBy?: ApplicationCollaborateurCustomOrderByWithRelationInput | ApplicationCollaborateurCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationCollaborateurCustoms.
+     */
+    cursor?: ApplicationCollaborateurCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCollaborateurCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCollaborateurCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationCollaborateurCustoms.
+     */
+    distinct?: ApplicationCollaborateurCustomScalarFieldEnum | ApplicationCollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCollaborateurCustom findFirstOrThrow
+   */
+  export type ApplicationCollaborateurCustomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateurCustom to fetch.
+     */
+    where?: ApplicationCollaborateurCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCollaborateurCustoms to fetch.
+     */
+    orderBy?: ApplicationCollaborateurCustomOrderByWithRelationInput | ApplicationCollaborateurCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationCollaborateurCustoms.
+     */
+    cursor?: ApplicationCollaborateurCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCollaborateurCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCollaborateurCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationCollaborateurCustoms.
+     */
+    distinct?: ApplicationCollaborateurCustomScalarFieldEnum | ApplicationCollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCollaborateurCustom findMany
+   */
+  export type ApplicationCollaborateurCustomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCollaborateurCustoms to fetch.
+     */
+    where?: ApplicationCollaborateurCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCollaborateurCustoms to fetch.
+     */
+    orderBy?: ApplicationCollaborateurCustomOrderByWithRelationInput | ApplicationCollaborateurCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationCollaborateurCustoms.
+     */
+    cursor?: ApplicationCollaborateurCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCollaborateurCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCollaborateurCustoms.
+     */
+    skip?: number
+    distinct?: ApplicationCollaborateurCustomScalarFieldEnum | ApplicationCollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCollaborateurCustom create
+   */
+  export type ApplicationCollaborateurCustomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationCollaborateurCustom.
+     */
+    data: XOR<ApplicationCollaborateurCustomCreateInput, ApplicationCollaborateurCustomUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationCollaborateurCustom createMany
+   */
+  export type ApplicationCollaborateurCustomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationCollaborateurCustoms.
+     */
+    data: ApplicationCollaborateurCustomCreateManyInput | ApplicationCollaborateurCustomCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationCollaborateurCustom update
+   */
+  export type ApplicationCollaborateurCustomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationCollaborateurCustom.
+     */
+    data: XOR<ApplicationCollaborateurCustomUpdateInput, ApplicationCollaborateurCustomUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationCollaborateurCustom to update.
+     */
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCollaborateurCustom updateMany
+   */
+  export type ApplicationCollaborateurCustomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationCollaborateurCustoms.
+     */
+    data: XOR<ApplicationCollaborateurCustomUpdateManyMutationInput, ApplicationCollaborateurCustomUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationCollaborateurCustoms to update
+     */
+    where?: ApplicationCollaborateurCustomWhereInput
+    /**
+     * Limit how many ApplicationCollaborateurCustoms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationCollaborateurCustom upsert
+   */
+  export type ApplicationCollaborateurCustomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationCollaborateurCustom to update in case it exists.
+     */
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+    /**
+     * In case the ApplicationCollaborateurCustom found by the `where` argument doesn't exist, create a new ApplicationCollaborateurCustom with this data.
+     */
+    create: XOR<ApplicationCollaborateurCustomCreateInput, ApplicationCollaborateurCustomUncheckedCreateInput>
+    /**
+     * In case the ApplicationCollaborateurCustom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationCollaborateurCustomUpdateInput, ApplicationCollaborateurCustomUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationCollaborateurCustom delete
+   */
+  export type ApplicationCollaborateurCustomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationCollaborateurCustom to delete.
+     */
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCollaborateurCustom deleteMany
+   */
+  export type ApplicationCollaborateurCustomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationCollaborateurCustoms to delete
+     */
+    where?: ApplicationCollaborateurCustomWhereInput
+    /**
+     * Limit how many ApplicationCollaborateurCustoms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationCollaborateurCustom without action
+   */
+  export type ApplicationCollaborateurCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApplicationNoteCustom
+   */
+
+  export type AggregateApplicationNoteCustom = {
+    _count: ApplicationNoteCustomCountAggregateOutputType | null
+    _min: ApplicationNoteCustomMinAggregateOutputType | null
+    _max: ApplicationNoteCustomMaxAggregateOutputType | null
+  }
+
+  export type ApplicationNoteCustomMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    content: string | null
+    authorId: string | null
+    authorName: string | null
+    authorType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApplicationNoteCustomMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    content: string | null
+    authorId: string | null
+    authorName: string | null
+    authorType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ApplicationNoteCustomCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    content: number
+    authorId: number
+    authorName: number
+    authorType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ApplicationNoteCustomMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    content?: true
+    authorId?: true
+    authorName?: true
+    authorType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApplicationNoteCustomMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    content?: true
+    authorId?: true
+    authorName?: true
+    authorType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ApplicationNoteCustomCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    content?: true
+    authorId?: true
+    authorName?: true
+    authorType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ApplicationNoteCustomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationNoteCustom to aggregate.
+     */
+    where?: ApplicationNoteCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationNoteCustoms to fetch.
+     */
+    orderBy?: ApplicationNoteCustomOrderByWithRelationInput | ApplicationNoteCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationNoteCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationNoteCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationNoteCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationNoteCustoms
+    **/
+    _count?: true | ApplicationNoteCustomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationNoteCustomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationNoteCustomMaxAggregateInputType
+  }
+
+  export type GetApplicationNoteCustomAggregateType<T extends ApplicationNoteCustomAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationNoteCustom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationNoteCustom[P]>
+      : GetScalarType<T[P], AggregateApplicationNoteCustom[P]>
+  }
+
+
+
+
+  export type ApplicationNoteCustomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationNoteCustomWhereInput
+    orderBy?: ApplicationNoteCustomOrderByWithAggregationInput | ApplicationNoteCustomOrderByWithAggregationInput[]
+    by: ApplicationNoteCustomScalarFieldEnum[] | ApplicationNoteCustomScalarFieldEnum
+    having?: ApplicationNoteCustomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationNoteCustomCountAggregateInputType | true
+    _min?: ApplicationNoteCustomMinAggregateInputType
+    _max?: ApplicationNoteCustomMaxAggregateInputType
+  }
+
+  export type ApplicationNoteCustomGroupByOutputType = {
+    id: string
+    applicationId: string
+    content: string
+    authorId: string
+    authorName: string | null
+    authorType: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ApplicationNoteCustomCountAggregateOutputType | null
+    _min: ApplicationNoteCustomMinAggregateOutputType | null
+    _max: ApplicationNoteCustomMaxAggregateOutputType | null
+  }
+
+  type GetApplicationNoteCustomGroupByPayload<T extends ApplicationNoteCustomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationNoteCustomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationNoteCustomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationNoteCustomGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationNoteCustomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationNoteCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorName?: boolean
+    authorType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationNoteCustom"]>
+
+
+
+  export type ApplicationNoteCustomSelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    content?: boolean
+    authorId?: boolean
+    authorName?: boolean
+    authorType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ApplicationNoteCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "content" | "authorId" | "authorName" | "authorType" | "createdAt" | "updatedAt", ExtArgs["result"]["applicationNoteCustom"]>
+  export type ApplicationNoteCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationNoteCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationNoteCustom"
+    objects: {
+      application: Prisma.$ApplicationCustomPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      content: string
+      authorId: string
+      authorName: string | null
+      authorType: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["applicationNoteCustom"]>
+    composites: {}
+  }
+
+  type ApplicationNoteCustomGetPayload<S extends boolean | null | undefined | ApplicationNoteCustomDefaultArgs> = $Result.GetResult<Prisma.$ApplicationNoteCustomPayload, S>
+
+  type ApplicationNoteCustomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationNoteCustomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationNoteCustomCountAggregateInputType | true
+    }
+
+  export interface ApplicationNoteCustomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationNoteCustom'], meta: { name: 'ApplicationNoteCustom' } }
+    /**
+     * Find zero or one ApplicationNoteCustom that matches the filter.
+     * @param {ApplicationNoteCustomFindUniqueArgs} args - Arguments to find a ApplicationNoteCustom
+     * @example
+     * // Get one ApplicationNoteCustom
+     * const applicationNoteCustom = await prisma.applicationNoteCustom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationNoteCustomFindUniqueArgs>(args: SelectSubset<T, ApplicationNoteCustomFindUniqueArgs<ExtArgs>>): Prisma__ApplicationNoteCustomClient<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationNoteCustom that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationNoteCustomFindUniqueOrThrowArgs} args - Arguments to find a ApplicationNoteCustom
+     * @example
+     * // Get one ApplicationNoteCustom
+     * const applicationNoteCustom = await prisma.applicationNoteCustom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationNoteCustomFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationNoteCustomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationNoteCustomClient<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationNoteCustom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteCustomFindFirstArgs} args - Arguments to find a ApplicationNoteCustom
+     * @example
+     * // Get one ApplicationNoteCustom
+     * const applicationNoteCustom = await prisma.applicationNoteCustom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationNoteCustomFindFirstArgs>(args?: SelectSubset<T, ApplicationNoteCustomFindFirstArgs<ExtArgs>>): Prisma__ApplicationNoteCustomClient<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationNoteCustom that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteCustomFindFirstOrThrowArgs} args - Arguments to find a ApplicationNoteCustom
+     * @example
+     * // Get one ApplicationNoteCustom
+     * const applicationNoteCustom = await prisma.applicationNoteCustom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationNoteCustomFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationNoteCustomFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationNoteCustomClient<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationNoteCustoms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteCustomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationNoteCustoms
+     * const applicationNoteCustoms = await prisma.applicationNoteCustom.findMany()
+     * 
+     * // Get first 10 ApplicationNoteCustoms
+     * const applicationNoteCustoms = await prisma.applicationNoteCustom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationNoteCustomWithIdOnly = await prisma.applicationNoteCustom.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationNoteCustomFindManyArgs>(args?: SelectSubset<T, ApplicationNoteCustomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationNoteCustom.
+     * @param {ApplicationNoteCustomCreateArgs} args - Arguments to create a ApplicationNoteCustom.
+     * @example
+     * // Create one ApplicationNoteCustom
+     * const ApplicationNoteCustom = await prisma.applicationNoteCustom.create({
+     *   data: {
+     *     // ... data to create a ApplicationNoteCustom
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationNoteCustomCreateArgs>(args: SelectSubset<T, ApplicationNoteCustomCreateArgs<ExtArgs>>): Prisma__ApplicationNoteCustomClient<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationNoteCustoms.
+     * @param {ApplicationNoteCustomCreateManyArgs} args - Arguments to create many ApplicationNoteCustoms.
+     * @example
+     * // Create many ApplicationNoteCustoms
+     * const applicationNoteCustom = await prisma.applicationNoteCustom.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationNoteCustomCreateManyArgs>(args?: SelectSubset<T, ApplicationNoteCustomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ApplicationNoteCustom.
+     * @param {ApplicationNoteCustomDeleteArgs} args - Arguments to delete one ApplicationNoteCustom.
+     * @example
+     * // Delete one ApplicationNoteCustom
+     * const ApplicationNoteCustom = await prisma.applicationNoteCustom.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationNoteCustom
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationNoteCustomDeleteArgs>(args: SelectSubset<T, ApplicationNoteCustomDeleteArgs<ExtArgs>>): Prisma__ApplicationNoteCustomClient<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationNoteCustom.
+     * @param {ApplicationNoteCustomUpdateArgs} args - Arguments to update one ApplicationNoteCustom.
+     * @example
+     * // Update one ApplicationNoteCustom
+     * const applicationNoteCustom = await prisma.applicationNoteCustom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationNoteCustomUpdateArgs>(args: SelectSubset<T, ApplicationNoteCustomUpdateArgs<ExtArgs>>): Prisma__ApplicationNoteCustomClient<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationNoteCustoms.
+     * @param {ApplicationNoteCustomDeleteManyArgs} args - Arguments to filter ApplicationNoteCustoms to delete.
+     * @example
+     * // Delete a few ApplicationNoteCustoms
+     * const { count } = await prisma.applicationNoteCustom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationNoteCustomDeleteManyArgs>(args?: SelectSubset<T, ApplicationNoteCustomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationNoteCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteCustomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationNoteCustoms
+     * const applicationNoteCustom = await prisma.applicationNoteCustom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationNoteCustomUpdateManyArgs>(args: SelectSubset<T, ApplicationNoteCustomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ApplicationNoteCustom.
+     * @param {ApplicationNoteCustomUpsertArgs} args - Arguments to update or create a ApplicationNoteCustom.
+     * @example
+     * // Update or create a ApplicationNoteCustom
+     * const applicationNoteCustom = await prisma.applicationNoteCustom.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationNoteCustom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationNoteCustom we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationNoteCustomUpsertArgs>(args: SelectSubset<T, ApplicationNoteCustomUpsertArgs<ExtArgs>>): Prisma__ApplicationNoteCustomClient<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationNoteCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteCustomCountArgs} args - Arguments to filter ApplicationNoteCustoms to count.
+     * @example
+     * // Count the number of ApplicationNoteCustoms
+     * const count = await prisma.applicationNoteCustom.count({
+     *   where: {
+     *     // ... the filter for the ApplicationNoteCustoms we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationNoteCustomCountArgs>(
+      args?: Subset<T, ApplicationNoteCustomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationNoteCustomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationNoteCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteCustomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationNoteCustomAggregateArgs>(args: Subset<T, ApplicationNoteCustomAggregateArgs>): Prisma.PrismaPromise<GetApplicationNoteCustomAggregateType<T>>
+
+    /**
+     * Group by ApplicationNoteCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationNoteCustomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationNoteCustomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationNoteCustomGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationNoteCustomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationNoteCustomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationNoteCustomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationNoteCustom model
+   */
+  readonly fields: ApplicationNoteCustomFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationNoteCustom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationNoteCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustomDefaultArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationNoteCustom model
+   */
+  interface ApplicationNoteCustomFieldRefs {
+    readonly id: FieldRef<"ApplicationNoteCustom", 'String'>
+    readonly applicationId: FieldRef<"ApplicationNoteCustom", 'String'>
+    readonly content: FieldRef<"ApplicationNoteCustom", 'String'>
+    readonly authorId: FieldRef<"ApplicationNoteCustom", 'String'>
+    readonly authorName: FieldRef<"ApplicationNoteCustom", 'String'>
+    readonly authorType: FieldRef<"ApplicationNoteCustom", 'String'>
+    readonly createdAt: FieldRef<"ApplicationNoteCustom", 'DateTime'>
+    readonly updatedAt: FieldRef<"ApplicationNoteCustom", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationNoteCustom findUnique
+   */
+  export type ApplicationNoteCustomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNoteCustom to fetch.
+     */
+    where: ApplicationNoteCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationNoteCustom findUniqueOrThrow
+   */
+  export type ApplicationNoteCustomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNoteCustom to fetch.
+     */
+    where: ApplicationNoteCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationNoteCustom findFirst
+   */
+  export type ApplicationNoteCustomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNoteCustom to fetch.
+     */
+    where?: ApplicationNoteCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationNoteCustoms to fetch.
+     */
+    orderBy?: ApplicationNoteCustomOrderByWithRelationInput | ApplicationNoteCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationNoteCustoms.
+     */
+    cursor?: ApplicationNoteCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationNoteCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationNoteCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationNoteCustoms.
+     */
+    distinct?: ApplicationNoteCustomScalarFieldEnum | ApplicationNoteCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationNoteCustom findFirstOrThrow
+   */
+  export type ApplicationNoteCustomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNoteCustom to fetch.
+     */
+    where?: ApplicationNoteCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationNoteCustoms to fetch.
+     */
+    orderBy?: ApplicationNoteCustomOrderByWithRelationInput | ApplicationNoteCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationNoteCustoms.
+     */
+    cursor?: ApplicationNoteCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationNoteCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationNoteCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationNoteCustoms.
+     */
+    distinct?: ApplicationNoteCustomScalarFieldEnum | ApplicationNoteCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationNoteCustom findMany
+   */
+  export type ApplicationNoteCustomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationNoteCustoms to fetch.
+     */
+    where?: ApplicationNoteCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationNoteCustoms to fetch.
+     */
+    orderBy?: ApplicationNoteCustomOrderByWithRelationInput | ApplicationNoteCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationNoteCustoms.
+     */
+    cursor?: ApplicationNoteCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationNoteCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationNoteCustoms.
+     */
+    skip?: number
+    distinct?: ApplicationNoteCustomScalarFieldEnum | ApplicationNoteCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationNoteCustom create
+   */
+  export type ApplicationNoteCustomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationNoteCustom.
+     */
+    data: XOR<ApplicationNoteCustomCreateInput, ApplicationNoteCustomUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationNoteCustom createMany
+   */
+  export type ApplicationNoteCustomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationNoteCustoms.
+     */
+    data: ApplicationNoteCustomCreateManyInput | ApplicationNoteCustomCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationNoteCustom update
+   */
+  export type ApplicationNoteCustomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationNoteCustom.
+     */
+    data: XOR<ApplicationNoteCustomUpdateInput, ApplicationNoteCustomUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationNoteCustom to update.
+     */
+    where: ApplicationNoteCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationNoteCustom updateMany
+   */
+  export type ApplicationNoteCustomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationNoteCustoms.
+     */
+    data: XOR<ApplicationNoteCustomUpdateManyMutationInput, ApplicationNoteCustomUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationNoteCustoms to update
+     */
+    where?: ApplicationNoteCustomWhereInput
+    /**
+     * Limit how many ApplicationNoteCustoms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationNoteCustom upsert
+   */
+  export type ApplicationNoteCustomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationNoteCustom to update in case it exists.
+     */
+    where: ApplicationNoteCustomWhereUniqueInput
+    /**
+     * In case the ApplicationNoteCustom found by the `where` argument doesn't exist, create a new ApplicationNoteCustom with this data.
+     */
+    create: XOR<ApplicationNoteCustomCreateInput, ApplicationNoteCustomUncheckedCreateInput>
+    /**
+     * In case the ApplicationNoteCustom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationNoteCustomUpdateInput, ApplicationNoteCustomUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationNoteCustom delete
+   */
+  export type ApplicationNoteCustomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationNoteCustom to delete.
+     */
+    where: ApplicationNoteCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationNoteCustom deleteMany
+   */
+  export type ApplicationNoteCustomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationNoteCustoms to delete
+     */
+    where?: ApplicationNoteCustomWhereInput
+    /**
+     * Limit how many ApplicationNoteCustoms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationNoteCustom without action
+   */
+  export type ApplicationNoteCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ChecklistItemCustom
+   */
+
+  export type AggregateChecklistItemCustom = {
+    _count: ChecklistItemCustomCountAggregateOutputType | null
+    _min: ChecklistItemCustomMinAggregateOutputType | null
+    _max: ChecklistItemCustomMaxAggregateOutputType | null
+  }
+
+  export type ChecklistItemCustomMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    title: string | null
+    description: string | null
+    isCompleted: boolean | null
+    createdById: string | null
+    createdByType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChecklistItemCustomMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    title: string | null
+    description: string | null
+    isCompleted: boolean | null
+    createdById: string | null
+    createdByType: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ChecklistItemCustomCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    title: number
+    description: number
+    isCompleted: number
+    createdById: number
+    createdByType: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ChecklistItemCustomMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    title?: true
+    description?: true
+    isCompleted?: true
+    createdById?: true
+    createdByType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChecklistItemCustomMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    title?: true
+    description?: true
+    isCompleted?: true
+    createdById?: true
+    createdByType?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ChecklistItemCustomCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    title?: true
+    description?: true
+    isCompleted?: true
+    createdById?: true
+    createdByType?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ChecklistItemCustomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChecklistItemCustom to aggregate.
+     */
+    where?: ChecklistItemCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChecklistItemCustoms to fetch.
+     */
+    orderBy?: ChecklistItemCustomOrderByWithRelationInput | ChecklistItemCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ChecklistItemCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChecklistItemCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChecklistItemCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ChecklistItemCustoms
+    **/
+    _count?: true | ChecklistItemCustomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ChecklistItemCustomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ChecklistItemCustomMaxAggregateInputType
+  }
+
+  export type GetChecklistItemCustomAggregateType<T extends ChecklistItemCustomAggregateArgs> = {
+        [P in keyof T & keyof AggregateChecklistItemCustom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateChecklistItemCustom[P]>
+      : GetScalarType<T[P], AggregateChecklistItemCustom[P]>
+  }
+
+
+
+
+  export type ChecklistItemCustomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChecklistItemCustomWhereInput
+    orderBy?: ChecklistItemCustomOrderByWithAggregationInput | ChecklistItemCustomOrderByWithAggregationInput[]
+    by: ChecklistItemCustomScalarFieldEnum[] | ChecklistItemCustomScalarFieldEnum
+    having?: ChecklistItemCustomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ChecklistItemCustomCountAggregateInputType | true
+    _min?: ChecklistItemCustomMinAggregateInputType
+    _max?: ChecklistItemCustomMaxAggregateInputType
+  }
+
+  export type ChecklistItemCustomGroupByOutputType = {
+    id: string
+    applicationId: string
+    title: string
+    description: string | null
+    isCompleted: boolean
+    createdById: string
+    createdByType: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ChecklistItemCustomCountAggregateOutputType | null
+    _min: ChecklistItemCustomMinAggregateOutputType | null
+    _max: ChecklistItemCustomMaxAggregateOutputType | null
+  }
+
+  type GetChecklistItemCustomGroupByPayload<T extends ChecklistItemCustomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ChecklistItemCustomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ChecklistItemCustomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ChecklistItemCustomGroupByOutputType[P]>
+            : GetScalarType<T[P], ChecklistItemCustomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ChecklistItemCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    title?: boolean
+    description?: boolean
+    isCompleted?: boolean
+    createdById?: boolean
+    createdByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["checklistItemCustom"]>
+
+
+
+  export type ChecklistItemCustomSelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    title?: boolean
+    description?: boolean
+    isCompleted?: boolean
+    createdById?: boolean
+    createdByType?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ChecklistItemCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "title" | "description" | "isCompleted" | "createdById" | "createdByType" | "createdAt" | "updatedAt", ExtArgs["result"]["checklistItemCustom"]>
+  export type ChecklistItemCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+  }
+
+  export type $ChecklistItemCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ChecklistItemCustom"
+    objects: {
+      application: Prisma.$ApplicationCustomPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      title: string
+      description: string | null
+      isCompleted: boolean
+      createdById: string
+      createdByType: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["checklistItemCustom"]>
+    composites: {}
+  }
+
+  type ChecklistItemCustomGetPayload<S extends boolean | null | undefined | ChecklistItemCustomDefaultArgs> = $Result.GetResult<Prisma.$ChecklistItemCustomPayload, S>
+
+  type ChecklistItemCustomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ChecklistItemCustomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ChecklistItemCustomCountAggregateInputType | true
+    }
+
+  export interface ChecklistItemCustomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ChecklistItemCustom'], meta: { name: 'ChecklistItemCustom' } }
+    /**
+     * Find zero or one ChecklistItemCustom that matches the filter.
+     * @param {ChecklistItemCustomFindUniqueArgs} args - Arguments to find a ChecklistItemCustom
+     * @example
+     * // Get one ChecklistItemCustom
+     * const checklistItemCustom = await prisma.checklistItemCustom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ChecklistItemCustomFindUniqueArgs>(args: SelectSubset<T, ChecklistItemCustomFindUniqueArgs<ExtArgs>>): Prisma__ChecklistItemCustomClient<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ChecklistItemCustom that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ChecklistItemCustomFindUniqueOrThrowArgs} args - Arguments to find a ChecklistItemCustom
+     * @example
+     * // Get one ChecklistItemCustom
+     * const checklistItemCustom = await prisma.checklistItemCustom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ChecklistItemCustomFindUniqueOrThrowArgs>(args: SelectSubset<T, ChecklistItemCustomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ChecklistItemCustomClient<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChecklistItemCustom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemCustomFindFirstArgs} args - Arguments to find a ChecklistItemCustom
+     * @example
+     * // Get one ChecklistItemCustom
+     * const checklistItemCustom = await prisma.checklistItemCustom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ChecklistItemCustomFindFirstArgs>(args?: SelectSubset<T, ChecklistItemCustomFindFirstArgs<ExtArgs>>): Prisma__ChecklistItemCustomClient<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ChecklistItemCustom that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemCustomFindFirstOrThrowArgs} args - Arguments to find a ChecklistItemCustom
+     * @example
+     * // Get one ChecklistItemCustom
+     * const checklistItemCustom = await prisma.checklistItemCustom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ChecklistItemCustomFindFirstOrThrowArgs>(args?: SelectSubset<T, ChecklistItemCustomFindFirstOrThrowArgs<ExtArgs>>): Prisma__ChecklistItemCustomClient<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ChecklistItemCustoms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemCustomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ChecklistItemCustoms
+     * const checklistItemCustoms = await prisma.checklistItemCustom.findMany()
+     * 
+     * // Get first 10 ChecklistItemCustoms
+     * const checklistItemCustoms = await prisma.checklistItemCustom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const checklistItemCustomWithIdOnly = await prisma.checklistItemCustom.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ChecklistItemCustomFindManyArgs>(args?: SelectSubset<T, ChecklistItemCustomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ChecklistItemCustom.
+     * @param {ChecklistItemCustomCreateArgs} args - Arguments to create a ChecklistItemCustom.
+     * @example
+     * // Create one ChecklistItemCustom
+     * const ChecklistItemCustom = await prisma.checklistItemCustom.create({
+     *   data: {
+     *     // ... data to create a ChecklistItemCustom
+     *   }
+     * })
+     * 
+     */
+    create<T extends ChecklistItemCustomCreateArgs>(args: SelectSubset<T, ChecklistItemCustomCreateArgs<ExtArgs>>): Prisma__ChecklistItemCustomClient<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ChecklistItemCustoms.
+     * @param {ChecklistItemCustomCreateManyArgs} args - Arguments to create many ChecklistItemCustoms.
+     * @example
+     * // Create many ChecklistItemCustoms
+     * const checklistItemCustom = await prisma.checklistItemCustom.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ChecklistItemCustomCreateManyArgs>(args?: SelectSubset<T, ChecklistItemCustomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ChecklistItemCustom.
+     * @param {ChecklistItemCustomDeleteArgs} args - Arguments to delete one ChecklistItemCustom.
+     * @example
+     * // Delete one ChecklistItemCustom
+     * const ChecklistItemCustom = await prisma.checklistItemCustom.delete({
+     *   where: {
+     *     // ... filter to delete one ChecklistItemCustom
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ChecklistItemCustomDeleteArgs>(args: SelectSubset<T, ChecklistItemCustomDeleteArgs<ExtArgs>>): Prisma__ChecklistItemCustomClient<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ChecklistItemCustom.
+     * @param {ChecklistItemCustomUpdateArgs} args - Arguments to update one ChecklistItemCustom.
+     * @example
+     * // Update one ChecklistItemCustom
+     * const checklistItemCustom = await prisma.checklistItemCustom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ChecklistItemCustomUpdateArgs>(args: SelectSubset<T, ChecklistItemCustomUpdateArgs<ExtArgs>>): Prisma__ChecklistItemCustomClient<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ChecklistItemCustoms.
+     * @param {ChecklistItemCustomDeleteManyArgs} args - Arguments to filter ChecklistItemCustoms to delete.
+     * @example
+     * // Delete a few ChecklistItemCustoms
+     * const { count } = await prisma.checklistItemCustom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ChecklistItemCustomDeleteManyArgs>(args?: SelectSubset<T, ChecklistItemCustomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ChecklistItemCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemCustomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ChecklistItemCustoms
+     * const checklistItemCustom = await prisma.checklistItemCustom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ChecklistItemCustomUpdateManyArgs>(args: SelectSubset<T, ChecklistItemCustomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ChecklistItemCustom.
+     * @param {ChecklistItemCustomUpsertArgs} args - Arguments to update or create a ChecklistItemCustom.
+     * @example
+     * // Update or create a ChecklistItemCustom
+     * const checklistItemCustom = await prisma.checklistItemCustom.upsert({
+     *   create: {
+     *     // ... data to create a ChecklistItemCustom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ChecklistItemCustom we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ChecklistItemCustomUpsertArgs>(args: SelectSubset<T, ChecklistItemCustomUpsertArgs<ExtArgs>>): Prisma__ChecklistItemCustomClient<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ChecklistItemCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemCustomCountArgs} args - Arguments to filter ChecklistItemCustoms to count.
+     * @example
+     * // Count the number of ChecklistItemCustoms
+     * const count = await prisma.checklistItemCustom.count({
+     *   where: {
+     *     // ... the filter for the ChecklistItemCustoms we want to count
+     *   }
+     * })
+    **/
+    count<T extends ChecklistItemCustomCountArgs>(
+      args?: Subset<T, ChecklistItemCustomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ChecklistItemCustomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ChecklistItemCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemCustomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ChecklistItemCustomAggregateArgs>(args: Subset<T, ChecklistItemCustomAggregateArgs>): Prisma.PrismaPromise<GetChecklistItemCustomAggregateType<T>>
+
+    /**
+     * Group by ChecklistItemCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ChecklistItemCustomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ChecklistItemCustomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ChecklistItemCustomGroupByArgs['orderBy'] }
+        : { orderBy?: ChecklistItemCustomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ChecklistItemCustomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetChecklistItemCustomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ChecklistItemCustom model
+   */
+  readonly fields: ChecklistItemCustomFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ChecklistItemCustom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ChecklistItemCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustomDefaultArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ChecklistItemCustom model
+   */
+  interface ChecklistItemCustomFieldRefs {
+    readonly id: FieldRef<"ChecklistItemCustom", 'String'>
+    readonly applicationId: FieldRef<"ChecklistItemCustom", 'String'>
+    readonly title: FieldRef<"ChecklistItemCustom", 'String'>
+    readonly description: FieldRef<"ChecklistItemCustom", 'String'>
+    readonly isCompleted: FieldRef<"ChecklistItemCustom", 'Boolean'>
+    readonly createdById: FieldRef<"ChecklistItemCustom", 'String'>
+    readonly createdByType: FieldRef<"ChecklistItemCustom", 'String'>
+    readonly createdAt: FieldRef<"ChecklistItemCustom", 'DateTime'>
+    readonly updatedAt: FieldRef<"ChecklistItemCustom", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ChecklistItemCustom findUnique
+   */
+  export type ChecklistItemCustomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItemCustom to fetch.
+     */
+    where: ChecklistItemCustomWhereUniqueInput
+  }
+
+  /**
+   * ChecklistItemCustom findUniqueOrThrow
+   */
+  export type ChecklistItemCustomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItemCustom to fetch.
+     */
+    where: ChecklistItemCustomWhereUniqueInput
+  }
+
+  /**
+   * ChecklistItemCustom findFirst
+   */
+  export type ChecklistItemCustomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItemCustom to fetch.
+     */
+    where?: ChecklistItemCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChecklistItemCustoms to fetch.
+     */
+    orderBy?: ChecklistItemCustomOrderByWithRelationInput | ChecklistItemCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChecklistItemCustoms.
+     */
+    cursor?: ChecklistItemCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChecklistItemCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChecklistItemCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChecklistItemCustoms.
+     */
+    distinct?: ChecklistItemCustomScalarFieldEnum | ChecklistItemCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ChecklistItemCustom findFirstOrThrow
+   */
+  export type ChecklistItemCustomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItemCustom to fetch.
+     */
+    where?: ChecklistItemCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChecklistItemCustoms to fetch.
+     */
+    orderBy?: ChecklistItemCustomOrderByWithRelationInput | ChecklistItemCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ChecklistItemCustoms.
+     */
+    cursor?: ChecklistItemCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChecklistItemCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChecklistItemCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ChecklistItemCustoms.
+     */
+    distinct?: ChecklistItemCustomScalarFieldEnum | ChecklistItemCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ChecklistItemCustom findMany
+   */
+  export type ChecklistItemCustomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ChecklistItemCustoms to fetch.
+     */
+    where?: ChecklistItemCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ChecklistItemCustoms to fetch.
+     */
+    orderBy?: ChecklistItemCustomOrderByWithRelationInput | ChecklistItemCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ChecklistItemCustoms.
+     */
+    cursor?: ChecklistItemCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ChecklistItemCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ChecklistItemCustoms.
+     */
+    skip?: number
+    distinct?: ChecklistItemCustomScalarFieldEnum | ChecklistItemCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ChecklistItemCustom create
+   */
+  export type ChecklistItemCustomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ChecklistItemCustom.
+     */
+    data: XOR<ChecklistItemCustomCreateInput, ChecklistItemCustomUncheckedCreateInput>
+  }
+
+  /**
+   * ChecklistItemCustom createMany
+   */
+  export type ChecklistItemCustomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ChecklistItemCustoms.
+     */
+    data: ChecklistItemCustomCreateManyInput | ChecklistItemCustomCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ChecklistItemCustom update
+   */
+  export type ChecklistItemCustomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ChecklistItemCustom.
+     */
+    data: XOR<ChecklistItemCustomUpdateInput, ChecklistItemCustomUncheckedUpdateInput>
+    /**
+     * Choose, which ChecklistItemCustom to update.
+     */
+    where: ChecklistItemCustomWhereUniqueInput
+  }
+
+  /**
+   * ChecklistItemCustom updateMany
+   */
+  export type ChecklistItemCustomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ChecklistItemCustoms.
+     */
+    data: XOR<ChecklistItemCustomUpdateManyMutationInput, ChecklistItemCustomUncheckedUpdateManyInput>
+    /**
+     * Filter which ChecklistItemCustoms to update
+     */
+    where?: ChecklistItemCustomWhereInput
+    /**
+     * Limit how many ChecklistItemCustoms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChecklistItemCustom upsert
+   */
+  export type ChecklistItemCustomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ChecklistItemCustom to update in case it exists.
+     */
+    where: ChecklistItemCustomWhereUniqueInput
+    /**
+     * In case the ChecklistItemCustom found by the `where` argument doesn't exist, create a new ChecklistItemCustom with this data.
+     */
+    create: XOR<ChecklistItemCustomCreateInput, ChecklistItemCustomUncheckedCreateInput>
+    /**
+     * In case the ChecklistItemCustom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ChecklistItemCustomUpdateInput, ChecklistItemCustomUncheckedUpdateInput>
+  }
+
+  /**
+   * ChecklistItemCustom delete
+   */
+  export type ChecklistItemCustomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    /**
+     * Filter which ChecklistItemCustom to delete.
+     */
+    where: ChecklistItemCustomWhereUniqueInput
+  }
+
+  /**
+   * ChecklistItemCustom deleteMany
+   */
+  export type ChecklistItemCustomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ChecklistItemCustoms to delete
+     */
+    where?: ChecklistItemCustomWhereInput
+    /**
+     * Limit how many ChecklistItemCustoms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ChecklistItemCustom without action
+   */
+  export type ChecklistItemCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CandidatCustom
+   */
+
+  export type AggregateCandidatCustom = {
+    _count: CandidatCustomCountAggregateOutputType | null
+    _min: CandidatCustomMinAggregateOutputType | null
+    _max: CandidatCustomMaxAggregateOutputType | null
+  }
+
+  export type CandidatCustomMinAggregateOutputType = {
+    id: string | null
+    nom: string | null
+    prenom: string | null
+    role: $Enums.Role | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+    telephone: string | null
+    cv: string | null
+    letterm: string | null
+    bio: string | null
+    adresse: string | null
+    ville: string | null
+    statut: string | null
+    pays: string | null
+    dateNaissance: Date | null
+    nationalite: string | null
+    situationFamiliale: string | null
+    permisConduire: string | null
+    image: string | null
+    applicationId: string | null
+  }
+
+  export type CandidatCustomMaxAggregateOutputType = {
+    id: string | null
+    nom: string | null
+    prenom: string | null
+    role: $Enums.Role | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    userId: string | null
+    telephone: string | null
+    cv: string | null
+    letterm: string | null
+    bio: string | null
+    adresse: string | null
+    ville: string | null
+    statut: string | null
+    pays: string | null
+    dateNaissance: Date | null
+    nationalite: string | null
+    situationFamiliale: string | null
+    permisConduire: string | null
+    image: string | null
+    applicationId: string | null
+  }
+
+  export type CandidatCustomCountAggregateOutputType = {
+    id: number
+    nom: number
+    prenom: number
+    role: number
+    createdAt: number
+    updatedAt: number
+    userId: number
+    telephone: number
+    cv: number
+    letterm: number
+    bio: number
+    adresse: number
+    ville: number
+    statut: number
+    pays: number
+    dateNaissance: number
+    nationalite: number
+    situationFamiliale: number
+    permisConduire: number
+    image: number
+    applicationId: number
+    _all: number
+  }
+
+
+  export type CandidatCustomMinAggregateInputType = {
+    id?: true
+    nom?: true
+    prenom?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    telephone?: true
+    cv?: true
+    letterm?: true
+    bio?: true
+    adresse?: true
+    ville?: true
+    statut?: true
+    pays?: true
+    dateNaissance?: true
+    nationalite?: true
+    situationFamiliale?: true
+    permisConduire?: true
+    image?: true
+    applicationId?: true
+  }
+
+  export type CandidatCustomMaxAggregateInputType = {
+    id?: true
+    nom?: true
+    prenom?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    telephone?: true
+    cv?: true
+    letterm?: true
+    bio?: true
+    adresse?: true
+    ville?: true
+    statut?: true
+    pays?: true
+    dateNaissance?: true
+    nationalite?: true
+    situationFamiliale?: true
+    permisConduire?: true
+    image?: true
+    applicationId?: true
+  }
+
+  export type CandidatCustomCountAggregateInputType = {
+    id?: true
+    nom?: true
+    prenom?: true
+    role?: true
+    createdAt?: true
+    updatedAt?: true
+    userId?: true
+    telephone?: true
+    cv?: true
+    letterm?: true
+    bio?: true
+    adresse?: true
+    ville?: true
+    statut?: true
+    pays?: true
+    dateNaissance?: true
+    nationalite?: true
+    situationFamiliale?: true
+    permisConduire?: true
+    image?: true
+    applicationId?: true
+    _all?: true
+  }
+
+  export type CandidatCustomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CandidatCustom to aggregate.
+     */
+    where?: CandidatCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidatCustoms to fetch.
+     */
+    orderBy?: CandidatCustomOrderByWithRelationInput | CandidatCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CandidatCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidatCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidatCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CandidatCustoms
+    **/
+    _count?: true | CandidatCustomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CandidatCustomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CandidatCustomMaxAggregateInputType
+  }
+
+  export type GetCandidatCustomAggregateType<T extends CandidatCustomAggregateArgs> = {
+        [P in keyof T & keyof AggregateCandidatCustom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCandidatCustom[P]>
+      : GetScalarType<T[P], AggregateCandidatCustom[P]>
+  }
+
+
+
+
+  export type CandidatCustomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CandidatCustomWhereInput
+    orderBy?: CandidatCustomOrderByWithAggregationInput | CandidatCustomOrderByWithAggregationInput[]
+    by: CandidatCustomScalarFieldEnum[] | CandidatCustomScalarFieldEnum
+    having?: CandidatCustomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CandidatCustomCountAggregateInputType | true
+    _min?: CandidatCustomMinAggregateInputType
+    _max?: CandidatCustomMaxAggregateInputType
+  }
+
+  export type CandidatCustomGroupByOutputType = {
+    id: string
+    nom: string | null
+    prenom: string | null
+    role: $Enums.Role | null
+    createdAt: Date
+    updatedAt: Date
+    userId: string
+    telephone: string | null
+    cv: string | null
+    letterm: string | null
+    bio: string | null
+    adresse: string | null
+    ville: string | null
+    statut: string | null
+    pays: string | null
+    dateNaissance: Date
+    nationalite: string | null
+    situationFamiliale: string | null
+    permisConduire: string | null
+    image: string | null
+    applicationId: string
+    _count: CandidatCustomCountAggregateOutputType | null
+    _min: CandidatCustomMinAggregateOutputType | null
+    _max: CandidatCustomMaxAggregateOutputType | null
+  }
+
+  type GetCandidatCustomGroupByPayload<T extends CandidatCustomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CandidatCustomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CandidatCustomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CandidatCustomGroupByOutputType[P]>
+            : GetScalarType<T[P], CandidatCustomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CandidatCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nom?: boolean
+    prenom?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    telephone?: boolean
+    cv?: boolean
+    letterm?: boolean
+    bio?: boolean
+    adresse?: boolean
+    ville?: boolean
+    statut?: boolean
+    pays?: boolean
+    dateNaissance?: boolean
+    nationalite?: boolean
+    situationFamiliale?: boolean
+    permisConduire?: boolean
+    image?: boolean
+    applicationId?: boolean
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["candidatCustom"]>
+
+
+
+  export type CandidatCustomSelectScalar = {
+    id?: boolean
+    nom?: boolean
+    prenom?: boolean
+    role?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    userId?: boolean
+    telephone?: boolean
+    cv?: boolean
+    letterm?: boolean
+    bio?: boolean
+    adresse?: boolean
+    ville?: boolean
+    statut?: boolean
+    pays?: boolean
+    dateNaissance?: boolean
+    nationalite?: boolean
+    situationFamiliale?: boolean
+    permisConduire?: boolean
+    image?: boolean
+    applicationId?: boolean
+  }
+
+  export type CandidatCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nom" | "prenom" | "role" | "createdAt" | "updatedAt" | "userId" | "telephone" | "cv" | "letterm" | "bio" | "adresse" | "ville" | "statut" | "pays" | "dateNaissance" | "nationalite" | "situationFamiliale" | "permisConduire" | "image" | "applicationId", ExtArgs["result"]["candidatCustom"]>
+  export type CandidatCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+  }
+
+  export type $CandidatCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CandidatCustom"
+    objects: {
+      application: Prisma.$ApplicationCustomPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nom: string | null
+      prenom: string | null
+      role: $Enums.Role | null
+      createdAt: Date
+      updatedAt: Date
+      userId: string
+      telephone: string | null
+      cv: string | null
+      letterm: string | null
+      bio: string | null
+      adresse: string | null
+      ville: string | null
+      statut: string | null
+      pays: string | null
+      dateNaissance: Date
+      nationalite: string | null
+      situationFamiliale: string | null
+      permisConduire: string | null
+      image: string | null
+      applicationId: string
+    }, ExtArgs["result"]["candidatCustom"]>
+    composites: {}
+  }
+
+  type CandidatCustomGetPayload<S extends boolean | null | undefined | CandidatCustomDefaultArgs> = $Result.GetResult<Prisma.$CandidatCustomPayload, S>
+
+  type CandidatCustomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CandidatCustomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CandidatCustomCountAggregateInputType | true
+    }
+
+  export interface CandidatCustomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CandidatCustom'], meta: { name: 'CandidatCustom' } }
+    /**
+     * Find zero or one CandidatCustom that matches the filter.
+     * @param {CandidatCustomFindUniqueArgs} args - Arguments to find a CandidatCustom
+     * @example
+     * // Get one CandidatCustom
+     * const candidatCustom = await prisma.candidatCustom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CandidatCustomFindUniqueArgs>(args: SelectSubset<T, CandidatCustomFindUniqueArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CandidatCustom that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CandidatCustomFindUniqueOrThrowArgs} args - Arguments to find a CandidatCustom
+     * @example
+     * // Get one CandidatCustom
+     * const candidatCustom = await prisma.candidatCustom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CandidatCustomFindUniqueOrThrowArgs>(args: SelectSubset<T, CandidatCustomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CandidatCustom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatCustomFindFirstArgs} args - Arguments to find a CandidatCustom
+     * @example
+     * // Get one CandidatCustom
+     * const candidatCustom = await prisma.candidatCustom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CandidatCustomFindFirstArgs>(args?: SelectSubset<T, CandidatCustomFindFirstArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CandidatCustom that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatCustomFindFirstOrThrowArgs} args - Arguments to find a CandidatCustom
+     * @example
+     * // Get one CandidatCustom
+     * const candidatCustom = await prisma.candidatCustom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CandidatCustomFindFirstOrThrowArgs>(args?: SelectSubset<T, CandidatCustomFindFirstOrThrowArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CandidatCustoms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatCustomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CandidatCustoms
+     * const candidatCustoms = await prisma.candidatCustom.findMany()
+     * 
+     * // Get first 10 CandidatCustoms
+     * const candidatCustoms = await prisma.candidatCustom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const candidatCustomWithIdOnly = await prisma.candidatCustom.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CandidatCustomFindManyArgs>(args?: SelectSubset<T, CandidatCustomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CandidatCustom.
+     * @param {CandidatCustomCreateArgs} args - Arguments to create a CandidatCustom.
+     * @example
+     * // Create one CandidatCustom
+     * const CandidatCustom = await prisma.candidatCustom.create({
+     *   data: {
+     *     // ... data to create a CandidatCustom
+     *   }
+     * })
+     * 
+     */
+    create<T extends CandidatCustomCreateArgs>(args: SelectSubset<T, CandidatCustomCreateArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CandidatCustoms.
+     * @param {CandidatCustomCreateManyArgs} args - Arguments to create many CandidatCustoms.
+     * @example
+     * // Create many CandidatCustoms
+     * const candidatCustom = await prisma.candidatCustom.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CandidatCustomCreateManyArgs>(args?: SelectSubset<T, CandidatCustomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a CandidatCustom.
+     * @param {CandidatCustomDeleteArgs} args - Arguments to delete one CandidatCustom.
+     * @example
+     * // Delete one CandidatCustom
+     * const CandidatCustom = await prisma.candidatCustom.delete({
+     *   where: {
+     *     // ... filter to delete one CandidatCustom
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CandidatCustomDeleteArgs>(args: SelectSubset<T, CandidatCustomDeleteArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CandidatCustom.
+     * @param {CandidatCustomUpdateArgs} args - Arguments to update one CandidatCustom.
+     * @example
+     * // Update one CandidatCustom
+     * const candidatCustom = await prisma.candidatCustom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CandidatCustomUpdateArgs>(args: SelectSubset<T, CandidatCustomUpdateArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CandidatCustoms.
+     * @param {CandidatCustomDeleteManyArgs} args - Arguments to filter CandidatCustoms to delete.
+     * @example
+     * // Delete a few CandidatCustoms
+     * const { count } = await prisma.candidatCustom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CandidatCustomDeleteManyArgs>(args?: SelectSubset<T, CandidatCustomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CandidatCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatCustomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CandidatCustoms
+     * const candidatCustom = await prisma.candidatCustom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CandidatCustomUpdateManyArgs>(args: SelectSubset<T, CandidatCustomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CandidatCustom.
+     * @param {CandidatCustomUpsertArgs} args - Arguments to update or create a CandidatCustom.
+     * @example
+     * // Update or create a CandidatCustom
+     * const candidatCustom = await prisma.candidatCustom.upsert({
+     *   create: {
+     *     // ... data to create a CandidatCustom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CandidatCustom we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CandidatCustomUpsertArgs>(args: SelectSubset<T, CandidatCustomUpsertArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CandidatCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatCustomCountArgs} args - Arguments to filter CandidatCustoms to count.
+     * @example
+     * // Count the number of CandidatCustoms
+     * const count = await prisma.candidatCustom.count({
+     *   where: {
+     *     // ... the filter for the CandidatCustoms we want to count
+     *   }
+     * })
+    **/
+    count<T extends CandidatCustomCountArgs>(
+      args?: Subset<T, CandidatCustomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CandidatCustomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CandidatCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatCustomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CandidatCustomAggregateArgs>(args: Subset<T, CandidatCustomAggregateArgs>): Prisma.PrismaPromise<GetCandidatCustomAggregateType<T>>
+
+    /**
+     * Group by CandidatCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatCustomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CandidatCustomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CandidatCustomGroupByArgs['orderBy'] }
+        : { orderBy?: CandidatCustomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CandidatCustomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCandidatCustomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CandidatCustom model
+   */
+  readonly fields: CandidatCustomFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CandidatCustom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CandidatCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustomDefaultArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CandidatCustom model
+   */
+  interface CandidatCustomFieldRefs {
+    readonly id: FieldRef<"CandidatCustom", 'String'>
+    readonly nom: FieldRef<"CandidatCustom", 'String'>
+    readonly prenom: FieldRef<"CandidatCustom", 'String'>
+    readonly role: FieldRef<"CandidatCustom", 'Role'>
+    readonly createdAt: FieldRef<"CandidatCustom", 'DateTime'>
+    readonly updatedAt: FieldRef<"CandidatCustom", 'DateTime'>
+    readonly userId: FieldRef<"CandidatCustom", 'String'>
+    readonly telephone: FieldRef<"CandidatCustom", 'String'>
+    readonly cv: FieldRef<"CandidatCustom", 'String'>
+    readonly letterm: FieldRef<"CandidatCustom", 'String'>
+    readonly bio: FieldRef<"CandidatCustom", 'String'>
+    readonly adresse: FieldRef<"CandidatCustom", 'String'>
+    readonly ville: FieldRef<"CandidatCustom", 'String'>
+    readonly statut: FieldRef<"CandidatCustom", 'String'>
+    readonly pays: FieldRef<"CandidatCustom", 'String'>
+    readonly dateNaissance: FieldRef<"CandidatCustom", 'DateTime'>
+    readonly nationalite: FieldRef<"CandidatCustom", 'String'>
+    readonly situationFamiliale: FieldRef<"CandidatCustom", 'String'>
+    readonly permisConduire: FieldRef<"CandidatCustom", 'String'>
+    readonly image: FieldRef<"CandidatCustom", 'String'>
+    readonly applicationId: FieldRef<"CandidatCustom", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CandidatCustom findUnique
+   */
+  export type CandidatCustomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatCustom to fetch.
+     */
+    where: CandidatCustomWhereUniqueInput
+  }
+
+  /**
+   * CandidatCustom findUniqueOrThrow
+   */
+  export type CandidatCustomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatCustom to fetch.
+     */
+    where: CandidatCustomWhereUniqueInput
+  }
+
+  /**
+   * CandidatCustom findFirst
+   */
+  export type CandidatCustomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatCustom to fetch.
+     */
+    where?: CandidatCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidatCustoms to fetch.
+     */
+    orderBy?: CandidatCustomOrderByWithRelationInput | CandidatCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CandidatCustoms.
+     */
+    cursor?: CandidatCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidatCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidatCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidatCustoms.
+     */
+    distinct?: CandidatCustomScalarFieldEnum | CandidatCustomScalarFieldEnum[]
+  }
+
+  /**
+   * CandidatCustom findFirstOrThrow
+   */
+  export type CandidatCustomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatCustom to fetch.
+     */
+    where?: CandidatCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidatCustoms to fetch.
+     */
+    orderBy?: CandidatCustomOrderByWithRelationInput | CandidatCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CandidatCustoms.
+     */
+    cursor?: CandidatCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidatCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidatCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidatCustoms.
+     */
+    distinct?: CandidatCustomScalarFieldEnum | CandidatCustomScalarFieldEnum[]
+  }
+
+  /**
+   * CandidatCustom findMany
+   */
+  export type CandidatCustomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatCustoms to fetch.
+     */
+    where?: CandidatCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidatCustoms to fetch.
+     */
+    orderBy?: CandidatCustomOrderByWithRelationInput | CandidatCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CandidatCustoms.
+     */
+    cursor?: CandidatCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidatCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidatCustoms.
+     */
+    skip?: number
+    distinct?: CandidatCustomScalarFieldEnum | CandidatCustomScalarFieldEnum[]
+  }
+
+  /**
+   * CandidatCustom create
+   */
+  export type CandidatCustomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CandidatCustom.
+     */
+    data: XOR<CandidatCustomCreateInput, CandidatCustomUncheckedCreateInput>
+  }
+
+  /**
+   * CandidatCustom createMany
+   */
+  export type CandidatCustomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CandidatCustoms.
+     */
+    data: CandidatCustomCreateManyInput | CandidatCustomCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CandidatCustom update
+   */
+  export type CandidatCustomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CandidatCustom.
+     */
+    data: XOR<CandidatCustomUpdateInput, CandidatCustomUncheckedUpdateInput>
+    /**
+     * Choose, which CandidatCustom to update.
+     */
+    where: CandidatCustomWhereUniqueInput
+  }
+
+  /**
+   * CandidatCustom updateMany
+   */
+  export type CandidatCustomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CandidatCustoms.
+     */
+    data: XOR<CandidatCustomUpdateManyMutationInput, CandidatCustomUncheckedUpdateManyInput>
+    /**
+     * Filter which CandidatCustoms to update
+     */
+    where?: CandidatCustomWhereInput
+    /**
+     * Limit how many CandidatCustoms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CandidatCustom upsert
+   */
+  export type CandidatCustomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CandidatCustom to update in case it exists.
+     */
+    where: CandidatCustomWhereUniqueInput
+    /**
+     * In case the CandidatCustom found by the `where` argument doesn't exist, create a new CandidatCustom with this data.
+     */
+    create: XOR<CandidatCustomCreateInput, CandidatCustomUncheckedCreateInput>
+    /**
+     * In case the CandidatCustom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CandidatCustomUpdateInput, CandidatCustomUncheckedUpdateInput>
+  }
+
+  /**
+   * CandidatCustom delete
+   */
+  export type CandidatCustomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    /**
+     * Filter which CandidatCustom to delete.
+     */
+    where: CandidatCustomWhereUniqueInput
+  }
+
+  /**
+   * CandidatCustom deleteMany
+   */
+  export type CandidatCustomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CandidatCustoms to delete
+     */
+    where?: CandidatCustomWhereInput
+    /**
+     * Limit how many CandidatCustoms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CandidatCustom without action
+   */
+  export type CandidatCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApplicationCustom
+   */
+
+  export type AggregateApplicationCustom = {
+    _count: ApplicationCustomCountAggregateOutputType | null
+    _avg: ApplicationCustomAvgAggregateOutputType | null
+    _sum: ApplicationCustomSumAggregateOutputType | null
+    _min: ApplicationCustomMinAggregateOutputType | null
+    _max: ApplicationCustomMaxAggregateOutputType | null
+  }
+
+  export type ApplicationCustomAvgAggregateOutputType = {
+    salaryMin: number | null
+    salaryMax: number | null
+  }
+
+  export type ApplicationCustomSumAggregateOutputType = {
+    salaryMin: number | null
+    salaryMax: number | null
+  }
+
+  export type ApplicationCustomMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    company: string | null
+    location: string | null
+    type: string | null
+    etat: string | null
+    experience: string | null
+    salaryMin: number | null
+    salaryMax: number | null
+    salaryCurrency: string | null
+    salaryPeriod: string | null
+    benefits: string | null
+    requirements: string | null
+    responsibilities: string | null
+    skills: string | null
+    duedate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    kanbanColumnCustomid: string | null
+  }
+
+  export type ApplicationCustomMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    company: string | null
+    location: string | null
+    type: string | null
+    etat: string | null
+    experience: string | null
+    salaryMin: number | null
+    salaryMax: number | null
+    salaryCurrency: string | null
+    salaryPeriod: string | null
+    benefits: string | null
+    requirements: string | null
+    responsibilities: string | null
+    skills: string | null
+    duedate: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    kanbanColumnCustomid: string | null
+  }
+
+  export type ApplicationCustomCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    company: number
+    location: number
+    type: number
+    etat: number
+    experience: number
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: number
+    salaryPeriod: number
+    benefits: number
+    requirements: number
+    responsibilities: number
+    skills: number
+    duedate: number
+    createdAt: number
+    updatedAt: number
+    kanbanColumnCustomid: number
+    _all: number
+  }
+
+
+  export type ApplicationCustomAvgAggregateInputType = {
+    salaryMin?: true
+    salaryMax?: true
+  }
+
+  export type ApplicationCustomSumAggregateInputType = {
+    salaryMin?: true
+    salaryMax?: true
+  }
+
+  export type ApplicationCustomMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    company?: true
+    location?: true
+    type?: true
+    etat?: true
+    experience?: true
+    salaryMin?: true
+    salaryMax?: true
+    salaryCurrency?: true
+    salaryPeriod?: true
+    benefits?: true
+    requirements?: true
+    responsibilities?: true
+    skills?: true
+    duedate?: true
+    createdAt?: true
+    updatedAt?: true
+    kanbanColumnCustomid?: true
+  }
+
+  export type ApplicationCustomMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    company?: true
+    location?: true
+    type?: true
+    etat?: true
+    experience?: true
+    salaryMin?: true
+    salaryMax?: true
+    salaryCurrency?: true
+    salaryPeriod?: true
+    benefits?: true
+    requirements?: true
+    responsibilities?: true
+    skills?: true
+    duedate?: true
+    createdAt?: true
+    updatedAt?: true
+    kanbanColumnCustomid?: true
+  }
+
+  export type ApplicationCustomCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    company?: true
+    location?: true
+    type?: true
+    etat?: true
+    experience?: true
+    salaryMin?: true
+    salaryMax?: true
+    salaryCurrency?: true
+    salaryPeriod?: true
+    benefits?: true
+    requirements?: true
+    responsibilities?: true
+    skills?: true
+    duedate?: true
+    createdAt?: true
+    updatedAt?: true
+    kanbanColumnCustomid?: true
+    _all?: true
+  }
+
+  export type ApplicationCustomAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationCustom to aggregate.
+     */
+    where?: ApplicationCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCustoms to fetch.
+     */
+    orderBy?: ApplicationCustomOrderByWithRelationInput | ApplicationCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationCustoms
+    **/
+    _count?: true | ApplicationCustomCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ApplicationCustomAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ApplicationCustomSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationCustomMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationCustomMaxAggregateInputType
+  }
+
+  export type GetApplicationCustomAggregateType<T extends ApplicationCustomAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationCustom]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationCustom[P]>
+      : GetScalarType<T[P], AggregateApplicationCustom[P]>
+  }
+
+
+
+
+  export type ApplicationCustomGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationCustomWhereInput
+    orderBy?: ApplicationCustomOrderByWithAggregationInput | ApplicationCustomOrderByWithAggregationInput[]
+    by: ApplicationCustomScalarFieldEnum[] | ApplicationCustomScalarFieldEnum
+    having?: ApplicationCustomScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationCustomCountAggregateInputType | true
+    _avg?: ApplicationCustomAvgAggregateInputType
+    _sum?: ApplicationCustomSumAggregateInputType
+    _min?: ApplicationCustomMinAggregateInputType
+    _max?: ApplicationCustomMaxAggregateInputType
+  }
+
+  export type ApplicationCustomGroupByOutputType = {
+    id: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate: Date | null
+    createdAt: Date
+    updatedAt: Date
+    kanbanColumnCustomid: string
+    _count: ApplicationCustomCountAggregateOutputType | null
+    _avg: ApplicationCustomAvgAggregateOutputType | null
+    _sum: ApplicationCustomSumAggregateOutputType | null
+    _min: ApplicationCustomMinAggregateOutputType | null
+    _max: ApplicationCustomMaxAggregateOutputType | null
+  }
+
+  type GetApplicationCustomGroupByPayload<T extends ApplicationCustomGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationCustomGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationCustomGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationCustomGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationCustomGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    company?: boolean
+    location?: boolean
+    type?: boolean
+    etat?: boolean
+    experience?: boolean
+    salaryMin?: boolean
+    salaryMax?: boolean
+    salaryCurrency?: boolean
+    salaryPeriod?: boolean
+    benefits?: boolean
+    requirements?: boolean
+    responsibilities?: boolean
+    skills?: boolean
+    duedate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kanbanColumnCustomid?: boolean
+    collaborateurs?: boolean | ApplicationCustom$collaborateursArgs<ExtArgs>
+    files?: boolean | ApplicationCustom$filesArgs<ExtArgs>
+    notes?: boolean | ApplicationCustom$notesArgs<ExtArgs>
+    checklist?: boolean | ApplicationCustom$checklistArgs<ExtArgs>
+    candidatCustom?: boolean | ApplicationCustom$candidatCustomArgs<ExtArgs>
+    recruteur?: boolean | KanbanColumnCustomDefaultArgs<ExtArgs>
+    _count?: boolean | ApplicationCustomCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationCustom"]>
+
+
+
+  export type ApplicationCustomSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    company?: boolean
+    location?: boolean
+    type?: boolean
+    etat?: boolean
+    experience?: boolean
+    salaryMin?: boolean
+    salaryMax?: boolean
+    salaryCurrency?: boolean
+    salaryPeriod?: boolean
+    benefits?: boolean
+    requirements?: boolean
+    responsibilities?: boolean
+    skills?: boolean
+    duedate?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    kanbanColumnCustomid?: boolean
+  }
+
+  export type ApplicationCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "company" | "location" | "type" | "etat" | "experience" | "salaryMin" | "salaryMax" | "salaryCurrency" | "salaryPeriod" | "benefits" | "requirements" | "responsibilities" | "skills" | "duedate" | "createdAt" | "updatedAt" | "kanbanColumnCustomid", ExtArgs["result"]["applicationCustom"]>
+  export type ApplicationCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    collaborateurs?: boolean | ApplicationCustom$collaborateursArgs<ExtArgs>
+    files?: boolean | ApplicationCustom$filesArgs<ExtArgs>
+    notes?: boolean | ApplicationCustom$notesArgs<ExtArgs>
+    checklist?: boolean | ApplicationCustom$checklistArgs<ExtArgs>
+    candidatCustom?: boolean | ApplicationCustom$candidatCustomArgs<ExtArgs>
+    recruteur?: boolean | KanbanColumnCustomDefaultArgs<ExtArgs>
+    _count?: boolean | ApplicationCustomCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationCustom"
+    objects: {
+      collaborateurs: Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>[]
+      files: Prisma.$ApplicationFileCustomPayload<ExtArgs>[]
+      notes: Prisma.$ApplicationNoteCustomPayload<ExtArgs>[]
+      checklist: Prisma.$ChecklistItemCustomPayload<ExtArgs>[]
+      candidatCustom: Prisma.$CandidatCustomPayload<ExtArgs>[]
+      recruteur: Prisma.$KanbanColumnCustomPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string
+      company: string
+      location: string
+      type: string
+      etat: string
+      experience: string
+      salaryMin: number
+      salaryMax: number
+      salaryCurrency: string
+      salaryPeriod: string
+      benefits: string
+      requirements: string
+      responsibilities: string
+      skills: string
+      duedate: Date | null
+      createdAt: Date
+      updatedAt: Date
+      kanbanColumnCustomid: string
+    }, ExtArgs["result"]["applicationCustom"]>
+    composites: {}
+  }
+
+  type ApplicationCustomGetPayload<S extends boolean | null | undefined | ApplicationCustomDefaultArgs> = $Result.GetResult<Prisma.$ApplicationCustomPayload, S>
+
+  type ApplicationCustomCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationCustomFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationCustomCountAggregateInputType | true
+    }
+
+  export interface ApplicationCustomDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationCustom'], meta: { name: 'ApplicationCustom' } }
+    /**
+     * Find zero or one ApplicationCustom that matches the filter.
+     * @param {ApplicationCustomFindUniqueArgs} args - Arguments to find a ApplicationCustom
+     * @example
+     * // Get one ApplicationCustom
+     * const applicationCustom = await prisma.applicationCustom.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationCustomFindUniqueArgs>(args: SelectSubset<T, ApplicationCustomFindUniqueArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationCustom that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationCustomFindUniqueOrThrowArgs} args - Arguments to find a ApplicationCustom
+     * @example
+     * // Get one ApplicationCustom
+     * const applicationCustom = await prisma.applicationCustom.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationCustomFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationCustomFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationCustom that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCustomFindFirstArgs} args - Arguments to find a ApplicationCustom
+     * @example
+     * // Get one ApplicationCustom
+     * const applicationCustom = await prisma.applicationCustom.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationCustomFindFirstArgs>(args?: SelectSubset<T, ApplicationCustomFindFirstArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationCustom that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCustomFindFirstOrThrowArgs} args - Arguments to find a ApplicationCustom
+     * @example
+     * // Get one ApplicationCustom
+     * const applicationCustom = await prisma.applicationCustom.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationCustomFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationCustomFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationCustoms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCustomFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationCustoms
+     * const applicationCustoms = await prisma.applicationCustom.findMany()
+     * 
+     * // Get first 10 ApplicationCustoms
+     * const applicationCustoms = await prisma.applicationCustom.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationCustomWithIdOnly = await prisma.applicationCustom.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationCustomFindManyArgs>(args?: SelectSubset<T, ApplicationCustomFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationCustom.
+     * @param {ApplicationCustomCreateArgs} args - Arguments to create a ApplicationCustom.
+     * @example
+     * // Create one ApplicationCustom
+     * const ApplicationCustom = await prisma.applicationCustom.create({
+     *   data: {
+     *     // ... data to create a ApplicationCustom
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationCustomCreateArgs>(args: SelectSubset<T, ApplicationCustomCreateArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationCustoms.
+     * @param {ApplicationCustomCreateManyArgs} args - Arguments to create many ApplicationCustoms.
+     * @example
+     * // Create many ApplicationCustoms
+     * const applicationCustom = await prisma.applicationCustom.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationCustomCreateManyArgs>(args?: SelectSubset<T, ApplicationCustomCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ApplicationCustom.
+     * @param {ApplicationCustomDeleteArgs} args - Arguments to delete one ApplicationCustom.
+     * @example
+     * // Delete one ApplicationCustom
+     * const ApplicationCustom = await prisma.applicationCustom.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationCustom
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationCustomDeleteArgs>(args: SelectSubset<T, ApplicationCustomDeleteArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationCustom.
+     * @param {ApplicationCustomUpdateArgs} args - Arguments to update one ApplicationCustom.
+     * @example
+     * // Update one ApplicationCustom
+     * const applicationCustom = await prisma.applicationCustom.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationCustomUpdateArgs>(args: SelectSubset<T, ApplicationCustomUpdateArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationCustoms.
+     * @param {ApplicationCustomDeleteManyArgs} args - Arguments to filter ApplicationCustoms to delete.
+     * @example
+     * // Delete a few ApplicationCustoms
+     * const { count } = await prisma.applicationCustom.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationCustomDeleteManyArgs>(args?: SelectSubset<T, ApplicationCustomDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCustomUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationCustoms
+     * const applicationCustom = await prisma.applicationCustom.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationCustomUpdateManyArgs>(args: SelectSubset<T, ApplicationCustomUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ApplicationCustom.
+     * @param {ApplicationCustomUpsertArgs} args - Arguments to update or create a ApplicationCustom.
+     * @example
+     * // Update or create a ApplicationCustom
+     * const applicationCustom = await prisma.applicationCustom.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationCustom
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationCustom we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationCustomUpsertArgs>(args: SelectSubset<T, ApplicationCustomUpsertArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationCustoms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCustomCountArgs} args - Arguments to filter ApplicationCustoms to count.
+     * @example
+     * // Count the number of ApplicationCustoms
+     * const count = await prisma.applicationCustom.count({
+     *   where: {
+     *     // ... the filter for the ApplicationCustoms we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationCustomCountArgs>(
+      args?: Subset<T, ApplicationCustomCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationCustomCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCustomAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationCustomAggregateArgs>(args: Subset<T, ApplicationCustomAggregateArgs>): Prisma.PrismaPromise<GetApplicationCustomAggregateType<T>>
+
+    /**
+     * Group by ApplicationCustom.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationCustomGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationCustomGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationCustomGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationCustomGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationCustomGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationCustomGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationCustom model
+   */
+  readonly fields: ApplicationCustomFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationCustom.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    collaborateurs<T extends ApplicationCustom$collaborateursArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustom$collaborateursArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationCollaborateurCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    files<T extends ApplicationCustom$filesArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustom$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationFileCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notes<T extends ApplicationCustom$notesArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustom$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationNoteCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    checklist<T extends ApplicationCustom$checklistArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustom$checklistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChecklistItemCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    candidatCustom<T extends ApplicationCustom$candidatCustomArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustom$candidatCustomArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    recruteur<T extends KanbanColumnCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KanbanColumnCustomDefaultArgs<ExtArgs>>): Prisma__KanbanColumnCustomClient<$Result.GetResult<Prisma.$KanbanColumnCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationCustom model
+   */
+  interface ApplicationCustomFieldRefs {
+    readonly id: FieldRef<"ApplicationCustom", 'String'>
+    readonly title: FieldRef<"ApplicationCustom", 'String'>
+    readonly description: FieldRef<"ApplicationCustom", 'String'>
+    readonly company: FieldRef<"ApplicationCustom", 'String'>
+    readonly location: FieldRef<"ApplicationCustom", 'String'>
+    readonly type: FieldRef<"ApplicationCustom", 'String'>
+    readonly etat: FieldRef<"ApplicationCustom", 'String'>
+    readonly experience: FieldRef<"ApplicationCustom", 'String'>
+    readonly salaryMin: FieldRef<"ApplicationCustom", 'Float'>
+    readonly salaryMax: FieldRef<"ApplicationCustom", 'Float'>
+    readonly salaryCurrency: FieldRef<"ApplicationCustom", 'String'>
+    readonly salaryPeriod: FieldRef<"ApplicationCustom", 'String'>
+    readonly benefits: FieldRef<"ApplicationCustom", 'String'>
+    readonly requirements: FieldRef<"ApplicationCustom", 'String'>
+    readonly responsibilities: FieldRef<"ApplicationCustom", 'String'>
+    readonly skills: FieldRef<"ApplicationCustom", 'String'>
+    readonly duedate: FieldRef<"ApplicationCustom", 'DateTime'>
+    readonly createdAt: FieldRef<"ApplicationCustom", 'DateTime'>
+    readonly updatedAt: FieldRef<"ApplicationCustom", 'DateTime'>
+    readonly kanbanColumnCustomid: FieldRef<"ApplicationCustom", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationCustom findUnique
+   */
+  export type ApplicationCustomFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCustom to fetch.
+     */
+    where: ApplicationCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCustom findUniqueOrThrow
+   */
+  export type ApplicationCustomFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCustom to fetch.
+     */
+    where: ApplicationCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCustom findFirst
+   */
+  export type ApplicationCustomFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCustom to fetch.
+     */
+    where?: ApplicationCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCustoms to fetch.
+     */
+    orderBy?: ApplicationCustomOrderByWithRelationInput | ApplicationCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationCustoms.
+     */
+    cursor?: ApplicationCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationCustoms.
+     */
+    distinct?: ApplicationCustomScalarFieldEnum | ApplicationCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCustom findFirstOrThrow
+   */
+  export type ApplicationCustomFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCustom to fetch.
+     */
+    where?: ApplicationCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCustoms to fetch.
+     */
+    orderBy?: ApplicationCustomOrderByWithRelationInput | ApplicationCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationCustoms.
+     */
+    cursor?: ApplicationCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCustoms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationCustoms.
+     */
+    distinct?: ApplicationCustomScalarFieldEnum | ApplicationCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCustom findMany
+   */
+  export type ApplicationCustomFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationCustoms to fetch.
+     */
+    where?: ApplicationCustomWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationCustoms to fetch.
+     */
+    orderBy?: ApplicationCustomOrderByWithRelationInput | ApplicationCustomOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationCustoms.
+     */
+    cursor?: ApplicationCustomWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationCustoms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationCustoms.
+     */
+    skip?: number
+    distinct?: ApplicationCustomScalarFieldEnum | ApplicationCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCustom create
+   */
+  export type ApplicationCustomCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationCustom.
+     */
+    data: XOR<ApplicationCustomCreateInput, ApplicationCustomUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationCustom createMany
+   */
+  export type ApplicationCustomCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationCustoms.
+     */
+    data: ApplicationCustomCreateManyInput | ApplicationCustomCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationCustom update
+   */
+  export type ApplicationCustomUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationCustom.
+     */
+    data: XOR<ApplicationCustomUpdateInput, ApplicationCustomUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationCustom to update.
+     */
+    where: ApplicationCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCustom updateMany
+   */
+  export type ApplicationCustomUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationCustoms.
+     */
+    data: XOR<ApplicationCustomUpdateManyMutationInput, ApplicationCustomUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationCustoms to update
+     */
+    where?: ApplicationCustomWhereInput
+    /**
+     * Limit how many ApplicationCustoms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationCustom upsert
+   */
+  export type ApplicationCustomUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationCustom to update in case it exists.
+     */
+    where: ApplicationCustomWhereUniqueInput
+    /**
+     * In case the ApplicationCustom found by the `where` argument doesn't exist, create a new ApplicationCustom with this data.
+     */
+    create: XOR<ApplicationCustomCreateInput, ApplicationCustomUncheckedCreateInput>
+    /**
+     * In case the ApplicationCustom was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationCustomUpdateInput, ApplicationCustomUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationCustom delete
+   */
+  export type ApplicationCustomDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationCustom to delete.
+     */
+    where: ApplicationCustomWhereUniqueInput
+  }
+
+  /**
+   * ApplicationCustom deleteMany
+   */
+  export type ApplicationCustomDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationCustoms to delete
+     */
+    where?: ApplicationCustomWhereInput
+    /**
+     * Limit how many ApplicationCustoms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationCustom.collaborateurs
+   */
+  export type ApplicationCustom$collaborateursArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCollaborateurCustom
+     */
+    select?: ApplicationCollaborateurCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCollaborateurCustom
+     */
+    omit?: ApplicationCollaborateurCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCollaborateurCustomInclude<ExtArgs> | null
+    where?: ApplicationCollaborateurCustomWhereInput
+    orderBy?: ApplicationCollaborateurCustomOrderByWithRelationInput | ApplicationCollaborateurCustomOrderByWithRelationInput[]
+    cursor?: ApplicationCollaborateurCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationCollaborateurCustomScalarFieldEnum | ApplicationCollaborateurCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCustom.files
+   */
+  export type ApplicationCustom$filesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationFileCustom
+     */
+    select?: ApplicationFileCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationFileCustom
+     */
+    omit?: ApplicationFileCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationFileCustomInclude<ExtArgs> | null
+    where?: ApplicationFileCustomWhereInput
+    orderBy?: ApplicationFileCustomOrderByWithRelationInput | ApplicationFileCustomOrderByWithRelationInput[]
+    cursor?: ApplicationFileCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationFileCustomScalarFieldEnum | ApplicationFileCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCustom.notes
+   */
+  export type ApplicationCustom$notesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationNoteCustom
+     */
+    select?: ApplicationNoteCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationNoteCustom
+     */
+    omit?: ApplicationNoteCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationNoteCustomInclude<ExtArgs> | null
+    where?: ApplicationNoteCustomWhereInput
+    orderBy?: ApplicationNoteCustomOrderByWithRelationInput | ApplicationNoteCustomOrderByWithRelationInput[]
+    cursor?: ApplicationNoteCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationNoteCustomScalarFieldEnum | ApplicationNoteCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCustom.checklist
+   */
+  export type ApplicationCustom$checklistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ChecklistItemCustom
+     */
+    select?: ChecklistItemCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ChecklistItemCustom
+     */
+    omit?: ChecklistItemCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChecklistItemCustomInclude<ExtArgs> | null
+    where?: ChecklistItemCustomWhereInput
+    orderBy?: ChecklistItemCustomOrderByWithRelationInput | ChecklistItemCustomOrderByWithRelationInput[]
+    cursor?: ChecklistItemCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChecklistItemCustomScalarFieldEnum | ChecklistItemCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCustom.candidatCustom
+   */
+  export type ApplicationCustom$candidatCustomArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustom
+     */
+    select?: CandidatCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatCustom
+     */
+    omit?: CandidatCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatCustomInclude<ExtArgs> | null
+    where?: CandidatCustomWhereInput
+    orderBy?: CandidatCustomOrderByWithRelationInput | CandidatCustomOrderByWithRelationInput[]
+    cursor?: CandidatCustomWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CandidatCustomScalarFieldEnum | CandidatCustomScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationCustom without action
+   */
+  export type ApplicationCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCustom
+     */
+    select?: ApplicationCustomSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationCustom
+     */
+    omit?: ApplicationCustomOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -35570,6 +44790,7 @@ export namespace Prisma {
     recruteurId: 'recruteurId',
     invitationId: 'invitationId',
     userId: 'userId',
+    dueDate: 'dueDate',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -35604,6 +44825,7 @@ export namespace Prisma {
     benefits: 'benefits',
     requirements: 'requirements',
     responsibilities: 'responsibilities',
+    duedate: 'duedate',
     skills: 'skills',
     favorite: 'favorite',
     templateId: 'templateId',
@@ -35913,6 +45135,147 @@ export namespace Prisma {
   };
 
   export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+  export const KanbanColumnCustomScalarFieldEnum: {
+    id: 'id',
+    color: 'color',
+    name: 'name',
+    order: 'order',
+    isDefault: 'isDefault',
+    jobOfferId: 'jobOfferId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    recruteurId: 'recruteurId',
+    applicationsCustomid: 'applicationsCustomid'
+  };
+
+  export type KanbanColumnCustomScalarFieldEnum = (typeof KanbanColumnCustomScalarFieldEnum)[keyof typeof KanbanColumnCustomScalarFieldEnum]
+
+
+  export const CollaborateurCustomScalarFieldEnum: {
+    id: 'id',
+    email: 'email',
+    nom: 'nom',
+    prenom: 'prenom',
+    role: 'role',
+    recruteurId: 'recruteurId',
+    invitationId: 'invitationId',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type CollaborateurCustomScalarFieldEnum = (typeof CollaborateurCustomScalarFieldEnum)[keyof typeof CollaborateurCustomScalarFieldEnum]
+
+
+  export const ApplicationFileCustomScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    fileName: 'fileName',
+    fileUrl: 'fileUrl',
+    fileType: 'fileType',
+    fileSize: 'fileSize',
+    uploadedById: 'uploadedById',
+    uploadedByType: 'uploadedByType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ApplicationFileCustomScalarFieldEnum = (typeof ApplicationFileCustomScalarFieldEnum)[keyof typeof ApplicationFileCustomScalarFieldEnum]
+
+
+  export const ApplicationCollaborateurCustomScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    collaborateurId: 'collaborateurId',
+    assignedAt: 'assignedAt',
+    assignedBy: 'assignedBy'
+  };
+
+  export type ApplicationCollaborateurCustomScalarFieldEnum = (typeof ApplicationCollaborateurCustomScalarFieldEnum)[keyof typeof ApplicationCollaborateurCustomScalarFieldEnum]
+
+
+  export const ApplicationNoteCustomScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    content: 'content',
+    authorId: 'authorId',
+    authorName: 'authorName',
+    authorType: 'authorType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ApplicationNoteCustomScalarFieldEnum = (typeof ApplicationNoteCustomScalarFieldEnum)[keyof typeof ApplicationNoteCustomScalarFieldEnum]
+
+
+  export const ChecklistItemCustomScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    title: 'title',
+    description: 'description',
+    isCompleted: 'isCompleted',
+    createdById: 'createdById',
+    createdByType: 'createdByType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ChecklistItemCustomScalarFieldEnum = (typeof ChecklistItemCustomScalarFieldEnum)[keyof typeof ChecklistItemCustomScalarFieldEnum]
+
+
+  export const CandidatCustomScalarFieldEnum: {
+    id: 'id',
+    nom: 'nom',
+    prenom: 'prenom',
+    role: 'role',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    userId: 'userId',
+    telephone: 'telephone',
+    cv: 'cv',
+    letterm: 'letterm',
+    bio: 'bio',
+    adresse: 'adresse',
+    ville: 'ville',
+    statut: 'statut',
+    pays: 'pays',
+    dateNaissance: 'dateNaissance',
+    nationalite: 'nationalite',
+    situationFamiliale: 'situationFamiliale',
+    permisConduire: 'permisConduire',
+    image: 'image',
+    applicationId: 'applicationId'
+  };
+
+  export type CandidatCustomScalarFieldEnum = (typeof CandidatCustomScalarFieldEnum)[keyof typeof CandidatCustomScalarFieldEnum]
+
+
+  export const ApplicationCustomScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    company: 'company',
+    location: 'location',
+    type: 'type',
+    etat: 'etat',
+    experience: 'experience',
+    salaryMin: 'salaryMin',
+    salaryMax: 'salaryMax',
+    salaryCurrency: 'salaryCurrency',
+    salaryPeriod: 'salaryPeriod',
+    benefits: 'benefits',
+    requirements: 'requirements',
+    responsibilities: 'responsibilities',
+    skills: 'skills',
+    duedate: 'duedate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    kanbanColumnCustomid: 'kanbanColumnCustomid'
+  };
+
+  export type ApplicationCustomScalarFieldEnum = (typeof ApplicationCustomScalarFieldEnum)[keyof typeof ApplicationCustomScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -36287,6 +45650,121 @@ export namespace Prisma {
   };
 
   export type MessageOrderByRelevanceFieldEnum = (typeof MessageOrderByRelevanceFieldEnum)[keyof typeof MessageOrderByRelevanceFieldEnum]
+
+
+  export const KanbanColumnCustomOrderByRelevanceFieldEnum: {
+    id: 'id',
+    color: 'color',
+    name: 'name',
+    recruteurId: 'recruteurId',
+    applicationsCustomid: 'applicationsCustomid'
+  };
+
+  export type KanbanColumnCustomOrderByRelevanceFieldEnum = (typeof KanbanColumnCustomOrderByRelevanceFieldEnum)[keyof typeof KanbanColumnCustomOrderByRelevanceFieldEnum]
+
+
+  export const CollaborateurCustomOrderByRelevanceFieldEnum: {
+    id: 'id',
+    email: 'email',
+    nom: 'nom',
+    prenom: 'prenom',
+    recruteurId: 'recruteurId',
+    invitationId: 'invitationId',
+    userId: 'userId'
+  };
+
+  export type CollaborateurCustomOrderByRelevanceFieldEnum = (typeof CollaborateurCustomOrderByRelevanceFieldEnum)[keyof typeof CollaborateurCustomOrderByRelevanceFieldEnum]
+
+
+  export const ApplicationFileCustomOrderByRelevanceFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    fileName: 'fileName',
+    fileUrl: 'fileUrl',
+    fileType: 'fileType',
+    uploadedById: 'uploadedById',
+    uploadedByType: 'uploadedByType'
+  };
+
+  export type ApplicationFileCustomOrderByRelevanceFieldEnum = (typeof ApplicationFileCustomOrderByRelevanceFieldEnum)[keyof typeof ApplicationFileCustomOrderByRelevanceFieldEnum]
+
+
+  export const ApplicationCollaborateurCustomOrderByRelevanceFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    collaborateurId: 'collaborateurId',
+    assignedBy: 'assignedBy'
+  };
+
+  export type ApplicationCollaborateurCustomOrderByRelevanceFieldEnum = (typeof ApplicationCollaborateurCustomOrderByRelevanceFieldEnum)[keyof typeof ApplicationCollaborateurCustomOrderByRelevanceFieldEnum]
+
+
+  export const ApplicationNoteCustomOrderByRelevanceFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    content: 'content',
+    authorId: 'authorId',
+    authorName: 'authorName',
+    authorType: 'authorType'
+  };
+
+  export type ApplicationNoteCustomOrderByRelevanceFieldEnum = (typeof ApplicationNoteCustomOrderByRelevanceFieldEnum)[keyof typeof ApplicationNoteCustomOrderByRelevanceFieldEnum]
+
+
+  export const ChecklistItemCustomOrderByRelevanceFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    title: 'title',
+    description: 'description',
+    createdById: 'createdById',
+    createdByType: 'createdByType'
+  };
+
+  export type ChecklistItemCustomOrderByRelevanceFieldEnum = (typeof ChecklistItemCustomOrderByRelevanceFieldEnum)[keyof typeof ChecklistItemCustomOrderByRelevanceFieldEnum]
+
+
+  export const CandidatCustomOrderByRelevanceFieldEnum: {
+    id: 'id',
+    nom: 'nom',
+    prenom: 'prenom',
+    userId: 'userId',
+    telephone: 'telephone',
+    cv: 'cv',
+    letterm: 'letterm',
+    bio: 'bio',
+    adresse: 'adresse',
+    ville: 'ville',
+    statut: 'statut',
+    pays: 'pays',
+    nationalite: 'nationalite',
+    situationFamiliale: 'situationFamiliale',
+    permisConduire: 'permisConduire',
+    image: 'image',
+    applicationId: 'applicationId'
+  };
+
+  export type CandidatCustomOrderByRelevanceFieldEnum = (typeof CandidatCustomOrderByRelevanceFieldEnum)[keyof typeof CandidatCustomOrderByRelevanceFieldEnum]
+
+
+  export const ApplicationCustomOrderByRelevanceFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    company: 'company',
+    location: 'location',
+    type: 'type',
+    etat: 'etat',
+    experience: 'experience',
+    salaryCurrency: 'salaryCurrency',
+    salaryPeriod: 'salaryPeriod',
+    benefits: 'benefits',
+    requirements: 'requirements',
+    responsibilities: 'responsibilities',
+    skills: 'skills',
+    kanbanColumnCustomid: 'kanbanColumnCustomid'
+  };
+
+  export type ApplicationCustomOrderByRelevanceFieldEnum = (typeof ApplicationCustomOrderByRelevanceFieldEnum)[keyof typeof ApplicationCustomOrderByRelevanceFieldEnum]
 
 
   /**
@@ -36673,6 +46151,8 @@ export namespace Prisma {
     invitations?: InvitationListRelationFilter
     JobOffer?: JobOfferListRelationFilter
     OfferTemplate?: OfferTemplateListRelationFilter
+    CollaborateurCustom?: CollaborateurCustomListRelationFilter
+    KanbanColumnCustom?: KanbanColumnCustomListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -36698,6 +46178,8 @@ export namespace Prisma {
     invitations?: InvitationOrderByRelationAggregateInput
     JobOffer?: JobOfferOrderByRelationAggregateInput
     OfferTemplate?: OfferTemplateOrderByRelationAggregateInput
+    CollaborateurCustom?: CollaborateurCustomOrderByRelationAggregateInput
+    KanbanColumnCustom?: KanbanColumnCustomOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
     _relevance?: RecruteurOrderByRelevanceInput
   }
@@ -36727,6 +46209,8 @@ export namespace Prisma {
     invitations?: InvitationListRelationFilter
     JobOffer?: JobOfferListRelationFilter
     OfferTemplate?: OfferTemplateListRelationFilter
+    CollaborateurCustom?: CollaborateurCustomListRelationFilter
+    KanbanColumnCustom?: KanbanColumnCustomListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId" | "email">
 
@@ -36909,6 +46393,7 @@ export namespace Prisma {
     recruteurId?: StringFilter<"Collaborateur"> | string
     invitationId?: StringNullableFilter<"Collaborateur"> | string | null
     userId?: StringFilter<"Collaborateur"> | string
+    dueDate?: DateTimeNullableFilter<"Collaborateur"> | Date | string | null
     createdAt?: DateTimeFilter<"Collaborateur"> | Date | string
     updatedAt?: DateTimeFilter<"Collaborateur"> | Date | string
     applications?: ApplicationCollaborateurListRelationFilter
@@ -36926,6 +46411,7 @@ export namespace Prisma {
     recruteurId?: SortOrder
     invitationId?: SortOrderInput | SortOrder
     userId?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     applications?: ApplicationCollaborateurOrderByRelationAggregateInput
@@ -36947,6 +46433,7 @@ export namespace Prisma {
     prenom?: StringFilter<"Collaborateur"> | string
     role?: EnumRoleFilter<"Collaborateur"> | $Enums.Role
     recruteurId?: StringFilter<"Collaborateur"> | string
+    dueDate?: DateTimeNullableFilter<"Collaborateur"> | Date | string | null
     createdAt?: DateTimeFilter<"Collaborateur"> | Date | string
     updatedAt?: DateTimeFilter<"Collaborateur"> | Date | string
     applications?: ApplicationCollaborateurListRelationFilter
@@ -36964,6 +46451,7 @@ export namespace Prisma {
     recruteurId?: SortOrder
     invitationId?: SortOrderInput | SortOrder
     userId?: SortOrder
+    dueDate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: CollaborateurCountOrderByAggregateInput
@@ -36983,6 +46471,7 @@ export namespace Prisma {
     recruteurId?: StringWithAggregatesFilter<"Collaborateur"> | string
     invitationId?: StringNullableWithAggregatesFilter<"Collaborateur"> | string | null
     userId?: StringWithAggregatesFilter<"Collaborateur"> | string
+    dueDate?: DateTimeNullableWithAggregatesFilter<"Collaborateur"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Collaborateur"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Collaborateur"> | Date | string
   }
@@ -37066,6 +46555,7 @@ export namespace Prisma {
     benefits?: StringFilter<"JobOffer"> | string
     requirements?: StringFilter<"JobOffer"> | string
     responsibilities?: StringFilter<"JobOffer"> | string
+    duedate?: DateTimeNullableFilter<"JobOffer"> | Date | string | null
     skills?: StringFilter<"JobOffer"> | string
     favorite?: BoolNullableFilter<"JobOffer"> | boolean | null
     templateId?: IntNullableFilter<"JobOffer"> | number | null
@@ -37097,6 +46587,7 @@ export namespace Prisma {
     benefits?: SortOrder
     requirements?: SortOrder
     responsibilities?: SortOrder
+    duedate?: SortOrderInput | SortOrder
     skills?: SortOrder
     favorite?: SortOrderInput | SortOrder
     templateId?: SortOrderInput | SortOrder
@@ -37132,6 +46623,7 @@ export namespace Prisma {
     benefits?: StringFilter<"JobOffer"> | string
     requirements?: StringFilter<"JobOffer"> | string
     responsibilities?: StringFilter<"JobOffer"> | string
+    duedate?: DateTimeNullableFilter<"JobOffer"> | Date | string | null
     skills?: StringFilter<"JobOffer"> | string
     favorite?: BoolNullableFilter<"JobOffer"> | boolean | null
     templateId?: IntNullableFilter<"JobOffer"> | number | null
@@ -37163,6 +46655,7 @@ export namespace Prisma {
     benefits?: SortOrder
     requirements?: SortOrder
     responsibilities?: SortOrder
+    duedate?: SortOrderInput | SortOrder
     skills?: SortOrder
     favorite?: SortOrderInput | SortOrder
     templateId?: SortOrderInput | SortOrder
@@ -37196,6 +46689,7 @@ export namespace Prisma {
     benefits?: StringWithAggregatesFilter<"JobOffer"> | string
     requirements?: StringWithAggregatesFilter<"JobOffer"> | string
     responsibilities?: StringWithAggregatesFilter<"JobOffer"> | string
+    duedate?: DateTimeNullableWithAggregatesFilter<"JobOffer"> | Date | string | null
     skills?: StringWithAggregatesFilter<"JobOffer"> | string
     favorite?: BoolNullableWithAggregatesFilter<"JobOffer"> | boolean | null
     templateId?: IntNullableWithAggregatesFilter<"JobOffer"> | number | null
@@ -38794,6 +48288,750 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
   }
 
+  export type KanbanColumnCustomWhereInput = {
+    AND?: KanbanColumnCustomWhereInput | KanbanColumnCustomWhereInput[]
+    OR?: KanbanColumnCustomWhereInput[]
+    NOT?: KanbanColumnCustomWhereInput | KanbanColumnCustomWhereInput[]
+    id?: StringFilter<"KanbanColumnCustom"> | string
+    color?: StringFilter<"KanbanColumnCustom"> | string
+    name?: StringFilter<"KanbanColumnCustom"> | string
+    order?: IntFilter<"KanbanColumnCustom"> | number
+    isDefault?: BoolFilter<"KanbanColumnCustom"> | boolean
+    jobOfferId?: IntFilter<"KanbanColumnCustom"> | number
+    createdAt?: DateTimeFilter<"KanbanColumnCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"KanbanColumnCustom"> | Date | string
+    recruteurId?: StringFilter<"KanbanColumnCustom"> | string
+    applicationsCustomid?: StringFilter<"KanbanColumnCustom"> | string
+    applicationsCustom?: ApplicationCustomListRelationFilter
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
+  }
+
+  export type KanbanColumnCustomOrderByWithRelationInput = {
+    id?: SortOrder
+    color?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    isDefault?: SortOrder
+    jobOfferId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    recruteurId?: SortOrder
+    applicationsCustomid?: SortOrder
+    applicationsCustom?: ApplicationCustomOrderByRelationAggregateInput
+    recruteur?: RecruteurOrderByWithRelationInput
+    _relevance?: KanbanColumnCustomOrderByRelevanceInput
+  }
+
+  export type KanbanColumnCustomWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: KanbanColumnCustomWhereInput | KanbanColumnCustomWhereInput[]
+    OR?: KanbanColumnCustomWhereInput[]
+    NOT?: KanbanColumnCustomWhereInput | KanbanColumnCustomWhereInput[]
+    color?: StringFilter<"KanbanColumnCustom"> | string
+    name?: StringFilter<"KanbanColumnCustom"> | string
+    order?: IntFilter<"KanbanColumnCustom"> | number
+    isDefault?: BoolFilter<"KanbanColumnCustom"> | boolean
+    jobOfferId?: IntFilter<"KanbanColumnCustom"> | number
+    createdAt?: DateTimeFilter<"KanbanColumnCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"KanbanColumnCustom"> | Date | string
+    recruteurId?: StringFilter<"KanbanColumnCustom"> | string
+    applicationsCustomid?: StringFilter<"KanbanColumnCustom"> | string
+    applicationsCustom?: ApplicationCustomListRelationFilter
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
+  }, "id">
+
+  export type KanbanColumnCustomOrderByWithAggregationInput = {
+    id?: SortOrder
+    color?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    isDefault?: SortOrder
+    jobOfferId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    recruteurId?: SortOrder
+    applicationsCustomid?: SortOrder
+    _count?: KanbanColumnCustomCountOrderByAggregateInput
+    _avg?: KanbanColumnCustomAvgOrderByAggregateInput
+    _max?: KanbanColumnCustomMaxOrderByAggregateInput
+    _min?: KanbanColumnCustomMinOrderByAggregateInput
+    _sum?: KanbanColumnCustomSumOrderByAggregateInput
+  }
+
+  export type KanbanColumnCustomScalarWhereWithAggregatesInput = {
+    AND?: KanbanColumnCustomScalarWhereWithAggregatesInput | KanbanColumnCustomScalarWhereWithAggregatesInput[]
+    OR?: KanbanColumnCustomScalarWhereWithAggregatesInput[]
+    NOT?: KanbanColumnCustomScalarWhereWithAggregatesInput | KanbanColumnCustomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"KanbanColumnCustom"> | string
+    color?: StringWithAggregatesFilter<"KanbanColumnCustom"> | string
+    name?: StringWithAggregatesFilter<"KanbanColumnCustom"> | string
+    order?: IntWithAggregatesFilter<"KanbanColumnCustom"> | number
+    isDefault?: BoolWithAggregatesFilter<"KanbanColumnCustom"> | boolean
+    jobOfferId?: IntWithAggregatesFilter<"KanbanColumnCustom"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"KanbanColumnCustom"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"KanbanColumnCustom"> | Date | string
+    recruteurId?: StringWithAggregatesFilter<"KanbanColumnCustom"> | string
+    applicationsCustomid?: StringWithAggregatesFilter<"KanbanColumnCustom"> | string
+  }
+
+  export type CollaborateurCustomWhereInput = {
+    AND?: CollaborateurCustomWhereInput | CollaborateurCustomWhereInput[]
+    OR?: CollaborateurCustomWhereInput[]
+    NOT?: CollaborateurCustomWhereInput | CollaborateurCustomWhereInput[]
+    id?: StringFilter<"CollaborateurCustom"> | string
+    email?: StringFilter<"CollaborateurCustom"> | string
+    nom?: StringFilter<"CollaborateurCustom"> | string
+    prenom?: StringFilter<"CollaborateurCustom"> | string
+    role?: EnumRoleFilter<"CollaborateurCustom"> | $Enums.Role
+    recruteurId?: StringFilter<"CollaborateurCustom"> | string
+    invitationId?: StringNullableFilter<"CollaborateurCustom"> | string | null
+    userId?: StringFilter<"CollaborateurCustom"> | string
+    createdAt?: DateTimeFilter<"CollaborateurCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"CollaborateurCustom"> | Date | string
+    applications?: ApplicationCollaborateurCustomListRelationFilter
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
+  }
+
+  export type CollaborateurCustomOrderByWithRelationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    nom?: SortOrder
+    prenom?: SortOrder
+    role?: SortOrder
+    recruteurId?: SortOrder
+    invitationId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    applications?: ApplicationCollaborateurCustomOrderByRelationAggregateInput
+    recruteur?: RecruteurOrderByWithRelationInput
+    _relevance?: CollaborateurCustomOrderByRelevanceInput
+  }
+
+  export type CollaborateurCustomWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    invitationId?: string
+    userId?: string
+    AND?: CollaborateurCustomWhereInput | CollaborateurCustomWhereInput[]
+    OR?: CollaborateurCustomWhereInput[]
+    NOT?: CollaborateurCustomWhereInput | CollaborateurCustomWhereInput[]
+    nom?: StringFilter<"CollaborateurCustom"> | string
+    prenom?: StringFilter<"CollaborateurCustom"> | string
+    role?: EnumRoleFilter<"CollaborateurCustom"> | $Enums.Role
+    recruteurId?: StringFilter<"CollaborateurCustom"> | string
+    createdAt?: DateTimeFilter<"CollaborateurCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"CollaborateurCustom"> | Date | string
+    applications?: ApplicationCollaborateurCustomListRelationFilter
+    recruteur?: XOR<RecruteurScalarRelationFilter, RecruteurWhereInput>
+  }, "id" | "email" | "invitationId" | "userId">
+
+  export type CollaborateurCustomOrderByWithAggregationInput = {
+    id?: SortOrder
+    email?: SortOrder
+    nom?: SortOrder
+    prenom?: SortOrder
+    role?: SortOrder
+    recruteurId?: SortOrder
+    invitationId?: SortOrderInput | SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: CollaborateurCustomCountOrderByAggregateInput
+    _max?: CollaborateurCustomMaxOrderByAggregateInput
+    _min?: CollaborateurCustomMinOrderByAggregateInput
+  }
+
+  export type CollaborateurCustomScalarWhereWithAggregatesInput = {
+    AND?: CollaborateurCustomScalarWhereWithAggregatesInput | CollaborateurCustomScalarWhereWithAggregatesInput[]
+    OR?: CollaborateurCustomScalarWhereWithAggregatesInput[]
+    NOT?: CollaborateurCustomScalarWhereWithAggregatesInput | CollaborateurCustomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CollaborateurCustom"> | string
+    email?: StringWithAggregatesFilter<"CollaborateurCustom"> | string
+    nom?: StringWithAggregatesFilter<"CollaborateurCustom"> | string
+    prenom?: StringWithAggregatesFilter<"CollaborateurCustom"> | string
+    role?: EnumRoleWithAggregatesFilter<"CollaborateurCustom"> | $Enums.Role
+    recruteurId?: StringWithAggregatesFilter<"CollaborateurCustom"> | string
+    invitationId?: StringNullableWithAggregatesFilter<"CollaborateurCustom"> | string | null
+    userId?: StringWithAggregatesFilter<"CollaborateurCustom"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CollaborateurCustom"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CollaborateurCustom"> | Date | string
+  }
+
+  export type ApplicationFileCustomWhereInput = {
+    AND?: ApplicationFileCustomWhereInput | ApplicationFileCustomWhereInput[]
+    OR?: ApplicationFileCustomWhereInput[]
+    NOT?: ApplicationFileCustomWhereInput | ApplicationFileCustomWhereInput[]
+    id?: StringFilter<"ApplicationFileCustom"> | string
+    applicationId?: StringFilter<"ApplicationFileCustom"> | string
+    fileName?: StringFilter<"ApplicationFileCustom"> | string
+    fileUrl?: StringFilter<"ApplicationFileCustom"> | string
+    fileType?: StringFilter<"ApplicationFileCustom"> | string
+    fileSize?: IntFilter<"ApplicationFileCustom"> | number
+    uploadedById?: StringFilter<"ApplicationFileCustom"> | string
+    uploadedByType?: StringFilter<"ApplicationFileCustom"> | string
+    createdAt?: DateTimeFilter<"ApplicationFileCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationFileCustom"> | Date | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+  }
+
+  export type ApplicationFileCustomOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    application?: ApplicationCustomOrderByWithRelationInput
+    _relevance?: ApplicationFileCustomOrderByRelevanceInput
+  }
+
+  export type ApplicationFileCustomWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApplicationFileCustomWhereInput | ApplicationFileCustomWhereInput[]
+    OR?: ApplicationFileCustomWhereInput[]
+    NOT?: ApplicationFileCustomWhereInput | ApplicationFileCustomWhereInput[]
+    applicationId?: StringFilter<"ApplicationFileCustom"> | string
+    fileName?: StringFilter<"ApplicationFileCustom"> | string
+    fileUrl?: StringFilter<"ApplicationFileCustom"> | string
+    fileType?: StringFilter<"ApplicationFileCustom"> | string
+    fileSize?: IntFilter<"ApplicationFileCustom"> | number
+    uploadedById?: StringFilter<"ApplicationFileCustom"> | string
+    uploadedByType?: StringFilter<"ApplicationFileCustom"> | string
+    createdAt?: DateTimeFilter<"ApplicationFileCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationFileCustom"> | Date | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+  }, "id">
+
+  export type ApplicationFileCustomOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ApplicationFileCustomCountOrderByAggregateInput
+    _avg?: ApplicationFileCustomAvgOrderByAggregateInput
+    _max?: ApplicationFileCustomMaxOrderByAggregateInput
+    _min?: ApplicationFileCustomMinOrderByAggregateInput
+    _sum?: ApplicationFileCustomSumOrderByAggregateInput
+  }
+
+  export type ApplicationFileCustomScalarWhereWithAggregatesInput = {
+    AND?: ApplicationFileCustomScalarWhereWithAggregatesInput | ApplicationFileCustomScalarWhereWithAggregatesInput[]
+    OR?: ApplicationFileCustomScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationFileCustomScalarWhereWithAggregatesInput | ApplicationFileCustomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationFileCustom"> | string
+    applicationId?: StringWithAggregatesFilter<"ApplicationFileCustom"> | string
+    fileName?: StringWithAggregatesFilter<"ApplicationFileCustom"> | string
+    fileUrl?: StringWithAggregatesFilter<"ApplicationFileCustom"> | string
+    fileType?: StringWithAggregatesFilter<"ApplicationFileCustom"> | string
+    fileSize?: IntWithAggregatesFilter<"ApplicationFileCustom"> | number
+    uploadedById?: StringWithAggregatesFilter<"ApplicationFileCustom"> | string
+    uploadedByType?: StringWithAggregatesFilter<"ApplicationFileCustom"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ApplicationFileCustom"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ApplicationFileCustom"> | Date | string
+  }
+
+  export type ApplicationCollaborateurCustomWhereInput = {
+    AND?: ApplicationCollaborateurCustomWhereInput | ApplicationCollaborateurCustomWhereInput[]
+    OR?: ApplicationCollaborateurCustomWhereInput[]
+    NOT?: ApplicationCollaborateurCustomWhereInput | ApplicationCollaborateurCustomWhereInput[]
+    id?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    applicationId?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    collaborateurId?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    assignedAt?: DateTimeFilter<"ApplicationCollaborateurCustom"> | Date | string
+    assignedBy?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+    collaborateur?: XOR<CollaborateurCustomScalarRelationFilter, CollaborateurCustomWhereInput>
+  }
+
+  export type ApplicationCollaborateurCustomOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+    application?: ApplicationCustomOrderByWithRelationInput
+    collaborateur?: CollaborateurCustomOrderByWithRelationInput
+    _relevance?: ApplicationCollaborateurCustomOrderByRelevanceInput
+  }
+
+  export type ApplicationCollaborateurCustomWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    applicationId_collaborateurId?: ApplicationCollaborateurCustomApplicationIdCollaborateurIdCompoundUniqueInput
+    AND?: ApplicationCollaborateurCustomWhereInput | ApplicationCollaborateurCustomWhereInput[]
+    OR?: ApplicationCollaborateurCustomWhereInput[]
+    NOT?: ApplicationCollaborateurCustomWhereInput | ApplicationCollaborateurCustomWhereInput[]
+    applicationId?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    collaborateurId?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    assignedAt?: DateTimeFilter<"ApplicationCollaborateurCustom"> | Date | string
+    assignedBy?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+    collaborateur?: XOR<CollaborateurCustomScalarRelationFilter, CollaborateurCustomWhereInput>
+  }, "id" | "applicationId_collaborateurId">
+
+  export type ApplicationCollaborateurCustomOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+    _count?: ApplicationCollaborateurCustomCountOrderByAggregateInput
+    _max?: ApplicationCollaborateurCustomMaxOrderByAggregateInput
+    _min?: ApplicationCollaborateurCustomMinOrderByAggregateInput
+  }
+
+  export type ApplicationCollaborateurCustomScalarWhereWithAggregatesInput = {
+    AND?: ApplicationCollaborateurCustomScalarWhereWithAggregatesInput | ApplicationCollaborateurCustomScalarWhereWithAggregatesInput[]
+    OR?: ApplicationCollaborateurCustomScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationCollaborateurCustomScalarWhereWithAggregatesInput | ApplicationCollaborateurCustomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationCollaborateurCustom"> | string
+    applicationId?: StringWithAggregatesFilter<"ApplicationCollaborateurCustom"> | string
+    collaborateurId?: StringWithAggregatesFilter<"ApplicationCollaborateurCustom"> | string
+    assignedAt?: DateTimeWithAggregatesFilter<"ApplicationCollaborateurCustom"> | Date | string
+    assignedBy?: StringWithAggregatesFilter<"ApplicationCollaborateurCustom"> | string
+  }
+
+  export type ApplicationNoteCustomWhereInput = {
+    AND?: ApplicationNoteCustomWhereInput | ApplicationNoteCustomWhereInput[]
+    OR?: ApplicationNoteCustomWhereInput[]
+    NOT?: ApplicationNoteCustomWhereInput | ApplicationNoteCustomWhereInput[]
+    id?: StringFilter<"ApplicationNoteCustom"> | string
+    applicationId?: StringFilter<"ApplicationNoteCustom"> | string
+    content?: StringFilter<"ApplicationNoteCustom"> | string
+    authorId?: StringFilter<"ApplicationNoteCustom"> | string
+    authorName?: StringNullableFilter<"ApplicationNoteCustom"> | string | null
+    authorType?: StringFilter<"ApplicationNoteCustom"> | string
+    createdAt?: DateTimeFilter<"ApplicationNoteCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationNoteCustom"> | Date | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+  }
+
+  export type ApplicationNoteCustomOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorName?: SortOrderInput | SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    application?: ApplicationCustomOrderByWithRelationInput
+    _relevance?: ApplicationNoteCustomOrderByRelevanceInput
+  }
+
+  export type ApplicationNoteCustomWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApplicationNoteCustomWhereInput | ApplicationNoteCustomWhereInput[]
+    OR?: ApplicationNoteCustomWhereInput[]
+    NOT?: ApplicationNoteCustomWhereInput | ApplicationNoteCustomWhereInput[]
+    applicationId?: StringFilter<"ApplicationNoteCustom"> | string
+    content?: StringFilter<"ApplicationNoteCustom"> | string
+    authorId?: StringFilter<"ApplicationNoteCustom"> | string
+    authorName?: StringNullableFilter<"ApplicationNoteCustom"> | string | null
+    authorType?: StringFilter<"ApplicationNoteCustom"> | string
+    createdAt?: DateTimeFilter<"ApplicationNoteCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationNoteCustom"> | Date | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+  }, "id">
+
+  export type ApplicationNoteCustomOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorName?: SortOrderInput | SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ApplicationNoteCustomCountOrderByAggregateInput
+    _max?: ApplicationNoteCustomMaxOrderByAggregateInput
+    _min?: ApplicationNoteCustomMinOrderByAggregateInput
+  }
+
+  export type ApplicationNoteCustomScalarWhereWithAggregatesInput = {
+    AND?: ApplicationNoteCustomScalarWhereWithAggregatesInput | ApplicationNoteCustomScalarWhereWithAggregatesInput[]
+    OR?: ApplicationNoteCustomScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationNoteCustomScalarWhereWithAggregatesInput | ApplicationNoteCustomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationNoteCustom"> | string
+    applicationId?: StringWithAggregatesFilter<"ApplicationNoteCustom"> | string
+    content?: StringWithAggregatesFilter<"ApplicationNoteCustom"> | string
+    authorId?: StringWithAggregatesFilter<"ApplicationNoteCustom"> | string
+    authorName?: StringNullableWithAggregatesFilter<"ApplicationNoteCustom"> | string | null
+    authorType?: StringWithAggregatesFilter<"ApplicationNoteCustom"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ApplicationNoteCustom"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ApplicationNoteCustom"> | Date | string
+  }
+
+  export type ChecklistItemCustomWhereInput = {
+    AND?: ChecklistItemCustomWhereInput | ChecklistItemCustomWhereInput[]
+    OR?: ChecklistItemCustomWhereInput[]
+    NOT?: ChecklistItemCustomWhereInput | ChecklistItemCustomWhereInput[]
+    id?: StringFilter<"ChecklistItemCustom"> | string
+    applicationId?: StringFilter<"ChecklistItemCustom"> | string
+    title?: StringFilter<"ChecklistItemCustom"> | string
+    description?: StringNullableFilter<"ChecklistItemCustom"> | string | null
+    isCompleted?: BoolFilter<"ChecklistItemCustom"> | boolean
+    createdById?: StringFilter<"ChecklistItemCustom"> | string
+    createdByType?: StringFilter<"ChecklistItemCustom"> | string
+    createdAt?: DateTimeFilter<"ChecklistItemCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ChecklistItemCustom"> | Date | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+  }
+
+  export type ChecklistItemCustomOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    application?: ApplicationCustomOrderByWithRelationInput
+    _relevance?: ChecklistItemCustomOrderByRelevanceInput
+  }
+
+  export type ChecklistItemCustomWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ChecklistItemCustomWhereInput | ChecklistItemCustomWhereInput[]
+    OR?: ChecklistItemCustomWhereInput[]
+    NOT?: ChecklistItemCustomWhereInput | ChecklistItemCustomWhereInput[]
+    applicationId?: StringFilter<"ChecklistItemCustom"> | string
+    title?: StringFilter<"ChecklistItemCustom"> | string
+    description?: StringNullableFilter<"ChecklistItemCustom"> | string | null
+    isCompleted?: BoolFilter<"ChecklistItemCustom"> | boolean
+    createdById?: StringFilter<"ChecklistItemCustom"> | string
+    createdByType?: StringFilter<"ChecklistItemCustom"> | string
+    createdAt?: DateTimeFilter<"ChecklistItemCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ChecklistItemCustom"> | Date | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+  }, "id">
+
+  export type ChecklistItemCustomOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ChecklistItemCustomCountOrderByAggregateInput
+    _max?: ChecklistItemCustomMaxOrderByAggregateInput
+    _min?: ChecklistItemCustomMinOrderByAggregateInput
+  }
+
+  export type ChecklistItemCustomScalarWhereWithAggregatesInput = {
+    AND?: ChecklistItemCustomScalarWhereWithAggregatesInput | ChecklistItemCustomScalarWhereWithAggregatesInput[]
+    OR?: ChecklistItemCustomScalarWhereWithAggregatesInput[]
+    NOT?: ChecklistItemCustomScalarWhereWithAggregatesInput | ChecklistItemCustomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ChecklistItemCustom"> | string
+    applicationId?: StringWithAggregatesFilter<"ChecklistItemCustom"> | string
+    title?: StringWithAggregatesFilter<"ChecklistItemCustom"> | string
+    description?: StringNullableWithAggregatesFilter<"ChecklistItemCustom"> | string | null
+    isCompleted?: BoolWithAggregatesFilter<"ChecklistItemCustom"> | boolean
+    createdById?: StringWithAggregatesFilter<"ChecklistItemCustom"> | string
+    createdByType?: StringWithAggregatesFilter<"ChecklistItemCustom"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ChecklistItemCustom"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ChecklistItemCustom"> | Date | string
+  }
+
+  export type CandidatCustomWhereInput = {
+    AND?: CandidatCustomWhereInput | CandidatCustomWhereInput[]
+    OR?: CandidatCustomWhereInput[]
+    NOT?: CandidatCustomWhereInput | CandidatCustomWhereInput[]
+    id?: StringFilter<"CandidatCustom"> | string
+    nom?: StringNullableFilter<"CandidatCustom"> | string | null
+    prenom?: StringNullableFilter<"CandidatCustom"> | string | null
+    role?: EnumRoleNullableFilter<"CandidatCustom"> | $Enums.Role | null
+    createdAt?: DateTimeFilter<"CandidatCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidatCustom"> | Date | string
+    userId?: StringFilter<"CandidatCustom"> | string
+    telephone?: StringNullableFilter<"CandidatCustom"> | string | null
+    cv?: StringNullableFilter<"CandidatCustom"> | string | null
+    letterm?: StringNullableFilter<"CandidatCustom"> | string | null
+    bio?: StringNullableFilter<"CandidatCustom"> | string | null
+    adresse?: StringNullableFilter<"CandidatCustom"> | string | null
+    ville?: StringNullableFilter<"CandidatCustom"> | string | null
+    statut?: StringNullableFilter<"CandidatCustom"> | string | null
+    pays?: StringNullableFilter<"CandidatCustom"> | string | null
+    dateNaissance?: DateTimeFilter<"CandidatCustom"> | Date | string
+    nationalite?: StringNullableFilter<"CandidatCustom"> | string | null
+    situationFamiliale?: StringNullableFilter<"CandidatCustom"> | string | null
+    permisConduire?: StringNullableFilter<"CandidatCustom"> | string | null
+    image?: StringNullableFilter<"CandidatCustom"> | string | null
+    applicationId?: StringFilter<"CandidatCustom"> | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+  }
+
+  export type CandidatCustomOrderByWithRelationInput = {
+    id?: SortOrder
+    nom?: SortOrderInput | SortOrder
+    prenom?: SortOrderInput | SortOrder
+    role?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    telephone?: SortOrderInput | SortOrder
+    cv?: SortOrderInput | SortOrder
+    letterm?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
+    adresse?: SortOrderInput | SortOrder
+    ville?: SortOrderInput | SortOrder
+    statut?: SortOrderInput | SortOrder
+    pays?: SortOrderInput | SortOrder
+    dateNaissance?: SortOrder
+    nationalite?: SortOrderInput | SortOrder
+    situationFamiliale?: SortOrderInput | SortOrder
+    permisConduire?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    applicationId?: SortOrder
+    application?: ApplicationCustomOrderByWithRelationInput
+    _relevance?: CandidatCustomOrderByRelevanceInput
+  }
+
+  export type CandidatCustomWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: CandidatCustomWhereInput | CandidatCustomWhereInput[]
+    OR?: CandidatCustomWhereInput[]
+    NOT?: CandidatCustomWhereInput | CandidatCustomWhereInput[]
+    nom?: StringNullableFilter<"CandidatCustom"> | string | null
+    prenom?: StringNullableFilter<"CandidatCustom"> | string | null
+    role?: EnumRoleNullableFilter<"CandidatCustom"> | $Enums.Role | null
+    createdAt?: DateTimeFilter<"CandidatCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidatCustom"> | Date | string
+    telephone?: StringNullableFilter<"CandidatCustom"> | string | null
+    cv?: StringNullableFilter<"CandidatCustom"> | string | null
+    letterm?: StringNullableFilter<"CandidatCustom"> | string | null
+    bio?: StringNullableFilter<"CandidatCustom"> | string | null
+    adresse?: StringNullableFilter<"CandidatCustom"> | string | null
+    ville?: StringNullableFilter<"CandidatCustom"> | string | null
+    statut?: StringNullableFilter<"CandidatCustom"> | string | null
+    pays?: StringNullableFilter<"CandidatCustom"> | string | null
+    dateNaissance?: DateTimeFilter<"CandidatCustom"> | Date | string
+    nationalite?: StringNullableFilter<"CandidatCustom"> | string | null
+    situationFamiliale?: StringNullableFilter<"CandidatCustom"> | string | null
+    permisConduire?: StringNullableFilter<"CandidatCustom"> | string | null
+    image?: StringNullableFilter<"CandidatCustom"> | string | null
+    applicationId?: StringFilter<"CandidatCustom"> | string
+    application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+  }, "id" | "userId">
+
+  export type CandidatCustomOrderByWithAggregationInput = {
+    id?: SortOrder
+    nom?: SortOrderInput | SortOrder
+    prenom?: SortOrderInput | SortOrder
+    role?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    telephone?: SortOrderInput | SortOrder
+    cv?: SortOrderInput | SortOrder
+    letterm?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
+    adresse?: SortOrderInput | SortOrder
+    ville?: SortOrderInput | SortOrder
+    statut?: SortOrderInput | SortOrder
+    pays?: SortOrderInput | SortOrder
+    dateNaissance?: SortOrder
+    nationalite?: SortOrderInput | SortOrder
+    situationFamiliale?: SortOrderInput | SortOrder
+    permisConduire?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    applicationId?: SortOrder
+    _count?: CandidatCustomCountOrderByAggregateInput
+    _max?: CandidatCustomMaxOrderByAggregateInput
+    _min?: CandidatCustomMinOrderByAggregateInput
+  }
+
+  export type CandidatCustomScalarWhereWithAggregatesInput = {
+    AND?: CandidatCustomScalarWhereWithAggregatesInput | CandidatCustomScalarWhereWithAggregatesInput[]
+    OR?: CandidatCustomScalarWhereWithAggregatesInput[]
+    NOT?: CandidatCustomScalarWhereWithAggregatesInput | CandidatCustomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CandidatCustom"> | string
+    nom?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    prenom?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    role?: EnumRoleNullableWithAggregatesFilter<"CandidatCustom"> | $Enums.Role | null
+    createdAt?: DateTimeWithAggregatesFilter<"CandidatCustom"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CandidatCustom"> | Date | string
+    userId?: StringWithAggregatesFilter<"CandidatCustom"> | string
+    telephone?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    cv?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    letterm?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    bio?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    adresse?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    ville?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    statut?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    pays?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    dateNaissance?: DateTimeWithAggregatesFilter<"CandidatCustom"> | Date | string
+    nationalite?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    situationFamiliale?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    permisConduire?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    image?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    applicationId?: StringWithAggregatesFilter<"CandidatCustom"> | string
+  }
+
+  export type ApplicationCustomWhereInput = {
+    AND?: ApplicationCustomWhereInput | ApplicationCustomWhereInput[]
+    OR?: ApplicationCustomWhereInput[]
+    NOT?: ApplicationCustomWhereInput | ApplicationCustomWhereInput[]
+    id?: StringFilter<"ApplicationCustom"> | string
+    title?: StringFilter<"ApplicationCustom"> | string
+    description?: StringFilter<"ApplicationCustom"> | string
+    company?: StringFilter<"ApplicationCustom"> | string
+    location?: StringFilter<"ApplicationCustom"> | string
+    type?: StringFilter<"ApplicationCustom"> | string
+    etat?: StringFilter<"ApplicationCustom"> | string
+    experience?: StringFilter<"ApplicationCustom"> | string
+    salaryMin?: FloatFilter<"ApplicationCustom"> | number
+    salaryMax?: FloatFilter<"ApplicationCustom"> | number
+    salaryCurrency?: StringFilter<"ApplicationCustom"> | string
+    salaryPeriod?: StringFilter<"ApplicationCustom"> | string
+    benefits?: StringFilter<"ApplicationCustom"> | string
+    requirements?: StringFilter<"ApplicationCustom"> | string
+    responsibilities?: StringFilter<"ApplicationCustom"> | string
+    skills?: StringFilter<"ApplicationCustom"> | string
+    duedate?: DateTimeNullableFilter<"ApplicationCustom"> | Date | string | null
+    createdAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
+    kanbanColumnCustomid?: StringFilter<"ApplicationCustom"> | string
+    collaborateurs?: ApplicationCollaborateurCustomListRelationFilter
+    files?: ApplicationFileCustomListRelationFilter
+    notes?: ApplicationNoteCustomListRelationFilter
+    checklist?: ChecklistItemCustomListRelationFilter
+    candidatCustom?: CandidatCustomListRelationFilter
+    recruteur?: XOR<KanbanColumnCustomScalarRelationFilter, KanbanColumnCustomWhereInput>
+  }
+
+  export type ApplicationCustomOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    type?: SortOrder
+    etat?: SortOrder
+    experience?: SortOrder
+    salaryMin?: SortOrder
+    salaryMax?: SortOrder
+    salaryCurrency?: SortOrder
+    salaryPeriod?: SortOrder
+    benefits?: SortOrder
+    requirements?: SortOrder
+    responsibilities?: SortOrder
+    skills?: SortOrder
+    duedate?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kanbanColumnCustomid?: SortOrder
+    collaborateurs?: ApplicationCollaborateurCustomOrderByRelationAggregateInput
+    files?: ApplicationFileCustomOrderByRelationAggregateInput
+    notes?: ApplicationNoteCustomOrderByRelationAggregateInput
+    checklist?: ChecklistItemCustomOrderByRelationAggregateInput
+    candidatCustom?: CandidatCustomOrderByRelationAggregateInput
+    recruteur?: KanbanColumnCustomOrderByWithRelationInput
+    _relevance?: ApplicationCustomOrderByRelevanceInput
+  }
+
+  export type ApplicationCustomWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApplicationCustomWhereInput | ApplicationCustomWhereInput[]
+    OR?: ApplicationCustomWhereInput[]
+    NOT?: ApplicationCustomWhereInput | ApplicationCustomWhereInput[]
+    title?: StringFilter<"ApplicationCustom"> | string
+    description?: StringFilter<"ApplicationCustom"> | string
+    company?: StringFilter<"ApplicationCustom"> | string
+    location?: StringFilter<"ApplicationCustom"> | string
+    type?: StringFilter<"ApplicationCustom"> | string
+    etat?: StringFilter<"ApplicationCustom"> | string
+    experience?: StringFilter<"ApplicationCustom"> | string
+    salaryMin?: FloatFilter<"ApplicationCustom"> | number
+    salaryMax?: FloatFilter<"ApplicationCustom"> | number
+    salaryCurrency?: StringFilter<"ApplicationCustom"> | string
+    salaryPeriod?: StringFilter<"ApplicationCustom"> | string
+    benefits?: StringFilter<"ApplicationCustom"> | string
+    requirements?: StringFilter<"ApplicationCustom"> | string
+    responsibilities?: StringFilter<"ApplicationCustom"> | string
+    skills?: StringFilter<"ApplicationCustom"> | string
+    duedate?: DateTimeNullableFilter<"ApplicationCustom"> | Date | string | null
+    createdAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
+    kanbanColumnCustomid?: StringFilter<"ApplicationCustom"> | string
+    collaborateurs?: ApplicationCollaborateurCustomListRelationFilter
+    files?: ApplicationFileCustomListRelationFilter
+    notes?: ApplicationNoteCustomListRelationFilter
+    checklist?: ChecklistItemCustomListRelationFilter
+    candidatCustom?: CandidatCustomListRelationFilter
+    recruteur?: XOR<KanbanColumnCustomScalarRelationFilter, KanbanColumnCustomWhereInput>
+  }, "id">
+
+  export type ApplicationCustomOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    type?: SortOrder
+    etat?: SortOrder
+    experience?: SortOrder
+    salaryMin?: SortOrder
+    salaryMax?: SortOrder
+    salaryCurrency?: SortOrder
+    salaryPeriod?: SortOrder
+    benefits?: SortOrder
+    requirements?: SortOrder
+    responsibilities?: SortOrder
+    skills?: SortOrder
+    duedate?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kanbanColumnCustomid?: SortOrder
+    _count?: ApplicationCustomCountOrderByAggregateInput
+    _avg?: ApplicationCustomAvgOrderByAggregateInput
+    _max?: ApplicationCustomMaxOrderByAggregateInput
+    _min?: ApplicationCustomMinOrderByAggregateInput
+    _sum?: ApplicationCustomSumOrderByAggregateInput
+  }
+
+  export type ApplicationCustomScalarWhereWithAggregatesInput = {
+    AND?: ApplicationCustomScalarWhereWithAggregatesInput | ApplicationCustomScalarWhereWithAggregatesInput[]
+    OR?: ApplicationCustomScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationCustomScalarWhereWithAggregatesInput | ApplicationCustomScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    title?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    description?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    company?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    location?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    type?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    etat?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    experience?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    salaryMin?: FloatWithAggregatesFilter<"ApplicationCustom"> | number
+    salaryMax?: FloatWithAggregatesFilter<"ApplicationCustom"> | number
+    salaryCurrency?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    salaryPeriod?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    benefits?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    requirements?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    responsibilities?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    skills?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+    duedate?: DateTimeNullableWithAggregatesFilter<"ApplicationCustom"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ApplicationCustom"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ApplicationCustom"> | Date | string
+    kanbanColumnCustomid?: StringWithAggregatesFilter<"ApplicationCustom"> | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name?: string | null
@@ -39149,6 +49387,8 @@ export namespace Prisma {
     invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
     user: UserCreateNestedOneWithoutRecruteurInput
   }
 
@@ -39174,6 +49414,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurUpdateInput = {
@@ -39197,6 +49439,8 @@ export namespace Prisma {
     invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
     user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
@@ -39222,6 +49466,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type RecruteurCreateManyInput = {
@@ -39411,6 +49657,7 @@ export namespace Prisma {
     nom: string
     prenom: string
     role: $Enums.Role
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
@@ -39428,6 +49675,7 @@ export namespace Prisma {
     recruteurId: string
     invitationId?: string | null
     userId: string
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
@@ -39439,6 +49687,7 @@ export namespace Prisma {
     nom?: StringFieldUpdateOperationsInput | string
     prenom?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
@@ -39456,6 +49705,7 @@ export namespace Prisma {
     recruteurId?: StringFieldUpdateOperationsInput | string
     invitationId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
@@ -39470,6 +49720,7 @@ export namespace Prisma {
     recruteurId: string
     invitationId?: string | null
     userId: string
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -39480,6 +49731,7 @@ export namespace Prisma {
     nom?: StringFieldUpdateOperationsInput | string
     prenom?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39493,6 +49745,7 @@ export namespace Prisma {
     recruteurId?: StringFieldUpdateOperationsInput | string
     invitationId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39566,6 +49819,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -39595,6 +49849,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     templateId?: number | null
@@ -39623,6 +49878,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -39652,6 +49908,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -39681,6 +49938,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     templateId?: number | null
@@ -39705,6 +49963,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -39728,6 +49987,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -41384,6 +51644,844 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type KanbanColumnCustomCreateInput = {
+    id?: string
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
+    jobOfferId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applicationsCustomid: string
+    applicationsCustom?: ApplicationCustomCreateNestedManyWithoutRecruteurInput
+    recruteur: RecruteurCreateNestedOneWithoutKanbanColumnCustomInput
+  }
+
+  export type KanbanColumnCustomUncheckedCreateInput = {
+    id?: string
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
+    jobOfferId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recruteurId: string
+    applicationsCustomid: string
+    applicationsCustom?: ApplicationCustomUncheckedCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type KanbanColumnCustomUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
+    applicationsCustom?: ApplicationCustomUpdateManyWithoutRecruteurNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutKanbanColumnCustomNestedInput
+  }
+
+  export type KanbanColumnCustomUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
+    applicationsCustom?: ApplicationCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+  }
+
+  export type KanbanColumnCustomCreateManyInput = {
+    id?: string
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
+    jobOfferId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recruteurId: string
+    applicationsCustomid: string
+  }
+
+  export type KanbanColumnCustomUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type KanbanColumnCustomUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CollaborateurCustomCreateInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applications?: ApplicationCollaborateurCustomCreateNestedManyWithoutCollaborateurInput
+    recruteur: RecruteurCreateNestedOneWithoutCollaborateurCustomInput
+  }
+
+  export type CollaborateurCustomUncheckedCreateInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    recruteurId: string
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applications?: ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutCollaborateurInput
+  }
+
+  export type CollaborateurCustomUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurCustomUpdateManyWithoutCollaborateurNestedInput
+    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateurCustomNestedInput
+  }
+
+  export type CollaborateurCustomUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurCustomUncheckedUpdateManyWithoutCollaborateurNestedInput
+  }
+
+  export type CollaborateurCustomCreateManyInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    recruteurId: string
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CollaborateurCustomUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CollaborateurCustomUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileCustomCreateInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    application: ApplicationCustomCreateNestedOneWithoutFilesInput
+  }
+
+  export type ApplicationFileCustomUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileCustomUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationCustomUpdateOneRequiredWithoutFilesNestedInput
+  }
+
+  export type ApplicationFileCustomUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileCustomCreateManyInput = {
+    id?: string
+    applicationId: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileCustomUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileCustomUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCollaborateurCustomCreateInput = {
+    id?: string
+    assignedAt?: Date | string
+    assignedBy: string
+    application: ApplicationCustomCreateNestedOneWithoutCollaborateursInput
+    collaborateur: CollaborateurCustomCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurCustomUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+    application?: ApplicationCustomUpdateOneRequiredWithoutCollaborateursNestedInput
+    collaborateur?: CollaborateurCustomUpdateOneRequiredWithoutApplicationsNestedInput
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurCustomCreateManyInput = {
+    id?: string
+    applicationId: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurCustomUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationNoteCustomCreateInput = {
+    id?: string
+    content: string
+    authorId: string
+    authorName?: string | null
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    application: ApplicationCustomCreateNestedOneWithoutNotesInput
+  }
+
+  export type ApplicationNoteCustomUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    content: string
+    authorId: string
+    authorName?: string | null
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteCustomUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationCustomUpdateOneRequiredWithoutNotesNestedInput
+  }
+
+  export type ApplicationNoteCustomUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteCustomCreateManyInput = {
+    id?: string
+    applicationId: string
+    content: string
+    authorId: string
+    authorName?: string | null
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteCustomUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteCustomUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemCustomCreateInput = {
+    id?: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    application: ApplicationCustomCreateNestedOneWithoutChecklistInput
+  }
+
+  export type ChecklistItemCustomUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemCustomUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationCustomUpdateOneRequiredWithoutChecklistNestedInput
+  }
+
+  export type ChecklistItemCustomUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemCustomCreateManyInput = {
+    id?: string
+    applicationId: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemCustomUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemCustomUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidatCustomCreateInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    role?: $Enums.Role | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays?: string | null
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+    application: ApplicationCustomCreateNestedOneWithoutCandidatCustomInput
+  }
+
+  export type CandidatCustomUncheckedCreateInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    role?: $Enums.Role | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays?: string | null
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+    applicationId: string
+  }
+
+  export type CandidatCustomUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: NullableStringFieldUpdateOperationsInput | string | null
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    application?: ApplicationCustomUpdateOneRequiredWithoutCandidatCustomNestedInput
+  }
+
+  export type CandidatCustomUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: NullableStringFieldUpdateOperationsInput | string | null
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CandidatCustomCreateManyInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    role?: $Enums.Role | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays?: string | null
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+    applicationId: string
+  }
+
+  export type CandidatCustomUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: NullableStringFieldUpdateOperationsInput | string | null
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CandidatCustomUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: NullableStringFieldUpdateOperationsInput | string | null
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCustomCreateInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurCustomCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomCreateNestedManyWithoutApplicationInput
+    recruteur: KanbanColumnCustomCreateNestedOneWithoutApplicationsCustomInput
+  }
+
+  export type ApplicationCustomUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kanbanColumnCustomid: string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomUncheckedCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCustomUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurCustomUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUpdateManyWithoutApplicationNestedInput
+    recruteur?: KanbanColumnCustomUpdateOneRequiredWithoutApplicationsCustomNestedInput
+  }
+
+  export type ApplicationCustomUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kanbanColumnCustomid?: StringFieldUpdateOperationsInput | string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCustomCreateManyInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kanbanColumnCustomid: string
+  }
+
+  export type ApplicationCustomUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCustomUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kanbanColumnCustomid?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -41836,6 +52934,18 @@ export namespace Prisma {
     none?: OfferTemplateWhereInput
   }
 
+  export type CollaborateurCustomListRelationFilter = {
+    every?: CollaborateurCustomWhereInput
+    some?: CollaborateurCustomWhereInput
+    none?: CollaborateurCustomWhereInput
+  }
+
+  export type KanbanColumnCustomListRelationFilter = {
+    every?: KanbanColumnCustomWhereInput
+    some?: KanbanColumnCustomWhereInput
+    none?: KanbanColumnCustomWhereInput
+  }
+
   export type CollaborateurOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -41849,6 +52959,14 @@ export namespace Prisma {
   }
 
   export type OfferTemplateOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CollaborateurCustomOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KanbanColumnCustomOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -42053,6 +53171,7 @@ export namespace Prisma {
     recruteurId?: SortOrder
     invitationId?: SortOrder
     userId?: SortOrder
+    dueDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -42066,6 +53185,7 @@ export namespace Prisma {
     recruteurId?: SortOrder
     invitationId?: SortOrder
     userId?: SortOrder
+    dueDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -42079,6 +53199,7 @@ export namespace Prisma {
     recruteurId?: SortOrder
     invitationId?: SortOrder
     userId?: SortOrder
+    dueDate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -42213,6 +53334,7 @@ export namespace Prisma {
     benefits?: SortOrder
     requirements?: SortOrder
     responsibilities?: SortOrder
+    duedate?: SortOrder
     skills?: SortOrder
     favorite?: SortOrder
     templateId?: SortOrder
@@ -42246,6 +53368,7 @@ export namespace Prisma {
     benefits?: SortOrder
     requirements?: SortOrder
     responsibilities?: SortOrder
+    duedate?: SortOrder
     skills?: SortOrder
     favorite?: SortOrder
     templateId?: SortOrder
@@ -42271,6 +53394,7 @@ export namespace Prisma {
     benefits?: SortOrder
     requirements?: SortOrder
     responsibilities?: SortOrder
+    duedate?: SortOrder
     skills?: SortOrder
     favorite?: SortOrder
     templateId?: SortOrder
@@ -43471,6 +54595,530 @@ export namespace Prisma {
     _max?: NestedEnumSenderTypeFilter<$PrismaModel>
   }
 
+  export type ApplicationCustomListRelationFilter = {
+    every?: ApplicationCustomWhereInput
+    some?: ApplicationCustomWhereInput
+    none?: ApplicationCustomWhereInput
+  }
+
+  export type ApplicationCustomOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type KanbanColumnCustomOrderByRelevanceInput = {
+    fields: KanbanColumnCustomOrderByRelevanceFieldEnum | KanbanColumnCustomOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type KanbanColumnCustomCountOrderByAggregateInput = {
+    id?: SortOrder
+    color?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    isDefault?: SortOrder
+    jobOfferId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    recruteurId?: SortOrder
+    applicationsCustomid?: SortOrder
+  }
+
+  export type KanbanColumnCustomAvgOrderByAggregateInput = {
+    order?: SortOrder
+    jobOfferId?: SortOrder
+  }
+
+  export type KanbanColumnCustomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    color?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    isDefault?: SortOrder
+    jobOfferId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    recruteurId?: SortOrder
+    applicationsCustomid?: SortOrder
+  }
+
+  export type KanbanColumnCustomMinOrderByAggregateInput = {
+    id?: SortOrder
+    color?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    isDefault?: SortOrder
+    jobOfferId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    recruteurId?: SortOrder
+    applicationsCustomid?: SortOrder
+  }
+
+  export type KanbanColumnCustomSumOrderByAggregateInput = {
+    order?: SortOrder
+    jobOfferId?: SortOrder
+  }
+
+  export type ApplicationCollaborateurCustomListRelationFilter = {
+    every?: ApplicationCollaborateurCustomWhereInput
+    some?: ApplicationCollaborateurCustomWhereInput
+    none?: ApplicationCollaborateurCustomWhereInput
+  }
+
+  export type ApplicationCollaborateurCustomOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CollaborateurCustomOrderByRelevanceInput = {
+    fields: CollaborateurCustomOrderByRelevanceFieldEnum | CollaborateurCustomOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type CollaborateurCustomCountOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    nom?: SortOrder
+    prenom?: SortOrder
+    role?: SortOrder
+    recruteurId?: SortOrder
+    invitationId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CollaborateurCustomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    nom?: SortOrder
+    prenom?: SortOrder
+    role?: SortOrder
+    recruteurId?: SortOrder
+    invitationId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type CollaborateurCustomMinOrderByAggregateInput = {
+    id?: SortOrder
+    email?: SortOrder
+    nom?: SortOrder
+    prenom?: SortOrder
+    role?: SortOrder
+    recruteurId?: SortOrder
+    invitationId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationCustomScalarRelationFilter = {
+    is?: ApplicationCustomWhereInput
+    isNot?: ApplicationCustomWhereInput
+  }
+
+  export type ApplicationFileCustomOrderByRelevanceInput = {
+    fields: ApplicationFileCustomOrderByRelevanceFieldEnum | ApplicationFileCustomOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ApplicationFileCustomCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationFileCustomAvgOrderByAggregateInput = {
+    fileSize?: SortOrder
+  }
+
+  export type ApplicationFileCustomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationFileCustomMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    uploadedById?: SortOrder
+    uploadedByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationFileCustomSumOrderByAggregateInput = {
+    fileSize?: SortOrder
+  }
+
+  export type CollaborateurCustomScalarRelationFilter = {
+    is?: CollaborateurCustomWhereInput
+    isNot?: CollaborateurCustomWhereInput
+  }
+
+  export type ApplicationCollaborateurCustomOrderByRelevanceInput = {
+    fields: ApplicationCollaborateurCustomOrderByRelevanceFieldEnum | ApplicationCollaborateurCustomOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ApplicationCollaborateurCustomApplicationIdCollaborateurIdCompoundUniqueInput = {
+    applicationId: string
+    collaborateurId: string
+  }
+
+  export type ApplicationCollaborateurCustomCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+  }
+
+  export type ApplicationCollaborateurCustomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+  }
+
+  export type ApplicationCollaborateurCustomMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    collaborateurId?: SortOrder
+    assignedAt?: SortOrder
+    assignedBy?: SortOrder
+  }
+
+  export type ApplicationNoteCustomOrderByRelevanceInput = {
+    fields: ApplicationNoteCustomOrderByRelevanceFieldEnum | ApplicationNoteCustomOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ApplicationNoteCustomCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorName?: SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationNoteCustomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorName?: SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ApplicationNoteCustomMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    content?: SortOrder
+    authorId?: SortOrder
+    authorName?: SortOrder
+    authorType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChecklistItemCustomOrderByRelevanceInput = {
+    fields: ChecklistItemCustomOrderByRelevanceFieldEnum | ChecklistItemCustomOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ChecklistItemCustomCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChecklistItemCustomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ChecklistItemCustomMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    isCompleted?: SortOrder
+    createdById?: SortOrder
+    createdByType?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumRoleNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Role[] | null
+    notIn?: $Enums.Role[] | null
+    not?: NestedEnumRoleNullableFilter<$PrismaModel> | $Enums.Role | null
+  }
+
+  export type CandidatCustomOrderByRelevanceInput = {
+    fields: CandidatCustomOrderByRelevanceFieldEnum | CandidatCustomOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type CandidatCustomCountOrderByAggregateInput = {
+    id?: SortOrder
+    nom?: SortOrder
+    prenom?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    telephone?: SortOrder
+    cv?: SortOrder
+    letterm?: SortOrder
+    bio?: SortOrder
+    adresse?: SortOrder
+    ville?: SortOrder
+    statut?: SortOrder
+    pays?: SortOrder
+    dateNaissance?: SortOrder
+    nationalite?: SortOrder
+    situationFamiliale?: SortOrder
+    permisConduire?: SortOrder
+    image?: SortOrder
+    applicationId?: SortOrder
+  }
+
+  export type CandidatCustomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nom?: SortOrder
+    prenom?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    telephone?: SortOrder
+    cv?: SortOrder
+    letterm?: SortOrder
+    bio?: SortOrder
+    adresse?: SortOrder
+    ville?: SortOrder
+    statut?: SortOrder
+    pays?: SortOrder
+    dateNaissance?: SortOrder
+    nationalite?: SortOrder
+    situationFamiliale?: SortOrder
+    permisConduire?: SortOrder
+    image?: SortOrder
+    applicationId?: SortOrder
+  }
+
+  export type CandidatCustomMinOrderByAggregateInput = {
+    id?: SortOrder
+    nom?: SortOrder
+    prenom?: SortOrder
+    role?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    userId?: SortOrder
+    telephone?: SortOrder
+    cv?: SortOrder
+    letterm?: SortOrder
+    bio?: SortOrder
+    adresse?: SortOrder
+    ville?: SortOrder
+    statut?: SortOrder
+    pays?: SortOrder
+    dateNaissance?: SortOrder
+    nationalite?: SortOrder
+    situationFamiliale?: SortOrder
+    permisConduire?: SortOrder
+    image?: SortOrder
+    applicationId?: SortOrder
+  }
+
+  export type EnumRoleNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Role[] | null
+    notIn?: $Enums.Role[] | null
+    not?: NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel> | $Enums.Role | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumRoleNullableFilter<$PrismaModel>
+    _max?: NestedEnumRoleNullableFilter<$PrismaModel>
+  }
+
+  export type ApplicationFileCustomListRelationFilter = {
+    every?: ApplicationFileCustomWhereInput
+    some?: ApplicationFileCustomWhereInput
+    none?: ApplicationFileCustomWhereInput
+  }
+
+  export type ApplicationNoteCustomListRelationFilter = {
+    every?: ApplicationNoteCustomWhereInput
+    some?: ApplicationNoteCustomWhereInput
+    none?: ApplicationNoteCustomWhereInput
+  }
+
+  export type ChecklistItemCustomListRelationFilter = {
+    every?: ChecklistItemCustomWhereInput
+    some?: ChecklistItemCustomWhereInput
+    none?: ChecklistItemCustomWhereInput
+  }
+
+  export type CandidatCustomListRelationFilter = {
+    every?: CandidatCustomWhereInput
+    some?: CandidatCustomWhereInput
+    none?: CandidatCustomWhereInput
+  }
+
+  export type KanbanColumnCustomScalarRelationFilter = {
+    is?: KanbanColumnCustomWhereInput
+    isNot?: KanbanColumnCustomWhereInput
+  }
+
+  export type ApplicationFileCustomOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApplicationNoteCustomOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChecklistItemCustomOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CandidatCustomOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApplicationCustomOrderByRelevanceInput = {
+    fields: ApplicationCustomOrderByRelevanceFieldEnum | ApplicationCustomOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ApplicationCustomCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    type?: SortOrder
+    etat?: SortOrder
+    experience?: SortOrder
+    salaryMin?: SortOrder
+    salaryMax?: SortOrder
+    salaryCurrency?: SortOrder
+    salaryPeriod?: SortOrder
+    benefits?: SortOrder
+    requirements?: SortOrder
+    responsibilities?: SortOrder
+    skills?: SortOrder
+    duedate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kanbanColumnCustomid?: SortOrder
+  }
+
+  export type ApplicationCustomAvgOrderByAggregateInput = {
+    salaryMin?: SortOrder
+    salaryMax?: SortOrder
+  }
+
+  export type ApplicationCustomMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    type?: SortOrder
+    etat?: SortOrder
+    experience?: SortOrder
+    salaryMin?: SortOrder
+    salaryMax?: SortOrder
+    salaryCurrency?: SortOrder
+    salaryPeriod?: SortOrder
+    benefits?: SortOrder
+    requirements?: SortOrder
+    responsibilities?: SortOrder
+    skills?: SortOrder
+    duedate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kanbanColumnCustomid?: SortOrder
+  }
+
+  export type ApplicationCustomMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    company?: SortOrder
+    location?: SortOrder
+    type?: SortOrder
+    etat?: SortOrder
+    experience?: SortOrder
+    salaryMin?: SortOrder
+    salaryMax?: SortOrder
+    salaryCurrency?: SortOrder
+    salaryPeriod?: SortOrder
+    benefits?: SortOrder
+    requirements?: SortOrder
+    responsibilities?: SortOrder
+    skills?: SortOrder
+    duedate?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    kanbanColumnCustomid?: SortOrder
+  }
+
+  export type ApplicationCustomSumOrderByAggregateInput = {
+    salaryMin?: SortOrder
+    salaryMax?: SortOrder
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -44118,6 +55766,20 @@ export namespace Prisma {
     connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
   }
 
+  export type CollaborateurCustomCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<CollaborateurCustomCreateWithoutRecruteurInput, CollaborateurCustomUncheckedCreateWithoutRecruteurInput> | CollaborateurCustomCreateWithoutRecruteurInput[] | CollaborateurCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: CollaborateurCustomCreateOrConnectWithoutRecruteurInput | CollaborateurCustomCreateOrConnectWithoutRecruteurInput[]
+    createMany?: CollaborateurCustomCreateManyRecruteurInputEnvelope
+    connect?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+  }
+
+  export type KanbanColumnCustomCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<KanbanColumnCustomCreateWithoutRecruteurInput, KanbanColumnCustomUncheckedCreateWithoutRecruteurInput> | KanbanColumnCustomCreateWithoutRecruteurInput[] | KanbanColumnCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: KanbanColumnCustomCreateOrConnectWithoutRecruteurInput | KanbanColumnCustomCreateOrConnectWithoutRecruteurInput[]
+    createMany?: KanbanColumnCustomCreateManyRecruteurInputEnvelope
+    connect?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+  }
+
   export type UserCreateNestedOneWithoutRecruteurInput = {
     create?: XOR<UserCreateWithoutRecruteurInput, UserUncheckedCreateWithoutRecruteurInput>
     connectOrCreate?: UserCreateOrConnectWithoutRecruteurInput
@@ -44163,6 +55825,20 @@ export namespace Prisma {
     connectOrCreate?: OfferTemplateCreateOrConnectWithoutRecruteurInput | OfferTemplateCreateOrConnectWithoutRecruteurInput[]
     createMany?: OfferTemplateCreateManyRecruteurInputEnvelope
     connect?: OfferTemplateWhereUniqueInput | OfferTemplateWhereUniqueInput[]
+  }
+
+  export type CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<CollaborateurCustomCreateWithoutRecruteurInput, CollaborateurCustomUncheckedCreateWithoutRecruteurInput> | CollaborateurCustomCreateWithoutRecruteurInput[] | CollaborateurCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: CollaborateurCustomCreateOrConnectWithoutRecruteurInput | CollaborateurCustomCreateOrConnectWithoutRecruteurInput[]
+    createMany?: CollaborateurCustomCreateManyRecruteurInputEnvelope
+    connect?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+  }
+
+  export type KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<KanbanColumnCustomCreateWithoutRecruteurInput, KanbanColumnCustomUncheckedCreateWithoutRecruteurInput> | KanbanColumnCustomCreateWithoutRecruteurInput[] | KanbanColumnCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: KanbanColumnCustomCreateOrConnectWithoutRecruteurInput | KanbanColumnCustomCreateOrConnectWithoutRecruteurInput[]
+    createMany?: KanbanColumnCustomCreateManyRecruteurInputEnvelope
+    connect?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
   }
 
   export type EnumRecruteurTypeFieldUpdateOperationsInput = {
@@ -44247,6 +55923,34 @@ export namespace Prisma {
     update?: OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput[]
     updateMany?: OfferTemplateUpdateManyWithWhereWithoutRecruteurInput | OfferTemplateUpdateManyWithWhereWithoutRecruteurInput[]
     deleteMany?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
+  }
+
+  export type CollaborateurCustomUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<CollaborateurCustomCreateWithoutRecruteurInput, CollaborateurCustomUncheckedCreateWithoutRecruteurInput> | CollaborateurCustomCreateWithoutRecruteurInput[] | CollaborateurCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: CollaborateurCustomCreateOrConnectWithoutRecruteurInput | CollaborateurCustomCreateOrConnectWithoutRecruteurInput[]
+    upsert?: CollaborateurCustomUpsertWithWhereUniqueWithoutRecruteurInput | CollaborateurCustomUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: CollaborateurCustomCreateManyRecruteurInputEnvelope
+    set?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+    disconnect?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+    delete?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+    connect?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+    update?: CollaborateurCustomUpdateWithWhereUniqueWithoutRecruteurInput | CollaborateurCustomUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: CollaborateurCustomUpdateManyWithWhereWithoutRecruteurInput | CollaborateurCustomUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: CollaborateurCustomScalarWhereInput | CollaborateurCustomScalarWhereInput[]
+  }
+
+  export type KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<KanbanColumnCustomCreateWithoutRecruteurInput, KanbanColumnCustomUncheckedCreateWithoutRecruteurInput> | KanbanColumnCustomCreateWithoutRecruteurInput[] | KanbanColumnCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: KanbanColumnCustomCreateOrConnectWithoutRecruteurInput | KanbanColumnCustomCreateOrConnectWithoutRecruteurInput[]
+    upsert?: KanbanColumnCustomUpsertWithWhereUniqueWithoutRecruteurInput | KanbanColumnCustomUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: KanbanColumnCustomCreateManyRecruteurInputEnvelope
+    set?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+    disconnect?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+    delete?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+    connect?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+    update?: KanbanColumnCustomUpdateWithWhereUniqueWithoutRecruteurInput | KanbanColumnCustomUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: KanbanColumnCustomUpdateManyWithWhereWithoutRecruteurInput | KanbanColumnCustomUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: KanbanColumnCustomScalarWhereInput | KanbanColumnCustomScalarWhereInput[]
   }
 
   export type UserUpdateOneRequiredWithoutRecruteurNestedInput = {
@@ -44335,6 +56039,34 @@ export namespace Prisma {
     update?: OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput | OfferTemplateUpdateWithWhereUniqueWithoutRecruteurInput[]
     updateMany?: OfferTemplateUpdateManyWithWhereWithoutRecruteurInput | OfferTemplateUpdateManyWithWhereWithoutRecruteurInput[]
     deleteMany?: OfferTemplateScalarWhereInput | OfferTemplateScalarWhereInput[]
+  }
+
+  export type CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<CollaborateurCustomCreateWithoutRecruteurInput, CollaborateurCustomUncheckedCreateWithoutRecruteurInput> | CollaborateurCustomCreateWithoutRecruteurInput[] | CollaborateurCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: CollaborateurCustomCreateOrConnectWithoutRecruteurInput | CollaborateurCustomCreateOrConnectWithoutRecruteurInput[]
+    upsert?: CollaborateurCustomUpsertWithWhereUniqueWithoutRecruteurInput | CollaborateurCustomUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: CollaborateurCustomCreateManyRecruteurInputEnvelope
+    set?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+    disconnect?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+    delete?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+    connect?: CollaborateurCustomWhereUniqueInput | CollaborateurCustomWhereUniqueInput[]
+    update?: CollaborateurCustomUpdateWithWhereUniqueWithoutRecruteurInput | CollaborateurCustomUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: CollaborateurCustomUpdateManyWithWhereWithoutRecruteurInput | CollaborateurCustomUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: CollaborateurCustomScalarWhereInput | CollaborateurCustomScalarWhereInput[]
+  }
+
+  export type KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<KanbanColumnCustomCreateWithoutRecruteurInput, KanbanColumnCustomUncheckedCreateWithoutRecruteurInput> | KanbanColumnCustomCreateWithoutRecruteurInput[] | KanbanColumnCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: KanbanColumnCustomCreateOrConnectWithoutRecruteurInput | KanbanColumnCustomCreateOrConnectWithoutRecruteurInput[]
+    upsert?: KanbanColumnCustomUpsertWithWhereUniqueWithoutRecruteurInput | KanbanColumnCustomUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: KanbanColumnCustomCreateManyRecruteurInputEnvelope
+    set?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+    disconnect?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+    delete?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+    connect?: KanbanColumnCustomWhereUniqueInput | KanbanColumnCustomWhereUniqueInput[]
+    update?: KanbanColumnCustomUpdateWithWhereUniqueWithoutRecruteurInput | KanbanColumnCustomUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: KanbanColumnCustomUpdateManyWithWhereWithoutRecruteurInput | KanbanColumnCustomUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: KanbanColumnCustomScalarWhereInput | KanbanColumnCustomScalarWhereInput[]
   }
 
   export type RecruteurCreateNestedOneWithoutSocialInput = {
@@ -45569,6 +57301,430 @@ export namespace Prisma {
     update?: XOR<XOR<ConversationUpdateToOneWithWhereWithoutMessagesInput, ConversationUpdateWithoutMessagesInput>, ConversationUncheckedUpdateWithoutMessagesInput>
   }
 
+  export type ApplicationCustomCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<ApplicationCustomCreateWithoutRecruteurInput, ApplicationCustomUncheckedCreateWithoutRecruteurInput> | ApplicationCustomCreateWithoutRecruteurInput[] | ApplicationCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutRecruteurInput | ApplicationCustomCreateOrConnectWithoutRecruteurInput[]
+    createMany?: ApplicationCustomCreateManyRecruteurInputEnvelope
+    connect?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+  }
+
+  export type RecruteurCreateNestedOneWithoutKanbanColumnCustomInput = {
+    create?: XOR<RecruteurCreateWithoutKanbanColumnCustomInput, RecruteurUncheckedCreateWithoutKanbanColumnCustomInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutKanbanColumnCustomInput
+    connect?: RecruteurWhereUniqueInput
+  }
+
+  export type ApplicationCustomUncheckedCreateNestedManyWithoutRecruteurInput = {
+    create?: XOR<ApplicationCustomCreateWithoutRecruteurInput, ApplicationCustomUncheckedCreateWithoutRecruteurInput> | ApplicationCustomCreateWithoutRecruteurInput[] | ApplicationCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutRecruteurInput | ApplicationCustomCreateOrConnectWithoutRecruteurInput[]
+    createMany?: ApplicationCustomCreateManyRecruteurInputEnvelope
+    connect?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+  }
+
+  export type ApplicationCustomUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<ApplicationCustomCreateWithoutRecruteurInput, ApplicationCustomUncheckedCreateWithoutRecruteurInput> | ApplicationCustomCreateWithoutRecruteurInput[] | ApplicationCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutRecruteurInput | ApplicationCustomCreateOrConnectWithoutRecruteurInput[]
+    upsert?: ApplicationCustomUpsertWithWhereUniqueWithoutRecruteurInput | ApplicationCustomUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: ApplicationCustomCreateManyRecruteurInputEnvelope
+    set?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+    disconnect?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+    delete?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+    connect?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+    update?: ApplicationCustomUpdateWithWhereUniqueWithoutRecruteurInput | ApplicationCustomUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: ApplicationCustomUpdateManyWithWhereWithoutRecruteurInput | ApplicationCustomUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: ApplicationCustomScalarWhereInput | ApplicationCustomScalarWhereInput[]
+  }
+
+  export type RecruteurUpdateOneRequiredWithoutKanbanColumnCustomNestedInput = {
+    create?: XOR<RecruteurCreateWithoutKanbanColumnCustomInput, RecruteurUncheckedCreateWithoutKanbanColumnCustomInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutKanbanColumnCustomInput
+    upsert?: RecruteurUpsertWithoutKanbanColumnCustomInput
+    connect?: RecruteurWhereUniqueInput
+    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutKanbanColumnCustomInput, RecruteurUpdateWithoutKanbanColumnCustomInput>, RecruteurUncheckedUpdateWithoutKanbanColumnCustomInput>
+  }
+
+  export type ApplicationCustomUncheckedUpdateManyWithoutRecruteurNestedInput = {
+    create?: XOR<ApplicationCustomCreateWithoutRecruteurInput, ApplicationCustomUncheckedCreateWithoutRecruteurInput> | ApplicationCustomCreateWithoutRecruteurInput[] | ApplicationCustomUncheckedCreateWithoutRecruteurInput[]
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutRecruteurInput | ApplicationCustomCreateOrConnectWithoutRecruteurInput[]
+    upsert?: ApplicationCustomUpsertWithWhereUniqueWithoutRecruteurInput | ApplicationCustomUpsertWithWhereUniqueWithoutRecruteurInput[]
+    createMany?: ApplicationCustomCreateManyRecruteurInputEnvelope
+    set?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+    disconnect?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+    delete?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+    connect?: ApplicationCustomWhereUniqueInput | ApplicationCustomWhereUniqueInput[]
+    update?: ApplicationCustomUpdateWithWhereUniqueWithoutRecruteurInput | ApplicationCustomUpdateWithWhereUniqueWithoutRecruteurInput[]
+    updateMany?: ApplicationCustomUpdateManyWithWhereWithoutRecruteurInput | ApplicationCustomUpdateManyWithWhereWithoutRecruteurInput[]
+    deleteMany?: ApplicationCustomScalarWhereInput | ApplicationCustomScalarWhereInput[]
+  }
+
+  export type ApplicationCollaborateurCustomCreateNestedManyWithoutCollaborateurInput = {
+    create?: XOR<ApplicationCollaborateurCustomCreateWithoutCollaborateurInput, ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCustomCreateWithoutCollaborateurInput[] | ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCustomCreateManyCollaborateurInputEnvelope
+    connect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+  }
+
+  export type RecruteurCreateNestedOneWithoutCollaborateurCustomInput = {
+    create?: XOR<RecruteurCreateWithoutCollaborateurCustomInput, RecruteurUncheckedCreateWithoutCollaborateurCustomInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutCollaborateurCustomInput
+    connect?: RecruteurWhereUniqueInput
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutCollaborateurInput = {
+    create?: XOR<ApplicationCollaborateurCustomCreateWithoutCollaborateurInput, ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCustomCreateWithoutCollaborateurInput[] | ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCustomCreateManyCollaborateurInputEnvelope
+    connect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+  }
+
+  export type ApplicationCollaborateurCustomUpdateManyWithoutCollaborateurNestedInput = {
+    create?: XOR<ApplicationCollaborateurCustomCreateWithoutCollaborateurInput, ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCustomCreateWithoutCollaborateurInput[] | ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput[]
+    upsert?: ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCustomCreateManyCollaborateurInputEnvelope
+    set?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    delete?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    connect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    update?: ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutCollaborateurInput[]
+    updateMany?: ApplicationCollaborateurCustomUpdateManyWithWhereWithoutCollaborateurInput | ApplicationCollaborateurCustomUpdateManyWithWhereWithoutCollaborateurInput[]
+    deleteMany?: ApplicationCollaborateurCustomScalarWhereInput | ApplicationCollaborateurCustomScalarWhereInput[]
+  }
+
+  export type RecruteurUpdateOneRequiredWithoutCollaborateurCustomNestedInput = {
+    create?: XOR<RecruteurCreateWithoutCollaborateurCustomInput, RecruteurUncheckedCreateWithoutCollaborateurCustomInput>
+    connectOrCreate?: RecruteurCreateOrConnectWithoutCollaborateurCustomInput
+    upsert?: RecruteurUpsertWithoutCollaborateurCustomInput
+    connect?: RecruteurWhereUniqueInput
+    update?: XOR<XOR<RecruteurUpdateToOneWithWhereWithoutCollaborateurCustomInput, RecruteurUpdateWithoutCollaborateurCustomInput>, RecruteurUncheckedUpdateWithoutCollaborateurCustomInput>
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedUpdateManyWithoutCollaborateurNestedInput = {
+    create?: XOR<ApplicationCollaborateurCustomCreateWithoutCollaborateurInput, ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput> | ApplicationCollaborateurCustomCreateWithoutCollaborateurInput[] | ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput[]
+    connectOrCreate?: ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput | ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput[]
+    upsert?: ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutCollaborateurInput[]
+    createMany?: ApplicationCollaborateurCustomCreateManyCollaborateurInputEnvelope
+    set?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    delete?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    connect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    update?: ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutCollaborateurInput | ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutCollaborateurInput[]
+    updateMany?: ApplicationCollaborateurCustomUpdateManyWithWhereWithoutCollaborateurInput | ApplicationCollaborateurCustomUpdateManyWithWhereWithoutCollaborateurInput[]
+    deleteMany?: ApplicationCollaborateurCustomScalarWhereInput | ApplicationCollaborateurCustomScalarWhereInput[]
+  }
+
+  export type ApplicationCustomCreateNestedOneWithoutFilesInput = {
+    create?: XOR<ApplicationCustomCreateWithoutFilesInput, ApplicationCustomUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutFilesInput
+    connect?: ApplicationCustomWhereUniqueInput
+  }
+
+  export type ApplicationCustomUpdateOneRequiredWithoutFilesNestedInput = {
+    create?: XOR<ApplicationCustomCreateWithoutFilesInput, ApplicationCustomUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutFilesInput
+    upsert?: ApplicationCustomUpsertWithoutFilesInput
+    connect?: ApplicationCustomWhereUniqueInput
+    update?: XOR<XOR<ApplicationCustomUpdateToOneWithWhereWithoutFilesInput, ApplicationCustomUpdateWithoutFilesInput>, ApplicationCustomUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type ApplicationCustomCreateNestedOneWithoutCollaborateursInput = {
+    create?: XOR<ApplicationCustomCreateWithoutCollaborateursInput, ApplicationCustomUncheckedCreateWithoutCollaborateursInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutCollaborateursInput
+    connect?: ApplicationCustomWhereUniqueInput
+  }
+
+  export type CollaborateurCustomCreateNestedOneWithoutApplicationsInput = {
+    create?: XOR<CollaborateurCustomCreateWithoutApplicationsInput, CollaborateurCustomUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: CollaborateurCustomCreateOrConnectWithoutApplicationsInput
+    connect?: CollaborateurCustomWhereUniqueInput
+  }
+
+  export type ApplicationCustomUpdateOneRequiredWithoutCollaborateursNestedInput = {
+    create?: XOR<ApplicationCustomCreateWithoutCollaborateursInput, ApplicationCustomUncheckedCreateWithoutCollaborateursInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutCollaborateursInput
+    upsert?: ApplicationCustomUpsertWithoutCollaborateursInput
+    connect?: ApplicationCustomWhereUniqueInput
+    update?: XOR<XOR<ApplicationCustomUpdateToOneWithWhereWithoutCollaborateursInput, ApplicationCustomUpdateWithoutCollaborateursInput>, ApplicationCustomUncheckedUpdateWithoutCollaborateursInput>
+  }
+
+  export type CollaborateurCustomUpdateOneRequiredWithoutApplicationsNestedInput = {
+    create?: XOR<CollaborateurCustomCreateWithoutApplicationsInput, CollaborateurCustomUncheckedCreateWithoutApplicationsInput>
+    connectOrCreate?: CollaborateurCustomCreateOrConnectWithoutApplicationsInput
+    upsert?: CollaborateurCustomUpsertWithoutApplicationsInput
+    connect?: CollaborateurCustomWhereUniqueInput
+    update?: XOR<XOR<CollaborateurCustomUpdateToOneWithWhereWithoutApplicationsInput, CollaborateurCustomUpdateWithoutApplicationsInput>, CollaborateurCustomUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type ApplicationCustomCreateNestedOneWithoutNotesInput = {
+    create?: XOR<ApplicationCustomCreateWithoutNotesInput, ApplicationCustomUncheckedCreateWithoutNotesInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutNotesInput
+    connect?: ApplicationCustomWhereUniqueInput
+  }
+
+  export type ApplicationCustomUpdateOneRequiredWithoutNotesNestedInput = {
+    create?: XOR<ApplicationCustomCreateWithoutNotesInput, ApplicationCustomUncheckedCreateWithoutNotesInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutNotesInput
+    upsert?: ApplicationCustomUpsertWithoutNotesInput
+    connect?: ApplicationCustomWhereUniqueInput
+    update?: XOR<XOR<ApplicationCustomUpdateToOneWithWhereWithoutNotesInput, ApplicationCustomUpdateWithoutNotesInput>, ApplicationCustomUncheckedUpdateWithoutNotesInput>
+  }
+
+  export type ApplicationCustomCreateNestedOneWithoutChecklistInput = {
+    create?: XOR<ApplicationCustomCreateWithoutChecklistInput, ApplicationCustomUncheckedCreateWithoutChecklistInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutChecklistInput
+    connect?: ApplicationCustomWhereUniqueInput
+  }
+
+  export type ApplicationCustomUpdateOneRequiredWithoutChecklistNestedInput = {
+    create?: XOR<ApplicationCustomCreateWithoutChecklistInput, ApplicationCustomUncheckedCreateWithoutChecklistInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutChecklistInput
+    upsert?: ApplicationCustomUpsertWithoutChecklistInput
+    connect?: ApplicationCustomWhereUniqueInput
+    update?: XOR<XOR<ApplicationCustomUpdateToOneWithWhereWithoutChecklistInput, ApplicationCustomUpdateWithoutChecklistInput>, ApplicationCustomUncheckedUpdateWithoutChecklistInput>
+  }
+
+  export type ApplicationCustomCreateNestedOneWithoutCandidatCustomInput = {
+    create?: XOR<ApplicationCustomCreateWithoutCandidatCustomInput, ApplicationCustomUncheckedCreateWithoutCandidatCustomInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutCandidatCustomInput
+    connect?: ApplicationCustomWhereUniqueInput
+  }
+
+  export type NullableEnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role | null
+  }
+
+  export type ApplicationCustomUpdateOneRequiredWithoutCandidatCustomNestedInput = {
+    create?: XOR<ApplicationCustomCreateWithoutCandidatCustomInput, ApplicationCustomUncheckedCreateWithoutCandidatCustomInput>
+    connectOrCreate?: ApplicationCustomCreateOrConnectWithoutCandidatCustomInput
+    upsert?: ApplicationCustomUpsertWithoutCandidatCustomInput
+    connect?: ApplicationCustomWhereUniqueInput
+    update?: XOR<XOR<ApplicationCustomUpdateToOneWithWhereWithoutCandidatCustomInput, ApplicationCustomUpdateWithoutCandidatCustomInput>, ApplicationCustomUncheckedUpdateWithoutCandidatCustomInput>
+  }
+
+  export type ApplicationCollaborateurCustomCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationCollaborateurCustomCreateWithoutApplicationInput, ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCustomCreateWithoutApplicationInput[] | ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCustomCreateManyApplicationInputEnvelope
+    connect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+  }
+
+  export type ApplicationFileCustomCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationFileCustomCreateWithoutApplicationInput, ApplicationFileCustomUncheckedCreateWithoutApplicationInput> | ApplicationFileCustomCreateWithoutApplicationInput[] | ApplicationFileCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCustomCreateOrConnectWithoutApplicationInput | ApplicationFileCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationFileCustomCreateManyApplicationInputEnvelope
+    connect?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+  }
+
+  export type ApplicationNoteCustomCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationNoteCustomCreateWithoutApplicationInput, ApplicationNoteCustomUncheckedCreateWithoutApplicationInput> | ApplicationNoteCustomCreateWithoutApplicationInput[] | ApplicationNoteCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationNoteCustomCreateOrConnectWithoutApplicationInput | ApplicationNoteCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationNoteCustomCreateManyApplicationInputEnvelope
+    connect?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+  }
+
+  export type ChecklistItemCustomCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ChecklistItemCustomCreateWithoutApplicationInput, ChecklistItemCustomUncheckedCreateWithoutApplicationInput> | ChecklistItemCustomCreateWithoutApplicationInput[] | ChecklistItemCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ChecklistItemCustomCreateOrConnectWithoutApplicationInput | ChecklistItemCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: ChecklistItemCustomCreateManyApplicationInputEnvelope
+    connect?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+  }
+
+  export type CandidatCustomCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<CandidatCustomCreateWithoutApplicationInput, CandidatCustomUncheckedCreateWithoutApplicationInput> | CandidatCustomCreateWithoutApplicationInput[] | CandidatCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: CandidatCustomCreateOrConnectWithoutApplicationInput | CandidatCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: CandidatCustomCreateManyApplicationInputEnvelope
+    connect?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+  }
+
+  export type KanbanColumnCustomCreateNestedOneWithoutApplicationsCustomInput = {
+    create?: XOR<KanbanColumnCustomCreateWithoutApplicationsCustomInput, KanbanColumnCustomUncheckedCreateWithoutApplicationsCustomInput>
+    connectOrCreate?: KanbanColumnCustomCreateOrConnectWithoutApplicationsCustomInput
+    connect?: KanbanColumnCustomWhereUniqueInput
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationCollaborateurCustomCreateWithoutApplicationInput, ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCustomCreateWithoutApplicationInput[] | ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCustomCreateManyApplicationInputEnvelope
+    connect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+  }
+
+  export type ApplicationFileCustomUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationFileCustomCreateWithoutApplicationInput, ApplicationFileCustomUncheckedCreateWithoutApplicationInput> | ApplicationFileCustomCreateWithoutApplicationInput[] | ApplicationFileCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCustomCreateOrConnectWithoutApplicationInput | ApplicationFileCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationFileCustomCreateManyApplicationInputEnvelope
+    connect?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+  }
+
+  export type ApplicationNoteCustomUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationNoteCustomCreateWithoutApplicationInput, ApplicationNoteCustomUncheckedCreateWithoutApplicationInput> | ApplicationNoteCustomCreateWithoutApplicationInput[] | ApplicationNoteCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationNoteCustomCreateOrConnectWithoutApplicationInput | ApplicationNoteCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationNoteCustomCreateManyApplicationInputEnvelope
+    connect?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+  }
+
+  export type ChecklistItemCustomUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ChecklistItemCustomCreateWithoutApplicationInput, ChecklistItemCustomUncheckedCreateWithoutApplicationInput> | ChecklistItemCustomCreateWithoutApplicationInput[] | ChecklistItemCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ChecklistItemCustomCreateOrConnectWithoutApplicationInput | ChecklistItemCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: ChecklistItemCustomCreateManyApplicationInputEnvelope
+    connect?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+  }
+
+  export type CandidatCustomUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<CandidatCustomCreateWithoutApplicationInput, CandidatCustomUncheckedCreateWithoutApplicationInput> | CandidatCustomCreateWithoutApplicationInput[] | CandidatCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: CandidatCustomCreateOrConnectWithoutApplicationInput | CandidatCustomCreateOrConnectWithoutApplicationInput[]
+    createMany?: CandidatCustomCreateManyApplicationInputEnvelope
+    connect?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+  }
+
+  export type ApplicationCollaborateurCustomUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationCollaborateurCustomCreateWithoutApplicationInput, ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCustomCreateWithoutApplicationInput[] | ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCustomCreateManyApplicationInputEnvelope
+    set?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    delete?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    connect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    update?: ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationCollaborateurCustomUpdateManyWithWhereWithoutApplicationInput | ApplicationCollaborateurCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationCollaborateurCustomScalarWhereInput | ApplicationCollaborateurCustomScalarWhereInput[]
+  }
+
+  export type ApplicationFileCustomUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationFileCustomCreateWithoutApplicationInput, ApplicationFileCustomUncheckedCreateWithoutApplicationInput> | ApplicationFileCustomCreateWithoutApplicationInput[] | ApplicationFileCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCustomCreateOrConnectWithoutApplicationInput | ApplicationFileCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationFileCustomUpsertWithWhereUniqueWithoutApplicationInput | ApplicationFileCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationFileCustomCreateManyApplicationInputEnvelope
+    set?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+    disconnect?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+    delete?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+    connect?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+    update?: ApplicationFileCustomUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationFileCustomUpdateManyWithWhereWithoutApplicationInput | ApplicationFileCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationFileCustomScalarWhereInput | ApplicationFileCustomScalarWhereInput[]
+  }
+
+  export type ApplicationNoteCustomUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationNoteCustomCreateWithoutApplicationInput, ApplicationNoteCustomUncheckedCreateWithoutApplicationInput> | ApplicationNoteCustomCreateWithoutApplicationInput[] | ApplicationNoteCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationNoteCustomCreateOrConnectWithoutApplicationInput | ApplicationNoteCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationNoteCustomUpsertWithWhereUniqueWithoutApplicationInput | ApplicationNoteCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationNoteCustomCreateManyApplicationInputEnvelope
+    set?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+    disconnect?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+    delete?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+    connect?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+    update?: ApplicationNoteCustomUpdateWithWhereUniqueWithoutApplicationInput | ApplicationNoteCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationNoteCustomUpdateManyWithWhereWithoutApplicationInput | ApplicationNoteCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationNoteCustomScalarWhereInput | ApplicationNoteCustomScalarWhereInput[]
+  }
+
+  export type ChecklistItemCustomUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ChecklistItemCustomCreateWithoutApplicationInput, ChecklistItemCustomUncheckedCreateWithoutApplicationInput> | ChecklistItemCustomCreateWithoutApplicationInput[] | ChecklistItemCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ChecklistItemCustomCreateOrConnectWithoutApplicationInput | ChecklistItemCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: ChecklistItemCustomUpsertWithWhereUniqueWithoutApplicationInput | ChecklistItemCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ChecklistItemCustomCreateManyApplicationInputEnvelope
+    set?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+    disconnect?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+    delete?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+    connect?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+    update?: ChecklistItemCustomUpdateWithWhereUniqueWithoutApplicationInput | ChecklistItemCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ChecklistItemCustomUpdateManyWithWhereWithoutApplicationInput | ChecklistItemCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ChecklistItemCustomScalarWhereInput | ChecklistItemCustomScalarWhereInput[]
+  }
+
+  export type CandidatCustomUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<CandidatCustomCreateWithoutApplicationInput, CandidatCustomUncheckedCreateWithoutApplicationInput> | CandidatCustomCreateWithoutApplicationInput[] | CandidatCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: CandidatCustomCreateOrConnectWithoutApplicationInput | CandidatCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: CandidatCustomUpsertWithWhereUniqueWithoutApplicationInput | CandidatCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: CandidatCustomCreateManyApplicationInputEnvelope
+    set?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+    disconnect?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+    delete?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+    connect?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+    update?: CandidatCustomUpdateWithWhereUniqueWithoutApplicationInput | CandidatCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: CandidatCustomUpdateManyWithWhereWithoutApplicationInput | CandidatCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: CandidatCustomScalarWhereInput | CandidatCustomScalarWhereInput[]
+  }
+
+  export type KanbanColumnCustomUpdateOneRequiredWithoutApplicationsCustomNestedInput = {
+    create?: XOR<KanbanColumnCustomCreateWithoutApplicationsCustomInput, KanbanColumnCustomUncheckedCreateWithoutApplicationsCustomInput>
+    connectOrCreate?: KanbanColumnCustomCreateOrConnectWithoutApplicationsCustomInput
+    upsert?: KanbanColumnCustomUpsertWithoutApplicationsCustomInput
+    connect?: KanbanColumnCustomWhereUniqueInput
+    update?: XOR<XOR<KanbanColumnCustomUpdateToOneWithWhereWithoutApplicationsCustomInput, KanbanColumnCustomUpdateWithoutApplicationsCustomInput>, KanbanColumnCustomUncheckedUpdateWithoutApplicationsCustomInput>
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationCollaborateurCustomCreateWithoutApplicationInput, ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput> | ApplicationCollaborateurCustomCreateWithoutApplicationInput[] | ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput | ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationCollaborateurCustomCreateManyApplicationInputEnvelope
+    set?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    disconnect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    delete?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    connect?: ApplicationCollaborateurCustomWhereUniqueInput | ApplicationCollaborateurCustomWhereUniqueInput[]
+    update?: ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutApplicationInput | ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationCollaborateurCustomUpdateManyWithWhereWithoutApplicationInput | ApplicationCollaborateurCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationCollaborateurCustomScalarWhereInput | ApplicationCollaborateurCustomScalarWhereInput[]
+  }
+
+  export type ApplicationFileCustomUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationFileCustomCreateWithoutApplicationInput, ApplicationFileCustomUncheckedCreateWithoutApplicationInput> | ApplicationFileCustomCreateWithoutApplicationInput[] | ApplicationFileCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationFileCustomCreateOrConnectWithoutApplicationInput | ApplicationFileCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationFileCustomUpsertWithWhereUniqueWithoutApplicationInput | ApplicationFileCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationFileCustomCreateManyApplicationInputEnvelope
+    set?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+    disconnect?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+    delete?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+    connect?: ApplicationFileCustomWhereUniqueInput | ApplicationFileCustomWhereUniqueInput[]
+    update?: ApplicationFileCustomUpdateWithWhereUniqueWithoutApplicationInput | ApplicationFileCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationFileCustomUpdateManyWithWhereWithoutApplicationInput | ApplicationFileCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationFileCustomScalarWhereInput | ApplicationFileCustomScalarWhereInput[]
+  }
+
+  export type ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationNoteCustomCreateWithoutApplicationInput, ApplicationNoteCustomUncheckedCreateWithoutApplicationInput> | ApplicationNoteCustomCreateWithoutApplicationInput[] | ApplicationNoteCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationNoteCustomCreateOrConnectWithoutApplicationInput | ApplicationNoteCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationNoteCustomUpsertWithWhereUniqueWithoutApplicationInput | ApplicationNoteCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationNoteCustomCreateManyApplicationInputEnvelope
+    set?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+    disconnect?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+    delete?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+    connect?: ApplicationNoteCustomWhereUniqueInput | ApplicationNoteCustomWhereUniqueInput[]
+    update?: ApplicationNoteCustomUpdateWithWhereUniqueWithoutApplicationInput | ApplicationNoteCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationNoteCustomUpdateManyWithWhereWithoutApplicationInput | ApplicationNoteCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationNoteCustomScalarWhereInput | ApplicationNoteCustomScalarWhereInput[]
+  }
+
+  export type ChecklistItemCustomUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ChecklistItemCustomCreateWithoutApplicationInput, ChecklistItemCustomUncheckedCreateWithoutApplicationInput> | ChecklistItemCustomCreateWithoutApplicationInput[] | ChecklistItemCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ChecklistItemCustomCreateOrConnectWithoutApplicationInput | ChecklistItemCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: ChecklistItemCustomUpsertWithWhereUniqueWithoutApplicationInput | ChecklistItemCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ChecklistItemCustomCreateManyApplicationInputEnvelope
+    set?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+    disconnect?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+    delete?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+    connect?: ChecklistItemCustomWhereUniqueInput | ChecklistItemCustomWhereUniqueInput[]
+    update?: ChecklistItemCustomUpdateWithWhereUniqueWithoutApplicationInput | ChecklistItemCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ChecklistItemCustomUpdateManyWithWhereWithoutApplicationInput | ChecklistItemCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ChecklistItemCustomScalarWhereInput | ChecklistItemCustomScalarWhereInput[]
+  }
+
+  export type CandidatCustomUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<CandidatCustomCreateWithoutApplicationInput, CandidatCustomUncheckedCreateWithoutApplicationInput> | CandidatCustomCreateWithoutApplicationInput[] | CandidatCustomUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: CandidatCustomCreateOrConnectWithoutApplicationInput | CandidatCustomCreateOrConnectWithoutApplicationInput[]
+    upsert?: CandidatCustomUpsertWithWhereUniqueWithoutApplicationInput | CandidatCustomUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: CandidatCustomCreateManyApplicationInputEnvelope
+    set?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+    disconnect?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+    delete?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+    connect?: CandidatCustomWhereUniqueInput | CandidatCustomWhereUniqueInput[]
+    update?: CandidatCustomUpdateWithWhereUniqueWithoutApplicationInput | CandidatCustomUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: CandidatCustomUpdateManyWithWhereWithoutApplicationInput | CandidatCustomUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: CandidatCustomScalarWhereInput | CandidatCustomScalarWhereInput[]
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -45887,6 +58043,23 @@ export namespace Prisma {
     _max?: NestedEnumSenderTypeFilter<$PrismaModel>
   }
 
+  export type NestedEnumRoleNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Role[] | null
+    notIn?: $Enums.Role[] | null
+    not?: NestedEnumRoleNullableFilter<$PrismaModel> | $Enums.Role | null
+  }
+
+  export type NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Role[] | null
+    notIn?: $Enums.Role[] | null
+    not?: NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel> | $Enums.Role | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumRoleNullableFilter<$PrismaModel>
+    _max?: NestedEnumRoleNullableFilter<$PrismaModel>
+  }
+
   export type AccountCreateWithoutUserInput = {
     id?: string
     type: string
@@ -45994,6 +58167,7 @@ export namespace Prisma {
     nom: string
     prenom: string
     role: $Enums.Role
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
@@ -46009,6 +58183,7 @@ export namespace Prisma {
     role: $Enums.Role
     recruteurId: string
     invitationId?: string | null
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
@@ -46040,6 +58215,8 @@ export namespace Prisma {
     invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurUncheckedCreateWithoutUserInput = {
@@ -46063,6 +58240,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutUserInput = {
@@ -46212,6 +58391,7 @@ export namespace Prisma {
     nom?: StringFieldUpdateOperationsInput | string
     prenom?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
@@ -46227,6 +58407,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     recruteurId?: StringFieldUpdateOperationsInput | string
     invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
@@ -46264,6 +58445,8 @@ export namespace Prisma {
     invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
   }
 
   export type RecruteurUncheckedUpdateWithoutUserInput = {
@@ -46287,6 +58470,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -47121,6 +59306,7 @@ export namespace Prisma {
     nom: string
     prenom: string
     role: $Enums.Role
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
@@ -47136,6 +59322,7 @@ export namespace Prisma {
     role: $Enums.Role
     invitationId?: string | null
     userId: string
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
@@ -47245,6 +59432,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -47273,6 +59461,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     templateId?: number | null
@@ -47321,6 +59510,78 @@ export namespace Prisma {
 
   export type OfferTemplateCreateManyRecruteurInputEnvelope = {
     data: OfferTemplateCreateManyRecruteurInput | OfferTemplateCreateManyRecruteurInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CollaborateurCustomCreateWithoutRecruteurInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applications?: ApplicationCollaborateurCustomCreateNestedManyWithoutCollaborateurInput
+  }
+
+  export type CollaborateurCustomUncheckedCreateWithoutRecruteurInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applications?: ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutCollaborateurInput
+  }
+
+  export type CollaborateurCustomCreateOrConnectWithoutRecruteurInput = {
+    where: CollaborateurCustomWhereUniqueInput
+    create: XOR<CollaborateurCustomCreateWithoutRecruteurInput, CollaborateurCustomUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type CollaborateurCustomCreateManyRecruteurInputEnvelope = {
+    data: CollaborateurCustomCreateManyRecruteurInput | CollaborateurCustomCreateManyRecruteurInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KanbanColumnCustomCreateWithoutRecruteurInput = {
+    id?: string
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
+    jobOfferId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applicationsCustomid: string
+    applicationsCustom?: ApplicationCustomCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type KanbanColumnCustomUncheckedCreateWithoutRecruteurInput = {
+    id?: string
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
+    jobOfferId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applicationsCustomid: string
+    applicationsCustom?: ApplicationCustomUncheckedCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type KanbanColumnCustomCreateOrConnectWithoutRecruteurInput = {
+    where: KanbanColumnCustomWhereUniqueInput
+    create: XOR<KanbanColumnCustomCreateWithoutRecruteurInput, KanbanColumnCustomUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type KanbanColumnCustomCreateManyRecruteurInputEnvelope = {
+    data: KanbanColumnCustomCreateManyRecruteurInput | KanbanColumnCustomCreateManyRecruteurInput[]
     skipDuplicates?: boolean
   }
 
@@ -47389,6 +59650,7 @@ export namespace Prisma {
     recruteurId?: StringFilter<"Collaborateur"> | string
     invitationId?: StringNullableFilter<"Collaborateur"> | string | null
     userId?: StringFilter<"Collaborateur"> | string
+    dueDate?: DateTimeNullableFilter<"Collaborateur"> | Date | string | null
     createdAt?: DateTimeFilter<"Collaborateur"> | Date | string
     updatedAt?: DateTimeFilter<"Collaborateur"> | Date | string
   }
@@ -47497,6 +59759,7 @@ export namespace Prisma {
     benefits?: StringFilter<"JobOffer"> | string
     requirements?: StringFilter<"JobOffer"> | string
     responsibilities?: StringFilter<"JobOffer"> | string
+    duedate?: DateTimeNullableFilter<"JobOffer"> | Date | string | null
     skills?: StringFilter<"JobOffer"> | string
     favorite?: BoolNullableFilter<"JobOffer"> | boolean | null
     templateId?: IntNullableFilter<"JobOffer"> | number | null
@@ -47533,6 +59796,70 @@ export namespace Prisma {
     recruteurId?: StringFilter<"OfferTemplate"> | string
     createdAt?: DateTimeFilter<"OfferTemplate"> | Date | string
     updatedAt?: DateTimeFilter<"OfferTemplate"> | Date | string
+  }
+
+  export type CollaborateurCustomUpsertWithWhereUniqueWithoutRecruteurInput = {
+    where: CollaborateurCustomWhereUniqueInput
+    update: XOR<CollaborateurCustomUpdateWithoutRecruteurInput, CollaborateurCustomUncheckedUpdateWithoutRecruteurInput>
+    create: XOR<CollaborateurCustomCreateWithoutRecruteurInput, CollaborateurCustomUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type CollaborateurCustomUpdateWithWhereUniqueWithoutRecruteurInput = {
+    where: CollaborateurCustomWhereUniqueInput
+    data: XOR<CollaborateurCustomUpdateWithoutRecruteurInput, CollaborateurCustomUncheckedUpdateWithoutRecruteurInput>
+  }
+
+  export type CollaborateurCustomUpdateManyWithWhereWithoutRecruteurInput = {
+    where: CollaborateurCustomScalarWhereInput
+    data: XOR<CollaborateurCustomUpdateManyMutationInput, CollaborateurCustomUncheckedUpdateManyWithoutRecruteurInput>
+  }
+
+  export type CollaborateurCustomScalarWhereInput = {
+    AND?: CollaborateurCustomScalarWhereInput | CollaborateurCustomScalarWhereInput[]
+    OR?: CollaborateurCustomScalarWhereInput[]
+    NOT?: CollaborateurCustomScalarWhereInput | CollaborateurCustomScalarWhereInput[]
+    id?: StringFilter<"CollaborateurCustom"> | string
+    email?: StringFilter<"CollaborateurCustom"> | string
+    nom?: StringFilter<"CollaborateurCustom"> | string
+    prenom?: StringFilter<"CollaborateurCustom"> | string
+    role?: EnumRoleFilter<"CollaborateurCustom"> | $Enums.Role
+    recruteurId?: StringFilter<"CollaborateurCustom"> | string
+    invitationId?: StringNullableFilter<"CollaborateurCustom"> | string | null
+    userId?: StringFilter<"CollaborateurCustom"> | string
+    createdAt?: DateTimeFilter<"CollaborateurCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"CollaborateurCustom"> | Date | string
+  }
+
+  export type KanbanColumnCustomUpsertWithWhereUniqueWithoutRecruteurInput = {
+    where: KanbanColumnCustomWhereUniqueInput
+    update: XOR<KanbanColumnCustomUpdateWithoutRecruteurInput, KanbanColumnCustomUncheckedUpdateWithoutRecruteurInput>
+    create: XOR<KanbanColumnCustomCreateWithoutRecruteurInput, KanbanColumnCustomUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type KanbanColumnCustomUpdateWithWhereUniqueWithoutRecruteurInput = {
+    where: KanbanColumnCustomWhereUniqueInput
+    data: XOR<KanbanColumnCustomUpdateWithoutRecruteurInput, KanbanColumnCustomUncheckedUpdateWithoutRecruteurInput>
+  }
+
+  export type KanbanColumnCustomUpdateManyWithWhereWithoutRecruteurInput = {
+    where: KanbanColumnCustomScalarWhereInput
+    data: XOR<KanbanColumnCustomUpdateManyMutationInput, KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurInput>
+  }
+
+  export type KanbanColumnCustomScalarWhereInput = {
+    AND?: KanbanColumnCustomScalarWhereInput | KanbanColumnCustomScalarWhereInput[]
+    OR?: KanbanColumnCustomScalarWhereInput[]
+    NOT?: KanbanColumnCustomScalarWhereInput | KanbanColumnCustomScalarWhereInput[]
+    id?: StringFilter<"KanbanColumnCustom"> | string
+    color?: StringFilter<"KanbanColumnCustom"> | string
+    name?: StringFilter<"KanbanColumnCustom"> | string
+    order?: IntFilter<"KanbanColumnCustom"> | number
+    isDefault?: BoolFilter<"KanbanColumnCustom"> | boolean
+    jobOfferId?: IntFilter<"KanbanColumnCustom"> | number
+    createdAt?: DateTimeFilter<"KanbanColumnCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"KanbanColumnCustom"> | Date | string
+    recruteurId?: StringFilter<"KanbanColumnCustom"> | string
+    applicationsCustomid?: StringFilter<"KanbanColumnCustom"> | string
   }
 
   export type UserUpsertWithoutRecruteurInput = {
@@ -47598,6 +59925,8 @@ export namespace Prisma {
     invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
     user: UserCreateNestedOneWithoutRecruteurInput
   }
 
@@ -47622,6 +59951,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutSocialInput = {
@@ -47660,6 +59991,8 @@ export namespace Prisma {
     invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
     user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
@@ -47684,6 +60017,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type CollaborateurCreateWithoutInvitationInput = {
@@ -47692,6 +60027,7 @@ export namespace Prisma {
     nom: string
     prenom: string
     role: $Enums.Role
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCollaborateurCreateNestedManyWithoutCollaborateurInput
@@ -47707,6 +60043,7 @@ export namespace Prisma {
     role: $Enums.Role
     recruteurId: string
     userId: string
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCollaborateurUncheckedCreateNestedManyWithoutCollaborateurInput
@@ -47737,6 +60074,8 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
     user: UserCreateNestedOneWithoutRecruteurInput
   }
 
@@ -47761,6 +60100,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutInvitationsInput = {
@@ -47785,6 +60126,7 @@ export namespace Prisma {
     nom?: StringFieldUpdateOperationsInput | string
     prenom?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
@@ -47800,6 +60142,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     recruteurId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
@@ -47836,6 +60179,8 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
     user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
@@ -47860,6 +60205,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type ApplicationCollaborateurCreateWithoutCollaborateurInput = {
@@ -47933,6 +60280,8 @@ export namespace Prisma {
     invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
     user: UserCreateNestedOneWithoutRecruteurInput
   }
 
@@ -47957,6 +60306,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutCollaborateursInput = {
@@ -48092,6 +60443,8 @@ export namespace Prisma {
     invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
     user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
@@ -48116,6 +60469,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type UserUpsertWithoutCollaborateurInput = {
@@ -48206,6 +60561,7 @@ export namespace Prisma {
     nom: string
     prenom: string
     role: $Enums.Role
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     invitation?: InvitationCreateNestedOneWithoutCollaborateurInput
@@ -48222,6 +60578,7 @@ export namespace Prisma {
     recruteurId: string
     invitationId?: string | null
     userId: string
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -48293,6 +60650,7 @@ export namespace Prisma {
     nom?: StringFieldUpdateOperationsInput | string
     prenom?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     invitation?: InvitationUpdateOneWithoutCollaborateurNestedInput
@@ -48309,6 +60667,7 @@ export namespace Prisma {
     recruteurId?: StringFieldUpdateOperationsInput | string
     invitationId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -48407,6 +60766,8 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutRecruteurInput
     invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
     user: UserCreateNestedOneWithoutRecruteurInput
   }
 
@@ -48431,6 +60792,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutJobOfferInput = {
@@ -48579,6 +60942,8 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
     invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
     user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
@@ -48603,6 +60968,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type OfferTemplateUpsertWithoutOffersInput = {
@@ -48706,6 +61073,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -48734,6 +61102,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     templateId?: number | null
@@ -48777,6 +61146,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -48805,6 +61175,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -48832,6 +61203,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -48860,6 +61232,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -48902,6 +61275,8 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutRecruteurInput
     invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
     user: UserCreateNestedOneWithoutRecruteurInput
   }
 
@@ -48926,6 +61301,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
     invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutOfferTemplateInput = {
@@ -48980,6 +61357,8 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
     invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
     user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
@@ -49004,6 +61383,8 @@ export namespace Prisma {
     conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
     invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type CandidatCreateWithoutApplicationsInput = {
@@ -49111,6 +61492,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -49139,6 +61521,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     templateId?: number | null
@@ -49404,6 +61787,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -49432,6 +61816,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -49864,6 +62249,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -49892,6 +62278,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     templateId?: number | null
@@ -49951,6 +62338,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -49979,6 +62367,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -51501,6 +63890,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -51529,6 +63919,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     templateId?: number | null
@@ -51566,6 +63957,8 @@ export namespace Prisma {
     invitations?: InvitationCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
     user: UserCreateNestedOneWithoutRecruteurInput
   }
 
@@ -51590,6 +63983,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
     JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
     OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
   }
 
   export type RecruteurCreateOrConnectWithoutConversationsInput = {
@@ -51722,6 +64117,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -51750,6 +64146,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -51793,6 +64190,8 @@ export namespace Prisma {
     invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
     user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
   }
 
@@ -51817,6 +64216,8 @@ export namespace Prisma {
     invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
     JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
     OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -51903,6 +64304,1479 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCustomCreateWithoutRecruteurInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurCustomCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCustomUncheckedCreateWithoutRecruteurInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomUncheckedCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCustomCreateOrConnectWithoutRecruteurInput = {
+    where: ApplicationCustomWhereUniqueInput
+    create: XOR<ApplicationCustomCreateWithoutRecruteurInput, ApplicationCustomUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type ApplicationCustomCreateManyRecruteurInputEnvelope = {
+    data: ApplicationCustomCreateManyRecruteurInput | ApplicationCustomCreateManyRecruteurInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RecruteurCreateWithoutKanbanColumnCustomInput = {
+    id?: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
+  }
+
+  export type RecruteurUncheckedCreateWithoutKanbanColumnCustomInput = {
+    id?: string
+    userId: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type RecruteurCreateOrConnectWithoutKanbanColumnCustomInput = {
+    where: RecruteurWhereUniqueInput
+    create: XOR<RecruteurCreateWithoutKanbanColumnCustomInput, RecruteurUncheckedCreateWithoutKanbanColumnCustomInput>
+  }
+
+  export type ApplicationCustomUpsertWithWhereUniqueWithoutRecruteurInput = {
+    where: ApplicationCustomWhereUniqueInput
+    update: XOR<ApplicationCustomUpdateWithoutRecruteurInput, ApplicationCustomUncheckedUpdateWithoutRecruteurInput>
+    create: XOR<ApplicationCustomCreateWithoutRecruteurInput, ApplicationCustomUncheckedCreateWithoutRecruteurInput>
+  }
+
+  export type ApplicationCustomUpdateWithWhereUniqueWithoutRecruteurInput = {
+    where: ApplicationCustomWhereUniqueInput
+    data: XOR<ApplicationCustomUpdateWithoutRecruteurInput, ApplicationCustomUncheckedUpdateWithoutRecruteurInput>
+  }
+
+  export type ApplicationCustomUpdateManyWithWhereWithoutRecruteurInput = {
+    where: ApplicationCustomScalarWhereInput
+    data: XOR<ApplicationCustomUpdateManyMutationInput, ApplicationCustomUncheckedUpdateManyWithoutRecruteurInput>
+  }
+
+  export type ApplicationCustomScalarWhereInput = {
+    AND?: ApplicationCustomScalarWhereInput | ApplicationCustomScalarWhereInput[]
+    OR?: ApplicationCustomScalarWhereInput[]
+    NOT?: ApplicationCustomScalarWhereInput | ApplicationCustomScalarWhereInput[]
+    id?: StringFilter<"ApplicationCustom"> | string
+    title?: StringFilter<"ApplicationCustom"> | string
+    description?: StringFilter<"ApplicationCustom"> | string
+    company?: StringFilter<"ApplicationCustom"> | string
+    location?: StringFilter<"ApplicationCustom"> | string
+    type?: StringFilter<"ApplicationCustom"> | string
+    etat?: StringFilter<"ApplicationCustom"> | string
+    experience?: StringFilter<"ApplicationCustom"> | string
+    salaryMin?: FloatFilter<"ApplicationCustom"> | number
+    salaryMax?: FloatFilter<"ApplicationCustom"> | number
+    salaryCurrency?: StringFilter<"ApplicationCustom"> | string
+    salaryPeriod?: StringFilter<"ApplicationCustom"> | string
+    benefits?: StringFilter<"ApplicationCustom"> | string
+    requirements?: StringFilter<"ApplicationCustom"> | string
+    responsibilities?: StringFilter<"ApplicationCustom"> | string
+    skills?: StringFilter<"ApplicationCustom"> | string
+    duedate?: DateTimeNullableFilter<"ApplicationCustom"> | Date | string | null
+    createdAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
+    kanbanColumnCustomid?: StringFilter<"ApplicationCustom"> | string
+  }
+
+  export type RecruteurUpsertWithoutKanbanColumnCustomInput = {
+    update: XOR<RecruteurUpdateWithoutKanbanColumnCustomInput, RecruteurUncheckedUpdateWithoutKanbanColumnCustomInput>
+    create: XOR<RecruteurCreateWithoutKanbanColumnCustomInput, RecruteurUncheckedCreateWithoutKanbanColumnCustomInput>
+    where?: RecruteurWhereInput
+  }
+
+  export type RecruteurUpdateToOneWithWhereWithoutKanbanColumnCustomInput = {
+    where?: RecruteurWhereInput
+    data: XOR<RecruteurUpdateWithoutKanbanColumnCustomInput, RecruteurUncheckedUpdateWithoutKanbanColumnCustomInput>
+  }
+
+  export type RecruteurUpdateWithoutKanbanColumnCustomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
+  }
+
+  export type RecruteurUncheckedUpdateWithoutKanbanColumnCustomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    CollaborateurCustom?: CollaborateurCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+  }
+
+  export type ApplicationCollaborateurCustomCreateWithoutCollaborateurInput = {
+    id?: string
+    assignedAt?: Date | string
+    assignedBy: string
+    application: ApplicationCustomCreateNestedOneWithoutCollaborateursInput
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput = {
+    id?: string
+    applicationId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurCustomCreateOrConnectWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+    create: XOR<ApplicationCollaborateurCustomCreateWithoutCollaborateurInput, ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurCustomCreateManyCollaborateurInputEnvelope = {
+    data: ApplicationCollaborateurCustomCreateManyCollaborateurInput | ApplicationCollaborateurCustomCreateManyCollaborateurInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RecruteurCreateWithoutCollaborateurCustomInput = {
+    id?: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomCreateNestedManyWithoutRecruteurInput
+    user: UserCreateNestedOneWithoutRecruteurInput
+  }
+
+  export type RecruteurUncheckedCreateWithoutCollaborateurCustomInput = {
+    id?: string
+    userId: string
+    type: $Enums.RecruteurType
+    entreprise?: string | null
+    description?: string | null
+    name: string
+    logo?: string | null
+    industry?: string | null
+    size?: string | null
+    location?: string | null
+    website?: string | null
+    email: string
+    phone?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: CollaborateurUncheckedCreateNestedManyWithoutRecruteurInput
+    social?: CompanySocialUncheckedCreateNestedOneWithoutRecruteurInput
+    conversations?: ConversationUncheckedCreateNestedManyWithoutRecruteurInput
+    invitations?: InvitationUncheckedCreateNestedManyWithoutRecruteurInput
+    JobOffer?: JobOfferUncheckedCreateNestedManyWithoutRecruteurInput
+    OfferTemplate?: OfferTemplateUncheckedCreateNestedManyWithoutRecruteurInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedCreateNestedManyWithoutRecruteurInput
+  }
+
+  export type RecruteurCreateOrConnectWithoutCollaborateurCustomInput = {
+    where: RecruteurWhereUniqueInput
+    create: XOR<RecruteurCreateWithoutCollaborateurCustomInput, RecruteurUncheckedCreateWithoutCollaborateurCustomInput>
+  }
+
+  export type ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+    update: XOR<ApplicationCollaborateurCustomUpdateWithoutCollaborateurInput, ApplicationCollaborateurCustomUncheckedUpdateWithoutCollaborateurInput>
+    create: XOR<ApplicationCollaborateurCustomCreateWithoutCollaborateurInput, ApplicationCollaborateurCustomUncheckedCreateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+    data: XOR<ApplicationCollaborateurCustomUpdateWithoutCollaborateurInput, ApplicationCollaborateurCustomUncheckedUpdateWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurCustomUpdateManyWithWhereWithoutCollaborateurInput = {
+    where: ApplicationCollaborateurCustomScalarWhereInput
+    data: XOR<ApplicationCollaborateurCustomUpdateManyMutationInput, ApplicationCollaborateurCustomUncheckedUpdateManyWithoutCollaborateurInput>
+  }
+
+  export type ApplicationCollaborateurCustomScalarWhereInput = {
+    AND?: ApplicationCollaborateurCustomScalarWhereInput | ApplicationCollaborateurCustomScalarWhereInput[]
+    OR?: ApplicationCollaborateurCustomScalarWhereInput[]
+    NOT?: ApplicationCollaborateurCustomScalarWhereInput | ApplicationCollaborateurCustomScalarWhereInput[]
+    id?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    applicationId?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    collaborateurId?: StringFilter<"ApplicationCollaborateurCustom"> | string
+    assignedAt?: DateTimeFilter<"ApplicationCollaborateurCustom"> | Date | string
+    assignedBy?: StringFilter<"ApplicationCollaborateurCustom"> | string
+  }
+
+  export type RecruteurUpsertWithoutCollaborateurCustomInput = {
+    update: XOR<RecruteurUpdateWithoutCollaborateurCustomInput, RecruteurUncheckedUpdateWithoutCollaborateurCustomInput>
+    create: XOR<RecruteurCreateWithoutCollaborateurCustomInput, RecruteurUncheckedCreateWithoutCollaborateurCustomInput>
+    where?: RecruteurWhereInput
+  }
+
+  export type RecruteurUpdateToOneWithWhereWithoutCollaborateurCustomInput = {
+    where?: RecruteurWhereInput
+    data: XOR<RecruteurUpdateWithoutCollaborateurCustomInput, RecruteurUncheckedUpdateWithoutCollaborateurCustomInput>
+  }
+
+  export type RecruteurUpdateWithoutCollaborateurCustomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: CollaborateurUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUpdateManyWithoutRecruteurNestedInput
+    user?: UserUpdateOneRequiredWithoutRecruteurNestedInput
+  }
+
+  export type RecruteurUncheckedUpdateWithoutCollaborateurCustomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    type?: EnumRecruteurTypeFieldUpdateOperationsInput | $Enums.RecruteurType
+    entreprise?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    logo?: NullableStringFieldUpdateOperationsInput | string | null
+    industry?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: CollaborateurUncheckedUpdateManyWithoutRecruteurNestedInput
+    social?: CompanySocialUncheckedUpdateOneWithoutRecruteurNestedInput
+    conversations?: ConversationUncheckedUpdateManyWithoutRecruteurNestedInput
+    invitations?: InvitationUncheckedUpdateManyWithoutRecruteurNestedInput
+    JobOffer?: JobOfferUncheckedUpdateManyWithoutRecruteurNestedInput
+    OfferTemplate?: OfferTemplateUncheckedUpdateManyWithoutRecruteurNestedInput
+    KanbanColumnCustom?: KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+  }
+
+  export type ApplicationCustomCreateWithoutFilesInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurCustomCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomCreateNestedManyWithoutApplicationInput
+    recruteur: KanbanColumnCustomCreateNestedOneWithoutApplicationsCustomInput
+  }
+
+  export type ApplicationCustomUncheckedCreateWithoutFilesInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kanbanColumnCustomid: string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomUncheckedCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCustomCreateOrConnectWithoutFilesInput = {
+    where: ApplicationCustomWhereUniqueInput
+    create: XOR<ApplicationCustomCreateWithoutFilesInput, ApplicationCustomUncheckedCreateWithoutFilesInput>
+  }
+
+  export type ApplicationCustomUpsertWithoutFilesInput = {
+    update: XOR<ApplicationCustomUpdateWithoutFilesInput, ApplicationCustomUncheckedUpdateWithoutFilesInput>
+    create: XOR<ApplicationCustomCreateWithoutFilesInput, ApplicationCustomUncheckedCreateWithoutFilesInput>
+    where?: ApplicationCustomWhereInput
+  }
+
+  export type ApplicationCustomUpdateToOneWithWhereWithoutFilesInput = {
+    where?: ApplicationCustomWhereInput
+    data: XOR<ApplicationCustomUpdateWithoutFilesInput, ApplicationCustomUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type ApplicationCustomUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurCustomUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUpdateManyWithoutApplicationNestedInput
+    recruteur?: KanbanColumnCustomUpdateOneRequiredWithoutApplicationsCustomNestedInput
+  }
+
+  export type ApplicationCustomUncheckedUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kanbanColumnCustomid?: StringFieldUpdateOperationsInput | string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCustomCreateWithoutCollaborateursInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    files?: ApplicationFileCustomCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomCreateNestedManyWithoutApplicationInput
+    recruteur: KanbanColumnCustomCreateNestedOneWithoutApplicationsCustomInput
+  }
+
+  export type ApplicationCustomUncheckedCreateWithoutCollaborateursInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kanbanColumnCustomid: string
+    files?: ApplicationFileCustomUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomUncheckedCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCustomCreateOrConnectWithoutCollaborateursInput = {
+    where: ApplicationCustomWhereUniqueInput
+    create: XOR<ApplicationCustomCreateWithoutCollaborateursInput, ApplicationCustomUncheckedCreateWithoutCollaborateursInput>
+  }
+
+  export type CollaborateurCustomCreateWithoutApplicationsInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recruteur: RecruteurCreateNestedOneWithoutCollaborateurCustomInput
+  }
+
+  export type CollaborateurCustomUncheckedCreateWithoutApplicationsInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    recruteurId: string
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CollaborateurCustomCreateOrConnectWithoutApplicationsInput = {
+    where: CollaborateurCustomWhereUniqueInput
+    create: XOR<CollaborateurCustomCreateWithoutApplicationsInput, CollaborateurCustomUncheckedCreateWithoutApplicationsInput>
+  }
+
+  export type ApplicationCustomUpsertWithoutCollaborateursInput = {
+    update: XOR<ApplicationCustomUpdateWithoutCollaborateursInput, ApplicationCustomUncheckedUpdateWithoutCollaborateursInput>
+    create: XOR<ApplicationCustomCreateWithoutCollaborateursInput, ApplicationCustomUncheckedCreateWithoutCollaborateursInput>
+    where?: ApplicationCustomWhereInput
+  }
+
+  export type ApplicationCustomUpdateToOneWithWhereWithoutCollaborateursInput = {
+    where?: ApplicationCustomWhereInput
+    data: XOR<ApplicationCustomUpdateWithoutCollaborateursInput, ApplicationCustomUncheckedUpdateWithoutCollaborateursInput>
+  }
+
+  export type ApplicationCustomUpdateWithoutCollaborateursInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    files?: ApplicationFileCustomUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUpdateManyWithoutApplicationNestedInput
+    recruteur?: KanbanColumnCustomUpdateOneRequiredWithoutApplicationsCustomNestedInput
+  }
+
+  export type ApplicationCustomUncheckedUpdateWithoutCollaborateursInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kanbanColumnCustomid?: StringFieldUpdateOperationsInput | string
+    files?: ApplicationFileCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type CollaborateurCustomUpsertWithoutApplicationsInput = {
+    update: XOR<CollaborateurCustomUpdateWithoutApplicationsInput, CollaborateurCustomUncheckedUpdateWithoutApplicationsInput>
+    create: XOR<CollaborateurCustomCreateWithoutApplicationsInput, CollaborateurCustomUncheckedCreateWithoutApplicationsInput>
+    where?: CollaborateurCustomWhereInput
+  }
+
+  export type CollaborateurCustomUpdateToOneWithWhereWithoutApplicationsInput = {
+    where?: CollaborateurCustomWhereInput
+    data: XOR<CollaborateurCustomUpdateWithoutApplicationsInput, CollaborateurCustomUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type CollaborateurCustomUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recruteur?: RecruteurUpdateOneRequiredWithoutCollaborateurCustomNestedInput
+  }
+
+  export type CollaborateurCustomUncheckedUpdateWithoutApplicationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCustomCreateWithoutNotesInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurCustomCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomCreateNestedManyWithoutApplicationInput
+    recruteur: KanbanColumnCustomCreateNestedOneWithoutApplicationsCustomInput
+  }
+
+  export type ApplicationCustomUncheckedCreateWithoutNotesInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kanbanColumnCustomid: string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomUncheckedCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCustomCreateOrConnectWithoutNotesInput = {
+    where: ApplicationCustomWhereUniqueInput
+    create: XOR<ApplicationCustomCreateWithoutNotesInput, ApplicationCustomUncheckedCreateWithoutNotesInput>
+  }
+
+  export type ApplicationCustomUpsertWithoutNotesInput = {
+    update: XOR<ApplicationCustomUpdateWithoutNotesInput, ApplicationCustomUncheckedUpdateWithoutNotesInput>
+    create: XOR<ApplicationCustomCreateWithoutNotesInput, ApplicationCustomUncheckedCreateWithoutNotesInput>
+    where?: ApplicationCustomWhereInput
+  }
+
+  export type ApplicationCustomUpdateToOneWithWhereWithoutNotesInput = {
+    where?: ApplicationCustomWhereInput
+    data: XOR<ApplicationCustomUpdateWithoutNotesInput, ApplicationCustomUncheckedUpdateWithoutNotesInput>
+  }
+
+  export type ApplicationCustomUpdateWithoutNotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurCustomUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUpdateManyWithoutApplicationNestedInput
+    recruteur?: KanbanColumnCustomUpdateOneRequiredWithoutApplicationsCustomNestedInput
+  }
+
+  export type ApplicationCustomUncheckedUpdateWithoutNotesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kanbanColumnCustomid?: StringFieldUpdateOperationsInput | string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCustomCreateWithoutChecklistInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurCustomCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomCreateNestedManyWithoutApplicationInput
+    recruteur: KanbanColumnCustomCreateNestedOneWithoutApplicationsCustomInput
+  }
+
+  export type ApplicationCustomUncheckedCreateWithoutChecklistInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kanbanColumnCustomid: string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomUncheckedCreateNestedManyWithoutApplicationInput
+    candidatCustom?: CandidatCustomUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCustomCreateOrConnectWithoutChecklistInput = {
+    where: ApplicationCustomWhereUniqueInput
+    create: XOR<ApplicationCustomCreateWithoutChecklistInput, ApplicationCustomUncheckedCreateWithoutChecklistInput>
+  }
+
+  export type ApplicationCustomUpsertWithoutChecklistInput = {
+    update: XOR<ApplicationCustomUpdateWithoutChecklistInput, ApplicationCustomUncheckedUpdateWithoutChecklistInput>
+    create: XOR<ApplicationCustomCreateWithoutChecklistInput, ApplicationCustomUncheckedCreateWithoutChecklistInput>
+    where?: ApplicationCustomWhereInput
+  }
+
+  export type ApplicationCustomUpdateToOneWithWhereWithoutChecklistInput = {
+    where?: ApplicationCustomWhereInput
+    data: XOR<ApplicationCustomUpdateWithoutChecklistInput, ApplicationCustomUncheckedUpdateWithoutChecklistInput>
+  }
+
+  export type ApplicationCustomUpdateWithoutChecklistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurCustomUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUpdateManyWithoutApplicationNestedInput
+    recruteur?: KanbanColumnCustomUpdateOneRequiredWithoutApplicationsCustomNestedInput
+  }
+
+  export type ApplicationCustomUncheckedUpdateWithoutChecklistInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kanbanColumnCustomid?: StringFieldUpdateOperationsInput | string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCustomCreateWithoutCandidatCustomInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    collaborateurs?: ApplicationCollaborateurCustomCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomCreateNestedManyWithoutApplicationInput
+    recruteur: KanbanColumnCustomCreateNestedOneWithoutApplicationsCustomInput
+  }
+
+  export type ApplicationCustomUncheckedCreateWithoutCandidatCustomInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    kanbanColumnCustomid: string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedCreateNestedManyWithoutApplicationInput
+    files?: ApplicationFileCustomUncheckedCreateNestedManyWithoutApplicationInput
+    notes?: ApplicationNoteCustomUncheckedCreateNestedManyWithoutApplicationInput
+    checklist?: ChecklistItemCustomUncheckedCreateNestedManyWithoutApplicationInput
+  }
+
+  export type ApplicationCustomCreateOrConnectWithoutCandidatCustomInput = {
+    where: ApplicationCustomWhereUniqueInput
+    create: XOR<ApplicationCustomCreateWithoutCandidatCustomInput, ApplicationCustomUncheckedCreateWithoutCandidatCustomInput>
+  }
+
+  export type ApplicationCustomUpsertWithoutCandidatCustomInput = {
+    update: XOR<ApplicationCustomUpdateWithoutCandidatCustomInput, ApplicationCustomUncheckedUpdateWithoutCandidatCustomInput>
+    create: XOR<ApplicationCustomCreateWithoutCandidatCustomInput, ApplicationCustomUncheckedCreateWithoutCandidatCustomInput>
+    where?: ApplicationCustomWhereInput
+  }
+
+  export type ApplicationCustomUpdateToOneWithWhereWithoutCandidatCustomInput = {
+    where?: ApplicationCustomWhereInput
+    data: XOR<ApplicationCustomUpdateWithoutCandidatCustomInput, ApplicationCustomUncheckedUpdateWithoutCandidatCustomInput>
+  }
+
+  export type ApplicationCustomUpdateWithoutCandidatCustomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurCustomUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUpdateManyWithoutApplicationNestedInput
+    recruteur?: KanbanColumnCustomUpdateOneRequiredWithoutApplicationsCustomNestedInput
+  }
+
+  export type ApplicationCustomUncheckedUpdateWithoutCandidatCustomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kanbanColumnCustomid?: StringFieldUpdateOperationsInput | string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCollaborateurCustomCreateWithoutApplicationInput = {
+    id?: string
+    assignedAt?: Date | string
+    assignedBy: string
+    collaborateur: CollaborateurCustomCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurCustomCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+    create: XOR<ApplicationCollaborateurCustomCreateWithoutApplicationInput, ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurCustomCreateManyApplicationInputEnvelope = {
+    data: ApplicationCollaborateurCustomCreateManyApplicationInput | ApplicationCollaborateurCustomCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationFileCustomCreateWithoutApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileCustomUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationFileCustomCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationFileCustomWhereUniqueInput
+    create: XOR<ApplicationFileCustomCreateWithoutApplicationInput, ApplicationFileCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileCustomCreateManyApplicationInputEnvelope = {
+    data: ApplicationFileCustomCreateManyApplicationInput | ApplicationFileCustomCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationNoteCustomCreateWithoutApplicationInput = {
+    id?: string
+    content: string
+    authorId: string
+    authorName?: string | null
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteCustomUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    content: string
+    authorId: string
+    authorName?: string | null
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteCustomCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationNoteCustomWhereUniqueInput
+    create: XOR<ApplicationNoteCustomCreateWithoutApplicationInput, ApplicationNoteCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationNoteCustomCreateManyApplicationInputEnvelope = {
+    data: ApplicationNoteCustomCreateManyApplicationInput | ApplicationNoteCustomCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ChecklistItemCustomCreateWithoutApplicationInput = {
+    id?: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemCustomUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemCustomCreateOrConnectWithoutApplicationInput = {
+    where: ChecklistItemCustomWhereUniqueInput
+    create: XOR<ChecklistItemCustomCreateWithoutApplicationInput, ChecklistItemCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ChecklistItemCustomCreateManyApplicationInputEnvelope = {
+    data: ChecklistItemCustomCreateManyApplicationInput | ChecklistItemCustomCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type CandidatCustomCreateWithoutApplicationInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    role?: $Enums.Role | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays?: string | null
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+  }
+
+  export type CandidatCustomUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    role?: $Enums.Role | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays?: string | null
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+  }
+
+  export type CandidatCustomCreateOrConnectWithoutApplicationInput = {
+    where: CandidatCustomWhereUniqueInput
+    create: XOR<CandidatCustomCreateWithoutApplicationInput, CandidatCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type CandidatCustomCreateManyApplicationInputEnvelope = {
+    data: CandidatCustomCreateManyApplicationInput | CandidatCustomCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KanbanColumnCustomCreateWithoutApplicationsCustomInput = {
+    id?: string
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
+    jobOfferId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applicationsCustomid: string
+    recruteur: RecruteurCreateNestedOneWithoutKanbanColumnCustomInput
+  }
+
+  export type KanbanColumnCustomUncheckedCreateWithoutApplicationsCustomInput = {
+    id?: string
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
+    jobOfferId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    recruteurId: string
+    applicationsCustomid: string
+  }
+
+  export type KanbanColumnCustomCreateOrConnectWithoutApplicationsCustomInput = {
+    where: KanbanColumnCustomWhereUniqueInput
+    create: XOR<KanbanColumnCustomCreateWithoutApplicationsCustomInput, KanbanColumnCustomUncheckedCreateWithoutApplicationsCustomInput>
+  }
+
+  export type ApplicationCollaborateurCustomUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+    update: XOR<ApplicationCollaborateurCustomUpdateWithoutApplicationInput, ApplicationCollaborateurCustomUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationCollaborateurCustomCreateWithoutApplicationInput, ApplicationCollaborateurCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurCustomUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationCollaborateurCustomWhereUniqueInput
+    data: XOR<ApplicationCollaborateurCustomUpdateWithoutApplicationInput, ApplicationCollaborateurCustomUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationCollaborateurCustomUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationCollaborateurCustomScalarWhereInput
+    data: XOR<ApplicationCollaborateurCustomUpdateManyMutationInput, ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationFileCustomUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationFileCustomWhereUniqueInput
+    update: XOR<ApplicationFileCustomUpdateWithoutApplicationInput, ApplicationFileCustomUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationFileCustomCreateWithoutApplicationInput, ApplicationFileCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileCustomUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationFileCustomWhereUniqueInput
+    data: XOR<ApplicationFileCustomUpdateWithoutApplicationInput, ApplicationFileCustomUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationFileCustomUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationFileCustomScalarWhereInput
+    data: XOR<ApplicationFileCustomUpdateManyMutationInput, ApplicationFileCustomUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationFileCustomScalarWhereInput = {
+    AND?: ApplicationFileCustomScalarWhereInput | ApplicationFileCustomScalarWhereInput[]
+    OR?: ApplicationFileCustomScalarWhereInput[]
+    NOT?: ApplicationFileCustomScalarWhereInput | ApplicationFileCustomScalarWhereInput[]
+    id?: StringFilter<"ApplicationFileCustom"> | string
+    applicationId?: StringFilter<"ApplicationFileCustom"> | string
+    fileName?: StringFilter<"ApplicationFileCustom"> | string
+    fileUrl?: StringFilter<"ApplicationFileCustom"> | string
+    fileType?: StringFilter<"ApplicationFileCustom"> | string
+    fileSize?: IntFilter<"ApplicationFileCustom"> | number
+    uploadedById?: StringFilter<"ApplicationFileCustom"> | string
+    uploadedByType?: StringFilter<"ApplicationFileCustom"> | string
+    createdAt?: DateTimeFilter<"ApplicationFileCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationFileCustom"> | Date | string
+  }
+
+  export type ApplicationNoteCustomUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationNoteCustomWhereUniqueInput
+    update: XOR<ApplicationNoteCustomUpdateWithoutApplicationInput, ApplicationNoteCustomUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationNoteCustomCreateWithoutApplicationInput, ApplicationNoteCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationNoteCustomUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationNoteCustomWhereUniqueInput
+    data: XOR<ApplicationNoteCustomUpdateWithoutApplicationInput, ApplicationNoteCustomUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationNoteCustomUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationNoteCustomScalarWhereInput
+    data: XOR<ApplicationNoteCustomUpdateManyMutationInput, ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationNoteCustomScalarWhereInput = {
+    AND?: ApplicationNoteCustomScalarWhereInput | ApplicationNoteCustomScalarWhereInput[]
+    OR?: ApplicationNoteCustomScalarWhereInput[]
+    NOT?: ApplicationNoteCustomScalarWhereInput | ApplicationNoteCustomScalarWhereInput[]
+    id?: StringFilter<"ApplicationNoteCustom"> | string
+    applicationId?: StringFilter<"ApplicationNoteCustom"> | string
+    content?: StringFilter<"ApplicationNoteCustom"> | string
+    authorId?: StringFilter<"ApplicationNoteCustom"> | string
+    authorName?: StringNullableFilter<"ApplicationNoteCustom"> | string | null
+    authorType?: StringFilter<"ApplicationNoteCustom"> | string
+    createdAt?: DateTimeFilter<"ApplicationNoteCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ApplicationNoteCustom"> | Date | string
+  }
+
+  export type ChecklistItemCustomUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ChecklistItemCustomWhereUniqueInput
+    update: XOR<ChecklistItemCustomUpdateWithoutApplicationInput, ChecklistItemCustomUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ChecklistItemCustomCreateWithoutApplicationInput, ChecklistItemCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ChecklistItemCustomUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ChecklistItemCustomWhereUniqueInput
+    data: XOR<ChecklistItemCustomUpdateWithoutApplicationInput, ChecklistItemCustomUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ChecklistItemCustomUpdateManyWithWhereWithoutApplicationInput = {
+    where: ChecklistItemCustomScalarWhereInput
+    data: XOR<ChecklistItemCustomUpdateManyMutationInput, ChecklistItemCustomUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ChecklistItemCustomScalarWhereInput = {
+    AND?: ChecklistItemCustomScalarWhereInput | ChecklistItemCustomScalarWhereInput[]
+    OR?: ChecklistItemCustomScalarWhereInput[]
+    NOT?: ChecklistItemCustomScalarWhereInput | ChecklistItemCustomScalarWhereInput[]
+    id?: StringFilter<"ChecklistItemCustom"> | string
+    applicationId?: StringFilter<"ChecklistItemCustom"> | string
+    title?: StringFilter<"ChecklistItemCustom"> | string
+    description?: StringNullableFilter<"ChecklistItemCustom"> | string | null
+    isCompleted?: BoolFilter<"ChecklistItemCustom"> | boolean
+    createdById?: StringFilter<"ChecklistItemCustom"> | string
+    createdByType?: StringFilter<"ChecklistItemCustom"> | string
+    createdAt?: DateTimeFilter<"ChecklistItemCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"ChecklistItemCustom"> | Date | string
+  }
+
+  export type CandidatCustomUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: CandidatCustomWhereUniqueInput
+    update: XOR<CandidatCustomUpdateWithoutApplicationInput, CandidatCustomUncheckedUpdateWithoutApplicationInput>
+    create: XOR<CandidatCustomCreateWithoutApplicationInput, CandidatCustomUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type CandidatCustomUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: CandidatCustomWhereUniqueInput
+    data: XOR<CandidatCustomUpdateWithoutApplicationInput, CandidatCustomUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type CandidatCustomUpdateManyWithWhereWithoutApplicationInput = {
+    where: CandidatCustomScalarWhereInput
+    data: XOR<CandidatCustomUpdateManyMutationInput, CandidatCustomUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type CandidatCustomScalarWhereInput = {
+    AND?: CandidatCustomScalarWhereInput | CandidatCustomScalarWhereInput[]
+    OR?: CandidatCustomScalarWhereInput[]
+    NOT?: CandidatCustomScalarWhereInput | CandidatCustomScalarWhereInput[]
+    id?: StringFilter<"CandidatCustom"> | string
+    nom?: StringNullableFilter<"CandidatCustom"> | string | null
+    prenom?: StringNullableFilter<"CandidatCustom"> | string | null
+    role?: EnumRoleNullableFilter<"CandidatCustom"> | $Enums.Role | null
+    createdAt?: DateTimeFilter<"CandidatCustom"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidatCustom"> | Date | string
+    userId?: StringFilter<"CandidatCustom"> | string
+    telephone?: StringNullableFilter<"CandidatCustom"> | string | null
+    cv?: StringNullableFilter<"CandidatCustom"> | string | null
+    letterm?: StringNullableFilter<"CandidatCustom"> | string | null
+    bio?: StringNullableFilter<"CandidatCustom"> | string | null
+    adresse?: StringNullableFilter<"CandidatCustom"> | string | null
+    ville?: StringNullableFilter<"CandidatCustom"> | string | null
+    statut?: StringNullableFilter<"CandidatCustom"> | string | null
+    pays?: StringNullableFilter<"CandidatCustom"> | string | null
+    dateNaissance?: DateTimeFilter<"CandidatCustom"> | Date | string
+    nationalite?: StringNullableFilter<"CandidatCustom"> | string | null
+    situationFamiliale?: StringNullableFilter<"CandidatCustom"> | string | null
+    permisConduire?: StringNullableFilter<"CandidatCustom"> | string | null
+    image?: StringNullableFilter<"CandidatCustom"> | string | null
+    applicationId?: StringFilter<"CandidatCustom"> | string
+  }
+
+  export type KanbanColumnCustomUpsertWithoutApplicationsCustomInput = {
+    update: XOR<KanbanColumnCustomUpdateWithoutApplicationsCustomInput, KanbanColumnCustomUncheckedUpdateWithoutApplicationsCustomInput>
+    create: XOR<KanbanColumnCustomCreateWithoutApplicationsCustomInput, KanbanColumnCustomUncheckedCreateWithoutApplicationsCustomInput>
+    where?: KanbanColumnCustomWhereInput
+  }
+
+  export type KanbanColumnCustomUpdateToOneWithWhereWithoutApplicationsCustomInput = {
+    where?: KanbanColumnCustomWhereInput
+    data: XOR<KanbanColumnCustomUpdateWithoutApplicationsCustomInput, KanbanColumnCustomUncheckedUpdateWithoutApplicationsCustomInput>
+  }
+
+  export type KanbanColumnCustomUpdateWithoutApplicationsCustomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
+    recruteur?: RecruteurUpdateOneRequiredWithoutKanbanColumnCustomNestedInput
+  }
+
+  export type KanbanColumnCustomUncheckedUpdateWithoutApplicationsCustomInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    recruteurId?: StringFieldUpdateOperationsInput | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
   }
 
   export type AccountCreateManyUserInput = {
@@ -52411,6 +66285,7 @@ export namespace Prisma {
     role: $Enums.Role
     invitationId?: string | null
     userId: string
+    dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -52450,6 +66325,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     templateId?: number | null
@@ -52467,12 +66343,37 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type CollaborateurCustomCreateManyRecruteurInput = {
+    id?: string
+    email: string
+    nom: string
+    prenom: string
+    role: $Enums.Role
+    invitationId?: string | null
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KanbanColumnCustomCreateManyRecruteurInput = {
+    id?: string
+    color: string
+    name: string
+    order: number
+    isDefault?: boolean
+    jobOfferId: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    applicationsCustomid: string
+  }
+
   export type CollaborateurUpdateWithoutRecruteurInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     nom?: StringFieldUpdateOperationsInput | string
     prenom?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationCollaborateurUpdateManyWithoutCollaborateurNestedInput
@@ -52488,6 +66389,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     invitationId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationCollaborateurUncheckedUpdateManyWithoutCollaborateurNestedInput
@@ -52501,6 +66403,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     invitationId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
+    dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -52581,6 +66484,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -52609,6 +66513,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -52637,6 +66542,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -52671,6 +66577,82 @@ export namespace Prisma {
     content?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CollaborateurCustomUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurCustomUpdateManyWithoutCollaborateurNestedInput
+  }
+
+  export type CollaborateurCustomUncheckedUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applications?: ApplicationCollaborateurCustomUncheckedUpdateManyWithoutCollaborateurNestedInput
+  }
+
+  export type CollaborateurCustomUncheckedUpdateManyWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    nom?: StringFieldUpdateOperationsInput | string
+    prenom?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    invitationId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KanbanColumnCustomUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
+    applicationsCustom?: ApplicationCustomUpdateManyWithoutRecruteurNestedInput
+  }
+
+  export type KanbanColumnCustomUncheckedUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
+    applicationsCustom?: ApplicationCustomUncheckedUpdateManyWithoutRecruteurNestedInput
+  }
+
+  export type KanbanColumnCustomUncheckedUpdateManyWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    isDefault?: BoolFieldUpdateOperationsInput | boolean
+    jobOfferId?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    applicationsCustomid?: StringFieldUpdateOperationsInput | string
   }
 
   export type ApplicationCollaborateurCreateManyCollaborateurInput = {
@@ -52881,6 +66863,7 @@ export namespace Prisma {
     benefits: string
     requirements: string
     responsibilities: string
+    duedate?: Date | string | null
     skills: string
     favorite?: boolean | null
     views?: number
@@ -52904,6 +66887,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -52932,6 +66916,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -52960,6 +66945,7 @@ export namespace Prisma {
     benefits?: StringFieldUpdateOperationsInput | string
     requirements?: StringFieldUpdateOperationsInput | string
     responsibilities?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     skills?: StringFieldUpdateOperationsInput | string
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     views?: IntFieldUpdateOperationsInput | number
@@ -53322,6 +67308,384 @@ export namespace Prisma {
     isRead?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCustomCreateManyRecruteurInput = {
+    id?: string
+    title: string
+    description: string
+    company: string
+    location: string
+    type: string
+    etat?: string
+    experience: string
+    salaryMin: number
+    salaryMax: number
+    salaryCurrency: string
+    salaryPeriod: string
+    benefits: string
+    requirements: string
+    responsibilities: string
+    skills: string
+    duedate?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationCustomUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurCustomUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCustomUncheckedUpdateWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    collaborateurs?: ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    files?: ApplicationFileCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    notes?: ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    checklist?: ChecklistItemCustomUncheckedUpdateManyWithoutApplicationNestedInput
+    candidatCustom?: CandidatCustomUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type ApplicationCustomUncheckedUpdateManyWithoutRecruteurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    company?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    etat?: StringFieldUpdateOperationsInput | string
+    experience?: StringFieldUpdateOperationsInput | string
+    salaryMin?: FloatFieldUpdateOperationsInput | number
+    salaryMax?: FloatFieldUpdateOperationsInput | number
+    salaryCurrency?: StringFieldUpdateOperationsInput | string
+    salaryPeriod?: StringFieldUpdateOperationsInput | string
+    benefits?: StringFieldUpdateOperationsInput | string
+    requirements?: StringFieldUpdateOperationsInput | string
+    responsibilities?: StringFieldUpdateOperationsInput | string
+    skills?: StringFieldUpdateOperationsInput | string
+    duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationCollaborateurCustomCreateManyCollaborateurInput = {
+    id?: string
+    applicationId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationCollaborateurCustomUpdateWithoutCollaborateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+    application?: ApplicationCustomUpdateOneRequiredWithoutCollaborateursNestedInput
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedUpdateWithoutCollaborateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedUpdateManyWithoutCollaborateurInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurCustomCreateManyApplicationInput = {
+    id?: string
+    collaborateurId: string
+    assignedAt?: Date | string
+    assignedBy: string
+  }
+
+  export type ApplicationFileCustomCreateManyApplicationInput = {
+    id?: string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    uploadedById: string
+    uploadedByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ApplicationNoteCustomCreateManyApplicationInput = {
+    id?: string
+    content: string
+    authorId: string
+    authorName?: string | null
+    authorType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ChecklistItemCustomCreateManyApplicationInput = {
+    id?: string
+    title: string
+    description?: string | null
+    isCompleted?: boolean
+    createdById: string
+    createdByType: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type CandidatCustomCreateManyApplicationInput = {
+    id?: string
+    nom?: string | null
+    prenom?: string | null
+    role?: $Enums.Role | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    telephone?: string | null
+    cv?: string | null
+    letterm?: string | null
+    bio?: string | null
+    adresse?: string | null
+    ville?: string | null
+    statut?: string | null
+    pays?: string | null
+    dateNaissance: Date | string
+    nationalite?: string | null
+    situationFamiliale?: string | null
+    permisConduire?: string | null
+    image?: string | null
+  }
+
+  export type ApplicationCollaborateurCustomUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+    collaborateur?: CollaborateurCustomUpdateOneRequiredWithoutApplicationsNestedInput
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationCollaborateurCustomUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    collaborateurId?: StringFieldUpdateOperationsInput | string
+    assignedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assignedBy?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ApplicationFileCustomUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileCustomUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationFileCustomUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    uploadedById?: StringFieldUpdateOperationsInput | string
+    uploadedByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteCustomUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteCustomUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    authorName?: NullableStringFieldUpdateOperationsInput | string | null
+    authorType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemCustomUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemCustomUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ChecklistItemCustomUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isCompleted?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByType?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CandidatCustomUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: NullableStringFieldUpdateOperationsInput | string | null
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CandidatCustomUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: NullableStringFieldUpdateOperationsInput | string | null
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CandidatCustomUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nom?: NullableStringFieldUpdateOperationsInput | string | null
+    prenom?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    telephone?: NullableStringFieldUpdateOperationsInput | string | null
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    letterm?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    adresse?: NullableStringFieldUpdateOperationsInput | string | null
+    ville?: NullableStringFieldUpdateOperationsInput | string | null
+    statut?: NullableStringFieldUpdateOperationsInput | string | null
+    pays?: NullableStringFieldUpdateOperationsInput | string | null
+    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
+    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
+    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
+    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

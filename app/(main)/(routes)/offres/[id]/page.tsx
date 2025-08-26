@@ -298,6 +298,19 @@ export default function OffreDetailPage() {
               <Clock className="h-4 w-4 flex-shrink-0" />
               <span className="break-words">{offre.experience} ans</span>
             </div>
+            {offre.duedate && (
+              <div className="flex items-center gap-2 text-red-600">
+                <Clock className="h-4 w-4 flex-shrink-0 text-red-500" />
+                <span className="break-words font-medium">
+                  Échéance:{" "}
+                  {new Date(offre.duedate).toLocaleDateString("fr-FR", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <Eye className="h-4 w-4 flex-shrink-0" />
               <span>{offre.views || 0} vues</span>
@@ -324,11 +337,9 @@ export default function OffreDetailPage() {
               </CardHeader>
               <CardContent>
                 <div
-                  className="text-sm md:text-base text-muted-foreground line-clamp-3 whitespace-pre-wrap"
+                  className="text-sm md:text-base text-muted-foreground  whitespace-pre-wrap"
                   dangerouslySetInnerHTML={{ __html: offre.description }}
-                >
-                  {/* {offre.description} */}
-                </div>
+                ></div>
               </CardContent>
             </Card>
 
@@ -342,14 +353,17 @@ export default function OffreDetailPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
-                    {offre.responsibilities.split("\n").map((item, index) => (
+                    {/* {offre.responsibilities.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                         <span className="text-muted-foreground leading-relaxed text-sm sm:text-base">
                           {item}
                         </span>
                       </div>
-                    ))}
+                    ))} */}
+                    <div className="text-sm md:text-base text-muted-foreground  whitespace-pre-wrap">
+                      {offre.responsibilities}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -364,7 +378,7 @@ export default function OffreDetailPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
+                  {/* <div className="space-y-3">
                     {offre.requirements.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
@@ -373,6 +387,9 @@ export default function OffreDetailPage() {
                         </span>
                       </div>
                     ))}
+                  </div> */}
+                  <div className="text-sm md:text-base text-muted-foreground  whitespace-pre-wrap">
+                    {offre.requirements}
                   </div>
                 </CardContent>
               </Card>
@@ -387,7 +404,7 @@ export default function OffreDetailPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
+                  {/* <div className="space-y-3">
                     {offre.benefits.split("\n").map((item, index) => (
                       <div key={index} className="flex items-start gap-3">
                         <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
@@ -396,6 +413,10 @@ export default function OffreDetailPage() {
                         </span>
                       </div>
                     ))}
+                  </div> */}
+
+                  <div className="text-sm md:text-base text-muted-foreground  whitespace-pre-wrap">
+                    {offre.benefits}
                   </div>
                 </CardContent>
               </Card>
@@ -468,10 +489,30 @@ export default function OffreDetailPage() {
                       Expérience
                     </p>
                     <p className="text-xs sm:text-sm text-muted-foreground break-words">
-                      {offre.experience}
+                      {offre.experience} ans
                     </p>
                   </div>
                 </div>
+
+                {offre.duedate && (
+                  <div className="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-red-100 dark:bg-red-900/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-red-600 dark:text-red-400" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm font-medium text-foreground">
+                        Date d'échéance
+                      </p>
+                      <p className="text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium break-words">
+                        {new Date(offre.duedate).toLocaleDateString("fr-FR", {
+                          day: "2-digit",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 {offre.salaryMin && offre.salaryMax && (
                   <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
@@ -612,6 +653,23 @@ export default function OffreDetailPage() {
                           {otherOffre.experience} ans
                         </span>
                       </div>
+
+                      {otherOffre.duedate && (
+                        <div className="flex items-center gap-2 text-xs sm:text-sm text-red-600">
+                          <Clock className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0 text-red-500" />
+                          <span className="break-words font-medium">
+                            Échéance:{" "}
+                            {new Date(otherOffre.duedate).toLocaleDateString(
+                              "fr-FR",
+                              {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                              }
+                            )}
+                          </span>
+                        </div>
+                      )}
 
                       {otherOffre.salaryMin && otherOffre.salaryMax && (
                         <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">

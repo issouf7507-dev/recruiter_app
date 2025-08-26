@@ -25,6 +25,7 @@ export async function POST(req: Request) {
       responsibilities,
       benefits,
       etat,
+      duedate,
       education,
       // template,
       recruteurId,
@@ -60,6 +61,7 @@ export async function POST(req: Request) {
         responsibilities,
         benefits,
         etat,
+        duedate: new Date(duedate),
         // education,
         // templateId: template,
         recruteurId: recruteur.id,
@@ -166,6 +168,7 @@ export async function GET(req: NextRequest) {
         requirements: true,
         responsibilities: true,
         benefits: true,
+        duedate: true,
         jobOfferCompetences: {
           select: {
             competence: true,

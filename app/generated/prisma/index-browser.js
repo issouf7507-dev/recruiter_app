@@ -202,6 +202,7 @@ exports.Prisma.CollaborateurScalarFieldEnum = {
   recruteurId: 'recruteurId',
   invitationId: 'invitationId',
   userId: 'userId',
+  dueDate: 'dueDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -230,6 +231,7 @@ exports.Prisma.JobOfferScalarFieldEnum = {
   benefits: 'benefits',
   requirements: 'requirements',
   responsibilities: 'responsibilities',
+  duedate: 'duedate',
   skills: 'skills',
   favorite: 'favorite',
   templateId: 'templateId',
@@ -470,6 +472,123 @@ exports.Prisma.MessageScalarFieldEnum = {
   isRead: 'isRead',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.KanbanColumnCustomScalarFieldEnum = {
+  id: 'id',
+  color: 'color',
+  name: 'name',
+  order: 'order',
+  isDefault: 'isDefault',
+  jobOfferId: 'jobOfferId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  recruteurId: 'recruteurId',
+  applicationsCustomid: 'applicationsCustomid'
+};
+
+exports.Prisma.CollaborateurCustomScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  nom: 'nom',
+  prenom: 'prenom',
+  role: 'role',
+  recruteurId: 'recruteurId',
+  invitationId: 'invitationId',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ApplicationFileCustomScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  fileSize: 'fileSize',
+  uploadedById: 'uploadedById',
+  uploadedByType: 'uploadedByType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ApplicationCollaborateurCustomScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  collaborateurId: 'collaborateurId',
+  assignedAt: 'assignedAt',
+  assignedBy: 'assignedBy'
+};
+
+exports.Prisma.ApplicationNoteCustomScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName',
+  authorType: 'authorType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ChecklistItemCustomScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  title: 'title',
+  description: 'description',
+  isCompleted: 'isCompleted',
+  createdById: 'createdById',
+  createdByType: 'createdByType',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CandidatCustomScalarFieldEnum = {
+  id: 'id',
+  nom: 'nom',
+  prenom: 'prenom',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  telephone: 'telephone',
+  cv: 'cv',
+  letterm: 'letterm',
+  bio: 'bio',
+  adresse: 'adresse',
+  ville: 'ville',
+  statut: 'statut',
+  pays: 'pays',
+  dateNaissance: 'dateNaissance',
+  nationalite: 'nationalite',
+  situationFamiliale: 'situationFamiliale',
+  permisConduire: 'permisConduire',
+  image: 'image',
+  applicationId: 'applicationId'
+};
+
+exports.Prisma.ApplicationCustomScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  company: 'company',
+  location: 'location',
+  type: 'type',
+  etat: 'etat',
+  experience: 'experience',
+  salaryMin: 'salaryMin',
+  salaryMax: 'salaryMax',
+  salaryCurrency: 'salaryCurrency',
+  salaryPeriod: 'salaryPeriod',
+  benefits: 'benefits',
+  requirements: 'requirements',
+  responsibilities: 'responsibilities',
+  skills: 'skills',
+  duedate: 'duedate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  kanbanColumnCustomid: 'kanbanColumnCustomid'
 };
 
 exports.Prisma.SortOrder = {
@@ -746,6 +865,97 @@ exports.Prisma.MessageOrderByRelevanceFieldEnum = {
   senderId: 'senderId',
   content: 'content'
 };
+
+exports.Prisma.KanbanColumnCustomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  color: 'color',
+  name: 'name',
+  recruteurId: 'recruteurId',
+  applicationsCustomid: 'applicationsCustomid'
+};
+
+exports.Prisma.CollaborateurCustomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  email: 'email',
+  nom: 'nom',
+  prenom: 'prenom',
+  recruteurId: 'recruteurId',
+  invitationId: 'invitationId',
+  userId: 'userId'
+};
+
+exports.Prisma.ApplicationFileCustomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  uploadedById: 'uploadedById',
+  uploadedByType: 'uploadedByType'
+};
+
+exports.Prisma.ApplicationCollaborateurCustomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  collaborateurId: 'collaborateurId',
+  assignedBy: 'assignedBy'
+};
+
+exports.Prisma.ApplicationNoteCustomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  content: 'content',
+  authorId: 'authorId',
+  authorName: 'authorName',
+  authorType: 'authorType'
+};
+
+exports.Prisma.ChecklistItemCustomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  title: 'title',
+  description: 'description',
+  createdById: 'createdById',
+  createdByType: 'createdByType'
+};
+
+exports.Prisma.CandidatCustomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  nom: 'nom',
+  prenom: 'prenom',
+  userId: 'userId',
+  telephone: 'telephone',
+  cv: 'cv',
+  letterm: 'letterm',
+  bio: 'bio',
+  adresse: 'adresse',
+  ville: 'ville',
+  statut: 'statut',
+  pays: 'pays',
+  nationalite: 'nationalite',
+  situationFamiliale: 'situationFamiliale',
+  permisConduire: 'permisConduire',
+  image: 'image',
+  applicationId: 'applicationId'
+};
+
+exports.Prisma.ApplicationCustomOrderByRelevanceFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  company: 'company',
+  location: 'location',
+  type: 'type',
+  etat: 'etat',
+  experience: 'experience',
+  salaryCurrency: 'salaryCurrency',
+  salaryPeriod: 'salaryPeriod',
+  benefits: 'benefits',
+  requirements: 'requirements',
+  responsibilities: 'responsibilities',
+  skills: 'skills',
+  kanbanColumnCustomid: 'kanbanColumnCustomid'
+};
 exports.UserType = exports.$Enums.UserType = {
   CANDIDAT: 'CANDIDAT',
   RECRUTEUR: 'RECRUTEUR',
@@ -801,7 +1011,15 @@ exports.Prisma.ModelName = {
   AlerteMotCle: 'AlerteMotCle',
   Notification: 'Notification',
   Conversation: 'Conversation',
-  Message: 'Message'
+  Message: 'Message',
+  KanbanColumnCustom: 'KanbanColumnCustom',
+  CollaborateurCustom: 'CollaborateurCustom',
+  ApplicationFileCustom: 'ApplicationFileCustom',
+  ApplicationCollaborateurCustom: 'ApplicationCollaborateurCustom',
+  ApplicationNoteCustom: 'ApplicationNoteCustom',
+  ChecklistItemCustom: 'ChecklistItemCustom',
+  CandidatCustom: 'CandidatCustom',
+  ApplicationCustom: 'ApplicationCustom'
 };
 
 /**

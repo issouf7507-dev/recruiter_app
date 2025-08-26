@@ -105,7 +105,7 @@ export default function RecruteursLayout({
           label: "Candidats favoris",
           href: "/dashboard-recruteurs/candidatures-favoris",
         },
-        { label: "Tableau Kanban", href: "/dashboard-recruteurs/offres" },
+        { label: "Tableau Kanban", href: "/dashboard-recruteurs/kanban" },
       ],
     },
     {
@@ -373,7 +373,7 @@ export default function RecruteursLayout({
         <div
           className={cn(
             "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-card w-full flex-1  mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-            "h-[100vh] overflow-hidden" // for your use case, use `h-screen` instead of `h-[60vh]`
+            "h-screen overflow-y-hidden " // for your use case, use `h-screen` instead of `h-[60vh]`
           )}
         >
           <Sidebar open={open} setOpen={setOpen}>
@@ -505,14 +505,7 @@ export default function RecruteursLayout({
             </SidebarBody>
           </Sidebar>
 
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+          <div className="w-full h-screen overflow-y-auto">{children}</div>
         </div>
       </ErrorBoundary>
     </QueryClientProvider>

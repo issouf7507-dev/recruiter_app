@@ -31,6 +31,13 @@ import LoginModal from "@/components/auth/LoginModal";
 import OffresStats from "@/components/offres/OffresStats";
 import Header from "@/app/components/header/header";
 import Footer from "@/app/components/footer/footer";
+import {
+  Select,
+  SelectValue,
+  SelectItem,
+  SelectTrigger,
+  SelectContent,
+} from "@/components/ui/select";
 
 function OffresPageContent() {
   const searchParams = useSearchParams();
@@ -41,6 +48,8 @@ function OffresPageContent() {
   const [filterType, setFilterType] = useState("all");
   const [filterLocation, setFilterLocation] = useState("");
   const [filterCompany, setFilterCompany] = useState("");
+
+  const [filterContractType, setFilterContractType] = useState("");
   const [salaryRange, setSalaryRange] = useState({ min: 0, max: 0 });
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loginModalType, setLoginModalType] = useState<
@@ -62,15 +71,17 @@ function OffresPageContent() {
   const urlQuery = searchParams.get("q") || "";
   const urlLocation = searchParams.get("location") || "";
   const urlCompany = searchParams.get("company") || "";
+  const urlContractType = searchParams.get("type") || "";
 
   useEffect(() => {
     // Set initial search values from URL
     setSearchTerm(urlQuery);
     setFilterLocation(urlLocation);
     setFilterCompany(urlCompany);
+    setFilterContractType(urlContractType);
 
     // If we have URL parameters, we're in search mode
-    if (urlQuery || urlLocation || urlCompany) {
+    if (urlQuery || urlLocation || urlCompany || urlContractType) {
       setIsSearchMode(true);
       fetchOffres(1);
     } else {
@@ -78,9 +89,9 @@ function OffresPageContent() {
       // Load all offers when no search parameters
       fetchAllOffres();
 
-      console.log(offres);
+      // console.log(offres);
     }
-  }, [urlQuery, urlLocation, urlCompany]);
+  }, [urlQuery, urlLocation, urlCompany, urlContractType]);
 
   const fetchOffres = async (page = 1) => {
     try {
@@ -91,6 +102,7 @@ function OffresPageContent() {
       if (searchTerm) params.append("q", searchTerm);
       if (filterLocation) params.append("location", filterLocation);
       if (filterCompany) params.append("company", filterCompany);
+      if (filterContractType) params.append("type", filterContractType);
       if (page > 1) params.append("page", page.toString());
       params.append("limit", "10");
 
@@ -155,6 +167,7 @@ function OffresPageContent() {
     if (searchTerm) params.append("q", searchTerm);
     if (filterLocation) params.append("location", filterLocation);
     if (filterCompany) params.append("company", filterCompany);
+    if (filterContractType) params.append("type", filterContractType);
 
     const newUrl = params.toString()
       ? `/offres?${params.toString()}`
@@ -169,31 +182,6 @@ function OffresPageContent() {
       fetchAllOffres(newPage);
     }
   };
-
-  const filteredOffres = offres.filter((offre) => {
-    const matchesSearch =
-      offre.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      offre.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      offre.location.toLowerCase().includes(searchTerm.toLowerCase());
-
-    const matchesType = filterType === "all" || offre.type === filterType;
-    const matchesLocation =
-      !filterLocation || offre.location === filterLocation;
-    const matchesCompany = !filterCompany || offre.company === filterCompany;
-
-    const matchesSalary =
-      (!salaryRange.min && !salaryRange.max) ||
-      (offre.salaryMin >= (salaryRange.min || 0) &&
-        (!salaryRange.max || offre.salaryMax <= salaryRange.max));
-
-    return (
-      matchesSearch &&
-      matchesType &&
-      matchesLocation &&
-      matchesCompany &&
-      matchesSalary
-    );
-  });
 
   const formatSalary = (
     min: number,
@@ -260,6 +248,10 @@ function OffresPageContent() {
     setFilterCompany(value);
   };
 
+  const handleContractTypeChange = (value: string) => {
+    setFilterContractType(value);
+  };
+
   const handleClearSearchTerm = () => {
     setSearchTerm("");
   };
@@ -304,6 +296,19 @@ function OffresPageContent() {
                     <Clock className="h-3 w-3 md:h-4 md:w-4" />
                     {offre.experience}
                   </div>
+                  {offre.duedate && (
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-3 w-3 md:h-4 md:w-4 text-red-500" />
+                      <span className="text-red-600">
+                        Échéance:{" "}
+                        {new Date(offre.duedate).toLocaleDateString("fr-FR", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
               <Badge
@@ -408,6 +413,18 @@ function OffresPageContent() {
           <Clock className="h-3 w-3 md:h-4 md:w-4" />
           {offre.experience} ans
         </div>
+
+        {offre.duedate && (
+          <div className="flex items-center gap-2 text-xs md:text-sm text-red-600">
+            <Clock className="h-3 w-3 md:h-4 md:w-4 text-red-500" />
+            Échéance:{" "}
+            {new Date(offre.duedate).toLocaleDateString("fr-FR", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}
+          </div>
+        )}
 
         {offre.salaryMin && offre.salaryMax && (
           <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
@@ -531,6 +548,27 @@ function OffresPageContent() {
                 />
               </div>
             </div>
+
+            <div className="flex-1">
+              <div className="relative">
+                <Select
+                  value={filterContractType}
+                  onValueChange={(value) => handleContractTypeChange(value)}
+                >
+                  <SelectTrigger className="w-full pr-4 py-6  border border-input bg-background rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent text-sm md:text-base text-foreground h-12 placeholder:text-muted-foreground ">
+                    <SelectValue placeholder="Type de contrat" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="CDI">CDI</SelectItem>
+                    <SelectItem value="CDD">CDD</SelectItem>
+                    <SelectItem value="Stage">Stage</SelectItem>
+                    <SelectItem value="Alternance">Alternance</SelectItem>
+                    <SelectItem value="Freelance">Freelance</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
             <Button
               onClick={handleSearch}
               className="px-4 md:px-6 py-2 md:py-3 text-sm md:text-base h-full"

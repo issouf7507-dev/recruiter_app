@@ -26,6 +26,7 @@ export async function PUT(
       requirements,
       responsibilities,
       benefits,
+      duedate,
       etat,
       // recruteurId,
     } = body;
@@ -57,6 +58,7 @@ export async function PUT(
         responsibilities,
         benefits,
         etat,
+        duedate: new Date(duedate),
         jobOfferCompetences: {
           create: skills.map((skill: any) => ({
             competence: skill,

@@ -309,7 +309,7 @@ export default function ChatBox() {
       } else if (option.includes("plan Pro")) {
         botResponse = {
           id: (Date.now() + 1).toString(),
-          text: "Plan Pro (15 000 XOF/mois) :\n\n✅ Offres d'emploi illimitées\n✅ Templates d'offres personnalisables\n✅ Collaboration d'équipe (jusqu'à 5 membres)\n✅ Recherche avancée de candidats\n✅ Statistiques détaillées\n\nIdéal pour les équipes de recrutement !",
+          text: "Plan Pro (20 €/mois) :\n\n✅ Offres d'emploi illimitées\n✅ Templates d'offres personnalisables\n✅ Collaboration d'équipe (jusqu'à 5 membres)\n✅ Recherche avancée de candidats\n✅ Statistiques détaillées\n\nIdéal pour les équipes de recrutement !",
           sender: "bot",
           timestamp: new Date(),
           status: "read",

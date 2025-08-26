@@ -67,7 +67,7 @@ const pricingPlans = [
     id: 1,
     name: "Plan Gratuit",
     price: 0,
-    currency: "XOF",
+    currency: "€",
     period: "Mois",
     description:
       "Parfait pour découvrir la plateforme et commencer vos premiers recrutements",
@@ -85,8 +85,8 @@ const pricingPlans = [
   {
     id: 2,
     name: "Plan Pro",
-    price: 15000,
-    currency: "XOF",
+    price: 20,
+    currency: "€",
     period: "Mois",
     description:
       "Pour les équipes de recrutement qui veulent optimiser leurs processus",
@@ -105,8 +105,8 @@ const pricingPlans = [
   {
     id: 3,
     name: "Plan Entreprise",
-    price: 25000,
-    currency: "XOF",
+    price: 35,
+    currency: "€",
     period: "Mois",
     description:
       "Solution complète pour les grandes entreprises et agences de recrutement",

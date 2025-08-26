@@ -197,9 +197,14 @@ const OffresFavoritesPage = () => {
                     </div>
                   </div>
                 </div>
-                <p className="mt-4 text-sm text-muted-foreground">
-                  {offre.description}
-                </p>
+                <div
+                  className="mt-4 text-sm text-muted-foreground"
+                  dangerouslySetInnerHTML={{
+                    __html: offre.description,
+                  }}
+                >
+                  {/* {offre.description} */}
+                </div>
               </CardContent>
             </Card>
           ))}

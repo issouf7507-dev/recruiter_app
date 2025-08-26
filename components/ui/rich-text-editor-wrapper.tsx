@@ -12,7 +12,7 @@ const RichTextEditor = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="border rounded-md p-4 min-h-[200px] bg-gray-50 animate-pulse">
+      <div className="border rounded-md p-4 min-h-[150px] bg-gray-50 animate-pulse">
         <div className="h-4 bg-gray-200 rounded mb-2"></div>
         <div className="h-4 bg-gray-200 rounded mb-2 w-3/4"></div>
         <div className="h-4 bg-gray-200 rounded w-1/2"></div>
@@ -68,7 +68,3 @@ export function RichTextEditorWrapper({
     />
   );
 }
-
-
-
-

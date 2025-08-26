@@ -8,6 +8,7 @@ export async function GET(req: NextRequest) {
     const location = searchParams.get("location") || "";
     const company = searchParams.get("company") || "";
     const exclude = searchParams.get("exclude") || "";
+    const type = searchParams.get("type") || "";
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const offset = (page - 1) * limit;
@@ -40,6 +41,10 @@ export async function GET(req: NextRequest) {
 
     if (company) {
       whereClause.company = { contains: company };
+    }
+
+    if (type) {
+      whereClause.type = { contains: type };
     }
 
     // Get total count for pagination
@@ -98,6 +103,7 @@ export async function GET(req: NextRequest) {
       createdAt: offer.createdAt,
       updatedAt: offer.updatedAt,
       recruteur: offer.recruteur,
+      duedate: offer.duedate,
       applicationsCount: offer.applications.length,
     }));
 

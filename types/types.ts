@@ -89,6 +89,7 @@ export type JobOffer = {
   favorite: boolean;
   templateId: number;
   recruteurId: string;
+  duedate?: string; // date d'échéance optionnelle
   createdAt: string; // ou Date si tu les convertis
   updatedAt: string; // ou Date si tu les convertis
   applications: Application[]; // à typer selon la structure d'une application

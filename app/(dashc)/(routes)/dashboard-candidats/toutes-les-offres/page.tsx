@@ -411,7 +411,7 @@ const ToutesLesOffresPage = () => {
                         </div>
                       </div>
                       <div
-                        className="mt-4 text-sm text-muted-foreground"
+                        className="mt-4 text-sm text-muted-foreground line-clamp-3"
                         dangerouslySetInnerHTML={{ __html: offre.description }}
                       >
                         {/* {offre.description} */}

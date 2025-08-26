@@ -34,7 +34,6 @@ CREATE TABLE `Candidat` (
     `situationFamiliale` VARCHAR(191) NULL,
     `permisConduire` VARCHAR(191) NULL,
     `image` VARCHAR(191) NULL,
-    `favorite` BOOLEAN NULL DEFAULT false,
 
     UNIQUE INDEX `Candidat_userId_key`(`userId`),
     UNIQUE INDEX `Candidat_email_key`(`email`),
@@ -98,6 +97,7 @@ CREATE TABLE `Invitation` (
     `expiresAt` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Invitation_token_key`(`token`),
+    INDEX `Invitation_recruteurId_fkey`(`recruteurId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -117,6 +117,7 @@ CREATE TABLE `Collaborateur` (
     UNIQUE INDEX `Collaborateur_email_key`(`email`),
     UNIQUE INDEX `Collaborateur_invitationId_key`(`invitationId`),
     UNIQUE INDEX `Collaborateur_userId_key`(`userId`),
+    INDEX `Collaborateur_recruteurId_fkey`(`recruteurId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -128,6 +129,7 @@ CREATE TABLE `ApplicationCollaborateur` (
     `assignedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `assignedBy` VARCHAR(191) NOT NULL,
 
+    INDEX `ApplicationCollaborateur_collaborateurId_fkey`(`collaborateurId`),
     UNIQUE INDEX `ApplicationCollaborateur_applicationId_collaborateurId_key`(`applicationId`, `collaborateurId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -136,7 +138,7 @@ CREATE TABLE `ApplicationCollaborateur` (
 CREATE TABLE `JobOffer` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(191) NOT NULL,
-    `description` VARCHAR(191) NOT NULL,
+    `description` TEXT NOT NULL,
     `company` VARCHAR(191) NOT NULL,
     `location` VARCHAR(191) NOT NULL,
     `type` VARCHAR(191) NOT NULL,
@@ -146,9 +148,9 @@ CREATE TABLE `JobOffer` (
     `salaryMax` DOUBLE NOT NULL,
     `salaryCurrency` VARCHAR(191) NOT NULL,
     `salaryPeriod` VARCHAR(191) NOT NULL,
-    `benefits` VARCHAR(191) NOT NULL,
-    `requirements` VARCHAR(191) NOT NULL,
-    `responsibilities` VARCHAR(191) NOT NULL,
+    `benefits` TEXT NOT NULL,
+    `requirements` TEXT NOT NULL,
+    `responsibilities` TEXT NOT NULL,
     `skills` VARCHAR(191) NOT NULL,
     `favorite` BOOLEAN NULL DEFAULT false,
     `templateId` INTEGER NULL,
@@ -157,6 +159,8 @@ CREATE TABLE `JobOffer` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `JobOffer_recruteurId_fkey`(`recruteurId`),
+    INDEX `JobOffer_templateId_fkey`(`templateId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -181,6 +185,7 @@ CREATE TABLE `OfferTemplate` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `OfferTemplate_recruteurId_fkey`(`recruteurId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -193,10 +198,14 @@ CREATE TABLE `Application` (
     `rating` INTEGER NULL,
     `message` VARCHAR(191) NULL,
     `cv` VARCHAR(191) NULL,
+    `favorite` BOOLEAN NULL DEFAULT false,
     `duedate` DATETIME(3) NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `Application_candidatId_fkey`(`candidatId`),
+    INDEX `Application_columnId_fkey`(`columnId`),
+    INDEX `Application_jobOfferId_fkey`(`jobOfferId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -211,6 +220,7 @@ CREATE TABLE `ApplicationNote` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `ApplicationNote_applicationId_fkey`(`applicationId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -226,6 +236,7 @@ CREATE TABLE `ChecklistItem` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `ChecklistItem_applicationId_fkey`(`applicationId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -242,6 +253,7 @@ CREATE TABLE `ApplicationFile` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `ApplicationFile_applicationId_fkey`(`applicationId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -256,6 +268,7 @@ CREATE TABLE `KanbanColumn` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `KanbanColumn_jobOfferId_fkey`(`jobOfferId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -274,6 +287,7 @@ CREATE TABLE `Account` (
     `id_token` VARCHAR(191) NULL,
     `session_state` VARCHAR(191) NULL,
 
+    INDEX `Account_userId_fkey`(`userId`),
     UNIQUE INDEX `Account_provider_providerAccountId_key`(`provider`, `providerAccountId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -286,6 +300,7 @@ CREATE TABLE `Session` (
     `expires` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Session_sessionToken_key`(`sessionToken`),
+    INDEX `Session_userId_fkey`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -313,6 +328,7 @@ CREATE TABLE `Experience` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `Experience_candidatId_fkey`(`candidatId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -340,6 +356,7 @@ CREATE TABLE `Formation` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `Formation_candidatId_fkey`(`candidatId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -364,6 +381,7 @@ CREATE TABLE `Competence` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `Competence_candidatId_fkey`(`candidatId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -379,6 +397,7 @@ CREATE TABLE `ObjectifCarriere` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `ObjectifCarriere_candidatId_fkey`(`candidatId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -410,6 +429,7 @@ CREATE TABLE `AlerteEmploi` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `AlerteEmploi_candidatId_fkey`(`candidatId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -436,6 +456,193 @@ CREATE TABLE `Notification` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `Notification_candidatId_fkey`(`candidatId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Conversation` (
+    `id` VARCHAR(191) NOT NULL,
+    `jobOfferId` INTEGER NOT NULL,
+    `candidatId` VARCHAR(191) NOT NULL,
+    `recruteurId` VARCHAR(191) NOT NULL,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `Conversation_candidatId_fkey`(`candidatId`),
+    INDEX `Conversation_recruteurId_fkey`(`recruteurId`),
+    UNIQUE INDEX `Conversation_jobOfferId_candidatId_recruteurId_key`(`jobOfferId`, `candidatId`, `recruteurId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Message` (
+    `id` VARCHAR(191) NOT NULL,
+    `conversationId` VARCHAR(191) NOT NULL,
+    `senderId` VARCHAR(191) NOT NULL,
+    `senderType` ENUM('CANDIDAT', 'RECRUTEUR') NOT NULL,
+    `content` TEXT NOT NULL,
+    `isRead` BOOLEAN NOT NULL DEFAULT false,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `Message_conversationId_fkey`(`conversationId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `KanbanColumnCustom` (
+    `id` VARCHAR(191) NOT NULL,
+    `color` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `order` INTEGER NOT NULL,
+    `isDefault` BOOLEAN NOT NULL DEFAULT false,
+    `jobOfferId` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `recruteurId` VARCHAR(191) NOT NULL,
+    `applicationsCustomid` VARCHAR(191) NOT NULL,
+
+    INDEX `KanbanColumnCustom_recruteurId_fkey`(`recruteurId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CollaborateurCustom` (
+    `id` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `nom` VARCHAR(191) NOT NULL,
+    `prenom` VARCHAR(191) NOT NULL,
+    `role` ENUM('ADMIN', 'USER', 'MANAGER', 'VIEWER') NOT NULL,
+    `recruteurId` VARCHAR(191) NOT NULL,
+    `invitationId` VARCHAR(191) NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    UNIQUE INDEX `CollaborateurCustom_email_key`(`email`),
+    UNIQUE INDEX `CollaborateurCustom_invitationId_key`(`invitationId`),
+    UNIQUE INDEX `CollaborateurCustom_userId_key`(`userId`),
+    INDEX `CollaborateurCustom_recruteurId_fkey`(`recruteurId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ApplicationFileCustom` (
+    `id` VARCHAR(191) NOT NULL,
+    `applicationId` VARCHAR(191) NOT NULL,
+    `fileName` VARCHAR(191) NOT NULL,
+    `fileUrl` VARCHAR(191) NOT NULL,
+    `fileType` VARCHAR(191) NOT NULL,
+    `fileSize` INTEGER NOT NULL,
+    `uploadedById` VARCHAR(191) NOT NULL,
+    `uploadedByType` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `ApplicationFileCustom_applicationId_fkey`(`applicationId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ApplicationCollaborateurCustom` (
+    `id` VARCHAR(191) NOT NULL,
+    `applicationId` VARCHAR(191) NOT NULL,
+    `collaborateurId` VARCHAR(191) NOT NULL,
+    `assignedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `assignedBy` VARCHAR(191) NOT NULL,
+
+    INDEX `ApplicationCollaborateurCustom_collaborateurId_fkey`(`collaborateurId`),
+    UNIQUE INDEX `ApplicationCollaborateurCustom_applicationId_collaborateurId_key`(`applicationId`, `collaborateurId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ApplicationNoteCustom` (
+    `id` VARCHAR(191) NOT NULL,
+    `applicationId` VARCHAR(191) NOT NULL,
+    `content` VARCHAR(191) NOT NULL,
+    `authorId` VARCHAR(191) NOT NULL,
+    `authorName` VARCHAR(191) NULL,
+    `authorType` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `ApplicationNoteCustom_applicationId_fkey`(`applicationId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ChecklistItemCustom` (
+    `id` VARCHAR(191) NOT NULL,
+    `applicationId` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NULL,
+    `isCompleted` BOOLEAN NOT NULL DEFAULT false,
+    `createdById` VARCHAR(191) NOT NULL,
+    `createdByType` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `ChecklistItem_applicationId_fkey`(`applicationId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CandidatCustom` (
+    `id` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `nom` VARCHAR(191) NOT NULL,
+    `prenom` VARCHAR(191) NOT NULL,
+    `role` ENUM('ADMIN', 'USER', 'MANAGER', 'VIEWER') NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `telephone` VARCHAR(191) NULL,
+    `cv` VARCHAR(191) NULL,
+    `letterm` VARCHAR(191) NULL,
+    `bio` VARCHAR(191) NULL,
+    `adresse` VARCHAR(191) NULL,
+    `ville` VARCHAR(191) NULL,
+    `statut` VARCHAR(191) NULL,
+    `pays` VARCHAR(191) NOT NULL,
+    `dateNaissance` DATETIME(3) NOT NULL,
+    `nationalite` VARCHAR(191) NULL,
+    `situationFamiliale` VARCHAR(191) NULL,
+    `permisConduire` VARCHAR(191) NULL,
+    `image` VARCHAR(191) NULL,
+    `applicationId` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `CandidatCustom_email_key`(`email`),
+    UNIQUE INDEX `CandidatCustom_userId_key`(`userId`),
+    INDEX `CandidatCustom_applicationId_fkey`(`applicationId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `ApplicationCustom` (
+    `id` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `description` TEXT NOT NULL,
+    `company` VARCHAR(191) NOT NULL,
+    `location` VARCHAR(191) NOT NULL,
+    `type` VARCHAR(191) NOT NULL,
+    `etat` VARCHAR(191) NOT NULL DEFAULT 'active',
+    `experience` VARCHAR(191) NOT NULL,
+    `salaryMin` DOUBLE NOT NULL,
+    `salaryMax` DOUBLE NOT NULL,
+    `salaryCurrency` VARCHAR(191) NOT NULL,
+    `salaryPeriod` VARCHAR(191) NOT NULL,
+    `benefits` TEXT NOT NULL,
+    `requirements` TEXT NOT NULL,
+    `responsibilities` TEXT NOT NULL,
+    `skills` VARCHAR(191) NOT NULL,
+    `duedate` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `kanbanColumnCustomid` VARCHAR(191) NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -455,10 +662,10 @@ ALTER TABLE `CompanySocial` ADD CONSTRAINT `CompanySocial_recruteurId_fkey` FORE
 ALTER TABLE `Invitation` ADD CONSTRAINT `Invitation_recruteurId_fkey` FOREIGN KEY (`recruteurId`) REFERENCES `Recruteur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Collaborateur` ADD CONSTRAINT `Collaborateur_recruteurId_fkey` FOREIGN KEY (`recruteurId`) REFERENCES `Recruteur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Collaborateur` ADD CONSTRAINT `Collaborateur_invitationId_fkey` FOREIGN KEY (`invitationId`) REFERENCES `Invitation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Collaborateur` ADD CONSTRAINT `Collaborateur_invitationId_fkey` FOREIGN KEY (`invitationId`) REFERENCES `Invitation`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Collaborateur` ADD CONSTRAINT `Collaborateur_recruteurId_fkey` FOREIGN KEY (`recruteurId`) REFERENCES `Recruteur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Collaborateur` ADD CONSTRAINT `Collaborateur_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -470,10 +677,10 @@ ALTER TABLE `ApplicationCollaborateur` ADD CONSTRAINT `ApplicationCollaborateur_
 ALTER TABLE `ApplicationCollaborateur` ADD CONSTRAINT `ApplicationCollaborateur_collaborateurId_fkey` FOREIGN KEY (`collaborateurId`) REFERENCES `Collaborateur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobOffer` ADD CONSTRAINT `JobOffer_templateId_fkey` FOREIGN KEY (`templateId`) REFERENCES `OfferTemplate`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobOffer` ADD CONSTRAINT `JobOffer_recruteurId_fkey` FOREIGN KEY (`recruteurId`) REFERENCES `Recruteur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobOffer` ADD CONSTRAINT `JobOffer_recruteurId_fkey` FOREIGN KEY (`recruteurId`) REFERENCES `Recruteur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `JobOffer` ADD CONSTRAINT `JobOffer_templateId_fkey` FOREIGN KEY (`templateId`) REFERENCES `OfferTemplate`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `JobOfferCompetence` ADD CONSTRAINT `JobOfferCompetence_jobOfferId_fkey` FOREIGN KEY (`jobOfferId`) REFERENCES `JobOffer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -485,10 +692,10 @@ ALTER TABLE `OfferTemplate` ADD CONSTRAINT `OfferTemplate_recruteurId_fkey` FORE
 ALTER TABLE `Application` ADD CONSTRAINT `Application_candidatId_fkey` FOREIGN KEY (`candidatId`) REFERENCES `Candidat`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Application` ADD CONSTRAINT `Application_jobOfferId_fkey` FOREIGN KEY (`jobOfferId`) REFERENCES `JobOffer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Application` ADD CONSTRAINT `Application_columnId_fkey` FOREIGN KEY (`columnId`) REFERENCES `KanbanColumn`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Application` ADD CONSTRAINT `Application_columnId_fkey` FOREIGN KEY (`columnId`) REFERENCES `KanbanColumn`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `Application` ADD CONSTRAINT `Application_jobOfferId_fkey` FOREIGN KEY (`jobOfferId`) REFERENCES `JobOffer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `ApplicationNote` ADD CONSTRAINT `ApplicationNote_applicationId_fkey` FOREIGN KEY (`applicationId`) REFERENCES `Application`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -537,3 +744,42 @@ ALTER TABLE `AlerteMotCle` ADD CONSTRAINT `AlerteMotCle_alerteId_fkey` FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE `Notification` ADD CONSTRAINT `Notification_candidatId_fkey` FOREIGN KEY (`candidatId`) REFERENCES `Candidat`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Conversation` ADD CONSTRAINT `Conversation_candidatId_fkey` FOREIGN KEY (`candidatId`) REFERENCES `Candidat`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Conversation` ADD CONSTRAINT `Conversation_jobOfferId_fkey` FOREIGN KEY (`jobOfferId`) REFERENCES `JobOffer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Conversation` ADD CONSTRAINT `Conversation_recruteurId_fkey` FOREIGN KEY (`recruteurId`) REFERENCES `Recruteur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Message` ADD CONSTRAINT `Message_conversationId_fkey` FOREIGN KEY (`conversationId`) REFERENCES `Conversation`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `KanbanColumnCustom` ADD CONSTRAINT `KanbanColumnCustom_recruteurId_fkey` FOREIGN KEY (`recruteurId`) REFERENCES `Recruteur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CollaborateurCustom` ADD CONSTRAINT `CollaborateurCustom_recruteurId_fkey` FOREIGN KEY (`recruteurId`) REFERENCES `Recruteur`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplicationFileCustom` ADD CONSTRAINT `ApplicationFileCustom_applicationId_fkey` FOREIGN KEY (`applicationId`) REFERENCES `ApplicationCustom`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplicationCollaborateurCustom` ADD CONSTRAINT `ApplicationCollaborateurCustom_applicationId_fkey` FOREIGN KEY (`applicationId`) REFERENCES `ApplicationCustom`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplicationCollaborateurCustom` ADD CONSTRAINT `ApplicationCollaborateurCustom_collaborateurId_fkey` FOREIGN KEY (`collaborateurId`) REFERENCES `CollaborateurCustom`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplicationNoteCustom` ADD CONSTRAINT `ApplicationNoteCustom_applicationId_fkey` FOREIGN KEY (`applicationId`) REFERENCES `ApplicationCustom`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ChecklistItemCustom` ADD CONSTRAINT `ChecklistItemCustom_applicationId_fkey` FOREIGN KEY (`applicationId`) REFERENCES `ApplicationCustom`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CandidatCustom` ADD CONSTRAINT `CandidatCustom_applicationId_fkey` FOREIGN KEY (`applicationId`) REFERENCES `ApplicationCustom`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `ApplicationCustom` ADD CONSTRAINT `ApplicationCustom_kanbanColumnCustomid_fkey` FOREIGN KEY (`kanbanColumnCustomid`) REFERENCES `KanbanColumnCustom`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
