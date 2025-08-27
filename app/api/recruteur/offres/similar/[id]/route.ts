@@ -53,20 +53,25 @@ export async function GET(
                   },
                 },
               },
-              {
-                AND: [
-                  {
-                    salaryMin: {
-                      lte: currentOffer.salaryMax, // Salaire minimum inférieur ou égal au salaire maximum de l'offre actuelle
+              ...(currentOffer.salaryMin !== null &&
+              currentOffer.salaryMax !== null
+                ? [
+                    {
+                      AND: [
+                        {
+                          salaryMin: {
+                            lte: currentOffer.salaryMax,
+                          },
+                        },
+                        {
+                          salaryMax: {
+                            gte: currentOffer.salaryMin,
+                          },
+                        },
+                      ],
                     },
-                  },
-                  {
-                    salaryMax: {
-                      gte: currentOffer.salaryMin, // Salaire maximum supérieur ou égal au salaire minimum de l'offre actuelle
-                    },
-                  },
-                ],
-              },
+                  ]
+                : []),
             ],
           },
         ],

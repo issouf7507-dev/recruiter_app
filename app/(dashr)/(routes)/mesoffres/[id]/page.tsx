@@ -254,9 +254,9 @@ export default function OffreDetail({
                 Détail
               </TabsTrigger>
               <TabsTrigger value="tableau">Tableau</TabsTrigger>
-              <TabsTrigger value="personnalise">
+              {/* <TabsTrigger value="personnalise">
                 Tableau personnalisé
-              </TabsTrigger>
+              </TabsTrigger> */}
               <TabsTrigger value="calendrier">Calendrier</TabsTrigger>
             </TabsList>
 
@@ -319,80 +319,18 @@ export default function OffreDetail({
                         </div>
 
                         {/* Onglets de contenu */}
-                        <Tabs defaultValue="description" className="mt-6">
-                          <TabsList className="grid w-full grid-cols-3 bg-transparent border">
-                            <TabsTrigger value="description">
-                              Description
-                            </TabsTrigger>
-                            <TabsTrigger value="requirements">
-                              Prérequis
-                            </TabsTrigger>
-                            <TabsTrigger value="benefits">
-                              Avantages
-                            </TabsTrigger>
-                          </TabsList>
-                          <TabsContent
-                            value="description"
-                            className="space-y-4"
-                          >
-                            <div className="mt-4">
-                              <h3 className="font-semibold mb-2">
-                                Description du poste
-                              </h3>
-                              <div
-                                className="text-sm text-muted-foreground whitespace-pre-wrap"
-                                dangerouslySetInnerHTML={{
-                                  __html: offerDataFromQuery.description,
-                                }}
-                              />
-                            </div>
-                            <div>
-                              <h3 className="font-semibold mb-2">
-                                Responsabilités
-                              </h3>
-                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                {offerDataFromQuery.responsibilities}
-                              </p>
-                            </div>
-                          </TabsContent>
-                          <TabsContent
-                            value="requirements"
-                            className="space-y-4"
-                          >
-                            <div>
-                              <h3 className="font-semibold mb-2">
-                                Compétences requises
-                              </h3>
-                              <div className="flex flex-wrap gap-2">
-                                {offerDataFromQuery.jobOfferCompetences?.map(
-                                  (skill, index: number) => (
-                                    <Badge
-                                      key={`${skill.competence}-${index}`}
-                                      variant="secondary"
-                                      className="capitalize"
-                                    >
-                                      {skill.competence}
-                                    </Badge>
-                                  )
-                                )}
-                              </div>
-                            </div>
-                            <div>
-                              <h3 className="font-semibold mb-2">Prérequis</h3>
-                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                {offerDataFromQuery.requirements}
-                              </p>
-                            </div>
-                          </TabsContent>
-                          <TabsContent value="benefits">
-                            <div>
-                              <h3 className="font-semibold mb-2">Avantages</h3>
-                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                                {offerDataFromQuery.benefits}
-                              </p>
-                            </div>
-                          </TabsContent>
-                        </Tabs>
+
+                        <div className="mt-4">
+                          <h3 className="font-semibold mb-2">
+                            Description du poste
+                          </h3>
+                          <div
+                            className="text-sm text-muted-foreground whitespace-pre-wrap"
+                            dangerouslySetInnerHTML={{
+                              __html: offerDataFromQuery.description,
+                            }}
+                          />
+                        </div>
                       </CardContent>
                     </Card>
                   </div>
@@ -467,12 +405,6 @@ export default function OffreDetail({
                 applications={localApplications}
                 updateApplication={updateApplication}
               />
-            </TabsContent>
-
-            <TabsContent value="personnalise">
-              <div className="w-full h-[calc(100vh-200px)] overflow-y-auto">
-                <ManualKanbanBoard offerId={offerId} />
-              </div>
             </TabsContent>
 
             <TabsContent value="calendrier">

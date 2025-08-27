@@ -344,83 +344,10 @@ export default function OffreDetailPage() {
             </Card>
 
             {/* Responsabilités */}
-            {offre.responsibilities && (
-              <Card className="shadow-none border">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg sm:text-xl font-semibold">
-                    Responsabilités
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {/* {offre.responsibilities.split("\n").map((item, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-                          {item}
-                        </span>
-                      </div>
-                    ))} */}
-                    <div className="text-sm md:text-base text-muted-foreground  whitespace-pre-wrap">
-                      {offre.responsibilities}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
 
             {/* Exigences */}
-            {offre.requirements && (
-              <Card className="shadow-none border">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg sm:text-xl font-semibold">
-                    Exigences
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {/* <div className="space-y-3">
-                    {offre.requirements.split("\n").map((item, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div> */}
-                  <div className="text-sm md:text-base text-muted-foreground  whitespace-pre-wrap">
-                    {offre.requirements}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
 
             {/* Avantages */}
-            {offre.benefits && (
-              <Card className="shadow-none border">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-lg sm:text-xl font-semibold">
-                    Avantages
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {/* <div className="space-y-3">
-                    {offre.benefits.split("\n").map((item, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-muted-foreground leading-relaxed text-sm sm:text-base">
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </div> */}
-
-                  <div className="text-sm md:text-base text-muted-foreground  whitespace-pre-wrap">
-                    {offre.benefits}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
           </div>
 
           {/* Sidebar */}

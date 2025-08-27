@@ -104,7 +104,7 @@ export async function GET(req: NextRequest) {
         entreprise: candidature.jobOffer.company,
         localisation: candidature.jobOffer.location,
         type: candidature.jobOffer.type,
-        salaire: `${candidature.jobOffer.salaryMin.toLocaleString()} - ${candidature.jobOffer.salaryMax.toLocaleString()} ${
+        salaire: `${candidature?.jobOffer.salaryMin?.toLocaleString()} - ${candidature?.jobOffer.salaryMax?.toLocaleString()} ${
           candidature.jobOffer.salaryCurrency
         }/${candidature.jobOffer.salaryPeriod}`,
         description: candidature.jobOffer.description,
