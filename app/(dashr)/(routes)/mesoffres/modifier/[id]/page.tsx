@@ -38,22 +38,32 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchData, putData } from "@/utils/utilts";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 // Schéma de validation pour le formulaire
 const offerFormSchema = z.object({
   title: z.string().nonempty("Le titre est requis"),
-  company: z.string().nonempty("L'entreprise est requise"),
-  location: z.string().nonempty("La localisation est requise"),
+  company: z.string(),
+  location: z.string(),
   type: z.string(),
   experience: z.string(),
   // education: z.string().nonempty("Le niveau d'études est requis"),
-  description: z.string().nonempty("La description est requise"),
-  responsibilities: z.string().nonempty("Les responsabilités sont requises"),
-  requirements: z.string().nonempty("Les prérequis sont requis"),
+  description: z.string(),
+  responsibilities: z.string(),
+  requirements: z.string(),
   skills: z.array(z.string()),
-  benefits: z.string().nonempty("Les avantages sont requis"),
-  salaryMin: z.string().nonempty("Le salaire minimum est requis"),
-  salaryMax: z.string().nonempty("Le salaire maximum est requis"),
+  duedate: z.date().optional(),
+  benefits: z.string(),
+  salaryMin: z.string(),
+  salaryMax: z.string(),
   salaryCurrency: z.string(),
   salaryPeriod: z.string(),
   etat: z.string(),
@@ -134,6 +144,10 @@ export default function ModifierOffre({
       form.setValue("salaryPeriod", offer.salaryPeriod || "an");
       form.setValue("template", offer.template || "");
       form.setValue("etat", offer.etat || "active");
+      form.setValue(
+        "duedate",
+        offer.duedate ? new Date(offer.duedate) : new Date()
+      );
 
       // Forcer la mise à jour des champs Select après un court délai
       setTimeout(() => {
@@ -345,7 +359,7 @@ export default function ModifierOffre({
                 />
               </div>
 
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-6 gap-4">
                 <FormField
                   control={form.control}
                   name="salaryMin"
@@ -460,6 +474,47 @@ export default function ModifierOffre({
                     </FormItem>
                   )}
                 />
+
+                <FormField
+                  control={form.control}
+                  name="duedate"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>Date d'expiration</FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                " pl-3 text-left font-normal bg-transparent w-full",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "P")
+                              ) : (
+                                <span>Sélectionner une date</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            disabled={(date: Date) => date < new Date()}
+                            captionLayout="dropdown"
+                          />
+                        </PopoverContent>
+                      </Popover>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
             </CardContent>
           </Card>
@@ -496,7 +551,7 @@ export default function ModifierOffre({
                 )}
               />
 
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="responsibilities"
                 render={({ field }) => (
@@ -517,9 +572,9 @@ export default function ModifierOffre({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
 
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="requirements"
                 render={({ field }) => (
@@ -540,9 +595,9 @@ export default function ModifierOffre({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
 
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="skills"
                 render={({ field }) => {
@@ -577,7 +632,7 @@ export default function ModifierOffre({
                         propres compétences
                       </FormDescription>
 
-                      {/* Sélection de compétences prédéfinies */}
+
                       <Select
                         onValueChange={(value) => {
                           const currentSkills = field.value || [];
@@ -613,7 +668,7 @@ export default function ModifierOffre({
                         </SelectContent>
                       </Select>
 
-                      {/* Ajout de compétences personnalisées */}
+
                       <div className="flex gap-2 mt-2">
                         <Input
                           placeholder="Ajouter une compétence personnalisée..."
@@ -632,7 +687,7 @@ export default function ModifierOffre({
                         </Button>
                       </div>
 
-                      {/* Affichage des compétences sélectionnées */}
+
                       <div className="flex flex-wrap gap-2 mt-2">
                         {field.value?.map((skill) => (
                           <div
@@ -660,9 +715,9 @@ export default function ModifierOffre({
                     </FormItem>
                   );
                 }}
-              />
+              /> */}
 
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="benefits"
                 render={({ field }) => (
@@ -683,7 +738,7 @@ export default function ModifierOffre({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </CardContent>
           </Card>
 

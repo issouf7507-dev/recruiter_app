@@ -20,6 +20,8 @@ import {
   DollarSign,
   Loader2,
   RefreshCcw,
+  Building2,
+  FileText,
 } from "lucide-react";
 
 import {
@@ -47,10 +49,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 
 import { useUserStore } from "@/store/userStore";
 import SimpleCandidatesKanban from "./components/SimpleCandidatesKanban";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { RichTextEditorWrapper } from "@/components/ui/rich-text-editor-wrapper";
 
 // Types pour le Kanban des offres d'emploi
 type OfferColumn = {
@@ -103,6 +119,16 @@ type NewJobOffer = {
   salaryPeriod: string;
   skills: string[];
 };
+
+// Schéma de validation Zod pour le formulaire
+const offerFormSchema = z.object({
+  title: z.string().min(1, "Le titre du poste est requis"),
+  description: z.string().min(1, "La description est requise"),
+  company: z.string().optional(),
+  location: z.string().optional(),
+});
+
+type OfferFormValues = z.infer<typeof offerFormSchema>;
 
 export default function OffresPage() {
   const { user } = useUserStore();
@@ -1100,7 +1126,18 @@ export default function OffresPage() {
   const [selectedColumnColor, setSelectedColumnColor] =
     useState("bg-blue-300/30");
 
-  // États pour la création d'une nouvelle offre
+  // Form pour la création d'une nouvelle offre
+  const form = useForm<OfferFormValues>({
+    resolver: zodResolver(offerFormSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      company: "",
+      location: "",
+    },
+  });
+
+  // États pour la création d'une nouvelle offre (pour les champs non gérés par le form)
   const [newOffer, setNewOffer] = useState<NewJobOffer>({
     title: "",
     description: "",
@@ -1384,22 +1421,21 @@ export default function OffresPage() {
   };
 
   // Création d'une nouvelle offre
-  const handleCreateOffer = async () => {
-    if (!newOffer.title || !newOffer.description) return;
+  const handleCreateOffer = async (values: OfferFormValues) => {
     if (columns.length === 0) {
       alert("Veuillez créer au moins une colonne avant d'ajouter une offre.");
       return;
     }
 
     setIsLoading(true);
-    console.log("newOffer", newOffer);
+    console.log("offer values", values);
 
     try {
       await createOfferMutation.mutateAsync({
-        title: newOffer.title,
-        description: newOffer.description,
-        company: newOffer.company || "Non spécifié",
-        location: newOffer.location || "Non spécifié",
+        title: values.title,
+        description: values.description,
+        company: values.company || "Non spécifié",
+        location: values.location || "Non spécifié",
         type: newOffer.type || "CDI",
         experience: newOffer.experience || "Non spécifié",
         salaryMin: newOffer.salaryMin,
@@ -1412,26 +1448,32 @@ export default function OffresPage() {
         columnId: columns[0].id,
       });
 
-      setIsNewOfferModalOpen(false);
-      setNewOffer({
-        title: "",
-        description: "",
-        company: "",
-        location: "",
-        type: "CDI",
-        experience: "",
-        salaryMin: "",
-        salaryMax: "",
-        salaryCurrency: "EUR",
-        salaryPeriod: "month",
-        skills: [],
-      });
+      handleCloseOfferModal();
     } catch (error) {
       console.error("Erreur lors de la création de l'offre:", error);
       alert("Erreur lors de la création de l'offre");
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Fonction pour fermer le modal et reset le formulaire
+  const handleCloseOfferModal = () => {
+    setIsNewOfferModalOpen(false);
+    form.reset();
+    setNewOffer({
+      title: "",
+      description: "",
+      company: "",
+      location: "",
+      type: "CDI",
+      experience: "",
+      salaryMin: "",
+      salaryMax: "",
+      salaryCurrency: "EUR",
+      salaryPeriod: "month",
+      skills: [],
+    });
   };
 
   // Fonction pour formater le salaire
@@ -1771,48 +1813,6 @@ export default function OffresPage() {
                                               <MapPin className="h-4 w-4" />
                                               <span>{offer.location}</span>
                                             </div>
-                                            <div className="flex items-center gap-2">
-                                              <DollarSign className="h-4 w-4" />
-                                              <span>
-                                                {formatSalary(
-                                                  offer.salaryMin,
-                                                  offer.salaryMax,
-                                                  offer.salaryCurrency,
-                                                  offer.salaryPeriod
-                                                )}
-                                              </span>
-                                            </div>
-                                          </div>
-
-                                          {/* Compétences */}
-                                          <div className="flex flex-wrap gap-1">
-                                            {offer.competences &&
-                                            offer.competences.length > 0 ? (
-                                              <>
-                                                {offer.competences
-                                                  .slice(0, 3)
-                                                  .map((comp, idx) => (
-                                                    <span
-                                                      key={idx}
-                                                      className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full"
-                                                    >
-                                                      {comp}
-                                                    </span>
-                                                  ))}
-                                                {offer.competences.length >
-                                                  3 && (
-                                                  <span className="text-xs text-gray-500">
-                                                    +
-                                                    {offer.competences.length -
-                                                      3}
-                                                  </span>
-                                                )}
-                                              </>
-                                            ) : (
-                                              <span className="text-xs text-gray-500">
-                                                Aucune compétence
-                                              </span>
-                                            )}
                                           </div>
 
                                           {/* Footer */}
@@ -1865,18 +1865,13 @@ export default function OffresPage() {
                   <div className="flex flex-col gap-4 border-b border-gray-200 pb-6 mb-6">
                     {/* Avatar et nom */}
                     <div className="flex items-center gap-4">
-                      <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full w-16 h-16 flex items-center justify-center text-white font-bold text-xl">
-                        {selectedCard.candidat.nom.slice(0, 1)}
-                        {selectedCard.candidat.prenom?.slice(0, 1)}
+                      <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
+                        <Briefcase className="h-5 w-5" />
                       </div>
                       <div className="flex-1">
                         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                          {selectedCard.candidat.nom}{" "}
-                          {selectedCard.candidat.prenom}
+                          {selectedOffer?.title}
                         </h1>
-                        <p className="text-primary font-medium">
-                          {selectedCard.candidat.email}
-                        </p>
                       </div>
                       <div className="text-right">
                         <span className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-semibold uppercase">
@@ -1889,129 +1884,38 @@ export default function OffresPage() {
                       </div>
                     </div>
 
-                    {/* Compétences */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white ">
-                        Compétences
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCard.candidat.candidatCompetences?.map(
-                          (competence: any) => (
-                            <span
-                              key={competence.competence}
-                              className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
-                            >
-                              {competence.competence}
-                            </span>
-                          )
-                        )}
-                      </div>
-                    </div>
-
                     {/* Documents téléchargeables */}
                     <div className="bg-gray-50 rounded-lg py-4 dark:bg-background">
-                      <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white ">
-                        Documents
+                      <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white flex items-center gap-2">
+                        <FileText className="h-4 w-4" />
+                        Description
                       </h3>
-                      <div className="flex gap-3">
-                        <Button
-                          variant="outline"
-                          className="flex items-center gap-2"
-                          onClick={() =>
-                            handleDownloadCV(selectedCard.candidat.cv || "")
-                          }
-                          disabled={!selectedCard.candidat.cv}
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                            />
-                          </svg>
-                          {selectedCard.cv
-                            ? "Télécharger CV"
-                            : "CV non disponible"}
-                        </Button>
-                        {selectedCard.message && (
-                          <Button
-                            variant="outline"
-                            className="flex items-center gap-2"
-                            onClick={() =>
-                              handleDownloadLettreMotivation(
-                                selectedCard.candidat.letterm || ""
-                              )
-                            }
-                            disabled={!selectedCard.candidat.letterm}
-                          >
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                              />
-                            </svg>
-                            Télécharger Lettre
-                          </Button>
-                        )}
-                      </div>
-                      {!selectedCard.candidat.cv && (
-                        <p className="text-xs text-gray-500 mt-2">
-                          Aucun CV n'a été fourni par le candidat
-                        </p>
-                      )}
+                      <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
+                        {selectedOffer?.description}
+                      </p>
                     </div>
 
                     {/* Informations supplémentaires */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                          Informations de contact
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white flex items-center gap-2">
+                          <Building2 className="h-4 w-4" />
+                          Entreprise
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                              />
-                            </svg>
-                            <span>{selectedCard.candidat.email}</span>
+                            <span>{selectedOffer?.company}</span>
                           </div>
                         </div>
                       </div>
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                          Statut de candidature
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          Localisation
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span>
-                              Candidature reçue le{" "}
-                              {new Date(
-                                selectedCard.createdAt
-                              ).toLocaleDateString("fr-FR")}
-                            </span>
+                            <span>{selectedOffer?.location}</span>
                           </div>
                         </div>
                       </div>
@@ -4112,7 +4016,12 @@ export default function OffresPage() {
       </Dialog>
 
       {/* Modal de création d'offre */}
-      <Dialog open={isNewOfferModalOpen} onOpenChange={setIsNewOfferModalOpen}>
+      <Dialog
+        open={isNewOfferModalOpen}
+        onOpenChange={(open) => {
+          if (!open) handleCloseOfferModal();
+        }}
+      >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Créer une nouvelle offre</DialogTitle>
@@ -4121,218 +4030,120 @@ export default function OffresPage() {
             </DialogDescription>
           </DialogHeader>
 
-          <div className="grid gap-4 py-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Titre du poste *</label>
-              <Input
-                placeholder="Ex: Développeur Full Stack"
-                value={newOffer.title}
-                onChange={(e) =>
-                  setNewOffer({ ...newOffer, title: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Entreprise</label>
-                <Input
-                  placeholder="Nom de l'entreprise"
-                  value={newOffer.company}
-                  onChange={(e) =>
-                    setNewOffer({ ...newOffer, company: e.target.value })
-                  }
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Localisation</label>
-                <Input
-                  placeholder="Ville, Pays"
-                  value={newOffer.location}
-                  onChange={(e) =>
-                    setNewOffer({ ...newOffer, location: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Description *</label>
-              <Textarea
-                placeholder="Décrivez le poste..."
-                value={newOffer.description}
-                onChange={(e) =>
-                  setNewOffer({ ...newOffer, description: e.target.value })
-                }
-                rows={4}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Type de contrat</label>
-                <Select
-                  value={newOffer.type}
-                  onValueChange={(value) =>
-                    setNewOffer({ ...newOffer, type: value })
-                  }
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="CDI">CDI</SelectItem>
-                    <SelectItem value="CDD">CDD</SelectItem>
-                    <SelectItem value="Freelance">Freelance</SelectItem>
-                    <SelectItem value="Stage">Stage</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Expérience</label>
-                <Input
-                  placeholder="Ex: 2-5 ans"
-                  value={newOffer.experience}
-                  onChange={(e) =>
-                    setNewOffer({ ...newOffer, experience: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Salaire min</label>
-                <Input
-                  type="number"
-                  placeholder="30000"
-                  value={newOffer.salaryMin}
-                  onChange={(e) =>
-                    setNewOffer({ ...newOffer, salaryMin: e.target.value })
-                  }
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Salaire max</label>
-                <Input
-                  type="number"
-                  placeholder="45000"
-                  value={newOffer.salaryMax}
-                  onChange={(e) =>
-                    setNewOffer({ ...newOffer, salaryMax: e.target.value })
-                  }
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Période</label>
-                <Select
-                  value={newOffer.salaryPeriod}
-                  onValueChange={(value) =>
-                    setNewOffer({ ...newOffer, salaryPeriod: value })
-                  }
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="month">Mois</SelectItem>
-                    <SelectItem value="year">Année</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-
-          {/* Ajout de compétences personnalisées */}
-          <div className="flex gap-2 mt-2">
-            <Input
-              placeholder="Ajouter une compétence personnalisée..."
-              value={customSkill}
-              onChange={(e) => {
-                setCustomSkill(e.target.value);
-                // setNewOffer({
-                //   ...newOffer,
-                //   skills: [...newOffer.skills, e.target.value],
-                // });
-              }}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  setNewOffer({
-                    ...newOffer,
-                    skills: [...newOffer.skills, customSkill],
-                  });
-                  setCustomSkill("");
-                }
-              }}
-              className="flex-1"
-            />
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => {
-                setNewOffer({
-                  ...newOffer,
-                  skills: [...newOffer.skills, customSkill],
-                });
-                setCustomSkill("");
-              }}
-              disabled={
-                !customSkill.trim() ||
-                newOffer.skills.includes(customSkill) ||
-                newOffer.skills.length == 0
-              }
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleCreateOffer)}
+              className="space-y-4"
             >
-              Ajouter
-            </Button>
-          </div>
-          {/* Affichage des compétences sélectionnées */}
-          <div className="flex flex-wrap gap-2 mt-2">
-            {newOffer.skills?.map((skill) => (
-              <div
-                key={skill}
-                className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md"
-              >
-                <span className="text-sm">
-                  {skill.charAt(0).toUpperCase() + skill.slice(1)}
-                </span>
-                <button
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Titre du poste *</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Ex: Développeur Full Stack"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="company"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Entreprise</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Nom de l'entreprise" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Localisation</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Ville, Pays" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              {/* <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description *</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Décrivez le poste..."
+                        rows={4}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              /> */}
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormDescription>
+                      Utilisez l'éditeur riche pour formater votre description
+                      avec du texte en gras, italique, des listes, des liens,
+                      etc.
+                    </FormDescription>
+                    <FormControl>
+                      <RichTextEditorWrapper
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Décrivez le poste en détail avec un formatage riche..."
+                        className="bg-transparent"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <DialogFooter>
+                <Button
                   type="button"
-                  onClick={() => {
-                    setNewOffer({
-                      ...newOffer,
-                      skills: newOffer.skills.filter((s) => s !== skill),
-                    });
-                  }}
-                  className="text-primary hover:text-primary/80"
+                  variant="outline"
+                  onClick={handleCloseOfferModal}
                 >
-                  ×
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setIsNewOfferModalOpen(false)}
-            >
-              Annuler
-            </Button>
-            <Button
-              onClick={handleCreateOffer}
-              disabled={!newOffer.title || !newOffer.description || isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Création...
-                </>
-              ) : (
-                "Créer l'offre"
-              )}
-            </Button>
-          </DialogFooter>
+                  Annuler
+                </Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Création...
+                    </>
+                  ) : (
+                    "Créer l'offre"
+                  )}
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
         </DialogContent>
       </Dialog>
 

@@ -6,20 +6,7 @@ import { getAuthenticatedUser } from "@/lib/auth-utils";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const {
-      title,
-      description,
-      company,
-      location,
-      type,
-      experience,
-      salaryMin,
-      salaryMax,
-      salaryCurrency,
-      salaryPeriod,
-      skills,
-      columnId,
-    } = body;
+    const { title, description, company, location, columnId } = body;
 
     const authenticatedUser = await getAuthenticatedUser(req);
     if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
@@ -47,16 +34,6 @@ export async function POST(req: NextRequest) {
         description,
         company: company || "Non spécifié",
         location: location || "Non spécifié",
-        type: type || "CDI",
-        experience: experience || "Non spécifié",
-        salaryMin: parseFloat(salaryMin) || 0,
-        salaryMax: parseFloat(salaryMax) || 0,
-        salaryCurrency: salaryCurrency || "EUR",
-        salaryPeriod: salaryPeriod || "month",
-        benefits: "",
-        requirements: "",
-        responsibilities: "",
-        skills: Array.isArray(skills) ? skills.join(",") : skills || "",
         kanbanColumnCustomid: columnId,
       },
       include: {

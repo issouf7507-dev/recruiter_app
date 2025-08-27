@@ -13572,24 +13572,24 @@ export namespace Prisma {
   export type JobOfferGroupByOutputType = {
     id: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description: string | null
+    company: string | null
+    location: string | null
+    type: string | null
+    etat: string | null
+    experience: string | null
+    salaryMin: number | null
+    salaryMax: number | null
+    salaryCurrency: string | null
+    salaryPeriod: string | null
+    benefits: string | null
+    requirements: string | null
+    responsibilities: string | null
     duedate: Date | null
-    skills: string
+    skills: string | null
     favorite: boolean | null
     templateId: number | null
-    views: number
+    views: number | null
     recruteurId: string
     createdAt: Date
     updatedAt: Date
@@ -13699,24 +13699,24 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
-      description: string
-      company: string
-      location: string
-      type: string
-      etat: string
-      experience: string
-      salaryMin: number
-      salaryMax: number
-      salaryCurrency: string
-      salaryPeriod: string
-      benefits: string
-      requirements: string
-      responsibilities: string
+      description: string | null
+      company: string | null
+      location: string | null
+      type: string | null
+      etat: string | null
+      experience: string | null
+      salaryMin: number | null
+      salaryMax: number | null
+      salaryCurrency: string | null
+      salaryPeriod: string | null
+      benefits: string | null
+      requirements: string | null
+      responsibilities: string | null
       duedate: Date | null
-      skills: string
+      skills: string | null
       favorite: boolean | null
       templateId: number | null
-      views: number
+      views: number | null
       recruteurId: string
       createdAt: Date
       updatedAt: Date
@@ -43405,20 +43405,8 @@ export namespace Prisma {
 
   export type AggregateApplicationCustom = {
     _count: ApplicationCustomCountAggregateOutputType | null
-    _avg: ApplicationCustomAvgAggregateOutputType | null
-    _sum: ApplicationCustomSumAggregateOutputType | null
     _min: ApplicationCustomMinAggregateOutputType | null
     _max: ApplicationCustomMaxAggregateOutputType | null
-  }
-
-  export type ApplicationCustomAvgAggregateOutputType = {
-    salaryMin: number | null
-    salaryMax: number | null
-  }
-
-  export type ApplicationCustomSumAggregateOutputType = {
-    salaryMin: number | null
-    salaryMax: number | null
   }
 
   export type ApplicationCustomMinAggregateOutputType = {
@@ -43427,17 +43415,6 @@ export namespace Prisma {
     description: string | null
     company: string | null
     location: string | null
-    type: string | null
-    etat: string | null
-    experience: string | null
-    salaryMin: number | null
-    salaryMax: number | null
-    salaryCurrency: string | null
-    salaryPeriod: string | null
-    benefits: string | null
-    requirements: string | null
-    responsibilities: string | null
-    skills: string | null
     duedate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -43450,17 +43427,6 @@ export namespace Prisma {
     description: string | null
     company: string | null
     location: string | null
-    type: string | null
-    etat: string | null
-    experience: string | null
-    salaryMin: number | null
-    salaryMax: number | null
-    salaryCurrency: string | null
-    salaryPeriod: string | null
-    benefits: string | null
-    requirements: string | null
-    responsibilities: string | null
-    skills: string | null
     duedate: Date | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -43473,17 +43439,6 @@ export namespace Prisma {
     description: number
     company: number
     location: number
-    type: number
-    etat: number
-    experience: number
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: number
-    salaryPeriod: number
-    benefits: number
-    requirements: number
-    responsibilities: number
-    skills: number
     duedate: number
     createdAt: number
     updatedAt: number
@@ -43492,33 +43447,12 @@ export namespace Prisma {
   }
 
 
-  export type ApplicationCustomAvgAggregateInputType = {
-    salaryMin?: true
-    salaryMax?: true
-  }
-
-  export type ApplicationCustomSumAggregateInputType = {
-    salaryMin?: true
-    salaryMax?: true
-  }
-
   export type ApplicationCustomMinAggregateInputType = {
     id?: true
     title?: true
     description?: true
     company?: true
     location?: true
-    type?: true
-    etat?: true
-    experience?: true
-    salaryMin?: true
-    salaryMax?: true
-    salaryCurrency?: true
-    salaryPeriod?: true
-    benefits?: true
-    requirements?: true
-    responsibilities?: true
-    skills?: true
     duedate?: true
     createdAt?: true
     updatedAt?: true
@@ -43531,17 +43465,6 @@ export namespace Prisma {
     description?: true
     company?: true
     location?: true
-    type?: true
-    etat?: true
-    experience?: true
-    salaryMin?: true
-    salaryMax?: true
-    salaryCurrency?: true
-    salaryPeriod?: true
-    benefits?: true
-    requirements?: true
-    responsibilities?: true
-    skills?: true
     duedate?: true
     createdAt?: true
     updatedAt?: true
@@ -43554,17 +43477,6 @@ export namespace Prisma {
     description?: true
     company?: true
     location?: true
-    type?: true
-    etat?: true
-    experience?: true
-    salaryMin?: true
-    salaryMax?: true
-    salaryCurrency?: true
-    salaryPeriod?: true
-    benefits?: true
-    requirements?: true
-    responsibilities?: true
-    skills?: true
     duedate?: true
     createdAt?: true
     updatedAt?: true
@@ -43610,18 +43522,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: ApplicationCustomAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: ApplicationCustomSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: ApplicationCustomMinAggregateInputType
@@ -43652,8 +43552,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ApplicationCustomCountAggregateInputType | true
-    _avg?: ApplicationCustomAvgAggregateInputType
-    _sum?: ApplicationCustomSumAggregateInputType
     _min?: ApplicationCustomMinAggregateInputType
     _max?: ApplicationCustomMaxAggregateInputType
   }
@@ -43664,24 +43562,11 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate: Date | null
     createdAt: Date
     updatedAt: Date
     kanbanColumnCustomid: string
     _count: ApplicationCustomCountAggregateOutputType | null
-    _avg: ApplicationCustomAvgAggregateOutputType | null
-    _sum: ApplicationCustomSumAggregateOutputType | null
     _min: ApplicationCustomMinAggregateOutputType | null
     _max: ApplicationCustomMaxAggregateOutputType | null
   }
@@ -43706,17 +43591,6 @@ export namespace Prisma {
     description?: boolean
     company?: boolean
     location?: boolean
-    type?: boolean
-    etat?: boolean
-    experience?: boolean
-    salaryMin?: boolean
-    salaryMax?: boolean
-    salaryCurrency?: boolean
-    salaryPeriod?: boolean
-    benefits?: boolean
-    requirements?: boolean
-    responsibilities?: boolean
-    skills?: boolean
     duedate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -43738,24 +43612,13 @@ export namespace Prisma {
     description?: boolean
     company?: boolean
     location?: boolean
-    type?: boolean
-    etat?: boolean
-    experience?: boolean
-    salaryMin?: boolean
-    salaryMax?: boolean
-    salaryCurrency?: boolean
-    salaryPeriod?: boolean
-    benefits?: boolean
-    requirements?: boolean
-    responsibilities?: boolean
-    skills?: boolean
     duedate?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     kanbanColumnCustomid?: boolean
   }
 
-  export type ApplicationCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "company" | "location" | "type" | "etat" | "experience" | "salaryMin" | "salaryMax" | "salaryCurrency" | "salaryPeriod" | "benefits" | "requirements" | "responsibilities" | "skills" | "duedate" | "createdAt" | "updatedAt" | "kanbanColumnCustomid", ExtArgs["result"]["applicationCustom"]>
+  export type ApplicationCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "company" | "location" | "duedate" | "createdAt" | "updatedAt" | "kanbanColumnCustomid", ExtArgs["result"]["applicationCustom"]>
   export type ApplicationCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     collaborateurs?: boolean | ApplicationCustom$collaborateursArgs<ExtArgs>
     files?: boolean | ApplicationCustom$filesArgs<ExtArgs>
@@ -43782,17 +43645,6 @@ export namespace Prisma {
       description: string
       company: string
       location: string
-      type: string
-      etat: string
-      experience: string
-      salaryMin: number
-      salaryMax: number
-      salaryCurrency: string
-      salaryPeriod: string
-      benefits: string
-      requirements: string
-      responsibilities: string
-      skills: string
       duedate: Date | null
       createdAt: Date
       updatedAt: Date
@@ -44177,17 +44029,6 @@ export namespace Prisma {
     readonly description: FieldRef<"ApplicationCustom", 'String'>
     readonly company: FieldRef<"ApplicationCustom", 'String'>
     readonly location: FieldRef<"ApplicationCustom", 'String'>
-    readonly type: FieldRef<"ApplicationCustom", 'String'>
-    readonly etat: FieldRef<"ApplicationCustom", 'String'>
-    readonly experience: FieldRef<"ApplicationCustom", 'String'>
-    readonly salaryMin: FieldRef<"ApplicationCustom", 'Float'>
-    readonly salaryMax: FieldRef<"ApplicationCustom", 'Float'>
-    readonly salaryCurrency: FieldRef<"ApplicationCustom", 'String'>
-    readonly salaryPeriod: FieldRef<"ApplicationCustom", 'String'>
-    readonly benefits: FieldRef<"ApplicationCustom", 'String'>
-    readonly requirements: FieldRef<"ApplicationCustom", 'String'>
-    readonly responsibilities: FieldRef<"ApplicationCustom", 'String'>
-    readonly skills: FieldRef<"ApplicationCustom", 'String'>
     readonly duedate: FieldRef<"ApplicationCustom", 'DateTime'>
     readonly createdAt: FieldRef<"ApplicationCustom", 'DateTime'>
     readonly updatedAt: FieldRef<"ApplicationCustom", 'DateTime'>
@@ -45258,17 +45099,6 @@ export namespace Prisma {
     description: 'description',
     company: 'company',
     location: 'location',
-    type: 'type',
-    etat: 'etat',
-    experience: 'experience',
-    salaryMin: 'salaryMin',
-    salaryMax: 'salaryMax',
-    salaryCurrency: 'salaryCurrency',
-    salaryPeriod: 'salaryPeriod',
-    benefits: 'benefits',
-    requirements: 'requirements',
-    responsibilities: 'responsibilities',
-    skills: 'skills',
     duedate: 'duedate',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -45752,15 +45582,6 @@ export namespace Prisma {
     description: 'description',
     company: 'company',
     location: 'location',
-    type: 'type',
-    etat: 'etat',
-    experience: 'experience',
-    salaryCurrency: 'salaryCurrency',
-    salaryPeriod: 'salaryPeriod',
-    benefits: 'benefits',
-    requirements: 'requirements',
-    responsibilities: 'responsibilities',
-    skills: 'skills',
     kanbanColumnCustomid: 'kanbanColumnCustomid'
   };
 
@@ -46542,24 +46363,24 @@ export namespace Prisma {
     NOT?: JobOfferWhereInput | JobOfferWhereInput[]
     id?: IntFilter<"JobOffer"> | number
     title?: StringFilter<"JobOffer"> | string
-    description?: StringFilter<"JobOffer"> | string
-    company?: StringFilter<"JobOffer"> | string
-    location?: StringFilter<"JobOffer"> | string
-    type?: StringFilter<"JobOffer"> | string
-    etat?: StringFilter<"JobOffer"> | string
-    experience?: StringFilter<"JobOffer"> | string
-    salaryMin?: FloatFilter<"JobOffer"> | number
-    salaryMax?: FloatFilter<"JobOffer"> | number
-    salaryCurrency?: StringFilter<"JobOffer"> | string
-    salaryPeriod?: StringFilter<"JobOffer"> | string
-    benefits?: StringFilter<"JobOffer"> | string
-    requirements?: StringFilter<"JobOffer"> | string
-    responsibilities?: StringFilter<"JobOffer"> | string
+    description?: StringNullableFilter<"JobOffer"> | string | null
+    company?: StringNullableFilter<"JobOffer"> | string | null
+    location?: StringNullableFilter<"JobOffer"> | string | null
+    type?: StringNullableFilter<"JobOffer"> | string | null
+    etat?: StringNullableFilter<"JobOffer"> | string | null
+    experience?: StringNullableFilter<"JobOffer"> | string | null
+    salaryMin?: FloatNullableFilter<"JobOffer"> | number | null
+    salaryMax?: FloatNullableFilter<"JobOffer"> | number | null
+    salaryCurrency?: StringNullableFilter<"JobOffer"> | string | null
+    salaryPeriod?: StringNullableFilter<"JobOffer"> | string | null
+    benefits?: StringNullableFilter<"JobOffer"> | string | null
+    requirements?: StringNullableFilter<"JobOffer"> | string | null
+    responsibilities?: StringNullableFilter<"JobOffer"> | string | null
     duedate?: DateTimeNullableFilter<"JobOffer"> | Date | string | null
-    skills?: StringFilter<"JobOffer"> | string
+    skills?: StringNullableFilter<"JobOffer"> | string | null
     favorite?: BoolNullableFilter<"JobOffer"> | boolean | null
     templateId?: IntNullableFilter<"JobOffer"> | number | null
-    views?: IntFilter<"JobOffer"> | number
+    views?: IntNullableFilter<"JobOffer"> | number | null
     recruteurId?: StringFilter<"JobOffer"> | string
     createdAt?: DateTimeFilter<"JobOffer"> | Date | string
     updatedAt?: DateTimeFilter<"JobOffer"> | Date | string
@@ -46574,24 +46395,24 @@ export namespace Prisma {
   export type JobOfferOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
-    description?: SortOrder
-    company?: SortOrder
-    location?: SortOrder
-    type?: SortOrder
-    etat?: SortOrder
-    experience?: SortOrder
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
-    salaryCurrency?: SortOrder
-    salaryPeriod?: SortOrder
-    benefits?: SortOrder
-    requirements?: SortOrder
-    responsibilities?: SortOrder
+    description?: SortOrderInput | SortOrder
+    company?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    type?: SortOrderInput | SortOrder
+    etat?: SortOrderInput | SortOrder
+    experience?: SortOrderInput | SortOrder
+    salaryMin?: SortOrderInput | SortOrder
+    salaryMax?: SortOrderInput | SortOrder
+    salaryCurrency?: SortOrderInput | SortOrder
+    salaryPeriod?: SortOrderInput | SortOrder
+    benefits?: SortOrderInput | SortOrder
+    requirements?: SortOrderInput | SortOrder
+    responsibilities?: SortOrderInput | SortOrder
     duedate?: SortOrderInput | SortOrder
-    skills?: SortOrder
+    skills?: SortOrderInput | SortOrder
     favorite?: SortOrderInput | SortOrder
     templateId?: SortOrderInput | SortOrder
-    views?: SortOrder
+    views?: SortOrderInput | SortOrder
     recruteurId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -46610,24 +46431,24 @@ export namespace Prisma {
     OR?: JobOfferWhereInput[]
     NOT?: JobOfferWhereInput | JobOfferWhereInput[]
     title?: StringFilter<"JobOffer"> | string
-    description?: StringFilter<"JobOffer"> | string
-    company?: StringFilter<"JobOffer"> | string
-    location?: StringFilter<"JobOffer"> | string
-    type?: StringFilter<"JobOffer"> | string
-    etat?: StringFilter<"JobOffer"> | string
-    experience?: StringFilter<"JobOffer"> | string
-    salaryMin?: FloatFilter<"JobOffer"> | number
-    salaryMax?: FloatFilter<"JobOffer"> | number
-    salaryCurrency?: StringFilter<"JobOffer"> | string
-    salaryPeriod?: StringFilter<"JobOffer"> | string
-    benefits?: StringFilter<"JobOffer"> | string
-    requirements?: StringFilter<"JobOffer"> | string
-    responsibilities?: StringFilter<"JobOffer"> | string
+    description?: StringNullableFilter<"JobOffer"> | string | null
+    company?: StringNullableFilter<"JobOffer"> | string | null
+    location?: StringNullableFilter<"JobOffer"> | string | null
+    type?: StringNullableFilter<"JobOffer"> | string | null
+    etat?: StringNullableFilter<"JobOffer"> | string | null
+    experience?: StringNullableFilter<"JobOffer"> | string | null
+    salaryMin?: FloatNullableFilter<"JobOffer"> | number | null
+    salaryMax?: FloatNullableFilter<"JobOffer"> | number | null
+    salaryCurrency?: StringNullableFilter<"JobOffer"> | string | null
+    salaryPeriod?: StringNullableFilter<"JobOffer"> | string | null
+    benefits?: StringNullableFilter<"JobOffer"> | string | null
+    requirements?: StringNullableFilter<"JobOffer"> | string | null
+    responsibilities?: StringNullableFilter<"JobOffer"> | string | null
     duedate?: DateTimeNullableFilter<"JobOffer"> | Date | string | null
-    skills?: StringFilter<"JobOffer"> | string
+    skills?: StringNullableFilter<"JobOffer"> | string | null
     favorite?: BoolNullableFilter<"JobOffer"> | boolean | null
     templateId?: IntNullableFilter<"JobOffer"> | number | null
-    views?: IntFilter<"JobOffer"> | number
+    views?: IntNullableFilter<"JobOffer"> | number | null
     recruteurId?: StringFilter<"JobOffer"> | string
     createdAt?: DateTimeFilter<"JobOffer"> | Date | string
     updatedAt?: DateTimeFilter<"JobOffer"> | Date | string
@@ -46642,24 +46463,24 @@ export namespace Prisma {
   export type JobOfferOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
-    description?: SortOrder
-    company?: SortOrder
-    location?: SortOrder
-    type?: SortOrder
-    etat?: SortOrder
-    experience?: SortOrder
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
-    salaryCurrency?: SortOrder
-    salaryPeriod?: SortOrder
-    benefits?: SortOrder
-    requirements?: SortOrder
-    responsibilities?: SortOrder
+    description?: SortOrderInput | SortOrder
+    company?: SortOrderInput | SortOrder
+    location?: SortOrderInput | SortOrder
+    type?: SortOrderInput | SortOrder
+    etat?: SortOrderInput | SortOrder
+    experience?: SortOrderInput | SortOrder
+    salaryMin?: SortOrderInput | SortOrder
+    salaryMax?: SortOrderInput | SortOrder
+    salaryCurrency?: SortOrderInput | SortOrder
+    salaryPeriod?: SortOrderInput | SortOrder
+    benefits?: SortOrderInput | SortOrder
+    requirements?: SortOrderInput | SortOrder
+    responsibilities?: SortOrderInput | SortOrder
     duedate?: SortOrderInput | SortOrder
-    skills?: SortOrder
+    skills?: SortOrderInput | SortOrder
     favorite?: SortOrderInput | SortOrder
     templateId?: SortOrderInput | SortOrder
-    views?: SortOrder
+    views?: SortOrderInput | SortOrder
     recruteurId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -46676,24 +46497,24 @@ export namespace Prisma {
     NOT?: JobOfferScalarWhereWithAggregatesInput | JobOfferScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"JobOffer"> | number
     title?: StringWithAggregatesFilter<"JobOffer"> | string
-    description?: StringWithAggregatesFilter<"JobOffer"> | string
-    company?: StringWithAggregatesFilter<"JobOffer"> | string
-    location?: StringWithAggregatesFilter<"JobOffer"> | string
-    type?: StringWithAggregatesFilter<"JobOffer"> | string
-    etat?: StringWithAggregatesFilter<"JobOffer"> | string
-    experience?: StringWithAggregatesFilter<"JobOffer"> | string
-    salaryMin?: FloatWithAggregatesFilter<"JobOffer"> | number
-    salaryMax?: FloatWithAggregatesFilter<"JobOffer"> | number
-    salaryCurrency?: StringWithAggregatesFilter<"JobOffer"> | string
-    salaryPeriod?: StringWithAggregatesFilter<"JobOffer"> | string
-    benefits?: StringWithAggregatesFilter<"JobOffer"> | string
-    requirements?: StringWithAggregatesFilter<"JobOffer"> | string
-    responsibilities?: StringWithAggregatesFilter<"JobOffer"> | string
+    description?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    company?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    location?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    type?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    etat?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    experience?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    salaryMin?: FloatNullableWithAggregatesFilter<"JobOffer"> | number | null
+    salaryMax?: FloatNullableWithAggregatesFilter<"JobOffer"> | number | null
+    salaryCurrency?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    salaryPeriod?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    benefits?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    requirements?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
+    responsibilities?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
     duedate?: DateTimeNullableWithAggregatesFilter<"JobOffer"> | Date | string | null
-    skills?: StringWithAggregatesFilter<"JobOffer"> | string
+    skills?: StringNullableWithAggregatesFilter<"JobOffer"> | string | null
     favorite?: BoolNullableWithAggregatesFilter<"JobOffer"> | boolean | null
     templateId?: IntNullableWithAggregatesFilter<"JobOffer"> | number | null
-    views?: IntWithAggregatesFilter<"JobOffer"> | number
+    views?: IntNullableWithAggregatesFilter<"JobOffer"> | number | null
     recruteurId?: StringWithAggregatesFilter<"JobOffer"> | string
     createdAt?: DateTimeWithAggregatesFilter<"JobOffer"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"JobOffer"> | Date | string
@@ -48893,17 +48714,6 @@ export namespace Prisma {
     description?: StringFilter<"ApplicationCustom"> | string
     company?: StringFilter<"ApplicationCustom"> | string
     location?: StringFilter<"ApplicationCustom"> | string
-    type?: StringFilter<"ApplicationCustom"> | string
-    etat?: StringFilter<"ApplicationCustom"> | string
-    experience?: StringFilter<"ApplicationCustom"> | string
-    salaryMin?: FloatFilter<"ApplicationCustom"> | number
-    salaryMax?: FloatFilter<"ApplicationCustom"> | number
-    salaryCurrency?: StringFilter<"ApplicationCustom"> | string
-    salaryPeriod?: StringFilter<"ApplicationCustom"> | string
-    benefits?: StringFilter<"ApplicationCustom"> | string
-    requirements?: StringFilter<"ApplicationCustom"> | string
-    responsibilities?: StringFilter<"ApplicationCustom"> | string
-    skills?: StringFilter<"ApplicationCustom"> | string
     duedate?: DateTimeNullableFilter<"ApplicationCustom"> | Date | string | null
     createdAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
     updatedAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
@@ -48922,17 +48732,6 @@ export namespace Prisma {
     description?: SortOrder
     company?: SortOrder
     location?: SortOrder
-    type?: SortOrder
-    etat?: SortOrder
-    experience?: SortOrder
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
-    salaryCurrency?: SortOrder
-    salaryPeriod?: SortOrder
-    benefits?: SortOrder
-    requirements?: SortOrder
-    responsibilities?: SortOrder
-    skills?: SortOrder
     duedate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -48955,17 +48754,6 @@ export namespace Prisma {
     description?: StringFilter<"ApplicationCustom"> | string
     company?: StringFilter<"ApplicationCustom"> | string
     location?: StringFilter<"ApplicationCustom"> | string
-    type?: StringFilter<"ApplicationCustom"> | string
-    etat?: StringFilter<"ApplicationCustom"> | string
-    experience?: StringFilter<"ApplicationCustom"> | string
-    salaryMin?: FloatFilter<"ApplicationCustom"> | number
-    salaryMax?: FloatFilter<"ApplicationCustom"> | number
-    salaryCurrency?: StringFilter<"ApplicationCustom"> | string
-    salaryPeriod?: StringFilter<"ApplicationCustom"> | string
-    benefits?: StringFilter<"ApplicationCustom"> | string
-    requirements?: StringFilter<"ApplicationCustom"> | string
-    responsibilities?: StringFilter<"ApplicationCustom"> | string
-    skills?: StringFilter<"ApplicationCustom"> | string
     duedate?: DateTimeNullableFilter<"ApplicationCustom"> | Date | string | null
     createdAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
     updatedAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
@@ -48984,26 +48772,13 @@ export namespace Prisma {
     description?: SortOrder
     company?: SortOrder
     location?: SortOrder
-    type?: SortOrder
-    etat?: SortOrder
-    experience?: SortOrder
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
-    salaryCurrency?: SortOrder
-    salaryPeriod?: SortOrder
-    benefits?: SortOrder
-    requirements?: SortOrder
-    responsibilities?: SortOrder
-    skills?: SortOrder
     duedate?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     kanbanColumnCustomid?: SortOrder
     _count?: ApplicationCustomCountOrderByAggregateInput
-    _avg?: ApplicationCustomAvgOrderByAggregateInput
     _max?: ApplicationCustomMaxOrderByAggregateInput
     _min?: ApplicationCustomMinOrderByAggregateInput
-    _sum?: ApplicationCustomSumOrderByAggregateInput
   }
 
   export type ApplicationCustomScalarWhereWithAggregatesInput = {
@@ -49015,17 +48790,6 @@ export namespace Prisma {
     description?: StringWithAggregatesFilter<"ApplicationCustom"> | string
     company?: StringWithAggregatesFilter<"ApplicationCustom"> | string
     location?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    type?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    etat?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    experience?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    salaryMin?: FloatWithAggregatesFilter<"ApplicationCustom"> | number
-    salaryMax?: FloatWithAggregatesFilter<"ApplicationCustom"> | number
-    salaryCurrency?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    salaryPeriod?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    benefits?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    requirements?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    responsibilities?: StringWithAggregatesFilter<"ApplicationCustom"> | string
-    skills?: StringWithAggregatesFilter<"ApplicationCustom"> | string
     duedate?: DateTimeNullableWithAggregatesFilter<"ApplicationCustom"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ApplicationCustom"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"ApplicationCustom"> | Date | string
@@ -49806,23 +49570,23 @@ export namespace Prisma {
 
   export type JobOfferCreateInput = {
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
@@ -49836,24 +49600,24 @@ export namespace Prisma {
   export type JobOfferUncheckedCreateInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
     templateId?: number | null
-    views?: number
+    views?: number | null
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49865,23 +49629,23 @@ export namespace Prisma {
 
   export type JobOfferUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
@@ -49895,24 +49659,24 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -49925,24 +49689,24 @@ export namespace Prisma {
   export type JobOfferCreateManyInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
     templateId?: number | null
-    views?: number
+    views?: number | null
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49950,23 +49714,23 @@ export namespace Prisma {
 
   export type JobOfferUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49974,24 +49738,24 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52308,17 +52072,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52336,17 +52089,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52364,17 +52106,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52392,17 +52123,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52420,17 +52140,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52443,17 +52152,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52465,17 +52163,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53260,15 +52947,15 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
@@ -53428,20 +53115,20 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -54281,17 +53968,6 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type AlerteMotCleListRelationFilter = {
     every?: AlerteMotCleWhereInput
     some?: AlerteMotCleWhereInput
@@ -54369,22 +54045,6 @@ export namespace Prisma {
     salaireMin?: SortOrder
     salaireMax?: SortOrder
     nombreResultats?: SortOrder
-  }
-
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type AlerteEmploiScalarRelationFilter = {
@@ -55046,26 +54706,10 @@ export namespace Prisma {
     description?: SortOrder
     company?: SortOrder
     location?: SortOrder
-    type?: SortOrder
-    etat?: SortOrder
-    experience?: SortOrder
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
-    salaryCurrency?: SortOrder
-    salaryPeriod?: SortOrder
-    benefits?: SortOrder
-    requirements?: SortOrder
-    responsibilities?: SortOrder
-    skills?: SortOrder
     duedate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     kanbanColumnCustomid?: SortOrder
-  }
-
-  export type ApplicationCustomAvgOrderByAggregateInput = {
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
   }
 
   export type ApplicationCustomMaxOrderByAggregateInput = {
@@ -55074,17 +54718,6 @@ export namespace Prisma {
     description?: SortOrder
     company?: SortOrder
     location?: SortOrder
-    type?: SortOrder
-    etat?: SortOrder
-    experience?: SortOrder
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
-    salaryCurrency?: SortOrder
-    salaryPeriod?: SortOrder
-    benefits?: SortOrder
-    requirements?: SortOrder
-    responsibilities?: SortOrder
-    skills?: SortOrder
     duedate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -55097,26 +54730,10 @@ export namespace Prisma {
     description?: SortOrder
     company?: SortOrder
     location?: SortOrder
-    type?: SortOrder
-    etat?: SortOrder
-    experience?: SortOrder
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
-    salaryCurrency?: SortOrder
-    salaryPeriod?: SortOrder
-    benefits?: SortOrder
-    requirements?: SortOrder
-    responsibilities?: SortOrder
-    skills?: SortOrder
     duedate?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     kanbanColumnCustomid?: SortOrder
-  }
-
-  export type ApplicationCustomSumOrderByAggregateInput = {
-    salaryMin?: SortOrder
-    salaryMax?: SortOrder
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -56319,8 +55936,8 @@ export namespace Prisma {
     connect?: KanbanColumnWhereUniqueInput | KanbanColumnWhereUniqueInput[]
   }
 
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
@@ -56331,8 +55948,8 @@ export namespace Prisma {
     set?: boolean | null
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
     increment?: number
     decrement?: number
     multiply?: number
@@ -56413,8 +56030,8 @@ export namespace Prisma {
     deleteMany?: KanbanColumnScalarWhereInput | KanbanColumnScalarWhereInput[]
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
     increment?: number
     decrement?: number
     multiply?: number
@@ -57125,14 +56742,6 @@ export namespace Prisma {
     connectOrCreate?: AlerteMotCleCreateOrConnectWithoutAlerteInput | AlerteMotCleCreateOrConnectWithoutAlerteInput[]
     createMany?: AlerteMotCleCreateManyAlerteInputEnvelope
     connect?: AlerteMotCleWhereUniqueInput | AlerteMotCleWhereUniqueInput[]
-  }
-
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type CandidatUpdateOneRequiredWithoutAlertesNestedInput = {
@@ -57927,15 +57536,15 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
@@ -57959,7 +57568,7 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[]
     notIn?: number[]
@@ -57967,12 +57576,23 @@ export namespace Prisma {
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -57997,33 +57617,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | null
-    notIn?: number[] | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumSenderTypeFilter<$PrismaModel = never> = {
@@ -59419,23 +59012,23 @@ export namespace Prisma {
 
   export type JobOfferCreateWithoutRecruteurInput = {
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
@@ -59448,24 +59041,24 @@ export namespace Prisma {
   export type JobOfferUncheckedCreateWithoutRecruteurInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
     templateId?: number | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationUncheckedCreateNestedManyWithoutJobOfferInput
@@ -59746,24 +59339,24 @@ export namespace Prisma {
     NOT?: JobOfferScalarWhereInput | JobOfferScalarWhereInput[]
     id?: IntFilter<"JobOffer"> | number
     title?: StringFilter<"JobOffer"> | string
-    description?: StringFilter<"JobOffer"> | string
-    company?: StringFilter<"JobOffer"> | string
-    location?: StringFilter<"JobOffer"> | string
-    type?: StringFilter<"JobOffer"> | string
-    etat?: StringFilter<"JobOffer"> | string
-    experience?: StringFilter<"JobOffer"> | string
-    salaryMin?: FloatFilter<"JobOffer"> | number
-    salaryMax?: FloatFilter<"JobOffer"> | number
-    salaryCurrency?: StringFilter<"JobOffer"> | string
-    salaryPeriod?: StringFilter<"JobOffer"> | string
-    benefits?: StringFilter<"JobOffer"> | string
-    requirements?: StringFilter<"JobOffer"> | string
-    responsibilities?: StringFilter<"JobOffer"> | string
+    description?: StringNullableFilter<"JobOffer"> | string | null
+    company?: StringNullableFilter<"JobOffer"> | string | null
+    location?: StringNullableFilter<"JobOffer"> | string | null
+    type?: StringNullableFilter<"JobOffer"> | string | null
+    etat?: StringNullableFilter<"JobOffer"> | string | null
+    experience?: StringNullableFilter<"JobOffer"> | string | null
+    salaryMin?: FloatNullableFilter<"JobOffer"> | number | null
+    salaryMax?: FloatNullableFilter<"JobOffer"> | number | null
+    salaryCurrency?: StringNullableFilter<"JobOffer"> | string | null
+    salaryPeriod?: StringNullableFilter<"JobOffer"> | string | null
+    benefits?: StringNullableFilter<"JobOffer"> | string | null
+    requirements?: StringNullableFilter<"JobOffer"> | string | null
+    responsibilities?: StringNullableFilter<"JobOffer"> | string | null
     duedate?: DateTimeNullableFilter<"JobOffer"> | Date | string | null
-    skills?: StringFilter<"JobOffer"> | string
+    skills?: StringNullableFilter<"JobOffer"> | string | null
     favorite?: BoolNullableFilter<"JobOffer"> | boolean | null
     templateId?: IntNullableFilter<"JobOffer"> | number | null
-    views?: IntFilter<"JobOffer"> | number
+    views?: IntNullableFilter<"JobOffer"> | number | null
     recruteurId?: StringFilter<"JobOffer"> | string
     createdAt?: DateTimeFilter<"JobOffer"> | Date | string
     updatedAt?: DateTimeFilter<"JobOffer"> | Date | string
@@ -61060,23 +60653,23 @@ export namespace Prisma {
 
   export type JobOfferCreateWithoutJobOfferCompetencesInput = {
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
@@ -61089,24 +60682,24 @@ export namespace Prisma {
   export type JobOfferUncheckedCreateWithoutJobOfferCompetencesInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
     templateId?: number | null
-    views?: number
+    views?: number | null
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -61133,23 +60726,23 @@ export namespace Prisma {
 
   export type JobOfferUpdateWithoutJobOfferCompetencesInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
@@ -61162,24 +60755,24 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateWithoutJobOfferCompetencesInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -61190,23 +60783,23 @@ export namespace Prisma {
 
   export type JobOfferCreateWithoutTemplateInput = {
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
@@ -61219,23 +60812,23 @@ export namespace Prisma {
   export type JobOfferUncheckedCreateWithoutTemplateInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -61479,23 +61072,23 @@ export namespace Prisma {
 
   export type JobOfferCreateWithoutApplicationsInput = {
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutJobOfferInput
@@ -61508,24 +61101,24 @@ export namespace Prisma {
   export type JobOfferUncheckedCreateWithoutApplicationsInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
     templateId?: number | null
-    views?: number
+    views?: number | null
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -61774,23 +61367,23 @@ export namespace Prisma {
 
   export type JobOfferUpdateWithoutApplicationsInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutJobOfferNestedInput
@@ -61803,24 +61396,24 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateWithoutApplicationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -62236,23 +61829,23 @@ export namespace Prisma {
 
   export type JobOfferCreateWithoutKanbanColumnsInput = {
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
@@ -62265,24 +61858,24 @@ export namespace Prisma {
   export type JobOfferUncheckedCreateWithoutKanbanColumnsInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
     templateId?: number | null
-    views?: number
+    views?: number | null
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -62325,23 +61918,23 @@ export namespace Prisma {
 
   export type JobOfferUpdateWithoutKanbanColumnsInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
@@ -62354,24 +61947,24 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateWithoutKanbanColumnsInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63877,23 +63470,23 @@ export namespace Prisma {
 
   export type JobOfferCreateWithoutConversationsInput = {
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
     applications?: ApplicationCreateNestedManyWithoutJobOfferInput
@@ -63906,24 +63499,24 @@ export namespace Prisma {
   export type JobOfferUncheckedCreateWithoutConversationsInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
     templateId?: number | null
-    views?: number
+    views?: number | null
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -64104,23 +63697,23 @@ export namespace Prisma {
 
   export type JobOfferUpdateWithoutConversationsInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
@@ -64133,24 +63726,24 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateWithoutConversationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64312,17 +63905,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -64339,17 +63921,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -64450,17 +64021,6 @@ export namespace Prisma {
     description?: StringFilter<"ApplicationCustom"> | string
     company?: StringFilter<"ApplicationCustom"> | string
     location?: StringFilter<"ApplicationCustom"> | string
-    type?: StringFilter<"ApplicationCustom"> | string
-    etat?: StringFilter<"ApplicationCustom"> | string
-    experience?: StringFilter<"ApplicationCustom"> | string
-    salaryMin?: FloatFilter<"ApplicationCustom"> | number
-    salaryMax?: FloatFilter<"ApplicationCustom"> | number
-    salaryCurrency?: StringFilter<"ApplicationCustom"> | string
-    salaryPeriod?: StringFilter<"ApplicationCustom"> | string
-    benefits?: StringFilter<"ApplicationCustom"> | string
-    requirements?: StringFilter<"ApplicationCustom"> | string
-    responsibilities?: StringFilter<"ApplicationCustom"> | string
-    skills?: StringFilter<"ApplicationCustom"> | string
     duedate?: DateTimeNullableFilter<"ApplicationCustom"> | Date | string | null
     createdAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
     updatedAt?: DateTimeFilter<"ApplicationCustom"> | Date | string
@@ -64701,17 +64261,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -64728,17 +64277,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -64771,17 +64309,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64798,17 +64325,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64825,17 +64341,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -64852,17 +64357,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -64926,17 +64420,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -64953,17 +64436,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65017,17 +64489,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -65044,17 +64505,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -65087,17 +64537,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65114,17 +64553,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65141,17 +64569,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -65168,17 +64585,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -65211,17 +64617,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65238,17 +64633,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65265,17 +64649,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -65292,17 +64665,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -65335,17 +64697,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -65362,17 +64713,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66312,24 +65652,24 @@ export namespace Prisma {
   export type JobOfferCreateManyRecruteurInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
     templateId?: number | null
-    views?: number
+    views?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -66471,23 +65811,23 @@ export namespace Prisma {
 
   export type JobOfferUpdateWithoutRecruteurInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
@@ -66500,24 +65840,24 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateWithoutRecruteurInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUncheckedUpdateManyWithoutJobOfferNestedInput
@@ -66529,24 +65869,24 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateManyWithoutRecruteurInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
     templateId?: NullableIntFieldUpdateOperationsInput | number | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -66850,23 +66190,23 @@ export namespace Prisma {
   export type JobOfferCreateManyTemplateInput = {
     id?: number
     title: string
-    description: string
-    company: string
-    location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
+    description?: string | null
+    company?: string | null
+    location?: string | null
+    type?: string | null
+    etat?: string | null
+    experience?: string | null
+    salaryMin?: number | null
+    salaryMax?: number | null
+    salaryCurrency?: string | null
+    salaryPeriod?: string | null
+    benefits?: string | null
+    requirements?: string | null
+    responsibilities?: string | null
     duedate?: Date | string | null
-    skills: string
+    skills?: string | null
     favorite?: boolean | null
-    views?: number
+    views?: number | null
     recruteurId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -66874,23 +66214,23 @@ export namespace Prisma {
 
   export type JobOfferUpdateWithoutTemplateInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     applications?: ApplicationUpdateManyWithoutJobOfferNestedInput
@@ -66903,23 +66243,23 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateWithoutTemplateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66932,23 +66272,23 @@ export namespace Prisma {
   export type JobOfferUncheckedUpdateManyWithoutTemplateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    company?: StringFieldUpdateOperationsInput | string
-    location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    company?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    etat?: NullableStringFieldUpdateOperationsInput | string | null
+    experience?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryMin?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryMax?: NullableFloatFieldUpdateOperationsInput | number | null
+    salaryCurrency?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryPeriod?: NullableStringFieldUpdateOperationsInput | string | null
+    benefits?: NullableStringFieldUpdateOperationsInput | string | null
+    requirements?: NullableStringFieldUpdateOperationsInput | string | null
+    responsibilities?: NullableStringFieldUpdateOperationsInput | string | null
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    skills?: StringFieldUpdateOperationsInput | string
+    skills?: NullableStringFieldUpdateOperationsInput | string | null
     favorite?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    views?: IntFieldUpdateOperationsInput | number
+    views?: NullableIntFieldUpdateOperationsInput | number | null
     recruteurId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67316,17 +66656,6 @@ export namespace Prisma {
     description: string
     company: string
     location: string
-    type: string
-    etat?: string
-    experience: string
-    salaryMin: number
-    salaryMax: number
-    salaryCurrency: string
-    salaryPeriod: string
-    benefits: string
-    requirements: string
-    responsibilities: string
-    skills: string
     duedate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -67338,17 +66667,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67365,17 +66683,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67392,17 +66699,6 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
     company?: StringFieldUpdateOperationsInput | string
     location?: StringFieldUpdateOperationsInput | string
-    type?: StringFieldUpdateOperationsInput | string
-    etat?: StringFieldUpdateOperationsInput | string
-    experience?: StringFieldUpdateOperationsInput | string
-    salaryMin?: FloatFieldUpdateOperationsInput | number
-    salaryMax?: FloatFieldUpdateOperationsInput | number
-    salaryCurrency?: StringFieldUpdateOperationsInput | string
-    salaryPeriod?: StringFieldUpdateOperationsInput | string
-    benefits?: StringFieldUpdateOperationsInput | string
-    requirements?: StringFieldUpdateOperationsInput | string
-    responsibilities?: StringFieldUpdateOperationsInput | string
-    skills?: StringFieldUpdateOperationsInput | string
     duedate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

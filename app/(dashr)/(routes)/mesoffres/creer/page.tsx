@@ -52,23 +52,23 @@ import { Calendar } from "@/components/ui/calendar";
 // Schéma de validation pour le formulaire
 const offerFormSchema = z.object({
   title: z.string().nonempty("Le titre est requis"),
-  company: z.string().nonempty("L'entreprise est requise"),
-  location: z.string().nonempty("La localisation est requise"),
-  type: z.string().nonempty("Le type de contrat est requis"),
-  experience: z.string().nonempty("L'expérience requise est requise"),
+  company: z.string(),
+  location: z.string(),
+  type: z.string(),
+  experience: z.string(),
   duedate: z.date({
     required_error: "La date d'expiration est requise",
   }),
   // education: z.string().nonempty("Le niveau d'études est requis"),
-  description: z.string().nonempty("La description est requise"),
-  responsibilities: z.string().nonempty("Les responsabilités sont requises"),
-  requirements: z.string().nonempty("Les prérequis sont requis"),
-  skills: z.array(z.string()).nonempty("Au moins une compétence est requise"),
-  benefits: z.string().nonempty("Les avantages sont requis"),
-  salaryMin: z.string().nonempty("Le salaire minimum est requis"),
-  salaryMax: z.string().nonempty("Le salaire maximum est requis"),
-  salaryCurrency: z.string().nonempty("La devise est requise"),
-  salaryPeriod: z.string().nonempty("La période est requise"),
+  description: z.string(),
+  responsibilities: z.string(),
+  requirements: z.string(),
+  skills: z.array(z.string()),
+  benefits: z.string(),
+  salaryMin: z.string(),
+  salaryMax: z.string(),
+  salaryCurrency: z.string(),
+  salaryPeriod: z.string(),
   etat: z.string(),
   template: z.string().optional(),
 });
@@ -488,7 +488,7 @@ export default function CreerOffre() {
                 />
 
                 <div className=" grid grid-cols-2 gap-4">
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="responsibilities"
                     render={({ field }) => (
@@ -532,10 +532,10 @@ export default function CreerOffre() {
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
                 </div>
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="skills"
                   render={({ field }) => {
@@ -570,7 +570,7 @@ export default function CreerOffre() {
                           vos propres compétences
                         </FormDescription>
 
-                        {/* Sélection de compétences prédéfinies */}
+
                         <Select
                           onValueChange={(value) => {
                             const currentSkills = field.value || [];
@@ -610,7 +610,7 @@ export default function CreerOffre() {
                           </SelectContent>
                         </Select>
 
-                        {/* Ajout de compétences personnalisées */}
+
                         <div className="flex gap-2 mt-2">
                           <Input
                             placeholder="Ajouter une compétence personnalisée..."
@@ -629,7 +629,7 @@ export default function CreerOffre() {
                           </Button>
                         </div>
 
-                        {/* Affichage des compétences sélectionnées */}
+
                         <div className="flex flex-wrap gap-2 mt-2">
                           {field.value?.map((skill) => (
                             <div
@@ -657,9 +657,9 @@ export default function CreerOffre() {
                       </FormItem>
                     );
                   }}
-                />
+                /> */}
 
-                <FormField
+                {/* <FormField
                   control={form.control}
                   name="benefits"
                   render={({ field }) => (
@@ -680,7 +680,7 @@ export default function CreerOffre() {
                       <FormMessage />
                     </FormItem>
                   )}
-                />
+                /> */}
               </CardContent>
             </Card>
 

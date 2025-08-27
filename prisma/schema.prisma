@@ -156,24 +156,24 @@ model ApplicationCollaborateur {
 model JobOffer {
   id                  Int                  @id @default(autoincrement())
   title               String
-  description         String               @db.Text
-  company             String
-  location            String
-  type                String
-  etat                String               @default("active")
-  experience          String
-  salaryMin           Float
-  salaryMax           Float
-  salaryCurrency      String
-  salaryPeriod        String
-  benefits            String               @db.Text
-  requirements        String               @db.Text
-  responsibilities    String               @db.Text
+  description         String?               @db.Text
+  company             String?
+  location            String?
+  type                String?
+  etat                String?               @default("active")
+  experience          String?
+  salaryMin           Float?
+  salaryMax           Float?
+  salaryCurrency      String?
+  salaryPeriod        String?
+  benefits            String?               @db.Text
+  requirements        String?               @db.Text
+  responsibilities    String?               @db.Text
   duedate              DateTime?
-  skills              String
+  skills              String?  
   favorite            Boolean?             @default(false)
   templateId          Int?
-  views               Int                  @default(0)
+  views               Int?                  @default(0)
   recruteurId         String
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
@@ -665,17 +665,6 @@ model ApplicationCustom {
   description         String               @db.Text
   company             String
   location            String
-  type                String
-  etat                String               @default("active")
-  experience          String
-  salaryMin           Float
-  salaryMax           Float
-  salaryCurrency      String
-  salaryPeriod        String
-  benefits            String               @db.Text
-  requirements        String               @db.Text
-  responsibilities    String               @db.Text
-  skills              String
   duedate             DateTime?
   createdAt           DateTime                   @default(now())
   updatedAt           DateTime                   @updatedAt
