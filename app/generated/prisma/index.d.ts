@@ -204,6 +204,11 @@ export type ChecklistItemCustom = $Result.DefaultSelection<Prisma.$ChecklistItem
  */
 export type CandidatCustom = $Result.DefaultSelection<Prisma.$CandidatCustomPayload>
 /**
+ * Model CandidatDocument
+ * 
+ */
+export type CandidatDocument = $Result.DefaultSelection<Prisma.$CandidatDocumentPayload>
+/**
  * Model ApplicationCustom
  * 
  */
@@ -772,6 +777,16 @@ export class PrismaClient<
   get candidatCustom(): Prisma.CandidatCustomDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.candidatDocument`: Exposes CRUD operations for the **CandidatDocument** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CandidatDocuments
+    * const candidatDocuments = await prisma.candidatDocument.findMany()
+    * ```
+    */
+  get candidatDocument(): Prisma.CandidatDocumentDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.applicationCustom`: Exposes CRUD operations for the **ApplicationCustom** model.
     * Example usage:
     * ```ts
@@ -1258,6 +1273,7 @@ export namespace Prisma {
     ApplicationNoteCustom: 'ApplicationNoteCustom',
     ChecklistItemCustom: 'ChecklistItemCustom',
     CandidatCustom: 'CandidatCustom',
+    CandidatDocument: 'CandidatDocument',
     ApplicationCustom: 'ApplicationCustom'
   };
 
@@ -1277,7 +1293,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "candidat" | "candidatCompetence" | "recruteur" | "companySocial" | "invitation" | "collaborateur" | "applicationCollaborateur" | "jobOffer" | "jobOfferCompetence" | "offerTemplate" | "application" | "applicationNote" | "checklistItem" | "applicationFile" | "kanbanColumn" | "account" | "session" | "verificationToken" | "experience" | "experienceCompetence" | "formation" | "formationEtape" | "competence" | "objectifCarriere" | "objectifEtape" | "alerteEmploi" | "alerteMotCle" | "notification" | "conversation" | "message" | "kanbanColumnCustom" | "collaborateurCustom" | "applicationFileCustom" | "applicationCollaborateurCustom" | "applicationNoteCustom" | "checklistItemCustom" | "candidatCustom" | "applicationCustom"
+      modelProps: "user" | "candidat" | "candidatCompetence" | "recruteur" | "companySocial" | "invitation" | "collaborateur" | "applicationCollaborateur" | "jobOffer" | "jobOfferCompetence" | "offerTemplate" | "application" | "applicationNote" | "checklistItem" | "applicationFile" | "kanbanColumn" | "account" | "session" | "verificationToken" | "experience" | "experienceCompetence" | "formation" | "formationEtape" | "competence" | "objectifCarriere" | "objectifEtape" | "alerteEmploi" | "alerteMotCle" | "notification" | "conversation" | "message" | "kanbanColumnCustom" | "collaborateurCustom" | "applicationFileCustom" | "applicationCollaborateurCustom" | "applicationNoteCustom" | "checklistItemCustom" | "candidatCustom" | "candidatDocument" | "applicationCustom"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3789,6 +3805,72 @@ export namespace Prisma {
           }
         }
       }
+      CandidatDocument: {
+        payload: Prisma.$CandidatDocumentPayload<ExtArgs>
+        fields: Prisma.CandidatDocumentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CandidatDocumentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CandidatDocumentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload>
+          }
+          findFirst: {
+            args: Prisma.CandidatDocumentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CandidatDocumentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload>
+          }
+          findMany: {
+            args: Prisma.CandidatDocumentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload>[]
+          }
+          create: {
+            args: Prisma.CandidatDocumentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload>
+          }
+          createMany: {
+            args: Prisma.CandidatDocumentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.CandidatDocumentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload>
+          }
+          update: {
+            args: Prisma.CandidatDocumentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload>
+          }
+          deleteMany: {
+            args: Prisma.CandidatDocumentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CandidatDocumentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.CandidatDocumentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CandidatDocumentPayload>
+          }
+          aggregate: {
+            args: Prisma.CandidatDocumentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCandidatDocument>
+          }
+          groupBy: {
+            args: Prisma.CandidatDocumentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CandidatDocumentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CandidatDocumentCountArgs<ExtArgs>
+            result: $Utils.Optional<CandidatDocumentCountAggregateOutputType> | number
+          }
+        }
+      }
       ApplicationCustom: {
         payload: Prisma.$ApplicationCustomPayload<ExtArgs>
         fields: Prisma.ApplicationCustomFieldRefs
@@ -3977,6 +4059,7 @@ export namespace Prisma {
     applicationNoteCustom?: ApplicationNoteCustomOmit
     checklistItemCustom?: ChecklistItemCustomOmit
     candidatCustom?: CandidatCustomOmit
+    candidatDocument?: CandidatDocumentOmit
     applicationCustom?: ApplicationCustomOmit
   }
 
@@ -4718,6 +4801,37 @@ export namespace Prisma {
    */
   export type CollaborateurCustomCountOutputTypeCountApplicationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ApplicationCollaborateurCustomWhereInput
+  }
+
+
+  /**
+   * Count Type CandidatCustomCountOutputType
+   */
+
+  export type CandidatCustomCountOutputType = {
+    documents: number
+  }
+
+  export type CandidatCustomCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    documents?: boolean | CandidatCustomCountOutputTypeCountDocumentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * CandidatCustomCountOutputType without action
+   */
+  export type CandidatCustomCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatCustomCountOutputType
+     */
+    select?: CandidatCustomCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * CandidatCustomCountOutputType without action
+   */
+  export type CandidatCustomCountOutputTypeCountDocumentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CandidatDocumentWhereInput
   }
 
 
@@ -42306,73 +42420,31 @@ export namespace Prisma {
 
   export type CandidatCustomMinAggregateOutputType = {
     id: string | null
-    nom: string | null
-    prenom: string | null
-    role: $Enums.Role | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
-    telephone: string | null
     cv: string | null
-    letterm: string | null
-    bio: string | null
-    adresse: string | null
-    ville: string | null
-    statut: string | null
-    pays: string | null
-    dateNaissance: Date | null
-    nationalite: string | null
-    situationFamiliale: string | null
-    permisConduire: string | null
-    image: string | null
+    cvUrl: string | null
     applicationId: string | null
   }
 
   export type CandidatCustomMaxAggregateOutputType = {
     id: string | null
-    nom: string | null
-    prenom: string | null
-    role: $Enums.Role | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
-    telephone: string | null
     cv: string | null
-    letterm: string | null
-    bio: string | null
-    adresse: string | null
-    ville: string | null
-    statut: string | null
-    pays: string | null
-    dateNaissance: Date | null
-    nationalite: string | null
-    situationFamiliale: string | null
-    permisConduire: string | null
-    image: string | null
+    cvUrl: string | null
     applicationId: string | null
   }
 
   export type CandidatCustomCountAggregateOutputType = {
     id: number
-    nom: number
-    prenom: number
-    role: number
     createdAt: number
     updatedAt: number
     userId: number
-    telephone: number
     cv: number
-    letterm: number
-    bio: number
-    adresse: number
-    ville: number
-    statut: number
-    pays: number
-    dateNaissance: number
-    nationalite: number
-    situationFamiliale: number
-    permisConduire: number
-    image: number
+    cvUrl: number
     applicationId: number
     _all: number
   }
@@ -42380,73 +42452,31 @@ export namespace Prisma {
 
   export type CandidatCustomMinAggregateInputType = {
     id?: true
-    nom?: true
-    prenom?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
-    telephone?: true
     cv?: true
-    letterm?: true
-    bio?: true
-    adresse?: true
-    ville?: true
-    statut?: true
-    pays?: true
-    dateNaissance?: true
-    nationalite?: true
-    situationFamiliale?: true
-    permisConduire?: true
-    image?: true
+    cvUrl?: true
     applicationId?: true
   }
 
   export type CandidatCustomMaxAggregateInputType = {
     id?: true
-    nom?: true
-    prenom?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
-    telephone?: true
     cv?: true
-    letterm?: true
-    bio?: true
-    adresse?: true
-    ville?: true
-    statut?: true
-    pays?: true
-    dateNaissance?: true
-    nationalite?: true
-    situationFamiliale?: true
-    permisConduire?: true
-    image?: true
+    cvUrl?: true
     applicationId?: true
   }
 
   export type CandidatCustomCountAggregateInputType = {
     id?: true
-    nom?: true
-    prenom?: true
-    role?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
-    telephone?: true
     cv?: true
-    letterm?: true
-    bio?: true
-    adresse?: true
-    ville?: true
-    statut?: true
-    pays?: true
-    dateNaissance?: true
-    nationalite?: true
-    situationFamiliale?: true
-    permisConduire?: true
-    image?: true
+    cvUrl?: true
     applicationId?: true
     _all?: true
   }
@@ -42525,25 +42555,11 @@ export namespace Prisma {
 
   export type CandidatCustomGroupByOutputType = {
     id: string
-    nom: string | null
-    prenom: string | null
-    role: $Enums.Role | null
     createdAt: Date
     updatedAt: Date
     userId: string
-    telephone: string | null
     cv: string | null
-    letterm: string | null
-    bio: string | null
-    adresse: string | null
-    ville: string | null
-    statut: string | null
-    pays: string | null
-    dateNaissance: Date
-    nationalite: string | null
-    situationFamiliale: string | null
-    permisConduire: string | null
-    image: string | null
+    cvUrl: string | null
     applicationId: string
     _count: CandidatCustomCountAggregateOutputType | null
     _min: CandidatCustomMinAggregateOutputType | null
@@ -42566,86 +42582,49 @@ export namespace Prisma {
 
   export type CandidatCustomSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    nom?: boolean
-    prenom?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
-    telephone?: boolean
     cv?: boolean
-    letterm?: boolean
-    bio?: boolean
-    adresse?: boolean
-    ville?: boolean
-    statut?: boolean
-    pays?: boolean
-    dateNaissance?: boolean
-    nationalite?: boolean
-    situationFamiliale?: boolean
-    permisConduire?: boolean
-    image?: boolean
+    cvUrl?: boolean
     applicationId?: boolean
     application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+    documents?: boolean | CandidatCustom$documentsArgs<ExtArgs>
+    _count?: boolean | CandidatCustomCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["candidatCustom"]>
 
 
 
   export type CandidatCustomSelectScalar = {
     id?: boolean
-    nom?: boolean
-    prenom?: boolean
-    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
-    telephone?: boolean
     cv?: boolean
-    letterm?: boolean
-    bio?: boolean
-    adresse?: boolean
-    ville?: boolean
-    statut?: boolean
-    pays?: boolean
-    dateNaissance?: boolean
-    nationalite?: boolean
-    situationFamiliale?: boolean
-    permisConduire?: boolean
-    image?: boolean
+    cvUrl?: boolean
     applicationId?: boolean
   }
 
-  export type CandidatCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nom" | "prenom" | "role" | "createdAt" | "updatedAt" | "userId" | "telephone" | "cv" | "letterm" | "bio" | "adresse" | "ville" | "statut" | "pays" | "dateNaissance" | "nationalite" | "situationFamiliale" | "permisConduire" | "image" | "applicationId", ExtArgs["result"]["candidatCustom"]>
+  export type CandidatCustomOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "userId" | "cv" | "cvUrl" | "applicationId", ExtArgs["result"]["candidatCustom"]>
   export type CandidatCustomInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     application?: boolean | ApplicationCustomDefaultArgs<ExtArgs>
+    documents?: boolean | CandidatCustom$documentsArgs<ExtArgs>
+    _count?: boolean | CandidatCustomCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $CandidatCustomPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "CandidatCustom"
     objects: {
       application: Prisma.$ApplicationCustomPayload<ExtArgs>
+      documents: Prisma.$CandidatDocumentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      nom: string | null
-      prenom: string | null
-      role: $Enums.Role | null
       createdAt: Date
       updatedAt: Date
       userId: string
-      telephone: string | null
       cv: string | null
-      letterm: string | null
-      bio: string | null
-      adresse: string | null
-      ville: string | null
-      statut: string | null
-      pays: string | null
-      dateNaissance: Date
-      nationalite: string | null
-      situationFamiliale: string | null
-      permisConduire: string | null
-      image: string | null
+      cvUrl: string | null
       applicationId: string
     }, ExtArgs["result"]["candidatCustom"]>
     composites: {}
@@ -42988,6 +42967,7 @@ export namespace Prisma {
   export interface Prisma__CandidatCustomClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     application<T extends ApplicationCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationCustomDefaultArgs<ExtArgs>>): Prisma__ApplicationCustomClient<$Result.GetResult<Prisma.$ApplicationCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    documents<T extends CandidatCustom$documentsArgs<ExtArgs> = {}>(args?: Subset<T, CandidatCustom$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -43018,25 +42998,11 @@ export namespace Prisma {
    */
   interface CandidatCustomFieldRefs {
     readonly id: FieldRef<"CandidatCustom", 'String'>
-    readonly nom: FieldRef<"CandidatCustom", 'String'>
-    readonly prenom: FieldRef<"CandidatCustom", 'String'>
-    readonly role: FieldRef<"CandidatCustom", 'Role'>
     readonly createdAt: FieldRef<"CandidatCustom", 'DateTime'>
     readonly updatedAt: FieldRef<"CandidatCustom", 'DateTime'>
     readonly userId: FieldRef<"CandidatCustom", 'String'>
-    readonly telephone: FieldRef<"CandidatCustom", 'String'>
     readonly cv: FieldRef<"CandidatCustom", 'String'>
-    readonly letterm: FieldRef<"CandidatCustom", 'String'>
-    readonly bio: FieldRef<"CandidatCustom", 'String'>
-    readonly adresse: FieldRef<"CandidatCustom", 'String'>
-    readonly ville: FieldRef<"CandidatCustom", 'String'>
-    readonly statut: FieldRef<"CandidatCustom", 'String'>
-    readonly pays: FieldRef<"CandidatCustom", 'String'>
-    readonly dateNaissance: FieldRef<"CandidatCustom", 'DateTime'>
-    readonly nationalite: FieldRef<"CandidatCustom", 'String'>
-    readonly situationFamiliale: FieldRef<"CandidatCustom", 'String'>
-    readonly permisConduire: FieldRef<"CandidatCustom", 'String'>
-    readonly image: FieldRef<"CandidatCustom", 'String'>
+    readonly cvUrl: FieldRef<"CandidatCustom", 'String'>
     readonly applicationId: FieldRef<"CandidatCustom", 'String'>
   }
     
@@ -43381,6 +43347,30 @@ export namespace Prisma {
   }
 
   /**
+   * CandidatCustom.documents
+   */
+  export type CandidatCustom$documentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    where?: CandidatDocumentWhereInput
+    orderBy?: CandidatDocumentOrderByWithRelationInput | CandidatDocumentOrderByWithRelationInput[]
+    cursor?: CandidatDocumentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CandidatDocumentScalarFieldEnum | CandidatDocumentScalarFieldEnum[]
+  }
+
+  /**
    * CandidatCustom without action
    */
   export type CandidatCustomDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -43396,6 +43386,1002 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: CandidatCustomInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model CandidatDocument
+   */
+
+  export type AggregateCandidatDocument = {
+    _count: CandidatDocumentCountAggregateOutputType | null
+    _avg: CandidatDocumentAvgAggregateOutputType | null
+    _sum: CandidatDocumentSumAggregateOutputType | null
+    _min: CandidatDocumentMinAggregateOutputType | null
+    _max: CandidatDocumentMaxAggregateOutputType | null
+  }
+
+  export type CandidatDocumentAvgAggregateOutputType = {
+    fileSize: number | null
+  }
+
+  export type CandidatDocumentSumAggregateOutputType = {
+    fileSize: number | null
+  }
+
+  export type CandidatDocumentMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    fileName: string | null
+    fileUrl: string | null
+    fileType: string | null
+    fileSize: number | null
+    candidatId: string | null
+  }
+
+  export type CandidatDocumentMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    fileName: string | null
+    fileUrl: string | null
+    fileType: string | null
+    fileSize: number | null
+    candidatId: string | null
+  }
+
+  export type CandidatDocumentCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    fileName: number
+    fileUrl: number
+    fileType: number
+    fileSize: number
+    candidatId: number
+    _all: number
+  }
+
+
+  export type CandidatDocumentAvgAggregateInputType = {
+    fileSize?: true
+  }
+
+  export type CandidatDocumentSumAggregateInputType = {
+    fileSize?: true
+  }
+
+  export type CandidatDocumentMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    candidatId?: true
+  }
+
+  export type CandidatDocumentMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    candidatId?: true
+  }
+
+  export type CandidatDocumentCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    fileName?: true
+    fileUrl?: true
+    fileType?: true
+    fileSize?: true
+    candidatId?: true
+    _all?: true
+  }
+
+  export type CandidatDocumentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CandidatDocument to aggregate.
+     */
+    where?: CandidatDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidatDocuments to fetch.
+     */
+    orderBy?: CandidatDocumentOrderByWithRelationInput | CandidatDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CandidatDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidatDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidatDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CandidatDocuments
+    **/
+    _count?: true | CandidatDocumentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CandidatDocumentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CandidatDocumentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CandidatDocumentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CandidatDocumentMaxAggregateInputType
+  }
+
+  export type GetCandidatDocumentAggregateType<T extends CandidatDocumentAggregateArgs> = {
+        [P in keyof T & keyof AggregateCandidatDocument]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCandidatDocument[P]>
+      : GetScalarType<T[P], AggregateCandidatDocument[P]>
+  }
+
+
+
+
+  export type CandidatDocumentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CandidatDocumentWhereInput
+    orderBy?: CandidatDocumentOrderByWithAggregationInput | CandidatDocumentOrderByWithAggregationInput[]
+    by: CandidatDocumentScalarFieldEnum[] | CandidatDocumentScalarFieldEnum
+    having?: CandidatDocumentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CandidatDocumentCountAggregateInputType | true
+    _avg?: CandidatDocumentAvgAggregateInputType
+    _sum?: CandidatDocumentSumAggregateInputType
+    _min?: CandidatDocumentMinAggregateInputType
+    _max?: CandidatDocumentMaxAggregateInputType
+  }
+
+  export type CandidatDocumentGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    candidatId: string
+    _count: CandidatDocumentCountAggregateOutputType | null
+    _avg: CandidatDocumentAvgAggregateOutputType | null
+    _sum: CandidatDocumentSumAggregateOutputType | null
+    _min: CandidatDocumentMinAggregateOutputType | null
+    _max: CandidatDocumentMaxAggregateOutputType | null
+  }
+
+  type GetCandidatDocumentGroupByPayload<T extends CandidatDocumentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CandidatDocumentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CandidatDocumentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CandidatDocumentGroupByOutputType[P]>
+            : GetScalarType<T[P], CandidatDocumentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CandidatDocumentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    fileName?: boolean
+    fileUrl?: boolean
+    fileType?: boolean
+    fileSize?: boolean
+    candidatId?: boolean
+    candidat?: boolean | CandidatCustomDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["candidatDocument"]>
+
+
+
+  export type CandidatDocumentSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    fileName?: boolean
+    fileUrl?: boolean
+    fileType?: boolean
+    fileSize?: boolean
+    candidatId?: boolean
+  }
+
+  export type CandidatDocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "fileName" | "fileUrl" | "fileType" | "fileSize" | "candidatId", ExtArgs["result"]["candidatDocument"]>
+  export type CandidatDocumentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    candidat?: boolean | CandidatCustomDefaultArgs<ExtArgs>
+  }
+
+  export type $CandidatDocumentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CandidatDocument"
+    objects: {
+      candidat: Prisma.$CandidatCustomPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      fileName: string
+      fileUrl: string
+      fileType: string
+      fileSize: number
+      candidatId: string
+    }, ExtArgs["result"]["candidatDocument"]>
+    composites: {}
+  }
+
+  type CandidatDocumentGetPayload<S extends boolean | null | undefined | CandidatDocumentDefaultArgs> = $Result.GetResult<Prisma.$CandidatDocumentPayload, S>
+
+  type CandidatDocumentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CandidatDocumentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CandidatDocumentCountAggregateInputType | true
+    }
+
+  export interface CandidatDocumentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CandidatDocument'], meta: { name: 'CandidatDocument' } }
+    /**
+     * Find zero or one CandidatDocument that matches the filter.
+     * @param {CandidatDocumentFindUniqueArgs} args - Arguments to find a CandidatDocument
+     * @example
+     * // Get one CandidatDocument
+     * const candidatDocument = await prisma.candidatDocument.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CandidatDocumentFindUniqueArgs>(args: SelectSubset<T, CandidatDocumentFindUniqueArgs<ExtArgs>>): Prisma__CandidatDocumentClient<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CandidatDocument that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CandidatDocumentFindUniqueOrThrowArgs} args - Arguments to find a CandidatDocument
+     * @example
+     * // Get one CandidatDocument
+     * const candidatDocument = await prisma.candidatDocument.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CandidatDocumentFindUniqueOrThrowArgs>(args: SelectSubset<T, CandidatDocumentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CandidatDocumentClient<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CandidatDocument that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatDocumentFindFirstArgs} args - Arguments to find a CandidatDocument
+     * @example
+     * // Get one CandidatDocument
+     * const candidatDocument = await prisma.candidatDocument.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CandidatDocumentFindFirstArgs>(args?: SelectSubset<T, CandidatDocumentFindFirstArgs<ExtArgs>>): Prisma__CandidatDocumentClient<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CandidatDocument that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatDocumentFindFirstOrThrowArgs} args - Arguments to find a CandidatDocument
+     * @example
+     * // Get one CandidatDocument
+     * const candidatDocument = await prisma.candidatDocument.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CandidatDocumentFindFirstOrThrowArgs>(args?: SelectSubset<T, CandidatDocumentFindFirstOrThrowArgs<ExtArgs>>): Prisma__CandidatDocumentClient<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CandidatDocuments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatDocumentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CandidatDocuments
+     * const candidatDocuments = await prisma.candidatDocument.findMany()
+     * 
+     * // Get first 10 CandidatDocuments
+     * const candidatDocuments = await prisma.candidatDocument.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const candidatDocumentWithIdOnly = await prisma.candidatDocument.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CandidatDocumentFindManyArgs>(args?: SelectSubset<T, CandidatDocumentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CandidatDocument.
+     * @param {CandidatDocumentCreateArgs} args - Arguments to create a CandidatDocument.
+     * @example
+     * // Create one CandidatDocument
+     * const CandidatDocument = await prisma.candidatDocument.create({
+     *   data: {
+     *     // ... data to create a CandidatDocument
+     *   }
+     * })
+     * 
+     */
+    create<T extends CandidatDocumentCreateArgs>(args: SelectSubset<T, CandidatDocumentCreateArgs<ExtArgs>>): Prisma__CandidatDocumentClient<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CandidatDocuments.
+     * @param {CandidatDocumentCreateManyArgs} args - Arguments to create many CandidatDocuments.
+     * @example
+     * // Create many CandidatDocuments
+     * const candidatDocument = await prisma.candidatDocument.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CandidatDocumentCreateManyArgs>(args?: SelectSubset<T, CandidatDocumentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a CandidatDocument.
+     * @param {CandidatDocumentDeleteArgs} args - Arguments to delete one CandidatDocument.
+     * @example
+     * // Delete one CandidatDocument
+     * const CandidatDocument = await prisma.candidatDocument.delete({
+     *   where: {
+     *     // ... filter to delete one CandidatDocument
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CandidatDocumentDeleteArgs>(args: SelectSubset<T, CandidatDocumentDeleteArgs<ExtArgs>>): Prisma__CandidatDocumentClient<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CandidatDocument.
+     * @param {CandidatDocumentUpdateArgs} args - Arguments to update one CandidatDocument.
+     * @example
+     * // Update one CandidatDocument
+     * const candidatDocument = await prisma.candidatDocument.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CandidatDocumentUpdateArgs>(args: SelectSubset<T, CandidatDocumentUpdateArgs<ExtArgs>>): Prisma__CandidatDocumentClient<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CandidatDocuments.
+     * @param {CandidatDocumentDeleteManyArgs} args - Arguments to filter CandidatDocuments to delete.
+     * @example
+     * // Delete a few CandidatDocuments
+     * const { count } = await prisma.candidatDocument.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CandidatDocumentDeleteManyArgs>(args?: SelectSubset<T, CandidatDocumentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CandidatDocuments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatDocumentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CandidatDocuments
+     * const candidatDocument = await prisma.candidatDocument.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CandidatDocumentUpdateManyArgs>(args: SelectSubset<T, CandidatDocumentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one CandidatDocument.
+     * @param {CandidatDocumentUpsertArgs} args - Arguments to update or create a CandidatDocument.
+     * @example
+     * // Update or create a CandidatDocument
+     * const candidatDocument = await prisma.candidatDocument.upsert({
+     *   create: {
+     *     // ... data to create a CandidatDocument
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CandidatDocument we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CandidatDocumentUpsertArgs>(args: SelectSubset<T, CandidatDocumentUpsertArgs<ExtArgs>>): Prisma__CandidatDocumentClient<$Result.GetResult<Prisma.$CandidatDocumentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CandidatDocuments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatDocumentCountArgs} args - Arguments to filter CandidatDocuments to count.
+     * @example
+     * // Count the number of CandidatDocuments
+     * const count = await prisma.candidatDocument.count({
+     *   where: {
+     *     // ... the filter for the CandidatDocuments we want to count
+     *   }
+     * })
+    **/
+    count<T extends CandidatDocumentCountArgs>(
+      args?: Subset<T, CandidatDocumentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CandidatDocumentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CandidatDocument.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatDocumentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CandidatDocumentAggregateArgs>(args: Subset<T, CandidatDocumentAggregateArgs>): Prisma.PrismaPromise<GetCandidatDocumentAggregateType<T>>
+
+    /**
+     * Group by CandidatDocument.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CandidatDocumentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CandidatDocumentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CandidatDocumentGroupByArgs['orderBy'] }
+        : { orderBy?: CandidatDocumentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CandidatDocumentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCandidatDocumentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CandidatDocument model
+   */
+  readonly fields: CandidatDocumentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CandidatDocument.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CandidatDocumentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    candidat<T extends CandidatCustomDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CandidatCustomDefaultArgs<ExtArgs>>): Prisma__CandidatCustomClient<$Result.GetResult<Prisma.$CandidatCustomPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CandidatDocument model
+   */
+  interface CandidatDocumentFieldRefs {
+    readonly id: FieldRef<"CandidatDocument", 'String'>
+    readonly createdAt: FieldRef<"CandidatDocument", 'DateTime'>
+    readonly updatedAt: FieldRef<"CandidatDocument", 'DateTime'>
+    readonly fileName: FieldRef<"CandidatDocument", 'String'>
+    readonly fileUrl: FieldRef<"CandidatDocument", 'String'>
+    readonly fileType: FieldRef<"CandidatDocument", 'String'>
+    readonly fileSize: FieldRef<"CandidatDocument", 'Int'>
+    readonly candidatId: FieldRef<"CandidatDocument", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CandidatDocument findUnique
+   */
+  export type CandidatDocumentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatDocument to fetch.
+     */
+    where: CandidatDocumentWhereUniqueInput
+  }
+
+  /**
+   * CandidatDocument findUniqueOrThrow
+   */
+  export type CandidatDocumentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatDocument to fetch.
+     */
+    where: CandidatDocumentWhereUniqueInput
+  }
+
+  /**
+   * CandidatDocument findFirst
+   */
+  export type CandidatDocumentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatDocument to fetch.
+     */
+    where?: CandidatDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidatDocuments to fetch.
+     */
+    orderBy?: CandidatDocumentOrderByWithRelationInput | CandidatDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CandidatDocuments.
+     */
+    cursor?: CandidatDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidatDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidatDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidatDocuments.
+     */
+    distinct?: CandidatDocumentScalarFieldEnum | CandidatDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * CandidatDocument findFirstOrThrow
+   */
+  export type CandidatDocumentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatDocument to fetch.
+     */
+    where?: CandidatDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidatDocuments to fetch.
+     */
+    orderBy?: CandidatDocumentOrderByWithRelationInput | CandidatDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CandidatDocuments.
+     */
+    cursor?: CandidatDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidatDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidatDocuments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CandidatDocuments.
+     */
+    distinct?: CandidatDocumentScalarFieldEnum | CandidatDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * CandidatDocument findMany
+   */
+  export type CandidatDocumentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * Filter, which CandidatDocuments to fetch.
+     */
+    where?: CandidatDocumentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CandidatDocuments to fetch.
+     */
+    orderBy?: CandidatDocumentOrderByWithRelationInput | CandidatDocumentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CandidatDocuments.
+     */
+    cursor?: CandidatDocumentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CandidatDocuments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CandidatDocuments.
+     */
+    skip?: number
+    distinct?: CandidatDocumentScalarFieldEnum | CandidatDocumentScalarFieldEnum[]
+  }
+
+  /**
+   * CandidatDocument create
+   */
+  export type CandidatDocumentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a CandidatDocument.
+     */
+    data: XOR<CandidatDocumentCreateInput, CandidatDocumentUncheckedCreateInput>
+  }
+
+  /**
+   * CandidatDocument createMany
+   */
+  export type CandidatDocumentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CandidatDocuments.
+     */
+    data: CandidatDocumentCreateManyInput | CandidatDocumentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CandidatDocument update
+   */
+  export type CandidatDocumentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a CandidatDocument.
+     */
+    data: XOR<CandidatDocumentUpdateInput, CandidatDocumentUncheckedUpdateInput>
+    /**
+     * Choose, which CandidatDocument to update.
+     */
+    where: CandidatDocumentWhereUniqueInput
+  }
+
+  /**
+   * CandidatDocument updateMany
+   */
+  export type CandidatDocumentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CandidatDocuments.
+     */
+    data: XOR<CandidatDocumentUpdateManyMutationInput, CandidatDocumentUncheckedUpdateManyInput>
+    /**
+     * Filter which CandidatDocuments to update
+     */
+    where?: CandidatDocumentWhereInput
+    /**
+     * Limit how many CandidatDocuments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CandidatDocument upsert
+   */
+  export type CandidatDocumentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the CandidatDocument to update in case it exists.
+     */
+    where: CandidatDocumentWhereUniqueInput
+    /**
+     * In case the CandidatDocument found by the `where` argument doesn't exist, create a new CandidatDocument with this data.
+     */
+    create: XOR<CandidatDocumentCreateInput, CandidatDocumentUncheckedCreateInput>
+    /**
+     * In case the CandidatDocument was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CandidatDocumentUpdateInput, CandidatDocumentUncheckedUpdateInput>
+  }
+
+  /**
+   * CandidatDocument delete
+   */
+  export type CandidatDocumentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
+    /**
+     * Filter which CandidatDocument to delete.
+     */
+    where: CandidatDocumentWhereUniqueInput
+  }
+
+  /**
+   * CandidatDocument deleteMany
+   */
+  export type CandidatDocumentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CandidatDocuments to delete
+     */
+    where?: CandidatDocumentWhereInput
+    /**
+     * Limit how many CandidatDocuments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CandidatDocument without action
+   */
+  export type CandidatDocumentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CandidatDocument
+     */
+    select?: CandidatDocumentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CandidatDocument
+     */
+    omit?: CandidatDocumentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CandidatDocumentInclude<ExtArgs> | null
   }
 
 
@@ -45068,29 +46054,29 @@ export namespace Prisma {
 
   export const CandidatCustomScalarFieldEnum: {
     id: 'id',
-    nom: 'nom',
-    prenom: 'prenom',
-    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     userId: 'userId',
-    telephone: 'telephone',
     cv: 'cv',
-    letterm: 'letterm',
-    bio: 'bio',
-    adresse: 'adresse',
-    ville: 'ville',
-    statut: 'statut',
-    pays: 'pays',
-    dateNaissance: 'dateNaissance',
-    nationalite: 'nationalite',
-    situationFamiliale: 'situationFamiliale',
-    permisConduire: 'permisConduire',
-    image: 'image',
+    cvUrl: 'cvUrl',
     applicationId: 'applicationId'
   };
 
   export type CandidatCustomScalarFieldEnum = (typeof CandidatCustomScalarFieldEnum)[keyof typeof CandidatCustomScalarFieldEnum]
+
+
+  export const CandidatDocumentScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    fileName: 'fileName',
+    fileUrl: 'fileUrl',
+    fileType: 'fileType',
+    fileSize: 'fileSize',
+    candidatId: 'candidatId'
+  };
+
+  export type CandidatDocumentScalarFieldEnum = (typeof CandidatDocumentScalarFieldEnum)[keyof typeof CandidatDocumentScalarFieldEnum]
 
 
   export const ApplicationCustomScalarFieldEnum: {
@@ -45555,25 +46541,24 @@ export namespace Prisma {
 
   export const CandidatCustomOrderByRelevanceFieldEnum: {
     id: 'id',
-    nom: 'nom',
-    prenom: 'prenom',
     userId: 'userId',
-    telephone: 'telephone',
     cv: 'cv',
-    letterm: 'letterm',
-    bio: 'bio',
-    adresse: 'adresse',
-    ville: 'ville',
-    statut: 'statut',
-    pays: 'pays',
-    nationalite: 'nationalite',
-    situationFamiliale: 'situationFamiliale',
-    permisConduire: 'permisConduire',
-    image: 'image',
+    cvUrl: 'cvUrl',
     applicationId: 'applicationId'
   };
 
   export type CandidatCustomOrderByRelevanceFieldEnum = (typeof CandidatCustomOrderByRelevanceFieldEnum)[keyof typeof CandidatCustomOrderByRelevanceFieldEnum]
+
+
+  export const CandidatDocumentOrderByRelevanceFieldEnum: {
+    id: 'id',
+    fileName: 'fileName',
+    fileUrl: 'fileUrl',
+    fileType: 'fileType',
+    candidatId: 'candidatId'
+  };
+
+  export type CandidatDocumentOrderByRelevanceFieldEnum = (typeof CandidatDocumentOrderByRelevanceFieldEnum)[keyof typeof CandidatDocumentOrderByRelevanceFieldEnum]
 
 
   export const ApplicationCustomOrderByRelevanceFieldEnum: {
@@ -48574,104 +49559,51 @@ export namespace Prisma {
     OR?: CandidatCustomWhereInput[]
     NOT?: CandidatCustomWhereInput | CandidatCustomWhereInput[]
     id?: StringFilter<"CandidatCustom"> | string
-    nom?: StringNullableFilter<"CandidatCustom"> | string | null
-    prenom?: StringNullableFilter<"CandidatCustom"> | string | null
-    role?: EnumRoleNullableFilter<"CandidatCustom"> | $Enums.Role | null
     createdAt?: DateTimeFilter<"CandidatCustom"> | Date | string
     updatedAt?: DateTimeFilter<"CandidatCustom"> | Date | string
     userId?: StringFilter<"CandidatCustom"> | string
-    telephone?: StringNullableFilter<"CandidatCustom"> | string | null
     cv?: StringNullableFilter<"CandidatCustom"> | string | null
-    letterm?: StringNullableFilter<"CandidatCustom"> | string | null
-    bio?: StringNullableFilter<"CandidatCustom"> | string | null
-    adresse?: StringNullableFilter<"CandidatCustom"> | string | null
-    ville?: StringNullableFilter<"CandidatCustom"> | string | null
-    statut?: StringNullableFilter<"CandidatCustom"> | string | null
-    pays?: StringNullableFilter<"CandidatCustom"> | string | null
-    dateNaissance?: DateTimeFilter<"CandidatCustom"> | Date | string
-    nationalite?: StringNullableFilter<"CandidatCustom"> | string | null
-    situationFamiliale?: StringNullableFilter<"CandidatCustom"> | string | null
-    permisConduire?: StringNullableFilter<"CandidatCustom"> | string | null
-    image?: StringNullableFilter<"CandidatCustom"> | string | null
+    cvUrl?: StringNullableFilter<"CandidatCustom"> | string | null
     applicationId?: StringFilter<"CandidatCustom"> | string
     application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
+    documents?: CandidatDocumentListRelationFilter
   }
 
   export type CandidatCustomOrderByWithRelationInput = {
     id?: SortOrder
-    nom?: SortOrderInput | SortOrder
-    prenom?: SortOrderInput | SortOrder
-    role?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    telephone?: SortOrderInput | SortOrder
     cv?: SortOrderInput | SortOrder
-    letterm?: SortOrderInput | SortOrder
-    bio?: SortOrderInput | SortOrder
-    adresse?: SortOrderInput | SortOrder
-    ville?: SortOrderInput | SortOrder
-    statut?: SortOrderInput | SortOrder
-    pays?: SortOrderInput | SortOrder
-    dateNaissance?: SortOrder
-    nationalite?: SortOrderInput | SortOrder
-    situationFamiliale?: SortOrderInput | SortOrder
-    permisConduire?: SortOrderInput | SortOrder
-    image?: SortOrderInput | SortOrder
+    cvUrl?: SortOrderInput | SortOrder
     applicationId?: SortOrder
     application?: ApplicationCustomOrderByWithRelationInput
+    documents?: CandidatDocumentOrderByRelationAggregateInput
     _relevance?: CandidatCustomOrderByRelevanceInput
   }
 
   export type CandidatCustomWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    userId?: string
+    cvUrl?: string
     AND?: CandidatCustomWhereInput | CandidatCustomWhereInput[]
     OR?: CandidatCustomWhereInput[]
     NOT?: CandidatCustomWhereInput | CandidatCustomWhereInput[]
-    nom?: StringNullableFilter<"CandidatCustom"> | string | null
-    prenom?: StringNullableFilter<"CandidatCustom"> | string | null
-    role?: EnumRoleNullableFilter<"CandidatCustom"> | $Enums.Role | null
     createdAt?: DateTimeFilter<"CandidatCustom"> | Date | string
     updatedAt?: DateTimeFilter<"CandidatCustom"> | Date | string
-    telephone?: StringNullableFilter<"CandidatCustom"> | string | null
+    userId?: StringFilter<"CandidatCustom"> | string
     cv?: StringNullableFilter<"CandidatCustom"> | string | null
-    letterm?: StringNullableFilter<"CandidatCustom"> | string | null
-    bio?: StringNullableFilter<"CandidatCustom"> | string | null
-    adresse?: StringNullableFilter<"CandidatCustom"> | string | null
-    ville?: StringNullableFilter<"CandidatCustom"> | string | null
-    statut?: StringNullableFilter<"CandidatCustom"> | string | null
-    pays?: StringNullableFilter<"CandidatCustom"> | string | null
-    dateNaissance?: DateTimeFilter<"CandidatCustom"> | Date | string
-    nationalite?: StringNullableFilter<"CandidatCustom"> | string | null
-    situationFamiliale?: StringNullableFilter<"CandidatCustom"> | string | null
-    permisConduire?: StringNullableFilter<"CandidatCustom"> | string | null
-    image?: StringNullableFilter<"CandidatCustom"> | string | null
     applicationId?: StringFilter<"CandidatCustom"> | string
     application?: XOR<ApplicationCustomScalarRelationFilter, ApplicationCustomWhereInput>
-  }, "id" | "userId">
+    documents?: CandidatDocumentListRelationFilter
+  }, "id" | "id" | "cvUrl">
 
   export type CandidatCustomOrderByWithAggregationInput = {
     id?: SortOrder
-    nom?: SortOrderInput | SortOrder
-    prenom?: SortOrderInput | SortOrder
-    role?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    telephone?: SortOrderInput | SortOrder
     cv?: SortOrderInput | SortOrder
-    letterm?: SortOrderInput | SortOrder
-    bio?: SortOrderInput | SortOrder
-    adresse?: SortOrderInput | SortOrder
-    ville?: SortOrderInput | SortOrder
-    statut?: SortOrderInput | SortOrder
-    pays?: SortOrderInput | SortOrder
-    dateNaissance?: SortOrder
-    nationalite?: SortOrderInput | SortOrder
-    situationFamiliale?: SortOrderInput | SortOrder
-    permisConduire?: SortOrderInput | SortOrder
-    image?: SortOrderInput | SortOrder
+    cvUrl?: SortOrderInput | SortOrder
     applicationId?: SortOrder
     _count?: CandidatCustomCountOrderByAggregateInput
     _max?: CandidatCustomMaxOrderByAggregateInput
@@ -48683,26 +49615,85 @@ export namespace Prisma {
     OR?: CandidatCustomScalarWhereWithAggregatesInput[]
     NOT?: CandidatCustomScalarWhereWithAggregatesInput | CandidatCustomScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"CandidatCustom"> | string
-    nom?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    prenom?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    role?: EnumRoleNullableWithAggregatesFilter<"CandidatCustom"> | $Enums.Role | null
     createdAt?: DateTimeWithAggregatesFilter<"CandidatCustom"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"CandidatCustom"> | Date | string
     userId?: StringWithAggregatesFilter<"CandidatCustom"> | string
-    telephone?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
     cv?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    letterm?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    bio?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    adresse?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    ville?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    statut?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    pays?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    dateNaissance?: DateTimeWithAggregatesFilter<"CandidatCustom"> | Date | string
-    nationalite?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    situationFamiliale?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    permisConduire?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
-    image?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
+    cvUrl?: StringNullableWithAggregatesFilter<"CandidatCustom"> | string | null
     applicationId?: StringWithAggregatesFilter<"CandidatCustom"> | string
+  }
+
+  export type CandidatDocumentWhereInput = {
+    AND?: CandidatDocumentWhereInput | CandidatDocumentWhereInput[]
+    OR?: CandidatDocumentWhereInput[]
+    NOT?: CandidatDocumentWhereInput | CandidatDocumentWhereInput[]
+    id?: StringFilter<"CandidatDocument"> | string
+    createdAt?: DateTimeFilter<"CandidatDocument"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidatDocument"> | Date | string
+    fileName?: StringFilter<"CandidatDocument"> | string
+    fileUrl?: StringFilter<"CandidatDocument"> | string
+    fileType?: StringFilter<"CandidatDocument"> | string
+    fileSize?: IntFilter<"CandidatDocument"> | number
+    candidatId?: StringFilter<"CandidatDocument"> | string
+    candidat?: XOR<CandidatCustomScalarRelationFilter, CandidatCustomWhereInput>
+  }
+
+  export type CandidatDocumentOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    candidatId?: SortOrder
+    candidat?: CandidatCustomOrderByWithRelationInput
+    _relevance?: CandidatDocumentOrderByRelevanceInput
+  }
+
+  export type CandidatDocumentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CandidatDocumentWhereInput | CandidatDocumentWhereInput[]
+    OR?: CandidatDocumentWhereInput[]
+    NOT?: CandidatDocumentWhereInput | CandidatDocumentWhereInput[]
+    createdAt?: DateTimeFilter<"CandidatDocument"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidatDocument"> | Date | string
+    fileName?: StringFilter<"CandidatDocument"> | string
+    fileUrl?: StringFilter<"CandidatDocument"> | string
+    fileType?: StringFilter<"CandidatDocument"> | string
+    fileSize?: IntFilter<"CandidatDocument"> | number
+    candidatId?: StringFilter<"CandidatDocument"> | string
+    candidat?: XOR<CandidatCustomScalarRelationFilter, CandidatCustomWhereInput>
+  }, "id">
+
+  export type CandidatDocumentOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    candidatId?: SortOrder
+    _count?: CandidatDocumentCountOrderByAggregateInput
+    _avg?: CandidatDocumentAvgOrderByAggregateInput
+    _max?: CandidatDocumentMaxOrderByAggregateInput
+    _min?: CandidatDocumentMinOrderByAggregateInput
+    _sum?: CandidatDocumentSumOrderByAggregateInput
+  }
+
+  export type CandidatDocumentScalarWhereWithAggregatesInput = {
+    AND?: CandidatDocumentScalarWhereWithAggregatesInput | CandidatDocumentScalarWhereWithAggregatesInput[]
+    OR?: CandidatDocumentScalarWhereWithAggregatesInput[]
+    NOT?: CandidatDocumentScalarWhereWithAggregatesInput | CandidatDocumentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CandidatDocument"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CandidatDocument"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"CandidatDocument"> | Date | string
+    fileName?: StringWithAggregatesFilter<"CandidatDocument"> | string
+    fileUrl?: StringWithAggregatesFilter<"CandidatDocument"> | string
+    fileType?: StringWithAggregatesFilter<"CandidatDocument"> | string
+    fileSize?: IntWithAggregatesFilter<"CandidatDocument"> | number
+    candidatId?: StringWithAggregatesFilter<"CandidatDocument"> | string
   }
 
   export type ApplicationCustomWhereInput = {
@@ -51901,169 +52892,151 @@ export namespace Prisma {
 
   export type CandidatCustomCreateInput = {
     id?: string
-    nom?: string | null
-    prenom?: string | null
-    role?: $Enums.Role | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    telephone?: string | null
     cv?: string | null
-    letterm?: string | null
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays?: string | null
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
+    cvUrl?: string | null
     application: ApplicationCustomCreateNestedOneWithoutCandidatCustomInput
+    documents?: CandidatDocumentCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCustomUncheckedCreateInput = {
     id?: string
-    nom?: string | null
-    prenom?: string | null
-    role?: $Enums.Role | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    telephone?: string | null
     cv?: string | null
-    letterm?: string | null
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays?: string | null
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
+    cvUrl?: string | null
     applicationId: string
+    documents?: CandidatDocumentUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCustomUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: NullableStringFieldUpdateOperationsInput | string | null
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     application?: ApplicationCustomUpdateOneRequiredWithoutCandidatCustomNestedInput
+    documents?: CandidatDocumentUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatCustomUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: NullableStringFieldUpdateOperationsInput | string | null
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     applicationId?: StringFieldUpdateOperationsInput | string
+    documents?: CandidatDocumentUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatCustomCreateManyInput = {
     id?: string
-    nom?: string | null
-    prenom?: string | null
-    role?: $Enums.Role | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    telephone?: string | null
     cv?: string | null
-    letterm?: string | null
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays?: string | null
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
+    cvUrl?: string | null
     applicationId: string
   }
 
   export type CandidatCustomUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: NullableStringFieldUpdateOperationsInput | string | null
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CandidatCustomUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: NullableStringFieldUpdateOperationsInput | string | null
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
     applicationId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CandidatDocumentCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    candidat: CandidatCustomCreateNestedOneWithoutDocumentsInput
+  }
+
+  export type CandidatDocumentUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    candidatId: string
+  }
+
+  export type CandidatDocumentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    candidat?: CandidatCustomUpdateOneRequiredWithoutDocumentsNestedInput
+  }
+
+  export type CandidatDocumentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    candidatId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CandidatDocumentCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+    candidatId: string
+  }
+
+  export type CandidatDocumentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CandidatDocumentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+    candidatId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ApplicationCustomCreateInput = {
@@ -54554,11 +55527,14 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type EnumRoleNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Role[] | null
-    notIn?: $Enums.Role[] | null
-    not?: NestedEnumRoleNullableFilter<$PrismaModel> | $Enums.Role | null
+  export type CandidatDocumentListRelationFilter = {
+    every?: CandidatDocumentWhereInput
+    some?: CandidatDocumentWhereInput
+    none?: CandidatDocumentWhereInput
+  }
+
+  export type CandidatDocumentOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type CandidatCustomOrderByRelevanceInput = {
@@ -54569,84 +55545,84 @@ export namespace Prisma {
 
   export type CandidatCustomCountOrderByAggregateInput = {
     id?: SortOrder
-    nom?: SortOrder
-    prenom?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    telephone?: SortOrder
     cv?: SortOrder
-    letterm?: SortOrder
-    bio?: SortOrder
-    adresse?: SortOrder
-    ville?: SortOrder
-    statut?: SortOrder
-    pays?: SortOrder
-    dateNaissance?: SortOrder
-    nationalite?: SortOrder
-    situationFamiliale?: SortOrder
-    permisConduire?: SortOrder
-    image?: SortOrder
+    cvUrl?: SortOrder
     applicationId?: SortOrder
   }
 
   export type CandidatCustomMaxOrderByAggregateInput = {
     id?: SortOrder
-    nom?: SortOrder
-    prenom?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    telephone?: SortOrder
     cv?: SortOrder
-    letterm?: SortOrder
-    bio?: SortOrder
-    adresse?: SortOrder
-    ville?: SortOrder
-    statut?: SortOrder
-    pays?: SortOrder
-    dateNaissance?: SortOrder
-    nationalite?: SortOrder
-    situationFamiliale?: SortOrder
-    permisConduire?: SortOrder
-    image?: SortOrder
+    cvUrl?: SortOrder
     applicationId?: SortOrder
   }
 
   export type CandidatCustomMinOrderByAggregateInput = {
     id?: SortOrder
-    nom?: SortOrder
-    prenom?: SortOrder
-    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
-    telephone?: SortOrder
     cv?: SortOrder
-    letterm?: SortOrder
-    bio?: SortOrder
-    adresse?: SortOrder
-    ville?: SortOrder
-    statut?: SortOrder
-    pays?: SortOrder
-    dateNaissance?: SortOrder
-    nationalite?: SortOrder
-    situationFamiliale?: SortOrder
-    permisConduire?: SortOrder
-    image?: SortOrder
+    cvUrl?: SortOrder
     applicationId?: SortOrder
   }
 
-  export type EnumRoleNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Role[] | null
-    notIn?: $Enums.Role[] | null
-    not?: NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel> | $Enums.Role | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumRoleNullableFilter<$PrismaModel>
-    _max?: NestedEnumRoleNullableFilter<$PrismaModel>
+  export type CandidatCustomScalarRelationFilter = {
+    is?: CandidatCustomWhereInput
+    isNot?: CandidatCustomWhereInput
+  }
+
+  export type CandidatDocumentOrderByRelevanceInput = {
+    fields: CandidatDocumentOrderByRelevanceFieldEnum | CandidatDocumentOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type CandidatDocumentCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    candidatId?: SortOrder
+  }
+
+  export type CandidatDocumentAvgOrderByAggregateInput = {
+    fileSize?: SortOrder
+  }
+
+  export type CandidatDocumentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    candidatId?: SortOrder
+  }
+
+  export type CandidatDocumentMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    fileName?: SortOrder
+    fileUrl?: SortOrder
+    fileType?: SortOrder
+    fileSize?: SortOrder
+    candidatId?: SortOrder
+  }
+
+  export type CandidatDocumentSumOrderByAggregateInput = {
+    fileSize?: SortOrder
   }
 
   export type ApplicationFileCustomListRelationFilter = {
@@ -57098,8 +58074,18 @@ export namespace Prisma {
     connect?: ApplicationCustomWhereUniqueInput
   }
 
-  export type NullableEnumRoleFieldUpdateOperationsInput = {
-    set?: $Enums.Role | null
+  export type CandidatDocumentCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<CandidatDocumentCreateWithoutCandidatInput, CandidatDocumentUncheckedCreateWithoutCandidatInput> | CandidatDocumentCreateWithoutCandidatInput[] | CandidatDocumentUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CandidatDocumentCreateOrConnectWithoutCandidatInput | CandidatDocumentCreateOrConnectWithoutCandidatInput[]
+    createMany?: CandidatDocumentCreateManyCandidatInputEnvelope
+    connect?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+  }
+
+  export type CandidatDocumentUncheckedCreateNestedManyWithoutCandidatInput = {
+    create?: XOR<CandidatDocumentCreateWithoutCandidatInput, CandidatDocumentUncheckedCreateWithoutCandidatInput> | CandidatDocumentCreateWithoutCandidatInput[] | CandidatDocumentUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CandidatDocumentCreateOrConnectWithoutCandidatInput | CandidatDocumentCreateOrConnectWithoutCandidatInput[]
+    createMany?: CandidatDocumentCreateManyCandidatInputEnvelope
+    connect?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
   }
 
   export type ApplicationCustomUpdateOneRequiredWithoutCandidatCustomNestedInput = {
@@ -57108,6 +58094,48 @@ export namespace Prisma {
     upsert?: ApplicationCustomUpsertWithoutCandidatCustomInput
     connect?: ApplicationCustomWhereUniqueInput
     update?: XOR<XOR<ApplicationCustomUpdateToOneWithWhereWithoutCandidatCustomInput, ApplicationCustomUpdateWithoutCandidatCustomInput>, ApplicationCustomUncheckedUpdateWithoutCandidatCustomInput>
+  }
+
+  export type CandidatDocumentUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<CandidatDocumentCreateWithoutCandidatInput, CandidatDocumentUncheckedCreateWithoutCandidatInput> | CandidatDocumentCreateWithoutCandidatInput[] | CandidatDocumentUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CandidatDocumentCreateOrConnectWithoutCandidatInput | CandidatDocumentCreateOrConnectWithoutCandidatInput[]
+    upsert?: CandidatDocumentUpsertWithWhereUniqueWithoutCandidatInput | CandidatDocumentUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: CandidatDocumentCreateManyCandidatInputEnvelope
+    set?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+    disconnect?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+    delete?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+    connect?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+    update?: CandidatDocumentUpdateWithWhereUniqueWithoutCandidatInput | CandidatDocumentUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: CandidatDocumentUpdateManyWithWhereWithoutCandidatInput | CandidatDocumentUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: CandidatDocumentScalarWhereInput | CandidatDocumentScalarWhereInput[]
+  }
+
+  export type CandidatDocumentUncheckedUpdateManyWithoutCandidatNestedInput = {
+    create?: XOR<CandidatDocumentCreateWithoutCandidatInput, CandidatDocumentUncheckedCreateWithoutCandidatInput> | CandidatDocumentCreateWithoutCandidatInput[] | CandidatDocumentUncheckedCreateWithoutCandidatInput[]
+    connectOrCreate?: CandidatDocumentCreateOrConnectWithoutCandidatInput | CandidatDocumentCreateOrConnectWithoutCandidatInput[]
+    upsert?: CandidatDocumentUpsertWithWhereUniqueWithoutCandidatInput | CandidatDocumentUpsertWithWhereUniqueWithoutCandidatInput[]
+    createMany?: CandidatDocumentCreateManyCandidatInputEnvelope
+    set?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+    disconnect?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+    delete?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+    connect?: CandidatDocumentWhereUniqueInput | CandidatDocumentWhereUniqueInput[]
+    update?: CandidatDocumentUpdateWithWhereUniqueWithoutCandidatInput | CandidatDocumentUpdateWithWhereUniqueWithoutCandidatInput[]
+    updateMany?: CandidatDocumentUpdateManyWithWhereWithoutCandidatInput | CandidatDocumentUpdateManyWithWhereWithoutCandidatInput[]
+    deleteMany?: CandidatDocumentScalarWhereInput | CandidatDocumentScalarWhereInput[]
+  }
+
+  export type CandidatCustomCreateNestedOneWithoutDocumentsInput = {
+    create?: XOR<CandidatCustomCreateWithoutDocumentsInput, CandidatCustomUncheckedCreateWithoutDocumentsInput>
+    connectOrCreate?: CandidatCustomCreateOrConnectWithoutDocumentsInput
+    connect?: CandidatCustomWhereUniqueInput
+  }
+
+  export type CandidatCustomUpdateOneRequiredWithoutDocumentsNestedInput = {
+    create?: XOR<CandidatCustomCreateWithoutDocumentsInput, CandidatCustomUncheckedCreateWithoutDocumentsInput>
+    connectOrCreate?: CandidatCustomCreateOrConnectWithoutDocumentsInput
+    upsert?: CandidatCustomUpsertWithoutDocumentsInput
+    connect?: CandidatCustomWhereUniqueInput
+    update?: XOR<XOR<CandidatCustomUpdateToOneWithWhereWithoutDocumentsInput, CandidatCustomUpdateWithoutDocumentsInput>, CandidatCustomUncheckedUpdateWithoutDocumentsInput>
   }
 
   export type ApplicationCollaborateurCustomCreateNestedManyWithoutApplicationInput = {
@@ -57634,23 +58662,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSenderTypeFilter<$PrismaModel>
     _max?: NestedEnumSenderTypeFilter<$PrismaModel>
-  }
-
-  export type NestedEnumRoleNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Role[] | null
-    notIn?: $Enums.Role[] | null
-    not?: NestedEnumRoleNullableFilter<$PrismaModel> | $Enums.Role | null
-  }
-
-  export type NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Role[] | null
-    notIn?: $Enums.Role[] | null
-    not?: NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel> | $Enums.Role | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumRoleNullableFilter<$PrismaModel>
-    _max?: NestedEnumRoleNullableFilter<$PrismaModel>
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -64680,6 +65691,36 @@ export namespace Prisma {
     create: XOR<ApplicationCustomCreateWithoutCandidatCustomInput, ApplicationCustomUncheckedCreateWithoutCandidatCustomInput>
   }
 
+  export type CandidatDocumentCreateWithoutCandidatInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+  }
+
+  export type CandidatDocumentUncheckedCreateWithoutCandidatInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+  }
+
+  export type CandidatDocumentCreateOrConnectWithoutCandidatInput = {
+    where: CandidatDocumentWhereUniqueInput
+    create: XOR<CandidatDocumentCreateWithoutCandidatInput, CandidatDocumentUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type CandidatDocumentCreateManyCandidatInputEnvelope = {
+    data: CandidatDocumentCreateManyCandidatInput | CandidatDocumentCreateManyCandidatInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ApplicationCustomUpsertWithoutCandidatCustomInput = {
     update: XOR<ApplicationCustomUpdateWithoutCandidatCustomInput, ApplicationCustomUncheckedUpdateWithoutCandidatCustomInput>
     create: XOR<ApplicationCustomCreateWithoutCandidatCustomInput, ApplicationCustomUncheckedCreateWithoutCandidatCustomInput>
@@ -64721,6 +65762,92 @@ export namespace Prisma {
     files?: ApplicationFileCustomUncheckedUpdateManyWithoutApplicationNestedInput
     notes?: ApplicationNoteCustomUncheckedUpdateManyWithoutApplicationNestedInput
     checklist?: ChecklistItemCustomUncheckedUpdateManyWithoutApplicationNestedInput
+  }
+
+  export type CandidatDocumentUpsertWithWhereUniqueWithoutCandidatInput = {
+    where: CandidatDocumentWhereUniqueInput
+    update: XOR<CandidatDocumentUpdateWithoutCandidatInput, CandidatDocumentUncheckedUpdateWithoutCandidatInput>
+    create: XOR<CandidatDocumentCreateWithoutCandidatInput, CandidatDocumentUncheckedCreateWithoutCandidatInput>
+  }
+
+  export type CandidatDocumentUpdateWithWhereUniqueWithoutCandidatInput = {
+    where: CandidatDocumentWhereUniqueInput
+    data: XOR<CandidatDocumentUpdateWithoutCandidatInput, CandidatDocumentUncheckedUpdateWithoutCandidatInput>
+  }
+
+  export type CandidatDocumentUpdateManyWithWhereWithoutCandidatInput = {
+    where: CandidatDocumentScalarWhereInput
+    data: XOR<CandidatDocumentUpdateManyMutationInput, CandidatDocumentUncheckedUpdateManyWithoutCandidatInput>
+  }
+
+  export type CandidatDocumentScalarWhereInput = {
+    AND?: CandidatDocumentScalarWhereInput | CandidatDocumentScalarWhereInput[]
+    OR?: CandidatDocumentScalarWhereInput[]
+    NOT?: CandidatDocumentScalarWhereInput | CandidatDocumentScalarWhereInput[]
+    id?: StringFilter<"CandidatDocument"> | string
+    createdAt?: DateTimeFilter<"CandidatDocument"> | Date | string
+    updatedAt?: DateTimeFilter<"CandidatDocument"> | Date | string
+    fileName?: StringFilter<"CandidatDocument"> | string
+    fileUrl?: StringFilter<"CandidatDocument"> | string
+    fileType?: StringFilter<"CandidatDocument"> | string
+    fileSize?: IntFilter<"CandidatDocument"> | number
+    candidatId?: StringFilter<"CandidatDocument"> | string
+  }
+
+  export type CandidatCustomCreateWithoutDocumentsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    cv?: string | null
+    cvUrl?: string | null
+    application: ApplicationCustomCreateNestedOneWithoutCandidatCustomInput
+  }
+
+  export type CandidatCustomUncheckedCreateWithoutDocumentsInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    cv?: string | null
+    cvUrl?: string | null
+    applicationId: string
+  }
+
+  export type CandidatCustomCreateOrConnectWithoutDocumentsInput = {
+    where: CandidatCustomWhereUniqueInput
+    create: XOR<CandidatCustomCreateWithoutDocumentsInput, CandidatCustomUncheckedCreateWithoutDocumentsInput>
+  }
+
+  export type CandidatCustomUpsertWithoutDocumentsInput = {
+    update: XOR<CandidatCustomUpdateWithoutDocumentsInput, CandidatCustomUncheckedUpdateWithoutDocumentsInput>
+    create: XOR<CandidatCustomCreateWithoutDocumentsInput, CandidatCustomUncheckedCreateWithoutDocumentsInput>
+    where?: CandidatCustomWhereInput
+  }
+
+  export type CandidatCustomUpdateToOneWithWhereWithoutDocumentsInput = {
+    where?: CandidatCustomWhereInput
+    data: XOR<CandidatCustomUpdateWithoutDocumentsInput, CandidatCustomUncheckedUpdateWithoutDocumentsInput>
+  }
+
+  export type CandidatCustomUpdateWithoutDocumentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    application?: ApplicationCustomUpdateOneRequiredWithoutCandidatCustomNestedInput
+  }
+
+  export type CandidatCustomUncheckedUpdateWithoutDocumentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    cv?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ApplicationCollaborateurCustomCreateWithoutApplicationInput = {
@@ -64845,48 +65972,22 @@ export namespace Prisma {
 
   export type CandidatCustomCreateWithoutApplicationInput = {
     id?: string
-    nom?: string | null
-    prenom?: string | null
-    role?: $Enums.Role | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    telephone?: string | null
     cv?: string | null
-    letterm?: string | null
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays?: string | null
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
+    cvUrl?: string | null
+    documents?: CandidatDocumentCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCustomUncheckedCreateWithoutApplicationInput = {
     id?: string
-    nom?: string | null
-    prenom?: string | null
-    role?: $Enums.Role | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    telephone?: string | null
     cv?: string | null
-    letterm?: string | null
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays?: string | null
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
+    cvUrl?: string | null
+    documents?: CandidatDocumentUncheckedCreateNestedManyWithoutCandidatInput
   }
 
   export type CandidatCustomCreateOrConnectWithoutApplicationInput = {
@@ -65060,25 +66161,11 @@ export namespace Prisma {
     OR?: CandidatCustomScalarWhereInput[]
     NOT?: CandidatCustomScalarWhereInput | CandidatCustomScalarWhereInput[]
     id?: StringFilter<"CandidatCustom"> | string
-    nom?: StringNullableFilter<"CandidatCustom"> | string | null
-    prenom?: StringNullableFilter<"CandidatCustom"> | string | null
-    role?: EnumRoleNullableFilter<"CandidatCustom"> | $Enums.Role | null
     createdAt?: DateTimeFilter<"CandidatCustom"> | Date | string
     updatedAt?: DateTimeFilter<"CandidatCustom"> | Date | string
     userId?: StringFilter<"CandidatCustom"> | string
-    telephone?: StringNullableFilter<"CandidatCustom"> | string | null
     cv?: StringNullableFilter<"CandidatCustom"> | string | null
-    letterm?: StringNullableFilter<"CandidatCustom"> | string | null
-    bio?: StringNullableFilter<"CandidatCustom"> | string | null
-    adresse?: StringNullableFilter<"CandidatCustom"> | string | null
-    ville?: StringNullableFilter<"CandidatCustom"> | string | null
-    statut?: StringNullableFilter<"CandidatCustom"> | string | null
-    pays?: StringNullableFilter<"CandidatCustom"> | string | null
-    dateNaissance?: DateTimeFilter<"CandidatCustom"> | Date | string
-    nationalite?: StringNullableFilter<"CandidatCustom"> | string | null
-    situationFamiliale?: StringNullableFilter<"CandidatCustom"> | string | null
-    permisConduire?: StringNullableFilter<"CandidatCustom"> | string | null
-    image?: StringNullableFilter<"CandidatCustom"> | string | null
+    cvUrl?: StringNullableFilter<"CandidatCustom"> | string | null
     applicationId?: StringFilter<"CandidatCustom"> | string
   }
 
@@ -66732,6 +67819,46 @@ export namespace Prisma {
     assignedBy?: StringFieldUpdateOperationsInput | string
   }
 
+  export type CandidatDocumentCreateManyCandidatInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fileName: string
+    fileUrl: string
+    fileType: string
+    fileSize: number
+  }
+
+  export type CandidatDocumentUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CandidatDocumentUncheckedUpdateWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CandidatDocumentUncheckedUpdateManyWithoutCandidatInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fileName?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    fileType?: StringFieldUpdateOperationsInput | string
+    fileSize?: IntFieldUpdateOperationsInput | number
+  }
+
   export type ApplicationCollaborateurCustomCreateManyApplicationInput = {
     id?: string
     collaborateurId: string
@@ -66774,25 +67901,11 @@ export namespace Prisma {
 
   export type CandidatCustomCreateManyApplicationInput = {
     id?: string
-    nom?: string | null
-    prenom?: string | null
-    role?: $Enums.Role | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    telephone?: string | null
     cv?: string | null
-    letterm?: string | null
-    bio?: string | null
-    adresse?: string | null
-    ville?: string | null
-    statut?: string | null
-    pays?: string | null
-    dateNaissance: Date | string
-    nationalite?: string | null
-    situationFamiliale?: string | null
-    permisConduire?: string | null
-    image?: string | null
+    cvUrl?: string | null
   }
 
   export type ApplicationCollaborateurCustomUpdateWithoutApplicationInput = {
@@ -66917,71 +68030,31 @@ export namespace Prisma {
 
   export type CandidatCustomUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: NullableStringFieldUpdateOperationsInput | string | null
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documents?: CandidatDocumentUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatCustomUncheckedUpdateWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: NullableStringFieldUpdateOperationsInput | string | null
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    documents?: CandidatDocumentUncheckedUpdateManyWithoutCandidatNestedInput
   }
 
   export type CandidatCustomUncheckedUpdateManyWithoutApplicationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    nom?: NullableStringFieldUpdateOperationsInput | string | null
-    prenom?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    telephone?: NullableStringFieldUpdateOperationsInput | string | null
     cv?: NullableStringFieldUpdateOperationsInput | string | null
-    letterm?: NullableStringFieldUpdateOperationsInput | string | null
-    bio?: NullableStringFieldUpdateOperationsInput | string | null
-    adresse?: NullableStringFieldUpdateOperationsInput | string | null
-    ville?: NullableStringFieldUpdateOperationsInput | string | null
-    statut?: NullableStringFieldUpdateOperationsInput | string | null
-    pays?: NullableStringFieldUpdateOperationsInput | string | null
-    dateNaissance?: DateTimeFieldUpdateOperationsInput | Date | string
-    nationalite?: NullableStringFieldUpdateOperationsInput | string | null
-    situationFamiliale?: NullableStringFieldUpdateOperationsInput | string | null
-    permisConduire?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableStringFieldUpdateOperationsInput | string | null
+    cvUrl?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

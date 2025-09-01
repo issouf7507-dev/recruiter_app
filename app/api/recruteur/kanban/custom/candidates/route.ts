@@ -2,23 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
 
+interface DocumentData {
+  fileName: string;
+  fileUrl: string;
+  fileType: string;
+  fileSize: number;
+}
+
 // POST - Ajouter un candidat manuellement à une application
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const {
-      nom,
-      prenom,
-      email,
-      telephone,
-      cv,
-      bio,
-      adresse,
-      ville,
-      pays,
-      dateNaissance,
-      applicationId,
-    } = body;
+    const { cv, cvUrl, applicationId, documents } = body;
 
     const authenticatedUser = await getAuthenticatedUser(req);
     if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
@@ -40,28 +35,41 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const newCandidate = await prisma.candidatCustom.create({
-      data: {
-        // email,
-        nom,
-        prenom,
-        role: "USER",
-        userId: `temp_${Date.now()}`, // ID temporaire unique
-        telephone: telephone || "",
-        cv: cv || "",
-        bio: bio || "",
-        adresse: adresse || "",
-        ville: ville || "",
-        pays: pays || "France",
-        dateNaissance: dateNaissance ? new Date(dateNaissance) : new Date(),
-        applicationId,
-      },
+    // Créer le candidat avec ses documents dans une transaction
+    const result = await prisma.$transaction(async (tx) => {
+      const newCandidate = await tx.candidatCustom.create({
+        data: {
+          userId: authenticatedUser.userId,
+          cv: cv || "",
+          cvUrl: cvUrl || "",
+          applicationId,
+        },
+      });
+
+      // Créer les documents associés si fournis
+      if (documents && Array.isArray(documents) && documents.length > 0) {
+        await tx.candidatDocument.createMany({
+          data: documents.map((doc: DocumentData) => ({
+            fileName: doc.fileName,
+            fileUrl: doc.fileUrl,
+            fileType: doc.fileType,
+            fileSize: doc.fileSize,
+            candidatId: newCandidate.id,
+          })),
+        });
+      }
+
+      // Récupérer le candidat avec ses documents
+      return await tx.candidatCustom.findUnique({
+        where: { id: newCandidate.id },
+        include: { documents: true },
+      });
     });
 
     return NextResponse.json(
       {
         success: true,
-        data: newCandidate,
+        data: result,
       },
       { status: 201 }
     );

@@ -546,26 +546,23 @@ exports.Prisma.ChecklistItemCustomScalarFieldEnum = {
 
 exports.Prisma.CandidatCustomScalarFieldEnum = {
   id: 'id',
-  nom: 'nom',
-  prenom: 'prenom',
-  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
-  telephone: 'telephone',
   cv: 'cv',
-  letterm: 'letterm',
-  bio: 'bio',
-  adresse: 'adresse',
-  ville: 'ville',
-  statut: 'statut',
-  pays: 'pays',
-  dateNaissance: 'dateNaissance',
-  nationalite: 'nationalite',
-  situationFamiliale: 'situationFamiliale',
-  permisConduire: 'permisConduire',
-  image: 'image',
+  cvUrl: 'cvUrl',
   applicationId: 'applicationId'
+};
+
+exports.Prisma.CandidatDocumentScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  fileSize: 'fileSize',
+  candidatId: 'candidatId'
 };
 
 exports.Prisma.ApplicationCustomScalarFieldEnum = {
@@ -910,22 +907,18 @@ exports.Prisma.ChecklistItemCustomOrderByRelevanceFieldEnum = {
 
 exports.Prisma.CandidatCustomOrderByRelevanceFieldEnum = {
   id: 'id',
-  nom: 'nom',
-  prenom: 'prenom',
   userId: 'userId',
-  telephone: 'telephone',
   cv: 'cv',
-  letterm: 'letterm',
-  bio: 'bio',
-  adresse: 'adresse',
-  ville: 'ville',
-  statut: 'statut',
-  pays: 'pays',
-  nationalite: 'nationalite',
-  situationFamiliale: 'situationFamiliale',
-  permisConduire: 'permisConduire',
-  image: 'image',
+  cvUrl: 'cvUrl',
   applicationId: 'applicationId'
+};
+
+exports.Prisma.CandidatDocumentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  candidatId: 'candidatId'
 };
 
 exports.Prisma.ApplicationCustomOrderByRelevanceFieldEnum = {
@@ -999,6 +992,7 @@ exports.Prisma.ModelName = {
   ApplicationNoteCustom: 'ApplicationNoteCustom',
   ChecklistItemCustom: 'ChecklistItemCustom',
   CandidatCustom: 'CandidatCustom',
+  CandidatDocument: 'CandidatDocument',
   ApplicationCustom: 'ApplicationCustom'
 };
 

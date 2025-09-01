@@ -627,31 +627,31 @@ model ChecklistItemCustom {
 }
 
 model CandidatCustom {
-  id                 String   @id @default(cuid())
-  nom                String?
-  prenom             String?
-  role               Role?
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-  userId             String   @unique
-  telephone          String?
-  cv                 String?
-  letterm            String?
-  bio                String?
-  adresse            String?
-  ville              String?
-  statut             String?
-  pays               String?
-  dateNaissance      DateTime
-  nationalite        String?
-  situationFamiliale String?
-  permisConduire     String?
-  image              String?
-
+  id            String             @id @unique @default(cuid())
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  userId        String
+  cv            String?
+  cvUrl         String?            @unique
   applicationId String
-  application   ApplicationCustom @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  application   ApplicationCustom  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  documents     CandidatDocument[]
 
   @@index([applicationId], map: "CandidatCustom_applicationId_fkey")
+}
+
+model CandidatDocument {
+  id         String         @id @default(cuid())
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  fileName   String
+  fileUrl    String
+  fileType   String
+  fileSize   Int
+  candidatId String
+  candidat   CandidatCustom @relation(fields: [candidatId], references: [id], onDelete: Cascade)
+
+  @@index([candidatId], map: "CandidatDocument_candidatId_fkey")
 }
 
 model ApplicationCustom {

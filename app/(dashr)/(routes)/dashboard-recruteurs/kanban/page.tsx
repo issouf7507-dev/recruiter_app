@@ -22,6 +22,8 @@ import {
   RefreshCcw,
   Building2,
   FileText,
+  X,
+  Download,
 } from "lucide-react";
 
 import {
@@ -41,14 +43,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { FileUpload } from "@/components/ui/file-upload";
+
 import {
   Form,
   FormControl,
@@ -153,8 +149,6 @@ export default function OffresPage() {
   const [applicationFiles, setApplicationFiles] = useState<any[]>([]);
   const [isDeletingCollaborator, setIsDeletingCollaborator] = useState(false);
 
-  const [customSkill, setCustomSkill] = useState("");
-
   // États pour les modals
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
   const [isDueDateModalOpen, setIsDueDateModalOpen] = useState(false);
@@ -172,64 +166,21 @@ export default function OffresPage() {
 
   // Variables pour l'ajout manuel de candidat
   const [newCandidateData, setNewCandidateData] = useState({
-    nom: "",
-    prenom: "",
-    email: "",
-    telephone: "",
     cv: null as File | null,
-    message: "",
-    competences: [] as string[],
-    currentCompetence: "",
+    cvUrl: "",
   });
   const [isAddingCandidate, setIsAddingCandidate] = useState(false);
   const [cvPreview, setCvPreview] = useState<string>("");
+  const [uploadedDocuments, setUploadedDocuments] = useState<
+    Array<{
+      fileName: string;
+      fileUrl: string;
+      fileType: string;
+      fileSize: number;
+    }>
+  >([]);
 
   // Fonctions mock pour les tests
-  const handleDownloadCV = (cvUrl: string) => {
-    if (!cvUrl) {
-      alert("Aucun CV disponible pour ce candidat");
-      return;
-    }
-
-    try {
-      // Créer un lien de téléchargement
-      const link = document.createElement("a");
-      link.href = cvUrl;
-      link.download = `CV_${selectedCard?.candidat?.nom || "candidat"}_${
-        selectedCard?.candidat?.prenom || ""
-      }.pdf`;
-      link.target = "_blank";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Erreur lors du téléchargement du CV:", error);
-      alert("Erreur lors du téléchargement du CV");
-    }
-  };
-
-  const handleDownloadLettreMotivation = (lettreUrl: string) => {
-    if (!lettreUrl) {
-      alert("Aucune lettre de motivation disponible pour ce candidat");
-      return;
-    }
-
-    try {
-      // Créer un lien de téléchargement
-      const link = document.createElement("a");
-      link.href = lettreUrl;
-      link.download = `LM_${selectedCard?.candidat?.nom || "candidat"}_${
-        selectedCard?.candidat?.prenom || ""
-      }.pdf`;
-      link.target = "_blank";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Erreur lors du téléchargement de la lettre:", error);
-      alert("Erreur lors du téléchargement de la lettre de motivation");
-    }
-  };
 
   const handleNoteSubmit = async () => {
     if (!selectedCard || !cardNote.trim()) return;
@@ -662,94 +613,53 @@ export default function OffresPage() {
     }
   };
 
-  // Fonctions pour l'ajout manuel de candidat
-  const handleCvUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setNewCandidateData((prev) => ({ ...prev, cv: file }));
-      setCvPreview(file.name);
-    }
-  };
-
-  const handleAddCompetence = () => {
-    if (
-      newCandidateData.currentCompetence.trim() &&
-      !newCandidateData.competences.includes(
-        newCandidateData.currentCompetence.trim()
-      )
-    ) {
-      setNewCandidateData((prev) => ({
-        ...prev,
-        competences: [...prev.competences, prev.currentCompetence.trim()],
-        currentCompetence: "",
-      }));
-    }
-  };
-
-  const handleRemoveCompetence = (competence: string) => {
-    setNewCandidateData((prev) => ({
-      ...prev,
-      competences: prev.competences.filter((c) => c !== competence),
-    }));
-  };
-
   const handleSubmitNewCandidate = async () => {
     // Validation des champs requis
-    if (
-      !newCandidateData.nom.trim() ||
-      !newCandidateData.prenom.trim() ||
-      !newCandidateData.email.trim()
-    ) {
-      alert(
-        "Veuillez remplir tous les champs obligatoires (nom, prénom, email)"
-      );
+    if (!selectedCard) {
+      alert("Aucune application sélectionnée");
       return;
     }
 
-    if (!selectedCard) {
-      alert("Aucune application sélectionnée");
+    if (uploadedDocuments.length === 0) {
+      alert("Veuillez télécharger au moins un document");
       return;
     }
 
     setIsAddingCandidate(true);
 
     try {
-      console.log("Ajout du candidat:", newCandidateData);
+      console.log("Ajout du candidat:", {
+        documents: uploadedDocuments,
+        applicationId: selectedCard.id,
+      });
 
       const response = await fetch("/api/recruteur/kanban/custom/candidates", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nom: newCandidateData.nom,
-          prenom: newCandidateData.prenom,
-          email: newCandidateData.email,
-          telephone: newCandidateData.telephone,
-          cv: newCandidateData.cv
-            ? `cv_${newCandidateData.nom}_${Date.now()}.pdf`
-            : null,
-          bio: newCandidateData.message,
+          cv: uploadedDocuments[0]?.fileName || "",
+          cvUrl: uploadedDocuments[0]?.fileUrl || "",
+          documents: uploadedDocuments,
           applicationId: selectedCard.id,
         }),
       });
 
       if (response.ok) {
+        const result = await response.json();
+        console.log("Candidat ajouté avec succès:", result);
+
         // Réinitialiser le formulaire
-        setNewCandidateData({
-          nom: "",
-          prenom: "",
-          email: "",
-          telephone: "",
-          cv: null,
-          message: "",
-          competences: [],
-          currentCompetence: "",
-        });
+        setUploadedDocuments([]);
         setCvPreview("");
+        fetchCandidates(selectedCard.id);
 
         alert("Candidat ajouté avec succès !");
         await queryoffresbyidrefetch();
       } else {
-        throw new Error("Erreur lors de l'ajout du candidat");
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Erreur lors de l'ajout du candidat"
+        );
       }
     } catch (error) {
       console.error("Erreur lors de l'ajout du candidat:", error);
@@ -761,16 +671,11 @@ export default function OffresPage() {
 
   const resetNewCandidateForm = () => {
     setNewCandidateData({
-      nom: "",
-      prenom: "",
-      email: "",
-      telephone: "",
+      cvUrl: "",
       cv: null,
-      message: "",
-      competences: [],
-      currentCompetence: "",
     });
     setCvPreview("");
+    setUploadedDocuments([]);
   };
 
   const getDueDateStatus = (duedate: string) => {
@@ -904,57 +809,8 @@ export default function OffresPage() {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
 
-  // Composant FileUpload mock
-  const FileUpload = ({
-    onUpload,
-    accept,
-    multiple,
-    maxSize,
-    disabled,
-    buttonText,
-    bucket,
-  }: any) => {
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const files = event.target.files;
-      if (files && files.length > 0) {
-        const file = files[0];
-        const mockFileData = {
-          fileName: file.name,
-          fileUrl: URL.createObjectURL(file),
-          fileType: file.name.split(".").pop() || "unknown",
-          fileSize: file.size,
-        };
-        onUpload(mockFileData);
-      }
-    };
-
-    return (
-      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-        <input
-          type="file"
-          accept={accept}
-          multiple={multiple}
-          onChange={handleFileChange}
-          disabled={disabled}
-          className="hidden"
-          id="file-upload"
-        />
-        <label htmlFor="file-upload" className="cursor-pointer">
-          <Button variant="outline" disabled={disabled}>
-            {buttonText}
-          </Button>
-        </label>
-        <p className="text-sm text-gray-500 mt-2">
-          Formats acceptés: {accept}. Taille max:{" "}
-          {Math.round(maxSize / 1024 / 1024)}MB
-        </p>
-      </div>
-    );
-  };
-
   // Fonction pour recharger les données
   const queryoffresbyidrefetch = async () => {
-    console.log("Reloading data...");
     await refetch();
 
     // Si une card est sélectionnée, recharger ses données aussi
@@ -966,8 +822,6 @@ export default function OffresPage() {
   // Fonction pour charger les données spécifiques d'une application
   const loadApplicationData = async (applicationId: string) => {
     try {
-      console.log("Loading application data for ID:", applicationId);
-
       // Charger les données détaillées de l'application
       const response = await fetch(
         `/api/recruteur/kanban/custom/applications/${applicationId}`
@@ -992,12 +846,8 @@ export default function OffresPage() {
             // Utiliser les vraies données du candidat si disponibles
             candidat: appData.candidatCustom?.[0] ||
               prev?.candidat || {
-                nom: "Candidat",
-                prenom: "Inconnu",
-                email: "email@example.com",
+                cvUrl: null,
                 cv: null,
-                letterm: null,
-                candidatCompetences: [],
               },
           }));
 
@@ -1066,12 +916,8 @@ export default function OffresPage() {
         // Utiliser les vraies données du candidat depuis selectedOffer si disponibles
         candidat: (selectedOffer as any).candidatCustom?.[0] ||
           selectedOffer.candidates?.[0] || {
-            nom: "Candidat",
-            prenom: "Test",
-            email: "test@example.com",
+            cvUrl: null,
             cv: null,
-            letterm: null,
-            candidatCompetences: [],
           },
         // Données par défaut qui seront remplacées par loadApplicationData
         notes: (selectedOffer as any).notes || [],
@@ -1154,6 +1000,7 @@ export default function OffresPage() {
 
   // Fetch data from API
   const queryClient = useQueryClient();
+
   const {
     data: kanbanData,
     isLoading: isLoadingData,
@@ -1169,6 +1016,42 @@ export default function OffresPage() {
     },
     enabled: !!user?.id,
   });
+
+  // const {
+  //   data: candidatesData,
+  //   isLoading: isLoadingCandidates,
+  //   refetch: refetchCandidates,
+  // } = useQuery({
+  //   queryKey: ["candidates", user?.id],
+  //   queryFn: async () => {
+  //     const response = await fetch(`/api/recruteur/kanban/custom/candidates/${id}`);
+  //     if (!response.ok) {
+  //       throw new Error("Erreur lors de la récupération des candidats");
+  //     }
+  //     return response.json();
+  //   },
+  //   enabled: !!user?.id,
+  // });
+
+  const [candidatesData, setCandidatesData] = useState<any>([]);
+  const fetchCandidates = async (id: string) => {
+    try {
+      const response = await fetch(
+        `/api/recruteur/kanban/custom/candidates/${id}`
+      );
+      if (!response.ok) {
+        throw new Error("Erreur lors de la récupération des candidats");
+      }
+      const data = await response.json();
+      setCandidatesData(data);
+      return data;
+    } catch (error) {
+      console.error("Erreur lors de la récupération des candidats:", error);
+    }
+    // return data;
+  };
+
+  // console.log(candidatesData);
 
   // Initialize data from API
   useEffect(() => {
@@ -1476,18 +1359,6 @@ export default function OffresPage() {
     });
   };
 
-  // Fonction pour formater le salaire
-  const formatSalary = (
-    min: number,
-    max: number,
-    currency: string,
-    period: string
-  ): string => {
-    const currencySymbol = currency === "EUR" ? "€" : "$";
-    const periodText = period === "month" ? "/mois" : "/an";
-    return `${min}${currencySymbol} - ${max}${currencySymbol} ${periodText}`;
-  };
-
   // Fonctions pour gérer la vue des candidatures
   const handleViewCandidates = (offer: JobOfferCard) => {
     setSelectedOfferForCandidates(offer);
@@ -1508,6 +1379,10 @@ export default function OffresPage() {
           : offer
       )
     );
+  };
+
+  const handleDownloadCV = (cvUrl: string) => {
+    window.open(cvUrl, "_blank");
   };
 
   // Affichage du loading
@@ -1771,6 +1646,7 @@ export default function OffresPage() {
                                           onClick={() => {
                                             setSelectedOffer(offer);
                                             setIsOfferModalOpen(true);
+                                            fetchCandidates(offer.id);
                                           }}
                                         >
                                           {/* En-tête de carte */}
@@ -2120,18 +1996,13 @@ export default function OffresPage() {
                   <div className="flex flex-col gap-4 border-b border-gray-200 pb-6 mb-6">
                     {/* Avatar et nom */}
                     <div className="flex items-center gap-4">
-                      <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full w-16 h-16 flex items-center justify-center text-white font-bold text-xl">
-                        {selectedCard.candidat.nom.slice(0, 1)}
-                        {selectedCard.candidat.prenom?.slice(0, 1)}
+                      <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
+                        <Briefcase className="h-5 w-5" />
                       </div>
                       <div className="flex-1">
                         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                          {selectedCard.candidat.nom}{" "}
-                          {selectedCard.candidat.prenom}
+                          {selectedOffer?.title}
                         </h1>
-                        <p className="text-primary font-medium">
-                          {selectedCard.candidat.email}
-                        </p>
                       </div>
                       <div className="text-right">
                         <span className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-semibold uppercase">
@@ -2144,135 +2015,43 @@ export default function OffresPage() {
                       </div>
                     </div>
 
-                    {/* Compétences */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                        Compétences
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCard.candidat.candidatCompetences?.map(
-                          (competence: any) => (
-                            <span
-                              key={competence.competence}
-                              className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
-                            >
-                              {competence.competence}
-                            </span>
-                          )
-                        )}
-                      </div>
-                    </div>
-
                     {/* Documents téléchargeables */}
-                    <div className="bg-gray-50 rounded-lg dark:bg-background  ">
-                      <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white">
-                        Documents
+                    <div className="bg-gray-50 rounded-lg py-4 dark:bg-background">
+                      <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white flex items-center gap-2">
+                        <FileText className="h-4 w-4" />
+                        Description
                       </h3>
-                      <div className="flex gap-3">
-                        <Button
-                          variant="outline"
-                          className="flex items-center gap-2"
-                          onClick={() =>
-                            handleDownloadCV(selectedCard.candidat.cv || "")
-                          }
-                          disabled={!selectedCard.candidat.cv}
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                            />
-                          </svg>
-                          {selectedCard.cv
-                            ? "Télécharger CV"
-                            : "CV non disponible"}
-                        </Button>
-                        {selectedCard.message && (
-                          <Button
-                            variant="outline"
-                            className="flex items-center gap-2"
-                            onClick={() => {
-                              handleDownloadLettreMotivation(
-                                selectedCard.candidat.letterm || ""
-                              );
-                            }}
-                            disabled={!selectedCard.candidat.letterm}
-                          >
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                              />
-                            </svg>
-                            Télécharger Lettre
-                          </Button>
-                        )}
-                      </div>
-                      {!selectedCard.candidat.cv && (
-                        <p className="text-xs text-gray-500 mt-2">
-                          Aucun CV n'a été fourni par le candidat
-                        </p>
-                      )}
+                      <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
+                        {selectedOffer?.description}
+                      </p>
                     </div>
 
                     {/* Informations supplémentaires */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                          Informations de contact
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white flex items-center gap-2">
+                          <Building2 className="h-4 w-4" />
+                          Entreprise
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                              />
-                            </svg>
-                            <span>{selectedCard.candidat.email}</span>
+                            <span>{selectedOffer?.company}</span>
                           </div>
                         </div>
                       </div>
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2">
-                          Statut de candidature
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          Localisation
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span>
-                              Candidature reçue le{" "}
-                              {new Date(
-                                selectedCard.createdAt
-                              ).toLocaleDateString("fr-FR")}
-                            </span>
+                            <span>{selectedOffer?.location}</span>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-
                   <div>
                     <div>
                       <div className="mb-6">
@@ -2440,18 +2219,13 @@ export default function OffresPage() {
                   <div className="flex flex-col gap-4 border-b border-gray-200 pb-6 mb-6">
                     {/* Avatar et nom */}
                     <div className="flex items-center gap-4">
-                      <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full w-16 h-16 flex items-center justify-center text-white font-bold text-xl">
-                        {selectedCard.candidat.nom.slice(0, 1)}
-                        {selectedCard.candidat.prenom?.slice(0, 1)}
+                      <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
+                        <Briefcase className="h-5 w-5" />
                       </div>
                       <div className="flex-1">
-                        <h1 className="text-2xl font-bold text-gray-900">
-                          {selectedCard.candidat.nom}{" "}
-                          {selectedCard.candidat.prenom}
+                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                          {selectedOffer?.title}
                         </h1>
-                        <p className="text-primary font-medium">
-                          {selectedCard.candidat.email}
-                        </p>
                       </div>
                       <div className="text-right">
                         <span className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-semibold uppercase">
@@ -2464,129 +2238,38 @@ export default function OffresPage() {
                       </div>
                     </div>
 
-                    {/* Compétences */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                        Compétences
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCard.candidat.candidatCompetences?.map(
-                          (competence: any) => (
-                            <span
-                              key={competence.competence}
-                              className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
-                            >
-                              {competence.competence}
-                            </span>
-                          )
-                        )}
-                      </div>
-                    </div>
-
                     {/* Documents téléchargeables */}
-                    <div className="bg-gray-50 rounded-lg dark:bg-background ">
-                      <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white">
-                        Documents
+                    <div className="bg-gray-50 rounded-lg py-4 dark:bg-background">
+                      <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white flex items-center gap-2">
+                        <FileText className="h-4 w-4" />
+                        Description
                       </h3>
-                      <div className="flex gap-3">
-                        <Button
-                          variant="outline"
-                          className="flex items-center gap-2"
-                          onClick={() =>
-                            handleDownloadCV(selectedCard.candidat.cv || "")
-                          }
-                          disabled={!selectedCard.candidat.cv}
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                            />
-                          </svg>
-                          {selectedCard.cv
-                            ? "Télécharger CV"
-                            : "CV non disponible"}
-                        </Button>
-                        {selectedCard.message && (
-                          <Button
-                            variant="outline"
-                            className="flex items-center gap-2"
-                            onClick={() => {
-                              handleDownloadLettreMotivation(
-                                selectedCard.candidat.letterm || ""
-                              );
-                            }}
-                            disabled={!selectedCard.candidat.letterm}
-                          >
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                              />
-                            </svg>
-                            Télécharger Lettre
-                          </Button>
-                        )}
-                      </div>
-                      {!selectedCard.candidat.cv && (
-                        <p className="text-xs text-gray-500 mt-2">
-                          Aucun CV n'a été fourni par le candidat
-                        </p>
-                      )}
+                      <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
+                        {selectedOffer?.description}
+                      </p>
                     </div>
 
                     {/* Informations supplémentaires */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                          Informations de contact
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white flex items-center gap-2">
+                          <Building2 className="h-4 w-4" />
+                          Entreprise
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                              />
-                            </svg>
-                            <span>{selectedCard.candidat.email}</span>
+                            <span>{selectedOffer?.company}</span>
                           </div>
                         </div>
                       </div>
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                          Statut de candidature
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          Localisation
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span>
-                              Candidature reçue le{" "}
-                              {new Date(
-                                selectedCard.createdAt
-                              ).toLocaleDateString("fr-FR")}
-                            </span>
+                            <span>{selectedOffer?.location}</span>
                           </div>
                         </div>
                       </div>
@@ -2970,11 +2653,11 @@ export default function OffresPage() {
 
                     {/* Statistiques */}
                     {checklist.length > 0 && (
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h3 className="text-sm font-semibold text-blue-800 mb-2">
+                      <div className=" border border-blue-200 rounded-lg p-4">
+                        <h3 className="text-sm font-semibold  mb-2">
                           Statistiques
                         </h3>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-blue-700">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs ">
                           <div>
                             <div className="font-semibold">
                               {checklist.length}
@@ -3029,269 +2712,110 @@ export default function OffresPage() {
                           du candidat
                         </p>
                       </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={resetNewCandidateForm}
-                        disabled={isAddingCandidate}
-                        className="flex items-center gap-2"
-                      >
-                        <RefreshCcw className="h-4 w-4" />
-                        Réinitialiser
-                      </Button>
                     </div>
 
                     {/* Formulaire d'ajout de candidat */}
                     <div className="space-y-6">
                       {/* Informations personnelles */}
-                      <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
-                        <h3 className="text-lg font-semibold text-gray-700 mb-4 dark:text-white">
-                          Informations personnelles
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                              Nom <span className="text-red-500">*</span>
-                            </label>
-                            <Input
-                              className="w-full"
-                              placeholder="Nom du candidat"
-                              value={newCandidateData.nom}
-                              onChange={(e) =>
-                                setNewCandidateData((prev) => ({
-                                  ...prev,
-                                  nom: e.target.value,
-                                }))
-                              }
-                              disabled={isAddingCandidate}
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                              Prénom <span className="text-red-500">*</span>
-                            </label>
-                            <Input
-                              className="w-full"
-                              placeholder="Prénom du candidat"
-                              value={newCandidateData.prenom}
-                              onChange={(e) =>
-                                setNewCandidateData((prev) => ({
-                                  ...prev,
-                                  prenom: e.target.value,
-                                }))
-                              }
-                              disabled={isAddingCandidate}
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                              Email <span className="text-red-500">*</span>
-                            </label>
-                            <Input
-                              type="email"
-                              className="w-full"
-                              placeholder="email@exemple.com"
-                              value={newCandidateData.email}
-                              onChange={(e) =>
-                                setNewCandidateData((prev) => ({
-                                  ...prev,
-                                  email: e.target.value,
-                                }))
-                              }
-                              disabled={isAddingCandidate}
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                              Téléphone
-                            </label>
-                            <Input
-                              type="tel"
-                              className="w-full"
-                              placeholder="06 12 34 56 78"
-                              value={newCandidateData.telephone}
-                              onChange={(e) =>
-                                setNewCandidateData((prev) => ({
-                                  ...prev,
-                                  telephone: e.target.value,
-                                }))
-                              }
-                              disabled={isAddingCandidate}
-                            />
-                          </div>
-                        </div>
-                      </div>
 
-                      {/* Upload du CV */}
+                      {/* Upload des documents */}
                       <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
                         <h3 className="text-lg font-semibold text-gray-700 mb-4 dark:text-white">
-                          CV du candidat
+                          Documents du candidat
                         </h3>
                         <div className="space-y-4">
-                          <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-primary transition-colors">
-                            <input
-                              type="file"
-                              id="cv-upload"
-                              accept=".pdf,.doc,.docx"
-                              onChange={handleCvUpload}
-                              disabled={isAddingCandidate}
-                              className="hidden"
-                            />
-                            <label
-                              htmlFor="cv-upload"
-                              className="cursor-pointer flex flex-col items-center gap-3"
-                            >
-                              <svg
-                                className="w-12 h-12 text-gray-400"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                                />
-                              </svg>
-                              <div>
-                                <p className="text-sm font-medium text-gray-700 dark:text-white">
-                                  Cliquez pour télécharger le CV
-                                </p>
-                                <p className="text-xs text-gray-500 mt-1">
-                                  PDF, DOC, DOCX (max 10MB)
-                                </p>
-                              </div>
-                            </label>
-                          </div>
-                          {cvPreview && (
-                            <div className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                              <svg
-                                className="w-6 h-6 text-green-600"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth={2}
-                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
-                              </svg>
-                              <span className="text-sm font-medium text-green-700">
-                                CV téléchargé: {cvPreview}
-                              </span>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => {
-                                  setNewCandidateData((prev) => ({
-                                    ...prev,
-                                    cv: null,
-                                  }));
-                                  setCvPreview("");
-                                }}
-                                className="ml-auto text-red-600 hover:text-red-700"
-                              >
-                                Supprimer
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                          <FileUpload
+                            onUpload={(fileData: {
+                              fileName: string;
+                              fileUrl: string;
+                              fileType: string;
+                              fileSize: number;
+                            }) => {
+                              setUploadedDocuments((prev) => [
+                                ...prev,
+                                fileData,
+                              ]);
+                              // Mettre à jour cvPreview avec le premier document
+                              if (uploadedDocuments.length === 0) {
+                                setCvPreview(fileData.fileName);
+                              }
+                            }}
+                            multiple={true}
+                            accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif,.xls,.xlsx,.ppt,.pptx"
+                            disabled={isAddingCandidate}
+                            buttonText="Sélectionner des documents"
+                            bucket="kanbanAttachments"
+                            className="w-full"
+                          />
 
-                      {/* Compétences */}
-                      <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
-                        <h3 className="text-lg font-semibold text-gray-700 mb-4 dark:text-white">
-                          Compétences
-                        </h3>
-                        <div className="space-y-4">
-                          <div className="flex gap-3">
-                            <Input
-                              className="flex-1"
-                              placeholder="Ajouter une compétence (ex: React, JavaScript...)"
-                              value={newCandidateData.currentCompetence}
-                              onChange={(e) =>
-                                setNewCandidateData((prev) => ({
-                                  ...prev,
-                                  currentCompetence: e.target.value,
-                                }))
-                              }
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                  e.preventDefault();
-                                  handleAddCompetence();
-                                }
-                              }}
-                              disabled={isAddingCandidate}
-                            />
-                            <Button
-                              onClick={handleAddCompetence}
-                              disabled={
-                                !newCandidateData.currentCompetence.trim() ||
-                                isAddingCandidate
-                              }
-                              className="px-6"
-                            >
-                              Ajouter
-                            </Button>
-                          </div>
-                          {newCandidateData.competences.length > 0 && (
-                            <div className="flex flex-wrap gap-2">
-                              {newCandidateData.competences.map(
-                                (competence, index) => (
-                                  <span
-                                    key={index}
-                                    className="bg-blue-100 text-blue-700 text-sm font-medium px-3 py-1 rounded-full flex items-center gap-2"
+                          {/* {uploadedDocuments.length > 0 && (
+                            <div className="space-y-2">
+                              <h4 className="text-sm font-medium text-gray-700 dark:text-white">
+                                Documents uploadés ({uploadedDocuments.length})
+                              </h4>
+                              {uploadedDocuments.map((doc, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg"
+                                >
+                                  <svg
+                                    className="w-6 h-6 text-green-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
                                   >
-                                    {competence}
-                                    <button
-                                      onClick={() =>
-                                        handleRemoveCompetence(competence)
+                                    <path
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth={2}
+                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                  </svg>
+                                  <div className="flex-1">
+                                    <span className="text-sm font-medium text-green-700">
+                                      {doc.fileName}
+                                    </span>
+                                    <p className="text-xs text-green-600">
+                                      {(doc.fileSize / 1024 / 1024).toFixed(2)}{" "}
+                                      MB
+                                    </p>
+                                  </div>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => {
+                                      setUploadedDocuments((prev) =>
+                                        prev.filter((_, i) => i !== index)
+                                      );
+                                      if (
+                                        index === 0 &&
+                                        uploadedDocuments.length > 1
+                                      ) {
+                                        setCvPreview(
+                                          uploadedDocuments[1].fileName
+                                        );
+                                      } else if (
+                                        uploadedDocuments.length === 1
+                                      ) {
+                                        setCvPreview("");
                                       }
-                                      disabled={isAddingCandidate}
-                                      className="text-blue-500 hover:text-blue-700"
-                                    >
-                                      ×
-                                    </button>
-                                  </span>
-                                )
-                              )}
+                                    }}
+                                    className="text-red-600 hover:text-red-700"
+                                  >
+                                    <X className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              ))}
                             </div>
-                          )}
+                          )} */}
                         </div>
-                      </div>
-
-                      {/* Message de motivation */}
-                      <div className="bg-gray-50 rounded-lg p-4 dark:bg-background dark:border dark:border-gray-700">
-                        <h3 className="text-lg font-semibold text-gray-700 mb-4 dark:text-white">
-                          Message de motivation
-                        </h3>
-                        <textarea
-                          className="w-full h-32 p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-primary dark:bg-background dark:border-gray-600 dark:text-white"
-                          placeholder="Message de motivation ou notes sur le candidat..."
-                          value={newCandidateData.message}
-                          onChange={(e) =>
-                            setNewCandidateData((prev) => ({
-                              ...prev,
-                              message: e.target.value,
-                            }))
-                          }
-                          disabled={isAddingCandidate}
-                        />
                       </div>
 
                       {/* Boutons d'action */}
                       <div className="flex gap-3 pt-4 border-t border-gray-200">
                         <Button
                           onClick={handleSubmitNewCandidate}
-                          disabled={
-                            isAddingCandidate ||
-                            !newCandidateData.nom.trim() ||
-                            !newCandidateData.prenom.trim() ||
-                            !newCandidateData.email.trim()
-                          }
+                          disabled={isAddingCandidate}
                           className="flex-1 bg-primary text-white hover:bg-primary/90"
                         >
                           {isAddingCandidate ? (
@@ -3316,12 +2840,46 @@ export default function OffresPage() {
                         </Button>
                       </div>
 
-                      {/* Informations d'aide */}
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h4 className="text-sm font-semibold text-blue-800 mb-2">
-                          ℹ️ Informations importantes
+                      {/* Candidats */}
+                      <div className="border border-blue-200 rounded-lg p-4">
+                        <h4 className="text-sm font-semibold  mb-2">
+                          CVs candidats
                         </h4>
-                        <ul className="text-xs text-blue-700 space-y-1">
+                        <ul className="text-xs  space-y-1">
+                          {candidatesData?.candidates.length > 0 ? (
+                            candidatesData?.candidates?.map(
+                              (candidate: any) => (
+                                <li key={candidate.id}>
+                                  <div className="flex items-center justify-between">
+                                    <p className="text-gray-500 text-lg">
+                                      {candidate.cv}{" "}
+                                    </p>
+
+                                    <Button
+                                      variant="outline"
+                                      size="sm"
+                                      onClick={() => {
+                                        handleDownloadCV(candidate.cvUrl);
+                                      }}
+                                    >
+                                      <Download className="h-20 w-20" />
+                                    </Button>
+                                  </div>
+                                </li>
+                              )
+                            )
+                          ) : (
+                            <li>Aucun candidat trouvé</li>
+                          )}
+                        </ul>
+                      </div>
+
+                      {/* Informations d'aide */}
+                      <div className=" border border-blue-200 rounded-lg p-4">
+                        <h4 className="text-sm font-semibold  mb-2">
+                          Informations importantes
+                        </h4>
+                        <ul className="text-xs  space-y-1">
                           <li>
                             • Les champs marqués d'un astérisque (*) sont
                             obligatoires
@@ -3352,18 +2910,13 @@ export default function OffresPage() {
                   <div className="flex flex-col gap-4 border-b border-gray-200 pb-6 mb-6">
                     {/* Avatar et nom */}
                     <div className="flex items-center gap-4">
-                      <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full w-16 h-16 flex items-center justify-center text-white font-bold text-xl">
-                        {selectedCard.candidat.nom.slice(0, 1)}
-                        {selectedCard.candidat.prenom?.slice(0, 1)}
+                      <div className="bg-gradient-to-br from-primary to-primary/70 rounded-full w-10 h-10 flex items-center justify-center text-white font-bold text-xl">
+                        <Briefcase className="h-5 w-5" />
                       </div>
                       <div className="flex-1">
                         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                          {selectedCard.candidat.nom}{" "}
-                          {selectedCard.candidat.prenom}
+                          {selectedOffer?.title}
                         </h1>
-                        <p className="text-primary font-medium">
-                          {selectedCard.candidat.email}
-                        </p>
                       </div>
                       <div className="text-right">
                         <span className="bg-green-100 text-green-700 text-sm px-3 py-1 rounded-full font-semibold uppercase">
@@ -3376,129 +2929,38 @@ export default function OffresPage() {
                       </div>
                     </div>
 
-                    {/* Compétences */}
-                    <div>
-                      <h3 className="text-sm font-semibold text-gray-700 dark:text-white mb-2">
-                        Compétences
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCard.candidat.candidatCompetences?.map(
-                          (competence: any) => (
-                            <span
-                              key={competence.competence}
-                              className="bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full"
-                            >
-                              {competence.competence}
-                            </span>
-                          )
-                        )}
-                      </div>
-                    </div>
-
                     {/* Documents téléchargeables */}
-                    <div className="bg-gray-50 rounded-lg dark:bg-background ">
-                      <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white">
-                        Documents
+                    <div className="bg-gray-50 rounded-lg py-4 dark:bg-background">
+                      <h3 className="text-sm font-semibold text-gray-700 mb-3 dark:text-white flex items-center gap-2">
+                        <FileText className="h-4 w-4" />
+                        Description
                       </h3>
-                      <div className="flex gap-3">
-                        <Button
-                          variant="outline"
-                          className="flex items-center gap-2"
-                          onClick={() =>
-                            handleDownloadCV(selectedCard.candidat.cv || "")
-                          }
-                          disabled={!selectedCard.candidat.cv}
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                            />
-                          </svg>
-                          {selectedCard.cv
-                            ? "Télécharger CV"
-                            : "CV non disponible"}
-                        </Button>
-                        {selectedCard.message && (
-                          <Button
-                            variant="outline"
-                            className="flex items-center gap-2"
-                            onClick={() => {
-                              handleDownloadLettreMotivation(
-                                selectedCard.candidat.letterm || ""
-                              );
-                            }}
-                            disabled={!selectedCard.candidat.letterm}
-                          >
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                              />
-                            </svg>
-                            Télécharger Lettre
-                          </Button>
-                        )}
-                      </div>
-                      {!selectedCard.candidat.cv && (
-                        <p className="text-xs text-gray-500 mt-2">
-                          Aucun CV n'a été fourni par le candidat
-                        </p>
-                      )}
+                      <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
+                        {selectedOffer?.description}
+                      </p>
                     </div>
 
                     {/* Informations supplémentaires */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                          Informations de contact
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white flex items-center gap-2">
+                          <Building2 className="h-4 w-4" />
+                          Entreprise
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                              />
-                            </svg>
-                            <span>{selectedCard.candidat.email}</span>
+                            <span>{selectedOffer?.company}</span>
                           </div>
                         </div>
                       </div>
                       <div>
-                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white">
-                          Statut de candidature
+                        <h3 className="text-sm font-semibold text-gray-700 mb-2 dark:text-white flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          Localisation
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                            <span>
-                              Candidature reçue le{" "}
-                              {new Date(
-                                selectedCard.createdAt
-                              ).toLocaleDateString("fr-FR")}
-                            </span>
+                            <span>{selectedOffer?.location}</span>
                           </div>
                         </div>
                       </div>
@@ -3740,11 +3202,11 @@ export default function OffresPage() {
                       </div>
 
                       {/* Informations sur les types de fichiers acceptés */}
-                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h3 className="text-sm font-semibold text-blue-800 mb-2">
+                      <div className="border border-blue-200 rounded-lg p-4">
+                        <h3 className="text-sm font-semibold  mb-2">
                           Types de fichiers acceptés
                         </h3>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-blue-700">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs ">
                           <div>• PDF (.pdf)</div>
                           <div>• Word (.doc, .docx)</div>
                           <div>• Excel (.xls, .xlsx)</div>

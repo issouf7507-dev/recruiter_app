@@ -3153,11 +3153,11 @@ export default function KanbanBoard({
 
                       {/* Statistiques */}
                       {checklist.length > 0 && (
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                          <h3 className="text-sm font-semibold text-blue-800 mb-2">
+                        <div className=" border border-blue-200 rounded-lg p-4">
+                          <h3 className="text-sm font-semibold  mb-2">
                             Statistiques
                           </h3>
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs text-blue-700">
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs ">
                             <div>
                               <div className="font-semibold">
                                 {checklist.length}
@@ -3603,11 +3603,11 @@ export default function KanbanBoard({
                         </div>
 
                         {/* Informations sur les types de fichiers acceptés */}
-                        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                          <h3 className="text-sm font-semibold text-blue-800 mb-2">
+                        <div className="border border-blue-200 rounded-lg p-4">
+                          <h3 className="text-sm font-semibold  mb-2">
                             Types de fichiers acceptés
                           </h3>
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-blue-700">
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs ">
                             <div>• PDF (.pdf)</div>
                             <div>• Word (.doc, .docx)</div>
                             <div>• Excel (.xls, .xlsx)</div>
