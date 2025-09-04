@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
 import { getAuthenticatedUser } from "@/lib/auth-utils";
 
 const LINKEDIN_CLIENT_ID = process.env.LINKEDIN_CLIENT_ID;

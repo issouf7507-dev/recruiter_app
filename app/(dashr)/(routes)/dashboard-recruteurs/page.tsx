@@ -42,6 +42,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 import { postData } from "@/utils/utilts";
+import { useSession } from "@/lib/auth-client";
 
 interface ChartData {
   year: string;
@@ -472,7 +473,8 @@ const QuickStats = React.memo(() => {
 QuickStats.displayName = "QuickStats";
 
 const DashboardPage = () => {
-  const { user, loading } = useAuth();
+  const { data: session } = useSession();
+  console.log(session);
 
   // Mémoriser les statistiques
   const stats = useMemo(
@@ -517,29 +519,6 @@ const DashboardPage = () => {
     []
   );
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            Accès non autorisé
-          </h2>
-          <p className="text-gray-600">
-            Veuillez vous connecter pour accéder au dashboard
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br  w-full h-screen overflow-y-auto">
       <div className="p-6 space-y-8  mx-auto">
@@ -549,7 +528,7 @@ const DashboardPage = () => {
             Dashboard Recruteur
           </h1>
           <p className="text-lg text-gray-600">
-            Bienvenue, {user.email} • Voici un aperçu de vos activités
+            Bienvenue, {session?.user?.email} • Voici un aperçu de vos activités
           </p>
         </div>
 

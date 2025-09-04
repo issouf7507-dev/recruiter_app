@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { auth } from "@/lib/auth";
 // import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
 
 export async function PUT(
@@ -85,19 +86,22 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
+    // const authenticatedUser = await getAuthenticatedUser(req);
     const offerId = (await params).id;
 
-    if (
-      authenticatedUser &&
-      (authenticatedUser.type === "RECRUTEUR" ||
-        authenticatedUser.type === "COLLABORATEUR")
-    ) {
+    const session = await auth.api.getSession({ headers: req.headers });
+
+    if (session?.user && session.user.id) {
       // Version privée (toutes les infos)
+
+      const recruteurId = await prisma.recruteur.findUnique({
+        where: { userId: session.user.id },
+      });
+
       const offer = await prisma.jobOffer.findFirst({
         where: {
           id: Number(offerId),
-          recruteurId: authenticatedUser.recruteurId,
+          recruteurId: recruteurId?.id,
         },
         include: {
           kanbanColumns: { orderBy: { order: "asc" } },

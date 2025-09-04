@@ -52,6 +52,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserStore } from "@/store/userStore";
 import { useRecruteurId } from "@/hooks/useRecruteurId";
+import { useSession } from "@/lib/auth-client";
 
 // Type pour une offre d'emploi
 
@@ -59,18 +60,24 @@ type ViewMode = "grid" | "list";
 
 export default function MesOffres() {
   // const { user, loading } = useAuth();
-  const { user, loading } = useUserStore();
-  const recruteurId = useRecruteurId();
+  // const { user, loading } = useUserStore()
+  // ;
+
+  const { data: session, isPending } = useSession();
+  // const recruteurId = useRecruteurId();
 
   const {
     data: offertData,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["offertData123", recruteurId],
-    queryFn: () => fetchData(`/api/recruteur/offresbyuser/${recruteurId}`),
-    enabled: !!recruteurId,
+    queryKey: ["offertData123", session?.user?.id],
+    queryFn: () =>
+      fetchData(`/api/recruteur/offresbyuser/${session?.user?.id}`),
+    enabled: !!session?.user?.id,
   });
+
+  console.log("recruteurId", offertData);
 
   // console.log("offertData", offertData);
 
@@ -106,7 +113,7 @@ export default function MesOffres() {
     return matchesSearch && matchesStatus;
   });
 
-  if (isLoading || loading) {
+  if (isLoading || isPending) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -129,15 +136,15 @@ export default function MesOffres() {
               offer.etat === "active"
                 ? "bg-green-100 text-green-800"
                 : offer.etat === "draft"
-                ? "bg-yellow-100 text-yellow-800"
-                : "bg-red-100 text-red-800"
+                  ? "bg-yellow-100 text-yellow-800"
+                  : "bg-red-100 text-red-800"
             }`}
           >
             {offer.etat === "active"
               ? "Active"
               : offer.etat === "draft"
-              ? "Brouillon"
-              : "Fermée"}
+                ? "Brouillon"
+                : "Fermée"}
           </div>
         </CardTitle>
       </CardHeader>
@@ -234,15 +241,15 @@ export default function MesOffres() {
                 offer.etat === "active"
                   ? "bg-green-100 text-green-800"
                   : offer.etat === "draft"
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-red-100 text-red-800"
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-red-100 text-red-800"
               }`}
             >
               {offer.etat === "active"
                 ? "Active"
                 : offer.etat === "draft"
-                ? "Brouillon"
-                : "Fermée"}
+                  ? "Brouillon"
+                  : "Fermée"}
             </div>
           </div>
           <div className="flex items-center gap-6 mt-2 text-sm text-muted-foreground">

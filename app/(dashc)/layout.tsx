@@ -56,6 +56,8 @@ import {
 } from "@/components/ui/dialog";
 import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 import NotificationBell from "@/app/components/notifications/alerte-notification";
+import { AuthGuard } from "@/components/auth-guard";
+import { UserType } from "@/app/generated/prisma";
 
 const queryClient = new QueryClient();
 export default function CandidatsLayout({
@@ -176,34 +178,42 @@ export default function CandidatsLayout({
     );
   }
 
-  if (!candidat) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <Card className="w-96 text-center">
-          <CardHeader className="flex flex-col items-center gap-2">
-            <Lock className="w-10 h-10 text-red-500" />
-            <CardTitle>Accès restreint</CardTitle>
-            <CardDescription>
-              Vous devez être connecté pour accéder à cette section.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Connectez-vous pour continuer et profiter de toutes les
-              fonctionnalités.
-            </p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <Button asChild variant="link">
-              <Link href="/candidat/connexion">Se connecter</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-        <div></div>
-      </div>
-    );
-  }
+  // Utiliser AuthGuard pour gérer l'authentification et la redirection
+  return (
+    <AuthGuard requiredUserType={UserType.CANDIDAT}>
+      <CandidatsLayoutContent
+        children={children}
+        candidat={candidat}
+        linksCandidat={linksCandidat}
+        open={open}
+        setOpen={setOpen}
+        setTheme={setTheme}
+        showCvAlert={showCvAlert}
+        setShowCvAlert={setShowCvAlert}
+      />
+    </AuthGuard>
+  );
+}
 
+function CandidatsLayoutContent({
+  children,
+  candidat,
+  linksCandidat,
+  open,
+  setOpen,
+  setTheme,
+  showCvAlert,
+  setShowCvAlert,
+}: {
+  children: React.ReactNode;
+  candidat: any;
+  linksCandidat: any[];
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  setTheme: (theme: string) => void;
+  showCvAlert: boolean;
+  setShowCvAlert: (show: boolean) => void;
+}) {
   return (
     <QueryClientProvider client={queryClient}>
       <div

@@ -37,6 +37,7 @@ import KanbanBoard from "@/app/components/kanban/KanbanBoard";
 import ManualKanbanBoard from "@/app/components/kanban/ManualKanbanBoard";
 import CalendarView from "@/app/components/kanban/CalendarView";
 import { useRecruteurId } from "@/hooks/useRecruteurId";
+import { useSession } from "@/lib/auth-client";
 
 // Types pour une meilleure sécurité des données
 interface OfferData {
@@ -68,9 +69,11 @@ export default function OffreDetail({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { user } = useUserStore();
+  // const { user } = useUserStore();
+  const { data: session, isPending } = useSession();
   const router = useRouter();
   const { id: offerId } = use(params);
+  // console.log("offerId", offerId);
   const recruteurId = useRecruteurId();
   const [activeTab, setActiveTab] = useState("details");
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
@@ -85,7 +88,7 @@ export default function OffreDetail({
     error: offerError,
     refetch: queryoffresbyidrefetch,
   } = useQuery({
-    queryKey: ["queryoffresbyid", offerId],
+    queryKey: ["queryoffresbyidsws", offerId],
     queryFn: () => fetchDataById(`/api/recruteur/offres/${offerId}`),
     enabled: !!offerId,
   });
@@ -108,7 +111,7 @@ export default function OffreDetail({
     );
   };
 
-  console.log("user", user);
+  // console.log("user", session?.user?.id);
 
   // Récupérer toutes les offres du recruteur pour l'historique
   const {
@@ -116,12 +119,13 @@ export default function OffreDetail({
     isLoading: allOffersLoading,
     error: allOffersError,
   } = useQuery({
-    queryKey: ["allOffers", recruteurId],
-    queryFn: () => fetchData(`/api/recruteur/offresbyuser/${recruteurId}`),
-    enabled: !!recruteurId,
+    queryKey: ["allOffers", session?.user?.id],
+    queryFn: () =>
+      fetchData(`/api/recruteur/offresbyuser/${session?.user?.id}`),
+    enabled: !!session?.user?.id,
   });
 
-  console.log("allOffers", allOffers);
+  // console.log("allOffers", allOffers);
 
   // Fonction utilitaire pour accéder aux données de l'offre de manière sécurisée
   const getOfferData = (): OfferData | null => {

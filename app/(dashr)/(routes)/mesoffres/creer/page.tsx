@@ -48,7 +48,7 @@ import {
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
-
+import { useSession } from "@/lib/auth-client";
 // Schéma de validation pour le formulaire
 const offerFormSchema = z.object({
   title: z.string().nonempty("Le titre est requis"),
@@ -74,7 +74,8 @@ const offerFormSchema = z.object({
 });
 
 export default function CreerOffre() {
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  const { data: session } = useSession();
   const [isSuccess, setIsSuccess] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -108,7 +109,7 @@ export default function CreerOffre() {
     try {
       setIsSubmitting(true);
 
-      const newdata = { ...data, recruteurId: user?.id };
+      const newdata = { ...data, recruteurId: session?.user?.id };
 
       await postData(newdata, "/api/recruteur/offres").then((res) => {
         if (res.success) {

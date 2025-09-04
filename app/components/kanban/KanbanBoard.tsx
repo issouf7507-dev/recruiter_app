@@ -220,6 +220,8 @@ export default function KanbanBoard({
     gcTime: 60000, // Les données sont gardées en cache pendant 1 minute
   });
 
+  console.log("queryoffresbyidkanban", queryoffresbyid);
+
   // console.log("queryoffresbyid", queryoffresbyid);
 
   // Hook WebSocket pour les mises à jour en temps réel
@@ -2161,8 +2163,8 @@ export default function KanbanBoard({
                                   {user?.id === note.authorId
                                     ? user?.name?.[0]?.toUpperCase() || "U"
                                     : note.authorType === "RECRUTEUR"
-                                    ? "R"
-                                    : "C"}
+                                      ? "R"
+                                      : "C"}
                                 </div>
                               </div>
 
@@ -2197,8 +2199,8 @@ export default function KanbanBoard({
                                       (user?.id === note.authorId
                                         ? user?.name || "Vous"
                                         : note.authorType === "RECRUTEUR"
-                                        ? "Recruteur"
-                                        : "Candidat")}
+                                          ? "Recruteur"
+                                          : "Candidat")}
                                   </span>
                                   <span>•</span>
                                   <span>
@@ -2515,8 +2517,8 @@ export default function KanbanBoard({
                                       {user?.id === note.authorId
                                         ? user?.name?.[0]?.toUpperCase() || "U"
                                         : note.authorType === "RECRUTEUR"
-                                        ? "R"
-                                        : "C"}
+                                          ? "R"
+                                          : "C"}
                                     </div>
                                   </div>
 
@@ -2553,8 +2555,8 @@ export default function KanbanBoard({
                                           (user?.id === note.authorId
                                             ? user?.name || "Vous"
                                             : note.authorType === "RECRUTEUR"
-                                            ? "Recruteur"
-                                            : "Candidat")}
+                                              ? "Recruteur"
+                                              : "Candidat")}
                                       </span>
                                       <span>•</span>
                                       <span>
@@ -2821,14 +2823,14 @@ export default function KanbanBoard({
                             {checklist.length === 0
                               ? "Aucune tâche"
                               : checklist.filter((i) => i.isCompleted)
-                                  .length === checklist.length
-                              ? "Toutes les tâches sont terminées !"
-                              : `${Math.round(
-                                  (checklist.filter((i) => i.isCompleted)
-                                    .length /
-                                    (checklist.length || 1)) *
-                                    100
-                                )}% terminé`}
+                                    .length === checklist.length
+                                ? "Toutes les tâches sont terminées !"
+                                : `${Math.round(
+                                    (checklist.filter((i) => i.isCompleted)
+                                      .length /
+                                      (checklist.length || 1)) *
+                                      100
+                                  )}% terminé`}
                           </span>
                           {checklist.length > 0 && (
                             <span className="text-xs text-gray-500 dark:text-white">

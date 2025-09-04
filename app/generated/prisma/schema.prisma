@@ -12,10 +12,10 @@ model User {
   id            String         @id @default(cuid())
   name          String?
   email         String         @unique
-  emailVerified DateTime?
+  emailVerified Boolean        @default(false)
   password      String?
   image         String?
-  type          UserType
+  type          UserType?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   accounts      Account[]
@@ -23,6 +23,8 @@ model User {
   collaborateur Collaborateur?
   recruteur     Recruteur?     @relation("UserAsRecruteur")
   sessions      Session[]
+
+  @@map("user")
 }
 
 model Candidat {
@@ -56,16 +58,6 @@ model Candidat {
   objectifs           ObjectifCarriere[]
 }
 
-model CandidatCompetence {
-  id         String   @id @default(cuid())
-  candidatId String
-  competence String
-  createdAt  DateTime @default(now())
-  candidat   Candidat @relation(fields: [candidatId], references: [id], onDelete: Cascade)
-
-  @@unique([candidatId, competence])
-}
-
 model Recruteur {
   id                  String                @id @default(cuid())
   userId              String                @unique
@@ -92,6 +84,16 @@ model Recruteur {
   // ApplicationCustom ApplicationCustom[]
   KanbanColumnCustom  KanbanColumnCustom[]
   user                User                  @relation("UserAsRecruteur", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CandidatCompetence {
+  id         String   @id @default(cuid())
+  candidatId String
+  competence String
+  createdAt  DateTime @default(now())
+  candidat   Candidat @relation(fields: [candidatId], references: [id], onDelete: Cascade)
+
+  @@unique([candidatId, competence])
 }
 
 model CompanySocial {
@@ -152,6 +154,7 @@ model ApplicationCollaborateur {
 }
 
 /// Représente une offre d'emploi publiée par une entreprise
+
 model JobOffer {
   id                  Int                  @id @default(autoincrement())
   title               String
@@ -198,6 +201,7 @@ model JobOfferCompetence {
 }
 
 /// Représente un modèle d'offre d'emploi pouvant être réutilisé
+
 model OfferTemplate {
   id          Int        @id @default(autoincrement())
   name        String
@@ -297,33 +301,38 @@ model KanbanColumn {
   @@index([jobOfferId], map: "KanbanColumn_jobOfferId_fkey")
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?  @db.Text
+  userAgent String?  @db.Text
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
-  @@index([userId], map: "Account_userId_fkey")
+  @@unique([token])
+  @@map("session")
 }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Account {
+  id                    String    @id
+  accountId             String    @db.Text
+  providerId            String    @db.Text
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?   @db.Text
+  password              String?   @db.Text
+  createdAt             DateTime
+  updatedAt             DateTime
 
-  @@index([userId], map: "Session_userId_fkey")
+  @@map("account")
 }
 
 model VerificationToken {
@@ -531,6 +540,7 @@ enum SenderType {
 }
 
 //custum kanban
+
 model KanbanColumnCustom {
   id                   String   @id @default(cuid())
   color                String
@@ -672,4 +682,15 @@ model ApplicationCustom {
 
   kanbanColumnCustomid String
   recruteur            KanbanColumnCustom @relation(fields: [kanbanColumnCustomid], references: [id], onDelete: Cascade)
+}
+
+model Verification {
+  id         String    @id
+  identifier String    @db.Text
+  value      String    @db.Text
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
 }

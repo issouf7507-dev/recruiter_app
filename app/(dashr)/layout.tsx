@@ -1,7 +1,7 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 
 import {
@@ -48,6 +48,9 @@ import { postData } from "@/utils/utilts";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { AuthGuard } from "@/components/auth-guard";
+import { UserType } from "@/app/generated/prisma";
+import { signOut } from "@/lib/auth-client";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -148,7 +151,7 @@ export default function RecruteursLayout({
   const [open, setOpen] = useState(false);
   const { setTheme } = useTheme();
 
-  const { user, loading } = useAuth();
+  // const { user, loading } = useAuth();
 
   const pathname = usePathname();
   let isActive = "";
@@ -180,13 +183,13 @@ export default function RecruteursLayout({
     return () => clearTimeout(timer);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        Chargement...
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="h-screen flex items-center justify-center">
+  //       Chargement...
+  //     </div>
+  //   );
+  // }
 
   // console.log(user);
 
@@ -310,63 +313,42 @@ export default function RecruteursLayout({
     );
   }
 
-  if (!user) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <Card className="w-96 text-center">
-          <CardHeader className="flex flex-col items-center gap-2">
-            <Lock className="w-10 h-10 text-red-500" />
-            <CardTitle>Accès restreint</CardTitle>
-            <CardDescription>
-              Vous devez être connecté pour accéder à cette section.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Connectez-vous pour continuer et profiter de toutes les
-              fonctionnalités.
-            </p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <Button asChild variant="link">
-              <Link href="/recruteur/connexion">Se connecter</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-        <div></div>
-      </div>
-    );
-  }
+  // Utiliser AuthGuard pour gérer l'authentification et la redirection
+  return (
+    // <AuthGuard requiredUserType={UserType.RECRUTEUR}>
+    <RecruteursLayoutContent
+      children={children}
+      // user={user}
+      links={links}
+      open={open}
+      setOpen={setOpen}
+      isActive={isActive}
+      isActive2={isActive2}
+      setTheme={setTheme}
+    />
+    // </AuthGuard>
+  );
+}
 
-  // Vérifier que l'utilisateur est un recruteur ou un collaborateur
-  if (user.type !== "RECRUTEUR" && user.type !== "COLLABORATEUR") {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <Card className="w-96 text-center">
-          <CardHeader className="flex flex-col items-center gap-2">
-            <Lock className="w-10 h-10 text-red-500" />
-            <CardTitle>Accès restreint</CardTitle>
-            <CardDescription>
-              Vous devez être un recruteur ou un collaborateur pour accéder à
-              cette section.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>
-              Seuls les recruteurs et leurs collaborateurs peuvent accéder à
-              cette section.
-            </p>
-          </CardContent>
-          <CardFooter className="flex justify-center">
-            <Button asChild variant="link">
-              <Link href="/recruteur/connexion">Se connecter</Link>
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
-    );
-  }
-
+function RecruteursLayoutContent({
+  children,
+  // user,
+  links,
+  open,
+  setOpen,
+  isActive,
+  isActive2,
+  setTheme,
+}: {
+  children: React.ReactNode;
+  // user: any;
+  links: any[];
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  isActive: string;
+  isActive2: string;
+  setTheme: (theme: string) => void;
+}) {
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
@@ -376,7 +358,10 @@ export default function RecruteursLayout({
             "h-screen overflow-y-hidden " // for your use case, use `h-screen` instead of `h-[60vh]`
           )}
         >
-          <Sidebar open={open} setOpen={setOpen}>
+          <Sidebar
+            open={open}
+            setOpen={setOpen as Dispatch<SetStateAction<boolean>>}
+          >
             <SidebarBody className="flex flex-col justify-between border bg-[#2a294b] dark:bg-card rounded-lg p-4">
               {/* Header avec logo */}
               <div className="flex-shrink-0 mb-2">
@@ -401,7 +386,7 @@ export default function RecruteursLayout({
                       />
                       {open && link.subItems && (
                         <div className="ml-6 mt-1 flex flex-col gap-1 border-l border-white/20 pl-4">
-                          {link.subItems.map((subItem, subIdx) => (
+                          {link.subItems.map((subItem: any, subIdx: any) => (
                             <Link
                               key={subIdx}
                               href={subItem.href}
@@ -455,17 +440,17 @@ export default function RecruteursLayout({
                 <SidebarLink
                   className="uppercase"
                   link={{
-                    label: user?.name || "",
+                    label: "User",
                     href: "#",
                     icon: (
                       <Avatar>
                         <AvatarFallback className="text-[14px] font-bold bg-white/20 text-white">
-                          {(user?.name &&
+                          {/* {(user?.name &&
                             (
                               user?.name.split(" ")[0].slice(0, 1) +
                               user?.name.split(" ")[1].slice(0, 1)
                             ).toUpperCase()) ||
-                            ""}
+                            ""} */}
                         </AvatarFallback>
                       </Avatar>
                     ),
@@ -478,24 +463,8 @@ export default function RecruteursLayout({
                   size="sm"
                   className="w-full justify-start text-white/80 hover:text-white hover:bg-white/10"
                   onClick={async () => {
-                    try {
-                      // Appel de la route de déconnexion
-                      const response = await fetch("/api/auth/logout", {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                      });
-
-                      if (response.ok) {
-                        // Redirection vers la page de connexion après déconnexion
-                        window.location.href = "/recruteur/connexion";
-                      } else {
-                        console.error("Erreur lors de la déconnexion");
-                      }
-                    } catch (error) {
-                      console.error("Erreur lors de la déconnexion:", error);
-                    }
+                    await signOut();
+                    window.location.href = "/auth/connexion";
                   }}
                 >
                   <LogOut className="h-4 w-4 mr-2" />

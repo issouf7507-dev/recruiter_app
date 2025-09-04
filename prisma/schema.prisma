@@ -13,10 +13,10 @@ model User {
   id            String         @id @default(cuid())
   name          String?
   email         String         @unique
-  emailVerified DateTime?
+  emailVerified Boolean @default(false)
   password      String?
   image         String?
-  type          UserType
+  type          UserType?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   accounts      Account[]
@@ -59,15 +59,7 @@ model Candidat {
   objectifs           ObjectifCarriere[]
 }
 
-model CandidatCompetence {
-  id         String   @id @default(cuid())
-  candidatId String
-  competence String
-  createdAt  DateTime @default(now())
-  candidat   Candidat @relation(fields: [candidatId], references: [id], onDelete: Cascade)
 
-  @@unique([candidatId, competence])
-}
 
 model Recruteur {
   id                  String                @id @default(cuid())
@@ -95,6 +87,16 @@ model Recruteur {
   // ApplicationCustom ApplicationCustom[]
   KanbanColumnCustom  KanbanColumnCustom[]
   user                User                  @relation("UserAsRecruteur", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CandidatCompetence {
+  id         String   @id @default(cuid())
+  candidatId String
+  competence String
+  createdAt  DateTime @default(now())
+  candidat   Candidat @relation(fields: [candidatId], references: [id], onDelete: Cascade)
+
+  @@unique([candidatId, competence])
 }
 
 model CompanySocial {
@@ -157,7 +159,7 @@ model ApplicationCollaborateur {
 /// Représente une offre d'emploi publiée par une entreprise
 
 model JobOffer {
-  id                  Int                  @id @default(autoincrement())
+  id                  String                  @id @default(cuid())
   title               String
   description         String?              @db.Text
   company             String?
@@ -193,7 +195,7 @@ model JobOffer {
 
 model JobOfferCompetence {
   id         String   @id @default(cuid())
-  jobOfferId Int
+  jobOfferId String
   competence String
   createdAt  DateTime @default(now())
   jobOffer   JobOffer @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
@@ -220,7 +222,7 @@ model OfferTemplate {
 model Application {
   id             String                     @id @default(cuid())
   candidatId     String
-  jobOfferId     Int
+  jobOfferId     String
   columnId       String
   rating         Int?
   message        String?
@@ -293,7 +295,7 @@ model KanbanColumn {
   name         String
   order        Int
   isDefault    Boolean       @default(false)
-  jobOfferId   Int
+  jobOfferId   String
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   applications Application[]
@@ -302,55 +304,40 @@ model KanbanColumn {
   @@index([jobOfferId], map: "KanbanColumn_jobOfferId_fkey")
 }
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  accountId             String    @db.Text
-  providerId            String    @db.Text
-  accessToken           String?   @db.Text
-  refreshToken          String?   @db.Text
-  idToken               String?   @db.Text
-  accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
-  password              String?   @db.Text
-  createdAt             DateTime
-  updatedAt             DateTime
-
-  @@unique([provider, providerAccountId])
-  @@index([userId], map: "Account_userId_fkey")
-  @@map("account")
-}
-
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  id        String   @id
   expiresAt DateTime
   token     String
   createdAt DateTime
   updatedAt DateTime
   ipAddress String?  @db.Text
   userAgent String?  @db.Text
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId], map: "Session_userId_fkey")
   @@unique([token])
   @@map("session")
 }
+
+model Account {
+  id                    String    @id
+  accountId             String    @db.Text
+  providerId            String    @db.Text
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @db.Text
+  refreshToken          String?   @db.Text
+  idToken               String?   @db.Text
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?   @db.Text
+  password              String?   @db.Text
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
 
 model VerificationToken {
   identifier String
@@ -502,7 +489,7 @@ model Notification {
 
 model Conversation {
   id          String    @id @default(cuid())
-  jobOfferId  Int
+  jobOfferId  String
   candidatId  String
   recruteurId String
   isActive    Boolean   @default(true)
