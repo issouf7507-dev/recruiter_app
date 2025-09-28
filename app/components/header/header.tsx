@@ -11,9 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useAuth } from "@/hooks/useAuth";
+
 import { useRouter } from "next/navigation";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+import { useUser } from "@/hooks/useUser";
 import {
   Sheet,
   SheetContent,
@@ -24,13 +24,16 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import CandidatProfileForm from "@/components/CandidatProfileForm";
+import { signOut, useSession } from "@/lib/auth-client";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const { user, loading } = useAuth();
+
+  const { data: session, isPending } = useSession();
   const [isOpenCandidat, setIsOpenCandidat] = useState(false);
-  const { loading: loadingCandidat, candidat } = useAuthCandidat();
+  // const { loading: loadingCandidat, candidat } = useAuthCandidat();
+  const { user, loading } = useUser();
 
   const router = useRouter();
 
@@ -38,7 +41,7 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  console.log(candidat);
+  console.log(user);
 
   return (
     <div>
@@ -109,29 +112,31 @@ const Header = () => {
             </Link>
 
             {/* Si user connecté, afficher avatar + dropdown, sinon bouton */}
-            {!loading && user && (
+            {!isPending && session?.user && user?.type === "RECRUTEUR" && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src={user.image || undefined}
-                      alt={user.name || user.email || "Avatar"}
+                      src={session?.user?.image || undefined}
+                      alt={
+                        session?.user?.name || session?.user?.email || "Avatar"
+                      }
                     />
                     <AvatarFallback>
-                      {user.name
-                        ? user.name[0]
-                        : user.email
-                        ? user.email[0]
-                        : "U"}
+                      {session?.user?.name
+                        ? session?.user?.name[0]
+                        : session?.user?.email
+                          ? session?.user?.email[0]
+                          : "U"}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem
                     onClick={() => {
-                      if (user.type === "CANDIDAT") {
+                      if (user?.type === "CANDIDAT") {
                         router.push("/dashboard-candidats");
-                      } else if (user.type === "RECRUTEUR") {
+                      } else if (user?.type === "RECRUTEUR") {
                         router.push("/dashboard-recruteurs");
                       }
                     }}
@@ -147,7 +152,7 @@ const Header = () => {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={async () => {
-                      await fetch("/api/auth/logout", { method: "POST" });
+                      await signOut();
                       window.location.reload();
                     }}
                   >
@@ -157,22 +162,24 @@ const Header = () => {
               </DropdownMenu>
             )}
 
-            {!loadingCandidat && candidat && (
+            {!isPending && session?.user && user?.type === "CANDIDAT" && (
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src={candidat.image || undefined}
-                      alt={candidat.name || candidat.email || "Avatar"}
+                      src={session?.user?.image || undefined}
+                      alt={
+                        session?.user?.name || session?.user?.email || "Avatar"
+                      }
                     />
                     <AvatarFallback>
-                      {candidat.candidat?.nom
-                        ? candidat.candidat?.nom.charAt(0) +
-                          candidat.candidat?.prenom.charAt(0)
-                        : candidat.candidat?.prenom
-                        ? candidat.candidat?.prenom.charAt(0) +
-                          candidat.candidat?.nom.charAt(0)
-                        : "U"}
+                      {session?.user?.name
+                        ? session?.user?.name.charAt(0) +
+                          session?.user?.email.charAt(0)
+                        : session?.user?.email
+                          ? session?.user?.email.charAt(0) +
+                            session?.user?.name.charAt(0)
+                          : "U"}
                     </AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
@@ -203,7 +210,7 @@ const Header = () => {
               </DropdownMenu>
             )}
 
-            {!loadingCandidat && !candidat && !loading && !user && (
+            {!isPending && !session?.user && (
               <Button
                 onClick={() => setIsOpen(true)}
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
@@ -288,28 +295,32 @@ const Header = () => {
               <Separator className="my-2" />
 
               {/* Gestion des utilisateurs connectés en mobile */}
-              {!loading && user && (
+              {!isPending && session?.user && (
                 <div className="space-y-2">
                   <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg">
                     <Avatar className="h-8 w-8">
                       <AvatarImage
-                        src={user.image || undefined}
-                        alt={user.name || user.email || "Avatar"}
+                        src={session?.user?.image || undefined}
+                        alt={
+                          session?.user?.name ||
+                          session?.user?.email ||
+                          "Avatar"
+                        }
                       />
                       <AvatarFallback>
-                        {user.name
-                          ? user.name[0]
-                          : user.email
-                          ? user.email[0]
-                          : "U"}
+                        {session?.user?.name
+                          ? session?.user?.name[0]
+                          : session?.user?.email
+                            ? session?.user?.email[0]
+                            : "U"}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground truncate">
-                        {user.name || user.email}
+                        {session?.user?.name || session?.user?.email}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {user.type === "CANDIDAT" ? "Candidat" : "Recruteur"}
+                        {/* {session?.user?.type === "CANDIDAT" ? "Candidat" : "Recruteur"} */}
                       </p>
                     </div>
                   </div>
@@ -318,11 +329,11 @@ const Header = () => {
                     className="w-full justify-start"
                     onClick={() => {
                       setIsMenuOpen(false);
-                      if (user.type === "CANDIDAT") {
-                        router.push("/dashboard-candidats");
-                      } else if (user.type === "RECRUTEUR") {
-                        router.push("/dashboard-recruteurs");
-                      }
+                      // if (user.type === "CANDIDAT") {
+                      //   router.push("/dashboard-candidats");
+                      // } else if (user.type === "RECRUTEUR") {
+                      //   router.push("/dashboard-recruteurs");
+                      // }
                     }}
                   >
                     Mon espace
@@ -351,29 +362,33 @@ const Header = () => {
                 </div>
               )}
 
-              {!loadingCandidat && candidat && (
+              {!isPending && session?.user && (
                 <div className="space-y-2">
                   <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg">
                     <Avatar className="h-8 w-8">
                       <AvatarImage
-                        src={candidat.image || undefined}
-                        alt={candidat.name || candidat.email || "Avatar"}
+                        src={session?.user?.image || undefined}
+                        alt={
+                          session?.user?.name ||
+                          session?.user?.email ||
+                          "Avatar"
+                        }
                       />
                       <AvatarFallback>
-                        {candidat.candidat?.nom
-                          ? candidat.candidat?.nom.charAt(0) +
-                            candidat.candidat?.prenom.charAt(0)
-                          : candidat.candidat?.prenom
-                          ? candidat.candidat?.prenom.charAt(0) +
-                            candidat.candidat?.nom.charAt(0)
-                          : "U"}
+                        {session?.user?.name
+                          ? session?.user?.name.charAt(0) +
+                            session?.user?.email.charAt(0)
+                          : session?.user?.email
+                            ? session?.user?.email.charAt(0) +
+                              session?.user?.name.charAt(0)
+                            : "U"}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-foreground truncate">
-                        {candidat.candidat?.nom && candidat.candidat?.prenom
-                          ? `${candidat.candidat.prenom} ${candidat.candidat.nom}`
-                          : candidat.email}
+                        {session?.user?.name && session?.user?.email
+                          ? `${session?.user?.name} ${session?.user?.email}`
+                          : session?.user?.email}
                       </p>
                       <p className="text-xs text-muted-foreground">Candidat</p>
                     </div>
@@ -413,7 +428,7 @@ const Header = () => {
               )}
 
               {/* Bouton pour utilisateurs non connectés */}
-              {!loadingCandidat && !candidat && !loading && !user && (
+              {!isPending && !session?.user && !session?.user && (
                 <Button
                   onClick={() => {
                     setIsMenuOpen(false);
@@ -457,7 +472,7 @@ const Header = () => {
 
                 {/* Options */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <Link href="/recruteur/inscription" className="group">
+                  <Link href="/auth/recruteur/connexion" className="group">
                     <div className="flex flex-col items-center justify-center border-2 border-border hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-card to-muted hover:from-primary/5 hover:to-primary/10">
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors duration-300">
                         <UserCheck
@@ -474,7 +489,7 @@ const Header = () => {
                     </div>
                   </Link>
 
-                  <Link href="/candidat/inscription" className="group">
+                  <Link href="/auth/candidat/connexion" className="group">
                     <div className="flex flex-col items-center justify-center border-2 border-border hover:border-primary hover:shadow-lg rounded-xl p-6 md:p-8 h-40 md:h-48 cursor-pointer transition-all duration-300 bg-gradient-to-br from-card to-muted hover:from-primary/5 hover:to-primary/10">
                       <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:bg-primary/20 transition-colors duration-300">
                         <Briefcase

@@ -47,7 +47,6 @@ const OffresRecommandeesPage = () => {
     useUserStore.persist.rehydrate();
   }, []);
 
-  const [showCvAlert, setShowCvAlert] = useState(false);
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
@@ -201,7 +200,6 @@ const OffresRecommandeesPage = () => {
     if (!selectedOfferId) return;
 
     if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
-      setShowCvAlert(true);
       setShowConfirmModal(false);
       return;
     }
@@ -349,7 +347,7 @@ const OffresRecommandeesPage = () => {
                               </h2>
                             </Link>
                             <Badge variant="secondary" className="ml-2">
-                              {offre.matchingPercentage} % match
+                              {/* {offre.matchingPercentage} % match */}
                             </Badge>
                           </div>
                           <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
@@ -770,35 +768,6 @@ const OffresRecommandeesPage = () => {
           <DialogFooter>
             <Button onClick={() => setShowWelcomeModal(false)}>
               Commencer
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
-        <DialogContent className="w-lg">
-          <DialogHeader>
-            <DialogTitle>Documents importants manquants</DialogTitle>
-            <DialogDescription>
-              Pour maximiser vos chances de trouver un emploi, il est important
-              de compléter votre profil en ajoutant votre CV et votre lettre de
-              motivation.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-sm text-muted-foreground">
-              Ces documents sont essentiels pour que les recruteurs puissent
-              vous connaître et vous contacter.
-            </p>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCvAlert(false)}>
-              Plus tard
-            </Button>
-            <Button asChild onClick={() => setShowCvAlert(false)}>
-              <Link href="/dashboard-candidats/informations-personnelles">
-                Compléter mon profil
-              </Link>
             </Button>
           </DialogFooter>
         </DialogContent>

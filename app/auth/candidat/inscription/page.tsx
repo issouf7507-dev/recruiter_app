@@ -62,6 +62,8 @@ import {
   EyeOff,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { signUp } from "@/lib/auth-client";
+import { completeSignupCandidat } from "@/action/signup";
 
 // Interface pour les pays
 interface Country {
@@ -238,20 +240,43 @@ export default function Inscription() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setIsLoading(true);
-      const response = await postData(
-        {
-          ...values,
-          type: "CANDIDAT",
-        },
-        "/api/auth/register/candidat"
-      );
+      // setIsLoading(true);
+      // const response = await postData(
+      //   {
+      //     ...values,
+      //     type: "CANDIDAT",
+      //   },
+      //   "/api/auth/register/candidat"
+      // );
+      // if (response.success) {
+      //   toast.success("Inscription réussie");
+      //   router.push("/candidat/connexion");
+      // } else {
+      //   toast.error(response.message || "Erreur lors de l'inscription");
+      // }
 
-      if (response.success) {
-        toast.success("Inscription réussie");
-        router.push("/candidat/connexion");
-      } else {
-        toast.error(response.message || "Erreur lors de l'inscription");
+      const res = await signUp.email({
+        email: values.email,
+        password: values.password,
+        name: values.nom + " " + values.prenom || "",
+      });
+      if (res.data) {
+        await completeSignupCandidat({
+          email: values.email,
+          password: values.password,
+          confirmPassword: values.confirmPassword,
+          nom: values.nom,
+          prenom: values.prenom,
+          telephone: values.telephone,
+          pays: values.pays,
+          dateNaissance: values.dateNaissance,
+          nationalite: values.nationalite,
+          situationFamiliale: values.situationFamiliale,
+          permisConduire: values.permisConduire,
+          type: "CANDIDAT" as "CANDIDAT",
+        });
+
+        router.push("/auth/candidat/connexion");
       }
     } catch (error) {
       toast.error("Une erreur est survenue");

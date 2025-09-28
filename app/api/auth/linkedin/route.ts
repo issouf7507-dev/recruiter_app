@@ -1,6 +1,7 @@
+import { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+// import { getAuthenticatedUser } from "@/lib/auth-utils";
 
 const LINKEDIN_CLIENT_ID = process.env.LINKEDIN_CLIENT_ID;
 const LINKEDIN_CLIENT_SECRET = process.env.LINKEDIN_CLIENT_SECRET;
@@ -8,8 +9,8 @@ const REDIRECT_URI = `http://localhost:3000/api/auth/linkedin/callback`;
 
 export async function GET(req: NextRequest) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -19,7 +20,7 @@ export async function GET(req: NextRequest) {
     authUrl.searchParams.append("client_id", LINKEDIN_CLIENT_ID!);
     authUrl.searchParams.append("redirect_uri", REDIRECT_URI);
     authUrl.searchParams.append("scope", "w_member_social");
-    authUrl.searchParams.append("state", authenticatedUser.userId); // Pour sécuriser la requête
+    authUrl.searchParams.append("state", session.user.id); // Pour sécuriser la requête
 
     return NextResponse.json({
       success: true,
@@ -39,8 +40,8 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -132,7 +133,7 @@ export async function POST(req: NextRequest) {
 
     // Utilisons l'ID utilisateur de notre application pour le Person URN
     // En production, vous devriez récupérer le vrai Person URN via l'API LinkedIn
-    const personUrn = `urn:li:person:${authenticatedUser.userId}`;
+    const personUrn = `urn:li:person:${session.user.id}`;
     console.log("Person URN généré:", personUrn);
 
     // Ici, vous devriez sauvegarder l'access_token et le personUrn dans votre base de données
@@ -145,7 +146,7 @@ export async function POST(req: NextRequest) {
       data: {
         accessToken: access_token,
         personUrn: personUrn,
-        userId: authenticatedUser.userId,
+        userId: session.user.id,
       },
     });
   } catch (error) {

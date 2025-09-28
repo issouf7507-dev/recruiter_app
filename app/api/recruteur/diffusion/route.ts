@@ -1,36 +1,35 @@
 import { NextResponse, NextRequest } from "next/server";
 import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get("token")?.value;
-    if (!token) {
+    const session = await auth.api.getSession({ headers: req.headers });
+
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    // Récupérer le recruteur
     const recruteur = await prisma.recruteur.findFirst({
       where: {
-        userId: decoded.userId,
+        userId: session?.user.id,
       },
     });
 
-    if (!recruteur) {
-      return NextResponse.json(
-        { error: "Recruteur non trouvé" },
-        { status: 404 }
-      );
+    const collaborateur = await prisma.collaborateur.findFirst({
+      where: {
+        userId: session?.user.id,
+      },
+      include: {
+        recruteur: true,
+      },
+    });
+
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
+    // Récupérer le recruteur
 
     // Récupérer les paramètres de diffusion du recruteur
     // Pour l'instant, on retourne des paramètres par défaut
@@ -82,17 +81,9 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get("token")?.value;
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
+    const session = await auth.api.getSession({ headers: req.headers });
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -102,22 +93,28 @@ export async function POST(req: NextRequest) {
     // Récupérer le recruteur
     const recruteur = await prisma.recruteur.findFirst({
       where: {
-        userId: decoded.userId,
+        userId: session?.user.id,
       },
     });
 
-    if (!recruteur) {
-      return NextResponse.json(
-        { error: "Recruteur non trouvé" },
-        { status: 404 }
-      );
+    const collaborateur = await prisma.collaborateur.findFirst({
+      where: {
+        userId: session?.user.id,
+      },
+      include: {
+        recruteur: true,
+      },
+    });
+
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     // Récupérer l'offre
     const offre = await prisma.jobOffer.findFirst({
       where: {
         id: offreId,
-        recruteurId: recruteur.id,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 

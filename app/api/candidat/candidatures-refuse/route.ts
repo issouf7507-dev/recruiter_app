@@ -1,35 +1,17 @@
 import { NextResponse, NextRequest } from "next/server";
 import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get("candidat")?.value;
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "CANDIDAT") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    // Récupérer le candidat
-    const candidat = await prisma.candidat.findFirst({
-      where: {
-        userId: decoded.userId,
-      },
+    const session = await auth.api.getSession({ headers: req.headers });
+    const candidat = await prisma.candidat.findUnique({
+      where: { userId: session?.user.id },
     });
 
     if (!candidat) {
-      return NextResponse.json(
-        { error: "Candidat non trouvé" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     // Récupérer les candidatures acceptées (colonnes avec noms indiquant l'acceptation)

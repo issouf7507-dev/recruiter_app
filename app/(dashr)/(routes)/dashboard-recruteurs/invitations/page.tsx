@@ -126,12 +126,17 @@ export default function InvitationsPage() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors du renvoi de l'invitation");
+        const error = await response.json();
+        throw new Error(error.error || "Erreur lors du renvoi de l'invitation");
       }
 
       toast.success("Invitation renvoyée avec succès");
     } catch (error) {
-      toast.error("Erreur lors du renvoi de l'invitation");
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Erreur lors du renvoi de l'invitation"
+      );
     }
   };
 
@@ -142,13 +147,20 @@ export default function InvitationsPage() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de la suppression de l'invitation");
+        const error = await response.json();
+        throw new Error(
+          error.error || "Erreur lors de la suppression de l'invitation"
+        );
       }
 
       toast.success("Invitation supprimée avec succès");
       fetchInvitations();
     } catch (error) {
-      toast.error("Erreur lors de la suppression de l'invitation");
+      toast.error(
+        error instanceof Error
+          ? error.message + "sd"
+          : "Erreur lors de la suppression de l'invitation"
+      );
     }
   };
 

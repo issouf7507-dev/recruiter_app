@@ -27,7 +27,6 @@ import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 import ChatBox from "@/components/ChatBox";
 import { useTheme } from "next-themes";
-import { useAutoRedirect } from "@/hooks/useAutoRedirect";
 
 // Animation variants
 const fadeInUp = {
@@ -134,7 +133,6 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
 
   // Redirection automatique si l'utilisateur est connecté
-  const { user, isLoading } = useAutoRedirect();
 
   // Search states
   const [searchQuery, setSearchQuery] = useState("");
@@ -186,16 +184,16 @@ export default function Home() {
   }, []);
 
   // Afficher un loader si l'utilisateur est connecté et en cours de redirection
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Redirection en cours...</p>
-        </div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 mx-auto mb-4"></div>
+  //         <p className="text-lg text-gray-600">Redirection en cours...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (loadingLogo) {
     return (

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-
+import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
   CustomForm,
@@ -12,87 +12,75 @@ import {
   CustomButton,
 } from "@/components/custom-form";
 import Link from "next/link";
-import {
-  Mail,
-  Lock,
-  User,
-  Building2,
-  Briefcase,
-  FileText,
-  UserCheck,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { signIn } from "../../../../lib/auth-client";
 
-import { signUp } from "../../../lib/auth-client";
-import { completeSignupRecruteur } from "@/action/signup";
-// import { RecruteurType, UserType } from "@prisma/client";
+import { redirectRecruteur } from "@/action/redirectusers";
 
-const recruteurSchema = z.object({
+const loginSchema = z.object({
   email: z.string().email("Email invalide"),
-  password: z
-    .string()
-    .min(6, "Le mot de passe doit contenir au moins 6 caractères"),
-  name: z.string().optional(),
-  type: z.enum(["PARTICULIER", "ENTREPRISE", "ENTITE"]),
-  entreprise: z.string().optional(),
-  description: z.string().optional(),
-  typeUser: z.enum(["RECRUTEUR", "COLLABORATEUR", "CANDIDAT"]).optional(),
+  password: z.string().min(1, "Le mot de passe est requis"),
 });
 
-type RecruteurFormData = z.infer<typeof recruteurSchema>;
+type LoginFormData = z.infer<typeof loginSchema>;
 
-export default function InscriptionRecruteur() {
+export default function ConnexionRecruteur() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+
+  // Redirection automatique si l'utilisateur est déjà connecté
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RecruteurFormData>({
-    // resolver: zodResolver(recruteurSchema),
-    defaultValues: {
-      type: "ENTREPRISE",
-      typeUser: "RECRUTEUR",
-    },
+    reset: resetForm,
+    setError,
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: RecruteurFormData) => {
+  // console.log(user);
+
+  const [errorsForm, setErrorsForm] = useState<string | null>(null);
+
+  const onSubmit = async (data: LoginFormData) => {
     console.log(data);
 
-    const res = await signUp.email({
+    const res = await signIn.email({
       email: data.email,
       password: data.password,
-      name: data.name || "",
     });
 
-    // console.log(res);
+    if (res.error) {
+      setErrorsForm(res.error.message || "Une erreur est survenue");
+      resetForm();
+      return;
+    }
+
     if (res.data) {
-      await completeSignupRecruteur({
-        description: data.description || "",
-        email: data.email,
-        entreprise: data.entreprise || "",
-        name: data.name || "",
-        type:
-          (data.type as "ENTREPRISE" | "PARTICULIER" | "ENTITE") ||
-          "ENTREPRISE",
-        typeUser:
-          (data.typeUser as "RECRUTEUR" | "COLLABORATEUR" | "CANDIDAT") ||
-          "RECRUTEUR",
-      });
-      console.log(res.data);
+      console.log("Connexion réussie:", res.data);
+      redirectRecruteur(res.data.user.id);
+
+      resetForm();
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-3">
-      {/* Formulaire principal */}
-      <div className="flex-1 flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 lg:col-span-2">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <h1 className="text-2xl font-bold text-center mb-8">Inscription</h1>
+      {/* Contenu principal - responsive */}
+      <div className="flex-1 flex flex-col justify-center px-4 py-8 sm:px-6 lg:px-8 lg:col-span-2">
+        <div className="mx-auto w-full max-w-md">
+          <h1 className="text-2xl font-bold text-center mb-8">Connexion</h1>
 
-          <div className="bg-card dark:bg-card py-6 px-4 sm:py-8 sm:px-6 lg:px-8 sm:rounded-lg border">
+          <div className="bg-card py-6 px-4 sm:py-8 sm:px-6 rounded-lg border shadow-sm">
             <CustomForm onSubmit={handleSubmit(onSubmit)}>
+              {errorsForm && (
+                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-4">
+                  {errorsForm}
+                </div>
+              )}
+
               <FormGroup
                 label={
                   <div className="flex items-center gap-2">
@@ -100,12 +88,12 @@ export default function InscriptionRecruteur() {
                     Email
                   </div>
                 }
-                error={errors.email?.message}
+                // error={errorsForm || undefined}
               >
                 <CustomInput
                   type="email"
                   {...register("email")}
-                  className={errors.email ? "border-red-500" : ""}
+                  className={errorsForm ? "border-red-500" : ""}
                   placeholder="Email"
                 />
               </FormGroup>
@@ -117,16 +105,14 @@ export default function InscriptionRecruteur() {
                     Mot de passe
                   </div>
                 }
-                error={errors.password?.message}
+                // error={errorsForm || undefined}
               >
                 <div className="relative">
                   <CustomInput
+                    placeholder="Mot de passe"
                     type={showPassword ? "text" : "password"}
                     {...register("password")}
-                    className={`${
-                      errors.password ? "border-red-500" : ""
-                    } pr-10`}
-                    placeholder="Mot de passe"
+                    className={`${errorsForm ? "border-red-500" : ""} pr-10`}
                   />
                   <button
                     type="button"
@@ -145,83 +131,13 @@ export default function InscriptionRecruteur() {
                 </div>
               </FormGroup>
 
-              <FormGroup
-                label={
-                  <div className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    Nom
-                  </div>
-                }
-                error={errors.name?.message}
-              >
-                <CustomInput
-                  type="text"
-                  {...register("name")}
-                  className={errors.name ? "border-red-500" : ""}
-                  placeholder="Nom"
-                />
-              </FormGroup>
-
-              <FormGroup
-                label={
-                  <div className="flex items-center gap-2">
-                    <Briefcase className="h-4 w-4" />
-                    Type de recruteur
-                  </div>
-                }
-                error={errors.type?.message}
-              >
-                <select
-                  {...register("type")}
-                  className="block w-full rounded-md border-gray-300 p-[9px] border focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-1"
-                >
-                  <option value="PARTICULIER">Particulier</option>
-                  <option value="ENTREPRISE">Entreprise</option>
-                  <option value="ENTITE">Entité</option>
-                </select>
-              </FormGroup>
-
-              <FormGroup
-                label={
-                  <div className="flex items-center gap-2">
-                    <Building2 className="h-4 w-4" />
-                    Entreprise
-                  </div>
-                }
-                error={errors.entreprise?.message}
-              >
-                <CustomInput
-                  type="text"
-                  {...register("entreprise")}
-                  className={errors.entreprise ? "border-red-500" : ""}
-                  placeholder="Entreprise"
-                />
-              </FormGroup>
-
-              <FormGroup
-                label={
-                  <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4" />
-                    Description
-                  </div>
-                }
-                error={errors.description?.message}
-              >
-                <textarea
-                  {...register("description")}
-                  className="block w-full rounded-md border-gray-300 border focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-1"
-                  rows={3}
-                  placeholder="Expliquez nous un peu"
-                />
-              </FormGroup>
-
               <div className="mt-6">
                 <CustomButton
                   type="submit"
                   className="bg-primary hover:bg-primary/90 w-full"
                   isLoading={isSubmitting}
                 >
-                  S'inscrire
+                  Se connecter
                 </CustomButton>
               </div>
             </CustomForm>
@@ -232,27 +148,28 @@ export default function InscriptionRecruteur() {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-card">Déjà inscrit ?</span>
+                  <span className="px-2 bg-card text-muted-foreground">
+                    Pas encore inscrit ?
+                  </span>
                 </div>
               </div>
-
               <div className="mt-4 text-center">
-                <div className="text-sm">
-                  Vous avez déjà un compte ?{" "}
+                <span className="text-sm text-muted-foreground">
+                  Vous n'avez pas de compte?{" "}
                   <Link
-                    href="/auth/connexion"
-                    className="hover:text-primary hover:underline font-bold"
+                    href="/auth/inscription"
+                    className="text-primary hover:underline font-medium"
                   >
-                    Connectez-vous
+                    Inscrivez-vous
                   </Link>
-                </div>
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Section décorative - cachée sur mobile, visible sur desktop */}
+      {/* Sidebar colorée - cachée sur mobile, visible sur desktop */}
       <div className="hidden lg:block lg:col-span-1 bg-gradient-to-br from-primary via-primary/90 to-primary/80 dark:from-primary/30 dark:via-primary/20 dark:to-primary/10 relative overflow-hidden">
         {/* Effet de fond décoratif */}
         <div className="absolute inset-0 opacity-10">
@@ -272,16 +189,20 @@ export default function InscriptionRecruteur() {
               <div className="relative">
                 <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse"></div>
                 <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center border border-white/20">
-                  <UserCheck className="h-12 w-12 text-white" />
+                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                    <div className="w-6 h-6 bg-white rounded-full"></div>
+                  </div>
                 </div>
               </div>
               <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                Rejoignez notre réseau
+                Bienvenue
               </h2>
-              <p className="text-white/80 text-lg font-medium">de recruteurs</p>
+              <p className="text-white/80 text-lg font-medium">
+                dans votre espace recruteur
+              </p>
             </div>
 
-            {/* Liste des avantages avec style amélioré */}
+            {/* Liste des fonctionnalités */}
             <div className="space-y-5 text-sm leading-relaxed mb-8">
               <div className="flex items-start gap-4 group">
                 <div className="relative">
@@ -289,7 +210,7 @@ export default function InscriptionRecruteur() {
                   <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20"></div>
                 </div>
                 <p className="text-white/90 group-hover:text-white transition-colors duration-200">
-                  Publiez vos offres d'emploi en quelques clics
+                  Accédez à votre tableau de bord complet
                 </p>
               </div>
 
@@ -299,7 +220,7 @@ export default function InscriptionRecruteur() {
                   <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-200"></div>
                 </div>
                 <p className="text-white/90 group-hover:text-white transition-colors duration-200">
-                  Accédez à une base de candidats qualifiés
+                  Gérez vos offres et candidatures
                 </p>
               </div>
 
@@ -309,7 +230,7 @@ export default function InscriptionRecruteur() {
                   <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-400"></div>
                 </div>
                 <p className="text-white/90 group-hover:text-white transition-colors duration-200">
-                  Gérez vos candidatures avec notre outil Kanban
+                  Consultez vos statistiques détaillées
                 </p>
               </div>
 
@@ -319,31 +240,27 @@ export default function InscriptionRecruteur() {
                   <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-600"></div>
                 </div>
                 <p className="text-white/90 group-hover:text-white transition-colors duration-200">
-                  Bénéficiez d'analyses et statistiques détaillées
+                  Communiquez avec vos candidats
                 </p>
               </div>
             </div>
 
-            {/* Témoignage avec style amélioré */}
+            {/* Section de statistiques */}
             <div className="relative">
               <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20"></div>
               <div className="relative p-6">
                 <div className="flex items-center justify-center mb-3">
-                  <div className="flex -space-x-2">
-                    {[...Array(5)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="w-8 h-8 bg-white/20 rounded-full border-2 border-white/30 flex items-center justify-center"
-                      >
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
-                      </div>
-                    ))}
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                    <span className="text-white/90 text-sm font-medium">
+                      Accès sécurisé
+                    </span>
                   </div>
                 </div>
                 <p className="text-sm text-white/90 font-medium leading-relaxed">
-                  "Plus de{" "}
-                  <span className="text-white font-bold">500 entreprises</span>{" "}
-                  nous font confiance pour leurs recrutements"
+                  Votre espace est protégé par un chiffrement de niveau bancaire
                 </p>
                 <div className="mt-3 flex items-center justify-center gap-1">
                   {[...Array(5)].map((_, i) => (
@@ -360,7 +277,7 @@ export default function InscriptionRecruteur() {
             <div className="mt-6">
               <div className="inline-flex items-center gap-2 text-white/70 text-xs">
                 <div className="w-2 h-2 bg-white/50 rounded-full animate-pulse"></div>
-                Commencez dès maintenant
+                Connexion sécurisée
               </div>
             </div>
           </div>

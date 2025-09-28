@@ -44,7 +44,8 @@ import {
   Clock,
   X,
 } from "lucide-react";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+// import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+import { useSession } from "@/lib/auth-client";
 
 interface Contact {
   nom: string;
@@ -101,7 +102,8 @@ interface CandidatureAcceptee {
 }
 
 const CandidaturesRefuseesPage = () => {
-  const { candidat } = useAuthCandidat();
+  // const { candidat } = useAuthCandidat();
+  const { data: session, isPending } = useSession();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [filters, setFilters] = useState({
     date: "all",
@@ -115,10 +117,10 @@ const CandidaturesRefuseesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (candidat?.candidat?.id) {
+    if (session?.user?.id) {
       fetchCandidatures();
     }
-  }, [candidat]);
+  }, [session]);
 
   const fetchCandidatures = async () => {
     try {
@@ -169,7 +171,7 @@ const CandidaturesRefuseesPage = () => {
     }
   };
 
-  if (loading) {
+  if (isPending) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center w-full">
         <div className="text-center space-y-4">

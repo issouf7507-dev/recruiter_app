@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+
+import { auth } from "@/lib/auth";
 
 // POST - Créer une nouvelle application (offre d'emploi)
 export async function POST(req: NextRequest) {
@@ -8,8 +9,22 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { title, description, company, location, columnId } = body;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -17,7 +32,7 @@ export async function POST(req: NextRequest) {
     const column = await prisma.kanbanColumnCustom.findFirst({
       where: {
         id: columnId,
-        recruteurId: authenticatedUser.recruteurId,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 
@@ -71,11 +86,23 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const { applicationId, newColumnId } = body;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
     // Vérifier que l'application existe et appartient au recruteur
     const application = await prisma.applicationCustom.findFirst({
       where: {
@@ -95,7 +122,7 @@ export async function PUT(req: NextRequest) {
     const newColumn = await prisma.kanbanColumnCustom.findFirst({
       where: {
         id: newColumnId,
-        recruteurId: authenticatedUser.recruteurId,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 

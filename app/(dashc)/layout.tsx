@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
   LayoutDashboard,
@@ -35,16 +35,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-// import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+
 import { useUserStore } from "@/store/userStore";
 import {
   Dialog,
@@ -56,8 +47,8 @@ import {
 } from "@/components/ui/dialog";
 import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 import NotificationBell from "@/app/components/notifications/alerte-notification";
-import { AuthGuard } from "@/components/auth-guard";
-import { UserType } from "@/app/generated/prisma";
+
+import { useSession } from "@/lib/auth-client";
 
 const queryClient = new QueryClient();
 export default function CandidatsLayout({
@@ -155,22 +146,13 @@ export default function CandidatsLayout({
   ];
 
   const [open, setOpen] = useState(false);
-  const [showCvAlert, setShowCvAlert] = useState(false);
+
   const { setTheme } = useTheme();
 
-  const { candidat, loading } = useAuthCandidat();
+  // const { candidat, loading } = useAuthCandidat();
+  const { data: session, isPending } = useSession();
 
-  // Vérifier si le CV et la lettre de motivation sont manquants
-  useEffect(() => {
-    if (
-      candidat?.candidat &&
-      (!candidat.candidat.cv || !candidat.candidat.letterm)
-    ) {
-      setShowCvAlert(true);
-    }
-  }, [candidat]);
-
-  if (loading) {
+  if (isPending) {
     return (
       <div className="h-screen flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -178,20 +160,15 @@ export default function CandidatsLayout({
     );
   }
 
-  // Utiliser AuthGuard pour gérer l'authentification et la redirection
   return (
-    <AuthGuard requiredUserType={UserType.CANDIDAT}>
-      <CandidatsLayoutContent
-        children={children}
-        candidat={candidat}
-        linksCandidat={linksCandidat}
-        open={open}
-        setOpen={setOpen}
-        setTheme={setTheme}
-        showCvAlert={showCvAlert}
-        setShowCvAlert={setShowCvAlert}
-      />
-    </AuthGuard>
+    <CandidatsLayoutContent
+      children={children}
+      candidat={session?.user}
+      linksCandidat={linksCandidat}
+      open={open}
+      setOpen={setOpen}
+      setTheme={setTheme}
+    />
   );
 }
 
@@ -202,8 +179,6 @@ function CandidatsLayoutContent({
   open,
   setOpen,
   setTheme,
-  showCvAlert,
-  setShowCvAlert,
 }: {
   children: React.ReactNode;
   candidat: any;
@@ -211,8 +186,6 @@ function CandidatsLayoutContent({
   open: boolean;
   setOpen: (open: boolean) => void;
   setTheme: (theme: string) => void;
-  showCvAlert: boolean;
-  setShowCvAlert: (show: boolean) => void;
 }) {
   return (
     <QueryClientProvider client={queryClient}>
@@ -222,7 +195,10 @@ function CandidatsLayoutContent({
           "h-[100vh]" // for your use case, use `h-screen` instead of `h-[60vh]`
         )}
       >
-        <Sidebar open={open} setOpen={setOpen}>
+        <Sidebar
+          open={open}
+          setOpen={setOpen as Dispatch<SetStateAction<boolean>>}
+        >
           <SidebarBody className="flex flex-col justify-between border bg-[#2a294b] dark:bg-card rounded-lg p-4">
             {/* Header avec logo */}
             <div className="flex-shrink-0 mb-2">
@@ -243,7 +219,7 @@ function CandidatsLayoutContent({
                     <SidebarLink link={link} />
                     {open && link.subItems && (
                       <div className="ml-6 mt-1 flex flex-col gap-1 border-l border-white/20 pl-4">
-                        {link.subItems.map((subItem, subIdx) => (
+                        {link.subItems.map((subItem: any, subIdx: number) => (
                           <Link
                             key={subIdx}
                             href={subItem.href}
@@ -293,7 +269,7 @@ function CandidatsLayoutContent({
               </div>
 
               {/* Profil utilisateur */}
-              <SidebarLink
+              {/* <SidebarLink
                 link={{
                   label: `${candidat?.candidat?.nom
                     .charAt(0)
@@ -305,7 +281,7 @@ function CandidatsLayoutContent({
                   href: "#",
                   icon: <User className="w-4 h-4" />,
                 }}
-              />
+              /> */}
 
               {/* Notifications */}
               <div className="flex justify-center">
@@ -353,35 +329,6 @@ function CandidatsLayoutContent({
         >
           {children}
         </ThemeProvider>
-
-        <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
-          <DialogContent className="w-lg">
-            <DialogHeader>
-              <DialogTitle>Documents importants manquants</DialogTitle>
-              <DialogDescription>
-                Pour maximiser vos chances de trouver un emploi, il est
-                important de compléter votre profil en ajoutant votre CV et
-                votre lettre de motivation.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="py-4">
-              <p className="text-sm text-muted-foreground">
-                Ces documents sont essentiels pour que les recruteurs puissent
-                vous connaître et vous contacter.
-              </p>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setShowCvAlert(false)}>
-                Plus tard
-              </Button>
-              <Button asChild onClick={() => setShowCvAlert(false)}>
-                <Link href="/dashboard-candidats/informations-personnelles">
-                  Compléter mon profil
-                </Link>
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
       </div>
     </QueryClientProvider>
   );

@@ -1,41 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { verify } from "jsonwebtoken";
+import { auth } from "@/lib/auth";
 
 // GET - Récupérer les notifications d'un candidat
 export async function GET(request: NextRequest) {
   try {
-    const token = request.cookies.get("candidat")?.value;
+    // const token = request.cookies.get("candidat")?.value;
 
-    if (!token) {
+    // if (!token) {
+    //   return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    // }
+
+    // const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
+    //   userId: string;
+    //   type: string;
+    // };
+
+    // if (decoded.type !== "CANDIDAT") {
+    //   return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    // }
+
+    // // Récupérer le candidat
+    // const candidat = await prisma.candidat.findUnique({
+    //   where: { userId: decoded.userId },
+    // });
+
+    // if (!candidat) {
+    //   return NextResponse.json(
+    //     { error: "Candidat non trouvé" },
+    //     { status: 404 }
+    //   );
+    // }
+
+    const session = await auth.api.getSession({ headers: request.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
-
-    const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "CANDIDAT") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    // Récupérer le candidat
     const candidat = await prisma.candidat.findUnique({
-      where: { userId: decoded.userId },
+      where: { userId: session?.user.id },
     });
-
-    if (!candidat) {
-      return NextResponse.json(
-        { error: "Candidat non trouvé" },
-        { status: 404 }
-      );
-    }
-
     // Récupérer les notifications du candidat
     const notifications = await prisma.notification.findMany({
       where: {
-        candidatId: candidat.id,
+        candidatId: candidat?.id,
       },
       orderBy: {
         createdAt: "desc",
@@ -56,20 +64,28 @@ export async function GET(request: NextRequest) {
 // POST - Marquer une notification comme lue
 export async function POST(request: NextRequest) {
   try {
-    const token = request.cookies.get("candidat")?.value;
+    // const token = request.cookies.get("candidat")?.value;
 
-    if (!token) {
+    // if (!token) {
+    //   return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    // }
+
+    // const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
+    //   userId: string;
+    //   type: string;
+    // };
+
+    // if (decoded.type !== "CANDIDAT") {
+    //   return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    // }
+
+    const session = await auth.api.getSession({ headers: request.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
-
-    const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "CANDIDAT") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
+    const candidat = await prisma.candidat.findUnique({
+      where: { userId: session?.user.id },
+    });
 
     const { notificationId } = await request.json();
 
@@ -81,9 +97,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Récupérer le candidat
-    const candidat = await prisma.candidat.findUnique({
-      where: { userId: decoded.userId },
-    });
+    // const candidat = await prisma.candidat.findUnique({
+    //   where: { userId: decoded.userId },
+    // });
 
     if (!candidat) {
       return NextResponse.json(

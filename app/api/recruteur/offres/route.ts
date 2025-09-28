@@ -1,12 +1,8 @@
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+
 import { NextRequest, NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
-import {
-  withAuthRectruter,
-  withAuthRectruterNoId,
-} from "@/lib/withAuthRectruter";
-// import { CACHE_KEYS, CACHE_TTL, cacheUtils } from "@/lib/redis";
+
+import { withAuthRecruteurOrCollaborateurNoId } from "@/lib/withAuthRecruteurOrCollaborateur";
 
 const DISABLE_CACHE_LOCAL = true; // Force la désactivation
 
@@ -41,7 +37,16 @@ export async function POST(req: Request) {
       },
     });
 
-    if (!recruteur) {
+    const collaborateur = await prisma.collaborateur.findFirst({
+      where: {
+        userId: recruteurId,
+      },
+      include: {
+        recruteur: true,
+      },
+    });
+
+    if (!recruteur && !collaborateur) {
       return NextResponse.json(
         { success: false, message: "Ce recruteur n'existe pas" },
         { status: 400 }
@@ -68,7 +73,7 @@ export async function POST(req: Request) {
         duedate: new Date(duedate),
         // education,
         // templateId: template,
-        recruteurId: recruteur.id,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
         jobOfferCompetences: {
           create: skills.map((skill: any) => ({
             competence: skill,
@@ -125,10 +130,10 @@ export async function POST(req: Request) {
 
 export async function GET(req: NextRequest) {
   try {
-    return withAuthRectruterNoId(
+    return withAuthRecruteurOrCollaborateurNoId(
       req,
       // resolvedParams,
-      async (session, recruteur) => {
+      async ({ session, recruteur, isCollaborateur, collaborateur }) => {
         const offres = await prisma.jobOffer.findMany({
           where: {
             etat: "active",

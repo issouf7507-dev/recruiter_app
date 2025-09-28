@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { auth } from "@/lib/auth";
 
 // GET - Récupérer une application spécifique avec tous ses détails
 export async function GET(
@@ -10,8 +10,8 @@ export async function GET(
   try {
     const { applicationId } = await params;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -72,8 +72,21 @@ export async function PUT(
     const body = await req.json();
     const { notes, duedate } = body;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -101,9 +114,10 @@ export async function PUT(
         data: {
           applicationId,
           content: notes,
-          authorId: authenticatedUser.userId,
-          authorType: authenticatedUser.type,
-          authorName: authenticatedUser.name || "Utilisateur",
+          authorId: recruteur?.id || collaborateur?.recruteur?.id || "",
+          authorType: "RECRUTEUR",
+          authorName:
+            recruteur?.name || collaborateur?.recruteur?.name || "Utilisateur",
         },
       });
     }

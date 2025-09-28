@@ -28,6 +28,8 @@ import { toast } from "sonner";
 import { postData } from "@/utils/utilts";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Suspense } from "react";
+import { signIn } from "@/lib/auth-client";
+import { redirectRecruteur } from "@/action/redirectusers";
 
 const formSchema = z.object({
   email: z.string().email("Email invalide"),
@@ -52,18 +54,34 @@ function Connexion() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      setIsLoading(true);
-      const response = await postData(values, "/api/auth/login/candidat");
+      // setIsLoading(true);
+      // const response = await postData(values, "/api/auth/login/candidat");
+      // if (response.success) {
+      //   toast.success("Connexion réussie");
+      //   const redirectTo = searchParams.get("redirect");
+      //   if (redirectTo) {
+      //     window.location.href = redirectTo;
+      //   } else {
+      //     window.location.href = "/";
+      //   }
+      // }
 
-      if (response.success) {
-        toast.success("Connexion réussie");
-        const redirectTo = searchParams.get("redirect");
-        if (redirectTo) {
-          window.location.href = redirectTo;
-        } else {
-          window.location.href = "/";
-        }
+      // console.log(data);
+
+      const res = await signIn.email({
+        email: values.email,
+        password: values.password,
+      });
+
+      if (res.data) {
+        // La redirection sera gérée automatiquement par useAutoRedirect
+        console.log("Connexion réussie:", res.data);
+        redirectRecruteur(res.data.user.id);
+
+        // resetForm();
       }
+
+      console.log(res);
     } catch (error: any) {
       toast.error(error.message || "Une erreur est survenue");
       console.error("Erreur de connexion:", error);
@@ -166,7 +184,7 @@ function Connexion() {
             <div className="mt-4 lg:mt-6 text-center text-xs lg:text-sm">
               <span className="text-gray-600">Pas encore de compte ? </span>
               <Link
-                href="/candidat/inscription"
+                href="/auth/candidat/inscription"
                 className="text-primary hover:underline font-medium"
               >
                 S'inscrire

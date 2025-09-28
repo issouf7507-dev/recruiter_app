@@ -35,15 +35,13 @@ import {
   Loader2,
   RefreshCw,
   Eye,
-  Users,
   Star,
   MessageSquare,
   CheckSquare,
-  AlertCircle,
   User,
-  Clock,
 } from "lucide-react";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+
+import { useSession } from "@/lib/auth-client";
 
 interface Contact {
   nom: string;
@@ -100,7 +98,8 @@ interface CandidatureAcceptee {
 }
 
 const CandidaturesAccepteesPage = () => {
-  const { candidat } = useAuthCandidat();
+  // const { candidat } = useAuthCandidat();
+  const { data: session, isPending } = useSession();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [filters, setFilters] = useState({
     date: "all",
@@ -114,10 +113,10 @@ const CandidaturesAccepteesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (candidat?.candidat?.id) {
+    if (session?.user?.id) {
       fetchCandidatures();
     }
-  }, [candidat]);
+  }, [session]);
 
   const fetchCandidatures = async () => {
     try {
@@ -168,7 +167,7 @@ const CandidaturesAccepteesPage = () => {
     }
   };
 
-  if (loading) {
+  if (isPending) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center w-full">
         <div className="text-center space-y-4">
@@ -190,7 +189,7 @@ const CandidaturesAccepteesPage = () => {
         {/* Header Section */}
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/20 rounded-2xl opacity-50"></div>
-          <div className="relative p-8 rounded-2xl bg-card/80 backdrop-blur-sm border border-border shadow-xl">
+          <div className="relative p-8 rounded-2xl bg-card/80 backdrop-blur-sm border border-border shadow-none">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
@@ -229,7 +228,7 @@ const CandidaturesAccepteesPage = () => {
         </div>
 
         {/* Search and Filters */}
-        <Card className="bg-card border border-border shadow-lg">
+        <Card className="bg-card border border-border shadow-none">
           <CardContent className="p-6">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
               <div className="relative flex-1 max-w-md">
@@ -279,7 +278,7 @@ const CandidaturesAccepteesPage = () => {
 
                 <div className="flex gap-1 bg-muted p-1 rounded-lg">
                   <Button
-                    variant={viewMode === "list" ? "default" : "ghost"}
+                    variant={viewMode === "list" ? "ghost" : "ghost"}
                     size="sm"
                     onClick={() => setViewMode("list")}
                     className={
@@ -288,10 +287,10 @@ const CandidaturesAccepteesPage = () => {
                         : "hover:bg-muted/50"
                     }
                   >
-                    <List className="h-4 w-4" />
+                    <List className="h-4 w-4 " />
                   </Button>
                   <Button
-                    variant={viewMode === "grid" ? "default" : "ghost"}
+                    variant={viewMode === "grid" ? "ghost" : "ghost"}
                     size="sm"
                     onClick={() => setViewMode("grid")}
                     className={
@@ -310,7 +309,7 @@ const CandidaturesAccepteesPage = () => {
 
         {/* Results */}
         {filteredCandidatures.length === 0 ? (
-          <Card className="bg-card border border-border shadow-lg">
+          <Card className="bg-card border border-border shadow-none">
             <CardContent className="p-12 text-center">
               <div className="relative">
                 <CheckCircle2 className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
@@ -331,7 +330,7 @@ const CandidaturesAccepteesPage = () => {
             {filteredCandidatures.map((candidature, index) => (
               <Card
                 key={candidature.id}
-                className="bg-card border-l-4 border-l-green-500 border-border shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-card border-l-4 border-l-green-500 border-border shadow-none hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6">
@@ -524,7 +523,7 @@ const CandidaturesAccepteesPage = () => {
             {filteredCandidatures.map((candidature, index) => (
               <Card
                 key={candidature.id}
-                className="bg-card border-l-4 border-l-green-500 border-border shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105"
+                className="bg-card border-l-4 border-l-green-500 border-border shadow-none hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6">
@@ -707,7 +706,7 @@ const CandidaturesAccepteesPage = () => {
 
                 {/* Informations principales */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card>
+                  <Card className="shadow-none">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                         <Calendar className="h-4 w-4 text-primary" />
@@ -750,7 +749,7 @@ const CandidaturesAccepteesPage = () => {
                     </CardContent>
                   </Card>
 
-                  <Card>
+                  <Card className="shadow-none">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                         <User className="h-4 w-4 text-primary" />
@@ -799,7 +798,7 @@ const CandidaturesAccepteesPage = () => {
 
                 {/* Documents */}
                 {selectedCandidature.documents.length > 0 && (
-                  <Card>
+                  <Card className="shadow-none">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                         <FileText className="h-4 w-4 text-primary" />
@@ -855,7 +854,7 @@ const CandidaturesAccepteesPage = () => {
 
                 {/* Prochaines étapes */}
                 {selectedCandidature.prochainessEtapes.length > 0 && (
-                  <Card>
+                  <Card className="shadow-none">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                         <CheckSquare className="h-4 w-4 text-primary" />
@@ -903,7 +902,7 @@ const CandidaturesAccepteesPage = () => {
 
                 {/* Message de candidature */}
                 {selectedCandidature.message && (
-                  <Card>
+                  <Card className="shadow-none">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                         <MessageSquare className="h-4 w-4 text-primary" />
@@ -918,7 +917,7 @@ const CandidaturesAccepteesPage = () => {
 
                 {/* Notes du recruteur */}
                 {selectedCandidature.notes.length > 0 && (
-                  <Card>
+                  <Card className="shadow-none">
                     <CardContent className="p-4">
                       <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                         <MessageSquare className="h-4 w-4 text-primary" />

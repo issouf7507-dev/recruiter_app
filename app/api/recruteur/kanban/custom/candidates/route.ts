@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { auth } from "@/lib/auth";
+// import { getAuthenticatedUser } from "@/lib/auth-utils";
 
 interface DocumentData {
   fileName: string;
@@ -15,11 +16,23 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { cv, cvUrl, applicationId, documents } = body;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
     // Vérifier que l'application appartient au recruteur
     const application = await prisma.applicationCustom.findFirst({
       where: {
@@ -39,7 +52,7 @@ export async function POST(req: NextRequest) {
     const result = await prisma.$transaction(async (tx) => {
       const newCandidate = await tx.candidatCustom.create({
         data: {
-          userId: authenticatedUser.userId,
+          userId: recruteur?.userId || collaborateur?.userId || "",
           cv: cv || "",
           cvUrl: cvUrl || "",
           applicationId,

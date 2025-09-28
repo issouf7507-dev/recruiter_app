@@ -77,7 +77,12 @@ export default function MesOffres() {
     enabled: !!session?.user?.id,
   });
 
-  console.log("recruteurId", offertData);
+  console.log("offertData", offertData);
+
+  // Extraire les données selon le nouveau format
+  const offres = offertData?.data || [];
+  const userType = offertData?.userType;
+  const collaborateur = offertData?.collaborateur;
 
   // console.log("offertData", offertData);
 
@@ -101,7 +106,7 @@ export default function MesOffres() {
 
   // console.log("offertData", offertData);
 
-  const filteredOffers = offertData?.filter((offer: JobOffer) => {
+  const filteredOffers = offres?.filter((offer: JobOffer) => {
     const matchesSearch =
       offer?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       offer?.company?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -326,7 +331,25 @@ export default function MesOffres() {
   return (
     <div className="p-6 space-y-6 w-full">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Mes Offres d'Emploi</h1>
+        <div className="space-y-2">
+          <h1 className="text-2xl font-bold">
+            {userType === "collaborateur"
+              ? "Offres d'emploi"
+              : "Mes Offres d'Emploi"}
+          </h1>
+          {userType === "collaborateur" && collaborateur && (
+            <div className="flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+              <Users className="h-4 w-4" />
+              <span>
+                Connecté en tant que{" "}
+                <strong>
+                  {collaborateur.prenom} {collaborateur.nom}
+                </strong>{" "}
+                - {collaborateur.role}
+              </span>
+            </div>
+          )}
+        </div>
         <Link href="/mesoffres/creer">
           <Button className="flex items-center gap-2">
             <Plus className="h-4 w-4" />

@@ -42,6 +42,7 @@ import { postData, putData } from "@/utils/utilts";
 import { useMutation } from "@tanstack/react-query";
 import { FileUpload } from "@/components/ui/file-upload";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { useSession } from "@/lib/auth-client";
 
 const formSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -66,7 +67,8 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const InformationsPersonnellesPage = () => {
-  const { candidat, loading: authLoading, setCandidat } = useUserStore();
+  // const { candidat, loading: authLoading, setCandidat } = useUserStore();
+  const { data: session, isPending } = useSession();
   const [isEditing, setIsEditing] = useState(false);
   const [date, setDate] = useState<Date>();
   const [formLoading, setFormLoading] = useState(true);
@@ -100,35 +102,35 @@ const InformationsPersonnellesPage = () => {
     },
   });
 
-  useEffect(() => {
-    if (candidat?.candidat) {
-      const ucandidat = candidat?.candidat;
-      console.log(ucandidat);
-      reset({
-        nom: ucandidat.nom || "",
-        prenom: ucandidat.prenom || "",
-        telephone: ucandidat.telephone || "",
-        adresse: ucandidat.adresse || "",
-        ville: ucandidat.ville || "",
-        pays: ucandidat.pays || "",
-        dateNaissance: ucandidat.dateNaissance
-          ? new Date(ucandidat.dateNaissance)
-          : undefined,
-        nationalite: ucandidat.nationalite || "",
-        situationFamiliale: ucandidat.situationFamiliale || "",
-        permisConduire: ucandidat.permisConduire || "",
-        bio: ucandidat.bio || "",
-        image: ucandidat.image || "",
-        competences: ucandidat.competences || [],
-        cv: ucandidat.cv || "",
-        letterm: ucandidat.letterm || "",
-      });
-      if (ucandidat.dateNaissance) {
-        setDate(new Date(ucandidat.dateNaissance));
-      }
-      setFormLoading(false);
-    }
-  }, [candidat, reset]);
+  // useEffect(() => {
+  //   if (candidat?.candidat) {
+  //     const ucandidat = candidat?.candidat;
+  //     console.log(ucandidat);
+  //     reset({
+  //       nom: ucandidat.nom || "",
+  //       prenom: ucandidat.prenom || "",
+  //       telephone: ucandidat.telephone || "",
+  //       adresse: ucandidat.adresse || "",
+  //       ville: ucandidat.ville || "",
+  //       pays: ucandidat.pays || "",
+  //       dateNaissance: ucandidat.dateNaissance
+  //         ? new Date(ucandidat.dateNaissance)
+  //         : undefined,
+  //       nationalite: ucandidat.nationalite || "",
+  //       situationFamiliale: ucandidat.situationFamiliale || "",
+  //       permisConduire: ucandidat.permisConduire || "",
+  //       bio: ucandidat.bio || "",
+  //       image: ucandidat.image || "",
+  //       competences: ucandidat.competences || [],
+  //       cv: ucandidat.cv || "",
+  //       letterm: ucandidat.letterm || "",
+  //     });
+  //     if (ucandidat.dateNaissance) {
+  //       setDate(new Date(ucandidat.dateNaissance));
+  //     }
+  //     setFormLoading(false);
+  //   }
+  // }, [candidat, reset]);
 
   const updateMutation = useMutation({
     mutationFn: (data: FormData) => putData(data, "/api/candidat/update"),
@@ -145,21 +147,21 @@ const InformationsPersonnellesPage = () => {
   const onSubmit = async (data: FormData) => {
     updateMutation.mutate(data);
     // Mettre à jour le store avec les nouvelles données
-    if (candidat?.candidat) {
-      setCandidat({
-        ...candidat,
-        candidat: {
-          ...candidat.candidat,
-          ...data,
-          dateNaissance:
-            data.dateNaissance?.toISOString() ||
-            candidat.candidat.dateNaissance,
-        },
-      });
-    }
+    // if (candidat?.candidat) {
+    //   setCandidat({
+    //     ...candidat,
+    //     candidat: {
+    //       ...candidat.candidat,
+    //       ...data,
+    //       dateNaissance:
+    //         data.dateNaissance?.toISOString() ||
+    //         candidat.candidat.dateNaissance,
+    //     },
+    //   });
+    // }
   };
 
-  if (authLoading || formLoading) {
+  if (isPending) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
         <Loader2 className="h-8 w-8 animate-spin" />

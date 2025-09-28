@@ -30,3 +30,40 @@ export async function completeSignupRecruteur(data: {
     },
   });
 }
+
+export async function completeSignupCandidat(data: {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  nom: string;
+  prenom: string;
+  telephone: string;
+  pays: string;
+  dateNaissance: string;
+  nationalite: string;
+  situationFamiliale: string;
+  permisConduire: string;
+  type: "CANDIDAT";
+}) {
+  return await prisma.user.update({
+    where: { email: data.email },
+    data: {
+      email: data.email,
+      name: data.nom + " " + data.prenom,
+      type: data.type,
+      candidat: {
+        create: {
+          nom: data.nom,
+          prenom: data.prenom,
+          telephone: data.telephone,
+          pays: data.pays,
+          dateNaissance: new Date(data.dateNaissance),
+          nationalite: data.nationalite,
+          situationFamiliale: data.situationFamiliale,
+          permisConduire: data.permisConduire,
+          email: data.email,
+        },
+      },
+    },
+  });
+}

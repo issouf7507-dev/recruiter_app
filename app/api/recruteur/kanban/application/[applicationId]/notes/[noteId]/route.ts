@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { auth } from "@/lib/auth";
 import { kanbanEvents } from "@/lib/socket";
 // import { CACHE_KEYS, cacheUtils } from "@/lib/redis";
 
@@ -12,6 +12,24 @@ export async function PUT(
     const { applicationId, noteId } = await params;
     const body = await req.json();
     const { content } = body;
+
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
     // Vérifier que le contenu n'est pas vide
     if (
@@ -25,8 +43,7 @@ export async function PUT(
       );
     }
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser) {
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -56,7 +73,10 @@ export async function PUT(
     // console.log("application", application);
 
     // Vérifier que l'utilisateur a accès à cette application
-    if (application.jobOffer.recruteurId !== authenticatedUser.recruteurId) {
+    if (
+      application.jobOffer.recruteurId !== recruteur?.id ||
+      collaborateur?.recruteur?.id
+    ) {
       return NextResponse.json(
         { error: "Accès non autorisé à cette application" },
         { status: 403 }
@@ -78,7 +98,7 @@ export async function PUT(
     }
 
     // Vérifier que l'utilisateur est l'auteur de la note
-    if (note.authorId !== authenticatedUser.userId) {
+    if (note.authorId !== recruteur?.id || collaborateur?.recruteur?.id) {
       return NextResponse.json(
         { error: "Vous ne pouvez modifier que vos propres notes" },
         { status: 403 }

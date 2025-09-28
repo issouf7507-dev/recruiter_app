@@ -28,29 +28,29 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useSession } from "@/lib/auth-client";
 
 const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
   //   const params = useParams();
   const { id } = use(params);
-  const [offre, setOffre] = useState<JobOffer | null>(null);
-  const { candidat, loading: authLoading } = useUserStore();
+
+  const { data: session, isPending } = useSession();
 
   const [postulatedOffers, setPostulatedOffers] = useState<number[]>([]);
   const hasIncrementedViews = useRef(false);
-  const [showCvAlert, setShowCvAlert] = useState(false);
+
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  console.log(candidat?.candidat);
 
   // Récupérer les données de l'offre existante
   const { data: offertData, isLoading } = useQuery({
     queryKey: ["offerbyid", id],
-    queryFn: () => fetchData(`/api/recruteur/offres/${id}`),
+    queryFn: () => fetchData(`/api/candidat/offres/${id}`),
   });
 
   // Récupérer les offres similaires
   const { data: similarOffers, isLoading: isLoadingSimilar } = useQuery({
     queryKey: ["similaroffers", id],
-    queryFn: () => fetchData(`/api/recruteur/offres/similar/${id}`),
+    queryFn: () => fetchData(`/api/candidat/offres/similar/${id}`),
     enabled: !!offertData?.data?.[0],
   });
 
@@ -58,7 +58,7 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
   // Mutation pour incrémenter les vues
   const { mutate: incrementViews } = useMutation({
     mutationFn: async () => {
-      const response = await fetch(`/api/recruteur/offres/${id}/views`, {
+      const response = await fetch(`/api/candidat/offres/${id}/views`, {
         method: "POST",
       });
       if (!response.ok) {
@@ -93,40 +93,10 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
   };
 
   useEffect(() => {
-    if (candidat?.candidat?.id) {
+    if (session?.user?.id) {
       loadPostulatedOffers();
     }
-  }, [candidat]);
-
-  const handlePostuler = async () => {
-    try {
-      if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
-        setShowCvAlert(true);
-        setShowConfirmModal(false);
-        return;
-      }
-      const response = await fetch("/api/candidat/postuler", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          jobOfferId: offertData?.data?.[0].id,
-          message: "Je suis intéressé par cette offre",
-        }),
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        toast.success("Candidature envoyée avec succès");
-      } else {
-        toast.error(result.error || "Erreur lors de la candidature");
-      }
-    } catch (error) {
-      console.error("Erreur lors de la candidature:", error);
-      toast.error("Erreur lors de la candidature");
-    }
-  };
+  }, [session]);
 
   const postulerMutation = useMutation({
     mutationFn: (data: { jobOfferId: number; message: string }) =>
@@ -146,11 +116,11 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const handleConfirmPostuler = () => {
     if (!offertData?.data?.[0].id) return;
 
-    if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
-      setShowCvAlert(true);
-      setShowConfirmModal(false);
-      return;
-    }
+    // if (!session?.user?.candidat?.cv || !session?.user?.candidat?.letterm) {
+    //   setShowCvAlert(true);
+    //   setShowConfirmModal(false);
+    //   return;
+    // }
 
     postulerMutation.mutate({
       jobOfferId: offertData?.data?.[0].id,
@@ -204,7 +174,7 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <Card>
+          <Card className="shadow-none">
             <CardContent className="p-6 space-y-6">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold">
@@ -263,44 +233,6 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
                     }}
                   ></div>
                 </div>
-
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">
-                    Compétences requises
-                  </h2>
-                  <div className="flex flex-wrap gap-2">
-                    {offertData?.data?.[0].jobOfferCompetences?.map(
-                      (skill: any, index: number) => (
-                        <Badge key={index} variant="secondary">
-                          {skill.competence}
-                        </Badge>
-                      )
-                    )}
-                  </div>
-                </div>
-
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">
-                    Responsabilités
-                  </h2>
-                  <p className="text-muted-foreground">
-                    {offertData?.data?.[0].responsibilities}
-                  </p>
-                </div>
-
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">Exigences</h2>
-                  <p className="text-muted-foreground">
-                    {offertData?.data?.[0].requirements}
-                  </p>
-                </div>
-
-                <div>
-                  <h2 className="text-xl font-semibold mb-2">Avantages</h2>
-                  <p className="text-muted-foreground">
-                    {offertData?.data?.[0].benefits}
-                  </p>
-                </div>
               </div>
             </CardContent>
           </Card>
@@ -319,7 +251,7 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
                   key={offer.id}
                   href={`/dashboard-candidats/toutes-les-offres/${offer.id}`}
                 >
-                  <Card className="hover:bg-accent transition-colors">
+                  <Card className="shadow-none">
                     <CardContent className="p-4">
                       <h3 className="font-semibold mb-2">{offer.title}</h3>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
@@ -349,35 +281,6 @@ const DetailOffrePage = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
       </div>
-
-      <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
-        <DialogContent className="w-lg">
-          <DialogHeader>
-            <DialogTitle>Documents importants manquants</DialogTitle>
-            <DialogDescription>
-              Pour maximiser vos chances de trouver un emploi, il est important
-              de compléter votre profil en ajoutant votre CV et votre lettre de
-              motivation.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-sm text-muted-foreground">
-              Ces documents sont essentiels pour que les recruteurs puissent
-              vous connaître et vous contacter.
-            </p>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCvAlert(false)}>
-              Plus tard
-            </Button>
-            <Button asChild onClick={() => setShowCvAlert(false)}>
-              <Link href="/dashboard-candidats/informations-personnelles">
-                Compléter mon profil
-              </Link>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       {/* Modal de confirmation de postulation */}
       <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>

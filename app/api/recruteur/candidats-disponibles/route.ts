@@ -1,22 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { verify } from "jsonwebtoken";
+
+import { auth } from "@/lib/auth";
 
 // GET - Récupérer les candidats disponibles pour une offre d'emploi
 export async function GET(request: NextRequest) {
   try {
-    const token = request.cookies.get("token")?.value;
-
-    if (!token) {
+    const session = await auth.api.getSession({ headers: request.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
-
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -30,23 +33,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Récupérer le recruteur
-    const recruteur = await prisma.recruteur.findUnique({
-      where: { userId: decoded.userId },
-    });
-
-    if (!recruteur) {
-      return NextResponse.json(
-        { error: "Recruteur non trouvé" },
-        { status: 404 }
-      );
-    }
-
     // Vérifier que l'offre appartient au recruteur
     const jobOffer = await prisma.jobOffer.findFirst({
       where: {
         id: parseInt(jobOfferId),
-        recruteurId: recruteur.id,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 

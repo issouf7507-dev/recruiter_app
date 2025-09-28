@@ -93,8 +93,6 @@ export default function OffreDetail({
     enabled: !!offerId,
   });
 
-  console.log("queryoffresbyid", queryoffresbyid);
-
   // Mettre à jour les applications locales quand les données changent
   useEffect(() => {
     if (queryoffresbyid?.data?.[0]?.applications) {
@@ -124,6 +122,8 @@ export default function OffreDetail({
       fetchData(`/api/recruteur/offresbyuser/${session?.user?.id}`),
     enabled: !!session?.user?.id,
   });
+
+  // console.log("allOffers", allOffers);
 
   // console.log("allOffers", allOffers);
 
@@ -162,7 +162,7 @@ export default function OffreDetail({
   if (offerError || allOffersError) {
     return (
       <div className="flex h-screen w-full overflow-x-hidden">
-        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
         <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -188,7 +188,7 @@ export default function OffreDetail({
   if (isLoading || allOffersLoading) {
     return (
       <div className="flex h-screen w-full overflow-x-hidden">
-        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
         <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
           <div className="flex items-center justify-center min-h-[60vh] w-full">
             <Loader2 className="h-8 w-8 animate-spin" />
@@ -202,7 +202,7 @@ export default function OffreDetail({
   if (!offerDataFromQuery) {
     return (
       <div className="flex h-screen w-full overflow-x-hidden">
-        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
         <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
           <Alert>
             <AlertCircle className="h-4 w-4" />
@@ -221,7 +221,7 @@ export default function OffreDetail({
   return (
     <div className="flex h-screen w-full overflow-x-hidden">
       {/* Sidebar */}
-      <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+      <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
 
       {/* Main content */}
       <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/prisma";
-import { verify } from "jsonwebtoken";
+
+import { auth } from "@/lib/auth";
 
 // GET - Récupérer les candidats qui ont postulé à une offre
 export async function GET(
@@ -11,28 +12,22 @@ export async function GET(
   try {
     const { id } = await params;
 
-    const token = req.cookies.get("token")?.value;
-    if (!token) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    // Récupérer le recruteur
-    const recruteur = await prisma.recruteur.findFirst({
-      where: {
-        userId: decoded.userId,
-      },
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
     });
 
-    if (!recruteur) {
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json(
         { error: "Recruteur non trouvé" },
         { status: 404 }
@@ -43,7 +38,7 @@ export async function GET(
     const jobOffer = await prisma.jobOffer.findFirst({
       where: {
         id: parseInt(id),
-        recruteurId: recruteur.id,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 

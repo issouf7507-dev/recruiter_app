@@ -1,21 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   try {
-    const token = request.cookies.get("token")?.value;
-
-    if (!token) {
+    const session = await auth.api.getSession({ headers: request.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -23,7 +27,7 @@ export async function GET(request: NextRequest) {
     const config = {
       linkedinAccessToken: !!process.env.LINKEDIN_ACCESS_TOKEN,
       linkedinPersonUrn:
-        process.env.LINKEDIN_PERSON_URN || `urn:li:person:${decoded.userId}`,
+        process.env.LINKEDIN_PERSON_URN || `urn:li:person:${session.user.id}`,
       jwtSecret: !!process.env.JWT_SECRET,
       databaseUrl: !!process.env.DATABASE_URL,
     };
@@ -31,7 +35,7 @@ export async function GET(request: NextRequest) {
     // Vérifier les offres du recruteur
     const offres = await prisma.jobOffer.findMany({
       where: {
-        recruteurId: decoded.userId,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
       select: {
         id: true,
@@ -50,8 +54,8 @@ export async function GET(request: NextRequest) {
       success: true,
       config,
       user: {
-        id: decoded.userId,
-        type: decoded.type,
+        id: session.user.id,
+        type: recruteur?.type || collaborateur?.recruteur?.type || "",
       },
       offres,
       message: "Configuration vérifiée avec succès",

@@ -1,15 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
-
-    if (!authenticatedUser) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
     const { applicationId, collaborateurIds } = await req.json();
 
     if (!applicationId || !Array.isArray(collaborateurIds)) {
@@ -24,7 +35,7 @@ export async function POST(req: NextRequest) {
       where: {
         id: applicationId,
         jobOffer: {
-          recruteurId: authenticatedUser.recruteurId,
+          recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
         },
       },
     });
@@ -40,7 +51,7 @@ export async function POST(req: NextRequest) {
     const collaborateurs = await prisma.collaborateur.findMany({
       where: {
         id: { in: collaborateurIds },
-        recruteurId: authenticatedUser.recruteurId,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 
@@ -63,7 +74,7 @@ export async function POST(req: NextRequest) {
       const assignments = collaborateurIds.map((collaborateurId: string) => ({
         applicationId,
         collaborateurId,
-        assignedBy: authenticatedUser.userId,
+        assignedBy: recruteur?.id || collaborateur?.recruteur?.id || "",
       }));
 
       //   console.log("assignments", assignments);
@@ -88,9 +99,20 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
-
-    if (!authenticatedUser) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -110,7 +132,7 @@ export async function GET(req: NextRequest) {
         applicationId,
         application: {
           jobOffer: {
-            recruteurId: authenticatedUser.recruteurId,
+            recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
           },
         },
       },
@@ -147,9 +169,20 @@ export async function GET(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
-
-    if (!authenticatedUser) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -169,7 +202,7 @@ export async function DELETE(req: NextRequest) {
         id: assignmentId,
         application: {
           jobOffer: {
-            recruteurId: authenticatedUser.recruteurId,
+            recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
           },
         },
       },

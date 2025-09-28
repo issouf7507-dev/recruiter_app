@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { z } from "zod";
 import {
   CustomForm,
@@ -12,72 +12,87 @@ import {
   CustomButton,
 } from "@/components/custom-form";
 import Link from "next/link";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  User,
+  Building2,
+  Briefcase,
+  FileText,
+  UserCheck,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 
-const loginSchema = z.object({
+import { signUp } from "../../../../lib/auth-client";
+import { completeSignupRecruteur } from "@/action/signup";
+// import { RecruteurType, UserType } from "@prisma/client";
+
+const recruteurSchema = z.object({
   email: z.string().email("Email invalide"),
-  password: z.string().min(1, "Le mot de passe est requis"),
+  password: z
+    .string()
+    .min(6, "Le mot de passe doit contenir au moins 6 caractères"),
+  name: z.string().optional(),
+  type: z.enum(["PARTICULIER", "ENTREPRISE", "ENTITE"]),
+  entreprise: z.string().optional(),
+  description: z.string().optional(),
+  typeUser: z.enum(["RECRUTEUR", "COLLABORATEUR", "CANDIDAT"]).optional(),
 });
 
-type LoginFormData = z.infer<typeof loginSchema>;
+type RecruteurFormData = z.infer<typeof recruteurSchema>;
 
-export default function ConnexionRecruteur() {
+export default function InscriptionRecruteur() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setError,
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+  } = useForm<RecruteurFormData>({
+    // resolver: zodResolver(recruteurSchema),
+    defaultValues: {
+      type: "ENTREPRISE",
+      typeUser: "RECRUTEUR",
+    },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    try {
-      const response = await fetch("/api/auth/login/recruteur", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+  const onSubmit = async (data: RecruteurFormData) => {
+    // console.log(data);
+
+    const res = await signUp.email({
+      email: data.email,
+      password: data.password,
+      name: data.name || "",
+    });
+
+    // console.log(res);
+    if (res.data) {
+      await completeSignupRecruteur({
+        description: data.description || "",
+        email: data.email,
+        entreprise: data.entreprise || "",
+        name: data.name || "",
+        type:
+          (data.type as "ENTREPRISE" | "PARTICULIER" | "ENTITE") ||
+          "ENTREPRISE",
+        typeUser:
+          (data.typeUser as "RECRUTEUR" | "COLLABORATEUR" | "CANDIDAT") ||
+          "RECRUTEUR",
       });
-
-      const responseData = await response.json();
-
-      if (!response.ok) {
-        setError("root", {
-          type: "manual",
-          message: responseData.error || "Une erreur est survenue",
-        });
-        return;
-      }
-
-      // Redirection vers la page d'accueil avec reload pour rafraîchir l'état connecté
-      window.location.href = "/";
-    } catch (error) {
-      setError("root", {
-        type: "manual",
-        message: "Une erreur est survenue lors de la connexion",
-      });
+      // console.log(res.data);
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col lg:grid lg:grid-cols-3">
-      {/* Contenu principal - responsive */}
-      <div className="flex-1 flex flex-col justify-center px-4 py-8 sm:px-6 lg:px-8 lg:col-span-2">
-        <div className="mx-auto w-full max-w-md">
-          <h1 className="text-2xl font-bold text-center mb-8">Connexion</h1>
+      {/* Formulaire principal */}
+      <div className="flex-1 flex flex-col justify-center py-8 px-4 sm:px-6 lg:px-8 lg:col-span-2">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <h1 className="text-2xl font-bold text-center mb-8">Inscription</h1>
 
-          <div className="bg-card py-6 px-4 sm:py-8 sm:px-6 rounded-lg border shadow-sm">
+          <div className="bg-card dark:bg-card py-6 px-4 sm:py-8 sm:px-6 lg:px-8 sm:rounded-lg border">
             <CustomForm onSubmit={handleSubmit(onSubmit)}>
-              {errors.root && (
-                <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded mb-4">
-                  {errors.root.message}
-                </div>
-              )}
-
               <FormGroup
                 label={
                   <div className="flex items-center gap-2">
@@ -106,12 +121,12 @@ export default function ConnexionRecruteur() {
               >
                 <div className="relative">
                   <CustomInput
-                    placeholder="Mot de passe"
                     type={showPassword ? "text" : "password"}
                     {...register("password")}
                     className={`${
                       errors.password ? "border-red-500" : ""
                     } pr-10`}
+                    placeholder="Mot de passe"
                   />
                   <button
                     type="button"
@@ -130,13 +145,83 @@ export default function ConnexionRecruteur() {
                 </div>
               </FormGroup>
 
+              <FormGroup
+                label={
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Nom
+                  </div>
+                }
+                error={errors.name?.message}
+              >
+                <CustomInput
+                  type="text"
+                  {...register("name")}
+                  className={errors.name ? "border-red-500" : ""}
+                  placeholder="Nom"
+                />
+              </FormGroup>
+
+              <FormGroup
+                label={
+                  <div className="flex items-center gap-2">
+                    <Briefcase className="h-4 w-4" />
+                    Type de recruteur
+                  </div>
+                }
+                error={errors.type?.message}
+              >
+                <select
+                  {...register("type")}
+                  className="block w-full rounded-md border-gray-300 p-[9px] border focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm px-1"
+                >
+                  <option value="PARTICULIER">Particulier</option>
+                  <option value="ENTREPRISE">Entreprise</option>
+                  <option value="ENTITE">Entité</option>
+                </select>
+              </FormGroup>
+
+              <FormGroup
+                label={
+                  <div className="flex items-center gap-2">
+                    <Building2 className="h-4 w-4" />
+                    Entreprise
+                  </div>
+                }
+                error={errors.entreprise?.message}
+              >
+                <CustomInput
+                  type="text"
+                  {...register("entreprise")}
+                  className={errors.entreprise ? "border-red-500" : ""}
+                  placeholder="Entreprise"
+                />
+              </FormGroup>
+
+              <FormGroup
+                label={
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    Description
+                  </div>
+                }
+                error={errors.description?.message}
+              >
+                <textarea
+                  {...register("description")}
+                  className="block w-full rounded-md border-gray-300 border focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-1"
+                  rows={3}
+                  placeholder="Expliquez nous un peu"
+                />
+              </FormGroup>
+
               <div className="mt-6">
                 <CustomButton
                   type="submit"
                   className="bg-primary hover:bg-primary/90 w-full"
                   isLoading={isSubmitting}
                 >
-                  Se connecter
+                  S'inscrire
                 </CustomButton>
               </div>
             </CustomForm>
@@ -147,28 +232,27 @@ export default function ConnexionRecruteur() {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-card text-muted-foreground">
-                    Pas encore inscrit ?
-                  </span>
+                  <span className="px-2 bg-card">Déjà inscrit ?</span>
                 </div>
               </div>
+
               <div className="mt-4 text-center">
-                <span className="text-sm text-muted-foreground">
-                  Vous n'avez pas de compte?{" "}
+                <div className="text-sm">
+                  Vous avez déjà un compte ?{" "}
                   <Link
-                    href="/recruteur/inscription"
-                    className="text-primary hover:underline font-medium"
+                    href="/auth/recruteur/connexion"
+                    className="hover:text-primary hover:underline font-bold"
                   >
-                    Inscrivez-vous
+                    Connectez-vous
                   </Link>
-                </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Sidebar colorée - cachée sur mobile, visible sur desktop */}
+      {/* Section décorative - cachée sur mobile, visible sur desktop */}
       <div className="hidden lg:block lg:col-span-1 bg-gradient-to-br from-primary via-primary/90 to-primary/80 dark:from-primary/30 dark:via-primary/20 dark:to-primary/10 relative overflow-hidden">
         {/* Effet de fond décoratif */}
         <div className="absolute inset-0 opacity-10">
@@ -188,20 +272,16 @@ export default function ConnexionRecruteur() {
               <div className="relative">
                 <div className="absolute inset-0 bg-white/20 rounded-full blur-xl animate-pulse"></div>
                 <div className="relative bg-white/10 backdrop-blur-sm rounded-full p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center border border-white/20">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                    <div className="w-6 h-6 bg-white rounded-full"></div>
-                  </div>
+                  <UserCheck className="h-12 w-12 text-white" />
                 </div>
               </div>
               <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">
-                Bienvenue
+                Rejoignez notre réseau
               </h2>
-              <p className="text-white/80 text-lg font-medium">
-                dans votre espace recruteur
-              </p>
+              <p className="text-white/80 text-lg font-medium">de recruteurs</p>
             </div>
 
-            {/* Liste des fonctionnalités */}
+            {/* Liste des avantages avec style amélioré */}
             <div className="space-y-5 text-sm leading-relaxed mb-8">
               <div className="flex items-start gap-4 group">
                 <div className="relative">
@@ -209,7 +289,7 @@ export default function ConnexionRecruteur() {
                   <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20"></div>
                 </div>
                 <p className="text-white/90 group-hover:text-white transition-colors duration-200">
-                  Accédez à votre tableau de bord complet
+                  Publiez vos offres d'emploi en quelques clics
                 </p>
               </div>
 
@@ -219,7 +299,7 @@ export default function ConnexionRecruteur() {
                   <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-200"></div>
                 </div>
                 <p className="text-white/90 group-hover:text-white transition-colors duration-200">
-                  Gérez vos offres et candidatures
+                  Accédez à une base de candidats qualifiés
                 </p>
               </div>
 
@@ -229,7 +309,7 @@ export default function ConnexionRecruteur() {
                   <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-400"></div>
                 </div>
                 <p className="text-white/90 group-hover:text-white transition-colors duration-200">
-                  Consultez vos statistiques détaillées
+                  Gérez vos candidatures avec notre outil Kanban
                 </p>
               </div>
 
@@ -239,27 +319,31 @@ export default function ConnexionRecruteur() {
                   <div className="absolute inset-0 w-3 h-3 bg-white rounded-full animate-ping opacity-20 animation-delay-600"></div>
                 </div>
                 <p className="text-white/90 group-hover:text-white transition-colors duration-200">
-                  Communiquez avec vos candidats
+                  Bénéficiez d'analyses et statistiques détaillées
                 </p>
               </div>
             </div>
 
-            {/* Section de statistiques */}
+            {/* Témoignage avec style amélioré */}
             <div className="relative">
               <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20"></div>
               <div className="relative p-6">
                 <div className="flex items-center justify-center mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
-                    </div>
-                    <span className="text-white/90 text-sm font-medium">
-                      Accès sécurisé
-                    </span>
+                  <div className="flex -space-x-2">
+                    {[...Array(5)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-8 h-8 bg-white/20 rounded-full border-2 border-white/30 flex items-center justify-center"
+                      >
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <p className="text-sm text-white/90 font-medium leading-relaxed">
-                  Votre espace est protégé par un chiffrement de niveau bancaire
+                  "Plus de{" "}
+                  <span className="text-white font-bold">500 entreprises</span>{" "}
+                  nous font confiance pour leurs recrutements"
                 </p>
                 <div className="mt-3 flex items-center justify-center gap-1">
                   {[...Array(5)].map((_, i) => (
@@ -276,7 +360,7 @@ export default function ConnexionRecruteur() {
             <div className="mt-6">
               <div className="inline-flex items-center gap-2 text-white/70 text-xs">
                 <div className="w-2 h-2 bg-white/50 rounded-full animate-pulse"></div>
-                Connexion sécurisée
+                Commencez dès maintenant
               </div>
             </div>
           </div>

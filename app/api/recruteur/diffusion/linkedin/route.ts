@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 interface LinkedInShareRequest {
   offreId: number;
@@ -28,18 +29,21 @@ interface JobOffer {
 
 export async function POST(request: NextRequest) {
   try {
-    const token = request.cookies.get("token")?.value;
-
-    if (!token) {
+    const session = await auth.api.getSession({ headers: request.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -72,7 +76,7 @@ export async function POST(request: NextRequest) {
     if (!offre) {
       console.error("Offre non trouvée:", {
         offreId,
-        recruteurId: decoded.userId,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       });
       return NextResponse.json(
         {
@@ -107,7 +111,7 @@ export async function POST(request: NextRequest) {
     // Construire le Person URN LinkedIn
     // Note: En production, vous devriez récupérer le LinkedIn Person URN depuis la base de données
     const linkedinPersonUrn =
-      process.env.LINKEDIN_PERSON_URN || `urn:li:person:${decoded.userId}`;
+      process.env.LINKEDIN_PERSON_URN || `urn:li:person:${session.user.id}`;
 
     console.log("Configuration LinkedIn:", {
       hasToken: !!linkedinAccessToken,

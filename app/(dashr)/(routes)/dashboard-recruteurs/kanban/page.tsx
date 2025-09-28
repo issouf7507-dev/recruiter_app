@@ -63,6 +63,7 @@ import { useUserStore } from "@/store/userStore";
 import SimpleCandidatesKanban from "./components/SimpleCandidatesKanban";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { RichTextEditorWrapper } from "@/components/ui/rich-text-editor-wrapper";
+import { useSession } from "@/lib/auth-client";
 
 // Types pour le Kanban des offres d'emploi
 type OfferColumn = {
@@ -127,7 +128,8 @@ const offerFormSchema = z.object({
 type OfferFormValues = z.infer<typeof offerFormSchema>;
 
 export default function OffresPage() {
-  const { user } = useUserStore();
+  // const { user } = useUserStore();
+  const { data: session } = useSession();
 
   const [columns, setColumns] = useState<OfferColumn[]>([]);
   const [jobOffers, setJobOffers] = useState<JobOfferCard[]>([]);
@@ -185,7 +187,7 @@ export default function OffresPage() {
   const handleNoteSubmit = async () => {
     if (!selectedCard || !cardNote.trim()) return;
 
-    console.log(editingNote ? "Modification note:" : "Envoi note:", cardNote);
+    // console.log(editingNote ? "Modification note:" : "Envoi note:", cardNote);
     setIsUpdatingMessage(true);
 
     try {
@@ -250,7 +252,7 @@ export default function OffresPage() {
   const handleAddChecklistItem = async () => {
     if (!selectedCard || !newChecklistItem.trim()) return;
 
-    console.log("Ajout item checklist:", newChecklistItem);
+    // console.log("Ajout item checklist:", newChecklistItem);
     setIsAddingChecklistItem(true);
 
     try {
@@ -325,7 +327,7 @@ export default function OffresPage() {
     if (!selectedCard || !editingChecklistItem || !editingChecklistTitle.trim())
       return;
 
-    console.log("Update checklist item:", editingChecklistTitle);
+    // console.log("Update checklist item:", editingChecklistTitle);
     setIsUpdatingChecklistItem(true);
 
     try {
@@ -367,7 +369,7 @@ export default function OffresPage() {
   const handleDeleteChecklistItem = async (itemId: string) => {
     if (!selectedCard) return;
 
-    console.log("Delete checklist item:", itemId);
+    // console.log("Delete checklist item:", itemId);
 
     try {
       const response = await fetch(
@@ -397,7 +399,7 @@ export default function OffresPage() {
 
     if (!confirmReset) return;
 
-    console.log("Reset checklist");
+    // console.log("Reset checklist");
     setIsUpdatingChecklistItem(true);
 
     try {
@@ -427,7 +429,7 @@ export default function OffresPage() {
   };
 
   const handleOpenAssignModal = async (card: any) => {
-    console.log("Open assign modal for card:", card.id);
+    // console.log("Open assign modal for card:", card.id);
     setSelectedCard(card);
     setIsLoadingCollaborators(true);
 
@@ -455,7 +457,7 @@ export default function OffresPage() {
   };
 
   const handleOpenDueDateModal = (card: any) => {
-    console.log("Open due date modal for card:", card.id);
+    // console.log("Open due date modal for card:", card.id);
     setSelectedCard(card);
     setSelectedDueDate(card.duedate || "");
     setIsDueDateModalOpen(true);
@@ -468,7 +470,7 @@ export default function OffresPage() {
 
     if (!confirmRefuse) return;
 
-    console.log("Refuse candidate:", card.id);
+    // console.log("Refuse candidate:", card.id);
 
     try {
       const response = await fetch(
@@ -497,7 +499,7 @@ export default function OffresPage() {
   };
 
   const handleDeleteCollaborator = async (collaboratorId: string) => {
-    console.log("Delete collaborator:", collaboratorId);
+    // console.log("Delete collaborator:", collaboratorId);
     setIsDeletingCollaborator(true);
 
     try {
@@ -590,7 +592,7 @@ export default function OffresPage() {
   const handleDeleteAttachment = async (fileId: string) => {
     if (!selectedCard) return;
 
-    console.log("Delete attachment:", fileId);
+    // console.log("Delete attachment:", fileId);
 
     try {
       const response = await fetch(
@@ -628,10 +630,10 @@ export default function OffresPage() {
     setIsAddingCandidate(true);
 
     try {
-      console.log("Ajout du candidat:", {
-        documents: uploadedDocuments,
-        applicationId: selectedCard.id,
-      });
+      // console.log("Ajout du candidat:", {
+      //   documents: uploadedDocuments,
+      //   applicationId: selectedCard.id,
+      // });
 
       const response = await fetch("/api/recruteur/kanban/custom/candidates", {
         method: "POST",
@@ -646,7 +648,7 @@ export default function OffresPage() {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Candidat ajouté avec succès:", result);
+        // console.log("Candidat ajouté avec succès:", result);
 
         // Réinitialiser le formulaire
         setUploadedDocuments([]);
@@ -851,13 +853,13 @@ export default function OffresPage() {
               },
           }));
 
-          console.log("Application data loaded successfully:", {
-            notes: appData.notes?.length || 0,
-            checklist: appData.checklist?.length || 0,
-            files: appData.files?.length || 0,
-            collaborateurs: appData.collaborateurs?.length || 0,
-            candidats: appData.candidatCustom?.length || 0,
-          });
+          // console.log("Application data loaded successfully:", {
+          //   notes: appData.notes?.length || 0,
+          //   checklist: appData.checklist?.length || 0,
+          //   files: appData.files?.length || 0,
+          //   collaborateurs: appData.collaborateurs?.length || 0,
+          //   candidats: appData.candidatCustom?.length || 0,
+          // });
         }
       } else {
         console.warn("Failed to load application data:", response.status);
@@ -894,7 +896,7 @@ export default function OffresPage() {
   // Synchroniser selectedOffer avec selectedCard pour la modal
   React.useEffect(() => {
     if (selectedOffer && isOfferModalOpen) {
-      console.log("Opening modal for offer:", selectedOffer);
+      // console.log("Opening modal for offer:", selectedOffer);
 
       // Transformer selectedOffer en format attendu par la modal
       const cardData = {
@@ -972,6 +974,11 @@ export default function OffresPage() {
   const [selectedColumnColor, setSelectedColumnColor] =
     useState("bg-blue-300/30");
 
+  // État pour la colonne sélectionnée lors de la création d'offre
+  const [selectedColumnForOffer, setSelectedColumnForOffer] = useState<
+    string | null
+  >(null);
+
   // Form pour la création d'une nouvelle offre
   const form = useForm<OfferFormValues>({
     resolver: zodResolver(offerFormSchema),
@@ -1006,7 +1013,7 @@ export default function OffresPage() {
     isLoading: isLoadingData,
     refetch,
   } = useQuery({
-    queryKey: ["kanban-custom", user?.id],
+    queryKey: ["kanban-custom", session?.user?.id],
     queryFn: async () => {
       const response = await fetch("/api/recruteur/kanban/custom");
       if (!response.ok) {
@@ -1014,8 +1021,10 @@ export default function OffresPage() {
       }
       return response.json();
     },
-    enabled: !!user?.id,
+    enabled: !!session?.user?.id,
   });
+
+  // console.log("kanbanData", kanbanData);
 
   // const {
   //   data: candidatesData,
@@ -1043,6 +1052,7 @@ export default function OffresPage() {
         throw new Error("Erreur lors de la récupération des candidats");
       }
       const data = await response.json();
+      console.log("data", data);
       setCandidatesData(data);
       return data;
     } catch (error) {
@@ -1122,7 +1132,9 @@ export default function OffresPage() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["kanban-custom"] });
+      queryClient.invalidateQueries({
+        queryKey: ["kanban-custom", session?.user?.id],
+      });
     },
   });
 
@@ -1139,7 +1151,9 @@ export default function OffresPage() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["kanban-custom"] });
+      queryClient.invalidateQueries({
+        queryKey: ["kanban-custom", session?.user?.id],
+      });
     },
   });
 
@@ -1158,7 +1172,9 @@ export default function OffresPage() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["kanban-custom"] });
+      queryClient.invalidateQueries({
+        queryKey: ["kanban-custom", session?.user?.id],
+      });
     },
   });
 
@@ -1183,7 +1199,9 @@ export default function OffresPage() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["kanban-custom"] });
+      queryClient.invalidateQueries({
+        queryKey: ["kanban-custom", session?.user?.id],
+      });
     },
   });
 
@@ -1202,7 +1220,9 @@ export default function OffresPage() {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["kanban-custom"] });
+      queryClient.invalidateQueries({
+        queryKey: ["kanban-custom", session?.user?.id],
+      });
     },
   });
 
@@ -1311,9 +1331,12 @@ export default function OffresPage() {
     }
 
     setIsLoading(true);
-    console.log("offer values", values);
+    // console.log("offer values", values);
 
     try {
+      // Utiliser la colonne sélectionnée ou la première colonne par défaut
+      const targetColumnId = selectedColumnForOffer || columns[0].id;
+
       await createOfferMutation.mutateAsync({
         title: values.title,
         description: values.description,
@@ -1328,7 +1351,7 @@ export default function OffresPage() {
         skills: Array.isArray(newOffer.skills)
           ? newOffer.skills.join(",")
           : newOffer.skills,
-        columnId: columns[0].id,
+        columnId: targetColumnId,
       });
 
       handleCloseOfferModal();
@@ -1343,6 +1366,7 @@ export default function OffresPage() {
   // Fonction pour fermer le modal et reset le formulaire
   const handleCloseOfferModal = () => {
     setIsNewOfferModalOpen(false);
+    setSelectedColumnForOffer(null);
     form.reset();
     setNewOffer({
       title: "",
@@ -1357,6 +1381,12 @@ export default function OffresPage() {
       salaryPeriod: "month",
       skills: [],
     });
+  };
+
+  // Fonction pour ouvrir le modal de création d'offre avec une colonne spécifique
+  const handleOpenOfferModal = (columnId?: string) => {
+    setSelectedColumnForOffer(columnId || null);
+    setIsNewOfferModalOpen(true);
   };
 
   // Fonctions pour gérer la vue des candidatures
@@ -1533,20 +1563,12 @@ export default function OffresPage() {
             Nouvelle colonne
           </Button>
           <Button
-            onClick={() => setIsNewOfferModalOpen(true)}
+            onClick={() => handleOpenOfferModal()}
             className="flex items-center gap-2"
             disabled={columns.length === 0}
           >
             <Plus className="h-4 w-4" />
             Nouvelle offre
-          </Button>
-          <Button
-            onClick={() => setIsOfferModalOpen(true)}
-            variant="outline"
-            className="flex items-center gap-2"
-          >
-            <Users className="h-4 w-4" />
-            Test Dialog
           </Button>
         </div>
       </div>
@@ -1713,6 +1735,24 @@ export default function OffresPage() {
                                       )}
                                     </Draggable>
                                   ))}
+
+                                  {/* Bouton d'ajout d'offre dans la colonne */}
+                                  <div className="mt-4">
+                                    <button
+                                      onClick={() =>
+                                        handleOpenOfferModal(column.id)
+                                      }
+                                      className="w-full p-3 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors group"
+                                    >
+                                      <div className="flex items-center justify-center gap-2 text-gray-500 group-hover:text-primary">
+                                        <Plus className="h-4 w-4" />
+                                        <span className="text-sm font-medium">
+                                          Ajouter une offre
+                                        </span>
+                                      </div>
+                                    </button>
+                                  </div>
+
                                   {provided.placeholder}
                                 </div>
                               )}
@@ -1766,9 +1806,13 @@ export default function OffresPage() {
                         <FileText className="h-4 w-4" />
                         Description
                       </h3>
-                      <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
-                        {selectedOffer?.description}
-                      </p>
+
+                      <div
+                        className="text-sm text-gray-500 mb-3 dark:text-gray-400 "
+                        dangerouslySetInnerHTML={{
+                          __html: selectedOffer?.description || "",
+                        }}
+                      />
                     </div>
 
                     {/* Informations supplémentaires */}
@@ -1856,7 +1900,7 @@ export default function OffresPage() {
                           <div
                             key={note.id}
                             className={`flex gap-3 ${
-                              user?.id === note.authorId
+                              session?.user?.id === note.authorId
                                 ? "flex-row-reverse"
                                 : ""
                             }`}
@@ -1864,27 +1908,32 @@ export default function OffresPage() {
                             {/* Avatar */}
                             <div
                               className={`flex-shrink-0 ${
-                                user?.id === note.authorId ? "ml-3" : "mr-3"
+                                session?.user?.id === note.authorId
+                                  ? "ml-3"
+                                  : "mr-3"
                               }`}
                             >
                               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-semibold text-sm">
-                                {user?.id === note.authorId
-                                  ? user?.name?.[0]?.toUpperCase() || "U"
+                                {session?.user?.id === note.authorId
+                                  ? session?.user?.name?.[0]?.toUpperCase() ||
+                                    "U"
                                   : note.authorType === "RECRUTEUR"
-                                  ? "R"
-                                  : "C"}
+                                    ? "R"
+                                    : "C"}
                               </div>
                             </div>
 
                             {/* Message bubble */}
                             <div
                               className={`flex-1 max-w-xs ${
-                                user?.id === note.authorId ? "text-right" : ""
+                                session?.user?.id === note.authorId
+                                  ? "text-right"
+                                  : ""
                               }`}
                             >
                               <div
                                 className={`inline-block p-3 rounded-2xl ${
-                                  user?.id === note.authorId
+                                  session?.user?.id === note.authorId
                                     ? "bg-primary text-white rounded-br-md"
                                     : "bg-white text-gray-800 rounded-bl-md shadow-sm border"
                                 }`}
@@ -1897,18 +1946,18 @@ export default function OffresPage() {
                               {/* Message info */}
                               <div
                                 className={`flex items-center gap-2 mt-1 text-xs text-gray-500 ${
-                                  user?.id === note.authorId
+                                  session?.user?.id === note.authorId
                                     ? "justify-end"
                                     : "justify-start"
                                 }`}
                               >
                                 <span className="font-medium">
                                   {note.authorName ||
-                                    (user?.id === note.authorId
-                                      ? user?.name || "Vous"
+                                    (session?.user?.id === note.authorId
+                                      ? session?.user?.name || "Vous"
                                       : note.authorType === "RECRUTEUR"
-                                      ? "Recruteur"
-                                      : "Candidat")}
+                                        ? "Recruteur"
+                                        : "Candidat")}
                                 </span>
                                 <span>•</span>
                                 <span>
@@ -1919,7 +1968,7 @@ export default function OffresPage() {
                                     minute: "2-digit",
                                   })}
                                 </span>
-                                {user?.id === note.authorId && (
+                                {session?.user?.id === note.authorId && (
                                   <>
                                     <span>•</span>
                                     <div className="flex items-center gap-1">
@@ -2021,9 +2070,16 @@ export default function OffresPage() {
                         <FileText className="h-4 w-4" />
                         Description
                       </h3>
-                      <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
+
+                      <div
+                        className="text-sm text-gray-500 mb-3 dark:text-gray-400"
+                        dangerouslySetInnerHTML={{
+                          __html: selectedOffer?.description || "",
+                        }}
+                      />
+                      {/* <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
                         {selectedOffer?.description}
-                      </p>
+                      </p> */}
                     </div>
 
                     {/* Informations supplémentaires */}
@@ -2109,7 +2165,7 @@ export default function OffresPage() {
                               <div
                                 key={note.id}
                                 className={`flex gap-3 ${
-                                  user?.id === note.authorId
+                                  session?.user?.id === note.authorId
                                     ? "flex-row-reverse"
                                     : ""
                                 }`}
@@ -2117,29 +2173,32 @@ export default function OffresPage() {
                                 {/* Avatar */}
                                 <div
                                   className={`flex-shrink-0 ${
-                                    user?.id === note.authorId ? "ml-3" : "mr-3"
+                                    session?.user?.id === note.authorId
+                                      ? "ml-3"
+                                      : "mr-3"
                                   }`}
                                 >
                                   <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center text-white font-semibold text-sm">
-                                    {user?.id === note.authorId
-                                      ? user?.name?.[0]?.toUpperCase() || "U"
+                                    {session?.user?.id === note.authorId
+                                      ? session?.user?.name?.[0]?.toUpperCase() ||
+                                        "U"
                                       : note.authorType === "RECRUTEUR"
-                                      ? "R"
-                                      : "C"}
+                                        ? "R"
+                                        : "C"}
                                   </div>
                                 </div>
 
                                 {/* Message bubble */}
                                 <div
                                   className={`flex-1 max-w-xs ${
-                                    user?.id === note.authorId
+                                    session?.user?.id === note.authorId
                                       ? "text-right"
                                       : ""
                                   }`}
                                 >
                                   <div
                                     className={`inline-block p-3 rounded-2xl ${
-                                      user?.id === note.authorId
+                                      session?.user?.id === note.authorId
                                         ? "bg-primary text-white rounded-br-md"
                                         : "bg-white text-gray-800 rounded-bl-md shadow-sm border"
                                     }`}
@@ -2152,18 +2211,18 @@ export default function OffresPage() {
                                   {/* Message info */}
                                   <div
                                     className={`flex items-center gap-2 mt-1 text-xs text-gray-500 ${
-                                      user?.id === note.authorId
+                                      session?.user?.id === note.authorId
                                         ? "justify-end"
                                         : "justify-start"
                                     }`}
                                   >
                                     <span className="font-medium">
                                       {note.authorName ||
-                                        (user?.id === note.authorId
-                                          ? user?.name || "Vous"
+                                        (session?.user?.id === note.authorId
+                                          ? session?.user?.name || "Vous"
                                           : note.authorType === "RECRUTEUR"
-                                          ? "Recruteur"
-                                          : "Candidat")}
+                                            ? "Recruteur"
+                                            : "Candidat")}
                                     </span>
                                     <span>•</span>
                                     <span>
@@ -2174,7 +2233,7 @@ export default function OffresPage() {
                                         minute: "2-digit",
                                       })}
                                     </span>
-                                    {user?.id === note.authorId && (
+                                    {session?.user?.id === note.authorId && (
                                       <>
                                         <span>•</span>
                                         <div className="flex items-center gap-1">
@@ -2244,9 +2303,13 @@ export default function OffresPage() {
                         <FileText className="h-4 w-4" />
                         Description
                       </h3>
-                      <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
-                        {selectedOffer?.description}
-                      </p>
+
+                      <div
+                        className="text-sm text-gray-500 mb-3 dark:text-gray-400 "
+                        dangerouslySetInnerHTML={{
+                          __html: selectedOffer?.description || "",
+                        }}
+                      />
                     </div>
 
                     {/* Informations supplémentaires */}
@@ -2332,13 +2395,14 @@ export default function OffresPage() {
                           {checklist.length === 0
                             ? "Aucune tâche"
                             : checklist.filter((i) => i.isCompleted).length ===
-                              checklist.length
-                            ? "Toutes les tâches sont terminées !"
-                            : `${Math.round(
-                                (checklist.filter((i) => i.isCompleted).length /
-                                  (checklist.length || 1)) *
-                                  100
-                              )}% terminé`}
+                                checklist.length
+                              ? "Toutes les tâches sont terminées !"
+                              : `${Math.round(
+                                  (checklist.filter((i) => i.isCompleted)
+                                    .length /
+                                    (checklist.length || 1)) *
+                                    100
+                                )}% terminé`}
                         </span>
                         {checklist.length > 0 && (
                           <span className="text-xs text-gray-500 dark:text-white">
@@ -2606,15 +2670,15 @@ export default function OffresPage() {
                                   <div className="flex items-center gap-2">
                                     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
                                       <span className="text-xs font-bold text-white">
-                                        {user?.id === item.createdById
-                                          ? user?.name?.[0]?.toUpperCase() ||
+                                        {session?.user?.id === item.createdById
+                                          ? session?.user?.name?.[0]?.toUpperCase() ||
                                             "U"
                                           : "U"}
                                       </span>
                                     </div>
                                     <span className="text-xs text-gray-500">
-                                      {user?.id === item.createdById
-                                        ? user?.name || "Vous"
+                                      {session?.user?.id === item.createdById
+                                        ? session?.user?.name || "Vous"
                                         : "Utilisateur"}
                                     </span>
                                   </div>
@@ -2935,9 +2999,15 @@ export default function OffresPage() {
                         <FileText className="h-4 w-4" />
                         Description
                       </h3>
-                      <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
+                      {/* <p className="text-sm text-gray-500 mb-3 dark:text-gray-400">
                         {selectedOffer?.description}
-                      </p>
+                      </p> */}
+                      <div
+                        className="flex gap-2"
+                        dangerouslySetInnerHTML={{
+                          __html: selectedOffer?.description || "",
+                        }}
+                      />
                     </div>
 
                     {/* Informations supplémentaires */}
@@ -3043,7 +3113,7 @@ export default function OffresPage() {
 
                       {/* Liste des pièces jointes */}
                       <div className="space-y-3">
-                        {applicationFiles.length === 0 ? (
+                        {applicationFiles?.length === 0 ? (
                           <div className="text-center py-12 text-gray-500">
                             <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 dark:bg-background rounded-full flex items-center justify-center">
                               <svg

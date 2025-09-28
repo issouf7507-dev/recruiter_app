@@ -32,29 +32,29 @@ interface User {
   updatedAt: string;
 }
 
-export function useAuthCandidat() {
-  const { loading, setLoading, setCandidat, candidat } = useUserStore();
+export function useUser() {
+  const { loading, setLoading, setUser, user } = useUserStore();
 
   const fetchUser = useCallback(async () => {
     try {
       const response = await fetch("/api/auth/me-cd");
       if (response.ok) {
         const data = await response.json();
-        setCandidat(data.user);
+        setUser(data.user);
       } else {
-        setCandidat(null);
+        setUser(null);
       }
     } catch (error) {
       console.error("Erreur lors de la récupération du candidat:", error);
-      setCandidat(null);
+      setUser(null);
     } finally {
       setLoading(false);
     }
-  }, [setCandidat, setLoading]);
+  }, [setUser, setLoading]);
 
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
 
-  return { loading, candidat };
+  return { loading, user };
 }

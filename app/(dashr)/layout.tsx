@@ -32,24 +32,15 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { ThemeProvider } from "@/components/theme-provider";
+
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
-import {
-  Card,
-  CardTitle,
-  CardDescription,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+
 import { postData } from "@/utils/utilts";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { AuthGuard } from "@/components/auth-guard";
-import { UserType } from "@/app/generated/prisma";
+
 import { signOut } from "@/lib/auth-client";
 
 const queryClient = new QueryClient({
@@ -313,9 +304,7 @@ export default function RecruteursLayout({
     );
   }
 
-  // Utiliser AuthGuard pour gérer l'authentification et la redirection
   return (
-    // <AuthGuard requiredUserType={UserType.RECRUTEUR}>
     <RecruteursLayoutContent
       children={children}
       // user={user}
@@ -326,7 +315,6 @@ export default function RecruteursLayout({
       isActive2={isActive2}
       setTheme={setTheme}
     />
-    // </AuthGuard>
   );
 }
 

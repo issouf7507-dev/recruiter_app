@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,36 +11,29 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import {
-  CheckCircle,
-  XCircle,
-  Loader2,
-  UserPlus,
-  Mail,
-  Lock,
-  User,
-  Calendar,
-  Shield,
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { CheckCircle, AlertCircle, Mail, Users, Calendar } from "lucide-react";
 
-function AcceptInvitationPageContent() {
+interface InvitationData {
+  valid: boolean;
+  role: string;
+  email: string;
+  recruteur: {
+    name: string;
+    email: string;
+  };
+  expiresAt: string;
+}
+
+export default function AcceptInvitationPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get("token");
   const [isLoading, setIsLoading] = useState(true);
-  const [isValid, setIsValid] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [invitationData, setInvitationData] = useState<{
-    email: string;
-    role: string;
-    entreprise?: string;
-  } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [invitationData, setInvitationData] = useState<InvitationData | null>(
+    null
+  );
   const [formData, setFormData] = useState({
     nom: "",
     prenom: "",
@@ -60,13 +53,12 @@ function AcceptInvitationPageContent() {
     try {
       const response = await fetch(`/api/invitation/validate?token=${token}`);
       if (!response.ok) {
-        throw new Error("Token invalide");
+        const error = await response.json();
+        throw new Error(error.error);
       }
       const data = await response.json();
       console.log("data", data);
       setInvitationData(data);
-      console.log("invitationData", invitationData);
-      setIsValid(true);
     } catch (error) {
       toast.error("Cette invitation n'est plus valide ou a expiré");
     } finally {
@@ -82,10 +74,12 @@ function AcceptInvitationPageContent() {
       return;
     }
 
-    if (formData.password.length < 8) {
-      toast.error("Le mot de passe doit contenir au moins 8 caractères");
+    if (formData.password.length < 6) {
+      toast.error("Le mot de passe doit contenir au moins 6 caractères");
       return;
     }
+
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/invitation/accept", {
@@ -106,48 +100,42 @@ function AcceptInvitationPageContent() {
         throw new Error(error.error);
       }
 
+      const result = await response.json();
       toast.success(
-        "Invitation acceptée avec succès ! Bienvenue dans l'équipe"
+        "Invitation acceptée avec succès ! Vous êtes maintenant collaborateur dans l'équipe !"
       );
-      router.push("/recruteur/connexion");
+
+      // Rediriger vers la page de connexion du recruteur (espace partagé)
+      router.push("/auth/recruteur/connexion?message=collaborator-joined");
     } catch (error) {
       toast.error(
         error instanceof Error
           ? error.message
           : "Erreur lors de l'acceptation de l'invitation"
       );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const getRoleBadge = (role: string) => {
-    const roleColors = {
-      ADMIN: "bg-red-100 text-red-800",
-      COLLABORATEUR: "bg-blue-100 text-blue-800",
+  const getRoleDisplay = (role: string) => {
+    const roleMap = {
+      ADMIN: "Administrateur",
+      MANAGER: "Manager",
+      USER: "Collaborateur",
+      VIEWER: "Lecteur",
     };
-
-    return (
-      <Badge
-        className={
-          roleColors[role as keyof typeof roleColors] ||
-          "bg-gray-100 text-gray-800"
-        }
-      >
-        {role === "ADMIN" ? "Administrateur" : "Collaborateur"}
-      </Badge>
-    );
+    return roleMap[role as keyof typeof roleMap] || role;
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-        <Card className="w-full max-w-md">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
           <CardContent className="py-12 text-center">
-            <Loader2 className="h-12 w-12 animate-spin text-blue-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold mb-2">
-              Vérification de l'invitation
-            </h2>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
             <p className="text-muted-foreground">
-              Nous vérifions la validité de votre invitation...
+              Vérification de l'invitation...
             </p>
           </CardContent>
         </Card>
@@ -155,22 +143,19 @@ function AcceptInvitationPageContent() {
     );
   }
 
-  if (!isValid) {
+  if (!invitationData?.valid) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-pink-100 p-4">
-        <Card className="w-full max-w-md">
+      <div className="min-h-screen bg-gradient-to-br from-red-50 to-pink-100 flex items-center justify-center p-4">
+        <Card className="max-w-md w-full">
           <CardContent className="py-12 text-center">
-            <XCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
-            <h2 className="text-xl font-semibold mb-2 text-red-600">
+            <AlertCircle className="h-16 w-16 text-red-500 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-red-600 mb-2">
               Invitation invalide
             </h2>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-muted-foreground">
               Cette invitation n'est plus valide ou a expiré. Veuillez contacter
-              l'administrateur.
+              l'équipe pour obtenir une nouvelle invitation.
             </p>
-            <Button onClick={() => router.push("/")} variant="outline">
-              Retour à l'accueil
-            </Button>
           </CardContent>
         </Card>
       </div>
@@ -178,215 +163,139 @@ function AcceptInvitationPageContent() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-100 p-4">
-      <Card className="w-full max-w-lg">
-        <CardHeader className="text-center pb-6">
-          <div className="mx-auto mb-4 p-3 rounded-full bg-green-100 w-fit">
-            <UserPlus className="h-8 w-8 text-green-600" />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+      <Card className="max-w-md w-full">
+        <CardHeader className="text-center">
+          <div className="mx-auto mb-4 p-3 bg-green-100 rounded-full w-fit">
+            <CheckCircle className="h-8 w-8 text-green-600" />
           </div>
-          <CardTitle className="text-2xl">Accepter l'invitation</CardTitle>
-          <CardDescription className="text-base">
-            Complétez vos informations pour rejoindre l'équipe
+          <CardTitle className="text-2xl">Rejoindre l'équipe</CardTitle>
+          <CardDescription>
+            Vous avez été invité en tant que{" "}
+            <span className="font-semibold text-blue-600">collaborateur</span>{" "}
+            dans l'organisation de{" "}
+            <span className="font-semibold">
+              {invitationData.recruteur.name}
+            </span>
           </CardDescription>
         </CardHeader>
 
-        {invitationData && (
-          <div className="px-6 pb-4">
-            <div className="bg-blue-50 rounded-lg p-4 mb-6">
-              <div className="flex items-center gap-2 mb-3">
-                <Mail className="h-4 w-4 text-primary" />
-                <span className="font-medium text-blue-900">
-                  Détails de l'invitation
-                </span>
-              </div>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Email :</span>
-                  <span className="font-medium">{invitationData.email}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Rôle :</span>
-                  {getRoleBadge(invitationData.role)}
-                </div>
-                {invitationData.entreprise && (
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Entreprise :</span>
-                    <span className="font-medium">
-                      {invitationData.entreprise}
-                    </span>
-                  </div>
+        {/* Informations sur l'invitation */}
+        <CardContent className="space-y-6">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 space-y-3 border border-blue-200">
+            <div className="text-center mb-3">
+              <p className="text-sm text-blue-700 font-medium">
+                En tant que collaborateur, vous aurez accès à l'espace de
+                travail de cette organisation
+              </p>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <Mail className="h-4 w-4 text-blue-600" />
+              <span className="font-medium">Email :</span>
+              <span>{invitationData.email}</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <Users className="h-4 w-4 text-blue-600" />
+              <span className="font-medium">Rôle dans l'équipe :</span>
+              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">
+                {getRoleDisplay(invitationData.role)}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 text-sm">
+              <Calendar className="h-4 w-4 text-blue-600" />
+              <span className="font-medium">Expire le :</span>
+              <span>
+                {new Date(invitationData.expiresAt).toLocaleDateString(
+                  "fr-FR",
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
                 )}
-              </div>
+              </span>
             </div>
           </div>
-        )}
 
-        <CardContent className="pt-0">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="prenom" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
+                <label htmlFor="prenom" className="text-sm font-medium">
                   Prénom
-                </Label>
+                </label>
                 <Input
                   id="prenom"
                   value={formData.prenom}
                   onChange={(e) =>
                     setFormData({ ...formData, prenom: e.target.value })
                   }
-                  placeholder="Votre prénom"
                   required
-                  className="transition-all focus:ring-2 focus:ring-blue-500"
+                  placeholder="Votre prénom"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="nom" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
+                <label htmlFor="nom" className="text-sm font-medium">
                   Nom
-                </Label>
+                </label>
                 <Input
                   id="nom"
                   value={formData.nom}
                   onChange={(e) =>
                     setFormData({ ...formData, nom: e.target.value })
                   }
+                  required
                   placeholder="Votre nom"
-                  required
-                  className=" bg-transparent shadow-none"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="flex items-center gap-2">
-                <Lock className="h-4 w-4" />
+              <label htmlFor="password" className="text-sm font-medium">
                 Mot de passe
-              </Label>
-              <div className="relative">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                  placeholder="Minimum 8 caractères"
-                  required
-                  minLength={8}
-                  className="pr-10 transition-all focus:ring-2 focus:ring-blue-500"
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-              {formData.password.length > 0 && (
-                <div className="text-xs text-muted-foreground">
-                  {formData.password.length >= 8 ? (
-                    <span className="text-green-600 flex items-center gap-1">
-                      <CheckCircle className="h-3 w-3" />
-                      Mot de passe valide
-                    </span>
-                  ) : (
-                    <span className="text-yellow-600">
-                      Le mot de passe doit contenir au moins 8 caractères
-                    </span>
-                  )}
-                </div>
-              )}
+              </label>
+              <Input
+                id="password"
+                type="password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                required
+                minLength={6}
+                placeholder="Minimum 6 caractères"
+              />
             </div>
 
             <div className="space-y-2">
-              <Label
-                htmlFor="confirmPassword"
-                className="flex items-center gap-2"
-              >
-                <Shield className="h-4 w-4" />
+              <label htmlFor="confirmPassword" className="text-sm font-medium">
                 Confirmer le mot de passe
-              </Label>
-              <div className="relative">
-                <Input
-                  id="confirmPassword"
-                  type={showConfirmPassword ? "text" : "password"}
-                  value={formData.confirmPassword}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      confirmPassword: e.target.value,
-                    })
-                  }
-                  placeholder="Confirmez votre mot de passe"
-                  required
-                  minLength={8}
-                  className="pr-10 transition-all focus:ring-2 focus:ring-blue-500"
-                />
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  className="absolute right-0 top-0 h-full px-3"
-                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-              {formData.confirmPassword.length > 0 && (
-                <div className="text-xs">
-                  {formData.password === formData.confirmPassword ? (
-                    <span className="text-green-600 flex items-center gap-1">
-                      <CheckCircle className="h-3 w-3" />
-                      Les mots de passe correspondent
-                    </span>
-                  ) : (
-                    <span className="text-red-600 flex items-center gap-1">
-                      <XCircle className="h-3 w-3" />
-                      Les mots de passe ne correspondent pas
-                    </span>
-                  )}
-                </div>
-              )}
+              </label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmPassword: e.target.value })
+                }
+                required
+                minLength={6}
+                placeholder="Confirmez votre mot de passe"
+              />
             </div>
 
-            <Button
-              type="submit"
-              className="w-full mt-6 bg-gradient-to-r from-primary to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium py-3"
-              size="lg"
-            >
-              <CheckCircle className="h-4 w-4 mr-2" />
-              Accepter l'invitation
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  Rejoindre l'équipe...
+                </>
+              ) : (
+                "Rejoindre l'équipe"
+              )}
             </Button>
           </form>
-
-          <div className="mt-6 pt-4 border-t">
-            <p className="text-xs text-center text-muted-foreground">
-              En acceptant cette invitation, vous acceptez les conditions
-              d'utilisation de la plateforme.
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
-  );
-}
-
-export default function AcceptInvitationPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AcceptInvitationPageContent />
-    </Suspense>
   );
 }
