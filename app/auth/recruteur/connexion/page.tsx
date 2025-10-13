@@ -37,7 +37,7 @@ export default function ConnexionRecruteur() {
     reset: resetForm,
     setError,
   } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
+    // resolver: zodResolver(loginSchema),
   });
 
   // console.log(user);

@@ -57,7 +57,7 @@ const offerFormSchema = z.object({
   type: z.string(),
   experience: z.string(),
   duedate: z.date({
-    required_error: "La date d'expiration est requise",
+    error: "La date d'expiration est requise",
   }),
   // education: z.string().nonempty("Le niveau d'études est requis"),
   description: z.string(),
@@ -82,7 +82,7 @@ export default function CreerOffre() {
   const router = useRouter();
 
   const form = useForm<z.infer<typeof offerFormSchema>>({
-    resolver: zodResolver(offerFormSchema),
+    // resolver: zodResolver(offerFormSchema),
     defaultValues: {
       type: "CDI",
       salaryCurrency: "XOF",

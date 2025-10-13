@@ -55,17 +55,17 @@ export async function POST(request: NextRequest) {
       visibility = "PUBLIC",
     } = body;
 
-    console.log("Diffusion LinkedIn - Données reçues:", {
-      offreId,
-      customMessage,
-      includeSalary,
-      visibility,
-    });
+    // console.log("Diffusion LinkedIn - Données reçues:", {
+    //   offreId,
+    //   customMessage,
+    //   includeSalary,
+    //   visibility,
+    // });
 
     // Récupérer les détails de l'offre directement depuis la base de données
     const offre = await prisma.jobOffer.findFirst({
       where: {
-        id: offreId,
+        id: String(offreId),
         // recruteurId: decoded.userId,
       },
       include: {

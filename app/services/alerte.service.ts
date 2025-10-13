@@ -124,7 +124,7 @@ export class AlerteService {
 
         for (const offre of nouvellesOffres) {
           // Vérifier si l'offre a déjà été notifiée pour ce candidat
-          if (offresDejaNotifiees.has(offre.id)) {
+          if (offresDejaNotifiees.has(Number(offre.id))) {
             // console.log(offresDejaNotifiees.has(offre.id));
             continue;
           }

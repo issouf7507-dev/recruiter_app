@@ -108,7 +108,7 @@ const FormationsCompetencesPage = () => {
     setValue: setFormationValue,
     watch: watchFormation,
   } = useForm<FormationFormData>({
-    resolver: zodResolver(formationSchema),
+    // resolver: zodResolver(formationSchema),
     defaultValues: {
       diplome: "",
       etablissement: "",
@@ -127,7 +127,7 @@ const FormationsCompetencesPage = () => {
     setValue: setCompetenceValue,
     watch: watchCompetence,
   } = useForm<CompetenceFormData>({
-    resolver: zodResolver(competenceSchema),
+    // resolver: zodResolver(competenceSchema),
     defaultValues: {
       categorie: "",
       nom: "",

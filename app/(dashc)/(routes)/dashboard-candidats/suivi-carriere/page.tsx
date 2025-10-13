@@ -49,7 +49,7 @@ const suiviCarriereSchema = z.object({
   description: z.string().min(1, "La description est requise"),
   categorie: z.string().min(1, "La catégorie est requise"),
   dateLimite: z.date({
-    required_error: "La date limite est requise",
+    error: "La date limite est requise",
   }),
   progression: z.number().min(0).max(100),
   etapes: z.array(z.string()),
@@ -74,7 +74,7 @@ const SuiviCarrierePage = () => {
     watch,
     control,
   } = useForm<SuiviCarriereFormData>({
-    resolver: zodResolver(suiviCarriereSchema),
+    // resolver: zodResolver(suiviCarriereSchema),
     defaultValues: {
       titre: "",
       description: "",

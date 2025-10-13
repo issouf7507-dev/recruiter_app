@@ -82,7 +82,7 @@ export default function ModifierOffre({
   const { id } = use(params);
 
   const form = useForm<z.infer<typeof offerFormSchema>>({
-    resolver: zodResolver(offerFormSchema),
+    // resolver: zodResolver(offerFormSchema),
     defaultValues: {
       type: "",
       salaryCurrency: "",

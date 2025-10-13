@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     // Vérifier que l'offre appartient au recruteur
     const jobOffer = await prisma.jobOffer.findFirst({
       where: {
-        id: parseInt(jobOfferId),
+        id: jobOfferId as string,
         recruteurId: recruteur?.id || collaborateur?.recruteur.id || "",
       },
     });
@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
     let conversation = await prisma.conversation.findUnique({
       where: {
         jobOfferId_candidatId_recruteurId: {
-          jobOfferId: parseInt(jobOfferId),
+          jobOfferId: jobOfferId as string,
           candidatId: candidatId,
           recruteurId: recruteur?.id || collaborateur?.recruteur.id || "",
         },
@@ -79,7 +79,7 @@ export async function POST(request: NextRequest) {
     if (!conversation) {
       conversation = await prisma.conversation.create({
         data: {
-          jobOfferId: parseInt(jobOfferId),
+          jobOfferId: jobOfferId as string,
           candidatId: candidatId,
           recruteurId: recruteur?.id || collaborateur?.recruteur.id || "",
           isActive: true,
@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
         titre: "Nouveau message",
         message: `Vous avez reçu un message de ${recruteur?.name || collaborateur?.recruteur.name || "Utilisateur"} concernant le poste de ${jobOffer.title}`,
         type: "message",
-        offreId: jobOffer.id,
+        offreId: Number(jobOffer.id),
         lu: false,
       },
     });

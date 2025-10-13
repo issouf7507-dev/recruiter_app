@@ -7,7 +7,7 @@ import { generateMinimalistCVHTML } from "@/lib/cv-templates/minimal-pdf";
 // POST - Exporter un CV en PDF
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth.api.getSession({
@@ -33,7 +33,7 @@ export async function POST(
     // Récupérer le CV avec toutes ses sections
     const cv = await prisma.cV.findFirst({
       where: {
-        id: params.id,
+        id: (await params).id,
         candidatId: candidat.id,
       },
       include: {
@@ -94,7 +94,7 @@ export async function POST(
 
     // Mettre à jour la date d'export
     await prisma.cV.update({
-      where: { id: params.id },
+      where: { id: (await params).id },
       data: { lastExportedAt: new Date() },
     });
 

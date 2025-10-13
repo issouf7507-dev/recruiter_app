@@ -35,7 +35,7 @@ export async function GET(
 
     const candidatures = await prisma.application.findMany({
       where: {
-        jobOfferId: Number(id),
+        jobOfferId: String(id),
       },
       include: {
         candidat: true,

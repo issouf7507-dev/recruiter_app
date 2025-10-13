@@ -14,7 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/hooks/useAuth";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+
 import { JobOffer } from "@/types/types";
 import {
   MapPin,
@@ -51,6 +51,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import CandidatProfileForm from "@/components/CandidatProfileForm";
+import { useSession } from "@/lib/auth-client";
 
 export default function OffreDetailPage() {
   const params = useParams();
@@ -67,7 +68,8 @@ export default function OffreDetailPage() {
   const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
   const [isOpenCandidat, setIsOpenCandidat] = useState(false);
   const { user, loading: authLoading } = useAuth();
-  const { candidat, loading: candidatLoading } = useAuthCandidat();
+  // const { candidat, loading: candidatLoading } = useAuthCandidat();
+  const { data: session, isPending } = useSession();
 
   useEffect(() => {
     if (params.id) {
@@ -91,10 +93,10 @@ export default function OffreDetailPage() {
   };
 
   useEffect(() => {
-    if (candidat?.candidat?.id) {
+    if (session?.user?.id) {
       loadPostulatedOffers();
     }
-  }, [candidat]);
+  }, [session]);
 
   const fetchOffre = async () => {
     try {
@@ -157,7 +159,7 @@ export default function OffreDetailPage() {
   const handleConfirmPostuler = () => {
     if (!selectedOfferId) return;
 
-    if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
+    if (!session?.user || !session?.user) {
       setShowConfirmModal(false);
       return;
     }
@@ -216,7 +218,7 @@ export default function OffreDetailPage() {
     });
   };
 
-  if (loading || authLoading || candidatLoading) {
+  if (loading || authLoading || isPending) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
@@ -362,7 +364,7 @@ export default function OffreDetailPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {candidat ? (
+                {session?.user?.id ? (
                   <>
                     <Button
                       onClick={() => handlePostuler(offre.id)}

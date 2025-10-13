@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth";
 // GET - Récupérer un CV spécifique
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth.api.getSession({
@@ -31,7 +31,7 @@ export async function GET(
     // Récupérer le CV avec toutes ses sections
     const cv = await prisma.cV.findFirst({
       where: {
-        id: params.id,
+        id: (await params).id,
         candidatId: candidat.id,
       },
       include: {
@@ -84,13 +84,14 @@ export async function GET(
 // PUT - Mettre à jour un CV
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth.api.getSession({
       headers: request.headers,
     });
 
+    const id = (await params).id;
     if (!session?.user) {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
@@ -110,7 +111,7 @@ export async function PUT(
     // Vérifier que le CV appartient au candidat
     const existingCv = await prisma.cV.findFirst({
       where: {
-        id: params.id,
+        id: id,
         candidatId: candidat.id,
       },
     });
@@ -186,19 +187,19 @@ export async function PUT(
     // Supprimer toutes les sections existantes et les recréer
     await prisma.$transaction(async (tx) => {
       // Supprimer les sections existantes
-      await tx.cVExperience.deleteMany({ where: { cvId: params.id } });
-      await tx.cVEducation.deleteMany({ where: { cvId: params.id } });
-      await tx.cVSkill.deleteMany({ where: { cvId: params.id } });
-      await tx.cVLanguage.deleteMany({ where: { cvId: params.id } });
-      await tx.cVInterest.deleteMany({ where: { cvId: params.id } });
-      await tx.cVCustomSection.deleteMany({ where: { cvId: params.id } });
+      await tx.cVExperience.deleteMany({ where: { cvId: id } });
+      await tx.cVEducation.deleteMany({ where: { cvId: id } });
+      await tx.cVSkill.deleteMany({ where: { cvId: id } });
+      await tx.cVLanguage.deleteMany({ where: { cvId: id } });
+      await tx.cVInterest.deleteMany({ where: { cvId: id } });
+      await tx.cVCustomSection.deleteMany({ where: { cvId: id } });
 
       // Supprimer les informations personnelles si elles existent
-      await tx.cVPersonalInfo.deleteMany({ where: { cvId: params.id } });
+      await tx.cVPersonalInfo.deleteMany({ where: { cvId: id } });
 
       // Mettre à jour le CV principal
       await tx.cV.update({
-        where: { id: params.id },
+        where: { id: id },
         data: {
           title: title || existingCv.title,
           templateId: templateId || existingCv.templateId,
@@ -210,7 +211,7 @@ export async function PUT(
       if (cleanPersonalInfo) {
         await tx.cVPersonalInfo.create({
           data: {
-            cvId: params.id,
+            cvId: id,
             ...cleanPersonalInfo,
           },
         });
@@ -234,7 +235,7 @@ export async function PUT(
       if (skills.length > 0) {
         await tx.cVSkill.createMany({
           data: skills.map((skill: any, index: number) => ({
-            cvId: params.id,
+            cvId: id,
             ...skill,
             order: index,
           })),
@@ -245,7 +246,7 @@ export async function PUT(
       if (languages.length > 0) {
         await tx.cVLanguage.createMany({
           data: languages.map((lang: any, index: number) => ({
-            cvId: params.id,
+            cvId: id,
             ...lang,
             order: index,
           })),
@@ -256,7 +257,7 @@ export async function PUT(
       if (interests.length > 0) {
         await tx.cVInterest.createMany({
           data: interests.map((interest: any, index: number) => ({
-            cvId: params.id,
+            cvId: id,
             ...interest,
             order: index,
           })),
@@ -267,7 +268,7 @@ export async function PUT(
       if (customSections.length > 0) {
         await tx.cVCustomSection.createMany({
           data: customSections.map((section: any, index: number) => ({
-            cvId: params.id,
+            cvId: id,
             ...section,
             order: index,
           })),
@@ -277,7 +278,7 @@ export async function PUT(
 
     // Récupérer le CV mis à jour
     const updatedCv = await prisma.cV.findUnique({
-      where: { id: params.id },
+      where: { id: id },
       include: {
         template: true,
         personalInfo: true,
@@ -315,9 +316,10 @@ export async function PUT(
 // DELETE - Supprimer un CV
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const id = (await params).id;
     const session = await auth.api.getSession({
       headers: request.headers,
     });
@@ -341,7 +343,7 @@ export async function DELETE(
     // Vérifier que le CV appartient au candidat
     const cv = await prisma.cV.findFirst({
       where: {
-        id: params.id,
+        id: id,
         candidatId: candidat.id,
       },
     });
@@ -352,7 +354,7 @@ export async function DELETE(
 
     // Supprimer le CV (cascade supprimera toutes les sections)
     await prisma.cV.delete({
-      where: { id: params.id },
+      where: { id: id },
     });
 
     return NextResponse.json({ message: "CV supprimé avec succès" });

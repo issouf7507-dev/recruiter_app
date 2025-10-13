@@ -11,6 +11,7 @@ import { Upload, User } from "lucide-react";
 interface PersonalInfo {
   firstName?: string;
   lastName?: string;
+  jobTitle?: string;
   email?: string;
   phone?: string;
   address?: string;

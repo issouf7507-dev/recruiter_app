@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         name,
         color,
         order,
-        jobOfferId: Number(jobOfferId),
+        jobOfferId: jobOfferId as string,
       },
     });
 

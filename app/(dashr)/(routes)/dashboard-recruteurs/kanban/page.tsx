@@ -981,7 +981,7 @@ export default function OffresPage() {
 
   // Form pour la création d'une nouvelle offre
   const form = useForm<OfferFormValues>({
-    resolver: zodResolver(offerFormSchema),
+    // resolver: zodResolver(offerFormSchema),
     defaultValues: {
       title: "",
       description: "",

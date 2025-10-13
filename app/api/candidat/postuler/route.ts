@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     // Vérifier si l'offre existe
     const jobOffer = await prisma.jobOffer.findUnique({
       where: {
-        id: Number(jobOfferId),
+        id: jobOfferId as string,
       },
       include: {
         kanbanColumns: {
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     const existingApplication = await prisma.application.findFirst({
       where: {
         candidatId: candidat.id,
-        jobOfferId: Number(jobOfferId),
+        jobOfferId: jobOfferId as string,
         columnId: jobOffer.kanbanColumns[0].id,
       },
     });
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       data: {
         message,
         candidatId: candidat.id,
-        jobOfferId: Number(jobOfferId),
+        jobOfferId: jobOfferId as string,
         columnId: jobOffer.kanbanColumns[0].id,
       },
     });

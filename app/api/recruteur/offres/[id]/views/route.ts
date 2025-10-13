@@ -11,7 +11,7 @@ export async function POST(
     // Incrémenter le compteur de vues
     const updatedOffer = await prisma.jobOffer.update({
       where: {
-        id: Number(id),
+        id: id as string,
       },
       data: {
         views: {

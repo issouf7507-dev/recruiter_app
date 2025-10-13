@@ -56,10 +56,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (!signUpResult || signUpResult.error) {
+    if (!signUpResult) {
       return NextResponse.json(
         {
-          error: signUpResult?.error || "Erreur lors de la création du compte",
+          error: signUpResult || "Erreur lors de la création du compte",
         },
         { status: 500 }
       );

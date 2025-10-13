@@ -5,7 +5,7 @@ import { auth } from "@/lib/auth";
 // POST - Dupliquer un CV
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await auth.api.getSession({
@@ -31,7 +31,7 @@ export async function POST(
     // Récupérer le CV original avec toutes ses sections
     const originalCv = await prisma.cV.findFirst({
       where: {
-        id: params.id,
+        id: (await params).id,
         candidatId: candidat.id,
       },
       include: {

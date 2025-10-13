@@ -47,7 +47,7 @@ import {
   Phone,
   Mail,
 } from "lucide-react";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+// import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 import { useSession } from "@/lib/auth-client";
 
 interface Etape {

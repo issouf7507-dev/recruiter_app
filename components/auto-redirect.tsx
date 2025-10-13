@@ -4,20 +4,21 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { getRedirectPath } from "@/lib/auth-redirect";
+import { UserType } from "@/app/generated/prisma";
 
 export function AutoRedirect() {
-  const { user, isLoading } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoading) return; // Attendre que l'authentification soit chargée
+    if (loading) return; // Attendre que l'authentification soit chargée
 
     if (user && user.type) {
       // Rediriger vers le dashboard approprié
-      const redirectPath = getRedirectPath(user.type);
+      const redirectPath = getRedirectPath(user.type as UserType);
       router.push(redirectPath);
     }
-  }, [user, isLoading, router]);
+  }, [user, loading, router]);
 
   // Afficher un loader pendant la redirection
   return (

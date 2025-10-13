@@ -28,7 +28,7 @@ export async function GET(
 
       const offer = await prisma.jobOffer.findFirst({
         where: {
-          id: Number(offerId),
+          id: offerId as string,
         },
         include: {
           kanbanColumns: { orderBy: { order: "asc" } },
@@ -88,7 +88,7 @@ export async function GET(
     } else {
       // Version publique (infos de base)
       const offer = await prisma.jobOffer.findFirst({
-        where: { id: Number(offerId) },
+        where: { id: offerId as string },
         include: {
           jobOfferCompetences: {
             select: { competence: true },
@@ -123,14 +123,14 @@ export async function DELETE(
     // Supprimer d'abord les colonnes du kanban associées
     await prisma.kanbanColumn.deleteMany({
       where: {
-        jobOfferId: Number(id),
+        jobOfferId: id as string,
       },
     });
 
     // Supprimer l'offre
     const jobOffer = await prisma.jobOffer.delete({
       where: {
-        id: Number(id),
+        id: id as string,
       },
     });
 

@@ -37,7 +37,7 @@ export async function GET(
     // Vérifier que l'offre appartient au recruteur
     const jobOffer = await prisma.jobOffer.findFirst({
       where: {
-        id: parseInt(id),
+        id: id as string,
         recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
@@ -52,7 +52,7 @@ export async function GET(
     // Récupérer les candidats qui ont postulé à cette offre
     const applications = await prisma.application.findMany({
       where: {
-        jobOfferId: parseInt(id),
+        jobOfferId: id as string,
       },
       include: {
         candidat: {

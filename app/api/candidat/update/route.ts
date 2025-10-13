@@ -87,11 +87,11 @@ export async function PUT(req: NextRequest) {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error("Erreur de validation Zod:", error.errors);
+      console.error("Erreur de validation Zod:", error);
       return NextResponse.json(
         {
           error: "Données invalides",
-          details: error.errors,
+          details: error,
           message: "Validation failed",
         },
         { status: 400 }

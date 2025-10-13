@@ -11,7 +11,7 @@ export async function GET(
     // Récupérer l'offre actuelle
     const currentOffer = await prisma.jobOffer.findUnique({
       where: {
-        id: Number(id),
+        id: id as string,
       },
       include: {
         jobOfferCompetences: true,
@@ -31,7 +31,7 @@ export async function GET(
         AND: [
           {
             id: {
-              not: Number(id), // Exclure l'offre actuelle
+              not: id as string, // Exclure l'offre actuelle
             },
           },
           {
