@@ -3,10 +3,10 @@ CREATE TABLE `user` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
     `email` VARCHAR(191) NOT NULL,
-    `emailVerified` DATETIME(3) NULL,
+    `emailVerified` BOOLEAN NOT NULL DEFAULT false,
     `password` VARCHAR(191) NULL,
     `image` VARCHAR(191) NULL,
-    `type` ENUM('CANDIDAT', 'RECRUTEUR', 'COLLABORATEUR') NOT NULL,
+    `type` ENUM('CANDIDAT', 'RECRUTEUR', 'COLLABORATEUR') NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -137,7 +137,7 @@ CREATE TABLE `ApplicationCollaborateur` (
 
 -- CreateTable
 CREATE TABLE `JobOffer` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` VARCHAR(191) NOT NULL,
     `title` VARCHAR(191) NOT NULL,
     `description` TEXT NULL,
     `company` VARCHAR(191) NULL,
@@ -169,7 +169,7 @@ CREATE TABLE `JobOffer` (
 -- CreateTable
 CREATE TABLE `JobOfferCompetence` (
     `id` VARCHAR(191) NOT NULL,
-    `jobOfferId` INTEGER NOT NULL,
+    `jobOfferId` VARCHAR(191) NOT NULL,
     `competence` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
@@ -195,7 +195,7 @@ CREATE TABLE `OfferTemplate` (
 CREATE TABLE `Application` (
     `id` VARCHAR(191) NOT NULL,
     `candidatId` VARCHAR(191) NOT NULL,
-    `jobOfferId` INTEGER NOT NULL,
+    `jobOfferId` VARCHAR(191) NOT NULL,
     `columnId` VARCHAR(191) NOT NULL,
     `rating` INTEGER NULL,
     `message` VARCHAR(191) NULL,
@@ -266,7 +266,7 @@ CREATE TABLE `KanbanColumn` (
     `name` VARCHAR(191) NOT NULL,
     `order` INTEGER NOT NULL,
     `isDefault` BOOLEAN NOT NULL DEFAULT false,
-    `jobOfferId` INTEGER NOT NULL,
+    `jobOfferId` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -275,51 +275,36 @@ CREATE TABLE `KanbanColumn` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `account` (
-    `id` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
-    `type` VARCHAR(191) NOT NULL,
-    `provider` VARCHAR(191) NOT NULL,
-    `providerAccountId` VARCHAR(191) NOT NULL,
-    `refresh_token` VARCHAR(191) NULL,
-    `access_token` VARCHAR(191) NULL,
-    `expires_at` INTEGER NULL,
-    `token_type` VARCHAR(191) NULL,
-    `scope` VARCHAR(191) NULL,
-    `id_token` VARCHAR(191) NULL,
-    `session_state` VARCHAR(191) NULL,
-    `accountId` TEXT NOT NULL,
-    `providerId` TEXT NOT NULL,
-    `accessToken` TEXT NULL,
-    `refreshToken` TEXT NULL,
-    `idToken` TEXT NULL,
-    `accessTokenExpiresAt` DATETIME(3) NULL,
-    `refreshTokenExpiresAt` DATETIME(3) NULL,
-    `password` TEXT NULL,
-    `createdAt` DATETIME(3) NOT NULL,
-    `updatedAt` DATETIME(3) NOT NULL,
-
-    INDEX `Account_userId_fkey`(`userId`),
-    UNIQUE INDEX `account_provider_providerAccountId_key`(`provider`, `providerAccountId`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `session` (
     `id` VARCHAR(191) NOT NULL,
-    `sessionToken` VARCHAR(191) NOT NULL,
-    `userId` VARCHAR(191) NOT NULL,
-    `expires` DATETIME(3) NOT NULL,
     `expiresAt` DATETIME(3) NOT NULL,
     `token` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
     `ipAddress` TEXT NULL,
     `userAgent` TEXT NULL,
+    `userId` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `session_sessionToken_key`(`sessionToken`),
-    INDEX `Session_userId_fkey`(`userId`),
     UNIQUE INDEX `session_token_key`(`token`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `account` (
+    `id` VARCHAR(191) NOT NULL,
+    `accountId` TEXT NOT NULL,
+    `providerId` TEXT NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
+    `accessToken` TEXT NULL,
+    `refreshToken` TEXT NULL,
+    `idToken` TEXT NULL,
+    `accessTokenExpiresAt` DATETIME(3) NULL,
+    `refreshTokenExpiresAt` DATETIME(3) NULL,
+    `scope` TEXT NULL,
+    `password` TEXT NULL,
+    `createdAt` DATETIME(3) NOT NULL,
+    `updatedAt` DATETIME(3) NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -482,7 +467,7 @@ CREATE TABLE `Notification` (
 -- CreateTable
 CREATE TABLE `Conversation` (
     `id` VARCHAR(191) NOT NULL,
-    `jobOfferId` INTEGER NOT NULL,
+    `jobOfferId` VARCHAR(191) NOT NULL,
     `candidatId` VARCHAR(191) NOT NULL,
     `recruteurId` VARCHAR(191) NOT NULL,
     `isActive` BOOLEAN NOT NULL DEFAULT true,
@@ -666,6 +651,155 @@ CREATE TABLE `verification` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `CVTemplate` (
+    `id` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NULL,
+    `layout` VARCHAR(191) NOT NULL,
+    `colors` JSON NULL,
+    `fonts` JSON NULL,
+    `isActive` BOOLEAN NOT NULL DEFAULT true,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CV` (
+    `id` VARCHAR(191) NOT NULL,
+    `candidatId` VARCHAR(191) NOT NULL,
+    `templateId` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL DEFAULT 'Mon CV',
+    `isPublic` BOOLEAN NOT NULL DEFAULT false,
+    `lastExportedAt` DATETIME(3) NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+
+    INDEX `CV_candidatId_idx`(`candidatId`),
+    INDEX `CV_templateId_idx`(`templateId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CVPersonalInfo` (
+    `id` VARCHAR(191) NOT NULL,
+    `cvId` VARCHAR(191) NOT NULL,
+    `firstName` VARCHAR(191) NULL,
+    `lastName` VARCHAR(191) NULL,
+    `jobTitle` VARCHAR(191) NULL,
+    `email` VARCHAR(191) NULL,
+    `phone` VARCHAR(191) NULL,
+    `address` VARCHAR(191) NULL,
+    `city` VARCHAR(191) NULL,
+    `postalCode` VARCHAR(191) NULL,
+    `country` VARCHAR(191) NULL,
+    `dateOfBirth` DATETIME(3) NULL,
+    `nationality` VARCHAR(191) NULL,
+    `maritalStatus` VARCHAR(191) NULL,
+    `drivingLicense` VARCHAR(191) NULL,
+    `website` VARCHAR(191) NULL,
+    `linkedin` VARCHAR(191) NULL,
+    `github` VARCHAR(191) NULL,
+    `portfolio` VARCHAR(191) NULL,
+    `profileImage` VARCHAR(191) NULL,
+    `summary` TEXT NULL,
+
+    UNIQUE INDEX `CVPersonalInfo_cvId_key`(`cvId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CVExperience` (
+    `id` VARCHAR(191) NOT NULL,
+    `cvId` VARCHAR(191) NOT NULL,
+    `position` VARCHAR(191) NOT NULL,
+    `company` VARCHAR(191) NOT NULL,
+    `location` VARCHAR(191) NULL,
+    `contractType` VARCHAR(191) NULL,
+    `startDate` DATETIME(3) NOT NULL,
+    `endDate` DATETIME(3) NULL,
+    `isCurrent` BOOLEAN NOT NULL DEFAULT false,
+    `description` TEXT NULL,
+    `achievements` TEXT NULL,
+    `skills` VARCHAR(191) NULL,
+    `order` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `CVExperience_cvId_idx`(`cvId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CVEducation` (
+    `id` VARCHAR(191) NOT NULL,
+    `cvId` VARCHAR(191) NOT NULL,
+    `degree` VARCHAR(191) NOT NULL,
+    `institution` VARCHAR(191) NOT NULL,
+    `field` VARCHAR(191) NULL,
+    `location` VARCHAR(191) NULL,
+    `startDate` DATETIME(3) NOT NULL,
+    `endDate` DATETIME(3) NULL,
+    `isCurrent` BOOLEAN NOT NULL DEFAULT false,
+    `description` TEXT NULL,
+    `grade` VARCHAR(191) NULL,
+    `honors` VARCHAR(191) NULL,
+    `order` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `CVEducation_cvId_idx`(`cvId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CVSkill` (
+    `id` VARCHAR(191) NOT NULL,
+    `cvId` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `category` VARCHAR(191) NOT NULL,
+    `level` INTEGER NOT NULL DEFAULT 1,
+    `order` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `CVSkill_cvId_idx`(`cvId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CVLanguage` (
+    `id` VARCHAR(191) NOT NULL,
+    `cvId` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `level` VARCHAR(191) NOT NULL,
+    `certification` VARCHAR(191) NULL,
+    `order` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `CVLanguage_cvId_idx`(`cvId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CVInterest` (
+    `id` VARCHAR(191) NOT NULL,
+    `cvId` VARCHAR(191) NOT NULL,
+    `name` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NULL,
+    `order` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `CVInterest_cvId_idx`(`cvId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `CVCustomSection` (
+    `id` VARCHAR(191) NOT NULL,
+    `cvId` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `content` TEXT NOT NULL,
+    `order` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `CVCustomSection_cvId_idx`(`cvId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `Candidat` ADD CONSTRAINT `Candidat_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -730,10 +864,10 @@ ALTER TABLE `ApplicationFile` ADD CONSTRAINT `ApplicationFile_applicationId_fkey
 ALTER TABLE `KanbanColumn` ADD CONSTRAINT `KanbanColumn_jobOfferId_fkey` FOREIGN KEY (`jobOfferId`) REFERENCES `JobOffer`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `account` ADD CONSTRAINT `account_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `session` ADD CONSTRAINT `session_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `session` ADD CONSTRAINT `session_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `account` ADD CONSTRAINT `account_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `user`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Experience` ADD CONSTRAINT `Experience_candidatId_fkey` FOREIGN KEY (`candidatId`) REFERENCES `Candidat`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -806,3 +940,30 @@ ALTER TABLE `CandidatDocument` ADD CONSTRAINT `CandidatDocument_candidatId_fkey`
 
 -- AddForeignKey
 ALTER TABLE `ApplicationCustom` ADD CONSTRAINT `ApplicationCustom_kanbanColumnCustomid_fkey` FOREIGN KEY (`kanbanColumnCustomid`) REFERENCES `KanbanColumnCustom`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CV` ADD CONSTRAINT `CV_candidatId_fkey` FOREIGN KEY (`candidatId`) REFERENCES `Candidat`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CV` ADD CONSTRAINT `CV_templateId_fkey` FOREIGN KEY (`templateId`) REFERENCES `CVTemplate`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CVPersonalInfo` ADD CONSTRAINT `CVPersonalInfo_cvId_fkey` FOREIGN KEY (`cvId`) REFERENCES `CV`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CVExperience` ADD CONSTRAINT `CVExperience_cvId_fkey` FOREIGN KEY (`cvId`) REFERENCES `CV`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CVEducation` ADD CONSTRAINT `CVEducation_cvId_fkey` FOREIGN KEY (`cvId`) REFERENCES `CV`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CVSkill` ADD CONSTRAINT `CVSkill_cvId_fkey` FOREIGN KEY (`cvId`) REFERENCES `CV`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CVLanguage` ADD CONSTRAINT `CVLanguage_cvId_fkey` FOREIGN KEY (`cvId`) REFERENCES `CV`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CVInterest` ADD CONSTRAINT `CVInterest_cvId_fkey` FOREIGN KEY (`cvId`) REFERENCES `CV`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `CVCustomSection` ADD CONSTRAINT `CVCustomSection_cvId_fkey` FOREIGN KEY (`cvId`) REFERENCES `CV`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
-import { verify } from "jsonwebtoken";
+import { auth } from "@/lib/auth";
 
 const updateSchema = z.object({
   nom: z.string().min(2).optional(),
@@ -10,7 +10,9 @@ const updateSchema = z.object({
   adresse: z.string().optional(),
   ville: z.string().optional(),
   pays: z.string().optional(),
-  dateNaissance: z.string().optional(),
+  dateNaissance: z
+    .union([z.date(), z.string().datetime(), z.string().optional()])
+    .optional(),
   nationalite: z.string().optional(),
   situationFamiliale: z.string().optional(),
   permisConduire: z.string().optional(),
@@ -23,51 +25,52 @@ const updateSchema = z.object({
 
 export async function PUT(req: NextRequest) {
   try {
-    // Récupérer le token depuis les cookies
-    const token = req.cookies.get("candidat")?.value;
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-    // Vérifier le token
-    const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
-      userId: string;
-      type: string;
-    };
+    // Utiliser le nouveau système d'authentification
+    const session = await auth.api.getSession({ headers: req.headers });
 
-    if (decoded.type !== "CANDIDAT") {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
     const body = await req.json();
     const validatedData = updateSchema.parse(body);
 
     // Extraire les compétences du validatedData
-    const { competences, ...candidatData } = validatedData;
+    const { competences, dateNaissance, ...candidatData } = validatedData;
+
+    // Préparer les données pour la mise à jour
+    const updateData: any = { ...candidatData };
+
+    // Gérer la date de naissance
+    if (dateNaissance) {
+      if (typeof dateNaissance === "string") {
+        updateData.dateNaissance = new Date(dateNaissance);
+      } else {
+        updateData.dateNaissance = dateNaissance;
+      }
+    }
 
     // Mettre à jour le profil du candidat
     const updatedCandidat = await prisma.candidat.update({
-      where: { userId: decoded.userId },
-      data: {
-        ...candidatData,
-        dateNaissance: candidatData.dateNaissance
-          ? new Date(candidatData.dateNaissance)
-          : undefined,
-      },
+      where: { userId: session.user.id },
+      data: updateData,
     });
 
     // Si des compétences sont fournies, les mettre à jour
-    if (competences && competences.length > 0) {
+    if (competences !== undefined) {
       // Supprimer toutes les compétences existantes
       await prisma.candidatCompetence.deleteMany({
         where: { candidatId: updatedCandidat.id },
       });
 
-      // Ajouter les nouvelles compétences
-      await prisma.candidatCompetence.createMany({
-        data: competences.map((competence: string) => ({
-          candidatId: updatedCandidat.id,
-          competence: competence,
-        })),
-      });
+      // Ajouter les nouvelles compétences si il y en a
+      if (competences.length > 0) {
+        await prisma.candidatCompetence.createMany({
+          data: competences.map((competence: string) => ({
+            candidatId: updatedCandidat.id,
+            competence: competence,
+          })),
+        });
+      }
     }
 
     // Récupérer le candidat avec ses compétences
@@ -84,14 +87,22 @@ export async function PUT(req: NextRequest) {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error("Erreur de validation Zod:", error.errors);
       return NextResponse.json(
-        { error: "Données invalides", details: error.errors },
+        {
+          error: "Données invalides",
+          details: error.errors,
+          message: "Validation failed",
+        },
         { status: 400 }
       );
     }
     console.error("Erreur lors de la mise à jour du profil:", error);
     return NextResponse.json(
-      { error: "Erreur lors de la mise à jour du profil" },
+      {
+        error: "Erreur lors de la mise à jour du profil",
+        message: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }

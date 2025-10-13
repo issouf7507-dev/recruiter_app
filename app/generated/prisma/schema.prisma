@@ -56,6 +56,7 @@ model Candidat {
   formations          Formation[]
   notifications       Notification[]
   objectifs           ObjectifCarriere[]
+  cvs                 CV[]
 }
 
 model Recruteur {
@@ -156,7 +157,7 @@ model ApplicationCollaborateur {
 /// Représente une offre d'emploi publiée par une entreprise
 
 model JobOffer {
-  id                  Int                  @id @default(autoincrement())
+  id                  String               @id @default(cuid())
   title               String
   description         String?              @db.Text
   company             String?
@@ -192,7 +193,7 @@ model JobOffer {
 
 model JobOfferCompetence {
   id         String   @id @default(cuid())
-  jobOfferId Int
+  jobOfferId String
   competence String
   createdAt  DateTime @default(now())
   jobOffer   JobOffer @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
@@ -219,7 +220,7 @@ model OfferTemplate {
 model Application {
   id             String                     @id @default(cuid())
   candidatId     String
-  jobOfferId     Int
+  jobOfferId     String
   columnId       String
   rating         Int?
   message        String?
@@ -292,7 +293,7 @@ model KanbanColumn {
   name         String
   order        Int
   isDefault    Boolean       @default(false)
-  jobOfferId   Int
+  jobOfferId   String
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   applications Application[]
@@ -485,7 +486,7 @@ model Notification {
 
 model Conversation {
   id          String    @id @default(cuid())
-  jobOfferId  Int
+  jobOfferId  String
   candidatId  String
   recruteurId String
   isActive    Boolean   @default(true)
@@ -693,4 +694,150 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+// Modèles pour le générateur de CV
+model CVTemplate {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  layout      String // 'modern', 'classic', 'creative', etc.
+  colors      Json? // Couleurs du template
+  fonts       Json? // Polices du template
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  cvs         CV[]
+}
+
+model CV {
+  id             String            @id @default(cuid())
+  candidatId     String
+  templateId     String
+  title          String            @default("Mon CV")
+  isPublic       Boolean           @default(false)
+  lastExportedAt DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  candidat       Candidat          @relation(fields: [candidatId], references: [id], onDelete: Cascade)
+  template       CVTemplate        @relation(fields: [templateId], references: [id])
+  personalInfo   CVPersonalInfo?
+  experiences    CVExperience[]
+  educations     CVEducation[]
+  skills         CVSkill[]
+  languages      CVLanguage[]
+  interests      CVInterest[]
+  customSections CVCustomSection[]
+
+  @@index([candidatId])
+  @@index([templateId])
+}
+
+model CVPersonalInfo {
+  id             String    @id @default(cuid())
+  cvId           String    @unique
+  firstName      String?
+  lastName       String?
+  jobTitle       String?
+  email          String?
+  phone          String?
+  address        String?
+  city           String?
+  postalCode     String?
+  country        String?
+  dateOfBirth    DateTime?
+  nationality    String?
+  maritalStatus  String?
+  drivingLicense String?
+  website        String?
+  linkedin       String?
+  github         String?
+  portfolio      String?
+  profileImage   String?
+  summary        String?   @db.Text
+  cv             CV        @relation(fields: [cvId], references: [id], onDelete: Cascade)
+}
+
+model CVExperience {
+  id           String    @id @default(cuid())
+  cvId         String
+  position     String
+  company      String
+  location     String?
+  contractType String?
+  startDate    DateTime
+  endDate      DateTime?
+  isCurrent    Boolean   @default(false)
+  description  String?   @db.Text
+  achievements String?   @db.Text
+  skills       String? // Compétences utilisées (JSON array)
+  order        Int       @default(0)
+  cv           CV        @relation(fields: [cvId], references: [id], onDelete: Cascade)
+
+  @@index([cvId])
+}
+
+model CVEducation {
+  id          String    @id @default(cuid())
+  cvId        String
+  degree      String
+  institution String
+  field       String?
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  isCurrent   Boolean   @default(false)
+  description String?   @db.Text
+  grade       String?
+  honors      String?
+  order       Int       @default(0)
+  cv          CV        @relation(fields: [cvId], references: [id], onDelete: Cascade)
+
+  @@index([cvId])
+}
+
+model CVSkill {
+  id       String @id @default(cuid())
+  cvId     String
+  name     String
+  category String // 'technical', 'soft', 'language', 'other'
+  level    Int    @default(1) // 1-5 ou 1-10
+  order    Int    @default(0)
+  cv       CV     @relation(fields: [cvId], references: [id], onDelete: Cascade)
+
+  @@index([cvId])
+}
+
+model CVLanguage {
+  id            String  @id @default(cuid())
+  cvId          String
+  name          String
+  level         String // 'Débutant', 'Intermédiaire', 'Avancé', 'Natif'
+  certification String?
+  order         Int     @default(0)
+  cv            CV      @relation(fields: [cvId], references: [id], onDelete: Cascade)
+
+  @@index([cvId])
+}
+
+model CVInterest {
+  id          String  @id @default(cuid())
+  cvId        String
+  name        String
+  description String?
+  order       Int     @default(0)
+  cv          CV      @relation(fields: [cvId], references: [id], onDelete: Cascade)
+
+  @@index([cvId])
+}
+
+model CVCustomSection {
+  id      String @id @default(cuid())
+  cvId    String
+  title   String
+  content String @db.Text
+  order   Int    @default(0)
+  cv      CV     @relation(fields: [cvId], references: [id], onDelete: Cascade)
+
+  @@index([cvId])
 }

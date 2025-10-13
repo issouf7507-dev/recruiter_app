@@ -30,9 +30,6 @@ export async function PUT(
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    if (!recruteur && !collaborateur) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
 
     // Vérifier que l'élément appartient à une application du recruteur
     const checklistItem = await prisma.checklistItemCustom.findFirst({

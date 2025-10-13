@@ -19,6 +19,7 @@ import {
   ClipboardList,
   Lock,
   Loader2,
+  FileText,
 } from "lucide-react";
 
 import {
@@ -45,7 +46,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+
 import NotificationBell from "@/app/components/notifications/alerte-notification";
 
 import { useSession } from "@/lib/auth-client";
@@ -117,6 +118,11 @@ export default function CandidatsLayout({
         //   href: "/dashboard-candidats/cv-pieces-jointes",
         // },
       ],
+    },
+    {
+      label: "Générateur de CV",
+      href: "/dashboard-candidats/generateur-cv",
+      icon: <FileText className="h-5 w-5 text-white" />,
     },
     // {
     //   label: "Suivi de carrière",

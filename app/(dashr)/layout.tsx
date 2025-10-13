@@ -41,7 +41,7 @@ import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-import { signOut } from "@/lib/auth-client";
+import { signOut, useSession } from "@/lib/auth-client";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -337,6 +337,9 @@ function RecruteursLayoutContent({
   isActive2: string;
   setTheme: (theme: string) => void;
 }) {
+  const { data: session } = useSession();
+  console.log("session", session);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
@@ -428,17 +431,18 @@ function RecruteursLayoutContent({
                 <SidebarLink
                   className="uppercase"
                   link={{
-                    label: "User",
+                    label:
+                      session?.user?.name || session?.user?.email || "User",
                     href: "#",
                     icon: (
                       <Avatar>
                         <AvatarFallback className="text-[14px] font-bold bg-white/20 text-white">
-                          {/* {(user?.name &&
+                          {(session?.user?.name &&
                             (
-                              user?.name.split(" ")[0].slice(0, 1) +
-                              user?.name.split(" ")[1].slice(0, 1)
+                              session.user.name.split(" ")[0].slice(0, 1) +
+                              session.user.name.split(" ")[1].slice(0, 1)
                             ).toUpperCase()) ||
-                            ""} */}
+                            ""}
                         </AvatarFallback>
                       </Avatar>
                     ),
@@ -452,7 +456,7 @@ function RecruteursLayoutContent({
                   className="w-full justify-start text-white/80 hover:text-white hover:bg-white/10"
                   onClick={async () => {
                     await signOut();
-                    window.location.href = "/auth/connexion";
+                    window.location.href = "/auth/recruteur/connexion";
                   }}
                 >
                   <LogOut className="h-4 w-4 mr-2" />
