@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## Script de déploiement pour le serveur VPS
+## Script d déploiement pour le serveur VPS
 ## À exécuter sur le serveur VPS
 
 echo "Début du déploiement..."
@@ -26,7 +26,7 @@ fi
 echo "Nettoyage du répertoire temporaire..."
 rm -rf $TEMP_DIR/*
 
-#### Cloner le code depuis GitHub
+### Cloner le code depuis GitHub
 echo "Téléchargement du code depuis GitHub..."
 cd $TEMP_DIR
 ### git clone -b dev-issouf-f https://github.com/issouf7507-dev/recruiter_app.git .
