@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import {
   Dialog,
   DialogContent,
@@ -42,18 +42,17 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import AdvancedSearch from "@/app/components/search/AdvancedSearch";
+import { useSession } from "@/lib/auth-client";
 // import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
 // import AdvancedSearch from "./components/AdvancedSearch";
 
 const ToutesLesOffresPage = () => {
-  const { candidat, loading: authLoading } = useUserStore();
+  const { data: session, isPending } = useSession();
 
   useEffect(() => {
     useUserStore.persist.rehydrate();
   }, []);
 
-  const [showCvAlert, setShowCvAlert] = useState(false);
-  const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
 
@@ -75,25 +74,12 @@ const ToutesLesOffresPage = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["offertData2123"],
-    queryFn: () => fetchData("/api/recruteur/offres"),
+    queryKey: ["offertData21"],
+    queryFn: () => fetchData("/api/candidat/offres"),
   });
 
-  console.log(offertData);
-  const {
-    data: notifications,
-    isLoading: notificationsLoading,
-    refetch: refetchNotifications,
-  } = useQuery<AlerteNotificationType[]>({
-    queryKey: ["alerte-notifications"],
-    queryFn: async () => {
-      const response = await fetch("/api/candidat/notifications");
-      if (!response.ok) {
-        throw new Error("Erreur lors de la récupération des notifications");
-      }
-      return response.json();
-    },
-  });
+  // console.log(offertData);
+
   const [showSearchModal, setShowSearchModal] = useState(false);
 
   // console.log(offertData);
@@ -112,20 +98,20 @@ const ToutesLesOffresPage = () => {
   };
 
   useEffect(() => {
-    if (candidat?.candidat?.id) {
+    if (session?.user?.id) {
       loadPostulatedOffers();
     }
-  }, [candidat]);
+  }, [session]);
 
   useEffect(() => {
-    if (candidat?.candidat?.nom && offertData?.data) {
-      const matchedOffers = matchUserWithOffers2(candidat, offertData.data);
-      setMatchOffersWithUser(matchedOffers);
+    if (session?.user?.id && offertData?.data) {
+      // const matchedOffers = matchUserWithOffers2(session?.user, offertData.data);
+      // setMatchOffersWithUser(matchedOffers);
     }
-  }, [candidat, offertData]);
+  }, [session, offertData]);
 
   // Fonction pour filtrer les offres
-  const filteredOffers = matchOffersWithUser.filter((offre: JobOffer) => {
+  const filteredOffers = offertData?.data.filter((offre: JobOffer) => {
     // Filtre par onglet actif
 
     if (activeTab === "postulated" && !postulatedOffers.includes(offre.id)) {
@@ -207,11 +193,11 @@ const ToutesLesOffresPage = () => {
   const handleConfirmPostuler = () => {
     if (!selectedOfferId) return;
 
-    if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
-      setShowCvAlert(true);
-      setShowConfirmModal(false);
-      return;
-    }
+    // if (!session?.user?.candidat?.cv || !session?.user?.candidat?.letterm) {
+    //   setShowCvAlert(true);
+    //   setShowConfirmModal(false);
+    //   return;
+    // }
 
     postulerMutation.mutate({
       jobOfferId: selectedOfferId,
@@ -338,10 +324,7 @@ const ToutesLesOffresPage = () => {
             <div className="grid gap-6">
               {offertData && filteredOffers && filteredOffers.length > 0 ? (
                 filteredOffers.map((offre: JobOffer) => (
-                  <Card
-                    key={offre.id}
-                    className="hover:shadow-lg transition-shadow"
-                  >
+                  <Card key={offre.id} className="shadow-none">
                     <CardContent className="p-6">
                       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                         <div className="space-y-2">
@@ -355,7 +338,7 @@ const ToutesLesOffresPage = () => {
                               </h2>
                             </Link>
                             <Badge variant="secondary" className="ml-2">
-                              {offre.matchingPercentage} % match
+                              {/* {offre.matchingPercentage} % match */}
                             </Badge>
                           </div>
                           <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
@@ -439,7 +422,7 @@ const ToutesLesOffresPage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {offertData && filteredOffers && filteredOffers.length > 0 ? (
-                filteredOffers.map((offre) => (
+                filteredOffers.map((offre: JobOffer) => (
                   <Card
                     key={offre.id}
                     className="hover:shadow-lg transition-shadow"
@@ -490,9 +473,16 @@ const ToutesLesOffresPage = () => {
                             </Badge>
                           ))}
                         </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
+
+                        <div
+                          className="mt-4 text-sm text-muted-foreground line-clamp-3"
+                          dangerouslySetInnerHTML={{
+                            __html: offre.description,
+                          }}
+                        />
+                        {/* <p className="text-sm text-muted-foreground line-clamp-2">
                           {offre.description}
-                        </p>
+                        </p> */}
                         <div className="flex gap-2">
                           {/* <Button variant="outline" className="flex-1">
                             Sauvegarder
@@ -586,7 +576,7 @@ const ToutesLesOffresPage = () => {
                               </h2>
                             </Link>
                             <Badge variant="secondary" className="ml-2">
-                              {offre.matchingPercentage} % match
+                              {/* {offre.matchingPercentage} % match */}
                             </Badge>
                           </div>
                           <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
@@ -642,9 +632,7 @@ const ToutesLesOffresPage = () => {
                       <div
                         className="mt-4 text-sm text-muted-foreground"
                         dangerouslySetInnerHTML={{ __html: offre.description }}
-                      >
-                        {/* {offre.description} */}
-                      </div>
+                      />
                     </CardContent>
                   </Card>
                 ))
@@ -668,7 +656,7 @@ const ToutesLesOffresPage = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {offertData && filteredOffers && filteredOffers.length > 0 ? (
-                filteredOffers.map((offre) => (
+                filteredOffers.map((offre: JobOffer) => (
                   <Card
                     key={offre.id}
                     className="hover:shadow-lg transition-shadow"
@@ -763,60 +751,6 @@ const ToutesLesOffresPage = () => {
           )}
         </TabsContent>
       </Tabs>
-
-      {/* Modal de bienvenue */}
-      <Dialog open={showWelcomeModal} onOpenChange={setShowWelcomeModal}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Bienvenue {candidat?.candidat?.prenom} !</DialogTitle>
-            <DialogDescription>
-              Nous sommes ravis de vous revoir. Découvrez les dernières offres
-              d'emploi correspondant à votre profil.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-sm text-muted-foreground">
-              Votre profil correspond à {matchOffersWithUser.length} offres
-              d'emploi. N'hésitez pas à postuler aux offres qui vous
-              intéressent.
-            </p>
-          </div>
-          <DialogFooter>
-            <Button onClick={() => setShowWelcomeModal(false)}>
-              Commencer
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
-        <DialogContent className="w-lg">
-          <DialogHeader>
-            <DialogTitle>Documents importants manquants</DialogTitle>
-            <DialogDescription>
-              Pour maximiser vos chances de trouver un emploi, il est important
-              de compléter votre profil en ajoutant votre CV et votre lettre de
-              motivation.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-sm text-muted-foreground">
-              Ces documents sont essentiels pour que les recruteurs puissent
-              vous connaître et vous contacter.
-            </p>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCvAlert(false)}>
-              Plus tard
-            </Button>
-            <Button asChild onClick={() => setShowCvAlert(false)}>
-              <Link href="/dashboard-candidats/informations-personnelles">
-                Compléter mon profil
-              </Link>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       {/* Modal de confirmation de postulation */}
       <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>

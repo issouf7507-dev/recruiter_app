@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+
+import { auth } from "@/lib/auth";
 
 // POST - Ajouter une note à une application
 export async function POST(
@@ -12,11 +13,23 @@ export async function POST(
     const body = await req.json();
     const { content } = body;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
     // Vérifier que l'application appartient au recruteur
     const application = await prisma.applicationCustom.findFirst({
       where: {
@@ -36,9 +49,10 @@ export async function POST(
       data: {
         applicationId,
         content,
-        authorId: authenticatedUser.userId,
-        authorType: authenticatedUser.type,
-        authorName: authenticatedUser.name || "Utilisateur",
+        authorId: recruteur?.id || collaborateur?.recruteur?.id || "",
+        authorType: "RECRUTEUR",
+        authorName:
+          recruteur?.name || collaborateur?.recruteur?.name || "Utilisateur",
       },
     });
 

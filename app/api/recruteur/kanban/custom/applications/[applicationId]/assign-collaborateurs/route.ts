@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { auth } from "@/lib/auth";
 
 // POST - Affecter des collaborateurs à une application
 export async function POST(
@@ -12,11 +12,23 @@ export async function POST(
     const body = await req.json();
     const { collaborateurIds } = body;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
     if (!Array.isArray(collaborateurIds) || collaborateurIds.length === 0) {
       return NextResponse.json(
         { error: "Liste de collaborateurs requise" },
@@ -43,7 +55,7 @@ export async function POST(
     const collaborateurs = await prisma.collaborateurCustom.findMany({
       where: {
         id: { in: collaborateurIds },
-        recruteurId: authenticatedUser.recruteurId,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 
@@ -68,7 +80,7 @@ export async function POST(
           data: {
             applicationId: applicationId,
             collaborateurId: collaborateurId,
-            assignedBy: authenticatedUser.recruteurId,
+            assignedBy: recruteur?.id || collaborateur?.recruteur?.id || "",
           },
           include: {
             collaborateur: true,
@@ -99,8 +111,21 @@ export async function GET(
   try {
     const { applicationId } = await params;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -140,8 +165,21 @@ export async function DELETE(
     const collaborateurId = searchParams.get("collaborateurId");
     const { applicationId } = await params;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 

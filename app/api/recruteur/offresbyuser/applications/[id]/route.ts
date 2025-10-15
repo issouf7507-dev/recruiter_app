@@ -1,36 +1,41 @@
 import { NextResponse, NextRequest } from "next/server";
-import { verify } from "jsonwebtoken";
+
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: number }> }
 ) {
   try {
-    const token = req.cookies.get("token")?.value;
-    const id = (await params).id;
-    if (!token) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    const id = (await params).id;
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const user = await prisma.user.findUnique({
       where: {
-        id: decoded.userId,
+        id: session.user.id,
       },
     });
 
     const candidatures = await prisma.application.findMany({
       where: {
-        jobOfferId: Number(id),
+        jobOfferId: String(id),
       },
       include: {
         candidat: true,

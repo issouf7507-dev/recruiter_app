@@ -85,7 +85,7 @@ const ExperiencesPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<ExperienceFormData>({
-    resolver: zodResolver(experienceSchema),
+    // resolver: zodResolver(experienceSchema),
     defaultValues: {
       poste: "",
       entreprise: "",

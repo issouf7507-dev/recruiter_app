@@ -37,11 +37,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import { useUserStore } from "@/store/userStore";
-import { postData, putData } from "@/utils/utilts";
-import { useMutation } from "@tanstack/react-query";
 import { FileUpload } from "@/components/ui/file-upload";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { useSession } from "@/lib/auth-client";
+import { useCandidatProfile } from "@/hooks/useCandidatProfile";
 
 const formSchema = z.object({
   nom: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
@@ -66,10 +65,16 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const InformationsPersonnellesPage = () => {
-  const { candidat, loading: authLoading, setCandidat } = useUserStore();
+  const { data: session, isPending } = useSession();
+  const {
+    profile,
+    isLoading: profileLoading,
+    updateProfile,
+    isUpdating,
+  } = useCandidatProfile();
+
   const [isEditing, setIsEditing] = useState(false);
   const [date, setDate] = useState<Date>();
-  const [formLoading, setFormLoading] = useState(true);
   const [customCompetence, setCustomCompetence] = useState("");
   const [showCustomInput, setShowCustomInput] = useState(false);
 
@@ -81,7 +86,7 @@ const InformationsPersonnellesPage = () => {
     setValue,
     watch,
   } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    // resolver: zodResolver(formSchema),
     defaultValues: {
       nom: "",
       prenom: "",
@@ -101,65 +106,44 @@ const InformationsPersonnellesPage = () => {
   });
 
   useEffect(() => {
-    if (candidat?.candidat) {
-      const ucandidat = candidat?.candidat;
-      console.log(ucandidat);
+    if (profile) {
       reset({
-        nom: ucandidat.nom || "",
-        prenom: ucandidat.prenom || "",
-        telephone: ucandidat.telephone || "",
-        adresse: ucandidat.adresse || "",
-        ville: ucandidat.ville || "",
-        pays: ucandidat.pays || "",
-        dateNaissance: ucandidat.dateNaissance
-          ? new Date(ucandidat.dateNaissance)
+        nom: profile.nom || "",
+        prenom: profile.prenom || "",
+        telephone: profile.telephone || "",
+        adresse: profile.adresse || "",
+        ville: profile.ville || "",
+        pays: profile.pays || "",
+        dateNaissance: profile.dateNaissance
+          ? new Date(profile.dateNaissance)
           : undefined,
-        nationalite: ucandidat.nationalite || "",
-        situationFamiliale: ucandidat.situationFamiliale || "",
-        permisConduire: ucandidat.permisConduire || "",
-        bio: ucandidat.bio || "",
-        image: ucandidat.image || "",
-        competences: ucandidat.competences || [],
-        cv: ucandidat.cv || "",
-        letterm: ucandidat.letterm || "",
+        nationalite: profile.nationalite || "",
+        situationFamiliale: profile.situationFamiliale || "",
+        permisConduire: profile.permisConduire || "",
+        bio: profile.bio || "",
+        image: profile.image || "",
+        competences: profile.competences || [],
+        cv: profile.cv || "",
+        letterm: profile.letterm || "",
       });
-      if (ucandidat.dateNaissance) {
-        setDate(new Date(ucandidat.dateNaissance));
+      if (profile.dateNaissance) {
+        setDate(new Date(profile.dateNaissance));
       }
-      setFormLoading(false);
     }
-  }, [candidat, reset]);
-
-  const updateMutation = useMutation({
-    mutationFn: (data: FormData) => putData(data, "/api/candidat/update"),
-    onSuccess: (result) => {
-      toast.success("Profil mis à jour avec succès");
-      setIsEditing(false);
-    },
-    onError: (error) => {
-      console.error("Erreur lors de la mise à jour:", error);
-      toast.error("Erreur lors de la mise à jour");
-    },
-  });
+  }, [profile, reset]);
 
   const onSubmit = async (data: FormData) => {
-    updateMutation.mutate(data);
-    // Mettre à jour le store avec les nouvelles données
-    if (candidat?.candidat) {
-      setCandidat({
-        ...candidat,
-        candidat: {
-          ...candidat.candidat,
-          ...data,
-          dateNaissance:
-            data.dateNaissance?.toISOString() ||
-            candidat.candidat.dateNaissance,
-        },
-      });
+    try {
+      await updateProfile(data);
+      toast.success("Profil mis à jour avec succès");
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour:", error);
+      toast.error("Erreur lors de la mise à jour");
     }
   };
 
-  if (authLoading || formLoading) {
+  if (isPending || profileLoading) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -186,12 +170,12 @@ const InformationsPersonnellesPage = () => {
                 setIsEditing(true);
               }
             }}
-            disabled={updateMutation.isPending}
+            disabled={isUpdating}
           >
             {isEditing ? (
               <>
-                {!updateMutation.isPending && <Save className="h-4 w-4 mr-2" />}
-                {updateMutation.isPending ? (
+                {!isUpdating && <Save className="h-4 w-4 mr-2" />}
+                {isUpdating ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                     Enregistrement

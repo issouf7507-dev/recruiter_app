@@ -75,7 +75,7 @@ const CandidatProfileForm = ({ onClose }: CandidatProfileFormProps) => {
     setValue,
     watch,
   } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+    // resolver: zodResolver(formSchema),
     defaultValues: {
       nom: "",
       prenom: "",

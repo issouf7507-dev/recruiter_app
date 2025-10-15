@@ -64,7 +64,7 @@ export default function ModelesOffres() {
   const [delAlerte, setDelAlerte] = useState(false);
 
   const form = useForm<z.infer<typeof templateFormSchema>>({
-    resolver: zodResolver(templateFormSchema),
+    // resolver: zodResolver(templateFormSchema),
     defaultValues: {
       name: "",
       description: "",

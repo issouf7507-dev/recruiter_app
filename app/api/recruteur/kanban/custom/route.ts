@@ -1,18 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { auth } from "@/lib/auth";
 
 // GET - Récupérer toutes les colonnes et applications custom pour un recruteur
 export async function GET(req: NextRequest) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const columns = await prisma.kanbanColumnCustom.findMany({
       where: {
-        recruteurId: authenticatedUser.recruteurId,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
       include: {
         applicationsCustom: {
@@ -60,8 +69,17 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, color, order } = body;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -71,7 +89,7 @@ export async function POST(req: NextRequest) {
         color,
         order: order || 1,
         jobOfferId: 1, // Valeur par défaut, peut être ajustée selon vos besoins
-        recruteurId: authenticatedUser.recruteurId,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
         applicationsCustomid: `custom_${Date.now()}`, // ID unique temporaire
       },
     });
@@ -98,8 +116,8 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const { columns } = body;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 

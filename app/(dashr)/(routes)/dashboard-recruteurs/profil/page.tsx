@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, Save, Loader2, Pencil } from "lucide-react";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/ui/image-upload";
+import { useSession } from "@/lib/auth-client";
 
 type CompanyProfile = {
   name: string;
@@ -51,30 +52,33 @@ export default function ProfilPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Charger les données du profil
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await fetch("/api/recruteur/profil");
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success) {
-            setProfile(data.data);
-            // window.location.reload();
-          }
-        } else {
-          toast.error("Erreur lors du chargement du profil");
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement du profil:", error);
-        toast.error("Erreur lors du chargement du profil");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const { data: session } = useSession();
 
-    fetchProfile();
-  }, []);
+  // Charger les données du profil
+  const fetchProfile = async () => {
+    try {
+      const response = await fetch("/api/recruteur/profil");
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          setProfile(data.data);
+          // window.location.reload();
+        }
+      } else {
+        toast.error("Erreur lors du chargement du profil");
+      }
+    } catch (error) {
+      console.error("Erreur lors du chargement du profil:", error);
+      toast.error("Erreur lors du chargement du profil");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetchProfile();
+    }
+  }, [session]);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -169,7 +173,7 @@ export default function ProfilPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Informations principales */}
-        <Card className="md:col-span-2">
+        <Card className="md:col-span-2 shadow-none">
           <CardHeader>
             <CardTitle>Informations générales</CardTitle>
           </CardHeader>
@@ -253,35 +257,57 @@ export default function ProfilPage() {
 
         {/* Logo et contacts */}
         <div className="space-y-6">
-          <Card>
+          <Card className="shadow-none">
             <CardHeader>
               <CardTitle>Logo</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col items-center space-y-4">
-                <Avatar className="h-32 w-32">
-                  <AvatarImage
-                    src={profile.logo || "/placeholder-avatar.jpg"}
-                  />
-                  <AvatarFallback>
-                    {profile.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .toUpperCase() || "LOGO"}
-                  </AvatarFallback>
-                </Avatar>
+                <div className="relative">
+                  <Avatar className="h-32 w-32">
+                    <AvatarImage
+                      src={profile.logo || "/placeholder-avatar.jpg"}
+                      alt="Logo de l'entreprise"
+                    />
+                    <AvatarFallback className="text-2xl">
+                      {profile.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase() || "LOGO"}
+                    </AvatarFallback>
+                  </Avatar>
+                  {isEditing && (
+                    <ImageUpload
+                      onUpload={(url) => setProfile({ ...profile, logo: url })}
+                      currentUrl={profile.logo}
+                      disabled={isSaving}
+                      successMessage="Logo mis à jour avec succès"
+                    />
+                  )}
+                </div>
                 {isEditing && (
-                  <ImageUpload
-                    onUpload={(url) => setProfile({ ...profile, logo: url })}
-                    currentUrl={profile.logo}
-                  />
+                  <div className="w-full">
+                    <ImageUpload
+                      variant="button"
+                      onUpload={(url) => setProfile({ ...profile, logo: url })}
+                      currentUrl={profile.logo}
+                      disabled={isSaving}
+                      uploadText="Changer le logo"
+                      successMessage="Logo mis à jour avec succès"
+                    />
+                  </div>
+                )}
+                {!isEditing && profile.logo && (
+                  <p className="text-sm text-muted-foreground text-center">
+                    Logo de l'entreprise
+                  </p>
                 )}
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="shadow-none">
             <CardHeader>
               <CardTitle>Contact</CardTitle>
             </CardHeader>
@@ -307,6 +333,8 @@ export default function ProfilPage() {
                   }
                   disabled={!isEditing}
                   placeholder="contact@ylsix-rh.com"
+                  type="email"
+                  readOnly={true}
                 />
               </div>
 
@@ -324,7 +352,7 @@ export default function ProfilPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="shadow-none">
             <CardHeader>
               <CardTitle>Réseaux sociaux</CardTitle>
             </CardHeader>

@@ -132,6 +132,8 @@ export default function Home() {
   const { theme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  // Redirection automatique si l'utilisateur est connecté
+
   // Search states
   const [searchQuery, setSearchQuery] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
@@ -180,6 +182,18 @@ export default function Home() {
     }, 4000);
     return () => clearTimeout(timer);
   }, []);
+
+  // Afficher un loader si l'utilisateur est connecté et en cours de redirection
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 mx-auto mb-4"></div>
+  //         <p className="text-lg text-gray-600">Redirection en cours...</p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (loadingLogo) {
     return (

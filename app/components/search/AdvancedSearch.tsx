@@ -108,7 +108,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({
   const [hasSearched, setHasSearched] = React.useState(false);
 
   const form = useForm<AdvancedSearchForm>({
-    resolver: zodResolver(advancedSearchSchema),
+    // resolver: zodResolver(advancedSearchSchema),
     defaultValues: {
       title: "",
       company: "",

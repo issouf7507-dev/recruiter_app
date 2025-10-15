@@ -48,7 +48,7 @@ import {
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
-
+import { useSession } from "@/lib/auth-client";
 // Schéma de validation pour le formulaire
 const offerFormSchema = z.object({
   title: z.string().nonempty("Le titre est requis"),
@@ -57,7 +57,7 @@ const offerFormSchema = z.object({
   type: z.string(),
   experience: z.string(),
   duedate: z.date({
-    required_error: "La date d'expiration est requise",
+    error: "La date d'expiration est requise",
   }),
   // education: z.string().nonempty("Le niveau d'études est requis"),
   description: z.string(),
@@ -74,14 +74,15 @@ const offerFormSchema = z.object({
 });
 
 export default function CreerOffre() {
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  const { data: session } = useSession();
   const [isSuccess, setIsSuccess] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof offerFormSchema>>({
-    resolver: zodResolver(offerFormSchema),
+    // resolver: zodResolver(offerFormSchema),
     defaultValues: {
       type: "CDI",
       salaryCurrency: "XOF",
@@ -108,7 +109,7 @@ export default function CreerOffre() {
     try {
       setIsSubmitting(true);
 
-      const newdata = { ...data, recruteurId: user?.id };
+      const newdata = { ...data, recruteurId: session?.user?.id };
 
       await postData(newdata, "/api/recruteur/offres").then((res) => {
         if (res.success) {

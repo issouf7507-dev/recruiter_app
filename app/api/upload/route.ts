@@ -2,29 +2,17 @@ import { NextResponse, NextRequest } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import { verify } from "jsonwebtoken";
+import { auth } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
     // Récupérer le token depuis les cookies
-    const token = req.cookies.get("candidat")?.value;
 
-    if (!token) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
-
-    // Vérifier le token
-    let decoded;
-    try {
-      decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
-        userId: string;
-        type: string;
-      };
-    } catch (error) {
-      console.error("Erreur de vérification du token:", error);
-      return NextResponse.json({ error: "Token invalide" }, { status: 401 });
-    }
-
-    if (decoded.type !== "CANDIDAT") {
+    if (!session.user.id) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -54,7 +42,7 @@ export async function POST(req: NextRequest) {
 
     // Créer un nom de fichier unique
     const timestamp = Date.now();
-    const filename = `${decoded.userId}_${type}_${timestamp}${fileExtension}`;
+    const filename = `${session.user.id}_${type}_${timestamp}${fileExtension}`;
 
     // Créer le dossier uploads s'il n'existe pas
     const uploadDir = join(process.cwd(), "public", "uploads");

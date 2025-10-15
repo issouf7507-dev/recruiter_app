@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Loader2, Camera } from "lucide-react";
+import { Loader2, Camera, Upload } from "lucide-react";
 import { useEdgeStore } from "@/lib/edgestore";
 import { toast } from "sonner";
 
@@ -10,12 +10,18 @@ interface ImageUploadProps {
   onUpload: (url: string) => void;
   currentUrl?: string;
   disabled?: boolean;
+  variant?: "icon" | "button";
+  uploadText?: string;
+  successMessage?: string;
 }
 
 export const ImageUpload = ({
   onUpload,
   currentUrl,
   disabled = false,
+  variant = "icon",
+  uploadText = "Choisir une image",
+  successMessage,
 }: ImageUploadProps) => {
   const [uploading, setUploading] = useState(false);
   const { edgestore } = useEdgeStore();
@@ -23,6 +29,18 @@ export const ImageUpload = ({
   const handleImageUpload = async (file: File) => {
     try {
       setUploading(true);
+
+      // Validation de la taille du fichier (max 5MB pour les logos)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Le fichier est trop volumineux (max 5MB)");
+        return;
+      }
+
+      // Validation du type de fichier
+      if (!file.type.startsWith("image/")) {
+        toast.error("Seuls les fichiers image sont acceptés");
+        return;
+      }
 
       const uploadedFile = await edgestore.publicFiles.upload({
         file,
@@ -33,7 +51,9 @@ export const ImageUpload = ({
 
       if (uploadedFile.url) {
         onUpload(uploadedFile.url);
-        toast.success(`Photo de profil "${file.name}" mise à jour`);
+        toast.success(
+          successMessage || `Image "${file.name}" uploadée avec succès`
+        );
       } else {
         toast.error("Erreur lors de l'upload");
       }
@@ -57,6 +77,30 @@ export const ImageUpload = ({
     };
     input.click();
   };
+
+  if (variant === "button") {
+    return (
+      <Button
+        variant="outline"
+        type="button"
+        disabled={disabled || uploading}
+        onClick={handleImageSelect}
+        className="w-full"
+      >
+        {uploading ? (
+          <>
+            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            Upload en cours...
+          </>
+        ) : (
+          <>
+            <Upload className="h-4 w-4 mr-2" />
+            {uploadText}
+          </>
+        )}
+      </Button>
+    );
+  }
 
   return (
     <Button

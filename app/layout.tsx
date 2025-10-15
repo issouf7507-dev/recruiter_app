@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { MyQueryClientProvider } from "@/provider/queryclientprovider";
 import { EdgeStoreProvider } from "@/lib/edgestore";
+import { PasswordCheckGuard } from "@/components/password-check-guard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +41,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <MyQueryClientProvider>
-            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+            <EdgeStoreProvider>
+              <PasswordCheckGuard>{children}</PasswordCheckGuard>
+            </EdgeStoreProvider>
           </MyQueryClientProvider>
         </ThemeProvider>
         <Toaster />

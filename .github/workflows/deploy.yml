@@ -2,7 +2,7 @@ name: Deploy to VPS
 
 on:
   push:
-    branches: [dev-issouf-feature]
+    branches: [dev-issouf-secure]
   workflow_dispatch:
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
             mkdir -p current
 
             # Cloner le code depuis GitHub
-            git clone -b dev-issouf-feature https://github.com/${{ github.repository }}.git temp-deploy
+            git clone -b dev-issouf-secure https://github.com/${{ github.repository }}.git temp-deploy
 
             # Copier les fichiers nécessaires
             cp -r temp-deploy/* current/

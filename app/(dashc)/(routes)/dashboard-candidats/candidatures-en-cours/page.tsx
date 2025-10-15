@@ -47,7 +47,8 @@ import {
   Phone,
   Mail,
 } from "lucide-react";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+// import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+import { useSession } from "@/lib/auth-client";
 
 interface Etape {
   nom: string;
@@ -78,7 +79,9 @@ interface Candidature {
 }
 
 const CandidaturesEnCoursPage = () => {
-  const { candidat } = useAuthCandidat();
+  // const { candidat } = useAuthCandidat();
+
+  const { data: session, isPending } = useSession();
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
   const [filters, setFilters] = useState({
     status: "all",
@@ -92,10 +95,10 @@ const CandidaturesEnCoursPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    if (candidat?.candidat?.id) {
+    if (session?.user?.id) {
       fetchCandidatures();
     }
-  }, [candidat]);
+  }, [session]);
 
   const fetchCandidatures = async () => {
     try {
@@ -217,7 +220,7 @@ const CandidaturesEnCoursPage = () => {
     acceptees: candidatures.filter((c) => c.status === "acceptées").length,
   };
 
-  if (loading) {
+  if (isPending) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center w-full">
         <div className="text-center space-y-4">
@@ -239,7 +242,7 @@ const CandidaturesEnCoursPage = () => {
         {/* Header Section */}
         <div className="relative">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/20 rounded-2xl opacity-50"></div>
-          <div className="relative p-8 rounded-2xl bg-card/80 backdrop-blur-sm border border-border shadow-xl">
+          <div className="relative p-8 rounded-2xl bg-card/80 backdrop-blur-sm border border-border shadow-none">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
@@ -266,7 +269,7 @@ const CandidaturesEnCoursPage = () => {
         </div>
 
         {/* Search and Filters */}
-        <Card className="bg-card border border-border shadow-lg">
+        <Card className="bg-card border border-border shadow-none">
           <CardContent className="p-6">
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
               <div className="relative flex-1 max-w-md">
@@ -351,7 +354,7 @@ const CandidaturesEnCoursPage = () => {
 
         {/* Results */}
         {filteredCandidatures.length === 0 ? (
-          <Card className="bg-card border border-border shadow-lg">
+          <Card className="bg-card border border-border shadow-none">
             <CardContent className="p-12 text-center">
               <div className="relative">
                 <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
@@ -380,7 +383,7 @@ const CandidaturesEnCoursPage = () => {
                 key={candidature.id}
                 className={`bg-card border-l-4 ${getStatusColor(
                   candidature.status
-                )} border-border shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1`}
+                )} border-border shadow-none  transition-all duration-300 transform hover:-translate-y-1`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6">
@@ -476,8 +479,8 @@ const CandidaturesEnCoursPage = () => {
                                 etape.statut === "complete"
                                   ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white"
                                   : etape.statut === "current"
-                                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ring-4 ring-primary/20"
-                                  : "bg-muted text-muted-foreground border-2 border-border"
+                                    ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ring-4 ring-primary/20"
+                                    : "bg-muted text-muted-foreground border-2 border-border"
                               }`}
                             >
                               {etape.statut === "complete" ? (
@@ -495,8 +498,8 @@ const CandidaturesEnCoursPage = () => {
                               {etape.nom === "Refusées"
                                 ? "Refusé"
                                 : etape.nom === "Finalisées"
-                                ? "Finalisées"
-                                : etape.date}
+                                  ? "Finalisées"
+                                  : etape.date}
                             </div>
                           </div>
                         ))}
@@ -514,7 +517,7 @@ const CandidaturesEnCoursPage = () => {
                 key={candidature.id}
                 className={`bg-card border-l-4 ${getStatusColor(
                   candidature.status
-                )} border-border shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105`}
+                )} border-border shadow-none transition-all duration-300 transform hover:-translate-y-2 hover:scale-105`}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 <CardContent className="p-6">
@@ -604,8 +607,8 @@ const CandidaturesEnCoursPage = () => {
                                 etape.statut === "complete"
                                   ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white"
                                   : etape.statut === "current"
-                                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ring-2 ring-primary/20"
-                                  : "bg-muted text-muted-foreground"
+                                    ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ring-2 ring-primary/20"
+                                    : "bg-muted text-muted-foreground"
                               }`}
                             >
                               {etape.statut === "complete" ? (
@@ -776,8 +779,8 @@ const CandidaturesEnCoursPage = () => {
                             etape.statut === "complete"
                               ? "bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800"
                               : etape.statut === "current"
-                              ? "bg-primary/10 border border-primary/20"
-                              : "bg-muted border border-border"
+                                ? "bg-primary/10 border border-primary/20"
+                                : "bg-muted border border-border"
                           }`}
                         >
                           <div
@@ -785,8 +788,8 @@ const CandidaturesEnCoursPage = () => {
                               etape.statut === "complete"
                                 ? "bg-gradient-to-r from-green-500 to-emerald-500 text-white"
                                 : etape.statut === "current"
-                                ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ring-4 ring-primary/20"
-                                : "bg-muted text-muted-foreground border-2 border-border"
+                                  ? "bg-gradient-to-r from-primary to-primary/80 text-primary-foreground ring-4 ring-primary/20"
+                                  : "bg-muted text-muted-foreground border-2 border-border"
                             }`}
                           >
                             {etape.statut === "complete" ? (

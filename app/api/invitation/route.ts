@@ -4,25 +4,21 @@ import prisma from "@/lib/prisma";
 import { randomBytes } from "crypto";
 
 import { MailService } from "@/app/services/mail.service";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
-import { verify } from "jsonwebtoken";
+
+import { auth } from "@/lib/auth";
 
 // Route pour créer une nouvelle invitation
 export async function POST(req: NextRequest) {
   try {
-    const tokenv = req.cookies.get("token")?.value;
-
-    if (!tokenv) {
-      return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(tokenv, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
+    // const recruteur = await prisma.recruteur.findUnique({
 
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { id: session?.user.id },
       include: {
         recruteur: true,
       },
@@ -88,7 +84,7 @@ export async function POST(req: NextRequest) {
 
     // Envoyer l'email d'invitation
     const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL}/accept?token=${token}`;
-
+    console.log("token envoyer", token);
     await MailService.sendEmail(
       email,
       "🎉 Invitation à rejoindre notre équipe de recrutement !",
@@ -157,6 +153,7 @@ export async function POST(req: NextRequest) {
             <p style="text-align: center; color: #666; font-size: 14px; margin-top: 30px;">
               Si le bouton ne fonctionne pas, copiez et collez ce lien dans votre navigateur :<br>
               <a href="${inviteUrl}" style="color: #667eea; word-break: break-all;">${inviteUrl}</a>
+              // ${token}
             </p>
             
           </div>
@@ -190,15 +187,21 @@ export async function POST(req: NextRequest) {
 // Route pour récupérer les invitations d'un recruteur
 export async function GET(req: NextRequest) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
-    if (!authenticatedUser) {
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    if (!recruteur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const invitations = await prisma.invitation.findMany({
       where: {
-        recruteurId: authenticatedUser.recruteurId,
+        recruteurId: recruteur.id,
       },
       include: {
         collaborateur: true,

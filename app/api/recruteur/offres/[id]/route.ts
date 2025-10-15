@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+
+import { auth } from "@/lib/auth";
 // import { cacheUtils, CACHE_KEYS, CACHE_TTL } from "@/lib/redis";
 
 export async function PUT(
@@ -10,7 +11,11 @@ export async function PUT(
   try {
     const id = (await params).id;
     const body = await req.json();
-    console.log("Received skills in API:", body.skills);
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
     const {
       title,
       description,
@@ -31,16 +36,30 @@ export async function PUT(
       // recruteurId,
     } = body;
 
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session.user.id },
+    });
+
+    const collaborateur = await prisma.collaborateur.findFirst({
+      where: { userId: session.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
     // First, delete existing competences for this job offer
     await prisma.jobOfferCompetence.deleteMany({
       where: {
-        jobOfferId: Number(id),
+        jobOfferId: id as string,
       },
     });
 
     const jobOffer = await prisma.jobOffer.update({
       where: {
-        id: Number(id),
+        id: id as string,
       },
       data: {
         title,
@@ -85,19 +104,29 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const authenticatedUser = await getAuthenticatedUser(req);
+    // const authenticatedUser = await getAuthenticatedUser(req);
     const offerId = (await params).id;
 
-    if (
-      authenticatedUser &&
-      (authenticatedUser.type === "RECRUTEUR" ||
-        authenticatedUser.type === "COLLABORATEUR")
-    ) {
+    const session = await auth.api.getSession({ headers: req.headers });
+
+    if (session?.user && session.user.id) {
       // Version privée (toutes les infos)
+
+      const recruteurId = await prisma.recruteur.findUnique({
+        where: { userId: session.user.id },
+      });
+
+      const collaborateur = await prisma.collaborateur.findFirst({
+        where: { userId: session.user.id },
+        include: {
+          recruteur: true,
+        },
+      });
+
       const offer = await prisma.jobOffer.findFirst({
         where: {
-          id: Number(offerId),
-          recruteurId: authenticatedUser.recruteurId,
+          id: offerId as string,
+          recruteurId: recruteurId?.id || collaborateur?.recruteur?.id || "",
         },
         include: {
           kanbanColumns: { orderBy: { order: "asc" } },
@@ -157,7 +186,7 @@ export async function GET(
     } else {
       // Version publique (infos de base)
       const offer = await prisma.jobOffer.findFirst({
-        where: { id: Number(offerId) },
+        where: { id: offerId as string },
         include: {
           jobOfferCompetences: {
             select: { competence: true },
@@ -189,17 +218,36 @@ export async function DELETE(
   try {
     const id = (await params).id;
 
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const collaborateur = await prisma.collaborateur.findFirst({
+      where: { userId: session.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session.user.id },
+    });
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
     // Supprimer d'abord les colonnes du kanban associées
     await prisma.kanbanColumn.deleteMany({
       where: {
-        jobOfferId: Number(id),
+        jobOfferId: id as string,
       },
     });
 
     // Supprimer l'offre
     const jobOffer = await prisma.jobOffer.delete({
       where: {
-        id: Number(id),
+        id: id as string,
       },
     });
 
@@ -208,7 +256,6 @@ export async function DELETE(
       { status: 200 }
     );
   } catch (err) {
-    console.log(err);
     return NextResponse.json(
       {
         success: false,

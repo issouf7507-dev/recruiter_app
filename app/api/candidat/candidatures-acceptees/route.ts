@@ -1,28 +1,41 @@
 import { NextResponse, NextRequest } from "next/server";
 import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get("candidat")?.value;
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
+    // const token = req.cookies.get("candidat")?.value;
+    // if (!token) {
+    //   return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    // }
 
-    const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
-      userId: string;
-      type: string;
-    };
+    // const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
+    //   userId: string;
+    //   type: string;
+    // };
 
-    if (decoded.type !== "CANDIDAT") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
+    // if (decoded.type !== "CANDIDAT") {
+    //   return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    // }
 
-    // Récupérer le candidat
-    const candidat = await prisma.candidat.findFirst({
-      where: {
-        userId: decoded.userId,
-      },
+    // // Récupérer le candidat
+    // const candidat = await prisma.candidat.findFirst({
+    //   where: {
+    //     userId: decoded.userId,
+    //   },
+    // });
+
+    // if (!candidat) {
+    //   return NextResponse.json(
+    //     { error: "Candidat non trouvé" },
+    //     { status: 404 }
+    //   );
+    // }
+
+    const session = await auth.api.getSession({ headers: req.headers });
+    const candidat = await prisma.candidat.findUnique({
+      where: { userId: session?.user.id },
     });
 
     if (!candidat) {

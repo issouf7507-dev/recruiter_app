@@ -1,31 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
   try {
-    // Récupérer le token depuis les cookies
-    const token = req.cookies.get("candidat")?.value;
+    const session = await auth.api.getSession({ headers: req.headers });
 
-    if (!token) {
+    if (!session) {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    // Vérifier le token
-    const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
-      userId: string;
-      type: string;
-    };
+    if (!session?.user) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
     // Récupérer l'utilisateur avec les compétences du candidat
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { id: session?.user.id },
       include: {
-        candidat: {
-          include: {
-            candidatCompetences: true,
-          },
-        },
+        candidat: true,
+        recruteur: true,
       },
     });
 
@@ -37,20 +32,6 @@ export async function GET(req: NextRequest) {
     }
 
     // Transformer les données pour inclure les compétences dans le bon format
-    if (user.candidat) {
-      const competences = user.candidat.candidatCompetences.map(
-        (comp) => comp.competence
-      );
-
-      // Créer un nouvel objet candidat avec les compétences
-      const candidatWithCompetences = {
-        ...user.candidat,
-        competences: competences,
-      };
-
-      // Remplacer le candidat dans l'objet user
-      user.candidat = candidatWithCompetences as any;
-    }
 
     // Retourner l'utilisateur sans le mot de passe
     const { password, ...userWithoutPassword } = user;

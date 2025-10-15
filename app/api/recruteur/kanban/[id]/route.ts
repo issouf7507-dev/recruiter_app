@@ -29,7 +29,7 @@ export async function PUT(
 
     const kanbanColumn = await prisma.kanbanColumn.update({
       where: { id },
-      data: { name, color, jobOfferId: Number(jobOfferId) },
+      data: { name, color, jobOfferId: jobOfferId as string },
     });
 
     return NextResponse.json(

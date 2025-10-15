@@ -35,7 +35,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 // import { AlerteNotification } from "@/app/components/notifications/alerte-notification";
@@ -114,7 +114,7 @@ const AlertesEmploiPage = () => {
   const queryClient = useQueryClient();
 
   const form = useForm<AlerteFormData>({
-    resolver: zodResolver(alerteSchema),
+    // resolver: zodResolver(alerteSchema),
     defaultValues: {
       titre: "",
       motsCles: [],
@@ -297,7 +297,9 @@ const AlertesEmploiPage = () => {
             <h2 className="font-semibold">Nouvelle alerte</h2>
             <Form {...form}>
               <form
-                onSubmit={form.handleSubmit(onSubmit)}
+                onSubmit={form.handleSubmit(
+                  onSubmit as SubmitHandler<FieldValues>
+                )}
                 className="space-y-4"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

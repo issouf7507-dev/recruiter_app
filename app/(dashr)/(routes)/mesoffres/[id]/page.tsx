@@ -37,6 +37,7 @@ import KanbanBoard from "@/app/components/kanban/KanbanBoard";
 import ManualKanbanBoard from "@/app/components/kanban/ManualKanbanBoard";
 import CalendarView from "@/app/components/kanban/CalendarView";
 import { useRecruteurId } from "@/hooks/useRecruteurId";
+import { useSession } from "@/lib/auth-client";
 
 // Types pour une meilleure sécurité des données
 interface OfferData {
@@ -68,9 +69,11 @@ export default function OffreDetail({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { user } = useUserStore();
+  // const { user } = useUserStore();
+  const { data: session, isPending } = useSession();
   const router = useRouter();
   const { id: offerId } = use(params);
+  // console.log("offerId", offerId);
   const recruteurId = useRecruteurId();
   const [activeTab, setActiveTab] = useState("details");
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
@@ -85,12 +88,10 @@ export default function OffreDetail({
     error: offerError,
     refetch: queryoffresbyidrefetch,
   } = useQuery({
-    queryKey: ["queryoffresbyid", offerId],
+    queryKey: ["queryoffresbyidsws", offerId],
     queryFn: () => fetchDataById(`/api/recruteur/offres/${offerId}`),
     enabled: !!offerId,
   });
-
-  console.log("queryoffresbyid", queryoffresbyid);
 
   // Mettre à jour les applications locales quand les données changent
   useEffect(() => {
@@ -108,7 +109,7 @@ export default function OffreDetail({
     );
   };
 
-  console.log("user", user);
+  // console.log("user", session?.user?.id);
 
   // Récupérer toutes les offres du recruteur pour l'historique
   const {
@@ -116,12 +117,15 @@ export default function OffreDetail({
     isLoading: allOffersLoading,
     error: allOffersError,
   } = useQuery({
-    queryKey: ["allOffers", recruteurId],
-    queryFn: () => fetchData(`/api/recruteur/offresbyuser/${recruteurId}`),
-    enabled: !!recruteurId,
+    queryKey: ["allOffers", session?.user?.id],
+    queryFn: () =>
+      fetchData(`/api/recruteur/offresbyuser/${session?.user?.id}`),
+    enabled: !!session?.user?.id,
   });
 
-  console.log("allOffers", allOffers);
+  // console.log("allOffers", allOffers);
+
+  // console.log("allOffers", allOffers);
 
   // Fonction utilitaire pour accéder aux données de l'offre de manière sécurisée
   const getOfferData = (): OfferData | null => {
@@ -158,7 +162,7 @@ export default function OffreDetail({
   if (offerError || allOffersError) {
     return (
       <div className="flex h-screen w-full overflow-x-hidden">
-        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
         <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -184,7 +188,7 @@ export default function OffreDetail({
   if (isLoading || allOffersLoading) {
     return (
       <div className="flex h-screen w-full overflow-x-hidden">
-        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
         <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
           <div className="flex items-center justify-center min-h-[60vh] w-full">
             <Loader2 className="h-8 w-8 animate-spin" />
@@ -198,7 +202,7 @@ export default function OffreDetail({
   if (!offerDataFromQuery) {
     return (
       <div className="flex h-screen w-full overflow-x-hidden">
-        <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+        <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
         <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">
           <Alert>
             <AlertCircle className="h-4 w-4" />
@@ -217,7 +221,7 @@ export default function OffreDetail({
   return (
     <div className="flex h-screen w-full overflow-x-hidden">
       {/* Sidebar */}
-      <SidebarOffres offres={allOffers || []} selectedId={offerId} />
+      <SidebarOffres offres={allOffers?.data || []} selectedId={offerId} />
 
       {/* Main content */}
       <main className="flex-1 p-8 overflow-y-auto w-full overflow-x-hidden">

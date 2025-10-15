@@ -47,6 +47,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { useSession } from "@/lib/auth-client";
 
 // Schéma de validation pour le formulaire
 const offerFormSchema = z.object({
@@ -75,13 +76,13 @@ export default function ModifierOffre({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { user } = useAuth();
+  const { data: session, isPending } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { id } = use(params);
 
   const form = useForm<z.infer<typeof offerFormSchema>>({
-    resolver: zodResolver(offerFormSchema),
+    // resolver: zodResolver(offerFormSchema),
     defaultValues: {
       type: "",
       salaryCurrency: "",
@@ -178,7 +179,7 @@ export default function ModifierOffre({
       const newdata = {
         ...data,
         skills: Array.isArray(data.skills) ? data.skills : [data.skills],
-        recruteurId: user?.id,
+        recruteurId: session?.user?.id,
       };
 
       console.log("Skills after processing:", newdata.skills);

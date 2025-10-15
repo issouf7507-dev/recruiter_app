@@ -14,7 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/hooks/useAuth";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+
 import { JobOffer } from "@/types/types";
 import {
   MapPin,
@@ -51,6 +51,7 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import CandidatProfileForm from "@/components/CandidatProfileForm";
+import { useSession } from "@/lib/auth-client";
 
 export default function OffreDetailPage() {
   const params = useParams();
@@ -62,12 +63,13 @@ export default function OffreDetailPage() {
   const [otherOffers, setOtherOffers] = useState<JobOffer[]>([]);
   const [loadingOtherOffers, setLoadingOtherOffers] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [showCvAlert, setShowCvAlert] = useState(false);
+
   const [postulatedOffers, setPostulatedOffers] = useState<number[]>([]);
   const [selectedOfferId, setSelectedOfferId] = useState<number | null>(null);
   const [isOpenCandidat, setIsOpenCandidat] = useState(false);
   const { user, loading: authLoading } = useAuth();
-  const { candidat, loading: candidatLoading } = useAuthCandidat();
+  // const { candidat, loading: candidatLoading } = useAuthCandidat();
+  const { data: session, isPending } = useSession();
 
   useEffect(() => {
     if (params.id) {
@@ -91,10 +93,10 @@ export default function OffreDetailPage() {
   };
 
   useEffect(() => {
-    if (candidat?.candidat?.id) {
+    if (session?.user?.id) {
       loadPostulatedOffers();
     }
-  }, [candidat]);
+  }, [session]);
 
   const fetchOffre = async () => {
     try {
@@ -157,8 +159,7 @@ export default function OffreDetailPage() {
   const handleConfirmPostuler = () => {
     if (!selectedOfferId) return;
 
-    if (!candidat?.candidat?.cv || !candidat?.candidat?.letterm) {
-      setShowCvAlert(true);
+    if (!session?.user || !session?.user) {
       setShowConfirmModal(false);
       return;
     }
@@ -217,7 +218,7 @@ export default function OffreDetailPage() {
     });
   };
 
-  if (loading || authLoading || candidatLoading) {
+  if (loading || authLoading || isPending) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
@@ -363,7 +364,7 @@ export default function OffreDetailPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {candidat ? (
+                {session?.user?.id ? (
                   <>
                     <Button
                       onClick={() => handlePostuler(offre.id)}
@@ -688,43 +689,6 @@ export default function OffreDetailPage() {
           )}
         </div>
       </div>
-
-      <Dialog open={showCvAlert} onOpenChange={setShowCvAlert}>
-        <DialogContent className="w-[90vw] max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Documents importants manquants</DialogTitle>
-            <DialogDescription>
-              Pour maximiser vos chances de trouver un emploi, il est important
-              de compléter votre profil en ajoutant votre CV et votre lettre de
-              motivation.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="py-4">
-            <p className="text-sm text-muted-foreground">
-              Ces documents sont essentiels pour que les recruteurs puissent
-              vous connaître et vous contacter.
-            </p>
-          </div>
-          <DialogFooter className="flex flex-col sm:flex-row gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setShowCvAlert(false)}
-              className="w-full sm:w-auto"
-            >
-              Plus tard
-            </Button>
-            <Button
-              onClick={() => {
-                setShowCvAlert(false);
-                setIsOpenCandidat(true);
-              }}
-              className="w-full sm:w-auto"
-            >
-              Compléter mon profil
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       {/* Modal de confirmation de postulation */}
       <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>

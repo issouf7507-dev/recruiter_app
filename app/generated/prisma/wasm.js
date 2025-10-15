@@ -123,8 +123,22 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   password: 'password',
+  passwordNeedsUpdate: 'passwordNeedsUpdate',
   image: 'image',
   type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BackupUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  password: 'password',
+  type: 'type',
+  userData: 'userData',
+  migrated: 'migrated',
+  migratedAt: 'migratedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -150,13 +164,6 @@ exports.Prisma.CandidatScalarFieldEnum = {
   image: 'image'
 };
 
-exports.Prisma.CandidatCompetenceScalarFieldEnum = {
-  id: 'id',
-  candidatId: 'candidatId',
-  competence: 'competence',
-  createdAt: 'createdAt'
-};
-
 exports.Prisma.RecruteurScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -173,6 +180,13 @@ exports.Prisma.RecruteurScalarFieldEnum = {
   phone: 'phone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CandidatCompetenceScalarFieldEnum = {
+  id: 'id',
+  candidatId: 'candidatId',
+  competence: 'competence',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.CompanySocialScalarFieldEnum = {
@@ -319,26 +333,31 @@ exports.Prisma.KanbanColumnScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.AccountScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  type: 'type',
-  provider: 'provider',
-  providerAccountId: 'providerAccountId',
-  refresh_token: 'refresh_token',
-  access_token: 'access_token',
-  expires_at: 'expires_at',
-  token_type: 'token_type',
-  scope: 'scope',
-  id_token: 'id_token',
-  session_state: 'session_state'
-};
-
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
-  sessionToken: 'sessionToken',
+  expiresAt: 'expiresAt',
+  token: 'token',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  userId: 'userId'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  providerId: 'providerId',
   userId: 'userId',
-  expires: 'expires'
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  idToken: 'idToken',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  scope: 'scope',
+  password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VerificationTokenScalarFieldEnum = {
@@ -546,26 +565,23 @@ exports.Prisma.ChecklistItemCustomScalarFieldEnum = {
 
 exports.Prisma.CandidatCustomScalarFieldEnum = {
   id: 'id',
-  nom: 'nom',
-  prenom: 'prenom',
-  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
-  telephone: 'telephone',
   cv: 'cv',
-  letterm: 'letterm',
-  bio: 'bio',
-  adresse: 'adresse',
-  ville: 'ville',
-  statut: 'statut',
-  pays: 'pays',
-  dateNaissance: 'dateNaissance',
-  nationalite: 'nationalite',
-  situationFamiliale: 'situationFamiliale',
-  permisConduire: 'permisConduire',
-  image: 'image',
+  cvUrl: 'cvUrl',
   applicationId: 'applicationId'
+};
+
+exports.Prisma.CandidatDocumentScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  fileSize: 'fileSize',
+  candidatId: 'candidatId'
 };
 
 exports.Prisma.ApplicationCustomScalarFieldEnum = {
@@ -580,9 +596,136 @@ exports.Prisma.ApplicationCustomScalarFieldEnum = {
   kanbanColumnCustomid: 'kanbanColumnCustomid'
 };
 
+exports.Prisma.VerificationScalarFieldEnum = {
+  id: 'id',
+  identifier: 'identifier',
+  value: 'value',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CVTemplateScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  layout: 'layout',
+  colors: 'colors',
+  fonts: 'fonts',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CVScalarFieldEnum = {
+  id: 'id',
+  candidatId: 'candidatId',
+  templateId: 'templateId',
+  title: 'title',
+  isPublic: 'isPublic',
+  lastExportedAt: 'lastExportedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CVPersonalInfoScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  jobTitle: 'jobTitle',
+  email: 'email',
+  phone: 'phone',
+  address: 'address',
+  city: 'city',
+  postalCode: 'postalCode',
+  country: 'country',
+  dateOfBirth: 'dateOfBirth',
+  nationality: 'nationality',
+  maritalStatus: 'maritalStatus',
+  drivingLicense: 'drivingLicense',
+  website: 'website',
+  linkedin: 'linkedin',
+  github: 'github',
+  portfolio: 'portfolio',
+  profileImage: 'profileImage',
+  summary: 'summary'
+};
+
+exports.Prisma.CVExperienceScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  position: 'position',
+  company: 'company',
+  location: 'location',
+  contractType: 'contractType',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isCurrent: 'isCurrent',
+  description: 'description',
+  achievements: 'achievements',
+  skills: 'skills',
+  order: 'order'
+};
+
+exports.Prisma.CVEducationScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  degree: 'degree',
+  institution: 'institution',
+  field: 'field',
+  location: 'location',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isCurrent: 'isCurrent',
+  description: 'description',
+  grade: 'grade',
+  honors: 'honors',
+  order: 'order'
+};
+
+exports.Prisma.CVSkillScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  name: 'name',
+  category: 'category',
+  level: 'level',
+  order: 'order'
+};
+
+exports.Prisma.CVLanguageScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  name: 'name',
+  level: 'level',
+  certification: 'certification',
+  order: 'order'
+};
+
+exports.Prisma.CVInterestScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  name: 'name',
+  description: 'description',
+  order: 'order'
+};
+
+exports.Prisma.CVCustomSectionScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  title: 'title',
+  content: 'content',
+  order: 'order'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.NullsOrder = {
@@ -596,6 +739,15 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   email: 'email',
   password: 'password',
   image: 'image'
+};
+
+exports.Prisma.BackupUserOrderByRelevanceFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  password: 'password',
+  type: 'type',
+  userData: 'userData'
 };
 
 exports.Prisma.CandidatOrderByRelevanceFieldEnum = {
@@ -618,12 +770,6 @@ exports.Prisma.CandidatOrderByRelevanceFieldEnum = {
   image: 'image'
 };
 
-exports.Prisma.CandidatCompetenceOrderByRelevanceFieldEnum = {
-  id: 'id',
-  candidatId: 'candidatId',
-  competence: 'competence'
-};
-
 exports.Prisma.RecruteurOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -637,6 +783,12 @@ exports.Prisma.RecruteurOrderByRelevanceFieldEnum = {
   website: 'website',
   email: 'email',
   phone: 'phone'
+};
+
+exports.Prisma.CandidatCompetenceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidatId: 'candidatId',
+  competence: 'competence'
 };
 
 exports.Prisma.CompanySocialOrderByRelevanceFieldEnum = {
@@ -671,6 +823,7 @@ exports.Prisma.ApplicationCollaborateurOrderByRelevanceFieldEnum = {
 };
 
 exports.Prisma.JobOfferOrderByRelevanceFieldEnum = {
+  id: 'id',
   title: 'title',
   description: 'description',
   company: 'company',
@@ -689,6 +842,7 @@ exports.Prisma.JobOfferOrderByRelevanceFieldEnum = {
 
 exports.Prisma.JobOfferCompetenceOrderByRelevanceFieldEnum = {
   id: 'id',
+  jobOfferId: 'jobOfferId',
   competence: 'competence'
 };
 
@@ -702,6 +856,7 @@ exports.Prisma.OfferTemplateOrderByRelevanceFieldEnum = {
 exports.Prisma.ApplicationOrderByRelevanceFieldEnum = {
   id: 'id',
   candidatId: 'candidatId',
+  jobOfferId: 'jobOfferId',
   columnId: 'columnId',
   message: 'message',
   cv: 'cv'
@@ -738,27 +893,28 @@ exports.Prisma.ApplicationFileOrderByRelevanceFieldEnum = {
 exports.Prisma.KanbanColumnOrderByRelevanceFieldEnum = {
   id: 'id',
   color: 'color',
-  name: 'name'
-};
-
-exports.Prisma.AccountOrderByRelevanceFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  type: 'type',
-  provider: 'provider',
-  providerAccountId: 'providerAccountId',
-  refresh_token: 'refresh_token',
-  access_token: 'access_token',
-  token_type: 'token_type',
-  scope: 'scope',
-  id_token: 'id_token',
-  session_state: 'session_state'
+  name: 'name',
+  jobOfferId: 'jobOfferId'
 };
 
 exports.Prisma.SessionOrderByRelevanceFieldEnum = {
   id: 'id',
-  sessionToken: 'sessionToken',
+  token: 'token',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
   userId: 'userId'
+};
+
+exports.Prisma.AccountOrderByRelevanceFieldEnum = {
+  id: 'id',
+  accountId: 'accountId',
+  providerId: 'providerId',
+  userId: 'userId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  idToken: 'idToken',
+  scope: 'scope',
+  password: 'password'
 };
 
 exports.Prisma.VerificationTokenOrderByRelevanceFieldEnum = {
@@ -844,6 +1000,7 @@ exports.Prisma.NotificationOrderByRelevanceFieldEnum = {
 
 exports.Prisma.ConversationOrderByRelevanceFieldEnum = {
   id: 'id',
+  jobOfferId: 'jobOfferId',
   candidatId: 'candidatId',
   recruteurId: 'recruteurId'
 };
@@ -910,22 +1067,18 @@ exports.Prisma.ChecklistItemCustomOrderByRelevanceFieldEnum = {
 
 exports.Prisma.CandidatCustomOrderByRelevanceFieldEnum = {
   id: 'id',
-  nom: 'nom',
-  prenom: 'prenom',
   userId: 'userId',
-  telephone: 'telephone',
   cv: 'cv',
-  letterm: 'letterm',
-  bio: 'bio',
-  adresse: 'adresse',
-  ville: 'ville',
-  statut: 'statut',
-  pays: 'pays',
-  nationalite: 'nationalite',
-  situationFamiliale: 'situationFamiliale',
-  permisConduire: 'permisConduire',
-  image: 'image',
+  cvUrl: 'cvUrl',
   applicationId: 'applicationId'
+};
+
+exports.Prisma.CandidatDocumentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  fileName: 'fileName',
+  fileUrl: 'fileUrl',
+  fileType: 'fileType',
+  candidatId: 'candidatId'
 };
 
 exports.Prisma.ApplicationCustomOrderByRelevanceFieldEnum = {
@@ -935,6 +1088,113 @@ exports.Prisma.ApplicationCustomOrderByRelevanceFieldEnum = {
   company: 'company',
   location: 'location',
   kanbanColumnCustomid: 'kanbanColumnCustomid'
+};
+
+exports.Prisma.VerificationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  identifier: 'identifier',
+  value: 'value'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
+exports.Prisma.CVTemplateOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  layout: 'layout'
+};
+
+exports.Prisma.CVOrderByRelevanceFieldEnum = {
+  id: 'id',
+  candidatId: 'candidatId',
+  templateId: 'templateId',
+  title: 'title'
+};
+
+exports.Prisma.CVPersonalInfoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  jobTitle: 'jobTitle',
+  email: 'email',
+  phone: 'phone',
+  address: 'address',
+  city: 'city',
+  postalCode: 'postalCode',
+  country: 'country',
+  nationality: 'nationality',
+  maritalStatus: 'maritalStatus',
+  drivingLicense: 'drivingLicense',
+  website: 'website',
+  linkedin: 'linkedin',
+  github: 'github',
+  portfolio: 'portfolio',
+  profileImage: 'profileImage',
+  summary: 'summary'
+};
+
+exports.Prisma.CVExperienceOrderByRelevanceFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  position: 'position',
+  company: 'company',
+  location: 'location',
+  contractType: 'contractType',
+  description: 'description',
+  achievements: 'achievements',
+  skills: 'skills'
+};
+
+exports.Prisma.CVEducationOrderByRelevanceFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  degree: 'degree',
+  institution: 'institution',
+  field: 'field',
+  location: 'location',
+  description: 'description',
+  grade: 'grade',
+  honors: 'honors'
+};
+
+exports.Prisma.CVSkillOrderByRelevanceFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  name: 'name',
+  category: 'category'
+};
+
+exports.Prisma.CVLanguageOrderByRelevanceFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  name: 'name',
+  level: 'level',
+  certification: 'certification'
+};
+
+exports.Prisma.CVInterestOrderByRelevanceFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  name: 'name',
+  description: 'description'
+};
+
+exports.Prisma.CVCustomSectionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  title: 'title',
+  content: 'content'
 };
 exports.UserType = exports.$Enums.UserType = {
   CANDIDAT: 'CANDIDAT',
@@ -962,9 +1222,10 @@ exports.SenderType = exports.$Enums.SenderType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  BackupUser: 'BackupUser',
   Candidat: 'Candidat',
-  CandidatCompetence: 'CandidatCompetence',
   Recruteur: 'Recruteur',
+  CandidatCompetence: 'CandidatCompetence',
   CompanySocial: 'CompanySocial',
   Invitation: 'Invitation',
   Collaborateur: 'Collaborateur',
@@ -977,8 +1238,8 @@ exports.Prisma.ModelName = {
   ChecklistItem: 'ChecklistItem',
   ApplicationFile: 'ApplicationFile',
   KanbanColumn: 'KanbanColumn',
-  Account: 'Account',
   Session: 'Session',
+  Account: 'Account',
   VerificationToken: 'VerificationToken',
   Experience: 'Experience',
   ExperienceCompetence: 'ExperienceCompetence',
@@ -999,7 +1260,18 @@ exports.Prisma.ModelName = {
   ApplicationNoteCustom: 'ApplicationNoteCustom',
   ChecklistItemCustom: 'ChecklistItemCustom',
   CandidatCustom: 'CandidatCustom',
-  ApplicationCustom: 'ApplicationCustom'
+  CandidatDocument: 'CandidatDocument',
+  ApplicationCustom: 'ApplicationCustom',
+  Verification: 'Verification',
+  CVTemplate: 'CVTemplate',
+  CV: 'CV',
+  CVPersonalInfo: 'CVPersonalInfo',
+  CVExperience: 'CVExperience',
+  CVEducation: 'CVEducation',
+  CVSkill: 'CVSkill',
+  CVLanguage: 'CVLanguage',
+  CVInterest: 'CVInterest',
+  CVCustomSection: 'CVCustomSection'
 };
 
 /**

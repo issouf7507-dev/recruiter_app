@@ -175,7 +175,7 @@ export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const form = useForm<z.infer<typeof contactFormSchema>>({
-    resolver: zodResolver(contactFormSchema),
+    // resolver: zodResolver(contactFormSchema),
     defaultValues: {
       nom: "",
       email: "",

@@ -1,8 +1,8 @@
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+
 import { NextRequest, NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
-// import { CACHE_KEYS, CACHE_TTL, cacheUtils } from "@/lib/redis";
+
+import { withAuthRecruteurOrCollaborateurNoId } from "@/lib/withAuthRecruteurOrCollaborateur";
 
 const DISABLE_CACHE_LOCAL = true; // Force la désactivation
 
@@ -37,7 +37,16 @@ export async function POST(req: Request) {
       },
     });
 
-    if (!recruteur) {
+    const collaborateur = await prisma.collaborateur.findFirst({
+      where: {
+        userId: recruteurId,
+      },
+      include: {
+        recruteur: true,
+      },
+    });
+
+    if (!recruteur && !collaborateur) {
       return NextResponse.json(
         { success: false, message: "Ce recruteur n'existe pas" },
         { status: 400 }
@@ -64,7 +73,7 @@ export async function POST(req: Request) {
         duedate: new Date(duedate),
         // education,
         // templateId: template,
-        recruteurId: recruteur.id,
+        recruteurId: recruteur?.id || collaborateur?.recruteur?.id || "",
         jobOfferCompetences: {
           create: skills.map((skill: any) => ({
             competence: skill,
@@ -121,79 +130,58 @@ export async function POST(req: Request) {
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get("token")?.value;
-
-    const candidat = req.cookies.get("candidat")?.value;
-
-    if (!token && !candidat) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    let decoded;
-
-    if (token) {
-      decoded = verify(token, process.env.JWT_SECRET!) as {
-        userId: string;
-        type: string;
-      };
-    } else if (candidat) {
-      decoded = verify(candidat, process.env.JWT_SECRET_CANDIDAT!) as {
-        userId: string;
-        type: string;
-      };
-    }
-
-    if (!decoded?.type) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    // Récupérer toutes les offres du recruteur
-    const offres = await prisma.jobOffer.findMany({
-      where: {
-        etat: "active",
-      },
-      select: {
-        id: true,
-        title: true,
-        company: true,
-        location: true,
-        description: true,
-        type: true,
-        experience: true,
-        salaryMin: true,
-        salaryMax: true,
-        salaryCurrency: true,
-        salaryPeriod: true,
-        skills: true,
-        requirements: true,
-        responsibilities: true,
-        benefits: true,
-        duedate: true,
-        jobOfferCompetences: {
-          select: {
-            competence: true,
+    return withAuthRecruteurOrCollaborateurNoId(
+      req,
+      // resolvedParams,
+      async ({ session, recruteur, isCollaborateur, collaborateur }) => {
+        const offres = await prisma.jobOffer.findMany({
+          where: {
+            etat: "active",
           },
-        },
-        createdAt: true,
-        updatedAt: true,
-        etat: true,
-        _count: {
           select: {
-            applications: true,
+            id: true,
+            title: true,
+            company: true,
+            location: true,
+            description: true,
+            type: true,
+            experience: true,
+            salaryMin: true,
+            salaryMax: true,
+            salaryCurrency: true,
+            salaryPeriod: true,
+            skills: true,
+            requirements: true,
+            responsibilities: true,
+            benefits: true,
+            duedate: true,
+            jobOfferCompetences: {
+              select: {
+                competence: true,
+              },
+            },
+            createdAt: true,
+            updatedAt: true,
+            etat: true,
+            _count: {
+              select: {
+                applications: true,
+              },
+            },
           },
-        },
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
 
-    return NextResponse.json(
-      {
-        success: true,
-        data: offres,
-      },
-      { status: 200 }
+        return NextResponse.json(
+          {
+            success: true,
+            data: offres,
+          },
+          { status: 200 }
+        );
+      }
     );
   } catch (err) {
     console.error("Erreur lors de la récupération des offres:", err);

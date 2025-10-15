@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+import { auth } from "@/lib/auth";
+
 import { kanbanEvents } from "@/lib/socket";
 // import { CACHE_KEYS, cacheUtils } from "@/lib/redis";
 
@@ -13,8 +14,20 @@ export async function PUT(
     const { notes, duedate } = body;
     const idapp = (await params).applicationId;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -35,7 +48,10 @@ export async function PUT(
       );
     }
 
-    if (application.jobOffer.recruteurId !== authenticatedUser.recruteurId) {
+    if (
+      application.jobOffer.recruteurId !== recruteur?.id ||
+      collaborateur?.recruteur?.id
+    ) {
       return NextResponse.json(
         { error: "Accès non autorisé à cette application" },
         { status: 403 }
@@ -49,9 +65,10 @@ export async function PUT(
       updateData.notes = {
         create: {
           content: notes,
-          authorId: authenticatedUser.userId,
-          authorType: authenticatedUser.type,
-          authorName: authenticatedUser.name,
+          authorId: recruteur?.id || collaborateur?.recruteur?.id || "",
+          authorType: "RECRUTEUR",
+          authorName:
+            recruteur?.name || collaborateur?.recruteur?.name || "Utilisateur",
         },
       };
     }
@@ -120,8 +137,8 @@ export async function PUT(
         message: notes
           ? "Note ajoutée avec succès"
           : duedate
-          ? "Date d'échéance mise à jour avec succès"
-          : "Application mise à jour avec succès",
+            ? "Date d'échéance mise à jour avec succès"
+            : "Application mise à jour avec succès",
         application: updatedApplication,
       },
       { status: 200 }

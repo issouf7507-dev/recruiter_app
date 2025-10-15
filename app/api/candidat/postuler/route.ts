@@ -1,33 +1,17 @@
 import { NextResponse, NextRequest } from "next/server";
 import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get("candidat")?.value;
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    const decoded = verify(token, process.env.JWT_SECRET_CANDIDAT!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "CANDIDAT") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
     const body = await req.json();
     const { jobOfferId, message } = body;
 
-    // Vérifier si le candidat existe
-    const candidat = await prisma.candidat.findFirst({
-      where: {
-        userId: decoded.userId,
-      },
+    const session = await auth.api.getSession({ headers: req.headers });
+    const candidat = await prisma.candidat.findUnique({
+      where: { userId: session?.user.id },
     });
-
     if (!candidat) {
       return NextResponse.json(
         { error: "Candidat non trouvé" },
@@ -35,19 +19,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // console.log(jobOfferId);
+    if (!session?.user.id) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
     // Vérifier si l'offre existe
     const jobOffer = await prisma.jobOffer.findUnique({
       where: {
-        id: Number(jobOfferId),
+        id: jobOfferId as string,
       },
       include: {
         kanbanColumns: {
           orderBy: {
             order: "asc",
           },
-
           take: 1,
         },
       },
@@ -63,7 +48,7 @@ export async function POST(req: NextRequest) {
     const existingApplication = await prisma.application.findFirst({
       where: {
         candidatId: candidat.id,
-        jobOfferId: Number(jobOfferId),
+        jobOfferId: jobOfferId as string,
         columnId: jobOffer.kanbanColumns[0].id,
       },
     });
@@ -80,7 +65,7 @@ export async function POST(req: NextRequest) {
       data: {
         message,
         candidatId: candidat.id,
-        jobOfferId: Number(jobOfferId),
+        jobOfferId: jobOfferId as string,
         columnId: jobOffer.kanbanColumns[0].id,
       },
     });

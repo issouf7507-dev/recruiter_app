@@ -258,13 +258,13 @@ export function FileUpload({
               {uploadedFile ? "Fichier uploadé" : "Fichier existant"}
             </h4>
           </div>
-          <div className="p-3 bg-green-50 border border-green-200 rounded-lg dark:bg-green-900 dark:border dark:border-green-700">
+          <div className="p-3  border border-green-200 rounded-lg dark:bg-green-900 dark:border dark:border-green-700">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-green-100 rounded flex items-center justify-center">
-                <FileText className="w-5 h-5 text-green-600" />
+              <div className="w-10 h-10  rounded flex items-center justify-center">
+                <FileText className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-medium text-gray-400 truncate">
                   {uploadedFile ? uploadedFile.fileName : "Document"}
                 </p>
                 {uploadedFile && (
@@ -274,21 +274,13 @@ export function FileUpload({
                 )}
               </div>
               <div className="flex gap-2">
-                <a
-                  href={uploadedFile ? uploadedFile.fileUrl : currentFileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-blue-600 hover:text-blue-800 underline"
-                >
-                  Voir
-                </a>
                 {uploadedFile && (
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
                     onClick={() => setUploadedFile(null)}
-                    className="text-red-600 hover:text-red-700"
+                    className="text-primary"
                   >
                     <X className="w-4 h-4" />
                   </Button>

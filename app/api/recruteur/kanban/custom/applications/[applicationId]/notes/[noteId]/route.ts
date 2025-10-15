@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { getAuthenticatedUser } from "@/lib/auth-utils";
+
+import { auth } from "@/lib/auth";
 
 // PUT - Modifier une note
 export async function PUT(
@@ -12,8 +13,21 @@ export async function PUT(
     const { content } = body;
     const { applicationId, noteId } = await params;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -29,7 +43,7 @@ export async function PUT(
       where: {
         id: noteId,
         applicationId: applicationId,
-        authorId: authenticatedUser.userId,
+        authorId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 
@@ -73,8 +87,21 @@ export async function DELETE(
   try {
     const { applicationId, noteId } = await params;
 
-    const authenticatedUser = await getAuthenticatedUser(req);
-    if (!authenticatedUser || authenticatedUser.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
+
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
@@ -83,7 +110,7 @@ export async function DELETE(
       where: {
         id: noteId,
         applicationId: applicationId,
-        authorId: authenticatedUser.userId,
+        authorId: recruteur?.id || collaborateur?.recruteur?.id || "",
       },
     });
 

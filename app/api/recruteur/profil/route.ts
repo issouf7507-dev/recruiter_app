@@ -1,43 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verify } from "jsonwebtoken";
 import prisma from "@/lib/prisma";
-import { z } from "zod";
-
-const profilSchema = z.object({
-  name: z.string().min(2).optional(),
-  entreprise: z.string().optional(),
-  description: z.string().optional(),
-  industry: z.string().optional(),
-  size: z.string().optional(),
-  location: z.string().optional(),
-  website: z.string().url().optional().or(z.literal("")),
-  email: z.string().email().optional(),
-  phone: z.string().optional(),
-  linkedin: z.string().url().optional().or(z.literal("")),
-  twitter: z.string().url().optional().or(z.literal("")),
-  logo: z.string().optional(),
-});
+import { auth } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get("token")?.value;
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     // Récupérer le profil du recruteur
     const recruteur = await prisma.recruteur.findFirst({
       where: {
-        userId: decoded.userId,
+        userId: session?.user.id,
       },
       include: {
         user: {
@@ -51,28 +26,43 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    if (!recruteur) {
-      return NextResponse.json(
-        { error: "Recruteur non trouvé" },
-        { status: 404 }
-      );
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session.user.id },
+      include: {
+        recruteur: {
+          include: {
+            user: { select: { name: true, email: true, image: true } },
+          },
+        },
+      },
+    });
+
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
+
+    // if (!recruteur) {
+    //   return NextResponse.json(
+    //     { error: "Recruteur non trouvé" },
+    //     { status: 404 }
+    //   );
+    // }
 
     // Formater les données pour correspondre au format attendu par le frontend
     const profil = {
-      name: recruteur.name || recruteur.user?.name || "",
-      entreprise: recruteur.entreprise || "",
-      description: recruteur.description || "",
-      industry: recruteur.industry || "",
-      size: recruteur.size || "",
-      location: recruteur.location || "",
-      website: recruteur.website || "",
-      email: recruteur.email || recruteur.user?.email || "",
-      phone: recruteur.phone || "",
-      logo: recruteur.logo || recruteur.user?.image || "",
+      name: recruteur?.name || recruteur?.user?.name || "",
+      entreprise: recruteur?.entreprise || "",
+      description: recruteur?.description || "",
+      industry: recruteur?.industry || "",
+      size: recruteur?.size || "",
+      location: recruteur?.location || "",
+      website: recruteur?.website || "",
+      email: recruteur?.email || recruteur?.user?.email || "",
+      phone: recruteur?.phone || "",
+      logo: recruteur?.logo || recruteur?.user?.image || "",
       social: {
-        linkedin: recruteur.social?.linkedin || "",
-        twitter: recruteur.social?.twitter || "",
+        linkedin: recruteur?.social?.linkedin || "",
+        twitter: recruteur?.social?.twitter || "",
       },
     };
 
@@ -91,30 +81,34 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const token = req.cookies.get("token")?.value;
-    if (!token) {
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+    if (!recruteur && !collaborateur) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     const body = await req.json();
-    const validatedData = profilSchema.parse(body);
+    // const validatedData = .parse(body);
 
     // Extraire les données sociales
-    const { linkedin, twitter, ...recruteurData } = validatedData;
+    const { linkedin, twitter, ...recruteurData } = body;
 
     // Mettre à jour le profil du recruteur
     const updatedRecruteur = await prisma.recruteur.update({
       where: {
-        userId: decoded.userId,
+        userId: session?.user.id,
       },
       data: {
         ...recruteurData,
@@ -144,13 +138,13 @@ export async function PUT(req: NextRequest) {
     });
 
     // Mettre à jour également le nom de l'utilisateur si fourni
-    if (validatedData.name) {
+    if (body.name) {
       await prisma.user.update({
         where: {
-          id: decoded.userId,
+          id: session?.user.id,
         },
         data: {
-          name: validatedData.name,
+          name: body.name,
         },
       });
     }

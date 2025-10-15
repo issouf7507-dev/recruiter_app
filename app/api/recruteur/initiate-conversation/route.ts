@@ -1,26 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { verify } from "jsonwebtoken";
+import { auth } from "@/lib/auth";
 
 // POST - Initier une conversation avec un candidat
 export async function POST(request: NextRequest) {
   try {
-    const token = request.cookies.get("token")?.value;
-
-    if (!token) {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
-
-    if (decoded.type !== "RECRUTEUR") {
-      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
-    }
-
     const { jobOfferId, candidatId, message } = await request.json();
+
+    const session = await auth.api.getSession({ headers: request.headers });
+
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
     if (!jobOfferId || !candidatId || !message) {
       return NextResponse.json(
@@ -31,14 +22,18 @@ export async function POST(request: NextRequest) {
 
     // Récupérer le recruteur
     const recruteur = await prisma.recruteur.findUnique({
-      where: { userId: decoded.userId },
+      where: { userId: session.user.id },
     });
 
-    if (!recruteur) {
-      return NextResponse.json(
-        { error: "Recruteur non trouvé" },
-        { status: 404 }
-      );
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
     // Vérifier que le candidat existe
@@ -54,13 +49,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("Candidat trouvé:", candidat.id, candidat.nom, candidat.prenom);
-
     // Vérifier que l'offre appartient au recruteur
     const jobOffer = await prisma.jobOffer.findFirst({
       where: {
-        id: parseInt(jobOfferId),
-        recruteurId: recruteur.id,
+        id: jobOfferId as string,
+        recruteurId: recruteur?.id || collaborateur?.recruteur.id || "",
       },
     });
 
@@ -75,9 +68,9 @@ export async function POST(request: NextRequest) {
     let conversation = await prisma.conversation.findUnique({
       where: {
         jobOfferId_candidatId_recruteurId: {
-          jobOfferId: parseInt(jobOfferId),
+          jobOfferId: jobOfferId as string,
           candidatId: candidatId,
-          recruteurId: recruteur.id,
+          recruteurId: recruteur?.id || collaborateur?.recruteur.id || "",
         },
       },
     });
@@ -86,9 +79,9 @@ export async function POST(request: NextRequest) {
     if (!conversation) {
       conversation = await prisma.conversation.create({
         data: {
-          jobOfferId: parseInt(jobOfferId),
+          jobOfferId: jobOfferId as string,
           candidatId: candidatId,
-          recruteurId: recruteur.id,
+          recruteurId: recruteur?.id || collaborateur?.recruteur.id || "",
           isActive: true,
         },
       });
@@ -98,7 +91,7 @@ export async function POST(request: NextRequest) {
     const newMessage = await prisma.message.create({
       data: {
         conversationId: conversation.id,
-        senderId: recruteur.id,
+        senderId: recruteur?.id || collaborateur?.recruteur.id || "",
         senderType: "RECRUTEUR",
         content: message,
       },
@@ -115,9 +108,9 @@ export async function POST(request: NextRequest) {
       data: {
         candidatId: candidat.id,
         titre: "Nouveau message",
-        message: `Vous avez reçu un message de ${recruteur.name} concernant le poste de ${jobOffer.title}`,
+        message: `Vous avez reçu un message de ${recruteur?.name || collaborateur?.recruteur.name || "Utilisateur"} concernant le poste de ${jobOffer.title}`,
         type: "message",
-        offreId: jobOffer.id,
+        offreId: Number(jobOffer.id),
         lu: false,
       },
     });

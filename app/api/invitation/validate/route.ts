@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const token = searchParams.get("token");
@@ -10,12 +10,23 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Token manquant" }, { status: 400 });
     }
 
+    console.log("tokeaan", token);
+
     const invitation = await prisma.invitation.findFirst({
       where: {
         token,
         accepted: false,
-        expiresAt: {
-          gt: new Date(),
+      },
+      include: {
+        recruteur: {
+          include: {
+            user: {
+              select: {
+                name: true,
+                email: true,
+              },
+            },
+          },
         },
       },
     });
@@ -27,10 +38,29 @@ export async function GET(req: Request) {
       );
     }
 
+    console.log("invitation", invitation);
+
+    // Vérifier si un utilisateur existe déjà avec cet email
+    const existingUser = await prisma.user.findUnique({
+      where: { email: invitation.email },
+    });
+
+    if (existingUser) {
+      return NextResponse.json(
+        { error: "Un compte existe déjà avec cet email" },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json({
       valid: true,
       role: invitation.role,
       email: invitation.email,
+      recruteur: {
+        name: invitation.recruteur.user.name,
+        email: invitation.recruteur.user.email,
+      },
+      expiresAt: invitation.expiresAt,
     });
   } catch (error) {
     console.error("Erreur lors de la validation du token:", error);

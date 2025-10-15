@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { verify } from "jsonwebtoken";
+
+import { auth } from "@/lib/auth";
 
 export async function POST(
   req: NextRequest,
@@ -11,19 +12,29 @@ export async function POST(
     const id = (await params).applicationId;
     const { title, description } = body;
 
-    const token = req.cookies.get("token")?.value;
-    if (!token) {
-      return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
+    const session = await auth.api.getSession({ headers: req.headers });
+    if (!session) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
 
-    const decoded = verify(token, process.env.JWT_SECRET!) as {
-      userId: string;
-      type: string;
-    };
+    const recruteur = await prisma.recruteur.findUnique({
+      where: { userId: session?.user.id },
+    });
+
+    const collaborateur = await prisma.collaborateur.findUnique({
+      where: { userId: session?.user.id },
+      include: {
+        recruteur: true,
+      },
+    });
+
+    if (!recruteur && !collaborateur) {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
+    }
 
     // Récupérer l'utilisateur
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId },
+      where: { id: session?.user.id },
       include: {
         recruteur: true,
       },
@@ -42,8 +53,8 @@ export async function POST(
         description,
         isCompleted: false,
         applicationId: id,
-        createdById: user.id,
-        createdByType: user.type,
+        createdById: recruteur?.id || collaborateur?.recruteur?.id || "",
+        createdByType: "RECRUTEUR",
       },
     });
 

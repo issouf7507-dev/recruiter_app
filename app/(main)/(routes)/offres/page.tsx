@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-import { useAuthCandidat } from "@/hooks/useAuthCandidat";
+// import { useAuthCandidat } from "@/hooks/useAuthCandidat";
 import { JobOffer } from "@/types/types";
 import {
   Search,
@@ -38,6 +38,7 @@ import {
   SelectTrigger,
   SelectContent,
 } from "@/components/ui/select";
+import { useSession } from "@/lib/auth-client";
 
 function OffresPageContent() {
   const searchParams = useSearchParams();
@@ -64,8 +65,9 @@ function OffresPageContent() {
   });
   const [isSearchMode, setIsSearchMode] = useState(false);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const { user, loading: authLoading } = useAuth();
-  const { candidat, loading: candidatLoading } = useAuthCandidat();
+  // const { user, loading: authLoading } = useAuth();
+  const { data: session, isPending } = useSession();
+  // const { candidat, loading: candidatLoading } = useAuthCandidat();
 
   // Get search parameters from URL
   const urlQuery = searchParams.get("q") || "";
@@ -211,15 +213,10 @@ function OffresPageContent() {
     }
   };
 
-  const handlePostulerClick = () => {
-    if (!candidat) {
-      setLoginModalType("candidat");
-      setShowLoginModal(true);
-    }
-  };
+  const handlePostulerClick = () => {};
 
   const handlePosterClick = () => {
-    if (!user) {
+    if (!session?.user) {
       setLoginModalType("recruteur");
       setShowLoginModal(true);
     }
@@ -492,7 +489,7 @@ function OffresPageContent() {
     .filter(Boolean)
     .slice(0, 3);
 
-  if (loading || authLoading) {
+  if (loading || isPending) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
@@ -807,15 +804,15 @@ function OffresPageContent() {
           loginModalType === "candidat"
             ? "Connexion requise pour postuler"
             : loginModalType === "recruteur"
-            ? "Connexion requise pour poster"
-            : "Connexion requise"
+              ? "Connexion requise pour poster"
+              : "Connexion requise"
         }
         message={
           loginModalType === "candidat"
             ? "Vous devez être connecté en tant que candidat pour postuler à cette offre."
             : loginModalType === "recruteur"
-            ? "Vous devez être connecté en tant que recruteur pour publier des offres."
-            : "Vous devez être connecté pour accéder à cette fonctionnalité."
+              ? "Vous devez être connecté en tant que recruteur pour publier des offres."
+              : "Vous devez être connecté pour accéder à cette fonctionnalité."
         }
         showBothOptions={!loginModalType}
       />

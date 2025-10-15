@@ -52,6 +52,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
 import { useUserStore } from "@/store/userStore";
 import { useRecruteurId } from "@/hooks/useRecruteurId";
+import { useSession } from "@/lib/auth-client";
 
 // Type pour une offre d'emploi
 
@@ -59,18 +60,29 @@ type ViewMode = "grid" | "list";
 
 export default function MesOffres() {
   // const { user, loading } = useAuth();
-  const { user, loading } = useUserStore();
-  const recruteurId = useRecruteurId();
+  // const { user, loading } = useUserStore()
+  // ;
+
+  const { data: session, isPending } = useSession();
+  // const recruteurId = useRecruteurId();
 
   const {
     data: offertData,
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["offertData123", recruteurId],
-    queryFn: () => fetchData(`/api/recruteur/offresbyuser/${recruteurId}`),
-    enabled: !!recruteurId,
+    queryKey: ["offertData123", session?.user?.id],
+    queryFn: () =>
+      fetchData(`/api/recruteur/offresbyuser/${session?.user?.id}`),
+    enabled: !!session?.user?.id,
   });
+
+  console.log("offertData", offertData);
+
+  // Extraire les données selon le nouveau format
+  const offres = offertData?.data || [];
+  const userType = offertData?.userType;
+  const collaborateur = offertData?.collaborateur;
 
   // console.log("offertData", offertData);
 
@@ -94,7 +106,7 @@ export default function MesOffres() {
 
   // console.log("offertData", offertData);
 
-  const filteredOffers = offertData?.filter((offer: JobOffer) => {
+  const filteredOffers = offres?.filter((offer: JobOffer) => {
     const matchesSearch =
       offer?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       offer?.company?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -106,7 +118,7 @@ export default function MesOffres() {
     return matchesSearch && matchesStatus;
   });
 
-  if (isLoading || loading) {
+  if (isLoading || isPending) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[60vh] w-full">
         <Loader2 className="h-8 w-8 animate-spin" />
@@ -129,15 +141,15 @@ export default function MesOffres() {
               offer.etat === "active"
                 ? "bg-green-100 text-green-800"
                 : offer.etat === "draft"
-                ? "bg-yellow-100 text-yellow-800"
-                : "bg-red-100 text-red-800"
+                  ? "bg-yellow-100 text-yellow-800"
+                  : "bg-red-100 text-red-800"
             }`}
           >
             {offer.etat === "active"
               ? "Active"
               : offer.etat === "draft"
-              ? "Brouillon"
-              : "Fermée"}
+                ? "Brouillon"
+                : "Fermée"}
           </div>
         </CardTitle>
       </CardHeader>
@@ -234,15 +246,15 @@ export default function MesOffres() {
                 offer.etat === "active"
                   ? "bg-green-100 text-green-800"
                   : offer.etat === "draft"
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-red-100 text-red-800"
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-red-100 text-red-800"
               }`}
             >
               {offer.etat === "active"
                 ? "Active"
                 : offer.etat === "draft"
-                ? "Brouillon"
-                : "Fermée"}
+                  ? "Brouillon"
+                  : "Fermée"}
             </div>
           </div>
           <div className="flex items-center gap-6 mt-2 text-sm text-muted-foreground">
@@ -319,7 +331,25 @@ export default function MesOffres() {
   return (
     <div className="p-6 space-y-6 w-full">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Mes Offres d'Emploi</h1>
+        <div className="space-y-2">
+          <h1 className="text-2xl font-bold">
+            {userType === "collaborateur"
+              ? "Offres d'emploi"
+              : "Mes Offres d'Emploi"}
+          </h1>
+          {userType === "collaborateur" && collaborateur && (
+            <div className="flex items-center gap-2 text-sm text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+              <Users className="h-4 w-4" />
+              <span>
+                Connecté en tant que{" "}
+                <strong>
+                  {collaborateur.prenom} {collaborateur.nom}
+                </strong>{" "}
+                - {collaborateur.role}
+              </span>
+            </div>
+          )}
+        </div>
         <Link href="/mesoffres/creer">
           <Button className="flex items-center gap-2">
             <Plus className="h-4 w-4" />
