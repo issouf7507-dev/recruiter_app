@@ -123,8 +123,22 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   password: 'password',
+  passwordNeedsUpdate: 'passwordNeedsUpdate',
   image: 'image',
   type: 'type',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BackupUserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  password: 'password',
+  type: 'type',
+  userData: 'userData',
+  migrated: 'migrated',
+  migratedAt: 'migratedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -727,6 +741,15 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   image: 'image'
 };
 
+exports.Prisma.BackupUserOrderByRelevanceFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  password: 'password',
+  type: 'type',
+  userData: 'userData'
+};
+
 exports.Prisma.CandidatOrderByRelevanceFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1199,6 +1222,7 @@ exports.SenderType = exports.$Enums.SenderType = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  BackupUser: 'BackupUser',
   Candidat: 'Candidat',
   Recruteur: 'Recruteur',
   CandidatCompetence: 'CandidatCompetence',

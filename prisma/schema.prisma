@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
   output   = "../app/generated/prisma"
@@ -10,22 +9,38 @@ datasource db {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String         @unique
-  emailVerified Boolean @default(false)
-  password      String?
-  image         String?
-  type          UserType?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  accounts      Account[]
-  candidat      Candidat?      @relation("UserAsCandidat")
-  collaborateur Collaborateur?
-  recruteur     Recruteur?     @relation("UserAsRecruteur")
-  sessions      Session[]
+  id                  String         @id @default(cuid())
+  name                String?
+  email               String         @unique
+  emailVerified       Boolean?       @default(false) 
+  password            String?
+  passwordNeedsUpdate Boolean        @default(false)
+  image               String?
+  type                UserType?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  candidat            Candidat?      @relation("UserAsCandidat")
+  collaborateur       Collaborateur?
+  recruteur           Recruteur?     @relation("UserAsRecruteur")
+  accounts            Account[]
+  sessions            Session[]
 
   @@map("user")
+}
+
+model BackupUser {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  password  String    // Ancien hash du mot de passe (pour référence)
+  type      String?   // CANDIDAT, RECRUTEUR, COLLABORATEUR
+  userData  String?   @db.Text // JSON avec toutes les données (candidat, recruteur, etc.)
+  migrated  Boolean   @default(false) // true quand l'utilisateur s'est réenregistré
+  migratedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("backup_user")
 }
 
 model Candidat {
@@ -49,6 +64,7 @@ model Candidat {
   image               String?
   alertes             AlerteEmploi[]
   applications        Application[]
+  cvs                 CV[]
   user                User                 @relation("UserAsCandidat", fields: [userId], references: [id], onDelete: Cascade)
   candidatCompetences CandidatCompetence[]
   competencesList     Competence[]
@@ -57,10 +73,7 @@ model Candidat {
   formations          Formation[]
   notifications       Notification[]
   objectifs           ObjectifCarriere[]
-  cvs                 CV[]
 }
-
-
 
 model Recruteur {
   id                  String                @id @default(cuid())
@@ -79,14 +92,13 @@ model Recruteur {
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   collaborateurs      Collaborateur[]
+  CollaborateurCustom CollaborateurCustom[]
   social              CompanySocial?
   conversations       Conversation[]
   invitations         Invitation[]
   JobOffer            JobOffer[]
-  OfferTemplate       OfferTemplate[]
-  CollaborateurCustom CollaborateurCustom[]
-  // ApplicationCustom ApplicationCustom[]
   KanbanColumnCustom  KanbanColumnCustom[]
+  OfferTemplate       OfferTemplate[]
   user                User                  @relation("UserAsRecruteur", fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -124,18 +136,17 @@ model Invitation {
 }
 
 model Collaborateur {
-  id           String    @id @default(cuid())
-  email        String    @unique
+  id           String                     @id @default(cuid())
+  email        String                     @unique
   nom          String
   prenom       String
   role         Role
   recruteurId  String
-  invitationId String?   @unique
-  userId       String    @unique
+  invitationId String?                    @unique
+  userId       String                     @unique
   dueDate      DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-
+  createdAt    DateTime                   @default(now())
+  updatedAt    DateTime                   @updatedAt
   applications ApplicationCollaborateur[]
   invitation   Invitation?                @relation(fields: [invitationId], references: [id])
   recruteur    Recruteur                  @relation(fields: [recruteurId], references: [id], onDelete: Cascade)
@@ -157,10 +168,8 @@ model ApplicationCollaborateur {
   @@index([collaborateurId], map: "ApplicationCollaborateur_collaborateurId_fkey")
 }
 
-/// Représente une offre d'emploi publiée par une entreprise
-
 model JobOffer {
-  id                  String                  @id @default(cuid())
+  id                  String               @id @default(cuid())
   title               String
   description         String?              @db.Text
   company             String?
@@ -203,8 +212,6 @@ model JobOfferCompetence {
 
   @@unique([jobOfferId, competence])
 }
-
-/// Représente un modèle d'offre d'emploi pouvant être réutilisé
 
 model OfferTemplate {
   id          Int        @id @default(autoincrement())
@@ -308,7 +315,7 @@ model KanbanColumn {
 model Session {
   id        String   @id
   expiresAt DateTime
-  token     String
+  token     String   @unique
   createdAt DateTime
   updatedAt DateTime
   ipAddress String?  @db.Text
@@ -316,7 +323,7 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
+  @@index([userId], map: "session_userId_fkey")
   @@map("session")
 }
 
@@ -325,7 +332,6 @@ model Account {
   accountId             String    @db.Text
   providerId            String    @db.Text
   userId                String
-  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   accessToken           String?   @db.Text
   refreshToken          String?   @db.Text
   idToken               String?   @db.Text
@@ -335,10 +341,11 @@ model Account {
   password              String?   @db.Text
   createdAt             DateTime
   updatedAt             DateTime
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId], map: "account_userId_fkey")
   @@map("account")
 }
-
 
 model VerificationToken {
   identifier String
@@ -520,46 +527,19 @@ model Message {
   @@index([conversationId], map: "Message_conversationId_fkey")
 }
 
-enum UserType {
-  CANDIDAT
-  RECRUTEUR
-  COLLABORATEUR
-}
-
-enum RecruteurType {
-  PARTICULIER
-  ENTREPRISE
-  ENTITE
-}
-
-enum Role {
-  ADMIN
-  USER
-  MANAGER
-  VIEWER
-}
-
-enum SenderType {
-  CANDIDAT
-  RECRUTEUR
-}
-
-//custum kanban
-
 model KanbanColumnCustom {
-  id                   String   @id @default(cuid())
+  id                   String              @id @default(cuid())
   color                String
   name                 String
   order                Int
-  isDefault            Boolean  @default(false)
+  isDefault            Boolean             @default(false)
   jobOfferId           Int
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
   recruteurId          String
   applicationsCustomid String
-
-  applicationsCustom ApplicationCustom[]
-  recruteur          Recruteur           @relation(fields: [recruteurId], references: [id], onDelete: Cascade)
+  applicationsCustom   ApplicationCustom[]
+  recruteur            Recruteur           @relation(fields: [recruteurId], references: [id], onDelete: Cascade)
 
   @@index([recruteurId], map: "KanbanColumnCustom_recruteurId_fkey")
 }
@@ -576,9 +556,7 @@ model CollaborateurCustom {
   createdAt    DateTime                         @default(now())
   updatedAt    DateTime                         @updatedAt
   applications ApplicationCollaborateurCustom[]
-  // invitation   Invitation?                @relation(fields: [invitationId], references: [id])
   recruteur    Recruteur                        @relation(fields: [recruteurId], references: [id], onDelete: Cascade)
-  // user         User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([recruteurId], map: "CollaborateurCustom_recruteurId_fkey")
 }
@@ -642,7 +620,7 @@ model ChecklistItemCustom {
 }
 
 model CandidatCustom {
-  id            String             @id @default(cuid()) @unique
+  id            String             @id @unique @default(cuid())
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   userId        String
@@ -670,23 +648,23 @@ model CandidatDocument {
 }
 
 model ApplicationCustom {
-  id          String    @id @default(cuid())
-  title       String
-  description String    @db.Text
-  company     String
-  location    String
-  duedate     DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  collaborateurs ApplicationCollaborateurCustom[]
-  files          ApplicationFileCustom[]
-  notes          ApplicationNoteCustom[]
-  checklist      ChecklistItemCustom[]
-  candidatCustom CandidatCustom[]
-
+  id                   String                           @id @default(cuid())
+  title                String
+  description          String                           @db.Text
+  company              String
+  location             String
+  duedate              DateTime?
+  createdAt            DateTime                         @default(now())
+  updatedAt            DateTime                         @updatedAt
   kanbanColumnCustomid String
-  recruteur            KanbanColumnCustom @relation(fields: [kanbanColumnCustomid], references: [id], onDelete: Cascade)
+  collaborateurs       ApplicationCollaborateurCustom[]
+  recruteur            KanbanColumnCustom               @relation(fields: [kanbanColumnCustomid], references: [id], onDelete: Cascade)
+  files                ApplicationFileCustom[]
+  notes                ApplicationNoteCustom[]
+  candidatCustom       CandidatCustom[]
+  checklist            ChecklistItemCustom[]
+
+  @@index([kanbanColumnCustomid], map: "ApplicationCustom_kanbanColumnCustomid_fkey")
 }
 
 model Verification {
@@ -700,14 +678,13 @@ model Verification {
   @@map("verification")
 }
 
-// Modèles pour le générateur de CV
 model CVTemplate {
   id          String   @id @default(cuid())
   name        String
   description String?
-  layout      String   // 'modern', 'classic', 'creative', etc.
-  colors      Json?    // Couleurs du template
-  fonts       Json?    // Polices du template
+  layout      String
+  colors      Json?
+  fonts       Json?
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -715,51 +692,51 @@ model CVTemplate {
 }
 
 model CV {
-  id               String           @id @default(cuid())
-  candidatId       String
-  templateId       String
-  title            String           @default("Mon CV")
-  isPublic         Boolean          @default(false)
-  lastExportedAt   DateTime?
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  candidat         Candidat         @relation(fields: [candidatId], references: [id], onDelete: Cascade)
-  template         CVTemplate       @relation(fields: [templateId], references: [id])
-  personalInfo     CVPersonalInfo?
-  experiences      CVExperience[]
-  educations       CVEducation[]
-  skills           CVSkill[]
-  languages        CVLanguage[]
-  interests        CVInterest[]
-  customSections   CVCustomSection[]
+  id             String            @id @default(cuid())
+  candidatId     String
+  templateId     String
+  title          String            @default("Mon CV")
+  isPublic       Boolean           @default(false)
+  lastExportedAt DateTime?
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+  candidat       Candidat          @relation(fields: [candidatId], references: [id], onDelete: Cascade)
+  template       CVTemplate        @relation(fields: [templateId], references: [id])
+  customSections CVCustomSection[]
+  educations     CVEducation[]
+  experiences    CVExperience[]
+  interests      CVInterest[]
+  languages      CVLanguage[]
+  personalInfo   CVPersonalInfo?
+  skills         CVSkill[]
 
   @@index([candidatId])
   @@index([templateId])
 }
 
 model CVPersonalInfo {
-  id            String  @id @default(cuid())
-  cvId          String  @unique
-  firstName     String?
-  lastName      String?
-  jobTitle      String?
-  email         String?
-  phone         String?
-  address       String?
-  city          String?
-  postalCode    String?
-  country       String?
-  dateOfBirth   DateTime?
-  nationality   String?
-  maritalStatus String?
+  id             String    @id @default(cuid())
+  cvId           String    @unique
+  firstName      String?
+  lastName       String?
+  jobTitle       String?
+  email          String?
+  phone          String?
+  address        String?
+  city           String?
+  postalCode     String?
+  country        String?
+  dateOfBirth    DateTime?
+  nationality    String?
+  maritalStatus  String?
   drivingLicense String?
-  website       String?
-  linkedin      String?
-  github        String?
-  portfolio     String?
-  profileImage  String?
-  summary       String? @db.Text
-  cv            CV      @relation(fields: [cvId], references: [id], onDelete: Cascade)
+  website        String?
+  linkedin       String?
+  github         String?
+  portfolio      String?
+  profileImage   String?
+  summary        String?   @db.Text
+  cv             CV        @relation(fields: [cvId], references: [id], onDelete: Cascade)
 }
 
 model CVExperience {
@@ -774,7 +751,7 @@ model CVExperience {
   isCurrent    Boolean   @default(false)
   description  String?   @db.Text
   achievements String?   @db.Text
-  skills       String?   // Compétences utilisées (JSON array)
+  skills       String?
   order        Int       @default(0)
   cv           CV        @relation(fields: [cvId], references: [id], onDelete: Cascade)
 
@@ -782,20 +759,20 @@ model CVExperience {
 }
 
 model CVEducation {
-  id           String    @id @default(cuid())
-  cvId         String
-  degree       String
-  institution  String
-  field        String?
-  location     String?
-  startDate    DateTime
-  endDate      DateTime?
-  isCurrent    Boolean   @default(false)
-  description  String?   @db.Text
-  grade        String?
-  honors       String?
-  order        Int       @default(0)
-  cv           CV        @relation(fields: [cvId], references: [id], onDelete: Cascade)
+  id          String    @id @default(cuid())
+  cvId        String
+  degree      String
+  institution String
+  field       String?
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  isCurrent   Boolean   @default(false)
+  description String?   @db.Text
+  grade       String?
+  honors      String?
+  order       Int       @default(0)
+  cv          CV        @relation(fields: [cvId], references: [id], onDelete: Cascade)
 
   @@index([cvId])
 }
@@ -804,8 +781,8 @@ model CVSkill {
   id       String @id @default(cuid())
   cvId     String
   name     String
-  category String // 'technical', 'soft', 'language', 'other'
-  level    Int    @default(1) // 1-5 ou 1-10
+  category String
+  level    Int    @default(1)
   order    Int    @default(0)
   cv       CV     @relation(fields: [cvId], references: [id], onDelete: Cascade)
 
@@ -813,24 +790,24 @@ model CVSkill {
 }
 
 model CVLanguage {
-  id           String @id @default(cuid())
-  cvId         String
-  name         String
-  level        String // 'Débutant', 'Intermédiaire', 'Avancé', 'Natif'
+  id            String  @id @default(cuid())
+  cvId          String
+  name          String
+  level         String
   certification String?
-  order        Int    @default(0)
-  cv           CV     @relation(fields: [cvId], references: [id], onDelete: Cascade)
+  order         Int     @default(0)
+  cv            CV      @relation(fields: [cvId], references: [id], onDelete: Cascade)
 
   @@index([cvId])
 }
 
 model CVInterest {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   cvId        String
   name        String
   description String?
-  order       Int    @default(0)
-  cv          CV     @relation(fields: [cvId], references: [id], onDelete: Cascade)
+  order       Int     @default(0)
+  cv          CV      @relation(fields: [cvId], references: [id], onDelete: Cascade)
 
   @@index([cvId])
 }
@@ -844,4 +821,28 @@ model CVCustomSection {
   cv      CV     @relation(fields: [cvId], references: [id], onDelete: Cascade)
 
   @@index([cvId])
+}
+
+enum UserType {
+  CANDIDAT
+  RECRUTEUR
+  COLLABORATEUR
+}
+
+enum RecruteurType {
+  PARTICULIER
+  ENTREPRISE
+  ENTITE
+}
+
+enum Role {
+  ADMIN
+  USER
+  MANAGER
+  VIEWER
+}
+
+enum SenderType {
+  CANDIDAT
+  RECRUTEUR
 }

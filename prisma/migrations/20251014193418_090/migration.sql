@@ -3,8 +3,9 @@ CREATE TABLE `user` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NULL,
     `email` VARCHAR(191) NOT NULL,
-    `emailVerified` BOOLEAN NOT NULL DEFAULT false,
+    `emailVerified` BOOLEAN NULL DEFAULT false,
     `password` VARCHAR(191) NULL,
+    `passwordNeedsUpdate` BOOLEAN NOT NULL DEFAULT true,
     `image` VARCHAR(191) NULL,
     `type` ENUM('CANDIDAT', 'RECRUTEUR', 'COLLABORATEUR') NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
@@ -286,6 +287,7 @@ CREATE TABLE `session` (
     `userId` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `session_token_key`(`token`),
+    INDEX `session_userId_fkey`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -305,6 +307,7 @@ CREATE TABLE `account` (
     `createdAt` DATETIME(3) NOT NULL,
     `updatedAt` DATETIME(3) NOT NULL,
 
+    INDEX `account_userId_fkey`(`userId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -636,6 +639,7 @@ CREATE TABLE `ApplicationCustom` (
     `updatedAt` DATETIME(3) NOT NULL,
     `kanbanColumnCustomid` VARCHAR(191) NOT NULL,
 
+    INDEX `ApplicationCustom_kanbanColumnCustomid_fkey`(`kanbanColumnCustomid`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

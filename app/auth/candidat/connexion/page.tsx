@@ -54,34 +54,46 @@ function Connexion() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // setIsLoading(true);
-      // const response = await postData(values, "/api/auth/login/candidat");
-      // if (response.success) {
-      //   toast.success("Connexion réussie");
-      //   const redirectTo = searchParams.get("redirect");
-      //   if (redirectTo) {
-      //     window.location.href = redirectTo;
-      //   } else {
-      //     window.location.href = "/";
-      //   }
-      // }
+      setIsLoading(true);
 
-      // console.log(data);
+      // Vérifier si l'utilisateur existe dans BackupUser
+      const backupCheckResponse = await fetch("/api/auth/check-backup-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: values.email,
+        }),
+      });
 
+      const backupCheck = await backupCheckResponse.json();
+      // console.log("backupCheck:", backupCheck);
+
+      // Si l'utilisateur est dans BackupUser et n'a pas encore migré
+      if (backupCheck.exists && !backupCheck.migrated) {
+        // Rediriger vers la page de réenregistrement
+        toast.info("Vous devez créer un nouveau compte suite à la migration");
+        router.push(`/auth/reenregistrement?email=${encodeURIComponent(values.email)}`);
+        return;
+      }
+
+      // Sinon, procéder à la connexion normale avec Better Auth
       const res = await signIn.email({
         email: values.email,
         password: values.password,
       });
 
-      if (res.data) {
-        // La redirection sera gérée automatiquement par useAutoRedirect
-        console.log("Connexion réussie:", res.data);
-        redirectRecruteur(res.data.user.id);
-
-        // resetForm();
+      if (res.error) {
+        toast.error(res.error.message || "Identifiants incorrects");
+        return;
       }
 
-      console.log(res);
+      if (res.data) {
+        console.log("Connexion réussie:", res.data);
+        toast.success("Connexion réussie");
+        redirectRecruteur(res.data.user.id);
+      }
     } catch (error: any) {
       toast.error(error.message || "Une erreur est survenue");
       console.error("Erreur de connexion:", error);

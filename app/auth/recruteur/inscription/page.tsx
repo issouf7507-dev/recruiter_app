@@ -80,6 +80,8 @@ export default function InscriptionRecruteur() {
           (data.typeUser as "RECRUTEUR" | "COLLABORATEUR" | "CANDIDAT") ||
           "RECRUTEUR",
       });
+
+      router.push("/auth/recruteur/connexion");
       // console.log(res.data);
     }
   };

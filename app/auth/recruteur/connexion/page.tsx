@@ -16,6 +16,7 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { signIn } from "../../../../lib/auth-client";
 
 import { redirectRecruteur } from "@/action/redirectusers";
+import { completeSignupRecruteur } from "@/action/signup";
 
 const loginSchema = z.object({
   email: z.string().email("Email invalide"),
@@ -45,23 +46,52 @@ export default function ConnexionRecruteur() {
   const [errorsForm, setErrorsForm] = useState<string | null>(null);
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log(data);
+    try {
+      // Vérifier si l'utilisateur existe dans BackupUser
+      const backupCheckResponse = await fetch("/api/auth/check-backup-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.email,
+        }),
+      });
 
-    const res = await signIn.email({
-      email: data.email,
-      password: data.password,
-    });
+      const backupCheck = await backupCheckResponse.json();
+      // console.log(backupCheck);
+      // console.log(JSON.parse(backupCheck?.backupUser?.userData));
 
-    if (res.error) {
-      setErrorsForm(res.error.message || "Une erreur est survenue");
-      resetForm();
-      return;
-    }
+     
 
-    if (res.data) {
-      console.log("Connexion réussie:", res.data);
-      redirectRecruteur(res.data.user.id);
+      // Si l'utilisateur est dans BackupUser et n'a pas encore migré
+      if (backupCheck.exists && !backupCheck.migrated) {
+        // Rediriger vers la page de réenregistrement
+        router.push(`/auth/reenregistrement?email=${encodeURIComponent(data.email)}`);
+        return;
+      }
 
+      // Sinon, procéder à la connexion normale avec Better Auth
+      const res = await signIn.email({
+        email: data.email,
+        password: data.password,
+      });
+
+      if (res.error) {
+        setErrorsForm(res.error.message || "Identifiants incorrects");
+        resetForm();
+        return;
+      }
+
+      if (res.data) {
+        console.log("Connexion réussie:", res.data);
+        redirectRecruteur(res.data.user.id);
+      
+        resetForm();
+      }
+    } catch (error: any) {
+      console.error("Erreur lors de la connexion:", error);
+      setErrorsForm(error.message || "Une erreur est survenue");
       resetForm();
     }
   };
@@ -157,7 +187,7 @@ export default function ConnexionRecruteur() {
                 <span className="text-sm text-muted-foreground">
                   Vous n'avez pas de compte?{" "}
                   <Link
-                    href="/auth/inscription"
+                    href="/auth/recruteur/inscription"
                     className="text-primary hover:underline font-medium"
                   >
                     Inscrivez-vous
